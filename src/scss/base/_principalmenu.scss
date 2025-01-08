@@ -1,0 +1,38 @@
+.seccion-1 {
+    margin-top: calc($separacion / 2);
+    margin-bottom: calc($separacion / 2);
+    .h1{
+        margin: 1rem 0;
+    }
+}
+
+.contenedor-1 {
+    width: 95%;
+    max-width: 120rem;
+    margin: 0 auto;
+    .h1{
+        margin: 1rem 0;
+    }
+}
+
+
+@include tablet{
+    .contenedor-anuncios-1{
+        @include grid(5,2rem);
+    }
+}
+
+.anuncio-1{
+    background-color: lighten($gris,5);
+    border: 1px solid darken($gris,10);
+    margin-bottom: 2rem;
+    
+    .contenido-anuncio-1{
+        padding: 2rem;
+        
+    }
+    h3, p{
+        margin: 0;
+    }
+
+}

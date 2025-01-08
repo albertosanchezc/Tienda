@@ -57,15 +57,13 @@ if (!isset($inicio)) {
             </div> <!--.barra-->
 
             <?php if ($inicio) { ?>
+                <section class="seccion-1 contenedor-1">
                 <h1>Punto de Venta</h1>
-                <section class="seccion contenedor">
-                    <h2>Producción en Tiempo Real</h2>
-                    <div class="contenedor-anuncios">
-
-                        <div class="anuncio">
+                    <div class="contenedor-anuncios-1">
+                        <div class="anuncio-1">
                             <img loading="lazy" src="build/img/brochascilindricas.jpg" alt="anuncio">
-                            <div class="contenido-anuncio">
-                                <h3>Brochas cilindricas</h3>
+                            <div class="contenido-anuncio-1">
+                                <h3>Carrito</h3>
                                 <a href="/brochasNuevas" class="boton-azul-block">
                                     Ver Monitor de Brochas Nuevas
                                 </a>
@@ -73,7 +71,7 @@ if (!isset($inicio)) {
                         </div><!--anuncio-->
 
 
-                        <div class="anuncio">
+                        <div class="anuncio-1">
                             <img loading="lazy" src="build/img/cremalleras.jpg" alt="anuncio">
 
                             <div class="contenido-anuncio">
@@ -94,6 +92,31 @@ if (!isset($inicio)) {
                                 </a>
                             </div><!--.contenido-anuncio-->
                         </div><!--anuncio-->
+
+                        
+                        <div class="anuncio-1">
+                            <img loading="lazy" src="build/img/cremalleras.jpg" alt="anuncio">
+
+                            <div class="contenido-anuncio">
+                                <h3>Cremalleras</h3>
+                                <a href="/cremalleras" class="boton-azul-block">
+                                    Ver Monitor de Cremalleras
+                                </a>
+                            </div><!--.contenido-anuncio-->
+                        </div><!--anuncio-->
+
+                        
+                        <div class="anuncio-1">
+                            <img loading="lazy" src="build/img/cremalleras.jpg" alt="anuncio">
+
+                            <div class="contenido-anuncio">
+                                <h3>Cremalleras</h3>
+                                <a href="/cremalleras" class="boton-azul-block">
+                                    Ver Monitor de Cremalleras
+                                </a>
+                            </div><!--.contenido-anuncio-->
+                        </div><!--anuncio-->
+
                     </div>
                 </section>
             <?php } ?>
