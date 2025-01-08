@@ -58,64 +58,63 @@ if (!isset($inicio)) {
 
             <?php if ($inicio) { ?>
                 <section class="seccion-1 contenedor-1">
-                <h1>Punto de Venta</h1>
+                    <h1>Punto de Venta</h1>
                     <div class="contenedor-anuncios-1">
-                        <div class="anuncio-1">
-                            <img loading="lazy" src="build/img/brochascilindricas.jpg" alt="anuncio">
-                            <div class="contenido-anuncio-1">
-                                <h3>Carrito</h3>
-                                <a href="/brochasNuevas" class="boton-azul-block">
-                                    Ver Monitor de Brochas Nuevas
-                                </a>
-                            </div><!--.contenido-anuncio-->
-                        </div><!--anuncio-->
+                    <a href="/metricas" class="enlace-anuncio">
+            <div class="anuncio-1">
+                <img loading="lazy" src="build/img/metricas.png" alt="anuncio">
+                <div class="contenido-anuncio-1">
+                    <h3>Métricas</h3>
+                    <p>Consulta el estado actual e histórico. Visualiza en gráficos resúmenes periódicos.</p>
+                </div>
+            </div>
+        </a>
 
 
-                        <div class="anuncio-1">
-                            <img loading="lazy" src="build/img/cremalleras.jpg" alt="anuncio">
 
-                            <div class="contenido-anuncio">
-                                <h3>Cremalleras</h3>
-                                <a href="/cremalleras" class="boton-azul-block">
-                                    Ver Monitor de Cremalleras
-                                </a>
-                            </div><!--.contenido-anuncio-->
-                        </div><!--anuncio-->
+        <!-- Segundo contenedor -->
+        <a href="/inventario" class="enlace-anuncio">
+            <div class="anuncio-1">
+                <img loading="lazy" src="build/img/inventario.png" alt="anuncio">
+                <div class="contenido-anuncio-1">
+                    <h3>Inventario</h3>
+                    <p>Administra y consulta fácilmente los productos que tienes en tu negocio.</p>
+                </div>
+            </div>
+        </a>
 
-                        <div class="anuncio">
-                            <img loading="lazy" src="build/img/afiladodebrochas.jpeg" alt="anuncio">
+        <!-- Tercer contenedor -->
+        <a href="/caja" class="enlace-anuncio">
+            <div class="anuncio-1">
+                <img loading="lazy" src="build/img/caja.png" alt="anuncio">
+                <div class="contenido-anuncio-1">
+                    <h3>Caja</h3>
+                    <p>Consulta y administra los movimientos de efectivo en caja.</p>
+                </div>
+            </div>
+        </a>
 
-                            <div class="contenido-anuncio">
-                                <h3>Afilado de Brochas</h3>
-                                <a href="/afilado" class="boton-azul-block">
-                                    Ver Monitor de Afilado de Brochas
-                                </a>
-                            </div><!--.contenido-anuncio-->
-                        </div><!--anuncio-->
+        <!-- Cuarto contenedor -->
+        <a href="/carrito" class="enlace-anuncio">
+            <div class="anuncio-1">
+                <img loading="lazy" src="build/img/carrito.png" alt="anuncio">
+                <div class="contenido-anuncio-1">
+                    <h3>Carrito</h3>
+                    <p>Selecciona para escanear o introducir artículos al carrito.</p>
+                </div>
+            </div>
+        </a>
 
-                        
-                        <div class="anuncio-1">
-                            <img loading="lazy" src="build/img/cremalleras.jpg" alt="anuncio">
-
-                            <div class="contenido-anuncio">
-                                <h3>Cremalleras</h3>
-                                <a href="/cremalleras" class="boton-azul-block">
-                                    Ver Monitor de Cremalleras
-                                </a>
-                            </div><!--.contenido-anuncio-->
-                        </div><!--anuncio-->
-
-                        
-                        <div class="anuncio-1">
-                            <img loading="lazy" src="build/img/cremalleras.jpg" alt="anuncio">
-
-                            <div class="contenido-anuncio">
-                                <h3>Cremalleras</h3>
-                                <a href="/cremalleras" class="boton-azul-block">
-                                    Ver Monitor de Cremalleras
-                                </a>
-                            </div><!--.contenido-anuncio-->
-                        </div><!--anuncio-->
+        <!-- Quinto contenedor -->
+        <a href="/proveedores" class="enlace-anuncio">
+            <div class="anuncio-1">
+                <img loading="lazy" src="build/img/proveedores.png" alt="anuncio">
+                <div class="contenido-anuncio-1">
+                    <h3>Proveedores</h3>
+                    <p>Administra información de tus proveedores.</p>
+                </div>
+            </div>
+        </a>
 
                     </div>
                 </section>

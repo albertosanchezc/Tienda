@@ -1,0 +1,39 @@
+.grid-container {
+    display: grid;
+    grid-template-rows: 2fr 1fr; /* Dividir en dos filas, una más grande */
+    grid-template-columns: 2fr 1fr; /* Dividir en dos columnas */
+    gap: 1rem; /* Espacio entre los elementos */
+    height: 100vh; /* Altura total de la pantalla */
+    width: 100%; /* Ancho total */
+}
+
+.rectangulo-grande {
+    grid-row: 1 / 3; /* Ocupa dos filas */
+    grid-column: 1 / 2; /* Ocupa la primera columna */
+    background-color: #f4f4f4; /* Color de fondo */
+    border: 1px solid #ccc; /* Borde */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.rectangulo-pequeno {
+    background-color: #e0e0e0; /* Color de fondo */
+    border: 1px solid #ccc; /* Borde */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.rectangulo-grande-horizontal {
+    grid-row: 2 / 3; /* Segunda fila */
+    grid-column: 2 / 3; /* Segunda columna */
+    background-color: #d9f4e1; /* Color de fondo */
+    border: 1px solid #ccc; /* Borde */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}

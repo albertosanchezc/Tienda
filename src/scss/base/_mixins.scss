@@ -16,6 +16,21 @@
         @content;
     }
 }
+
+@mixin desktop-1 {
+    @media (min-width: #{$desktop-1}) {
+        @content;
+    }
+}
+
+@mixin desktop-2 {
+    @media (min-width: #{$desktop-2}) {
+        @content;
+    }
+}
+
+
+
 @mixin grid($columnas, $espaciado ) {
     display: grid;
     gap: $espaciado;

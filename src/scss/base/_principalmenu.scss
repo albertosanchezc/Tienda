@@ -1,8 +1,9 @@
 .seccion-1 {
     margin-top: calc($separacion / 2);
     margin-bottom: calc($separacion / 2);
-    .h1{
-        margin: 1rem 0;
+
+    .h1 {
+        margin: 2rem 0;
     }
 }
 
@@ -10,29 +11,92 @@
     width: 95%;
     max-width: 120rem;
     margin: 0 auto;
-    .h1{
-        margin: 1rem 0;
-    }
+
 }
 
 
-@include tablet{
-    .contenedor-anuncios-1{
-        @include grid(5,2rem);
+@include tablet {
+    .contenedor-anuncios-1 {
+        @include grid(5, 2rem);
     }
 }
 
-.anuncio-1{
-    background-color: lighten($gris,5);
-    border: 1px solid darken($gris,10);
+.enlace-anuncio {
+
+.anuncio-1 {
+ //background-color: transparent;
+  //  background-color: rgba(0, 0, 0, 0.5)
+  //  border: 1px solid darken($gris, 10);
     margin-bottom: 2rem;
-    
-    .contenido-anuncio-1{
-        padding: 2rem;
-        
-    }
-    h3, p{
-        margin: 0;
+ //   border: 1px solid darken($gris,10);
+    margin-bottom: 3rem;
+    //border-radius: 2rem;
+    padding: 2rem 2rem;
+    //padding: 2rem;
+    border-radius: 1rem;
+    &{background-color:hsla(212,14%,42%,0.48);
+    background-image:
+    radial-gradient(at 53% 54%, hsla(186,7%,36%,1) 0px, transparent 50%),
+    radial-gradient(at 83% 61%, hsla(231,14%,81%,1) 0px, transparent 50%),
+    radial-gradient(at 52% 19%, hsla(205,0%,76%,1) 0px, transparent 50%)}
+    &:hover{
+        background-color: darken($gris, 10%);
+ 
     }
 
+
+
+
+    img{
+        background-color: transparent;
+        max-height: 20rem;
+     //   max-width: 20rem;
+    }
+
+    .contenido-anuncio-1 {
+        padding: 4rem 2rem 2rem 2rem;
+
+        p{
+            font-weight: $regular;
+            font-size: medium;
+            margin-top: 1.5rem;
+            padding: 0 1.5rem;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .boton-menucito {
+            @include boton(transparent, block);
+            font-weight: $regular;
+            padding: 0 0;
+    margin-top: 1.5rem;
+
+
+
+        }
+
+    }
+
+    h3,
+    p {
+        margin: 0;
+        color: white;
+    font-weight: $bold;
+
+    }
+
+}
+
+
+
+
+    display: block; /* Convierte el enlace en un bloque */
+    text-decoration: none; /* Elimina el subrayado */
+    color: inherit; /* Hereda el color del texto */
+    //max-height: 100rem;
+}
+
+.enlace-anuncio:hover .anuncio-1 {
+    background-color: darken(#cccccc, 10%); /* Efecto hover para todo el contenedor */
+    transition: background-color 0.3s ease;
 }
