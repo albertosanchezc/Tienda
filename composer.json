@@ -1,0 +1,24 @@
+{
+    "name": "albert/bienesraices",
+    "description": "Punto de venta con MVC",
+    "type": "project",
+    "authors": [
+        {
+            "name": "albertosanchezc",
+            "email": "albertosanchezc98@gmail.com"
+        }
+    ],
+    "require": {
+        "intervention/image": "^2.7",
+        "phpmailer/phpmailer": "^6.9",
+        "vlucas/phpdotenv": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Model\\": "./models",
+            "MVC\\": "./",
+            "Controllers\\": "./controllers",
+            "Classes\\" : "./classes"
+        }
+    }
+}

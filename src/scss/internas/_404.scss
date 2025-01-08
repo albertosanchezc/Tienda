@@ -1,0 +1,29 @@
+.pagina_404 {
+
+    &__contenedor {
+        text-align: center;
+    }
+
+}
+
+.enlaceInicio {
+    background-color: $grisOscuro;
+    color: $blanco;
+    font-weight: $bold;
+    text-align: center;
+    margin-top: 2.5rem;
+    display: table;
+    border: 1px solid $azul;
+    width: 33%;
+    border-radius: 1rem;
+    margin: 2rem auto;
+    align-items: center;
+    text-shadow: 1.5px 1.5px 1.5px rgba(36, 35, 35, 0.5);
+
+
+
+    &:hover {
+        background-color: darken($grisOscuro, 10%);
+        cursor: pointer;
+    }
+}

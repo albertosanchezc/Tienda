@@ -1,0 +1,66 @@
+.estadisticas {
+    display: grid;
+
+    @include telefono {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    justify-content: center;
+    max-width: 75%;
+    max-height: 60%;
+    margin: 1rem 15%;
+
+}
+
+.ayudas {
+    display: grid;
+
+    @include telefono{
+        grid-template-columns: repeat(1,1fr);
+    }
+    @include tablet{
+        grid-template-columns: repeat(2,1fr);
+        gap: 1rem;
+    
+    }
+
+    .ayuda-estadisticas {
+        margin: 0rem 2rem;
+        ul {
+            list-style: none;
+            color: $blanco;
+            text-align: center;
+
+        }
+    }
+
+}
+
+.metricas {
+    padding: 2rem;
+    margin: 2rem;
+    border-radius: .5rem;
+
+    .card {
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: $bold;
+        }
+
+        p {
+            color: $blanco;
+            padding: 1rem;
+            margin: 1rem;
+            text-align: center;
+            border-radius: 2rem;
+            background-color: $cyan;
+            border: 1px solid $azul;
+            font-weight: $bold;
+        }
+    }
+}

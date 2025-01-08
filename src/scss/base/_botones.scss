@@ -1,0 +1,61 @@
+.boton-amarillo{
+    @include boton($amarillo, inline-block);
+}
+.boton-amarillo-block{
+    @include boton($amarillo, block);
+}
+.boton-verde{
+    @include boton($verde, inline-block);
+}
+
+.boton-verde-block{
+    @include boton($verde, block);
+}
+
+.boton-morado{
+    @include boton($morado, inline-block);
+}
+
+.boton-morado-block{
+    @include boton($morado, block);
+    width: 100%;
+    padding: 1.2rem;
+}
+
+.boton-negro{
+    @include boton($negro, inline-block);
+}
+
+.boton-negro-block{
+    @include boton($negro, block);
+    width: 100%;
+    padding: 1.2rem;
+}
+
+.boton-azul{
+    @include boton($azul, inline-block);
+}
+
+.boton-azul-block{
+    @include boton($azul, block);
+}
+
+.boton-rojo-block{
+    @include boton($rojo, block);
+    width: 100%;
+    padding: 1.2rem;
+}
+
+.botones{
+    display: grid;
+    margin: auto 5rem;
+
+    @include telefono{
+        gap: 0;
+        grid-template-columns: repeat(1, 1fr);
+    }
+    @include tablet{
+        gap: 2rem;
+        grid-template-columns: repeat(5, 1fr);
+    }
+}

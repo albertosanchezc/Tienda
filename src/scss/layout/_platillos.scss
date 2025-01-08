@@ -1,0 +1,227 @@
+.platillos,
+.resumen__pedido {
+    border-radius: .5rem;
+    padding: 2rem;
+    margin: 2rem 0;
+
+
+    .categorias{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 1rem;
+
+    }
+
+    &__platillo {
+        margin: 0 4rem;
+
+        display: flex;
+        display: grid;
+
+        @include telefono {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        @include tablet {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+    }
+
+    @include desktop {
+
+        &__nombre,
+        &__precio,
+        &__categoria {
+            margin-top: 3.3rem;
+            text-align: center;
+        }
+    }
+
+    &__cantidad {
+        display: block;
+        width: 75%;
+
+        @include desktop {
+            margin-left: 4rem;
+
+        }
+
+        label {
+            color: $negro;
+        }
+    }
+
+    .contenido {
+        background-color: darken($gris-formulario, 50%);
+
+        h3 {
+            color: $negro;
+            font-weight: $bold;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        h4 {
+            color: $negro;
+        }
+    }
+}
+
+.resumen__pedido {
+    h3{
+        color: $negro;
+        font-weight: $bold;
+    }
+
+
+
+
+    .resumen {
+        display: grid;
+        border: 2rem;
+        border-radius: .5rem;
+
+        @include telefono {
+            grid-template-columns: repeat(1, 1fr);
+            gap: 5rem;
+        }
+
+        @include telefono {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5rem;
+        }
+
+        background-color: lighten($gris-formulario, 10);
+
+        h3 {
+            display: block;
+            color: $negro;
+            font-weight: $bold;
+        }
+
+        h4 {
+            margin: 0rem 1rem;
+        }
+
+        .porcentaje {
+            display: flex;
+            padding: 0.5rem;
+
+            input[type="radio"] {
+                display: none;
+            }
+
+            label {
+                position: relative;
+                color: #01cc65;
+                font-weight: $bold;
+                font-family: 'Poppins', sans-serif;
+                font-size: 3rem;
+                border: 3px solid #01cc65;
+                border-radius: .5rem;
+                padding: 1rem 5rem;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+            }
+
+            label:before {
+                content: "";
+                height: 3rem;
+                width: 3rem;
+                border: .35rem solid darken(#01cc65, 15);
+                border-radius: 50%;
+                margin-right: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            label:after {
+                content: "";
+                height: 1.6rem;
+                width: 1.6rem;
+                background-color: white;
+                border-radius: 50%;
+                display: none;
+
+            }
+
+            input[type="radio"]:checked+label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #01cc65;
+                color: $blanco;
+            }
+
+            input[type="radio"]:checked+label:before {
+                content: "";
+                height: 1.2rem;
+                width: 1.2rem;
+                // Este es el color de fondo del mas pequeño
+                background-color: darken(#01cc65, 5);
+                border-radius: 50%;
+            }
+        }
+
+        .contenido {
+            h3 {
+                display: block;
+            }
+
+            border-radius: 1rem;
+            background-color: $blanco;
+
+            ul {
+
+                li {
+                    border: 3px solid darken($gris-formulario, 5);
+                    border-radius: .5rem;
+                    margin-bottom: 1rem;
+                    p {
+                        margin: 1rem;
+
+                        font-weight: $bold;
+                        font-size: 2rem;
+
+                        span {
+                            font-weight: $regular;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+
+    .formulario-propina {
+        .porcentaje {
+            border: 3px solid darken($gris-formulario, 5);
+            border-radius: .5rem;
+            margin: 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .total{
+            background-color: darken($gris-formulario,5);
+            border: 3px solid darken($gris-formulario, 5);
+            border-radius: .5rem;
+            margin: 2rem;
+            padding: 1rem;
+            p{
+                font-size: 3rem;
+                font-weight: $bold;
+            }
+
+        }
+
+    }
+}
