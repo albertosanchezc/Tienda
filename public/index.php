@@ -32,11 +32,22 @@ $router->post('/reestablecer', [LoginController::class, 'reestablecer']);
 
 // Zona Privada 
 $router->get('/', [PaginasController::class, 'index']);
+
 $router->get('/carrito', [PaginasController::class, 'carrito']);
+$router->post('/carrito', [PaginasController::class, 'carrito']);
+
+
 $router->get('/inventario', [PaginasController::class, 'inventario']);
+$router->post('/inventario', [PaginasController::class, 'inventario']);
+
 $router->get('/caja', [PaginasController::class, 'caja']);
+$router->post('/caja', [PaginasController::class, 'caja']);
+
 $router->get('/metricas', [PaginasController::class, 'metricas']);
+
 $router->get('/proveedores', [PaginasController::class, 'proveedores']);
+$router->post('/proveedores', [PaginasController::class, 'proveedores']);
+
 $router->get('/404', [PaginasController::class, 'error']);
 
 $router->comprobarRutas();

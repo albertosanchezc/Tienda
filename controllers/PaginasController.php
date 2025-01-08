@@ -9,15 +9,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class PaginasController{
     public static function index(Router $router){
-        // $entradas = Blog::getWhere('restaurant_id',1,3);
         $inicio = true;
-
-        // $platillos = Platillo::getWhere('restaurant_id',1,3);
         
         $router->render('paginas/index', [
-            // 'entradas' => $entradas,
             'inicio' => $inicio,
-            // 'platillos' => $platillos            
         ]);
     }
 
@@ -44,12 +39,10 @@ class PaginasController{
 
     public static function propiedades(Router $router){
         
-        $platillos = Platillo::where('restaurant_id',1);
         
 
 
         $router->render('paginas/propiedades', [
-            'platillos' => $platillos
         ]);
     }
 

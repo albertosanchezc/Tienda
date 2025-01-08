@@ -25,11 +25,11 @@ class Router
 
         // Arreglo de rutas protegidas...
         $rutas_protegidas = [
-            '/carrito',
-            '/inventario',
-            '/caja',
-            '/metricas',
-            '/proveedores'
+            // '/carrito',
+            // '/inventario',
+            // '/caja',
+            // '/metricas',
+            // '/proveedores'
         ];
 
         $urlActual = $_SERVER['PATH_INFO'] ?? '/';
