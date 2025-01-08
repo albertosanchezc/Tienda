@@ -3,7 +3,16 @@
 namespace Controllers;
 
 use Model\Blog;
+use Model\Caja;
+use Model\Caja_historico;
+use Model\Inventario;
+use Model\Inventario_completo;
+use Model\Inventario_Completo_Granel;
+use Model\Inventario_granel;
 use Model\Platillo;
+use Model\Productos;
+use Model\Proveedor;
+use Model\Ventas;
 use MVC\Router;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -17,15 +26,42 @@ class PaginasController{
     }
 
     public static function carrito(Router $router){
+        // Pasamos todos los productos a la vista
+        $productos = Productos::all();
+        $venta = new Ventas;
+        debuguear($venta);
         
-        $router->render('paginas/carrito');
+        $router->render('paginas/carrito',[
+            'productos' => $productos 
+        ]);
     }
     public static function inventario(Router $router){
+
+        $inventario = Inventario_completo::join2('productos','inventario');
+        // debuguear($inventario);
+
+        $inventario_granel = Inventario_Completo_Granel::join2('productos','inventario_granel');
+        // debuguear($inventario_granel);
+
+        debuguear([$inventario,$inventario_granel]);
         
-        $router->render('paginas/inventario');
+        
+
+
+
+
+        
+
+     
+
+        $router->render('paginas/inventario',[
+            'productos' => $productos
+        ]);
     }
     public static function caja(Router $router){
-        
+        $caja = Caja::find(1);
+        debuguear($caja);
+        $caja_historico = Caja_historico::all();
         $router->render('paginas/caja');
     }
     public static function metricas(Router $router){
@@ -33,7 +69,8 @@ class PaginasController{
         $router->render('paginas/metricas');
     }
     public static function proveedores(Router $router){
-        
+        $proveedores = Proveedor::all();
+        debuguear($proveedores);
         $router->render('paginas/proveedores');
     }
 

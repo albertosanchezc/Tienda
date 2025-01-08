@@ -28,8 +28,6 @@ class ActiveRecord
             // Creando un nuevo registro
             $this->crear();
         }
-
-
     }
 
     public function crear()
@@ -142,7 +140,8 @@ class ActiveRecord
         return static::$errores;
     }
 
-    public static function setError($mensaje) {
+    public static function setError($mensaje)
+    {
         static::$errores[] = $mensaje;
     }
 
@@ -160,12 +159,19 @@ class ActiveRecord
         $query = "SELECT * FROM " . static::$tabla;
 
 
-        if($fechainicio && $fechafin){
+        if ($fechainicio && $fechafin) {
             $query .= " WHERE fecha BETWEEN '$fechainicio' AND '$fechafin'";
         }
 
         $resultado = self::consultarSQL($query);
 
+        return $resultado;
+    }
+
+
+    public static function join2($primera, $segunda){
+        $query = "SELECT * FROM $primera JOIN $segunda ON " . $primera . ".id = " . $segunda . ".producto_id";
+        $resultado = self::consultarSQL($query);
         return $resultado;
     }
 
@@ -178,7 +184,7 @@ class ActiveRecord
         return $resultado;
     }
 
-    public static function getWhere($col,$val,$cantidad)
+    public static function getWhere($col, $val, $cantidad)
     {
         $query = " SELECT * FROM " . static::$tabla . " WHERE ($col) = ('$val') LIMIT " . $cantidad;
         // debuguear($query);
@@ -210,7 +216,7 @@ class ActiveRecord
     public static function wherebelongsTo($columna, $valor, $belongs, $valueBelongs)
     {
         $query = " SELECT * FROM " . static::$tabla . " WHERE " . "$columna =" . "('$valor')";
-        $query .= " AND $belongs = ". "('$valueBelongs')";
+        $query .= " AND $belongs = " . "('$valueBelongs')";
         // debuguear($query);
         $resultado = self::consultarSQL($query);
 
@@ -226,7 +232,6 @@ class ActiveRecord
 
         return array_shift($resultado);
     }
-
 
     public static function consultarSQL($query)
     {
@@ -267,4 +272,6 @@ class ActiveRecord
             }
         }
     }
+
+
 }

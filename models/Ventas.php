@@ -18,8 +18,13 @@ class Ventas extends ActiveRecord{
         $this->id = $args['id'] ?? null;
         $this->cantidad = $args['cantidad'] ?? '';
         $this->producto_id = $args['producto_id'] ?? '';
-        $this->hora_venta = $args['hora_venta'] ?? '';
-        $this->fecha_venta = $args['fecha_venta'] ?? '';   
+        $this->hora_venta = $this->obtenerHoraActual();
+        $this->fecha_venta = $args['fecha_venta'] ?? date('Y/m/d');   
+    }
+
+    private function obtenerHoraActual() {
+        // Devuelve la hora actual formateada
+        return date("H:i:s");
     }
 }
 
