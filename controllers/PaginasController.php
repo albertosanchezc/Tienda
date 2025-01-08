@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Controllers;
 
@@ -16,74 +16,73 @@ use Model\Ventas;
 use MVC\Router;
 use PHPMailer\PHPMailer\PHPMailer;
 
-class PaginasController{
-    public static function index(Router $router){
+class PaginasController
+{
+    public static function index(Router $router)
+    {
         $inicio = true;
-        
+
         $router->render('paginas/index', [
             'inicio' => $inicio,
         ]);
     }
 
-    public static function carrito(Router $router){
+    public static function carrito(Router $router)
+    {
         // Pasamos todos los productos a la vista
         $productos = Productos::all();
         $venta = new Ventas;
-        debuguear($venta);
-        
-        $router->render('paginas/carrito',[
-            'productos' => $productos 
-        ]);
-    }
-    public static function inventario(Router $router){
+        //        debuguear($venta);
 
-        $inventario = Inventario_completo::join2('productos','inventario');
-        // debuguear($inventario);
-
-        $inventario_granel = Inventario_Completo_Granel::join2('productos','inventario_granel');
-        // debuguear($inventario_granel);
-
-        debuguear([$inventario,$inventario_granel]);
-        
-        
-
-
-
-
-        
-
-     
-
-        $router->render('paginas/inventario',[
+        $router->render('paginas/carrito', [
             'productos' => $productos
         ]);
     }
-    public static function caja(Router $router){
+    public static function inventario(Router $router)
+    {
+
+        $inventario = Inventario_completo::join2('productos', 'inventario');
+        // debuguear($inventario);
+
+        $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
+        // debuguear($inventario_granel);
+
+        // debuguear([$inventario, $inventario_granel]);
+
+
+        $router->render('paginas/inventario', [
+        ]);
+    }
+    public static function caja(Router $router)
+    {
         $caja = Caja::find(1);
-        debuguear($caja);
+        // debuguear($caja);
         $caja_historico = Caja_historico::all();
         $router->render('paginas/caja');
     }
-    public static function metricas(Router $router){
-        
+    public static function metricas(Router $router)
+    {
+
         $router->render('paginas/metricas');
     }
-    public static function proveedores(Router $router){
+    public static function proveedores(Router $router)
+    {
         $proveedores = Proveedor::all();
-        debuguear($proveedores);
+        // debuguear($proveedores);
         $router->render('paginas/proveedores');
     }
 
-    public static function propiedades(Router $router){
-        
-        
+    public static function propiedades(Router $router)
+    {
 
 
-        $router->render('paginas/propiedades', [
-        ]);
+
+
+        $router->render('paginas/propiedades', []);
     }
 
-    public static function propiedad(Router $router){
+    public static function propiedad(Router $router)
+    {
 
         $id = validarORedireccionar('/propiedades');
 
@@ -95,33 +94,36 @@ class PaginasController{
         ]);
     }
 
-    public static function blog(Router $router){
+    public static function blog(Router $router)
+    {
         $entradas = Blog::all();
 
         $router->render('/paginas/blog', [
             'entradas' => $entradas
         ]);
     }
-    public static function entrada(Router $router){
+    public static function entrada(Router $router)
+    {
         $id = validarORedireccionar('/blog');
 
         $entrada = Blog::find($id);
-        if(!$entrada){
+        if (!$entrada) {
             header('Location: /blog');
             exit;
         }
 
 
-        $router->render('/paginas/entrada',[
+        $router->render('/paginas/entrada', [
             'entrada' => $entrada
         ]);
     }
 
-    public static function contacto(Router $router){
+    public static function contacto(Router $router)
+    {
 
         $mensaje = null;
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $respuestas = $_POST['contacto'];
             // Crear una instancia de PHPMailer
             $mail = new PHPMailer();
@@ -143,7 +145,7 @@ class PaginasController{
             // Habilitar HTML
             $mail->isHTML(true);
             $mail->CharSet = 'UTF-8';
-            
+
             // Definir el contenido
             $contenido  = '<html>';
             $contenido .= '<p>Tienes un nuevo mensaje</p>';
@@ -151,12 +153,12 @@ class PaginasController{
             $contenido .= '<p>Mensaje: ' . $respuestas['mensaje']  . ' </p>';
 
             // Enviar de forma condicional algunos campos de email o teléfono
-            if($respuestas['contacto'] === 'telefono'){
+            if ($respuestas['contacto'] === 'telefono') {
                 $contenido .= '<p>Eligió Ser Contactado Por Teléfono</p>';
                 $contenido .= '<p>Teléfono: ' . $respuestas['telefono']  . ' </p>';
                 $contenido .= '<p>Fecha de Contacto: ' . $respuestas['fecha']  . ' </p>';
-                $contenido .= '<p>Hora : ' . $respuestas['hora']  . ' </p>';    
-            } else{
+                $contenido .= '<p>Hora : ' . $respuestas['hora']  . ' </p>';
+            } else {
                 // Es email, entonces agregamos el campo de email
                 $contenido .= '<p>Eligió Ser Contactado Por Email</p>';
                 $contenido .= '<p>Email: ' . $respuestas['email']  . ' </p>';
@@ -169,23 +171,22 @@ class PaginasController{
             $mail->AltBody = 'Esto es texto alternativo sin HTML';
 
             // Enviar el email
-             if($mail->send()){
+            if ($mail->send()) {
                 $mensaje = "Mensaje enviado Correctamente";
-             } else{
+            } else {
                 $mensaje = "El mensaje no se pudo enviar";
-             }
-
+            }
         }
 
-        $router->render('/paginas/contacto',[
+        $router->render('/paginas/contacto', [
             'mensaje' => $mensaje
         ]);
     }
 
-    public static function error(Router $router) {
-        $router->render('paginas/error',[
+    public static function error(Router $router)
+    {
+        $router->render('paginas/error', [
             'titulo' => 'Página no Encontrada'
         ]);
     }
-
 }
