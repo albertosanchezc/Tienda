@@ -37,12 +37,11 @@
                         </button>
                     </div>
                     <div class="rectangulo-grande-bebecito2">
-                    <div class="icono">
-
-                        <button class="boton-rojo-block">
+                        <div class="icono">
+                            <button class="boton-rojo-block">
                                 <img src="build/img/basura.svg" alt="Icono basura" loading="lazy">
-                            Vaciar carrito
-                            </div>
+                                Vaciar carrito
+                        </div>
                         </button>
                     </div>
                 </div>
@@ -52,7 +51,22 @@
             <!-- Rectángulo pequeño 2 -->
             <div class="grid-item rectangulo-pequeno">Opciones</div>
             <!-- Rectángulo adicional -->
-            <div class="grid-item rectangulo-grande-horizontal">Total</div>
-        </div>
+            <div class="grid-item rectangulo-grande-horizontal">
+                <div class="rectangulo-grande-horizontal-bebe1">
+                <h3>Total:</h3>
+                </div>
+                <div class="rectangulo-grande-horizontal-bebe2">
+                    <h3>$100.00</h3>
+                </div>
+                <div class="rectangulo-grande-horizontal-bebe3">
+                    <button id="busqueda-manual" class="boton-azul-block">
+                        PAGAR >>>
+                    </button>
+                </div>
+                <div class="rectangulo-grande-horizontal-bebe4">
+                    <h3>Cantidad de actículos:</h3>
+                    <h3>10</h3>
+                </div>
+            </div>
     </section>
 </main>
