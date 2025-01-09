@@ -32,7 +32,7 @@
                         <button id="busqueda-manual" class="boton-azul-block">
                             Introducir código manual
                         </button>
-                        <button id="usqueda-producto" class="boton-azul-block">
+                        <button id="busqueda-producto" class="boton-azul-block">
                             Buscar productos por nombre
                         </button>
                     </div>
