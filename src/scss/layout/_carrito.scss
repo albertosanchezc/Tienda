@@ -42,7 +42,16 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
-    
+
+    h2{
+        color: $negro;
+
+    }
+    h3{
+        font-size: 2rem;
+        font-weight: $bold;
+    }
+
 }
 
 .rectangulo-pequeno {
