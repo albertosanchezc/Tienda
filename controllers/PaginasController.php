@@ -54,6 +54,15 @@ class PaginasController
         ]);
     }
 
+    public static function inventarioAPI(){
+        $inventario = Inventario_completo::join2('productos', 'inventario');
+        $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
+        echo json_encode([
+            'inventario' => $inventario,
+            'inventario_granel' => $inventario_granel
+        ]);
+    }
+
     public static function inventario(Router $router)
     {
 
