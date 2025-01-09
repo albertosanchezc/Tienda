@@ -68,11 +68,12 @@ body {
             max-width: 18rem;
             min-width: 10rem;
             margin-bottom: 2rem;
-            @include fondo-radial($amarillo);
-
-            
-            
+            @include fondo-radial($amarillo);      
             border-radius: 1.2rem;
+            &:hover{
+                background-color: darken($amarillo, 5);
+                cursor: pointer;
+            }
         }
 
 

@@ -69,7 +69,12 @@
                 margin-right: 0;
             }
         }
+
+        &:hover{
+            color: $amarillo;
+        }
     }
+    
 }
 
 // Menú de hamburguesa

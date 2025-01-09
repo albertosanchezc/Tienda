@@ -27,12 +27,20 @@
                     </table>
                 </div>
                 <div class="rectangulo-grande-bebe3">
-                    <button class="boton-azul-block">
-                        Introducir código manual
-                    </button>
-                    <button class="boton-azul-block">
-                        Buscar productos por nombre
-                    </button>
+                    <div class="rectangulo-grande-bebecito1">
+
+                        <button id="busqueda-manual" class="boton-azul-block">
+                            Introducir código manual
+                        </button>
+                        <button id="usqueda-producto" class="boton-azul-block">
+                            Buscar productos por nombre
+                        </button>
+                    </div>
+                    <div class="rectangulo-grande-bebecito2">
+                        <button class="boton-azul-block">
+                            Vaciar carrito
+                        </button>
+                    </div>
                 </div>
             </div>
             <!-- Rectángulo pequeño 1 -->
