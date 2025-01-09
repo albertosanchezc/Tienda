@@ -61,6 +61,13 @@ body {
     }
     .rectangulo-grande-bebe3{
         grid-row: 3;
+        display: flex;
+        justify-content: space-around;
+        .boton-azul-block{
+            width: auto;
+            max-width: 15rem;
+            min-width: 10rem;
+        }
 
 
     }

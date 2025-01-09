@@ -23,13 +23,16 @@
                         <!-- Mostrar los resultados -->
                         <tbody>
 
-
                         </tbody>
                     </table>
                 </div>
                 <div class="rectangulo-grande-bebe3">
-                    <a href="/">Introducir código manual</a>
-                    <a href="/">Buscar productos por nombre</a>
+                    <button class="boton-azul-block">
+                        Introducir código manual
+                    </button>
+                    <button class="boton-azul-block">
+                        Buscar productos por nombre
+                    </button>
                 </div>
             </div>
             <!-- Rectángulo pequeño 1 -->
