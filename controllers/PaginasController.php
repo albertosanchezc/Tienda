@@ -32,6 +32,9 @@ class PaginasController
         // Pasamos todos los productos a la vista
         $inventario = Inventario_completo::join2('productos', 'inventario');
         $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
+        
+        $script = '<script src="/build/js/carrito.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
         $venta = new Ventas;
         $caja = Caja::find(1);
@@ -40,12 +43,13 @@ class PaginasController
         $carrito_id = $venta_previa->carrito_id;
         $carrito_id++;
         $venta->carrito_id = $carrito_id;
-        debuguear($venta);
+        // debuguear($venta);
 
         $router->render('paginas/carrito', [
             'inventario' => $inventario,
             'inventario_granel' => $inventario_granel,
             'caja' => $caja,
+            'script' => $script
             
         ]);
     }
