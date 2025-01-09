@@ -62,11 +62,17 @@ body {
     .rectangulo-grande-bebe3{
         grid-row: 3;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         .boton-azul-block{
             width: auto;
-            max-width: 15rem;
+            max-width: 18rem;
             min-width: 10rem;
+            margin-bottom: 2rem;
+            @include fondo-radial($amarillo);
+
+            
+            
+            border-radius: 1.2rem;
         }
 
 

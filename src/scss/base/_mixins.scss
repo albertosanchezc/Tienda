@@ -54,3 +54,15 @@
         cursor: pointer;
     }
 }
+
+@mixin fondo-radial($color-base) {
+    background-color: $color-base;
+    background-image:
+        radial-gradient(at 0% 18%, lighten($color-base, 20%) 0px, transparent 50%),
+        radial-gradient(at 28% 75%, $color-base 0px, transparent 50%),
+        radial-gradient(at 0% 47%, lighten($color-base, 20%) 0px, transparent 50%),
+        radial-gradient(at 74% 27%, $color-base 0px, transparent 50%),
+        radial-gradient(at 70% 71%, lighten($color-base, 20%) 0px, transparent 50%),
+        radial-gradient(at 30% 64%, $color-base 0px, transparent 50%);
+    background-size: cover; // Ajusta si quieres modificar cómo se escala
+}
