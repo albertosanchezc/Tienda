@@ -71,7 +71,8 @@ body {
 
     .rectangulo-grande-bebe2 {
         grid-row: 2;
-        flex-grow: 1; /* Permitir que crezca para ocupar el espacio disponible */
+        flex-grow: 1;
+        /* Permitir que crezca para ocupar el espacio disponible */
         overflow-y: auto;
 
 
@@ -84,41 +85,45 @@ body {
         /* Dividir en dos filas */
         grid-template-columns: 1fr 1fr;
 
-    column-gap: 1rem; /* Espacio horizontal entre columnas */
-    align-items: center; /* Centrar verticalmente */
-    justify-content: center;
-    margin-top: auto; /* Empujar hacia la parte inferior del contenedor */
-    padding: 1rem; /* Espaciado interno */
+        column-gap: 1rem;
+        /* Espacio horizontal entre columnas */
+        align-items: center;
+        /* Centrar verticalmente */
+        justify-content: center;
+        margin-top: auto;
+        /* Empujar hacia la parte inferior del contenedor */
+        padding: 1rem;
+        /* Espaciado interno */
 
         .rectangulo-grande-bebecito1 {
             grid-row: 1;
             /* Ocupa las dos filas */
             grid-column: 1 / 3;
             /* Primera columna */
-        justify-content: space-between;
-        display: flex;
-        .boton-azul-block {
-            width: auto;
-            max-width: 17rem;
-            min-width: 10rem;
-            height: 5rem;
-            margin: 0 0 0 0;
-            text-align: center;
-            @include fondo-radial($amarillo);
-            border-radius: 1.2rem;
-            font-size: 1.5rem; /* Tamaño del texto */
-    padding: 0.5rem 1rem;
+            justify-content: space-between;
+            display: flex;
+
+            .boton-azul-block {
+                width: auto;
+                max-width: 17rem;
+                min-width: 10rem;
+                height: 5rem;
+                margin: 0 0 0 0;
+                text-align: center;
+                @include fondo-radial($amarillo);
+                border-radius: 1.2rem;
+                font-size: 1.5rem;
+                /* Tamaño del texto */
+                padding: 0.5rem 1rem;
 
 
-            &:hover {
-                background-color: darken($amarillo, 5);
-                cursor: pointer;
+                &:hover {
+                    background-color: darken($amarillo, 5);
+                    cursor: pointer;
+                }
             }
         }
 
-
-
-        }
         .rectangulo-grande-bebecito2 {
             grid-row: 2;
             /* Ocupa las dos filas */
@@ -127,29 +132,31 @@ body {
             display: flex;
             justify-content: center;
 
-            img{
+            img {
                 height: 1.7rem;
                 width: 1.7rem;
-                
+
             }
-            .boton-rojo-block{
-            display: ruby;
+
+            .boton-rojo-block {
+                display: ruby;
                 width: auto;
-            max-width: 30rem;
-            min-width: 17rem;
-            height: 3rem;
-            margin: 0.4rem 0 0 0;
-            text-align: center;
-            font-size: 1.5rem; /* Tamaño del texto */
-            padding: 0 0 0 0;
+                max-width: 30rem;
+                min-width: 17rem;
+                height: 3rem;
+                margin: 0.4rem 0 0 0;
+                text-align: center;
+                font-size: 1.5rem;
+                /* Tamaño del texto */
+                padding: 0 0 0 0;
                 @include fondo-radial($rojo);
                 border-radius: 1.2rem;
-    
+
                 &:hover {
                     background-color: darken($rojo, 5);
                     cursor: pointer;
                 }
-    
+
             }
 
 
@@ -205,33 +212,65 @@ body {
 
     .rectangulo-grande-horizontal-bebe1 {
         grid-row: 1;
-        grid-column: 1;  
+        grid-column: 1;
+
         h3 {
-            font-size: 3rem;
+            font-size: 2.6rem;
             font-weight: $bold;
             margin: 0 0 0 0;
             padding: 0 0 0 0;
-        }   
+        }
     }
 
     .rectangulo-grande-horizontal-bebe2 {
         grid-row: 1;
-        grid-column: 2/4; 
+        grid-column: 2/4;
+
         h3 {
-            font-size: 7rem;
+            font-size: 5rem;
             font-weight: $bold;
             margin: 0 0 0 0;
             padding: 0 0 0 0;
-        }     
-    }    
-    
+        }
+    }
+
     .rectangulo-grande-horizontal-bebe3 {
         grid-row: 2;
-        grid-column: 1/3;     
-    }    
-    
+        grid-column: 1/3;
+        padding: 0 0 0.5rem 0.5rem;
+        display: flex;
+        justify-content: center;
+
+        .boton-azul-block {
+            width: auto;
+            max-width: 30rem;
+            min-width: 22rem;
+            height: 9rem;
+            margin: 0 0 1.5rem 0;
+            text-align: center;
+            @include fondo-radial($azul);
+            border-radius: 1.2rem;
+            font-size: 4.5rem; /* Tamaño del texto */
+            padding: 0.4rem;
+            &:hover {
+                background-color: darken($azul, 5);
+                cursor: pointer;
+            }
+            span{
+                color: $amarillo;
+            }
+        }
+
+    }
+
     .rectangulo-grande-horizontal-bebe4 {
         grid-row: 2;
-        grid-column: 3;     
+        grid-column: 3;
+        margin: 0 0 3rem 0;
+
+
+        h3{
+            font-size: 1.4rem;
+        }
     }
 }

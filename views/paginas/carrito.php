@@ -47,20 +47,33 @@
                 </div>
             </div>
             <!-- Rectángulo pequeño 1 -->
-            <div class="grid-item rectangulo-pequeno">Detalles</div>
+            <div class="grid-item rectangulo-pequeno">
+                <div class="rectangulo-pequeño-bebe1">
+                    <h3>Imagen:</h3>
+                </div>
+                <div class="rectangulo-pequeño-bebe2">
+                    <h3>Nombre y descripción:</h3>
+                </div>
+                <div class="rectangulo-pequeño-bebe3">
+                    <h3>Cantidad y código</h3>
+                </div>
+                <div class="rectangulo-pequeño-bebe4">
+                    <h3>Subtotal</h3>
+                </div>
+            </div>
             <!-- Rectángulo pequeño 2 -->
             <div class="grid-item rectangulo-pequeno">Opciones</div>
             <!-- Rectángulo adicional -->
             <div class="grid-item rectangulo-grande-horizontal">
                 <div class="rectangulo-grande-horizontal-bebe1">
-                <h3>Total:</h3>
+                    <h3>Total:</h3>
                 </div>
                 <div class="rectangulo-grande-horizontal-bebe2">
-                    <h3>$100.00</h3>
+                    <h3>$ 1000.00</h3>
                 </div>
                 <div class="rectangulo-grande-horizontal-bebe3">
-                    <button id="busqueda-manual" class="boton-azul-block">
-                        PAGAR >>>
+                    <button id="pagar" class="boton-azul-block">
+                        PAGAR <span>&gt;&gt;&gt;</span>
                     </button>
                 </div>
                 <div class="rectangulo-grande-horizontal-bebe4">
