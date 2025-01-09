@@ -13,7 +13,28 @@ document.addEventListener('keydown', iniciarCarrito);
 const rectanguloGrande = document.querySelector('.rectangulo-grande');
 rectanguloGrande.addEventListener('click', iniciarCarrito);
 
+const rectanguloGrandeBebe1 = document.querySelector('.rectangulo-grande-bebe1');
+let rectanguloGrandeBebe1Removed = null;
+rectanguloGrandeBebe1Removed = rectanguloGrandeBebe1;
+rectanguloGrandeBebe1.remove();
+
+const rectanguloGrandeBebe2 = document.querySelector('.rectangulo-grande-bebe2');
+let rectanguloGrandeBebe2Removed = null;
+rectanguloGrandeBebe2Removed = rectanguloGrandeBebe2;
+rectanguloGrandeBebe2.remove();
+
+const rectanguloGrandeBebe3 = document.querySelector('.rectangulo-grande-bebe3');
+let rectanguloGrandeBebe3Removed = null;
+rectanguloGrandeBebe3Removed = rectanguloGrandeBebe3;
+rectanguloGrandeBebe3.remove();
+
+
 function iniciarCarrito() {
     const h2 = document.querySelector('h2'); // Selecciona el primer <h2>
     h2.remove(); // Elimina ese <h2>
+
+    rectanguloGrande.appendChild(rectanguloGrandeBebe1);
+    rectanguloGrande.appendChild(rectanguloGrandeBebe2);
+    rectanguloGrande.appendChild(rectanguloGrandeBebe3);
+
 }
