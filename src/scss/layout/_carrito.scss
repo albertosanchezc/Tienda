@@ -181,10 +181,76 @@ body {
     /* Color de fondo */
     border: 1px solid #ccc;
     /* Borde */
-    display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+
+    h3 {
+        font-size: 1rem;
+        font-weight: $bold;
+        margin: 0 0 0 0;
+        padding: 0 0 0 0;
+    }
+
+    .rectangulo-pequeno-bebe1 {
+        grid-row: 1;
+        /* Ocupa las dos filas */
+        grid-column: 1;
+    }
+
+    .rectangulo-pequeno-bebe2 {
+        grid-row: 1;
+        /* Ocupa las dos filas */
+        grid-column: 2;
+        grid-template-rows: auto auto;
+
+        display: grid;
+        grid-template-rows: 1fr 5fr;
+
+        .rectangulo-pequeno-bebecito21 {
+            grid-row: 1;
+        }
+
+        .rectangulo-pequeno-bebecito22 {
+            grid-row: 2/7;
+        }
+    }
+
+    .rectangulo-pequeno-bebe3 {
+        grid-row: 2;
+        /* Ocupa las dos filas */
+        grid-column: 1;
+        display: grid;
+        grid-template-rows: 1fr 2fr;
+
+        .rectangulo-pequeno-bebecito31 {
+            grid-row: 1;
+        }
+
+
+        .rectangulo-pequeno-bebecito32 {
+            grid-row: 2;
+        }
+    }
+
+
+.rectangulo-pequeno-bebe4 {
+    grid-row: 2;
+    /* Ocupa las dos filas */
+    grid-column: 2;
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+    .rectangulo-pequeno-bebecito41{
+        grid-row: 1;
+    }
+    .rectangulo-pequeno-bebecito42{
+        grid-row: 2;
+    }
+}
+
 }
 
 .rectangulo-grande-horizontal {
@@ -250,13 +316,16 @@ body {
             text-align: center;
             @include fondo-radial($azul);
             border-radius: 1.2rem;
-            font-size: 4.5rem; /* Tamaño del texto */
+            font-size: 4.5rem;
+            /* Tamaño del texto */
             padding: 0.4rem;
+
             &:hover {
                 background-color: darken($azul, 5);
                 cursor: pointer;
             }
-            span{
+
+            span {
                 color: $amarillo;
             }
         }
@@ -269,8 +338,19 @@ body {
         margin: 0 0 3rem 0;
 
 
-        h3{
+        h3 {
             font-size: 1.4rem;
         }
     }
+}
+
+.rectangulo-pequeno-1 {
+    background-color: #e0e0e0;
+    /* Color de fondo */
+    border: 1px solid #ccc;
+    /* Borde */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
 }

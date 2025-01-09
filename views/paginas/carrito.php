@@ -48,21 +48,39 @@
             </div>
             <!-- Rectángulo pequeño 1 -->
             <div class="grid-item rectangulo-pequeno">
-                <div class="rectangulo-pequeño-bebe1">
+                <div class="rectangulo-pequeno-bebe1">
                     <h3>Imagen:</h3>
                 </div>
-                <div class="rectangulo-pequeño-bebe2">
-                    <h3>Nombre y descripción:</h3>
+                <div class="rectangulo-pequeno-bebe2">
+                    <div class="rectangulo-pequeno-bebecito21">
+                        <h3>Nombre</h3>
+                    </div>
+                    <div class="rectangulo-pequeno-bebecito22">
+                        <h3>Descripción:</h3>
+                    </div>
                 </div>
-                <div class="rectangulo-pequeño-bebe3">
-                    <h3>Cantidad y código</h3>
+
+                <div class="rectangulo-pequeno-bebe3">
+                    <div class="rectangulo-pequeno-bebecito31">
+                        <h3>Cantidad</h3>
+                    </div>
+                    <div class="rectangulo-pequeno-bebecito32">
+                        <h3>Código</h3>
+                    </div>
+
                 </div>
-                <div class="rectangulo-pequeño-bebe4">
-                    <h3>Subtotal</h3>
+
+                <div class="rectangulo-pequeno-bebe4">
+                    <div class="rectangulo-pequeno-bebecito41">
+                        <h3>Subtotal:</h3>
+                    </div>
+                    <div class="rectangulo-pequeno-bebecito42">
+                        <h3>$1000.00</h3>
+                    </div>
                 </div>
             </div>
             <!-- Rectángulo pequeño 2 -->
-            <div class="grid-item rectangulo-pequeno">Opciones</div>
+            <div class="grid-item rectangulo-pequeno-1">Opciones</div>
             <!-- Rectángulo adicional -->
             <div class="grid-item rectangulo-grande-horizontal">
                 <div class="rectangulo-grande-horizontal-bebe1">
