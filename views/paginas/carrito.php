@@ -30,15 +30,19 @@
                     <div class="rectangulo-grande-bebecito1">
 
                         <button id="busqueda-manual" class="boton-azul-block">
-                            Introducir código manual
+                            Introducir código manual.
                         </button>
                         <button id="busqueda-producto" class="boton-azul-block">
-                            Buscar productos por nombre
+                            Buscar productos por nombre.
                         </button>
                     </div>
                     <div class="rectangulo-grande-bebecito2">
-                        <button class="boton-azul-block">
+                    <div class="icono">
+
+                        <button class="boton-rojo-block">
+                                <img src="build/img/basura.svg" alt="Icono basura" loading="lazy">
                             Vaciar carrito
+                            </div>
                         </button>
                     </div>
                 </div>
