@@ -14,7 +14,7 @@
                             <tr>
                                 <th>Cantidad</th>
                                 <th>Producto</th>
-                                <th>Descrippción</th>
+                                <th>Descripción</th>
                                 <th>Imagen</th>
                                 <th>Subtotal</th>
                                 <th>Acciones</th>
