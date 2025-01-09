@@ -175,6 +175,14 @@ class ActiveRecord
         return $resultado;
     }
 
+    //Obtiene la última columna(especificada) de una tabla 
+    public static function lastofTable($tabla, $columna){
+        $query = "SELECT  ". $columna ."  FROM " . static::$tabla . " ORDER BY ". $columna ." DESC LIMIT 1 ";
+        $resultado = self::consultarSQL($query);
+        return array_shift($resultado);
+    }
+
+
     // Obtiene determinado número de registros
     public static function get($cantidad)
     {

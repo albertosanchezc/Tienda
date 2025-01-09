@@ -5,13 +5,15 @@ namespace Model;
 class Ventas extends ActiveRecord{
     // Base de datos
     protected static $tabla = 'ventas';
-    protected static $columnasDB = ['id', 'cantidad', 'producto_id', 'hora_venta', 'fecha_venta'];
+    protected static $columnasDB = ['id', 'cantidad', 'producto_id', 'hora_venta', 'fecha_venta', 'carrito_id'];
 
     public $id;
     public $cantidad;
     public $producto_id;
     public $hora_venta;
     public $fecha_venta;
+    public $carrito_id;
+    
 
     public function __construct($args = [])
     {
@@ -20,6 +22,7 @@ class Ventas extends ActiveRecord{
         $this->producto_id = $args['producto_id'] ?? '';
         $this->hora_venta = $this->obtenerHoraActual();
         $this->fecha_venta = $args['fecha_venta'] ?? date('Y/m/d');   
+        $this->carrito_id = $args['carrito_id'] ?? '';   
     }
 
     private function obtenerHoraActual() {
