@@ -31,11 +31,20 @@ rectanguloGrandeBebe3.remove();
 rectanguloGrande.classList.remove('grid-item');
 const h2 = document.querySelector('h2'); // Selecciona el primer <h2>
 
+var modalHTML = `
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3> !Bienvenido a la ventana Modal</h3>
+            <p>Este es el contenido que se generó</p>
+        </div>
+    </div>
+`
+
 function iniciarCarrito() {
     if(h2){
         h2.remove(); // Elimina ese <h2>
     }
-
 
     rectanguloGrande.classList.add('grid-item');
     rectanguloGrande.appendChild(rectanguloGrandeBebe1);
@@ -43,7 +52,13 @@ function iniciarCarrito() {
     rectanguloGrande.appendChild(rectanguloGrandeBebe3);
     const busquedaManual = document.getElementById('busqueda-manual');
     busquedaManual.addEventListener('click', () => {
-        console.log('diste click en el botón de busqueda manual');
+        if(!document.getElementById('myModal')){
+            document.body.insertAdjacentHTML('beforeend',modalHTML);
+        }
+
+        //obtener el modal recién insertado
+        var modal = document.getElementById("myModal");
+        
     })
     
 
