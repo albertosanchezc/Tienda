@@ -75,6 +75,8 @@ function iniciarCarrito() {
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe2);
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe3);
 
+    abrirModal
+
     // Después de haber eliminado los elementos, puedes volver a agregarlos a sus contenedores originales
     removedElements.forEach(function (item) {
         item.container.appendChild(item.element);  // Vuelve a añadir el <h3> a su contenedor original
