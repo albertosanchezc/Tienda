@@ -98,4 +98,14 @@
                 </div>
             </div>
     </section>
+    <section class="modal modal--show">
+        <div class="modal__container">
+            <img src="../../public/build/img/bienvenida.svg" alt="Logotipo de bienvenida">
+            <h2 class="modal__title">¡Bienvenido al Carrito!</h2>
+            <p class="modal__paragraph">
+                Haz click en el siguiente botón para comenzar a marcar los productos.
+            </p>
+            <a href="#" class="modal__close">Iniciar Carrito</a>
+        </div>
+    </section>
 </main>

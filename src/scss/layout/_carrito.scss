@@ -201,14 +201,14 @@ body {
         grid-column: 1;
         display: block;
         justify-content: center;
-    align-items: center;
+        align-items: center;
 
 
-        img{
+        img {
             height: 10rem;
             width: 10rem;
-        background-color: $azul;
-        margin: 0.9rem 0 0 6rem;
+            background-color: $azul;
+            margin: 0.9rem 0 0 6rem;
 
         }
     }
@@ -224,6 +224,7 @@ body {
 
         .rectangulo-pequeno-bebecito21 {
             grid-row: 1;
+
             h3 {
                 font-size: 1.3rem;
                 font-weight: $bold;
@@ -234,6 +235,7 @@ body {
 
         .rectangulo-pequeno-bebecito22 {
             grid-row: 2/7;
+
             h3 {
                 font-size: 2rem;
                 font-weight: $bold;
@@ -252,6 +254,7 @@ body {
 
         .rectangulo-pequeno-bebecito31 {
             grid-row: 1;
+
             h3 {
                 font-size: 1.3rem;
                 font-weight: $bold;
@@ -263,6 +266,7 @@ body {
 
         .rectangulo-pequeno-bebecito32 {
             grid-row: 2;
+
             h3 {
                 font-size: 1.3rem;
                 font-weight: $bold;
@@ -273,32 +277,35 @@ body {
     }
 
 
-.rectangulo-pequeno-bebe4 {
-    grid-row: 2;
-    /* Ocupa las dos filas */
-    grid-column: 2;
-    display: grid;
-    grid-template-rows: 1fr 3fr;
-    .rectangulo-pequeno-bebecito41{
-        grid-row: 1;
-        
-        h3 {
-            font-size: 1.3rem;
-            font-weight: $bold;
-            margin: 0 0 0 0;
-            padding: 0 0 0 0;
-        }
-    }
-    .rectangulo-pequeno-bebecito42{
+    .rectangulo-pequeno-bebe4 {
         grid-row: 2;
-        h3 {
-            font-size: 3rem;
-            font-weight: $bold;
-            margin: 0 0 0 0;
-            padding: 0 0 0 0;
+        /* Ocupa las dos filas */
+        grid-column: 2;
+        display: grid;
+        grid-template-rows: 1fr 3fr;
+
+        .rectangulo-pequeno-bebecito41 {
+            grid-row: 1;
+
+            h3 {
+                font-size: 1.3rem;
+                font-weight: $bold;
+                margin: 0 0 0 0;
+                padding: 0 0 0 0;
+            }
+        }
+
+        .rectangulo-pequeno-bebecito42 {
+            grid-row: 2;
+
+            h3 {
+                font-size: 3rem;
+                font-weight: $bold;
+                margin: 0 0 0 0;
+                padding: 0 0 0 0;
+            }
         }
     }
-}
 
 }
 
@@ -402,4 +409,66 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #111111bd;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal--show {
+    opacity: 1;
+    pointer-events: unset;
+
+}
+
+.modal__container {
+    margin: auto;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90%;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 3rem 2.5rem;
+    display: grid;
+    gap: 1rem;
+    place-items: center;
+    grid-auto-columns: 100%;
+
+}
+
+.modal__paragraph {
+    margin-bottom: 10px;
+}
+
+
+.modal__img {
+    width: 90%;
+    max-width: 300px;
+}
+
+
+.modal__close {
+    text-decoration: none;
+    color: #fff;
+    background-color: #f26250;
+    padding: 1rem 3rem;
+    border: 1px solid;
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: 300;
+    transition: background-color .3s;
+}
+
+
+.modal__close:hover {
+    color: #f26250;
+    background-color: #fff;
 }
