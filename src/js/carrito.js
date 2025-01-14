@@ -6,6 +6,9 @@ function iniciarApp() {
     // consultarAPI();
 }
 
+// Evento que lee una tecla
+document.addEventListener('keydown', iniciarCarrito);
+
 // Evento que lee el click
 const rectanguloGrande = document.querySelector('.rectangulo-grande');
 rectanguloGrande.addEventListener('click', iniciarCarrito);
@@ -71,8 +74,6 @@ function iniciarCarrito() {
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe1);
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe2);
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe3);
-
-    abrirModal
 
     // Después de haber eliminado los elementos, puedes volver a agregarlos a sus contenedores originales
     removedElements.forEach(function (item) {

@@ -98,4 +98,9 @@
                 </div>
             </div>
     </section>
+    <section class="modal">
+        <div class="modal__container">
+            <h2 class="modal__title"></h2>
+        </div>
+    </section>
 </main>

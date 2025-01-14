@@ -43,8 +43,11 @@ if (!isset($inicio)) {
                         <a href="/carrito">Carrito</a>
                         <a href="/inventario">Inventario</a>
                         <a href="/caja">Caja</a>
+                        <a href="/ventas">Ventas</a>
                         <a href="/metricas">Métricas</a>
                         <a href="/proveedores">Proveedores</a>
+                        <a href="/cancelaciones">Cancelaciones</a>
+
 
                         <?php if ($auth) { ?>
                             <a href="/logout">Cerrar Sesión</a>
@@ -65,7 +68,7 @@ if (!isset($inicio)) {
                 <img loading="lazy" src="build/img/metricas.png" alt="anuncio">
                 <div class="contenido-anuncio-1">
                     <h3>Métricas</h3>
-                    <p>Consulta el estado actual e histórico. Visualiza en gráficos resúmenes periódicos.</p>
+                    <p>Consulta el estado actual e histórico. Visualiza resúmenes periódicos.</p>
                 </div>
             </div>
         </a>
@@ -100,7 +103,7 @@ if (!isset($inicio)) {
                 <img loading="lazy" src="build/img/carrito.png" alt="anuncio">
                 <div class="contenido-anuncio-1">
                     <h3>Carrito</h3>
-                    <p>Selecciona para escanear o introducir artículos al carrito.</p>
+                    <p>Selecciona para introducir artículos al carrito.</p>
                 </div>
             </div>
         </a>
@@ -115,7 +118,6 @@ if (!isset($inicio)) {
                 </div>
             </div>
         </a>
-
                     </div>
                 </section>
             <?php } ?>
@@ -135,8 +137,10 @@ if (!isset($inicio)) {
                 <a href="/carrito">Carrito</a>
                 <a href="/inventario">Inventario</a>
                 <a href="/caja">Caja</a>
+                <a href="/ventas">Ventas</a>
                 <a href="/metricas">Métricas</a>
                 <a href="/proveedores">Proveedores</a>
+                <a href="/cancelaciones">Cancelaciones</a>
                 <?php if ($auth) { ?>
                     <a href="/logout">Cerrar Sesión</a>
                 <?php } else { ?>
