@@ -64,6 +64,11 @@ const rectanguloGrandeHorizontalBebe3 = document.querySelector('.rectangulo-gran
 rectanguloGrandeHorizontalBebe3Removed = rectanguloGrandeHorizontalBebe3;
 rectanguloGrandeHorizontalBebe3.remove();
 
+const modal = document.querySelector('.modal');
+const modalClose = document.querySelector('.modal__close');
+modalClose.addEventListener('click', () => {
+    modal.classList.remove('modal--show');
+})
 
 
 
