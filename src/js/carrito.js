@@ -59,15 +59,7 @@ rectanguloGrandeHorizontalBebe3Removed = rectanguloGrandeHorizontalBebe3;
 rectanguloGrandeHorizontalBebe3.remove();
 
 
-var modalHTML = `
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3> !Bienvenido a la ventana Modal</h3>
-            <p>Este es el contenido que se generó</p>
-        </div>
-    </div>
-`
+
 
 function iniciarCarrito() {
     if(h2){
@@ -91,12 +83,7 @@ function iniciarCarrito() {
 
     const busquedaManual = document.getElementById('busqueda-manual');
     busquedaManual.addEventListener('click', () => {
-        if(!document.getElementById('myModal')){
-            document.body.insertAdjacentHTML('beforeend',modalHTML);
-        }
 
-        //obtener el modal recién insertado
-        var modal = document.getElementById("myModal");
         
     })
     
