@@ -199,6 +199,18 @@ body {
         grid-row: 1;
         /* Ocupa las dos filas */
         grid-column: 1;
+        display: block;
+        justify-content: center;
+    align-items: center;
+
+
+        img{
+            height: 10rem;
+            width: 10rem;
+        background-color: $azul;
+        margin: 0.9rem 0 0 6rem;
+
+        }
     }
 
     .rectangulo-pequeno-bebe2 {
@@ -208,14 +220,26 @@ body {
         grid-template-rows: auto auto;
 
         display: grid;
-        grid-template-rows: 1fr 5fr;
+        grid-template-rows: 1fr 3fr;
 
         .rectangulo-pequeno-bebecito21 {
             grid-row: 1;
+            h3 {
+                font-size: 1.3rem;
+                font-weight: $bold;
+                margin: 0 0 0 0;
+                padding: 0 0 0 0;
+            }
         }
 
         .rectangulo-pequeno-bebecito22 {
             grid-row: 2/7;
+            h3 {
+                font-size: 2rem;
+                font-weight: $bold;
+                margin: 0 0 0 0;
+                padding: 0 0 0 0;
+            }
         }
     }
 
@@ -228,11 +252,23 @@ body {
 
         .rectangulo-pequeno-bebecito31 {
             grid-row: 1;
+            h3 {
+                font-size: 1.3rem;
+                font-weight: $bold;
+                margin: 0 0 0 0;
+                padding: 0 0 0 0;
+            }
         }
 
 
         .rectangulo-pequeno-bebecito32 {
             grid-row: 2;
+            h3 {
+                font-size: 1.3rem;
+                font-weight: $bold;
+                margin: 0 0 0 0;
+                padding: 0 0 0 0;
+            }
         }
     }
 
@@ -242,12 +278,25 @@ body {
     /* Ocupa las dos filas */
     grid-column: 2;
     display: grid;
-    grid-template-rows: 1fr 5fr;
+    grid-template-rows: 1fr 3fr;
     .rectangulo-pequeno-bebecito41{
         grid-row: 1;
+        
+        h3 {
+            font-size: 1.3rem;
+            font-weight: $bold;
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+        }
     }
     .rectangulo-pequeno-bebecito42{
         grid-row: 2;
+        h3 {
+            font-size: 3rem;
+            font-weight: $bold;
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+        }
     }
 }
 
@@ -293,7 +342,7 @@ body {
         grid-column: 2/4;
 
         h3 {
-            font-size: 5rem;
+            font-size: 4.8rem;
             font-weight: $bold;
             margin: 0 0 0 0;
             padding: 0 0 0 0;

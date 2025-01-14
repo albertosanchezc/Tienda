@@ -49,33 +49,31 @@
             <!-- Rectángulo pequeño 1 -->
             <div class="grid-item rectangulo-pequeno">
                 <div class="rectangulo-pequeno-bebe1">
-                    <h3>Imagen:</h3>
+                <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
+
                 </div>
                 <div class="rectangulo-pequeno-bebe2">
                     <div class="rectangulo-pequeno-bebecito21">
-                        <h3>Nombre</h3>
+                        <h3>Sabritas Doritos</h3>
                     </div>
                     <div class="rectangulo-pequeno-bebecito22">
-                        <h3>Descripción:</h3>
+                        <h3>Doritos Nacho Sabritas 76g. Rojos</h3>
                     </div>
                 </div>
-
                 <div class="rectangulo-pequeno-bebe3">
                     <div class="rectangulo-pequeno-bebecito31">
-                        <h3>Cantidad</h3>
+                        <h3>Cantidad:</h3>
                     </div>
                     <div class="rectangulo-pequeno-bebecito32">
-                        <h3>Código</h3>
+                        <h3>Código de Barras</h3>
                     </div>
-
                 </div>
-
                 <div class="rectangulo-pequeno-bebe4">
                     <div class="rectangulo-pequeno-bebecito41">
                         <h3>Subtotal:</h3>
                     </div>
                     <div class="rectangulo-pequeno-bebecito42">
-                        <h3>$1000.00</h3>
+                        <h3>$10000.00</h3>
                     </div>
                 </div>
             </div>
@@ -87,7 +85,7 @@
                     <h3>Total:</h3>
                 </div>
                 <div class="rectangulo-grande-horizontal-bebe2">
-                    <h3>$ 1000.00</h3>
+                    <h3>$10000.00</h3>
                 </div>
                 <div class="rectangulo-grande-horizontal-bebe3">
                     <button id="pagar" class="boton-azul-block">
