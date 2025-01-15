@@ -76,9 +76,6 @@
 
         }
 
-
-
-
         img {
             background-color: transparent;
             max-height: 15rem;
@@ -122,12 +119,9 @@
     }
 
     display: block;
-    /* Convierte el enlace en un bloque */
     text-decoration: none;
-    /* Elimina el subrayado */
     color: inherit;
-    /* Hereda el color del texto */
-    //max-height: 100rem;
+
 }
 
 .enlace-anuncio:hover .anuncio-1 {

@@ -49,7 +49,7 @@
             <!-- Rectángulo pequeño 1 -->
             <div class="grid-item rectangulo-pequeno">
                 <div class="rectangulo-pequeno-bebe1">
-                <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
+                    <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
 
                 </div>
                 <div class="rectangulo-pequeno-bebe2">
@@ -98,6 +98,7 @@
                 </div>
             </div>
     </section>
+    <!-- modal de bienvenida -->
     <section class="modal modal--show">
         <div class="modal__container">
             <img src="/build/img/bienvenida.svg" alt="Logotipo de bienvenida" class="modal__img">
@@ -108,4 +109,78 @@
             <a href="#" class="modal__close">Iniciar Carrito</a>
         </div>
     </section>
+
+    <!-- modal de buscador manual -->
+    <section class="modal--manual modal--manual--show">
+        <div class="modal--manual__container">
+            <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--manual__img">
+            <h2 class="modal--manual__title">¡Bienvenido a la busqueda manual!</h2>
+            <p class="modal--manual__paragraph">
+                Haz click en el siguiente recuadro para introducir el código de barras.
+            </p>
+            <label for="1">Código de Barras:</label>
+            <input href="#" id="1" class="modal--manual__close" type="number" placeholder="Ejemplo:  014555452636">
+            </input>
+
+            <table class="modal__tabla--manual">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th>Imagen</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <!-- Mostrar los resultados -->
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- modal de buscador por nombre -->
+    <section class="modal--nombre modal--nombre--show">
+        <div class="modal--nombre__container">
+            <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--nombre__img">
+            <h2 class="modal--nombre__title">¡Bienvenido a la busqueda por nombre!</h2>
+            <p class="modal--nombre__paragraph">
+                Haz click en el siguiente recuadro para buscar por nombre.
+            </p>
+            <label for="1">Nombre del producto:</label>
+            <input href="#" id="1" class="modal--nombre__close" type="text" placeholder="Ejemplo:  Doritos">
+            </input>
+
+            <table class="modal__tabla--nombre">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th>Imagen</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <!-- Mostrar los resultados -->
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- modal de y si es producto granel -->
+    <section class="modal--granel modal--granel--show">
+        <div class="modal--granel__container">
+            <img src="/build/img/bascula.png" alt="Logotipo de bascula" class="modal--granel__img">
+            <h2 class="modal--granel__title">¡Introduce la cantidad de --nombre del producto-- vendida en gramos.!</h2>
+
+            <label for="1">Gramos del producto: --220-- g.</label>
+            <input href="#" id="1" class="modal--granel__close" type="number" placeholder="Ejemplo:  220">
+            </input>
+            <h2>$56.00</h2>
+
+
+        </div>
+    </section>
+
 </main>
