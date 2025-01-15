@@ -17,19 +17,23 @@
     }
 }
 
-@mixin desktop-1 {
-    @media (min-width: #{$desktop-1}) {
+@mixin telefono-1 {
+    @media (min-width: #{$telefono-1}) {
         @content;
     }
 }
 
-@mixin desktop-2 {
-    @media (min-width: #{$desktop-2}) {
+@mixin tablet-1 {
+    @media (min-width: #{tablet-1}) {
         @content;
     }
 }
 
-
+@mixin laptop-1 {
+    @media (min-width: #{$laptop-1}) {
+        @content;
+    }
+}
 
 @mixin grid($columnas, $espaciado ) {
     display: grid;

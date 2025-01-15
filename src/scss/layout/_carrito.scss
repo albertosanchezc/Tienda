@@ -421,11 +421,17 @@ body {
     display: flex;
     opacity: 0;
     pointer-events: none;
+    transition: opacity .6s .9s;
+    --transform: translateY(-100vh);
+    --transition: transform .8s;
 }
 
 .modal--show {
     opacity: 1;
     pointer-events: unset;
+    transition: opacity .6s;
+    --transform: translateY(0);
+    --transition: transform .8s .8s;
 
 }
 
@@ -441,7 +447,8 @@ body {
     gap: 1rem;
     place-items: center;
     grid-auto-columns: 100%;
-
+    transform: var(--transform);
+    transition: var(--transition);
 }
 
 .modal__title{

@@ -43,10 +43,9 @@ if (!isset($inicio)) {
                         <a href="/carrito">Carrito</a>
                         <a href="/inventario">Inventario</a>
                         <a href="/caja">Caja</a>
-                        <a href="/ventas">Ventas</a>
+                        <a href="/ventas">Ventas y Cancelaciones</a>
                         <a href="/metricas">Métricas</a>
                         <a href="/proveedores">Proveedores</a>
-                        <a href="/cancelaciones">Cancelaciones</a>
 
 
                         <?php if ($auth) { ?>
@@ -63,61 +62,66 @@ if (!isset($inicio)) {
                 <section class="seccion-1 contenedor-1">
                     <h1>Punto de Venta</h1>
                     <div class="contenedor-anuncios-1">
-                    <a href="/metricas" class="enlace-anuncio">
-            <div class="anuncio-1">
-                <img loading="lazy" src="build/img/metricas.png" alt="anuncio">
-                <div class="contenido-anuncio-1">
-                    <h3>Métricas</h3>
-                    <p>Consulta el estado actual e histórico. Visualiza resúmenes periódicos.</p>
-                </div>
-            </div>
-        </a>
+                        <a href="/metricas" class="enlace-anuncio">
+                            <div class="anuncio-1">
+                                <img loading="lazy" src="build/img/metricas.png" alt="anuncio">
+                                <div class="contenido-anuncio-1">
+                                    <h3>Métricas</h3>
+                                    <p>Consulta el estado actual e histórico. Visualiza gráficamente resúmenes periódicos.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Segundo contenedor -->
+                        <a href="/inventario" class="enlace-anuncio">
+                            <div class="anuncio-1">
+                                <img loading="lazy" src="build/img/inventario.png" alt="anuncio">
+                                <div class="contenido-anuncio-1">
+                                    <h3>Inventario</h3>
+                                    <p>Aqui puedes visualizar y consultar fácilmente los productos existentes de tu negocio.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Tercer contenedor -->
+                        <a href="/caja" class="enlace-anuncio">
+                            <div class="anuncio-1">
+                                <img loading="lazy" src="build/img/caja.png" alt="anuncio">
+                                <div class="contenido-anuncio-1">
+                                    <h3>Caja</h3>
+                                    <p>Consulta y administra los movimientos de efectivo en caja.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Cuarto contenedor -->
+                        <a href="/carrito" class="enlace-anuncio">
+                            <div class="anuncio-1">
+                                <img loading="lazy" src="build/img/carrito.png" alt="anuncio">
+                                <div class="contenido-anuncio-1">
+                                    <h3>Carrito</h3>
+                                    <p>Selecciona aqui para introducir o escanear artículos al carrito.</p>
+                                </div>
+                            </div>
+                        </a>
 
-
-
-        <!-- Segundo contenedor -->
-        <a href="/inventario" class="enlace-anuncio">
-            <div class="anuncio-1">
-                <img loading="lazy" src="build/img/inventario.png" alt="anuncio">
-                <div class="contenido-anuncio-1">
-                    <h3>Inventario</h3>
-                    <p>Administra y consulta fácilmente los productos que tienes en tu negocio.</p>
-                </div>
-            </div>
-        </a>
-
-        <!-- Tercer contenedor -->
-        <a href="/caja" class="enlace-anuncio">
-            <div class="anuncio-1">
-                <img loading="lazy" src="build/img/caja.png" alt="anuncio">
-                <div class="contenido-anuncio-1">
-                    <h3>Caja</h3>
-                    <p>Consulta y administra los movimientos de efectivo en caja.</p>
-                </div>
-            </div>
-        </a>
-
-        <!-- Cuarto contenedor -->
-        <a href="/carrito" class="enlace-anuncio">
-            <div class="anuncio-1">
-                <img loading="lazy" src="build/img/carrito.png" alt="anuncio">
-                <div class="contenido-anuncio-1">
-                    <h3>Carrito</h3>
-                    <p>Selecciona para introducir artículos al carrito.</p>
-                </div>
-            </div>
-        </a>
-
-        <!-- Quinto contenedor -->
-        <a href="/proveedores" class="enlace-anuncio">
-            <div class="anuncio-1">
-                <img loading="lazy" src="build/img/proveedores.png" alt="anuncio">
-                <div class="contenido-anuncio-1">
-                    <h3>Proveedores</h3>
-                    <p>Administra información de tus proveedores.</p>
-                </div>
-            </div>
-        </a>
+                        <!-- Quinto contenedor -->
+                        <a href="/proveedores" class="enlace-anuncio">
+                            <div class="anuncio-1">
+                                <img loading="lazy" src="build/img/proveedores.png" alt="anuncio">
+                                <div class="contenido-anuncio-1">
+                                    <h3>Proveedores</h3>
+                                    <p>Selecciona para administrar la información de tus proveedores.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Sexto contenedor -->
+                        <a href="/ventasycancelaciones" class="enlace-anuncio">
+                            <div class="anuncio-1">
+                                <img loading="lazy" src="build/img/ventasycancelaciones.png" alt="anuncio">
+                                <div class="contenido-anuncio-1">
+                                    <h3>Ventas y Cancelaciones</h3>
+                                    <p>Consulta tus ventas y realiza cancelaciones. </p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </section>
             <?php } ?>
@@ -137,10 +141,9 @@ if (!isset($inicio)) {
                 <a href="/carrito">Carrito</a>
                 <a href="/inventario">Inventario</a>
                 <a href="/caja">Caja</a>
-                <a href="/ventas">Ventas</a>
+                <a href="/ventas">Ventas y Cancelaciones</a>
                 <a href="/metricas">Métricas</a>
                 <a href="/proveedores">Proveedores</a>
-                <a href="/cancelaciones">Cancelaciones</a>
                 <?php if ($auth) { ?>
                     <a href="/logout">Cerrar Sesión</a>
                 <?php } else { ?>
