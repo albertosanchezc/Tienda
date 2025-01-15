@@ -32,11 +32,10 @@ rectanguloGrande.classList.remove('grid-item');
 const h2 = document.querySelector('h2'); // Selecciona el primer <h2>
 var h3 = document.querySelectorAll("h3");
 
-const rectanguloPequeno = document.querySelector('.rectangulo-pequeno');
-rectanguloPequeno.classList.remove('grid-item');
-let rectanguloPequenoRemove = null;
-rectanguloPequenoRemove = rectanguloPequeno;
-rectanguloPequeno.remove();
+const rectanguloPequenoBebe1 = document.querySelector('.rectangulo-pequeno-bebe1');
+let rectanguloPequenoBebe1Remove = null;
+rectanguloPequenoBebe1Remove = rectanguloPequenoBebe1;
+ rectanguloPequenoBebe1.remove();
 
 // Crear un array para almacenar los elementos y sus contenedores
 var removedElements = [];
