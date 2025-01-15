@@ -100,7 +100,7 @@
     </section>
     <section class="modal modal--show">
         <div class="modal__container">
-            <img src="../../public/build/img/bienvenida.svg" alt="Logotipo de bienvenida">
+            <img src="/build/img/bienvenida.svg" alt="Logotipo de bienvenida" class="modal__img">
             <h2 class="modal__title">¡Bienvenido al Carrito!</h2>
             <p class="modal__paragraph">
                 Haz click en el siguiente botón para comenzar a marcar los productos.
