@@ -35,7 +35,7 @@ var h3 = document.querySelectorAll("h3");
 const rectanguloPequenoBebe1 = document.querySelector('.rectangulo-pequeno-bebe1');
 let rectanguloPequenoBebe1Remove = null;
 rectanguloPequenoBebe1Remove = rectanguloPequenoBebe1;
- rectanguloPequenoBebe1.remove();
+rectanguloPequenoBebe1.remove();
 
 // Crear un array para almacenar los elementos y sus contenedores
 var removedElements = [];
