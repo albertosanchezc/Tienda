@@ -3,7 +3,26 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function iniciarApp() {
-    // consultarAPI();
+    consultarAPI();
+}
+
+async function consultarAPI(){
+    try {
+        const server = window.location.host;
+        
+        const url = `http://${server}/inventarios/api/inventarios`;
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+
+    
+        const inventario = resultado.inventario;
+        const inventario_granel = resultado.inventario_granel;
+
+        // console.log([inventario,inventario_granel]);
+
+    } catch(e){
+        console.log(e);
+    }
 }
 
 // Evento que lee una tecla
@@ -80,7 +99,10 @@ const modalClose = document.querySelector('.modal__close');
 modalClose.addEventListener('click', () => {
     modal.classList.remove('modal--show');
     iniciarCarrito();
+    iniciarApp();
 })
+
+let articulosCarrito = [];
 
 
 
@@ -102,6 +124,9 @@ function iniciarCarrito() {
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe3);
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe4);
 
+    const tablaCarrito = document.querySelector('.ordenes');
+
+
 
     // Añadir al html los divs del rectangulo pequeño (Arriba a la derecha)
     rectanguloPequeno.classList.add('grid-item');
@@ -110,11 +135,40 @@ function iniciarCarrito() {
     rectanguloPequeno.appendChild(rectanguloPequenoBebe3);
     rectanguloPequeno.appendChild(rectanguloPequenoBebe4);
 
-    // Después de haber eliminado los elementos, puedes volver a agregarlos a sus contenedores originales
-    removedElements.forEach(function (item) {
-        item.container.appendChild(item.element);  // Vuelve a añadir el <h3> a su contenedor original
-    });
+    const infoArticulo = {
+        imagen: rectanguloPequeno.querySelector('img').src,
+        descripcion: rectanguloPequeno.querySelector('h3'),
+        cantidad: 0,
+        codigoBarras: null,
+        subtotal: 0
+    }
 
+    function carritoHTML(){
+        
+        // Limpiar el HTML
+        // limpiarHTML();
+        // Recorre el carrito y genera el HTML
+        articulosCarrito.forEach(inventario => {
+            const { cantidad, producto, descripcion, imagen, precio_unitario_venta, id } = inventario;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${cantidad}</td>
+                <td>${producto}</td>
+                <td>${descripcion}</td>
+                <td><img src="${imagen}" width="100"></td>
+                <td>${precio_unitario_venta}</td>
+                <td>
+                    <a href="#" class="borrar-curso" data-id="${id}"> X </a>
+                </td>
+            `;
+    
+            // Agrega el HTML del carrito en el tbody
+            ordenes.appendChild(row);
+        })
+
+    }
+
+    
 
     const busquedaManual = document.getElementById('busqueda-manual');
     busquedaManual.addEventListener('click', () => {
@@ -124,4 +178,3 @@ function iniciarCarrito() {
     
 
 }
-
