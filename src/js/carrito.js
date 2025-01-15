@@ -11,7 +11,6 @@ function iniciarApp() {
 
 // Evento que lee el click
 const rectanguloGrande = document.querySelector('.rectangulo-grande');
-rectanguloGrande.addEventListener('click', iniciarCarrito);
 
 const rectanguloGrandeBebe1 = document.querySelector('.rectangulo-grande-bebe1');
 let rectanguloGrandeBebe1Removed = null;
@@ -32,20 +31,29 @@ rectanguloGrande.classList.remove('grid-item');
 const h2 = document.querySelector('h2'); // Selecciona el primer <h2>
 var h3 = document.querySelectorAll("h3");
 
+// Div Arriba-Derecha
+const rectanguloPequeno = document.querySelector('.rectangulo-pequeno');
+rectanguloPequeno.classList.remove('grid-item');
+
 const rectanguloPequenoBebe1 = document.querySelector('.rectangulo-pequeno-bebe1');
 let rectanguloPequenoBebe1Remove = null;
 rectanguloPequenoBebe1Remove = rectanguloPequenoBebe1;
 rectanguloPequenoBebe1.remove();
 
-// Crear un array para almacenar los elementos y sus contenedores
-var removedElements = [];
+const rectanguloPequenoBebe2 = document.querySelector('.rectangulo-pequeno-bebe2');
+let rectanguloPequenoBebe2Remove = null;
+rectanguloPequenoBebe2Remove = rectanguloPequenoBebe2;
+rectanguloPequenoBebe2.remove();
 
-// Almacenar una copia de los elementos <h3> y sus contenedores antes de eliminarlos
-h3.forEach(function (h3) {
-    var container = h3.parentElement; // Obtenemos el contenedor del <h3>
-    removedElements.push({ element: h3, container: container });  // Guardamos el <h3> y su contenedor
-    h3.remove();  // Eliminamos el elemento <h3> del DOM
-});
+const rectanguloPequenoBebe3 = document.querySelector('.rectangulo-pequeno-bebe3');
+let rectanguloPequenoBebe3Remove = null;
+rectanguloPequenoBebe3Remove = rectanguloPequenoBebe3;
+rectanguloPequenoBebe3.remove();
+
+const rectanguloPequenoBebe4 = document.querySelector('.rectangulo-pequeno-bebe4');
+let rectanguloPequenoBebe4Remove = null;
+rectanguloPequenoBebe4Remove = rectanguloPequenoBebe4;
+rectanguloPequenoBebe4.remove();
 
 
 const rectanguloGrandeHorizontal = document.querySelector('.rectangulo-grande-horizontal');
@@ -63,10 +71,15 @@ const rectanguloGrandeHorizontalBebe3 = document.querySelector('.rectangulo-gran
 rectanguloGrandeHorizontalBebe3Removed = rectanguloGrandeHorizontalBebe3;
 rectanguloGrandeHorizontalBebe3.remove();
 
+const rectanguloGrandeHorizontalBebe4 = document.querySelector('.rectangulo-grande-horizontal-bebe4');
+rectanguloGrandeHorizontalBebe4Removed = rectanguloGrandeHorizontalBebe4;
+rectanguloGrandeHorizontalBebe4.remove();
+
 const modal = document.querySelector('.modal');
 const modalClose = document.querySelector('.modal__close');
 modalClose.addEventListener('click', () => {
     modal.classList.remove('modal--show');
+    iniciarCarrito();
 })
 
 
@@ -76,14 +89,26 @@ function iniciarCarrito() {
         h2.remove(); // Elimina ese <h2>
     }
 
+    //Réctangulo izquierdo
     rectanguloGrande.classList.add('grid-item');
     rectanguloGrande.appendChild(rectanguloGrandeBebe1);
     rectanguloGrande.appendChild(rectanguloGrandeBebe2);
     rectanguloGrande.appendChild(rectanguloGrandeBebe3);
+
+    // Rectángulo abajo derecha
     rectanguloGrandeHorizontal.classList.add('grid-item');
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe1);
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe2);
     rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe3);
+    rectanguloGrandeHorizontal.appendChild(rectanguloGrandeHorizontalBebe4);
+
+
+    // Añadir al html los divs del rectangulo pequeño (Arriba a la derecha)
+    rectanguloPequeno.classList.add('grid-item');
+    rectanguloPequeno.appendChild(rectanguloPequenoBebe1);
+    rectanguloPequeno.appendChild(rectanguloPequenoBebe2);
+    rectanguloPequeno.appendChild(rectanguloPequenoBebe3);
+    rectanguloPequeno.appendChild(rectanguloPequenoBebe4);
 
     // Después de haber eliminado los elementos, puedes volver a agregarlos a sus contenedores originales
     removedElements.forEach(function (item) {
