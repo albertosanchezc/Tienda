@@ -1,10 +1,9 @@
-document.addEventListener('DOMContentLoaded', function () {
-    iniciarApp();
-});
+let inventario = [];
+let inventarioGranel = [];
 
-function iniciarApp() {
+document.addEventListener('DOMContentLoaded', function () {
     consultarAPI();
-}
+});
 
 async function consultarAPI() {
     try {
@@ -15,15 +14,46 @@ async function consultarAPI() {
         const resultado = await respuesta.json();
 
 
-        const inventario = resultado.inventario;
-        const inventario_granel = resultado.inventario_granel;
+        inventario = resultado.inventario;
+        inventario_granel = resultado.inventario_granel;
 
-
-        // escucharEntradas();
+        filtrar();
     } catch (e) {
         console.log(e);
     }
 }
+
+const terminosBusqueda = {
+    codigoBarras: '',
+    nombre: '',
+    codigoBarrasManual: ''
+}
+
+
+function filtrar() {
+    const resultadoFiltrado = inventario.filter(filtrarCodigo);
+    console.log(resultadoFiltrado);
+    
+
+    if (resultadoFiltrado.length) {
+        // mostrarOrdenes(resultadoFiltrado);
+        return resultadoFiltrado;
+        // mostrarProductos(resultadoFiltrado);
+    }
+}
+
+
+function filtrarCodigo(inventario){
+    const {codigoBarras} = terminosBusqueda;
+
+    console.log(terminosBusqueda);
+    if(codigoBarras){
+        return inventario.codigo_barras.includes(codigoBarras);
+    }
+    return inventario;
+}
+
+
 
 // Evento que lee una tecla
 // document.addEventListener('keydown', iniciarCarrito);
@@ -101,7 +131,6 @@ const modalClose = document.querySelector('.modal__close');
 modalClose.addEventListener('click', () => {
     modal.classList.remove('modal--show');
     iniciarCarrito();
-    iniciarApp();
 });
 
 // Segunda ventana modal
@@ -172,22 +201,22 @@ function iniciarCarrito() {
 
     // Actualiza el div de totales
     rectanguloGrandeHorizontal.innerHTML = `
-    <div class="rectangulo-grande-horizontal-bebe1">
-        <h3>Total:</h3>
-    </div>
-    <div class="rectangulo-grande-horizontal-bebe2">
-        <h3>$0</h3>
-    </div>
-    <div class="rectangulo-grande-horizontal-bebe3">
-        <button id="pagar" class="boton-azul-block">
-            PAGAR <span>&gt;&gt;&gt;</span>
-        </button>
-    </div>
-    <div class="rectangulo-grande-horizontal-bebe4">
-        <h3>Cantidad de artículos:</h3>
-        <h3>0</h3>
-    </div>
-`;
+                <div class="rectangulo-grande-horizontal-bebe1">
+                    <h3>Total:</h3>
+                </div>
+                <div class="rectangulo-grande-horizontal-bebe2">
+                    <h3>$0</h3>
+                </div>
+                <div class="rectangulo-grande-horizontal-bebe3">
+                    <button id="pagar" class="boton-azul-block">
+                        PAGAR <span>&gt;&gt;&gt;</span>
+                    </button>
+                </div>
+                <div class="rectangulo-grande-horizontal-bebe4">
+                    <h3>Cantidad de artículos:</h3>
+                    <h3>0</h3>
+                </div>
+    `;
 
     // Añadir al html los divs del rectangulo pequeño (Arriba a la derecha)
     // rectanguloPequeno.classList.add('grid-item');
@@ -207,7 +236,6 @@ function iniciarCarrito() {
     const btnBuscarCodigoManual = document.getElementById('busqueda-manual');
     btnBuscarCodigoManual.addEventListener('click', () => {
         modalManual.classList.add('modal--manual--show');
-        // const btnCerrarModalManual
     })
 
     const btnBuscarNombre = document.getElementById('busqueda-producto');
@@ -215,9 +243,13 @@ function iniciarCarrito() {
         modalProducto.classList.add('modal--nombre--show')
     })
 
+    const inputCodigoManual = document.querySelector('.modal--manual__close');
+    inputCodigoManual.addEventListener('input', (e) => {
+        const codigo = +inputCodigoManual.value;
+        terminosBusqueda.codigoBarras = codigo.toString();
+        filtrar();
+    });
 
-
-
-
+    
 
 }
