@@ -23,7 +23,7 @@
 </main>
 
 <section class="contenedor seccion">
-    <h1>Más Sobre Nosotros</h1>
+    <h1>Historial de retiros</h1>
 
-    <?php include 'iconos.php'; ?>
+
 </section>

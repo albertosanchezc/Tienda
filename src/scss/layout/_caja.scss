@@ -3,45 +3,60 @@
     max-width: 120rem;
     margin: 0 auto;
 
-    h1{
+    h1 {
         font-size: 3.8rem;
     }
 }
+
 .seccioncaja {
     margin-top: calc($separacion / 2);
     margin-bottom: calc($separacion / 2);
 }
 
-.contenido-caja{
-    @include tablet{
-        @include grid(2, 2rem);
-    }
+.contenido-caja {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Dos columnas del mismo ancho */
+    align-items: center;
+    /* Centra verticalmente las filas */
+    gap: 2rem;
+    /* Espaciado horizontal */
 }
 
 .efectivo {
     margin-bottom: 0;
-    h1{
+    display: flex;
+    flex-direction: column;
+    /* Asegura que los textos estén apilados */
+    justify-content: center;
+
+    h1 {
         font-size: 9rem;
         margin-bottom: 0;
         padding-bottom: 0;
-        font-weight:normal;
+        font-weight: normal;
     }
-    .dispcaja{
+
+    .dispcaja {
         margin-top: 0;
         padding-top: 0;
-        h1{
+
+        h1 {
             padding-top: 0;
             margin-top: 0;
             font-size: 2.7rem;
-            font-weight:370;
+            font-weight: 370;
         }
     }
 }
 
-.opciones{
-    display: grid;
-    grid-template-rows: 2;
-    .botonanadir{
+.opciones {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+
+    .botonanadir {
         grid-row: 1;
         display: flex;
         justify-content: center;
@@ -49,47 +64,46 @@
 
     }
 
-    .botonquitar{
+    .botonquitar {
         grid-row: 2;
         display: flex;
         justify-content: center;
     }
-    .añadircaja {
+
+    .añadircaja,
+    .quitarcaja {
         text-decoration: none;
-        max-height: min-content;
+        color: #fff;
+        font-size: 2rem;
+        padding: 1.5rem 4rem;
+        border: 1px solid;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background-color .3s;
+        display: inline-block;
+        text-align: center;
+        min-width: 450px;
+
+    }
+
+    .añadircaja {
         color: #fff;
         background-color: #02B126;
-        padding: 1rem 3rem;
-        border: 1px solid;
-min-width: 164px;
-
-        border-radius: 6px;
-        display: inline-block;
-        font-weight: 400;
-        transition: background-color .3s;
     }
 
     .añadircaja:hover {
-        color: #02B126;;
+        color: #02B126;
         background-color: #fff;
     }
 
     .quitarcaja {
-        text-decoration: none;
-        color: #fff;
         background-color: #BE2414;
-        max-height: min-content;
-min-width: 164px;
-        padding: 1rem 3rem;
-        border: 1px solid;
-        border-radius: 6px;
-        display: inline-block;
-        font-weight: 400;
-        transition: background-color .3s;
     }
 
     .quitarcaja:hover {
         color: #BE2414;
         background-color: #fff;
     }
+
+
 }
