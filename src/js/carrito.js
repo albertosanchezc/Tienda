@@ -94,13 +94,19 @@ const rectanguloGrandeHorizontalBebe4 = document.querySelector('.rectangulo-gran
 rectanguloGrandeHorizontalBebe4Removed = rectanguloGrandeHorizontalBebe4;
 rectanguloGrandeHorizontalBebe4.remove();
 
+// Ventanas modales
+
 const modal = document.querySelector('.modal');
 const modalClose = document.querySelector('.modal__close');
 modalClose.addEventListener('click', () => {
     modal.classList.remove('modal--show');
     iniciarCarrito();
     iniciarApp();
-})
+});
+
+const modalManual = document.querySelector('.modal--manual');
+const modalProducto = document.querySelector('.modal--nombre');
+
 
 let articulosCarrito = [];
 
@@ -175,41 +181,17 @@ function iniciarCarrito() {
         subtotal: 0
     }
 
+    const btnCodigoManual = document.getElementById('busqueda-manual');
+    btnCodigoManual.addEventListener('click', () => {
+        modalManual.classList.add('modal--manual--show');
 
-    function carritoHTML() {
+      })
 
-
-        // Limpiar el HTML
-        // limpiarHTML();
-        // Recorre el carrito y genera el HTML
-        articulosCarrito.forEach(inventario => {
-            const { cantidad, producto, descripcion, imagen, precio_unitario_venta, id } = inventario;
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${cantidad}</td>
-                <td>${producto}</td>
-                <td>${descripcion}</td>
-                <td><img src="${imagen}" width="100"></td>
-                <td>${precio_unitario_venta}</td>
-                <td>
-                    <a href="#" class="borrar-curso" data-id="${id}"> X </a>
-                </td>
-            `;
-
-            // Agrega el HTML del carrito en el tbody
-            ordenes.appendChild(row);
-        })
-
-    }
-
-
-
-
-    const busquedaManual = document.getElementById('busqueda-manual');
-    busquedaManual.addEventListener('click', () => {
-
-
+    const btnNombre = document.getElementById('busqueda-producto');
+    btnNombre.addEventListener('click', () => {
+        modalProducto.classList.add('modal--nombre--show')
     })
+ 
 
 
 }
