@@ -21,9 +21,10 @@
 .efectivo {
     margin-bottom: 0;
     h1{
-        font-size: 8rem;
+        font-size: 9rem;
         margin-bottom: 0;
         padding-bottom: 0;
+        font-weight:normal;
     }
     .dispcaja{
         margin-top: 0;
@@ -31,18 +32,37 @@
         h1{
             padding-top: 0;
             margin-top: 0;
-            font-size: 2.8rem;
+            font-size: 2.7rem;
+            font-weight:370;
         }
     }
 }
 
 .opciones{
+    display: grid;
+    grid-template-rows: 2;
+    .botonanadir{
+        grid-row: 1;
+        display: flex;
+        justify-content: center;
+
+
+    }
+
+    .botonquitar{
+        grid-row: 2;
+        display: flex;
+        justify-content: center;
+    }
     .añadircaja {
         text-decoration: none;
+        max-height: min-content;
         color: #fff;
-        background-color: #008000;
+        background-color: #02B126;
         padding: 1rem 3rem;
         border: 1px solid;
+min-width: 164px;
+
         border-radius: 6px;
         display: inline-block;
         font-weight: 400;
@@ -50,14 +70,16 @@
     }
 
     .añadircaja:hover {
-        color: #f26250;
+        color: #02B126;;
         background-color: #fff;
     }
 
     .quitarcaja {
         text-decoration: none;
         color: #fff;
-        background-color: #f26250;
+        background-color: #BE2414;
+        max-height: min-content;
+min-width: 164px;
         padding: 1rem 3rem;
         border: 1px solid;
         border-radius: 6px;
@@ -67,7 +89,7 @@
     }
 
     .quitarcaja:hover {
-        color: #f26250;
+        color: #BE2414;
         background-color: #fff;
     }
 }
