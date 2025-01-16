@@ -28,7 +28,6 @@
                 </div>
                 <div class="rectangulo-grande-bebe3">
                     <div class="rectangulo-grande-bebecito1">
-
                         <button id="busqueda-manual" class="boton-azul-block">
                             Introducir código manual.
                         </button>
@@ -98,7 +97,8 @@
                 </div>
             </div>
     </section>
-    <!-- modal de bienvenida -->
+
+    <!-- modal de bienvenida 1-->
     <section class="modal modal--show">
         <div class="modal__container">
             <img src="/build/img/bienvenida.svg" alt="Logotipo de bienvenida" class="modal__img">
@@ -110,18 +110,17 @@
         </div>
     </section>
 
-    <!-- modal de buscador manual -->
-    <section class="modal--manual modal--manual--show">
+    <!-- modal de buscador manual 2-->
+    <section class="modal--manual">
         <div class="modal--manual__container">
             <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--manual__img">
             <h2 class="modal--manual__title">¡Bienvenido a la busqueda manual!</h2>
             <p class="modal--manual__paragraph">
                 Haz click en el siguiente recuadro para introducir el código de barras.
             </p>
-            <label for="1">Código de Barras:</label>
-            <input href="#" id="1" class="modal--manual__close" type="number" placeholder="Ejemplo:  014555452636">
+            <label for="2">Código de Barras:</label>
+            <input href="#" id="2" class="modal--manual__close" type="number" placeholder="Ejemplo:  014555452636">
             </input>
-
             <table class="modal__tabla--manual">
                 <thead>
                     <tr>
@@ -133,22 +132,23 @@
                 </thead>
                 <!-- Mostrar los resultados -->
                 <tbody>
-
+                    <tr>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <!-- modal de buscador por nombre -->
-    <section class="modal--nombre modal--nombre--show">
+    <!-- modal de buscador por nombre 3-->
+    <section class="modal--nombre">
         <div class="modal--nombre__container">
             <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--nombre__img">
             <h2 class="modal--nombre__title">¡Bienvenido a la busqueda por nombre!</h2>
             <p class="modal--nombre__paragraph">
                 Haz click en el siguiente recuadro para buscar por nombre.
             </p>
-            <label for="1">Nombre del producto:</label>
-            <input href="#" id="1" class="modal--nombre__close" type="text" placeholder="Ejemplo:  Doritos">
+            <label for="3">Nombre del producto:</label>
+            <input href="#" id="3" class="modal--nombre__close" type="text" placeholder="Ejemplo:  Doritos">
             </input>
 
             <table class="modal__tabla--nombre">
@@ -168,19 +168,71 @@
         </div>
     </section>
 
-    <!-- modal de y si es producto granel -->
-    <section class="modal--granel modal--granel--show">
+    <!-- modal de y si es producto granel 4-->
+    <section class="modal--granel">
         <div class="modal--granel__container">
-            <img src="/build/img/bascula.png" alt="Logotipo de bascula" class="modal--granel__img">
-            <h2 class="modal--granel__title">¡Introduce la cantidad de --nombre del producto-- vendida en gramos.!</h2>
-
-            <label for="1">Gramos del producto: --220-- g.</label>
-            <input href="#" id="1" class="modal--granel__close" type="number" placeholder="Ejemplo:  220">
-            </input>
-            <h2>$56.00</h2>
-
-
-        </div>
+            <div class="modal--granel__fleximg">
+                <div class="modal--granel__fleximg1">
+                    <img src="/build/img/bascula.png" alt="Logotipo de bascula" class="modal--granel__img1">
+                </div>
+                <div class="modal--granel__fleximg2">
+                    <a href="#" class="modal--granel__cerrar">
+                        <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--granel__img2">
+                    </a>
+                </div>
+            </div>
+            <h2 class="modal--granel__title">¡Introduce la cantidad en gramos!</h2>
+            <p class="modal--granel__paragraph">
+                Haz click en el siguiente recuadro para introducir la cantidad en gramos de --nombre del producto--.
+            </p>
+            <div class="modal--granel__gridcantidad">
+                <div class="modal--granel__cantidad">
+                    <label for="4"></label>
+                    <input href="#" id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
+                    </input>
+                </div>
+                <div class="modal--granel__gramos">
+                    <p>g.</p>
+                </div>
+            </div>
+            <div class="modal--granel__gridprecio">
+                <div class="modal--granel__titulo">
+                    <h2>Total:</h2>
+                </div>
+                <div class="modal--granel__precio">
+                    <h2>$56.00</h2>
+                </div>
+            </div>
     </section>
 
+    <!-- modal de editar cantidad 5-->
+    <section class="modal--cantidad">
+        <div class="modal--cantidad__container">
+            <div class="modal--cantidad__fleximg">
+                <div class="modal--cantidad__fleximg1">
+                    <img src="/build/img/editar.png" alt="Logotipo de edicion" class="modal--cantidad__img1">
+                </div>
+                <div class="modal--cantidad__fleximg2">
+                    <a href="#" class="modal--cantidad__cerrar">
+                        <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--cantidad__img2">
+                    </a>
+                </div>
+            </div>
+            <h2 class="modal--cantidad__title">¡Edita la cantidad!</h2>
+            <p class="modal--cantidad__paragraph">
+                Haz click en el siguiente recuadro para editar la cantidad que deseas vender de --nombre del
+                producto--.
+            </p>
+            <label for="5"></label>
+            <input href="#" id="5" class="modal--cantidad__close" type="number" placeholder="Ej.: 220.">
+            </input>
+            <div class="modal--cantidad__gridprecio">
+                <div class="modal--cantidad__titulo">
+                    <h2>Total:</h2>
+                </div>
+                <div class="modal--cantidad__precio">
+                    <h2>$56.00</h2>
+                </div>
+            </div>
+    </section>
 </main>
