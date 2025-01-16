@@ -1,9 +1,9 @@
 let inventario = [];
 let inventarioGranel = [];
 
-document.addEventListener('DOMContentLoaded', function () {
+// document.addEventListener('DOMContentLoaded', function () {
     consultarAPI();
-});
+// });
 
 async function consultarAPI() {
     try {
@@ -29,25 +29,57 @@ const terminosBusqueda = {
     codigoBarrasManual: ''
 }
 
+const tablaModalManual = document.querySelector('.modal__tabla--manual');
 
-function filtrar() {
-    const resultadoFiltrado = inventario.filter(filtrarCodigo);
-    console.log(resultadoFiltrado);
-    
+const resultadoBusquedaManual = tablaModalManual.querySelector('tbody');
+// resultadoBusquedaManual.remove('tr');
 
-    if (resultadoFiltrado.length) {
-        // mostrarOrdenes(resultadoFiltrado);
-        return resultadoFiltrado;
-        // mostrarProductos(resultadoFiltrado);
+function mostrarProductos(productos) {
+    limpiarHTML(resultadoBusquedaManual);
+
+    if (productos.length > 0) {
+        productos.forEach(producto => {
+            const { nombre, descripcion, categoria_id, precio_unitario_venta } = producto;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${nombre}</td>
+                <td>${descripcion}</td>
+                <td>${categoria_id}</td>
+                <td>${precio_unitario_venta}</td>
+            `;
+
+            resultadoBusquedaManual.appendChild(row);
+        })
+    }
+}
+
+// Limpiar HTML
+function limpiarHTML(resultado) {
+    while (resultado.firstChild) {
+        resultado.removeChild(resultado.firstChild);
     }
 }
 
 
-function filtrarCodigo(inventario){
-    const {codigoBarras} = terminosBusqueda;
+function filtrar() {
+    const resultadosFiltrados = inventario.filter(filtrarCodigo);
+    console.log(resultadosFiltrados);
+
+
+    if (resultadosFiltrados.length) {
+        // console.log(resultadosFiltrados);
+        mostrarProductos(resultadosFiltrados);
+        return resultadosFiltrados;
+    }
+}
+
+
+function filtrarCodigo(inventario) {
+    const { codigoBarras } = terminosBusqueda;
 
     console.log(terminosBusqueda);
-    if(codigoBarras){
+    if (codigoBarras) {
         return inventario.codigo_barras.includes(codigoBarras);
     }
     return inventario;
@@ -247,9 +279,10 @@ function iniciarCarrito() {
     inputCodigoManual.addEventListener('input', (e) => {
         const codigo = +inputCodigoManual.value;
         terminosBusqueda.codigoBarras = codigo.toString();
-        filtrar();
+        resultadosProductos = filtrar();
+        mostrarProductos(resultadosProductos);
     });
 
-    
+
 
 }

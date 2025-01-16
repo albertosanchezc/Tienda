@@ -21,7 +21,6 @@ if (!isset($inicio)) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="/build/css/app.css">
 
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 </head>
 
