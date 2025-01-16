@@ -521,7 +521,7 @@ body {
 
 }
 
-.modal--granel, .modal--cantidad {
+.modal--granel, .modal--cantidad,.modal--nombre,.modal--manual {
     &__gridcantidad {
         display: grid;
         gap: 3rem;
@@ -612,7 +612,7 @@ body {
 
 }
 
-.modal--cantidad, .modal--granel{
+.modal--cantidad, .modal--granel,.modal--nombre, .modal--manual{
     &__fleximg{
         display: flex;
         justify-content: center;

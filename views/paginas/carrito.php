@@ -77,7 +77,12 @@
                 </div>
             </div>
             <!-- Rectángulo pequeño 2 -->
-            <div class="grid-item rectangulo-pequeno-1">Opciones</div>
+            <div class="grid-item rectangulo-pequeno-1">
+                <p>10:04 p.m. 15/01/2025</p>
+                <p></p>
+
+
+            </div>
             <!-- Rectángulo adicional -->
             <div class="grid-item rectangulo-grande-horizontal">
                 <div class="rectangulo-grande-horizontal-bebe1">
@@ -113,7 +118,16 @@
     <!-- modal de buscador manual 2-->
     <section class="modal--manual">
         <div class="modal--manual__container">
-            <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--manual__img">
+            <div class="modal--manual__fleximg">
+                <div class="modal--manual__fleximg1">
+                    <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--manual__img1">
+                </div>
+                <div class="modal--manual__fleximg2">
+                    <a href="#" class="modal--manual__cerrar">
+                        <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--manual__img2">
+                    </a>
+                </div>
+            </div>
             <h2 class="modal--manual__title">¡Bienvenido a la busqueda manual!</h2>
             <p class="modal--manual__paragraph">
                 Haz click en el siguiente recuadro para introducir el código de barras.
@@ -142,7 +156,16 @@
     <!-- modal de buscador por nombre 3-->
     <section class="modal--nombre">
         <div class="modal--nombre__container">
-            <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--nombre__img">
+            <div class="modal--nombre__fleximg">
+                <div class="modal--nombre__fleximg1">
+                    <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--nombre__img1">
+                </div>
+                <div class="modal--nombre__fleximg2">
+                    <a href="#" class="modal--nombre__cerrar">
+                        <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--nombre__img2">
+                    </a>
+                </div>
+            </div>
             <h2 class="modal--nombre__title">¡Bienvenido a la busqueda por nombre!</h2>
             <p class="modal--nombre__paragraph">
                 Haz click en el siguiente recuadro para buscar por nombre.
