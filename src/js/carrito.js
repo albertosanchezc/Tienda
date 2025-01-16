@@ -104,8 +104,18 @@ modalClose.addEventListener('click', () => {
     iniciarApp();
 });
 
+
 const modalManual = document.querySelector('.modal--manual');
+const btnCerrarModalManual = document.querySelector('.modal--manual__img2');
+btnCerrarModalManual.addEventListener('click', () => {
+    modalManual.classList.remove('modal--manual--show');
+})
+
 const modalProducto = document.querySelector('.modal--nombre');
+const btnCerrarModalProducto = document.querySelector('.modal--nombre__img2');
+btnCerrarModalProducto.addEventListener('click', () => {
+    modalProducto.classList.remove('modal--nombre--show');
+})
 
 
 let articulosCarrito = [];
@@ -184,14 +194,16 @@ function iniciarCarrito() {
     const btnCodigoManual = document.getElementById('busqueda-manual');
     btnCodigoManual.addEventListener('click', () => {
         modalManual.classList.add('modal--manual--show');
-
-      })
+        // const btnCerrarModalManual
+    })
 
     const btnNombre = document.getElementById('busqueda-producto');
     btnNombre.addEventListener('click', () => {
         modalProducto.classList.add('modal--nombre--show')
     })
- 
+
+
+
 
 
 }
