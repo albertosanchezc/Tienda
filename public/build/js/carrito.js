@@ -104,18 +104,31 @@ modalClose.addEventListener('click', () => {
     iniciarApp();
 });
 
-
+// Segunda ventana modal
 const modalManual = document.querySelector('.modal--manual');
 const btnCerrarModalManual = document.querySelector('.modal--manual__img2');
 btnCerrarModalManual.addEventListener('click', () => {
     modalManual.classList.remove('modal--manual--show');
-})
-
+});
+// Tercera ventana modal
 const modalProducto = document.querySelector('.modal--nombre');
 const btnCerrarModalProducto = document.querySelector('.modal--nombre__img2');
 btnCerrarModalProducto.addEventListener('click', () => {
     modalProducto.classList.remove('modal--nombre--show');
-})
+});
+
+// Cuarta ventana modal
+const modalGranel = document.querySelector('.modal--granel');
+const btnCerrarModalGranel = document.querySelector('.modal--granel__img2');
+btnCerrarModalGranel.addEventListener('click', () => {
+    modalGranel.classList.remove('modal--granel--show');
+});
+// Quinta ventana modal
+const modalCantidad = document.querySelector('.modal--cantidad');
+const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__img2');
+btnCerrarModalCantidad.addEventListener('click', () => {
+    modalCantidad.classList.remove('modal--cantidad--show');
+});
 
 
 let articulosCarrito = [];
@@ -191,16 +204,17 @@ function iniciarCarrito() {
         subtotal: 0
     }
 
-    const btnCodigoManual = document.getElementById('busqueda-manual');
-    btnCodigoManual.addEventListener('click', () => {
+    const btnBuscarCodigoManual = document.getElementById('busqueda-manual');
+    btnBuscarCodigoManual.addEventListener('click', () => {
         modalManual.classList.add('modal--manual--show');
         // const btnCerrarModalManual
     })
 
-    const btnNombre = document.getElementById('busqueda-producto');
-    btnNombre.addEventListener('click', () => {
+    const btnBuscarNombre = document.getElementById('busqueda-producto');
+    btnBuscarNombre.addEventListener('click', () => {
         modalProducto.classList.add('modal--nombre--show')
     })
+
 
 
 
