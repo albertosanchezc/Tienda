@@ -56,6 +56,7 @@ body {
     background-color: #f4f4f4;
     /* Color de fondo */
     border: 1px solid #ccc;
+    border-radius: 1rem;
     /* Borde */
     justify-content: center;
     align-items: center;
@@ -100,8 +101,8 @@ body {
             /* Ocupa las dos filas */
             grid-column: 1 / 3;
             /* Primera columna */
-            justify-content: space-between;
             display: flex;
+            justify-content: space-between;
 
             .boton-azul-block {
                 width: auto;
@@ -180,6 +181,7 @@ body {
     background-color: #e0e0e0;
     /* Color de fondo */
     border: 1px solid #ccc;
+    border-radius: 1rem;
     /* Borde */
     justify-content: center;
     align-items: center;
@@ -317,6 +319,8 @@ body {
     background-color: #d9f4e1;
     /* Color de fondo */
     border: 1px solid #ccc;
+    border-radius: 1rem;
+
     /* Borde */
     justify-content: center;
     align-items: center;
@@ -372,12 +376,12 @@ body {
             text-align: center;
             @include fondo-radial($azul);
             border-radius: 1.2rem;
-            font-size: 4.5rem;
+            font-size: 3.8rem;
             /* Tamaño del texto */
-            padding: 0.4rem;
+            padding: 0;
 
             &:hover {
-                background-color: darken($azul, 5);
+                background-color: darken($azul, 15);
                 cursor: pointer;
             }
 
@@ -405,11 +409,83 @@ body {
     /* Color de fondo */
     border: 1px solid #ccc;
     /* Borde */
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: auto auto;
     align-items: center;
-    font-size: 1.2rem;
+    padding: 0 1rem;
+    height: 22px;
+    border-radius: 1rem;
+
+
 }
+
+.fecha{
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+}
+
+.fecha p{
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0 0 0 5rem;
+
+}
+
+.hora{
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: flex-end;
+
+    img{
+        max-width: 15px;
+        max-height: 15px;
+        background-color: transparent;
+    }
+
+    p{
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: 0 5rem 0 0;
+    
+    }
+}
+
+//animación verde
+
+.rectangulo-pequeno-1 {
+    position: relative; /* Para contener el pseudo-elemento */
+    overflow: hidden; /* Asegura que el pseudo-elemento no sobresalga */
+}
+
+.rectangulo-pequeno-1::before {
+    content: ""; /* Pseudo-elemento para el fondo animado */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0; /* Comienza invisible */
+    background-color: rgba(0, 255, 0, 0.6); /* Verde con transparencia */
+    z-index: 0; /* Coloca el fondo detrás del contenido */
+    animation: carga-verde 2s linear infinite; /* Animación continua */
+}
+
+@keyframes carga-verde {
+    0% {
+        width: 0; /* Comienza sin mostrar */
+    }
+    100% {
+        width: 100%; /* Llena el ancho completo */
+    }
+}
+
+.fecha, .hora {
+    position: relative;
+    z-index: 1; /* Asegura que el contenido esté encima del pseudo-elemento */
+}
+
 
 .modal,
 .modal--manual,

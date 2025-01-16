@@ -78,10 +78,13 @@
             </div>
             <!-- Rectángulo pequeño 2 -->
             <div class="grid-item rectangulo-pequeno-1">
-                <p>10:04 p.m. 15/01/2025</p>
-                <p></p>
-
-
+                <div class="fecha">
+                    <p>Lunes, 26 de diciembre de 1810.</p>
+                </div>
+                <div class="hora">
+                    <img src="/build/img/circuloverde.png" alt="Logotipo de circulo" class="imgcirculo">
+                    <p>10:04 p.m.</p>
+                </div>
             </div>
             <!-- Rectángulo adicional -->
             <div class="grid-item rectangulo-grande-horizontal">
