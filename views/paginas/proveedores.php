@@ -35,23 +35,23 @@
         <form id="buscador" action="/proveedores-generarexcel" method="POST">
             <fieldset>
                 <legend>Búsqueda</legend>
-                <div class="caja-filtros">
+                <div class="caja-filtros1">
                     <div class="fecha1">
                         <label for="fecha1">Fecha de visita: </label>
                         <input type="date" id="fecha1" name="caja[fecha1]">
                     </div>
                     <div class="fecha2">
                         <label for="fecha2">Nombre: </label>
-                        <input type="text" id="fecha2" name="caja[fecha2]">
+                        <input type="text" id="fecha2" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
                     </div>
-                    <div class="tipo-movimiento">
+                    <div class="tipo-movimiento1">
                         <div class="orden-caja">
-                            <label for="orden-caja">Orden: </label>
+                            <label for="orden-caja">Saldo: </label>
                             <div class="switch">
                                 <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
-                                <label for="ascendente">Ascendente</label>
+                                <label for="ascendente">Liquidado</label>
                                 <input type="radio" id="descendente" name="caja[orden]" value="descendente">
-                                <label for="descendente">Descendente</label>
+                                <label for="descendente">Adeudo</label>
                             </div>
                         </div>
                     </div>
@@ -60,35 +60,39 @@
         </form>
     </div>
 
-    <div class="tabladecontenido">
-        <table class="tabla-contenido">
+    <div class="tabladeproveedores">
+        <table class="tabla-proveedores">
             <thead>
                 <tr>
-                    <th>Cantidad</th>
-                    <th>Tipo</th>
+                    <th>Nombre</th>
                     <th>Fecha y Hora</th>
-                    <th>Saldo en Caja</th>
+                    <th>Total pagado</th>
+                    <th>Adeudo</th>
+                    <th>Productos comprados</th>
                 </tr>
             </thead>
             <!-- Mostrar los resultados -->
             <tbody>
                 <tr>
-                    <td>$10545</td>
-                    <td>Retiro</td>
+                    <td>Coca-cola</td>
                     <td>27/09/25 10:58p.m.</td>
-                    <td>$150.00</td>
+                    <td>$15063.00</td>
+                    <td>$1500.00</td>
+                    <td><a href="#">Ver productos</a></td>
                 </tr>
                 <tr>
-                    <td>$10545</td>
-                    <td>Retiro</td>
+                    <td>Coca-cola</td>
                     <td>27/09/25 10:58p.m.</td>
-                    <td>$150.00</td>
+                    <td>$15063.00</td>
+                    <td>$1500.00</td>
+                    <td><a href="#">Ver productos</a></td>
                 </tr>
                 <tr>
-                    <td>$10545</td>
-                    <td>Retiro</td>
+                    <td>Coca-cola</td>
                     <td>27/09/25 10:58p.m.</td>
-                    <td>$150.00</td>
+                    <td>$15063.00</td>
+                    <td>$1500.00</td>
+                    <td><a href="#">Ver productos</a></td>
                 </tr>
             </tbody>
         </table>

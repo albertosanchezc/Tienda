@@ -4,7 +4,7 @@
     margin: 0 auto;
     h1 {
         font-size: 3.8rem;
-        margin: 2.5rem 0 1rem 0;
+        margin: 4rem 0 1rem 0;
     }
 }
 
@@ -179,7 +179,7 @@
     justify-content: center;
 
     fieldset {
-        border: 2px dotted #D56B26;
+        border: 2px dotted #B02997;;
         /* Línea punteada de color azul */
         padding: 20px;
         /* Espaciado interno */
@@ -188,7 +188,7 @@
     }
 
     legend {
-        color: #D56B26;
+        color: #B02997;;
         /* Color del texto de la leyenda */
         font-weight: bold;
         /* Texto en negrita */
@@ -197,7 +197,7 @@
     }
 
 
-    .caja-filtros {
+    .caja-filtros1 {
         display: grid;
         grid-template-columns: 2;
         grid-template-rows: 2;
@@ -214,8 +214,19 @@
             width: 100%;
             padding: 5px;
             font-size: 16px;
-            border-color: #D56B26;
+            border-color: #B02997;;
             border-radius: 1rem;
+            height: 45px;
+
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border-color: #B02997;;
+            border-radius: 1rem;
+            height: 43px;
         }
 
         /* Estilos para switches */
@@ -227,6 +238,8 @@
 
         .switch input[type="radio"] {
             display: none;
+            height: 45px;
+
         }
 
         .switch label {
@@ -241,13 +254,69 @@
         }
 
         .switch input[type="radio"]:checked+label {
-            background-color: #D56B26;
+            background-color: #B02997;
             color: white;
         }
 
         input:hover {
-            color: #fff;
-            background-color: #D56B26;
+            color: $negro;
+            background-color: #F9E7F2;
         }
-    }
+
+    }   
+}
+
+.tabladeproveedores {
+    width: 100%;
+    overflow-x: auto;
+    /* Habilitar scroll horizontal si la tabla es demasiado ancha */
+    margin: 60px 0 20px 0;
+}
+
+.tabla-proveedores {
+    width: 100%;
+    border-collapse: collapse;
+    /* Combina bordes de celdas*/
+    table-layout: auto;
+    /* Ajusta las columnas automáticamente según el proveedores */
+    font-size: 16px;
+}
+
+.tabla-proveedores th,
+.tabla-proveedores td {
+    border: 1px solid #F9E7F2;
+    /* Bordes entre las celdas */
+    padding: 8px;
+    text-align: left;
+    /* Alineación del texto */
+}
+
+.tabla-proveedores th {
+    background: linear-gradient(to right, #8D28A7, #BD3F72);
+    //   background-color: #D56B26; 
+    color: white;
+    font-weight: bold;
+}
+
+.tabla-proveedores tbody tr:nth-child(even) {
+    background-color: #F9E7F2;
+    /* Color alternativo para filas pares */
+    // background-color: #FFF8ED; /* Color MAS CLARO */
+
+}
+
+.tabla-proveedores tbody tr:hover {
+    background-color: #F2CFE4;
+    /* Efecto hover para filas */
+}
+
+.tabladeproveedores::-webkit-scrollbar {
+    height: 8px;
+    /* Tamaño del scroll horizontal */
+}
+
+.tabladeproveedores::-webkit-scrollbar-thumb {
+    background-color: #8D28A7;
+    /* Color del scroll */
+    border-radius: 10px;
 }
