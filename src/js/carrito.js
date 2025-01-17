@@ -35,17 +35,22 @@ const terminosBusqueda = {
     codigoBarrasManual: ''
 }
 
+// Selectores modal manual
 const tablaModalManual = document.querySelector('.modal__tabla--manual');
 
 const resultadoBusquedaManual = tablaModalManual.querySelector('tbody');
+
+
+const tablaModalNombre = document.querySelector('.modal__tabla--nombre');
+const resultadoBusquedaNombre = tablaModalNombre.querySelector('tbody');
 
 const rectanguloGrandeBebecito2 = document.querySelector('.rectangulo-grande-bebecito2');
 const icono = document.querySelector('.icono');
 // resultadoBusquedaManual.remove('tr');
 
 // Mostrar productos en la tabla de la ventana modal manual
-function mostrarProductos(productos) {
-    limpiarHTML(resultadoBusquedaManual);  // Limpiar las filas anteriores
+function mostrarProductos(productos, resultados) {
+    limpiarHTML(resultados);  // Limpiar las filas anteriores
 
     if (productos.length > 0) {
         productos.forEach(producto => {
@@ -113,12 +118,12 @@ function mostrarProductos(productos) {
 
             });
             // Añadir la fila al contenedor
-            resultadoBusquedaManual.appendChild(row);
+            resultados.appendChild(row);
         });
     }
 }
 
-function vaciarCarrito(){
+function vaciarCarrito() {
     articulosCarrito = [];
     actualizarCarrito(articulosCarrito);
 }
@@ -189,13 +194,13 @@ function mostrarHora() {
     imagenHora.alt = 'Logotipo de circulo';
     const parrafoHora = document.createElement('p');
 
-    if(horas >=12){
+    if (horas >= 12) {
         horasFormatodeseado = horas - 12;
         horaFormateada = `${horasFormatodeseado}:${minutos}:${segundos} p.m.`;
         parrafoHora.textContent = horaFormateada;
-    }else{
-        if(horas === 0){
-            horaFormateada = horas+12;
+    } else {
+        if (horas === 0) {
+            horaFormateada = horas + 12;
         }
         horaFormateada = `${horas}:${minutos}:${segundos} a.m.`;
         parrafoHora.textContent = horaFormateada;
@@ -250,8 +255,10 @@ function actualizarCarritoView() {
 
 // Limpiar HTML
 function limpiarHTML(resultado) {
-    while (resultado.firstChild) {
-        resultado.removeChild(resultado.firstChild);
+    if (resultado && resultado.firstChild) {
+        while (resultado.firstChild) {
+            resultado.removeChild(resultado.firstChild);
+        }
     }
 }
 
@@ -263,7 +270,8 @@ function filtrar() {
 
     if (resultadosFiltrados.length) {
         // console.log(resultadosFiltrados);
-        mostrarProductos(resultadosFiltrados);
+        mostrarProductos(resultadosFiltrados, resultadoBusquedaManual);
+        mostrarProductos(resultadosFiltrados, resultadoBusquedaNombre);
         return resultadosFiltrados;
     }
 }
@@ -279,11 +287,11 @@ function filtrarCodigo(inventario) {
     return inventario;
 }
 
-function filtrarNombreProducto(inventario){
+function filtrarNombreProducto(inventario) {
     const { nombre } = terminosBusqueda;
 
     console.log(terminosBusqueda);
-    if(nombre){
+    if (nombre) {
         return inventario.nombre.toLowerCase().includes(nombre.toLowerCase());
     }
     return inventario;
@@ -490,16 +498,16 @@ function iniciarCarrito() {
     inputCodigoManual.addEventListener('input', (e) => {
         const codigo = +inputCodigoManual.value;
         terminosBusqueda.codigoBarras = codigo.toString();
-        resultadosProductos = filtrar();
-        mostrarProductos(resultadosProductos);
+        const resultadosProductos = filtrar();
+        mostrarProductos(resultadosProductos, resultadoBusquedaManual);
     });
 
     const inputCodigoNombre = document.querySelector('.modal--nombre__close');
     inputCodigoNombre.addEventListener('input', (e) => {
         // const nombreProucto = +inputCodigoNombre.value;
         terminosBusqueda.nombre = e.target.value;
-        resultadosProductos = filtrar();
-        mostrarProductos(resultadosProductos);
+        const resultadosProductos = filtrar();
+        mostrarProductos(resultadosProductos, resultadoBusquedaNombre);
     })
 
 
