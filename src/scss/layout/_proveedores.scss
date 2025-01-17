@@ -2,9 +2,10 @@
     width: 95%;
     max-width: 120rem;
     margin: 0 auto;
+
     h1 {
         font-size: 3.8rem;
-        margin: 2.5rem 0 1rem 0;
+        margin: 4rem 0 1rem 0;
     }
 }
 
@@ -31,10 +32,12 @@
             align-items: center;
             height: 240px;
         }
+
         h3 {
             font-size: 2.5rem;
             padding: 0 5rem 0 5rem;
         }
+
         .p1img {
             width: 100%;
             max-width: 240px;
@@ -43,21 +46,26 @@
             border-radius: 1rem;
         }
     }
+
     .presentacion2 {
         grid-column: 2;
         grid-row: 1;
 
-        .presentacion2boton, .presentacion2boton1 {
+        .presentacion2boton,
+        .presentacion2boton1 {
             display: flex;
             justify-content: center;
             margin-bottom: 1rem;
         }
+
         .presentacion2boton2 {
             display: flex;
             justify-content: center;
         }
+
         .p2boton,
-        .p2boton1, .p2boton2 {
+        .p2boton1,
+        .p2boton2 {
             position: relative;
             text-decoration: none;
             font-size: 2rem;
@@ -70,26 +78,32 @@
             text-align: center;
             min-width: 88%;
         }
+
         .p2boton {
             background-color: #8D28A7;
             color: #fff;
         }
+
         .p2boton1 {
             background-color: #B02997;
             color: #fff;
         }
+
         .p2boton2 {
             background-color: #BD3F72;
             color: #fff;
         }
+
         .p2boton:hover {
             color: #8D28A7;
             background-color: #fff;
         }
+
         .p2boton1:hover {
             color: #B02997;
             background-color: #fff;
         }
+
         .p2boton2:hover {
             color: #BD3F72;
             background-color: #fff;
@@ -106,6 +120,7 @@
             grid-row: 1;
             grid-column: 1;
         }
+
         .presentacion2 {
             grid-row: 2;
             grid-column: 1;
@@ -139,6 +154,7 @@
             grid-column: 1;
             grid-row: 1;
         }
+
         .presentacion2 {
             grid-column: 2;
             grid-row: 1;
@@ -163,11 +179,12 @@
 }
 
 .slider-indicators .dot.active {
-    background-color: #8D28A7; /* Mismo color que tus botones */
+    background-color: #8D28A7;
+    /* Mismo color que tus botones */
 }
 
-.proveedores-tabla{
-    h1{
+.proveedores-tabla {
+    h1 {
         padding-top: 4rem;
     }
 }
@@ -179,7 +196,8 @@
     justify-content: center;
 
     fieldset {
-        border: 2px dotted #D56B26;
+        border: 2px dotted #B02997;
+        ;
         /* Línea punteada de color azul */
         padding: 20px;
         /* Espaciado interno */
@@ -188,7 +206,8 @@
     }
 
     legend {
-        color: #D56B26;
+        color: #B02997;
+        ;
         /* Color del texto de la leyenda */
         font-weight: bold;
         /* Texto en negrita */
@@ -197,7 +216,7 @@
     }
 
 
-    .caja-filtros {
+    .caja-filtros1 {
         display: grid;
         grid-template-columns: 2;
         grid-template-rows: 2;
@@ -214,8 +233,21 @@
             width: 100%;
             padding: 5px;
             font-size: 16px;
-            border-color: #D56B26;
+            border-color: #B02997;
+            ;
             border-radius: 1rem;
+            height: 45px;
+
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border-color: #B02997;
+            ;
+            border-radius: 1rem;
+            height: 43px;
         }
 
         /* Estilos para switches */
@@ -227,6 +259,8 @@
 
         .switch input[type="radio"] {
             display: none;
+            height: 45px;
+
         }
 
         .switch label {
@@ -241,13 +275,104 @@
         }
 
         .switch input[type="radio"]:checked+label {
-            background-color: #D56B26;
+            background-color: #B02997;
             color: white;
         }
 
         input:hover {
-            color: #fff;
-            background-color: #D56B26;
+            color: $negro;
+            background-color: #F9E7F2;
         }
+
     }
+}
+
+.tabladeproveedores {
+    width: 100%;
+    overflow-x: auto;
+    /* Habilitar scroll horizontal si la tabla es demasiado ancha */
+    margin: 60px 0 20px 0;
+}
+
+.tabla-proveedores {
+    width: 100%;
+    border-collapse: collapse;
+    /* Combina bordes de celdas*/
+    table-layout: auto;
+    /* Ajusta las columnas automáticamente según el proveedores */
+    font-size: 16px;
+}
+
+.tabla-proveedores th,
+.tabla-proveedores td {
+    border: 1px solid #BD3F72;
+    /* Bordes entre las celdas */
+    padding: 8px;
+    text-align: left;
+    /* Alineación del texto */
+}
+
+
+
+.tabla-proveedores th {
+    background: linear-gradient(to right, #8D28A7, #BD3F72);
+    //   background-color: #D56B26; 
+    color: white;
+    font-weight: bold;
+}
+
+.tabla-proveedores tbody tr:nth-child(even) {
+    background-color: #FCF3F8;
+    /* Color alternativo para filas pares */
+    // background-color: #FFF8ED; /* Color MAS CLARO */
+
+}
+
+.tabla-proveedores tbody tr:hover {
+    background-color: #F9E7F2;
+    /* Efecto hover para filas */
+}
+
+.tabladeproveedores::-webkit-scrollbar {
+    height: 8px;
+    /* Tamaño del scroll horizontal */
+}
+
+.tabladeproveedores::-webkit-scrollbar-thumb {
+    background-color: #c76b90;
+    /* Color del scroll */
+    border-radius: 10px;
+}
+
+.verproductos td{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.verproductos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color:#C9554C;
+    font-size: 1.3rem;
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    border-radius: 6px;
+    font-weight: 600;
+    background-color: #fff;
+    transition: background-color .3s;
+}
+
+.verproductos:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: #C9554C;
+}
+
+.botonverproductos {
+    text-align: center;
+    display: inline-block;
+    color: #fff;
 }
