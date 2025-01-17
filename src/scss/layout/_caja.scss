@@ -16,31 +16,49 @@
 .contenido-caja {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* Dos columnas del mismo ancho */
+    grid-template-rows: 1fr;
+
     align-items: center;
-    /* Centra verticalmente las filas */
     gap: 2rem;
-    /* Espaciado horizontal */
 }
+
 @include telefono-1 {
-    .contenido-caja{
-        display: flex;
-        
+    .contenido-caja {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+
+    }
+
+    .opciones {
+        grid-row: 1;
+    }
+
+    .añadircaja,
+    .quitarcaja {
+        width: 10%;
     }
 }
 
 @include tablet {
-    .contenido-caja{
+    .contenido-caja {
+        grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
-        
+
+        .opciones {
+            grid-row: 1;
+        }
+
     }
 }
 
 @include laptop-1 {
-    .contenido-caja{
-    grid-template-columns: 1fr 1fr;
+    .contenido-caja {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        .opciones {
+            grid-column: 2;
+        }
 
-        
     }
 }
 
@@ -53,7 +71,7 @@
     justify-content: center;
 
     h1 {
-        font-size: 9rem;
+        font-size: 7rem;
         margin-bottom: 0;
         padding-bottom: 0;
         font-weight: normal;
@@ -131,13 +149,40 @@
 
 }
 
-.busqueda-titulo{
-    h1{
-        margin-top: 10rem;
+.busqueda-titulo {
+    h1 {
+        margin-top: 12rem;
     }
-    h3{
+
+    h3 {
         font-size: 1.7rem;
-        padding: 0 30rem 0 30rem;
-        
+        font-weight: 399;
+
     }
 }
+
+@include telefono-1 {
+    .busqueda-titulo{
+        h3{
+            padding: 0;
+        }
+        }
+}
+
+@include tablet {
+    .busqueda-titulo{
+        h3{
+    padding: 0 5rem 0 5rem;
+        }
+        }
+
+}
+
+@include laptop-1 {
+.busqueda-titulo{
+h3{
+    padding: 0 30rem 0 30rem;
+}
+}
+}
+

@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Rectángulo pequeño 1 -->
+            <!-- Rectángulo pequeño 1 producto-->
             <div class="grid-item rectangulo-pequeno">
                 <div class="rectangulo-pequeno-bebe1">
                     <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
@@ -76,10 +76,23 @@
                     </div>
                 </div>
             </div>
-            <!-- Rectángulo pequeño 2 -->
+            <!-- Rectángulo pequeño 2 fecha-->
             <div class="grid-item rectangulo-pequeno-1">
                 <div class="fecha">
-                    <p>Lunes, 26 de diciembre de 1810.</p>
+                    <?php
+                    $dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                    $meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+                    $diaSemana = $dias[date('w')];
+                    $dia = date('d');
+                    $mes = $meses[date('n') - 1];
+                    $anio = date('Y');
+                    ?>
+
+                    <p> <?php
+                    echo "$diaSemana, $dia de $mes de $anio";
+                    ?>
+                    </p>
                 </div>
                 <div class="hora">
                     <img src="/build/img/circuloverde.png" alt="Logotipo de circulo" class="imgcirculo">

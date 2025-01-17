@@ -24,8 +24,26 @@
 
 <section class="contenedorcaja seccioncaja">
     <div class="busqueda-titulo">
-    <h1>Histórico de Entradas y Retiros de Caja</h1>
-    <h3>Consulta el registro completo de movimientos de caja con filtros para buscar y ordenar fácilmente las entradas y retiros según tus necesidades.</h3>
+        <h1>Histórico de Entradas y Retiros de Caja</h1>
+        <h3>Consulta el registro completo de movimientos de caja con filtros para buscar y ordenar fácilmente las
+            entradas y retiros según tus necesidades.</h3>
+    </div>
+    <div class="busqueda-filtros">
+        <form id="buscador" action="/caja-generarexcel" method="POST">
+            <fieldset>
+                <div class="caja-fecha">
+                    <div class="fecha1">
+                        <label for="fecha1">Fecha inicial: </label>
+                        <input type="date" id="fecha1" name="caja[fecha1]">
+                    </div>
+                    <div class="fecha2">
+                    <label for="fecha2">Fecha final: </label>
+                        <input type="date" id="fecha2" name="caja[fecha2]">
+                    </div>
+                </div>
+            </fieldset>
+
+        </form>
     </div>
 
 </section>
