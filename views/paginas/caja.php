@@ -84,6 +84,18 @@
                     <td>27/09/25 10:58p.m.</td>
                     <td>$150.00</td>
                 </tr>
+                <tr>
+                    <td>$10545</td>
+                    <td>Retiro</td>
+                    <td>27/09/25 10:58p.m.</td>
+                    <td>$150.00</td>
+                </tr>
+                <tr>
+                    <td>$10545</td>
+                    <td>Retiro</td>
+                    <td>27/09/25 10:58p.m.</td>
+                    <td>$150.00</td>
+                </tr>
         </tbody>
     </table>
     </div>

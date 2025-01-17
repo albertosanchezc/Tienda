@@ -71,8 +71,9 @@
     /* Asegura que los textos estén apilados */
     justify-content: center;
 
+
     h1 {
-        font-size: 7rem;
+        font-size: 6.5rem;
         margin-bottom: 0;
         padding-bottom: 0;
         font-weight: normal;
@@ -124,7 +125,7 @@
         transition: background-color .3s;
         display: inline-block;
         text-align: center;
-        min-width: 450px;
+        min-width: 88%;
 
     }
 
@@ -276,23 +277,26 @@
 
 .tabla-contenido th,
 .tabla-contenido td {
-    border: 1px solid #ddd; /* Bordes entre las celdas */
-    padding: 8px; /* Espaciado interno */
+    border: 1px solid #FFE0B2; /* Bordes entre las celdas */
+    padding: 8px;
     text-align: left; /* Alineación del texto */
 }
 
 .tabla-contenido th {
-    background-color: #007bff; /* Color de fondo de la cabecera */
-    color: white; /* Color del texto en la cabecera */
-    font-weight: bold; /* Negrita en la cabecera */
+    background: linear-gradient(to right, #D56B26, #E6962C); 
+ //   background-color: #D56B26; 
+    color: white; 
+    font-weight: bold;
 }
 
 .tabla-contenido tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* Color alternativo para filas pares */
+    background-color: #FFF3E0; /* Color alternativo para filas pares */
+    // background-color: #FFF8ED; /* Color MAS CLARO */
+
 }
 
 .tabla-contenido tbody tr:hover {
-    background-color: #f1f1f1; /* Efecto hover para filas */
+    background-color: #F7D9A8; /* Efecto hover para filas */
 }
 
 .tabladecontenido::-webkit-scrollbar {
@@ -300,6 +304,6 @@
 }
 
 .tabladecontenido::-webkit-scrollbar-thumb {
-    background-color: #007bff; /* Color del scroll */
+    background-color: #D56B26; /* Color del scroll */
     border-radius: 10px;
 }
