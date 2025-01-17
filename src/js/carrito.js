@@ -122,6 +122,8 @@
 
                     console.log(articulosCarrito);
                     modalManual.classList.remove('modal--manual--show'); // Cerrar la modal
+                    modalProducto.classList.remove('modal--nombre--show'); // Cerrar la modal
+
                     terminosBusqueda.codigoBarras = ''; // Limpiar la variable de búsqueda
                     filtrar(); // Realizar la búsqueda nuevamente si es necesario
                 });
