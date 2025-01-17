@@ -257,7 +257,7 @@ function limpiarHTML(resultado) {
 
 
 function filtrar() {
-    const resultadosFiltrados = inventario.filter(filtrarCodigo);
+    const resultadosFiltrados = inventario.filter(filtrarCodigo).filter(filtrarNombreProducto);
     console.log(resultadosFiltrados);
 
 
@@ -275,6 +275,16 @@ function filtrarCodigo(inventario) {
     console.log(terminosBusqueda);
     if (codigoBarras) {
         return inventario.codigo_barras.includes(codigoBarras);
+    }
+    return inventario;
+}
+
+function filtrarNombreProducto(inventario){
+    const { nombre } = terminosBusqueda;
+
+    console.log(terminosBusqueda);
+    if(nombre){
+        return inventario.nombre.includes(nombre);
     }
     return inventario;
 }
@@ -483,6 +493,13 @@ function iniciarCarrito() {
         resultadosProductos = filtrar();
         mostrarProductos(resultadosProductos);
     });
+
+    const inputCodigoNombre = document.querySelector('.modal--nombre__close');
+    inputCodigoNombre.addEventListener('input', (e) => {
+        // const nombreProucto = +inputCodigoNombre.value;
+        terminosBusqueda.nombre = e.target.value;
+        
+    })
 
 
 
