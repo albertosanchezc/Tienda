@@ -131,7 +131,7 @@
     <div class="modal--retirar__container">
     <div class="modal--retirar__border"></div>
         <div class="modal--retirar__fleximg1">
-            <img src="/build/img/dinero.png" alt="Logotipo de dinero" class="modal--retirar__img">
+            <img src="/build/img/dinero1.png" alt="Logotipo de dinero1" class="modal--retirar__img">
         </div>
         <div class="modal--retirar__fleximg2">
             <a href="#" class="modal--retirar__cerrar">
