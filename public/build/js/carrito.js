@@ -95,7 +95,16 @@ function mostrarProductos(productos) {
                     rectanguloGrandeBebe1.appendChild(tabla);
 
 
+
                     icono.appendChild(botonVaciarCarrito);
+                    icono.addEventListener('dblclick', () => {
+                        vaciarCarrito();
+                        botonVaciarCarrito.remove();
+                        tabla.remove()
+                        console.log(articulosCarrito);
+                    })
+
+
                 }
                 articulosCarrito = [...articulosCarrito, producto];
                 actualizarCarrito(producto);
@@ -109,56 +118,11 @@ function mostrarProductos(productos) {
     }
 }
 
-// Mostrar productos en la tabla del carrito
-// function mostrarProductosCarrito(productos) {
-//     limpiarHTML(tablaCarrito);  // Limpiar las filas anteriores
+function vaciarCarrito(){
+    articulosCarrito = [];
+    actualizarCarrito(articulosCarrito);
+}
 
-//     if (productos.length > 0) {
-//         productos.forEach(producto => {
-//             const { nombre, descripcion, categoria_id, precio_unitario_venta } = producto;
-
-//             const row = document.createElement('tr');
-//             row.innerHTML = `
-//                 <td>${nombre}</td>
-//                 <td>${descripcion}</td>
-//                 <td>${categoria_id}</td>
-//                 <td>${precio_unitario_venta}</td>
-//             `;
-
-//             // Añadir event listener al tr para cuando se haga clic
-//             row.addEventListener('click', () => {
-//                 // Añadir a la tabla del carrito
-//                 const tabla = document.createElement('table');
-//                 tabla.classList.add('ordenes');
-//                 tabla.innerHTML =
-//                     `
-//                         <thead>
-//                         <tr>
-//                             <th>Cantidad</th>
-//                             <th>Producto</th>
-//                             <th>Descripción</th>
-//                             <th>Imagen</th>
-//                             <th>Subtotal</th>
-//                             <th>Acciones</th>
-//                         </tr>
-//                         </thead>
-//                         <tbody>
-
-//                         </tbody>
-//                     `;
-
-//                 rectanguloGrandeBebe1.appendChild(tabla);
-
-// actualizarCarrito(producto);
-// articulosCarrito = [...articulosCarrito, producto];
-// console.log(articulosCarrito);
-
-//             });
-//             // Añadir la fila al contenedor
-//             resultadoBusquedaManual.appendChild(row);
-//         });
-//     }
-// }
 
 
 function actualizarCarrito(producto) {
@@ -241,9 +205,6 @@ function mostrarHora() {
     // Colocar la hora en el div
     hora.appendChild(imagenHora);
     hora.appendChild(parrafoHora);
-
-
-    `<img src="/build/img/circuloverde.png" alt="Logotipo de circulo" class="imgcirculo">`;
 
 }
 
