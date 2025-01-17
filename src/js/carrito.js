@@ -175,11 +175,69 @@ function actualizarCarrito(producto) {
             tbody.appendChild(row);
 
 
+            // Seleccionamos el contenedor del botón de vaciar carrito
+            const rectanguloGrandeBebecito2 = document('.rectangulo-grande-bebecito2');
+            // rectanguloGrandeBebecito2.
         })
 
         actualizarCarritoView();
     }
 }
+
+const rectanguloPequeno1 = document.querySelector('.rectangulo-pequeno-1');
+const hora = rectanguloPequeno1.querySelector('.hora')
+
+// // Función para actualizar la hora
+function mostrarHora() {
+    const ahora = new Date();
+
+    // Obtener horas, minutos y segundos
+    let horas = ahora.getHours();
+    let minutos = ahora.getMinutes();
+    let segundos = ahora.getSeconds();
+
+    // Añadir ceros a la izquierda si es necesario
+    horas = String(horas).padStart(2, '0');
+    minutos = String(minutos).padStart(2, '0');
+    segundos = String(segundos).padStart(2, '0');
+    let horaFormateada = '';
+    // Crear el formato "hh:mm:ss"
+
+    hora.textContent = horaFormateada;
+    const imagenHora = document.createElement('img');
+    imagenHora.classList.add('imgCirculo');
+    imagenHora.src = '/build/img/circuloverde.png';
+    imagenHora.alt = 'Logotipo de circulo';
+    const parrafoHora = document.createElement('p');
+
+    if(horas >=12){
+        horasFormatodeseado = horas - 12;
+        horaFormateada = `${horasFormatodeseado}:${minutos}:${segundos} p.m.`;
+        parrafoHora.textContent = horaFormateada;
+    }else{
+        if(horas === 0){
+            horaFormateada = horas+12;
+        }
+        horaFormateada = `${horas}:${minutos}:${segundos} a.m.`;
+        parrafoHora.textContent = horaFormateada;
+
+    }
+
+    // Colocar la hora en el div
+    hora.appendChild(imagenHora);
+    hora.appendChild(parrafoHora);
+
+
+    `<img src="/build/img/circuloverde.png" alt="Logotipo de circulo" class="imgcirculo">`;
+
+}
+
+// Llamar a la función para mostrar la hora
+mostrarHora();
+
+// Actualizar la hora cada segundo
+setInterval(mostrarHora, 1000);
+
 
 // Función para eliminar productos del carrito
 function eliminarProducto(productoId) {
