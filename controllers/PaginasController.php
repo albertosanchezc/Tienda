@@ -21,9 +21,11 @@ class PaginasController
     public static function index(Router $router)
     {
         $inicio = true;
+        $titulo = 'Inicio';
 
         $router->render('paginas/index', [
             'inicio' => $inicio,
+            'titulo' => $titulo
         ]);
     }
 
@@ -32,7 +34,7 @@ class PaginasController
         // Pasamos todos los productos a la vista
         $inventario = Inventario_completo::join2('productos', 'inventario');
         $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
-        
+
         $script = '<script src="/build/js/carrito.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
@@ -44,17 +46,19 @@ class PaginasController
         $carrito_id++;
         $venta->carrito_id = $carrito_id;
         // debuguear($venta);
+        $titulo = 'Carrito';
 
         $router->render('paginas/carrito', [
             'inventario' => $inventario,
             'inventario_granel' => $inventario_granel,
             'caja' => $caja,
-            'script' => $script
-            
+            'script' => $script,
+            'titulo' => $titulo
         ]);
     }
 
-    public static function inventarioAPI(){
+    public static function inventarioAPI()
+    {
         $inventario = Inventario_completo::join2('productos', 'inventario');
         $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
@@ -74,8 +78,10 @@ class PaginasController
 
         // debuguear([$inventario, $inventario_granel]);
 
+        $titulo = 'Inventario';
 
         $router->render('paginas/inventario', [
+            'titulo' => $titulo
         ]);
     }
     public static function caja(Router $router)
@@ -85,25 +91,34 @@ class PaginasController
 
         $script = '<script src="/build/js/caja.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
+        $titulo = 'Caja';
 
         $caja_historico = Caja_historico::all();
-        $router->render('paginas/caja',[
-            'script' => $script 
+        $router->render('paginas/caja', [
+            'script' => $script,
+            'titulo' => $titulo
         ]);
     }
     public static function metricas(Router $router)
     {
+        $titulo = 'Métricas';
 
-        $router->render('paginas/metricas');
+        $router->render('paginas/metricas',[
+            'titulo' => $titulo
+        ]);
     }
     public static function proveedores(Router $router)
     {
         $script = '<script src="/build/js/proveedores.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $proveedores = Proveedor::all();
+        $titulo = 'Proveedores';
+
+
         // debuguear($proveedores);
-        $router->render('paginas/proveedores',[
-            'script' => $script
+        $router->render('paginas/proveedores', [
+            'script' => $script,
+            'titulo' => $titulo
         ]);
     }
 
@@ -220,8 +235,10 @@ class PaginasController
 
     public static function error(Router $router)
     {
+        $titulo = '(404) Page Not Found';
+
         $router->render('paginas/error', [
-            'titulo' => 'Página no Encontrada'
+        'titulo' => $titulo
         ]);
     }
 }
