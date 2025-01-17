@@ -344,35 +344,26 @@
     border-radius: 10px;
 }
 
-.verproductos td{
-    text-align: center;
-    vertical-align: middle;
-}
-
-.verproductos {
+.verproductos .botonverproductos {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-decoration: none;
-    color:#C9554C;
+    color: #C9554C; /* Color naranja que definiste */
     font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none; /* Evita subrayado */
+    background-color: #fff;
     width: 100%;
     height: 100%;
-    border: 1px solid;
+    border: 1px solid #C9554C;
     border-radius: 6px;
-    font-weight: 600;
-    background-color: #fff;
     transition: background-color .3s;
+
+
 }
 
-.verproductos:hover {
+.verproductos .botonverproductos:hover {
     text-decoration: none;
-    color: #fff;
+    color: #fff; /* Cambia a blanco bal pasar el cursor */
     background-color: #C9554C;
-}
-
-.botonverproductos {
-    text-align: center;
-    display: inline-block;
-    color: #fff;
 }

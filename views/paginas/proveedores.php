@@ -79,7 +79,10 @@
                         <td>27/09/25 10:58p.m.</td>
                         <td>$15063.00</td>
                         <td>$1500.00</td>
-                        <td><a href="#">Ver productos</a></td>
+                        <td>
+                            <div class="verproductos"><a href="#" class="botonverproductos">Ver productos</a>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td>Coca-cola</td>
@@ -96,7 +99,10 @@
                         <td>27/09/25 10:58p.m.</td>
                         <td>$15063.00</td>
                         <td>$1500.00</td>
-                        <td><a href="#" class="botonverproductos">Ver productos</a></td>
+                        <td>
+                            <div class="verproductos"><a href="#" class="botonverproductos">Ver productos</a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
