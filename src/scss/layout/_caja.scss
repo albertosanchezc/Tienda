@@ -55,6 +55,7 @@
     .contenido-caja {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr;
+
         .opciones {
             grid-column: 2;
         }
@@ -162,27 +163,143 @@
 }
 
 @include telefono-1 {
-    .busqueda-titulo{
-        h3{
+    .busqueda-titulo {
+        h3 {
             padding: 0;
         }
-        }
+    }
 }
 
 @include tablet {
-    .busqueda-titulo{
-        h3{
-    padding: 0 5rem 0 5rem;
+    .busqueda-titulo {
+        h3 {
+            padding: 0 5rem 0 5rem;
         }
-        }
+    }
 
 }
 
 @include laptop-1 {
-.busqueda-titulo{
-h3{
-    padding: 0 30rem 0 30rem;
-}
-}
+    .busqueda-titulo {
+        h3 {
+            padding: 0 30rem 0 30rem;
+        }
+    }
 }
 
+.busqueda-filtros {
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+
+    fieldset {
+        border: 2px dotted #D56B26; /* Línea punteada de color azul */
+        padding: 20px; /* Espaciado interno */
+        border-radius: 8px; /* Bordes ligeramente redondeados */
+    }
+    
+    legend {
+        color: #D56B26; /* Color del texto de la leyenda */
+        font-weight: bold; /* Texto en negrita */
+        padding: 0 10px; /* Espaciado interno para la leyenda */
+    }
+
+
+    .caja-filtros {
+        display: grid;
+        grid-template-columns: 2;
+        grid-template-rows: 2;
+        grid-gap: 20px;
+        width: 80%;
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border-color: #D56B26;
+            border-radius: 1rem;
+        }
+
+        /* Estilos para switches */
+        .switch {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .switch input[type="radio"] {
+            display: none;
+        }
+
+        .switch label {
+            padding: 8px 15px;
+            background-color: #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .switch input[type="radio"]:checked+label {
+            background-color: #D56B26;
+            color: white;
+        }
+
+        input:hover{
+            color: #fff;
+            background-color: #D56B26;
+        }
+    }
+}
+
+.tabladecontenido {
+    width: 100%;
+    overflow-x: auto; /* Habilitar scroll horizontal si la tabla es demasiado ancha */
+    margin: 60px 0 20px 0;
+}
+
+.tabla-contenido {
+    width: 100%;
+    border-collapse: collapse; /* Combina bordes de celdas*/
+    table-layout: auto; /* Ajusta las columnas automáticamente según el contenido */
+    font-size: 16px;
+}
+
+.tabla-contenido th,
+.tabla-contenido td {
+    border: 1px solid #ddd; /* Bordes entre las celdas */
+    padding: 8px; /* Espaciado interno */
+    text-align: left; /* Alineación del texto */
+}
+
+.tabla-contenido th {
+    background-color: #007bff; /* Color de fondo de la cabecera */
+    color: white; /* Color del texto en la cabecera */
+    font-weight: bold; /* Negrita en la cabecera */
+}
+
+.tabla-contenido tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Color alternativo para filas pares */
+}
+
+.tabla-contenido tbody tr:hover {
+    background-color: #f1f1f1; /* Efecto hover para filas */
+}
+
+.tabladecontenido::-webkit-scrollbar {
+    height: 8px; /* Tamaño del scroll horizontal */
+}
+
+.tabladecontenido::-webkit-scrollbar-thumb {
+    background-color: #007bff; /* Color del scroll */
+    border-radius: 10px;
+}
