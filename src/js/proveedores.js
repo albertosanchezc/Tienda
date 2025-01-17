@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Array con los textos que irán cambiando
     const frases = [
         "Visualiza la información detallada de los proveedores, incluyendo sus visitas y datos relevantes.",
-        "Gestiona fácilmente tus proveedores y registra nuevas visitas rápidamente.",
-        "Consulta información histórica de visitas de forma sencilla."
+        "Gestiona fácilmente a tus proveedores, registra visitas y actualiza toda la información relevante.",
+        "Consulta información histórica de visitas de proveedores y accede rápidamente a todos los datos."
     ];
 
     // Seleccionar el elemento <h3> donde aparecerán los textos
