@@ -66,6 +66,11 @@ function mostrarProductos(productos, resultados) {
 
             // Añadir event listener al tr para cuando se haga clic
             row.addEventListener('click', () => {
+
+                // Aquí puedes resetear los inputs cuando se hace clic en un td
+                const inputCodigoManual = document.querySelector('.modal--manual__close');
+                inputCodigoManual.value = '';  // Resetear el input
+
                 // Añadir a la tabla del carrito
                 const tabla = document.createElement('table');
 
@@ -115,7 +120,9 @@ function mostrarProductos(productos, resultados) {
                 actualizarCarrito(producto);
 
                 console.log(articulosCarrito);
-
+                modalManual.classList.remove('modal--manual--show'); // Cerrar la modal
+                terminosBusqueda.codigoBarras = ''; // Limpiar la variable de búsqueda
+                filtrar(); // Realizar la búsqueda nuevamente si es necesario
             });
             // Añadir la fila al contenedor
             resultados.appendChild(row);
@@ -133,7 +140,8 @@ function vaciarCarrito() {
 function actualizarCarrito(producto) {
     // limpiarHTML(tablaCarritoBody);
 
-    modalManual.classList.remove('modal--manual--show')
+    modalManual.classList.remove('modal--manual--show');
+
 
     let { id, nombre, descripcion, codigo_barras, cantidad, producto_id, precio_unitario_venta, categoria_id, precio_compra, fecha_compra, proveedor_id } = producto;
     // Verificar si la tabla ya existe
@@ -381,14 +389,26 @@ modalClose.addEventListener('click', () => {
 const modalManual = document.querySelector('.modal--manual');
 const btnCerrarModalManual = document.querySelector('.modal--manual__img2');
 btnCerrarModalManual.addEventListener('click', () => {
+    const inputCodigoManual = document.querySelector('.modal--manual__close');
+    inputCodigoManual.value = '';
     modalManual.classList.remove('modal--manual--show');
+    terminosBusqueda.codigoBarras = '';
+    filtrar();
 });
 // Tercera ventana modal
 const modalProducto = document.querySelector('.modal--nombre');
 const btnCerrarModalProducto = document.querySelector('.modal--nombre__img2');
 btnCerrarModalProducto.addEventListener('click', () => {
+    const inputCodigoNombre = document.querySelector('.modal--nombre__close');
+    inputCodigoNombre.value = '';
     modalProducto.classList.remove('modal--nombre--show');
-});
+    terminosBusqueda.nombre = '';
+    filtrar();
+})
+
+function eliminarModalShowNombre() {
+    modalProducto.classList.remove('modal--nombre--show');
+}
 
 // Cuarta ventana modal
 const modalGranel = document.querySelector('.modal--granel');
@@ -494,7 +514,7 @@ function iniciarCarrito() {
         modalProducto.classList.add('modal--nombre--show')
     })
 
-    const inputCodigoManual = document.querySelector('.modal--manual__close');
+    let inputCodigoManual = document.querySelector('.modal--manual__close');
     inputCodigoManual.addEventListener('input', (e) => {
         const codigo = +inputCodigoManual.value;
         terminosBusqueda.codigoBarras = codigo.toString();
@@ -502,12 +522,22 @@ function iniciarCarrito() {
         mostrarProductos(resultadosProductos, resultadoBusquedaManual);
     });
 
+    btnCerrarModalProducto.addEventListener('click', eliminarModalShowNombre);
+    const tbodyModalProducto = modalProducto.querySelector('tbody');
+    const modalProductoTr = document.querySelectorAll('tr');
+    modalProductoTr.forEach(tr => {
+        tr.addEventListener('click', () => {
+            eliminarModalShowNombre;
+        })
+    })
+
     const inputCodigoNombre = document.querySelector('.modal--nombre__close');
     inputCodigoNombre.addEventListener('input', (e) => {
         // const nombreProucto = +inputCodigoNombre.value;
         terminosBusqueda.nombre = e.target.value;
         const resultadosProductos = filtrar();
         mostrarProductos(resultadosProductos, resultadoBusquedaNombre);
+        terminosBusqueda.nombre = '';
     })
 
 
