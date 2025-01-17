@@ -172,4 +172,82 @@
     }
 }
 
+.busqueda-filtros1 {
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
 
+    fieldset {
+        border: 2px dotted #D56B26;
+        /* Línea punteada de color azul */
+        padding: 20px;
+        /* Espaciado interno */
+        border-radius: 8px;
+        /* Bordes ligeramente redondeados */
+    }
+
+    legend {
+        color: #D56B26;
+        /* Color del texto de la leyenda */
+        font-weight: bold;
+        /* Texto en negrita */
+        padding: 0 10px;
+        /* Espaciado interno para la leyenda */
+    }
+
+
+    .caja-filtros {
+        display: grid;
+        grid-template-columns: 2;
+        grid-template-rows: 2;
+        grid-gap: 20px;
+        width: 80%;
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border-color: #D56B26;
+            border-radius: 1rem;
+        }
+
+        /* Estilos para switches */
+        .switch {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .switch input[type="radio"] {
+            display: none;
+        }
+
+        .switch label {
+            padding: 8px 15px;
+            background-color: #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .switch input[type="radio"]:checked+label {
+            background-color: #D56B26;
+            color: white;
+        }
+
+        input:hover {
+            color: #fff;
+            background-color: #D56B26;
+        }
+    }
+}
