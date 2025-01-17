@@ -323,7 +323,7 @@
     border-radius: 10px;
 }
 
-.modal--aniadir {
+.modal--aniadir, .modal--retirar {
     position: fixed;
     top: 0;
     left: 0;
@@ -352,7 +352,6 @@
         max-height: 60%;
         background-color: #fff;
         border-radius: 6px;
-        padding:2.5rem;
         display: grid;
         gap: 1rem;
         place-items: center;
@@ -360,8 +359,8 @@
         transform: var(--transform);
         transition: var(--transition);
         // border: 3px double #02B126;
-        border: none;
-        box-shadow: inset 0 0 0 2px black;
+         border: none;
+        padding:2.5rem 2.5rem 3.5rem 2.5rem;
     }
 
     &__title {
@@ -400,8 +399,8 @@
 
     &__fleximg2 {
         position: absolute;
-        top: 11px;
-        right: 15px;
+        top: 22px;
+        right: 26px;
     }
 
     &__img {
@@ -468,5 +467,46 @@
 
     &__cantidad label {
         font-size: 3rem;
+    }
+
+    &__border {
+        position: absolute;
+        top: 15px; /* Ajusta el margen superior */
+        left: 15px; /* Ajusta el margen izquierdo */
+        right: 15px; /* Ajusta el margen derecho */
+        bottom: 15px; /* Ajusta el margen inferior */
+        border: 2px dashed #02B126; /* Borde del rectángulo más pequeño */
+        border-radius: 6px; /* Opcional: bordes redondeados */
+        pointer-events: none; /* Evita que interfiera con el contenido interactivo */
+      }
+}
+
+.modal--retirar{
+    &__close {
+        color: #BE2414;
+        background-color: #fff;
+    
+    }
+
+    &__close:hover {
+        color: #BE2414;
+        background-color: #FFF2F1;
+
+
+    }
+
+    &__close1 {
+        background-color: #BE2414;
+        color: #fff;
+    }
+
+    &__close1:hover {
+        color: #BE2414;
+        background-color: #fff;   
+    }
+
+    &__border {
+        border: 2px dashed #BE2414; /* Borde del rectángulo más pequeño */
+
     }
 }
