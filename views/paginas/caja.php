@@ -101,7 +101,7 @@
     </div>
 </section>
 <!-- modal de añadir -->
-<section class="modal--aniadir modal--aniadir--show">
+<section class="modal--aniadir">
     <div class="modal--aniadir__container">
     <div class="modal--aniadir__border"></div>
         <div class="modal--aniadir__fleximg1">
@@ -127,7 +127,7 @@
 </section>
 
 <!-- modal de retirar -->
-<section class="modal--retirar modal--retirar--show">
+<section class="modal--retirar">
     <div class="modal--retirar__container">
     <div class="modal--retirar__border"></div>
         <div class="modal--retirar__fleximg1">

@@ -1,20 +1,21 @@
-<div class="contenedor-anuncios">
-    <?php foreach($platillos as $platillo){ ?>
-
-        <div class="anuncio">
-
-            <img loading="lazy" src="/imagenes/<?php echo $platillo->imagen; ?>" alt="Anuncio">
-
-            <div class="contenido-anuncio">
-                <h3><?php echo $platillo->nombre; ?></h3>
-                <p><?php echo $platillo->descripcion; ?></p>
-                <p class="precio">$<?php echo $platillo->precio; ?></p>
-
-                <a href="propiedad?id=<?php echo $platillo->id; ?>" class="boton-amarillo-block">
-                    Ver Propiedad
-                </a>
-            </div><!--.contenido-anuncio-->
-        </div><!--anuncio-->
-    <?php } ?>
-
-</div><!--.contenedor-anuncios-->
+<main class="contenedorprov seccionprov">
+    <div class="proveedores-titulo">
+        <h1>Proveedores</h1>
+        <div class="gridpresentacion">
+            <div class="presentacion1">
+                <div class="presentacion1img">
+                    <img src="/build/img/proveedores.jpg" alt="Logotipo de proveedor" class="p1img">
+                </div>
+                <h3>Visualiza la información detallada de los proveedores, incluyendo sus visitas y datos relevantes.</h3>
+            </div>
+            <div class="presentacion2">
+                <div class="presentacion2boton">
+                    <a href="#" class="p2boton">+ Añadir Nuevo Proveedor</a>
+                </div>
+                <div class="presentacion2boton1">
+                    <a href="#" class="p2boton">+ Registrar Visita de Proveedor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
