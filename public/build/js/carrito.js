@@ -284,7 +284,7 @@ function filtrarNombreProducto(inventario){
 
     console.log(terminosBusqueda);
     if(nombre){
-        return inventario.nombre.includes(nombre);
+        return inventario.nombre.toLowerCase().includes(nombre.toLowerCase());
     }
     return inventario;
 }
@@ -498,7 +498,8 @@ function iniciarCarrito() {
     inputCodigoNombre.addEventListener('input', (e) => {
         // const nombreProucto = +inputCodigoNombre.value;
         terminosBusqueda.nombre = e.target.value;
-        
+        resultadosProductos = filtrar();
+        mostrarProductos(resultadosProductos);
     })
 
 
