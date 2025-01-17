@@ -71,6 +71,8 @@
                     // Aquí puedes resetear los inputs cuando se hace clic en un td
                     const inputCodigoManual = document.querySelector('.modal--manual__close');
                     inputCodigoManual.value = '';  // Resetear el input
+                    const inputCodigoNombre = document.querySelector('.modal--nombre__close');
+                    inputCodigoNombre.value = '';
 
                     // Añadir a la tabla del carrito
                     const tabla = document.createElement('table');
@@ -121,10 +123,11 @@
                     actualizarCarrito(producto);
 
                     console.log(articulosCarrito);
+                    terminosBusqueda.codigoBarras = ''; // Limpiar la variable de búsqueda
+
                     modalManual.classList.remove('modal--manual--show'); // Cerrar la modal
                     modalProducto.classList.remove('modal--nombre--show'); // Cerrar la modal
 
-                    terminosBusqueda.codigoBarras = ''; // Limpiar la variable de búsqueda
                     filtrar(); // Realizar la búsqueda nuevamente si es necesario
                 });
                 // Añadir la fila al contenedor
