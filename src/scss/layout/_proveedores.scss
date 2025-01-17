@@ -146,3 +146,30 @@
     }
 }
 
+.slider-indicators {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.slider-indicators .dot {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.slider-indicators .dot.active {
+    background-color: #8D28A7; /* Mismo color que tus botones */
+}
+
+.proveedores-tabla{
+    h1{
+        padding-top: 4rem;
+    }
+}
+
+

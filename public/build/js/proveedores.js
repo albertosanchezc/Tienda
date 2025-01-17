@@ -1,28 +1,45 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Array con los textos que irán cambiando
-    const frases = [
-        "Visualiza la información detallada de los proveedores, incluyendo sus visitas y datos relevantes.",
-        "Gestiona fácilmente a tus proveedores, registra visitas y actualiza toda la información relevante.",
-        "Consulta información histórica de visitas de proveedores y accede rápidamente a todos los datos."
-    ];
+const texts = [
+    "Visualiza la información detallada de los proveedores, incluyendo sus visitas y datos relevantes.",
+    "Gestiona fácilmente a tus proveedores, registra visitas y actualiza toda la información relevante.",
+    "Consulta información histórica de visitas de proveedores y accede rápidamente a todos los datos."
+];
 
-    // Seleccionar el elemento <h3> donde aparecerán los textos
-    const parrafo = document.querySelector('.presentacion1 h3');
+let currentIndex = 0;
 
-    // Validar que el elemento existe antes de continuar
-    if (parrafo) {
-        let indiceActual = 0;
+// Función para mostrar texto y actualizar indicadores
+function showText(index) {
+    const textElement = document.getElementById("slider-text");
+    const dots = document.querySelectorAll(".dot");
 
-        // Función para actualizar el texto del párrafo
-        const actualizarTexto = () => {
-            indiceActual = (indiceActual + 1) % frases.length; // Cambiar al siguiente texto
-            parrafo.textContent = frases[indiceActual];
-        };
+    // Actualiza el texto
+    textElement.textContent = texts[index];
 
-        // Configurar el intervalo para cambiar el texto cada 4 segundos
-        setInterval(actualizarTexto, 4000); // Cambia cada 4 segundos
-    } else {
-        console.error("El elemento .presentacion1 h3 no se encontró en el DOM.");
-    }
+    // Actualiza los puntitos
+    dots.forEach((dot, i) => {
+        if (i === index) {
+            dot.classList.add("active");
+        } else {
+            dot.classList.remove("active");
+        }
+    });
+}
+
+// Cambia al slide específico al hacer clic en un puntito
+function setSlide(index) {
+    currentIndex = index;
+    showText(currentIndex);
+}
+
+// Cambia automáticamente al siguiente slide cada 5 segundos
+function nextSlide() {
+    currentIndex = (currentIndex + 1) % texts.length;
+    showText(currentIndex);
+}
+
+// Inicializa el slider
+document.addEventListener("DOMContentLoaded", () => {
+    showText(currentIndex); // Muestra el primer texto
+    setInterval(nextSlide, 5000); // Cambia cada 7 segundos
 });
+
 

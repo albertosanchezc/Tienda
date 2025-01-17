@@ -6,10 +6,15 @@
                 <div class="presentacion1img">
                     <img src="/build/img/proveedores.jpg" alt="Logotipo de proveedor" class="p1img">
                 </div>
-                <h3>Visualiza la información detallada de los proveedores, incluyendo sus visitas y datos relevantes.</h3>
+                <h3 id="slider-text"></h3>
+                <div class="slider-indicators">
+                    <span class="dot" onclick="setSlide(0)"></span>
+                    <span class="dot" onclick="setSlide(1)"></span>
+                    <span class="dot" onclick="setSlide(2)"></span>
+                </div>
             </div>
             <div class="presentacion2">
-            <div class="presentacion2boton">
+                <div class="presentacion2boton">
                     <a href="#" class="p2boton">Ver todos los Proveedores</a>
                 </div>
                 <div class="presentacion2boton1">
