@@ -98,9 +98,13 @@ class PaginasController
     }
     public static function proveedores(Router $router)
     {
+        $script = '<script src="/build/js/proveedores.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $proveedores = Proveedor::all();
         // debuguear($proveedores);
-        $router->render('paginas/proveedores');
+        $router->render('paginas/proveedores',[
+            'script' => $script
+        ]);
     }
 
     public static function propiedades(Router $router)
