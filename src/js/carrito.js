@@ -60,27 +60,31 @@ function mostrarProductos(productos) {
             row.addEventListener('click', () => {
                 // Añadir a la tabla del carrito
                 const tabla = document.createElement('table');
-                tabla.classList.add('ordenes');
-                tabla.innerHTML =
-                    `
-                        <thead>
-                        <tr>
-                            <th>Cantidad</th>
-                            <th>Producto</th>
-                            <th>Descripción</th>
-                            <th>Imagen</th>
-                            <th>Subtotal</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-            
-                        </tbody>
-                    `;
 
+                if (articulosCarrito.length === 0) {
+                    console.log('Imprimiendo tabla');
+                    tabla.classList.add('ordenes');
+                    tabla.innerHTML =
+                        `
+                            <thead>
+                            <tr>
+                                <th>Cantidad</th>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Imagen</th>
+                                <th>Subtotal</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        `;
+                    rectanguloGrandeBebe1.appendChild(tabla);
+
+                }
                 articulosCarrito = [...articulosCarrito, producto];
-                rectanguloGrandeBebe1.appendChild(tabla);
                 actualizarCarrito(producto);
+
                 console.log(articulosCarrito);
 
             });
