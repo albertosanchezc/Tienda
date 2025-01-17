@@ -22,8 +22,10 @@
     </div>
 </main>
 
-<section class="contenedor seccion">
-    <h1>Historial de retiros</h1>
-
+<section class="contenedorcaja seccioncaja">
+    <div class="busqueda-titulo">
+    <h1>Histórico de Entradas y Retiros de Caja</h1>
+    <h3>Consulta el registro completo de movimientos de caja con filtros para buscar y ordenar fácilmente las entradas y retiros según tus necesidades.</h3>
+    </div>
 
 </section>

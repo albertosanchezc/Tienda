@@ -22,6 +22,28 @@
     gap: 2rem;
     /* Espaciado horizontal */
 }
+@include telefono-1 {
+    .contenido-caja{
+        display: flex;
+        
+    }
+}
+
+@include tablet {
+    .contenido-caja{
+        grid-template-rows: 1fr 1fr;
+        
+    }
+}
+
+@include laptop-1 {
+    .contenido-caja{
+    grid-template-columns: 1fr 1fr;
+
+        
+    }
+}
+
 
 .efectivo {
     margin-bottom: 0;
@@ -72,6 +94,7 @@
 
     .añadircaja,
     .quitarcaja {
+        position: relative;
         text-decoration: none;
         color: #fff;
         font-size: 2rem;
@@ -106,4 +129,15 @@
     }
 
 
+}
+
+.busqueda-titulo{
+    h1{
+        margin-top: 10rem;
+    }
+    h3{
+        font-size: 1.7rem;
+        padding: 0 30rem 0 30rem;
+        
+    }
 }
