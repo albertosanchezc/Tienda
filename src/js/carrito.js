@@ -2,7 +2,7 @@ let inventario = [];
 let inventarioGranel = [];
 
 // document.addEventListener('DOMContentLoaded', function () {
-    consultarAPI();
+consultarAPI();
 // });
 
 async function consultarAPI() {
@@ -23,6 +23,12 @@ async function consultarAPI() {
     }
 }
 
+// cargarEventListener();
+
+// function cargarEventListener(){
+//     actualizarCarrito();
+// }
+
 const terminosBusqueda = {
     codigoBarras: '',
     nombre: '',
@@ -34,8 +40,9 @@ const tablaModalManual = document.querySelector('.modal__tabla--manual');
 const resultadoBusquedaManual = tablaModalManual.querySelector('tbody');
 // resultadoBusquedaManual.remove('tr');
 
+// Mostrar productos en la tabla de la ventana modal manual
 function mostrarProductos(productos) {
-    limpiarHTML(resultadoBusquedaManual);
+    limpiarHTML(resultadoBusquedaManual);  // Limpiar las filas anteriores
 
     if (productos.length > 0) {
         productos.forEach(producto => {
@@ -49,10 +56,121 @@ function mostrarProductos(productos) {
                 <td>${precio_unitario_venta}</td>
             `;
 
+            // Añadir event listener al tr para cuando se haga clic
+            row.addEventListener('click', () => {
+                // Añadir a la tabla del carrito
+                const tabla = document.createElement('table');
+                tabla.classList.add('ordenes');
+                tabla.innerHTML =
+                    `
+                        <thead>
+                        <tr>
+                            <th>Cantidad</th>
+                            <th>Producto</th>
+                            <th>Descripción</th>
+                            <th>Imagen</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+            
+                        </tbody>
+                    `;
+
+                rectanguloGrandeBebe1.appendChild(tabla);
+                actualizarCarrito(producto);
+                articulosCarrito = [...articulosCarrito, producto];
+                console.log(articulosCarrito);
+
+            });
+            // Añadir la fila al contenedor
             resultadoBusquedaManual.appendChild(row);
-        })
+        });
     }
 }
+
+// Mostrar productos en la tabla del carrito
+// function mostrarProductosCarrito(productos) {
+//     limpiarHTML(tablaCarrito);  // Limpiar las filas anteriores
+
+//     if (productos.length > 0) {
+//         productos.forEach(producto => {
+//             const { nombre, descripcion, categoria_id, precio_unitario_venta } = producto;
+
+//             const row = document.createElement('tr');
+//             row.innerHTML = `
+//                 <td>${nombre}</td>
+//                 <td>${descripcion}</td>
+//                 <td>${categoria_id}</td>
+//                 <td>${precio_unitario_venta}</td>
+//             `;
+
+//             // Añadir event listener al tr para cuando se haga clic
+//             row.addEventListener('click', () => {
+//                 // Añadir a la tabla del carrito
+//                 const tabla = document.createElement('table');
+//                 tabla.classList.add('ordenes');
+//                 tabla.innerHTML =
+//                     `
+//                         <thead>
+//                         <tr>
+//                             <th>Cantidad</th>
+//                             <th>Producto</th>
+//                             <th>Descripción</th>
+//                             <th>Imagen</th>
+//                             <th>Subtotal</th>
+//                             <th>Acciones</th>
+//                         </tr>
+//                         </thead>
+//                         <tbody>
+            
+//                         </tbody>
+//                     `;
+
+//                 rectanguloGrandeBebe1.appendChild(tabla);
+
+                // actualizarCarrito(producto);
+                // articulosCarrito = [...articulosCarrito, producto];
+                // console.log(articulosCarrito);
+
+//             });
+//             // Añadir la fila al contenedor
+//             resultadoBusquedaManual.appendChild(row);
+//         });
+//     }
+// }
+
+
+function actualizarCarrito(producto) {
+    modalManual.classList.remove('modal--manual--show')
+
+
+    // `<table>
+    //     <thead>
+    //     <tr>
+    //         <th>Cantidad</th>
+    //         <th>Producto</th>
+    //         <th>Descripción</th>
+    //         <th>Imagen</th>
+    //         <th>Subtotal</th>
+    //         <th>Acciones</th>
+    //     </tr>
+    //     </thead>
+    //     <tbody>
+
+    //     </tbody>
+    // </table>`
+
+    // <td>${nombre}</td>
+    // <td>${descripcion}</td>
+    // <td>${categoria_id}</td>
+    // <td>${precio_unitario_venta}</td>
+
+}
+
+
+
 
 // Limpiar HTML
 function limpiarHTML(resultado) {
@@ -204,7 +322,7 @@ function iniciarCarrito() {
     //Réctangulo izquierdo
     rectanguloGrande.classList.add('grid-item');
     rectanguloGrande.appendChild(rectanguloGrandeBebe1);
-    rectanguloGrande.appendChild(rectanguloGrandeBebe2);
+    rectanguloGrande.appendChild(rectanguloGrandeBebe2);/////////////////
     rectanguloGrande.appendChild(rectanguloGrandeBebe3);
 
     // Rectángulo abajo derecha
@@ -217,7 +335,14 @@ function iniciarCarrito() {
     const tablaCarrito = document.querySelector('.ordenes');
     let tablaCarritoRemoved = null;
     tablaCarritoRemoved = tablaCarrito;
+
+    const tablaCarritoBody = document.querySelector('.ordenes');
+    let tablaCarritoBodyRemoved = null;
+    tablaCarritoBodyRemoved = tablaCarritoBody;
     tablaCarrito.remove();
+    tablaCarritoBody.remove();
+
+    // tablaCarritoBody.remove();
 
     const botonVaciarCarrito = document.querySelector('.boton-rojo-block');
     let botonVaciarCarritoRemoved = null;
