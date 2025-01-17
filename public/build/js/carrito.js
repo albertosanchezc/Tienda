@@ -49,13 +49,23 @@
     const icono = document.querySelector('.icono');
     // resultadoBusquedaManual.remove('tr');
 
+
+    function limpiarRectanguloPequeno() {
+        const rectanguloPequeno = document.querySelector('.rectangulo-pequeno');
+        if (rectanguloPequeno) {
+            while (rectanguloPequeno.firstChild) {
+                rectanguloPequeno.removeChild(rectanguloPequeno.firstChild);
+            }
+        }
+    }
+
     // Mostrar productos en la tabla de la ventana modal manual
     function mostrarProductos(productos, resultados) {
         limpiarHTML(resultados);  // Limpiar las filas anteriores
 
         if (productos.length > 0) {
             productos.forEach(producto => {
-                const { nombre, descripcion, categoria_id, precio_unitario_venta } = producto;
+                const { nombre, descripcion, categoria_id, precio_unitario_venta, cantidad, codigo_barras } = producto;
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -122,6 +132,58 @@
                     articulosCarrito = [...articulosCarrito, producto];
                     actualizarCarrito(producto);
 
+                    const rectanguloPequeno = document.querySelector('.rectangulo-pequeno');
+                    const detallesProducto = document.createElement('DIV');
+
+                    const divRectangulobebe1 = document.createElement('DIV');
+                    divRectangulobebe1.classList.add('rectangulo-pequeno-bebe1')
+                    divRectangulobebe1.innerHTML =
+                    `
+                                <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
+                    `;
+                    const divRectangulobebe2 = document.createElement('DIV');
+                    divRectangulobebe2.classList.add('rectangulo-pequeno-bebe2');
+                    divRectangulobebe2.innerHTML =
+
+                    `
+                                <div class="rectangulo-pequeno-bebecito21">
+                                    <h3>${nombre}</h3>
+                                </div>
+                                <div class="rectangulo-pequeno-bebecito22">
+                                    <h3>${descripcion}</h3>
+                                </div>
+                    `;
+                    const divRectangulobebe3 = document.createElement('DIV');
+                    divRectangulobebe3.classList.add('rectangulo-pequeno-bebe3');
+                    divRectangulobebe3.innerHTML =
+                    `
+                                <div class="rectangulo-pequeno-bebecito31">
+                                    <h3>Cantidad: <span class="cantidad">${cantidad}</span></h3>
+                                </div>
+                                <div class="rectangulo-pequeno-bebecito32">
+                                    <h3>Código de Barras</h3>
+                                    <h3>${codigo_barras}</h3>
+
+                                </div>
+                    `;
+                    const divRectangulobebe4 = document.createElement('DIV');
+                    divRectangulobebe4.classList.add('rectangulo-pequeno-bebe4');
+                    divRectangulobebe4.innerHTML =
+                    `
+                                <div class="rectangulo-pequeno-bebecito41">
+                                    <h3>Subtotal: <span class="subtotal">$${precio_unitario_venta}</span></h3>
+                                </div>
+                                <div class="rectangulo-pequeno-bebecito42">
+                                    <h3>Total: $${precio_unitario_venta*cantidad}</h3>
+                                </div>
+                    `;
+                    rectanguloPequeno.classList.remove('grid-item');
+                    rectanguloPequeno.appendChild(divRectangulobebe1);
+                    rectanguloPequeno.appendChild(divRectangulobebe2);
+                    rectanguloPequeno.appendChild(divRectangulobebe3);
+                    rectanguloPequeno.appendChild(divRectangulobebe4);
+
+                    // actualizarCarrito
                     console.log(articulosCarrito);
                     terminosBusqueda.codigoBarras = ''; // Limpiar la variable de búsqueda
 
@@ -340,7 +402,9 @@
 
     // Div Arriba-Derecha
     const rectanguloPequeno = document.querySelector('.rectangulo-pequeno');
-    rectanguloPequeno.classList.remove('grid-item');
+    // console.log(rectanguloPequeno);
+    rectanguloPequeno.firstChild.remove();
+
 
     const rectanguloPequenoBebe1 = document.querySelector('.rectangulo-pequeno-bebe1');
     let rectanguloPequenoBebe1Remove = null;
@@ -469,13 +533,6 @@
         botonVaciarCarritoRemoved = botonVaciarCarrito;
         botonVaciarCarrito.remove();
 
-        let detalles = `
-            <div class="rectangulo-pequeno">
-            </div>
-                `;
-
-        rectanguloPequeno.innerHTML = detalles;
-
         // Actualiza el div de totales
         rectanguloGrandeHorizontal.innerHTML = `
                 <div class="rectangulo-grande-horizontal-bebe1">
@@ -501,6 +558,8 @@
         // rectanguloPequeno.appendChild(rectanguloPequenoBebe2);
         // rectanguloPequeno.appendChild(rectanguloPequenoBebe3);
         // rectanguloPequeno.appendChild(rectanguloPequenoBebe4);
+
+
 
         const infoArticulo = {
             imagen: rectanguloPequeno.querySelector('img'),
