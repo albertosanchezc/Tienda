@@ -31,7 +31,7 @@
     <div class="busqueda-filtros">
         <form id="buscador" action="/caja-generarexcel" method="POST">
             <fieldset>
-            <legend>Búsqueda</legend>
+                <legend>Búsqueda</legend>
                 <div class="caja-filtros">
                     <div class="fecha1">
                         <label for="fecha1">Fecha inicial: </label>
@@ -44,40 +44,40 @@
                     <div class="tipo-movimiento">
                         <label for="tipo-movimiento">Tipo de movimiento: </label>
                         <div class="switch">
-                        <input type="radio" id="todos" name="caja[tipo_movimiento]" value="todos" checked>
-                        <label for="todos">Todos</label>
-                        <input type="radio" id="retiro" name="caja[tipo_movimiento]" value="retiro">
-                        <label for="retiro">Retiro</label>
-                        <input type="radio" id="abono" name="caja[tipo_movimiento]" value="abono">
-                        <label for="abono">Abono</label>
+                            <input type="radio" id="todos" name="caja[tipo_movimiento]" value="todos" checked>
+                            <label for="todos">Todos</label>
+                            <input type="radio" id="retiro" name="caja[tipo_movimiento]" value="retiro">
+                            <label for="retiro">Retiro</label>
+                            <input type="radio" id="abono" name="caja[tipo_movimiento]" value="abono">
+                            <label for="abono">Abono</label>
+                        </div>
+                        <div class="orden-caja">
+                            <label for="orden-caja">Orden: </label>
+                            <div class="switch">
+                                <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
+                                <label for="ascendente">Ascendente</label>
+                                <input type="radio" id="descendente" name="caja[orden]" value="descendente">
+                                <label for="descendente">Descendente</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="orden-caja">
-                        <label for="orden-caja">Orden: </label>
-                        <div class="switch">
-                        <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
-                        <label for="ascendente">Ascendente</label>
-                        <input type="radio" id="descendente" name="caja[orden]" value="descendente">
-                        <label for="descendente">Descendente</label>
-                    </div>
-                    </div>
-                </div>
             </fieldset>
             <!-- //aqui iriia el boton de descargar excel -->
         </form>
     </div>
 
     <div class="tabladecontenido">
-    <table class="tabla-contenido">
-        <thead>
-            <tr>
-                <th>Cantidad</th>
-                <th>Tipo</th>
-                <th>Fecha y Hora</th>
-                <th>Saldo en Caja</th>
-            </tr>
-        </thead>
-        <!-- Mostrar los resultados -->
-        <tbody>
+        <table class="tabla-contenido">
+            <thead>
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Tipo</th>
+                    <th>Fecha y Hora</th>
+                    <th>Saldo en Caja</th>
+                </tr>
+            </thead>
+            <!-- Mostrar los resultados -->
+            <tbody>
                 <tr>
                     <td>$10545</td>
                     <td>Retiro</td>
@@ -96,7 +96,31 @@
                     <td>27/09/25 10:58p.m.</td>
                     <td>$150.00</td>
                 </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- modal de añadir -->
+<section class="modal--aniadir modal--aniadir--show">
+    <div class="modal--aniadir__container">
+        <div class="modal--aniadir__fleximg1">
+            <img src="/build/img/dinero.png" alt="Logotipo de dinero" class="modal--aniadir__img">
+        </div>
+        <div class="modal--aniadir__fleximg2">
+            <a href="#" class="modal--aniadir__cerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--aniadir__img2">
+            </a>
+        </div>
+        <h2 class="modal--aniadir__title">¡Añadir efectivo!</h2>
+        <p class="modal--aniadir__paragraph">
+            Introduce la cantidad en efectivo que deseas añadir a la caja.
+        </p>
+        <div class="modal--aniadir__cantidad">
+        
+        <label for="2">$ </label>
+            <input href="#" id="2" class="modal--aniadir__close" type="number" placeholder="Ejemplo:  1576">
+        </input>
+        </div>
+        <a href="#" class="modal--aniadir__close1">+ Añadir</a>
     </div>
 </section>
