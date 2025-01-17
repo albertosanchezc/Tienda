@@ -27,76 +27,80 @@
         </div>
     </div>
     <section class="contenedorcaja seccioncaja">
-    <div class="busqueda-titulo">
-        <h1>Histórico de Visitas de Proveedores</h1>
-        <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos generados durante sus visitas.</h3>
-    </div>
-    <div class="busqueda-filtros1">
-        <form id="buscador" action="/proveedores-generarexcel" method="POST">
-            <fieldset>
-                <legend>Búsqueda</legend>
-                <div class="caja-filtros1">
-                    <div class="fecha1">
-                        <label for="fecha1">Fecha de visita: </label>
-                        <input type="date" id="fecha1" name="caja[fecha1]">
-                    </div>
-                    <div class="fecha2">
-                        <label for="fecha2">Nombre: </label>
-                        <input type="text" id="fecha2" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
-                    </div>
-                    <div class="tipo-movimiento1">
-                        <div class="orden-caja">
-                            <label for="orden-caja">Saldo: </label>
-                            <div class="switch">
-                                <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
-                                <label for="ascendente">Liquidado</label>
-                                <input type="radio" id="descendente" name="caja[orden]" value="descendente">
-                                <label for="descendente">Adeudo</label>
+        <div class="busqueda-titulo">
+            <h1>Histórico de Visitas de Proveedores</h1>
+            <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos
+                generados durante sus visitas.</h3>
+        </div>
+        <div class="busqueda-filtros1">
+            <form id="buscador" action="/proveedores-generarexcel" method="POST">
+                <fieldset>
+                    <legend>Búsqueda</legend>
+                    <div class="caja-filtros1">
+                        <div class="fecha1">
+                            <label for="fecha1">Fecha de visita: </label>
+                            <input type="date" id="fecha1" name="caja[fecha1]">
+                        </div>
+                        <div class="fecha2">
+                            <label for="fecha2">Nombre: </label>
+                            <input type="text" id="fecha2" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
+                        </div>
+                        <div class="tipo-movimiento1">
+                            <div class="orden-caja">
+                                <label for="orden-caja">Saldo: </label>
+                                <div class="switch">
+                                    <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
+                                    <label for="ascendente">Liquidado</label>
+                                    <input type="radio" id="descendente" name="caja[orden]" value="descendente">
+                                    <label for="descendente">Adeudo</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-            </fieldset>
-            <!-- //aqui iriia el boton de descargar excel -->
-        </form>
-    </div>
+                </fieldset>
+                <!-- //aqui iriia el boton de descargar excel -->
+            </form>
+        </div>
 
-    <div class="tabladeproveedores">
-        <table class="tabla-proveedores">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Fecha y Hora</th>
-                    <th>Total pagado</th>
-                    <th>Adeudo</th>
-                    <th>Productos comprados</th>
-                </tr>
-            </thead>
-            <!-- Mostrar los resultados -->
-            <tbody>
-                <tr>
-                    <td>Coca-cola</td>
-                    <td>27/09/25 10:58p.m.</td>
-                    <td>$15063.00</td>
-                    <td>$1500.00</td>
-                    <td><a href="#">Ver productos</a></td>
-                </tr>
-                <tr>
-                    <td>Coca-cola</td>
-                    <td>27/09/25 10:58p.m.</td>
-                    <td>$15063.00</td>
-                    <td>$1500.00</td>
-                    <td><a href="#">Ver productos</a></td>
-                </tr>
-                <tr>
-                    <td>Coca-cola</td>
-                    <td>27/09/25 10:58p.m.</td>
-                    <td>$15063.00</td>
-                    <td>$1500.00</td>
-                    <td><a href="#">Ver productos</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
+        <div class="tabladeproveedores">
+            <table class="tabla-proveedores">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha y Hora</th>
+                        <th>Total pagado</th>
+                        <th>Adeudo</th>
+                        <th>Productos comprados</th>
+                    </tr>
+                </thead>
+                <!-- Mostrar los resultados -->
+                <tbody>
+                    <tr>
+                        <td>Coca-cola</td>
+                        <td>27/09/25 10:58p.m.</td>
+                        <td>$15063.00</td>
+                        <td>$1500.00</td>
+                        <td><a href="#">Ver productos</a></td>
+                    </tr>
+                    <tr>
+                        <td>Coca-cola</td>
+                        <td>27/09/25 10:58p.m.</td>
+                        <td>$15063.00</td>
+                        <td>$1500.00</td>
+                        <td>
+                            <div class="verproductos"><a href="#" class="botonverproductos">Ver productos</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Coca-cola</td>
+                        <td>27/09/25 10:58p.m.</td>
+                        <td>$15063.00</td>
+                        <td>$1500.00</td>
+                        <td><a href="#" class="botonverproductos">Ver productos</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
 </main>
