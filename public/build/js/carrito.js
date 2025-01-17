@@ -78,9 +78,9 @@ function mostrarProductos(productos) {
                         </tbody>
                     `;
 
+                articulosCarrito = [...articulosCarrito, producto];
                 rectanguloGrandeBebe1.appendChild(tabla);
                 actualizarCarrito(producto);
-                articulosCarrito = [...articulosCarrito, producto];
                 console.log(articulosCarrito);
 
             });
@@ -124,15 +124,15 @@ function mostrarProductos(productos) {
 //                         </tr>
 //                         </thead>
 //                         <tbody>
-            
+
 //                         </tbody>
 //                     `;
 
 //                 rectanguloGrandeBebe1.appendChild(tabla);
 
-                // actualizarCarrito(producto);
-                // articulosCarrito = [...articulosCarrito, producto];
-                // console.log(articulosCarrito);
+// actualizarCarrito(producto);
+// articulosCarrito = [...articulosCarrito, producto];
+// console.log(articulosCarrito);
 
 //             });
 //             // Añadir la fila al contenedor
@@ -143,33 +143,71 @@ function mostrarProductos(productos) {
 
 
 function actualizarCarrito(producto) {
+    // limpiarHTML(tablaCarritoBody);
+
     modalManual.classList.remove('modal--manual--show')
 
+    let { id, nombre, descripcion, codigo_barras, cantidad, producto_id, precio_unitario_venta, categoria_id, precio_compra, fecha_compra, proveedor_id } = producto;
+    // Verificar si la tabla ya existe
+    let tablaCarrito = document.querySelector('.ordenes');
 
-    // `<table>
-    //     <thead>
-    //     <tr>
-    //         <th>Cantidad</th>
-    //         <th>Producto</th>
-    //         <th>Descripción</th>
-    //         <th>Imagen</th>
-    //         <th>Subtotal</th>
-    //         <th>Acciones</th>
-    //     </tr>
-    //     </thead>
-    //     <tbody>
+    if (tablaCarrito) {
+        // Ahora que la tabla está en el DOM, agregamos el producto
+        const tbody = tablaCarrito.querySelector('tbody');
 
-    //     </tbody>
-    // </table>`
+        // Crear una fila para el nuevo producto
+        articulosCarrito.forEach(producto => {
 
-    // <td>${nombre}</td>
-    // <td>${descripcion}</td>
-    // <td>${categoria_id}</td>
-    // <td>${precio_unitario_venta}</td>
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${cantidad}</td>
+            <td>${nombre}</td>
+            <td>${descripcion}</td>
+            <td>${codigo_barras}</td>
+            <td>${precio_unitario_venta}</td>        
+        `;
 
+            // Añadir la fila al tbody
+            tbody.appendChild(row);
+
+
+        })
+
+        actualizarCarritoView();
+    }
 }
 
+// Función para eliminar productos del carrito
+function eliminarProducto(productoId) {
+    // Filtrar el producto a eliminar
+    console.log(articulosCarrito);
 
+    // Actualizar el carrito después de eliminar el producto
+    actualizarCarritoView();
+}
+
+// Función para ctualizar el carrito cuando se eliminen producto
+function actualizarCarritoView() {
+    const tablaCarrito = document.querySelector('.ordenes');
+    const tbody = tablaCarrito.querySelector('tbody');
+
+    // limpiar el tbody
+    limpiarHTML(tbody);
+
+    // volver a agregar los productos al tbody
+    articulosCarrito.forEach(producto => {
+        const { cantidad, descripcion, precio_unitario_venta, nombre, categoria_id, codigo_barras } = producto;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        <td>${cantidad}</td>
+        <td>${nombre}</td>
+        <td>${descripcion}</td>
+        <td>${codigo_barras}</td>
+        <td>${precio_unitario_venta}</td>  
+        `;
+        tbody.appendChild(row);
+    })
+}
 
 
 // Limpiar HTML
