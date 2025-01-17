@@ -38,6 +38,9 @@ const terminosBusqueda = {
 const tablaModalManual = document.querySelector('.modal__tabla--manual');
 
 const resultadoBusquedaManual = tablaModalManual.querySelector('tbody');
+
+const rectanguloGrandeBebecito2 = document.querySelector('.rectangulo-grande-bebecito2');
+const icono = document.querySelector('.icono');
 // resultadoBusquedaManual.remove('tr');
 
 // Mostrar productos en la tabla de la ventana modal manual
@@ -61,8 +64,18 @@ function mostrarProductos(productos) {
                 // Añadir a la tabla del carrito
                 const tabla = document.createElement('table');
 
+
+                const botonVaciarCarrito = document.createElement('BUTTON');
+                botonVaciarCarrito.classList.add('boton-rojo-block');
+                botonVaciarCarrito.textContent = 'Vaciar Carrito';
+
+                const imagenBotonVaciarCarrito = document.createElement('IMG');
+                imagenBotonVaciarCarrito.src = 'build/img/basura.svg';
+                imagenBotonVaciarCarrito.alt = 'Icono basura';
+                imagenBotonVaciarCarrito.loading = 'lazy';
+                botonVaciarCarrito.appendChild(imagenBotonVaciarCarrito);
+
                 if (articulosCarrito.length === 0) {
-                    console.log('Imprimiendo tabla');
                     tabla.classList.add('ordenes');
                     tabla.innerHTML =
                         `
@@ -81,6 +94,8 @@ function mostrarProductos(productos) {
                         `;
                     rectanguloGrandeBebe1.appendChild(tabla);
 
+
+                    icono.appendChild(botonVaciarCarrito);
                 }
                 articulosCarrito = [...articulosCarrito, producto];
                 actualizarCarrito(producto);
@@ -176,7 +191,7 @@ function actualizarCarrito(producto) {
 
 
             // Seleccionamos el contenedor del botón de vaciar carrito
-            const rectanguloGrandeBebecito2 = document('.rectangulo-grande-bebecito2');
+            // const rectanguloGrandeBebecito2 = document('.rectangulo-grande-bebecito2');
             // rectanguloGrandeBebecito2.
         })
 
