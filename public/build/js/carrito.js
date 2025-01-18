@@ -134,6 +134,7 @@
 
                     const rectanguloPequeno = document.querySelector('.rectangulo-pequeno');
                     const detallesProducto = document.createElement('DIV');
+                    limpiarHTML(rectanguloPequeno);
 
                     const divRectangulobebe1 = document.createElement('DIV');
                     divRectangulobebe1.classList.add('rectangulo-pequeno-bebe1')
@@ -158,12 +159,10 @@
                     divRectangulobebe3.innerHTML =
                     `
                                 <div class="rectangulo-pequeno-bebecito31">
-                                    <h3>Cantidad: <span class="cantidad">${cantidad}</span></h3>
+                                    <h3>Cantidad: ${cantidad}</h3>
                                 </div>
                                 <div class="rectangulo-pequeno-bebecito32">
                                     <h3>Código de Barras</h3>
-                                    <h3>${codigo_barras}</h3>
-
                                 </div>
                     `;
                     const divRectangulobebe4 = document.createElement('DIV');
@@ -171,10 +170,10 @@
                     divRectangulobebe4.innerHTML =
                     `
                                 <div class="rectangulo-pequeno-bebecito41">
-                                    <h3>Subtotal: <span class="subtotal">$${precio_unitario_venta}</span></h3>
+                                    <h3>Subtotal: </h3>
                                 </div>
                                 <div class="rectangulo-pequeno-bebecito42">
-                                    <h3>Total: $${precio_unitario_venta*cantidad}</h3>
+                                    <h3>$${precio_unitario_venta}</h3>
                                 </div>
                     `;
                     rectanguloPequeno.classList.remove('grid-item');
@@ -182,6 +181,7 @@
                     rectanguloPequeno.appendChild(divRectangulobebe2);
                     rectanguloPequeno.appendChild(divRectangulobebe3);
                     rectanguloPequeno.appendChild(divRectangulobebe4);
+
 
                     // actualizarCarrito
                     console.log(articulosCarrito);
@@ -199,8 +199,11 @@
     }
 
     function vaciarCarrito() {
+        const rectanguloPequeno = document.querySelector('.rectangulo-pequeno');
+        limpiarHTML(rectanguloPequeno);
         articulosCarrito = [];
         actualizarCarrito(articulosCarrito);
+
     }
 
 
@@ -322,7 +325,15 @@
         <td>${nombre}</td>
         <td>${descripcion}</td>
         <td>${codigo_barras}</td>
-        <td>${precio_unitario_venta}</td>  
+        <td>${precio_unitario_venta}</td>
+        <td>
+            <div class="editar-cantidad">
+                <a href="#" class="botoneditar-cantidad">Editar</a>
+            </div>
+            <div class="eliminar-producto">
+                <a href="#" class="botoneliminar-producto">Eliminar</a>
+            </div>
+        </td>
         `;
             tbody.appendChild(row);
         })
@@ -572,11 +583,15 @@
         const btnBuscarCodigoManual = document.getElementById('busqueda-manual');
         btnBuscarCodigoManual.addEventListener('click', () => {
             modalManual.classList.add('modal--manual--show');
+            inputCodigoManual.disabled = false;
+            inputCodigoManual.focus();
         })
 
         const btnBuscarNombre = document.getElementById('busqueda-producto');
         btnBuscarNombre.addEventListener('click', () => {
             modalProducto.classList.add('modal--nombre--show')
+            inputCodigoNombre.disabled = false;
+            inputCodigoNombre.focus();
         })
 
         let inputCodigoManual = document.querySelector('.modal--manual__close');
