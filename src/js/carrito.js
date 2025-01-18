@@ -1,8 +1,17 @@
 (function () {
-    let inventario = [];
-    let inventarioGranel = [];
 
     document.addEventListener('DOMContentLoaded', function () {
+        let inventario = [];
+        let inventarioGranel = [];
+        let carrito = [];
+        const infoArticulo = {
+            imagen: 0,
+            descripcion: 0,
+            cantidad: 0,
+            codigoBarras: null,
+            subtotal: 0
+        }
+
         consultarAPI();
     });
 
@@ -139,14 +148,14 @@
                     const divRectangulobebe1 = document.createElement('DIV');
                     divRectangulobebe1.classList.add('rectangulo-pequeno-bebe1')
                     divRectangulobebe1.innerHTML =
-                    `
+                        `
                                 <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
                     `;
                     const divRectangulobebe2 = document.createElement('DIV');
                     divRectangulobebe2.classList.add('rectangulo-pequeno-bebe2');
                     divRectangulobebe2.innerHTML =
 
-                    `
+                        `
                                 <div class="rectangulo-pequeno-bebecito21">
                                     <h3>${nombre}</h3>
                                 </div>
@@ -157,7 +166,7 @@
                     const divRectangulobebe3 = document.createElement('DIV');
                     divRectangulobebe3.classList.add('rectangulo-pequeno-bebe3');
                     divRectangulobebe3.innerHTML =
-                    `
+                        `
                                 <div class="rectangulo-pequeno-bebecito31">
                                     <h3>Cantidad: ${cantidad}</h3>
                                 </div>
@@ -168,7 +177,7 @@
                     const divRectangulobebe4 = document.createElement('DIV');
                     divRectangulobebe4.classList.add('rectangulo-pequeno-bebe4');
                     divRectangulobebe4.innerHTML =
-                    `
+                        `
                                 <div class="rectangulo-pequeno-bebecito41">
                                     <h3>Subtotal: </h3>
                                 </div>
@@ -185,6 +194,10 @@
 
                     // actualizarCarrito
                     console.log(articulosCarrito);
+                    carrito = articulosCarrito;
+                    let acumulado = calcularPrecioAcumulado();
+                    console.log(acumulado);
+                    actualizarTotal(acumulado);
                     terminosBusqueda.codigoBarras = ''; // Limpiar la variable de búsqueda
 
                     modalManual.classList.remove('modal--manual--show'); // Cerrar la modal
@@ -196,6 +209,51 @@
                 resultados.appendChild(row);
             });
         }
+    }
+
+    function calcularPrecioAcumulado() {
+        let precioAcumulado = 0;
+        carrito.forEach(producto => {
+            const { precio_unitario_venta } = producto;
+            precioAcumulado = parseFloat(precio_unitario_venta) + parseFloat(precioAcumulado);
+        })
+        return precioAcumulado;
+    }
+
+    function actualizarTotal(total){
+        const divTotales = document.querySelector('.rectangulo-grande-horizontal');
+
+        const divTotalBebe1 = document.createElement('DIV');
+        divTotalBebe1.classList.add('rectangulo-grande-horizontal-bebe1')
+        divTotalBebe1.innerHTML = `
+                <h3>Total:</h3>
+        `;
+        const divTotalBebe2 = document.createElement('DIV');
+        divTotalBebe2.classList.add('rectangulo-grande-horizontal-bebe2')
+        divTotalBebe2.innerHTML = `
+                <h3>$${total}</h3>
+        `;
+        const divTotalBebe3 = document.createElement('DIV');
+        divTotalBebe3.classList.add('rectangulo-grande-horizontal-bebe3')
+        divTotalBebe3.innerHTML = `
+                <button id="pagar" class="boton-azul-block">
+                    PAGAR <span>&gt;&gt;&gt;</span>
+                </button>
+        `;
+        const divTotalBebe4 = document.createElement('DIV');
+        divTotalBebe4.classList.add('rectangulo-grande-horizontal-bebe4')
+        divTotalBebe4.innerHTML = `
+                <h3>Cantidad de artículos:</h3>
+                <h3>0</h3>
+        `;
+
+        limpiarHTML(divTotales);
+        divTotales.appendChild(divTotalBebe1);
+        divTotales.appendChild(divTotalBebe2);
+        divTotales.appendChild(divTotalBebe3);
+        divTotales.appendChild(divTotalBebe4);
+
+
     }
 
     function vaciarCarrito() {
@@ -231,7 +289,7 @@
             <td>${nombre}</td>
             <td>${descripcion}</td>
             <td>${codigo_barras}</td>
-            <td>${precio_unitario_venta}</td>        
+            <td class='precioTabla'>${precio_unitario_venta}</td>        
         `;
 
                 // Añadir la fila al tbody
@@ -617,6 +675,7 @@
             terminosBusqueda.nombre = e.target.value;
             const resultadosProductos = filtrar();
             mostrarProductos(resultadosProductos, resultadoBusquedaNombre);
+            const carrito = articulosCarrito;
             terminosBusqueda.nombre = '';
         })
 
