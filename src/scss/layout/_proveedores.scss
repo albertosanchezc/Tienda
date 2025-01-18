@@ -40,7 +40,7 @@
 
         .p1img {
             width: 100%;
-            max-width: 240px;
+            max-width: 210px;
             height: auto;
             background-color: transparent;
             border-radius: 1rem;
@@ -305,7 +305,7 @@
 
 .tabla-proveedores th,
 .tabla-proveedores td {
-    border: 1px solid #BD3F72;
+    border: 1px solid #8D28A7;
     /* Bordes entre las celdas */
     padding: 8px;
     text-align: left;
@@ -315,7 +315,7 @@
 
 
 .tabla-proveedores th {
-    background: linear-gradient(to right, #8D28A7, #BD3F72);
+    background: linear-gradient(to right, #8D28A7, #B02997);
     //   background-color: #D56B26; 
     color: white;
     font-weight: bold;
@@ -348,22 +348,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #C9554C; /* Color naranja que definiste */
+    color: #8D28A7; /* Color naranja que definiste */
     font-size: 1.3rem;
     font-weight: 600;
     text-decoration: none; /* Evita subrayado */
     background-color: #fff;
     width: 100%;
     height: 100%;
-    border: 1px solid #C9554C;
+    border: 1px solid #8D28A7;
     border-radius: 6px;
     transition: background-color .3s;
-
-
 }
 
 .verproductos .botonverproductos:hover {
     text-decoration: none;
     color: #fff; /* Cambia a blanco bal pasar el cursor */
-    background-color: #C9554C;
+    background-color: #8D28A7;
 }

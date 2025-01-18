@@ -163,6 +163,19 @@
                 <!-- Mostrar los resultados -->
                 <tbody>
                     <tr>
+                        <td>2</td>
+                        <td>Coca-Cola</td>
+                        <td>1.75 L</td>
+                        <td>7501055313532</td>
+                        <td>38.00</td>
+                        <td>
+                            <div class="editar-cantidad">
+                                <a href="#" class="botoneditar-cantidad">Editar</a>
+                            </div>
+                            <div class="eliminar-producto">
+                                <a href="#" class="botoneliminar-producto">Eliminar</a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -15,7 +15,7 @@
             </div>
             <div class="presentacion2">
                 <div class="presentacion2boton">
-                    <a href="#" class="p2boton">Ver todos los Proveedores</a>
+                    <a href="#" class="p2boton">Buscar Proveedores</a>
                 </div>
                 <div class="presentacion2boton1">
                     <a href="#" class="p2boton1">+ Añadir Nuevo Proveedor</a>
@@ -30,7 +30,7 @@
         <div class="busqueda-titulo">
             <h1>Histórico de Visitas de Proveedores</h1>
             <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos
-                generados durante sus visitas.</h3>
+            generados durante sus visitas.<h3>
         </div>
         <div class="busqueda-filtros1">
             <form id="buscador" action="/proveedores-generarexcel" method="POST">
@@ -100,7 +100,8 @@
                         <td>$15063.00</td>
                         <td>$1500.00</td>
                         <td>
-                            <div class="verproductos"><a href="#" class="botonverproductos">Ver productos</a>
+                            <div class="verproductos">
+                                <a href="#" class="botonverproductos">Ver productos</a>
                             </div>
                         </td>
                     </tr>
