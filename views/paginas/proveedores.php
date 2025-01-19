@@ -30,7 +30,7 @@
         <div class="busqueda-titulo">
             <h1>Histórico de Visitas de Proveedores</h1>
             <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos
-            generados durante sus visitas.<h3>
+                generados durante sus visitas.<h3>
         </div>
         <div class="busqueda-filtros1">
             <form id="buscador" action="/proveedores-generarexcel" method="POST">
@@ -109,5 +109,61 @@
             </table>
         </div>
     </section>
-
 </main>
+
+<!-- modal de buscar datos de proveedores -->
+<section class="modalproveedores modalproveedores--show">
+    <div class="modalproveedores__contenedor">
+        <div class="modalproveedores__cerrar">
+            <a href="#" class="modalproveedores__refcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalproveedores__imgcerrar">
+            </a>
+        </div>
+        <div class="modalproveedores__titulo">
+            <h1>Buscar proveedor</h1>
+            <h3>Introduce el nombre del proveedor y visualiza o edita sus datos empresariales.</h3>
+        </div>
+        <div class="modalproveedores__filtros">
+            <form id="buscador" action="/proveedores-generarexcel" method="POST">
+                <fieldset>
+                    <legend>Búsqueda</legend>
+                    <div class="modalproveedores__filtrosbox">
+                        <div class="modalproveedores__nombre">
+                            <label for="nombreproveedor">Proveedor: </label>
+                            <input type="text" id="entradanombre" name="proveedor[nombre]">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="modalproveedores__tablabox">
+            <table class="modalproveedores__tabla">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
+                        <th>Última visita</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Coca-cola</td>
+                        <td>4421637444</td>
+                        <td>Allende 55 76134 Qro.</td>
+                        <td>05/63/2089 12:05</td>
+                        <td>
+                            <div class="modalproveedores__botones">
+                                <a href="#"
+                                    class="modalproveedores__boton modalproveedores__botonactualizar">Actualizar</a>
+                                <a href="#"
+                                    class="modalproveedores__boton modalproveedores__botoneliminar">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

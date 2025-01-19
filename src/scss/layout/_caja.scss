@@ -2,7 +2,6 @@
     width: 95%;
     max-width: 120rem;
     margin: 0 auto;
-
     h1 {
         font-size: 3.8rem;
     }
@@ -26,13 +25,10 @@
     .contenido-caja {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
-
     }
-
     .opciones {
         grid-row: 1;
     }
-
     .añadircaja,
     .quitarcaja {
         width: 10%;
@@ -43,11 +39,9 @@
     .contenido-caja {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
-
         .opciones {
             grid-row: 1;
         }
-
     }
 }
 
@@ -59,7 +53,6 @@
         .opciones {
             grid-column: 2;
         }
-
     }
 }
 
@@ -68,17 +61,13 @@
     margin-bottom: 0;
     display: flex;
     flex-direction: column;
-    /* Asegura que los textos estén apilados */
     justify-content: center;
-
-
     h1 {
         font-size: 6.5rem;
         margin-bottom: 0;
         padding-bottom: 0;
         font-weight: normal;
     }
-
     .dispcaja {
         margin-top: 0;
         padding-top: 0;
@@ -102,16 +91,12 @@
         grid-row: 1;
         display: flex;
         justify-content: center;
-
-
     }
-
     .botonquitar {
         grid-row: 2;
         display: flex;
         justify-content: center;
     }
-
     .añadircaja,
     .quitarcaja {
         position: relative;
@@ -126,9 +111,7 @@
         display: inline-block;
         text-align: center;
         min-width: 88%;
-
     }
-
     .añadircaja {
         color: #fff;
         background-color: #02B126;
@@ -138,28 +121,22 @@
         color: #02B126;
         background-color: #fff;
     }
-
     .quitarcaja {
         background-color: #BE2414;
     }
-
     .quitarcaja:hover {
         color: #BE2414;
         background-color: #fff;
     }
-
-
 }
 
 .busqueda-titulo {
     h1 {
         margin-top: 12rem;
     }
-
     h3 {
         font-size: 1.7rem;
         font-weight: 399;
-
     }
 }
 
@@ -177,7 +154,6 @@
             padding: 0 5rem 0 5rem;
         }
     }
-
 }
 
 @include laptop-1 {
@@ -196,22 +172,14 @@
 
     fieldset {
         border: 2px dotted #D56B26;
-        /* Línea punteada de color azul */
         padding: 20px;
-        /* Espaciado interno */
         border-radius: 8px;
-        /* Bordes ligeramente redondeados */
     }
-
     legend {
         color: #D56B26;
-        /* Color del texto de la leyenda */
         font-weight: bold;
-        /* Texto en negrita */
         padding: 0 10px;
-        /* Espaciado interno para la leyenda */
     }
-
 
     .caja-filtros {
         display: grid;
@@ -234,7 +202,6 @@
             border-radius: 1rem;
         }
 
-        /* Estilos para switches */
         .switch {
             display: flex;
             gap: 10px;
@@ -271,55 +238,43 @@
 .tabladecontenido {
     width: 100%;
     overflow-x: auto;
-    /* Habilitar scroll horizontal si la tabla es demasiado ancha */
     margin: 60px 0 20px 0;
 }
 
 .tabla-contenido {
     width: 100%;
     border-collapse: collapse;
-    /* Combina bordes de celdas*/
     table-layout: auto;
-    /* Ajusta las columnas automáticamente según el contenido */
     font-size: 16px;
 }
 
 .tabla-contenido th,
 .tabla-contenido td {
     border: 1px solid #FFE0B2;
-    /* Bordes entre las celdas */
     padding: 8px;
     text-align: left;
-    /* Alineación del texto */
 }
 
 .tabla-contenido th {
     background: linear-gradient(to right, #D56B26, #E6962C);
-    //   background-color: #D56B26; 
     color: white;
     font-weight: bold;
 }
 
 .tabla-contenido tbody tr:nth-child(even) {
     background-color: #FFF3E0;
-    /* Color alternativo para filas pares */
-    // background-color: #FFF8ED; /* Color MAS CLARO */
-
 }
 
 .tabla-contenido tbody tr:hover {
     background-color: #F7D9A8;
-    /* Efecto hover para filas */
 }
 
 .tabladecontenido::-webkit-scrollbar {
     height: 8px;
-    /* Tamaño del scroll horizontal */
 }
 
 .tabladecontenido::-webkit-scrollbar-thumb {
     background-color: #D56B26;
-    /* Color del scroll */
     border-radius: 10px;
 }
 
@@ -351,30 +306,34 @@
         max-width: 500px;
         max-height: 60%;
         background-color: #fff;
-        border-radius: 6px;
+        border-radius: 10px;
         display: grid;
-        gap: 1rem;
         place-items: center;
         grid-auto-columns: 100%;
         transform: var(--transform);
         transition: var(--transition);
         // border: 3px double #02B126;
-         border: none;
-        padding:2.5rem 2.5rem 3.5rem 2.5rem;
+        border: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        padding: 2.5rem;
     }
 
     &__title {
         font-size: 2.6rem;
         margin: 0;
+        padding: 0;
         font-weight: 400;
+        color:#2B2B2B;
     }
 
     &__paragraph {
-        margin-bottom: 0;
+        margin-bottom: 2rem;
         margin-top: 0;
+        padding: 0;
         text-align: center;
         font-size: 1.4rem;
         font-weight: 400;
+        color: #666;
 
     }
 
@@ -388,32 +347,33 @@
     }
 
     &__fleximg1 {
-        display: flex;
+        display: inline-flex;
         justify-content: center;
         align-items: center;
         z-index: 1;
-        padding-top: 4px;
+        // padding-top: 4px;
 
 
     }
 
     &__fleximg2 {
         position: absolute;
-        top: 22px;
-        right: 26px;
+        top: 14px;
+        right: 14px;
     }
 
     &__img {
-        width: 90%;
+        width: 100%;
         max-width: 60px;
-        background-color: transparent;
+        background-color: #f0f8ff;
+        border-radius: 50%;
     }
 
     &__img2 {
-        // margin-top: 1rem;
-        // width: 90%;
-        max-width: 35px;
-        max-height: 35px;
+
+        max-width: 34px;
+        max-height: 34px;
+
     }
 
     &__close {
@@ -421,27 +381,33 @@
         color: #02B126;
         background-color: #fff;
         padding: 1rem 3rem;
-        border: 1px solid;
-        border-radius: 6px;
+        border: 1px dashed;
+        border-radius: 10px;
         display: inline-block;
-        font-weight: 400;
+        font-weight: 453;
+        font-size: 2.5rem;
         transition: background-color .3s;
     }
 
     &__close:hover {
         color: #02B126;
-        background-color: #CFF3D0;
+        border: 1px solid #2B2B2B;
     }
 
+    &__close::placeholder{
+        color:#DADADA;
+    }
+    
     &__close1 {
         text-decoration: none;
         color: #fff;
+        margin-top: 2rem;    
         background-color: #02B126;
         padding: 1rem 3rem;
         border: 1px solid;
-        border-radius: 6px;
+        border-radius: 10px;
         display: inline-block;
-        font-weight: 400;
+        font-weight: 505;
         transition: background-color .3s;
     }
 
@@ -457,29 +423,25 @@
         border: none;
         border-radius: 0;
         transition: background-color .3s;
-
-
+        filter: invert(1) brightness(60%) grayscale(100%);
     }
 
     &__cerrar:hover {
-        filter: saturate(9) hue-rotate(0deg) contrast(1.2);
+    filter: none;
     }
+
 
     &__cantidad label {
-        font-size: 3rem;
+        font-size: 2.5rem;
+        color: #2B2B2B;       
     }
 
-    &__border {
-        position: absolute;
-        top: 15px; /* Ajusta el margen superior */
-        left: 15px; /* Ajusta el margen izquierdo */
-        right: 15px; /* Ajusta el margen derecho */
-        bottom: 15px; /* Ajusta el margen inferior */
-        border: 2px dashed #02B126; /* Borde del rectángulo más pequeño */
-        border-radius: 6px; /* Opcional: bordes redondeados */
-        pointer-events: none; /* Evita que interfiera con el contenido interactivo */
-      }
+    &__cantidad input{
+        cursor: pointer;
+        color: #2B2B2B;
+    }
 }
+
 
 .modal--retirar{
     &__close {
@@ -490,8 +452,8 @@
 
     &__close:hover {
         color: #BE2414;
-        background-color: #FFF2F1;
-        border: #BE2414;
+        background-color: #FFF;
+        border: solid 1px #2B2B2B;
 
     }
 
@@ -502,11 +464,7 @@
 
     &__close1:hover {
         color: #BE2414;
-        background-color: #fff;   
-    }
-
-    &__border {
-        border: 2px dashed #BE2414; /* Borde del rectángulo más pequeño */
-
+        background-color: #fff; 
+          
     }
 }

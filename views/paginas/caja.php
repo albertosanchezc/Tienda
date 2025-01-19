@@ -114,7 +114,7 @@
         </div>
         <h2 class="modal--aniadir__title">¡Añadir efectivo!</h2>
         <p class="modal--aniadir__paragraph">
-            Introduce la cantidad en efectivo que deseas añadir a la caja.
+            Introduce la cantidad en efectivo que deseas abonar a la caja.
         </p>
         <div class="modal--aniadir__cantidad">
         
@@ -145,6 +145,7 @@
         <div class="modal--retirar__cantidad">
         
         <label for="12">$ </label>
+
             <input href="#" id="12" class="modal--retirar__close" type="number" placeholder="Ejemplo:  1576">
         </input>
         </div>

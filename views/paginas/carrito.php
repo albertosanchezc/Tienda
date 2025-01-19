@@ -2,7 +2,7 @@
     <h1>Carrito</h1>
     <section class="ventas">
         <div class="grid-container">
-            <!-- Rectángulo grande -->
+            <!-- Rectángulo grande productos-->
             <div class="grid-item rectangulo-grande">
                 <h2>Escanea o introduce el código de barras para iniciar venta.</h2>
                 <div class="rectangulo-grande-bebe1">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Rectángulo pequeño 1 producto-->
+            <!-- Rectángulo pequeño 1 producto-detalles-->
             <div class="grid-item rectangulo-pequeno">
                 <div class="rectangulo-pequeno-bebe1">
                     <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
@@ -99,7 +99,7 @@
                     <p>10:04 p.m.</p>
                 </div>
             </div>
-            <!-- Rectángulo adicional -->
+            <!-- Rectángulo adicional total-->
             <div class="grid-item rectangulo-grande-horizontal">
                 <div class="rectangulo-grande-horizontal-bebe1">
                     <h3>Total:</h3>
@@ -149,7 +149,7 @@
                 Haz click en el siguiente recuadro para introducir el código de barras.
             </p>
             <label for="2">Código de Barras:</label>
-            <input href="#" id="2" class="modal--manual__close" type="number" placeholder="Ejemplo:  014555452636">
+            <input id="2" class="modal--manual__close" type="number" placeholder="Ejemplo:  014555452636">
             </input>
             <table class="modal__tabla--manual">
                 <thead>
@@ -200,7 +200,7 @@
                 Haz click en el siguiente recuadro para buscar por nombre.
             </p>
             <label for="3">Nombre del producto:</label>
-            <input href="#" id="3" class="modal--nombre__close" type="text" placeholder="Ejemplo:  Doritos">
+            <input id="3" class="modal--nombre__close" type="text" placeholder="Ejemplo:  Doritos">
             </input>
 
             <table class="modal__tabla--nombre">
@@ -240,7 +240,7 @@
             <div class="modal--granel__gridcantidad">
                 <div class="modal--granel__cantidad">
                     <label for="4"></label>
-                    <input href="#" id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
+                    <input id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
                     </input>
                 </div>
                 <div class="modal--granel__gramos">
@@ -276,7 +276,7 @@
                 producto--.
             </p>
             <label for="5"></label>
-            <input href="#" id="5" class="modal--cantidad__close" type="number" placeholder="Ej.: 220.">
+            <input id="5" class="modal--cantidad__close" type="number" placeholder="Ej.: 220.">
             </input>
             <div class="modal--cantidad__gridprecio">
                 <div class="modal--cantidad__titulo">
