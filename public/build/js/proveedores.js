@@ -51,19 +51,27 @@ function nextSlide() {
 
 document.getElementById("phone").addEventListener("input", function (e) {
     let input = e.target.value.replace(/\D/g, ""); // Remover caracteres no numéricos
-    let formatted = "+52 "; // Prefijo inicial fijo
+    let formatted = "";
 
-    if (input.length > 0) {
-      formatted += "(" + input.substring(0, 3); // Primeros 3 dígitos como código de área
+    // Asegurar que siempre se inicia con "+52"
+    if (!input.startsWith("52")) {
+      input = "52" + input; // Añadir prefijo solo si falta
     }
-    if (input.length >= 4) {
-      formatted += ") " + input.substring(3, 6); // Siguientes 3 dígitos
+
+    if (input.length > 2) {
+      formatted = "+52 "; // Prefijo fijo
     }
-    if (input.length >= 7) {
-      formatted += " " + input.substring(6, 8); // Siguientes 2 dígitos
+    if (input.length > 3) {
+      formatted += "(" + input.substring(2, 5) + ")"; // Código de área
     }
-    if (input.length >= 9) {
-      formatted += " " + input.substring(8, 10); // Últimos 2 dígitos
+    if (input.length > 5) {
+      formatted += " " + input.substring(5, 8); // Primeros 3 dígitos
+    }
+    if (input.length > 8) {
+      formatted += " " + input.substring(8, 10); // Siguientes 2 dígitos
+    }
+    if (input.length > 10) {
+      formatted += " " + input.substring(10, 12); // Últimos 2 dígitos
     }
 
     e.target.value = formatted; // Asignar el valor formateado al input
