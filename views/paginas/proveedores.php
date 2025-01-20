@@ -202,17 +202,16 @@
                         </div>
                         <div class="modalproveedores--aniadir__telefono">
                             <label for="phone">Teléfono: </label>
-                            <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" maxlength="14">
+                            <input type="tel" id="phone" name="phone" placeholder="(+52) 415 456 7890" maxlength="17">
                         </div>
                         <div class="modalproveedores--aniadir__email">
                             <label for="emailproveedor">Email: </label>
                             <input type="text" id="entradaemail" name="proveedor[email]"
                                 placeholder="correo@correo.com">
-                        </div>
-                        
+                        </div>  
                     </div>
                 </fieldset>
-                <input type="submit" class="modalproveedores--aniadir__botonaniadir">
+                <input value="Crear Proveedor"type="submit" class="modalproveedores--aniadir__botonaniadir">
             </form>
             
         </div>
