@@ -43,10 +43,6 @@ class ActiveRecord
         // debuguear($query);
         $resultado = self::$db->query($query);
 
-        if ($resultado) {
-            // Redireccionar al usuario
-            header('Location: /admin?resultado=1');
-        }
     }
     public function actualizar()
     {
@@ -67,10 +63,7 @@ class ActiveRecord
 
         $resultado = self::$db->query($query);
 
-        if ($resultado) {
-            // Redireccionar al usuario
-            header('Location: /admin?resultado=2');
-        }
+
     }
 
     // Eliminar un registro
@@ -81,10 +74,7 @@ class ActiveRecord
         $resultado = self::$db->query($query);
 
         if ($resultado) {
-
             $this->borrarImagen();
-            // Redireccionar al usuario
-            header('Location: /admin?resultado=3');
         }
     }
 

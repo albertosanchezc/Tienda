@@ -242,10 +242,10 @@
         return precioAcumulado;
     }
 
-    function obtenerCantidad(producto){
+    function obtenerCantidad(producto) {
         let contador = 0;
-        articulosCarrito.forEach( articulo => {
-            if(articulo === producto){
+        articulosCarrito.forEach(articulo => {
+            if (articulo === producto) {
                 contador++;
             }
         })
@@ -468,7 +468,7 @@
         const { nombre } = terminosBusqueda;
 
         // console.log(articulosCarrito);
-        
+
         if (nombre) {
             return inventario.nombre.toLowerCase().includes(nombre.toLowerCase());
         }
