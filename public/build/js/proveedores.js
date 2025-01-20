@@ -49,6 +49,25 @@ function nextSlide() {
     showText(currentIndex);
 }
 
+document.getElementById("phone").addEventListener("input", function (e) {
+    let input = e.target.value.replace(/\D/g, ""); // Remover caracteres no numéricos
+    let formatted = "+52 "; // Prefijo inicial fijo
+
+    if (input.length > 0) {
+      formatted += "(" + input.substring(0, 3); // Primeros 3 dígitos como código de área
+    }
+    if (input.length >= 4) {
+      formatted += ") " + input.substring(3, 6); // Siguientes 3 dígitos
+    }
+    if (input.length >= 7) {
+      formatted += " " + input.substring(6, 8); // Siguientes 2 dígitos
+    }
+    if (input.length >= 9) {
+      formatted += " " + input.substring(8, 10); // Últimos 2 dígitos
+    }
+
+    e.target.value = formatted; // Asignar el valor formateado al input
+});
 
 
 // Inicializa el slider
