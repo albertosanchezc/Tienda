@@ -1,7 +1,15 @@
+// Botones
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
+const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores--aniadir__refcerrar');
+
+
+// Modales
 const modalProveedores = document.querySelector('.modalproveedores');
+const modalNuevoProveedor = document.querySelector('.modalproveedores--aniadir');
 
 const btnAbrirBuscarProveedores = document.querySelector('.p2boton');
+const btnAbrirNuevoProveedor = document.querySelector('.p2boton1');
+
 
 const texts = [
     "Visualiza la información detallada de los proveedores, incluyendo sus visitas y datos relevantes.",
@@ -52,10 +60,20 @@ document.addEventListener("DOMContentLoaded", () => {
     btnAbrirBuscarProveedores.addEventListener('click', () => {
         modalProveedores.classList.add('modalproveedores--show');
     })
+
+    btnAbrirNuevoProveedor.addEventListener('click', () => {
+        modalNuevoProveedor.classList.add('modalproveedores--aniadir--show');
+    })
+
+    
     // Evento que escucha el cerrar de la ventana modal buscar proveedores
     botonCerrarModal.addEventListener('click', () =>{
         modalProveedores.classList.remove('modalproveedores--show');
     });
+
+    botonCerrarModalNuevoProveedor.addEventListener('click', () => {
+        modalNuevoProveedor.classList.remove('modalproveedores--aniadir--show') 
+    })
 });
 
 
