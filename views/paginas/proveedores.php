@@ -188,7 +188,8 @@
         </div>
         <div class="modalproveedores--aniadir__titulo">
             <h1>Añadir Nuevo Proveedor</h1>
-            <h3>Completa el formulario con los datos empresariales del proveedor que deseas añadir. Incluye toda la información para garantizar un registro completo y preciso.</h3>
+            <h3>Completa el formulario con los datos empresariales del proveedor que deseas añadir. Incluye toda la
+                información.</h3>
         </div>
         <div class="modalproveedores--aniadir__entradas">
             <form id="buscador" action="/proveedores-generarexcel" method="POST">
@@ -196,19 +197,23 @@
                     <legend>+Anadir Proveedor</legend>
                     <div class="modalproveedores--aniadir__entradasbox">
                         <div class="modalproveedores--aniadir__nombre">
-                            <label for="nombreproveedor">Proveedor: </label>
-                            <input type="text" id="entradanombre" name="proveedor[nombre]">
+                            <label for="nombreproveedor">Nombre: </label>
+                            <input type="text" id="entradanombre" name="proveedor[nombre]" placeholder="Coca - Cola">
                         </div>
                         <div class="modalproveedores--aniadir__telefono">
-                            <label for="telefonoproveedor">Teléfono: </label>
-                            <input type="number" id="entradatelefono" name="proveedor[telefono]" placeholder="(123) 456-7890">
+                            <label for="phone">Teléfono: </label>
+                            <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" maxlength="14">
                         </div>
                         <div class="modalproveedores--aniadir__email">
                             <label for="emailproveedor">Email: </label>
-                            <input type="text" id="entradaemail" name="proveedor[email]">
+                            <input type="text" id="entradaemail" name="proveedor[email]"
+                                placeholder="correo@correo.com">
                         </div>
+                        
                     </div>
                 </fieldset>
+                <input type="submit" class="modalproveedores--aniadir__botonaniadir">
             </form>
+            
         </div>
 </section>
