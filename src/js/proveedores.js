@@ -1,3 +1,8 @@
+const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
+const modalProveedores = document.querySelector('.modalproveedores');
+
+const btnAbrirBuscarProveedores = document.querySelector('.p2boton');
+
 const texts = [
     "Visualiza la información detallada de los proveedores, incluyendo sus visitas y datos relevantes.",
     "Gestiona fácilmente a tus proveedores, registra visitas y actualiza toda la información relevante.",
@@ -36,10 +41,21 @@ function nextSlide() {
     showText(currentIndex);
 }
 
+
+
 // Inicializa el slider
 document.addEventListener("DOMContentLoaded", () => {
     showText(currentIndex); // Muestra el primer texto
     setInterval(nextSlide, 5000); // Cambia cada 7 segundos
+
+    // Evento que escucha el botón de abrir buscar proveedores
+    btnAbrirBuscarProveedores.addEventListener('click', () => {
+        modalProveedores.classList.add('modalproveedores--show');
+    })
+    // Evento que escucha el cerrar de la ventana modal buscar proveedores
+    botonCerrarModal.addEventListener('click', () =>{
+        modalProveedores.classList.remove('modalproveedores--show');
+    });
 });
 
 
