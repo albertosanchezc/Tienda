@@ -149,7 +149,7 @@
                 Haz click en el siguiente recuadro para introducir el código de barras.
             </p>
             <label for="2">Código de Barras:</label>
-            <input id="2" class="modal--manual__close" type="number" placeholder="Ejemplo:  014555452636">
+            <input id="2" class="modal--manual__close" type="text" placeholder="Ejemplo:  014555452636">
             </input>
             <table class="modal__tabla--manual">
                 <thead>
