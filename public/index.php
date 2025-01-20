@@ -36,6 +36,7 @@ $router->get('/', [PaginasController::class, 'index']);
 $router->get('/carrito', [PaginasController::class, 'carrito']);
 $router->post('/carrito', [PaginasController::class, 'carrito']);
 $router->get('/inventarios/api/inventarios', [PaginasController::class, 'inventarioAPI']);
+$router->get('/proveedores/api/proveedores', [PaginasController::class, 'proveedoresAPI']);
 
 
 

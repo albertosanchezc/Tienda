@@ -5,13 +5,12 @@ namespace Model;
 class Proveedor extends ActiveRecord{
     // Base de datos
     protected static $tabla = 'proveedor';
-    protected static $columnasDB = ['id', 'nombre', 'telefono', 'email', 'direccion'];
+    protected static $columnasDB = ['id', 'nombre', 'telefono', 'email'];
 
     public $id;
     public $nombre;
     public $telefono;
     public $email;
-    public $direccion;
 
 
     public function __construct($args = [])
@@ -20,7 +19,6 @@ class Proveedor extends ActiveRecord{
         $this->nombre = $args['nombre'] ?? '';
         $this->telefono = $args['telefono'] ?? '';
         $this->email = $args['email'] ?? '';
-        $this->direccion = $args['direccion'] ?? '';
     }
 }
 

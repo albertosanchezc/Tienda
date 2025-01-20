@@ -13,6 +13,7 @@ use Model\Platillo;
 use Model\Productos;
 use Model\Proveedor;
 use Model\Ventas;
+use Model\Visitas_proveedor;
 use MVC\Router;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -66,6 +67,17 @@ class PaginasController
             'inventario_granel' => $inventario_granel
         ]);
     }
+
+    public static function proveedoresAPI(){
+        $proveedores = Proveedor::all();
+        $visitas_proveedores = Visitas_proveedor::all();
+
+        echo json_encode([
+            'proveedores' => $proveedores,
+            'visitas_proveedores' => $visitas_proveedores
+        ]);
+    }
+    
 
     public static function inventario(Router $router)
     {

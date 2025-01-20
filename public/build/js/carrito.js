@@ -74,7 +74,7 @@
 
         if (productos.length > 0) {
             productos.forEach(producto => {
-                const { nombre, descripcion, categoria_id, precio_unitario_venta, cantidad, codigo_barras } = producto;
+                const { nombre, descripcion, categoria_id, precio_unitario_venta, codigo_barras } = producto;
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -136,10 +136,37 @@
                             console.log(articulosCarrito);
                         })
 
+                        carrito = articulosCarrito;
 
                     }
-                    articulosCarrito = [...articulosCarrito, producto];
+                    let acumulado = calcularPrecioAcumulado();
+                    actualizarTotal(acumulado);
+                    // Revisa si un elemento ya existe en el carrito
+                    const existe = articulosCarrito.some(producto => carrito.id === producto.id);
+                    var cantidad = 1;
+                    console.log(cantidad);
+                    if (existe) {
+                        // Actualizamos la cantidad
+                        const productos = carrito.map(producto => {
+                            if (producto.codigo_barras === carrito.codigo_barras) {
+                                cantidad = cantidad + 1;
+                                producto.cantidad = cantidad;
+                                return producto;
+                            } else {
+                                return producto.cantidad = cantidad;
+                            }
+                        });
+                        // articulosCarrito = carrito.filter(producto);
+                        articulosCarrito = [...productos];
+
+                    } else {
+                        // Si no existe lo agrega al arreglo de articulosCarrito
+                        articulosCarrito = [...articulosCarrito, producto];
+                    }
+
                     actualizarCarrito(producto);
+                    // actualizarCarrito
+
 
                     const rectanguloPequeno = document.querySelector('.rectangulo-pequeno');
                     const detallesProducto = document.createElement('DIV');
@@ -192,12 +219,7 @@
                     rectanguloPequeno.appendChild(divRectangulobebe4);
 
 
-                    // actualizarCarrito
-                    console.log(articulosCarrito);
-                    carrito = articulosCarrito;
-                    let acumulado = calcularPrecioAcumulado();
-                    console.log(acumulado);
-                    actualizarTotal(acumulado);
+
                     terminosBusqueda.codigoBarras = ''; // Limpiar la variable de búsqueda
 
                     modalManual.classList.remove('modal--manual--show'); // Cerrar la modal
@@ -220,7 +242,18 @@
         return precioAcumulado;
     }
 
-    function actualizarTotal(total){
+    function obtenerCantidad(producto){
+        let contador = 0;
+        articulosCarrito.forEach( articulo => {
+            if(articulo === producto){
+                contador++;
+            }
+        })
+        // console.log(contador);
+        return contador;
+    }
+
+    function actualizarTotal(total) {
         const divTotales = document.querySelector('.rectangulo-grande-horizontal');
 
         const divTotalBebe1 = document.createElement('DIV');
@@ -252,8 +285,6 @@
         divTotales.appendChild(divTotalBebe2);
         divTotales.appendChild(divTotalBebe3);
         divTotales.appendChild(divTotalBebe4);
-
-
     }
 
     function vaciarCarrito() {
@@ -272,7 +303,7 @@
         modalManual.classList.remove('modal--manual--show');
 
 
-        let { id, nombre, descripcion, codigo_barras, cantidad, producto_id, precio_unitario_venta, categoria_id, precio_compra, fecha_compra, proveedor_id } = producto;
+        let { id, nombre, descripcion, codigo_barras, producto_id, precio_unitario_venta, categoria_id, precio_compra, fecha_compra, proveedor_id } = producto;
         // Verificar si la tabla ya existe
         let tablaCarrito = document.querySelector('.ordenes');
 
@@ -282,15 +313,17 @@
 
             // Crear una fila para el nuevo producto
             articulosCarrito.forEach(producto => {
+                const cantidad = obtenerCantidad(producto);
+                producto.cantidad = cantidad;
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-            <td>${cantidad}</td>
-            <td>${nombre}</td>
-            <td>${descripcion}</td>
-            <td>${codigo_barras}</td>
-            <td class='precioTabla'>${precio_unitario_venta}</td>        
-        `;
+                    <td>${cantidad}</td>
+                    <td>${nombre}</td>
+                    <td>${descripcion}</td>
+                    <td>${codigo_barras}</td>
+                    <td class='precioTabla'>${precio_unitario_venta}</td>        
+                `;
 
                 // Añadir la fila al tbody
                 tbody.appendChild(row);
@@ -409,12 +442,13 @@
 
 
     function filtrar() {
-        const resultadosFiltrados = inventario.filter(filtrarCodigo).filter(filtrarNombreProducto);
-        console.log(resultadosFiltrados);
+        const resultadosFiltrados = inventario.filter(filtrarCodigo).filter(filtrarNombreProducto)
 
 
         if (resultadosFiltrados.length) {
             // console.log(resultadosFiltrados);
+            limpiarHTML(resultadoBusquedaManual);
+            limpiarHTML(resultadoBusquedaNombre);
             mostrarProductos(resultadosFiltrados, resultadoBusquedaManual);
             mostrarProductos(resultadosFiltrados, resultadoBusquedaNombre);
             return resultadosFiltrados;
@@ -425,7 +459,7 @@
     function filtrarCodigo(inventario) {
         const { codigoBarras } = terminosBusqueda;
 
-        console.log(terminosBusqueda);
+        // console.log(terminosBusqueda);
         if (codigoBarras) {
             return inventario.codigo_barras.includes(codigoBarras);
         }
@@ -435,7 +469,8 @@
     function filtrarNombreProducto(inventario) {
         const { nombre } = terminosBusqueda;
 
-        console.log(terminosBusqueda);
+        // console.log(articulosCarrito);
+        
         if (nombre) {
             return inventario.nombre.toLowerCase().includes(nombre.toLowerCase());
         }
