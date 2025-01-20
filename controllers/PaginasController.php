@@ -125,6 +125,15 @@ class PaginasController
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $proveedores = Proveedor::all();
         $titulo = 'Proveedores';
+        if($_SERVER['REQUEST_METHOD']==="POST"){
+            $proveedorNuevo = new Proveedor();
+            $args = $_POST['proveedores'];
+            $proveedorNuevo->sincronizar($args);
+            debuguear($proveedorNuevo);
+            $proveedorNuevo->guardar();
+
+
+        }
 
 
         // debuguear($proveedores);

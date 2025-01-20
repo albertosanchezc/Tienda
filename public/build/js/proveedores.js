@@ -6,15 +6,16 @@ const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores
 // Modales
 const modalProveedores = document.querySelector('.modalproveedores');
 const modalNuevoProveedor = document.querySelector('.modalproveedores--aniadir');
+const phoneInput = document.getElementById("phone");
 
 const btnAbrirBuscarProveedores = document.querySelector('.p2boton');
 const btnAbrirNuevoProveedor = document.querySelector('.p2boton1');
 
 
 const texts = [
-    "Visualiza la información detallada de los proveedores, incluyendo sus visitas y datos relevantes.",
-    "Gestiona fácilmente a tus proveedores, registra visitas y actualiza toda la información relevante.",
-    "Consulta información histórica de visitas de proveedores y accede rápidamente a todos los datos."
+    "Busca proveedores fácilmente y gestiona su información de forma rápida, precisa y completamente organizada.",
+    "Registra nuevos proveedores y organiza toda la información necesaria para mantener un control eficiente.",
+    "Crea visitas de proveedores de manera sencilla y gestiona productos de forma masiva con total facilidad."
 ];
 
 let currentIndex = 0;
@@ -49,33 +50,46 @@ function nextSlide() {
     showText(currentIndex);
 }
 
-document.getElementById("phone").addEventListener("input", function (e) {
-    let input = e.target.value.replace(/\D/g, ""); // Remover caracteres no numéricos
-    let formatted = "";
 
-    // Asegurar que siempre se inicia con "+52"
+
+///Formato de número en el formulario
+phoneInput.addEventListener("input", function (e) {
+    let input = phoneInput.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+
+    // Asegurar que siempre comience con "52"
     if (!input.startsWith("52")) {
-      input = "52" + input; // Añadir prefijo solo si falta
+      input = "52" + input;
     }
 
+    // Formatear el número
+    let formatted = "+52 ";
     if (input.length > 2) {
-      formatted = "+52 "; // Prefijo fijo
-    }
-    if (input.length > 3) {
-      formatted += "(" + input.substring(2, 5) + ")"; // Código de área
+      formatted += "(" + input.substring(2, 5); // Código de área
     }
     if (input.length > 5) {
-      formatted += " " + input.substring(5, 8); // Primeros 3 dígitos
+      formatted += ") " + input.substring(5, 8); // Primer bloque de tres dígitos
     }
     if (input.length > 8) {
-      formatted += " " + input.substring(8, 10); // Siguientes 2 dígitos
+      formatted += " " + input.substring(8, 10); // Segundo bloque de dos dígitos
     }
     if (input.length > 10) {
-      formatted += " " + input.substring(10, 12); // Últimos 2 dígitos
+      formatted += " " + input.substring(10, 12); // Últimos dos dígitos
     }
 
-    e.target.value = formatted; // Asignar el valor formateado al input
-});
+    // Actualizar el valor del input y posicionar el cursor
+    phoneInput.value = formatted.substring(0, 19);
+  });
+
+  phoneInput.addEventListener("focus", function () {
+    if (!phoneInput.value.startsWith("+52")) {
+      phoneInput.value = "+52 ";
+    }
+  });
+
+
+
+
+
 
 
 // Inicializa el slider
@@ -92,14 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
         modalNuevoProveedor.classList.add('modalproveedores--aniadir--show');
     })
 
-    
+
     // Evento que escucha el cerrar de la ventana modal buscar proveedores
-    botonCerrarModal.addEventListener('click', () =>{
+    botonCerrarModal.addEventListener('click', () => {
         modalProveedores.classList.remove('modalproveedores--show');
     });
 
     botonCerrarModalNuevoProveedor.addEventListener('click', () => {
-        modalNuevoProveedor.classList.remove('modalproveedores--aniadir--show') 
+        modalNuevoProveedor.classList.remove('modalproveedores--aniadir--show')
     })
 });
 

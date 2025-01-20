@@ -15,13 +15,13 @@
             </div>
             <div class="presentacion2">
                 <div class="presentacion2boton">
-                    <a href="#" class="p2boton">Buscar Proveedores</a>
+                    <a href="#" class="p2boton">Ver Proveedores</a>
                 </div>
                 <div class="presentacion2boton1">
                     <a href="#" class="p2boton1">+ Añadir Nuevo Proveedor</a>
                 </div>
                 <div class="presentacion2boton2">
-                    <a href="#" class="p2boton2">+ Registrar Visita de Proveedor</a>
+                    <a href="/proveedores/visitaproveedor" class="p2boton2">+ Registrar Visita de Proveedor</a>
                 </div>
             </div>
         </div>
@@ -192,22 +192,22 @@
                 información.</h3>
         </div>
         <div class="modalproveedores--aniadir__entradas">
-            <form id="buscador" action="/proveedores-generarexcel" method="POST">
+            <form id="nuevoproveedor" method="POST" enctype="multipart/form-data">
                 <fieldset>
                     <legend>+Anadir Proveedor</legend>
                     <div class="modalproveedores--aniadir__entradasbox">
                         <div class="modalproveedores--aniadir__nombre">
                             <label for="nombreproveedor">Nombre: </label>
-                            <input type="text" id="entradanombre" name="proveedor[nombre]" placeholder="Coca - Cola">
+                            <input type="text" id="entradanombre" name="proveedores[nombre]" placeholder="Coca - Cola" value="<?php echo s($proveedores->nombre); ?>">
                         </div>
                         <div class="modalproveedores--aniadir__telefono">
                             <label for="phone">Teléfono: </label>
-                            <input type="tel" id="phone" name="phone" placeholder="(+52) 415 456 7890" maxlength="17">
+                            <input type="tel" id="phone" name="proveedores[telefono]" placeholder="+52 (415) 456 7890" maxlength="19" value="<?php echo s($proveedores->telefono); ?>">
                         </div>
                         <div class="modalproveedores--aniadir__email">
                             <label for="emailproveedor">Email: </label>
-                            <input type="text" id="entradaemail" name="proveedor[email]"
-                                placeholder="correo@correo.com">
+                            <input type="text" id="entradaemail" name="proveedores[email]"
+                                placeholder="correo@correo.com" value="<?php echo s($proveedores->email); ?>" >
                         </div>  
                     </div>
                 </fieldset>
