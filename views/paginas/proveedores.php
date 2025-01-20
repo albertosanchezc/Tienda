@@ -136,34 +136,44 @@
                 </fieldset>
             </form>
         </div>
-        <div class="modalproveedores__tablabox">
-            <table class="modalproveedores__tabla">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Teléfono</th>
-                        <th>Dirección</th>
-                        <th>Última visita</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Coca-cola</td>
-                        <td>4421637444</td>
-                        <td>Allende 55 76134 Qro.</td>
-                        <td>05/63/2089 12:05</td>
-                        <td>
-                            <div class="modalproveedores__botones">
-                                <a href="#"
-                                    class="modalproveedores__boton modalproveedores__botonactualizar">Actualizar</a>
-                                <a href="#"
-                                    class="modalproveedores__boton modalproveedores__botoneliminar">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="modalproveedores__contactoproveedores">
+            <div class="modalproveedores__datosgrid">
+                <!-- Contenido de la primera tarjeta -->
+                <h3>COCA COLA REFRESCO</h3>
+                <p>PROVEEDOR DESTACADO</p>
+                <div class="modalproveedores__flextelefono">
+                    <img src="/build/img/telefono.png" alt="Logotipo de telefono" class="modalproveedores__imgtelefono">
+                    <div class="modalproveedores__telefono">(+52) 44-51-63-74</div>
+                </div>
+                <div class="modalproveedores__flexemail">
+                    <img src="/build/img/email.png" alt="Logotipo de email" class="modalproveedores__imgemail">
+                    <div class="modalproveedores__email">zamudiolopezkarina@gmail.com</div>
+                </div>
+                <div class="modalproveedores__flexreloj">
+                    <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="modalproveedores__imgreloj">
+                    <div class="modalproveedores__ultimoregistro">Últ. Visita: 26/10/2020</div>
+                </div>
+                <a href="#" class="modalproveedores__botonactualizar">Actualizar</a>
+                <a href="#" class="modalproveedores__botoneliminar">Eliminar</a>
+            </div>
+            <div class="modalproveedores__datosgrid1">
+                <!-- Contenido de la segunda tarjeta -->
+                <h3>COCA COLA REFRESCO</h3>
+                <p>PROVEEDOR DESTACADO</p>
+                <div class="modalproveedores__flextelefono">
+                    <img src="/build/img/telefono.png" alt="Logotipo de telefono" class="modalproveedores__imgtelefono">
+                    <div class="modalproveedores__telefono">(+52) 44-51-63-74</div>
+                </div>
+                <div class="modalproveedores__flexemail">
+                    <img src="/build/img/email.png" alt="Logotipo de email" class="modalproveedores__imgemail">
+                    <div class="modalproveedores__email">zamudiolopezkarina@gmail.com</div>
+                </div>
+                <div class="modalproveedores__flexreloj">
+                    <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="modalproveedores__imgreloj">
+                    <div class="modalproveedores__ultimoregistro">Últ. Visita: 26/10/2020</div>
+                </div>
+                <a href="#" class="modalproveedores__botonactualizar">Actualizar</a>
+                <a href="#" class="modalproveedores__botoneliminar">Eliminar</a>
+            </div>
         </div>
-    </div>
 </section>

@@ -295,8 +295,6 @@
 
     }
 
-
-
     function actualizarCarrito(producto) {
         // limpiarHTML(tablaCarritoBody);
 
@@ -554,7 +552,8 @@
 
     const modal = document.querySelector('.modal');
     const modalClose = document.querySelector('.modal__close');
-    modalClose.addEventListener('click', () => {
+    modalClose.addEventListener('click', (e) => {
+        e.preventDefault();
         modal.classList.remove('modal--show');
         iniciarCarrito();
     });
