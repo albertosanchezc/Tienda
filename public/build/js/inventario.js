@@ -3,20 +3,21 @@ const slides = [
         titulo: "Añade un producto",
         parrafo: "Registra un nuevo producto en el inventario, incluyendo sus características y detalles esenciales.",
         enlace: "#",
-        enlaceTexto: "Añadir nuevo Producto"
+        enlaceTexto: "+ Añadir nuevo Producto"
     },
     {
-        titulo: "Administra tus productos",
-        parrafo: "Mantén un control eficiente actualizando los productos existentes en tu inventario.",
+        titulo: "Entrada de producto",
+        parrafo: "Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
         enlace: "#",
-        enlaceTexto: "Actualizar Producto"
+        enlaceTexto: "Entrada de producto"
     },
     {
-        titulo: "Consulta el inventario",
-        parrafo: "Visualiza todos los productos disponibles, organizados por categorías y características.",
+        titulo: "Salida de Producto",
+        parrafo: "Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
         enlace: "#",
-        enlaceTexto: "Ver Inventario"
+        enlaceTexto: "Salida de producto"
     }
+    
 ];
 
 let currentIndex = 0;
@@ -34,11 +35,17 @@ function showSlide(index) {
     enlaceElement.href = slides[index].enlace;
     enlaceElement.textContent = slides[index].enlaceTexto;
 
+    // Actualiza los colores del botón (clase dinámica)
+    const colores = ["color1", "color2", "color3"];
+    enlaceElement.classList.remove(...colores); // Elimina las clases de color previas
+    enlaceElement.classList.add(colores[index]); // Agrega la clase correspondiente al índice
+
     // Actualiza los indicadores (dots)
     dots.forEach((dot, i) => {
         dot.classList.toggle("active", i === index); // Agrega o quita la clase según el índice
     });
 }
+
 
 
 // Cambia automáticamente al siguiente slide cada 5 segundos
@@ -56,5 +63,5 @@ function setSlide(index) {
 // Inicializa el slider al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     showSlide(currentIndex); // Muestra el primer slide
-    setInterval(nextSlide, 5000); // Cambia automáticamente cada 5 segundos
+    setInterval(nextSlide, 6000); // Cambia automáticamente cada 5 segundos
 });
