@@ -277,7 +277,7 @@
     }
 }
 
-.caja-filtrosinventario input::placeholder{
+.caja-filtrosinventario input::placeholder {
     padding: 0 1rem;
 }
 
@@ -290,10 +290,6 @@
     margin-top: 5rem;
     padding: 0 2rem;
 
-    @media (max-width: 1024px) {
-        grid-template-columns: 1fr;
-        /* Cambia a una columna en pantallas pequeñas */
-    }
 }
 
 .inventariogrid {
@@ -420,8 +416,8 @@
 
     }
 
-    .dineros1{
-        color:#0400ff;
+    .dineros1 {
+        color: #0400ff;
         font-size: 1.82rem;
         font-weight: bold;
     }
@@ -450,14 +446,14 @@
     font-weight: bold;
 }
 
-.botonactualizar:hover{
+.botonactualizar:hover {
     background-color: #2978e0;
     color: #fff;
 
 
 }
 
-.botoneliminar:hover{
+.botoneliminar:hover {
     background-color: #f50909;
     color: #fff;
     border-color: #f50909;
@@ -508,8 +504,13 @@
         grid-row: 5;
     }
 
-    .inventariogrid{
+    .inventariogrid {
         padding: 3rem 2rem;
+        grid-template-columns: 1fr;
+
+    }
+
+    .despliegueinventario {
         grid-template-columns: 1fr;
 
     }
@@ -546,10 +547,12 @@
         grid-row: 5;
     }
 
-    .inventariogrid{
-        padding: 3rem 8rem;
-        grid-template-columns: 1fr 1fr;
+    .inventariogrid {
+        padding: 3rem 2rem;
+    }
 
+    .despliegueinventario {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -582,9 +585,12 @@
         grid-row: 3/5;
     }
 
-    .inventariogrid{
-        padding: 3rem 8rem;
-        grid-template-columns: 1fr 1fr 1fr;
+    .inventariogrid {
+        padding: 3rem 6rem;
 
+    }
+
+    .despliegueinventario {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
