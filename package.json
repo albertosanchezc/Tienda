@@ -1,17 +1,18 @@
 {
-  "name": "bienesraices",
+  "name": "tienda",
   "version": "1.0.0",
-  "description": "Curso Desarrollo Web Completo",
+  "description": "Punto de venta",
   "main": "gulpfile.js",
   "scripts": {
     "gulp": "gulp",
     "build": "gulp build"
 
   },
-  "author": "Juan De La Torre",
+  "author": "Ksoulciones ",
   "license": "ISC",
   "devDependencies": {
     "cssnano": "^5.1.0",
+    "cypress": "^14.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-cache": "^1.1.3",
