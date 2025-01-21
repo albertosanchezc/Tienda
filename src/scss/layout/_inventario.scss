@@ -1,0 +1,141 @@
+.no-webp .imagen-slider {
+    background-image: url('../img/slider.jpg');
+}
+
+.webp .imagen-slider {
+    background-image: url('../img/slider.webp');
+
+}
+
+.proveedores-titulo {
+
+    h3 {
+        font-size: 2.4rem;
+        padding: 0 15rem;
+        margin-bottom: 8rem;
+    }
+}
+
+
+
+.imagen-slider {
+    background-position: center center;
+    background-size: cover;
+    padding: 5rem 0 5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 2px 2px 5px black(29, 26, 184, 0.5);
+
+
+
+    h2 {
+        font-size: 4rem;
+        padding: 0;
+        margin-bottom: 0;
+        margin-top: 1rem;
+        font-weight: $black;
+        color: #fff;
+        
+    }
+
+    p {
+        font-size: 1.9rem;
+        color: $blanco;
+        padding: 0;
+        margin-top: 0;
+        margin-bottom: 4rem;
+        text-align: center;
+        //font-weight: $black;
+        color: #fff;
+
+    }
+}
+
+.slider-puntos {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.slider-puntos .dot {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.slider-puntos .dot.active {
+    background-color: blue;
+}
+
+.botonslider {
+    position: relative;
+    text-decoration: none;
+    font-size: 2rem;
+    padding: 1.5rem 4rem;
+    border: 1px solid blue;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: background-color .3s;
+    display: inline-block;
+    text-align: center;
+    min-width: 30%;
+    background-color: blue;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+@include telefono-1 {
+    .proveedores-titulo {
+        h3 {
+            padding: 0 15rem;
+        }
+    }
+
+    .imagen-slider {
+        p {
+            padding: 0 2rem;
+        }
+    }
+
+}
+
+@include tablet {
+    .proveedores-titulo {
+        h3 {
+            padding: 0 20rem;
+        }
+    }
+
+    .imagen-slider {
+        p {
+            padding: 0 5rem;
+        }
+    }
+}
+
+@include laptop-1 {
+    .proveedores-titulo {
+        h3 {
+            padding: 0 30rem;
+        }
+    }
+
+    .imagen-slider {
+        p {
+            padding: 0 30rem;
+        }
+    }
+}

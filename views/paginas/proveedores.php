@@ -1,6 +1,7 @@
 <main class="contenedorprov seccionprov">
     <div class="proveedores-titulo">
         <h1>Proveedores</h1>
+
         <div class="gridpresentacion">
             <div class="presentacion1">
                 <div class="presentacion1img">
@@ -13,6 +14,7 @@
                     <span class="dot" onclick="setSlide(2)"></span>
                 </div>
             </div>
+
             <div class="presentacion2">
                 <div class="presentacion2boton">
                     <a href="#" class="p2boton">Ver Proveedores</a>
@@ -42,20 +44,19 @@
                             <input type="date" id="fecha1" name="caja[fecha1]">
                         </div>
                         <div class="fecha2">
-                            <label for="fecha2">Nombre: </label>
-                            <input type="text" id="fecha2" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
+                            <label for="bnombre">Nombre: </label>
+                            <input type="text" id="bnombre" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
                         </div>
                         <div class="tipo-movimiento1">
-                            <div class="orden-caja">
-                                <label for="orden-caja">Saldo: </label>
-                                <div class="switch">
-                                    <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
-                                    <label for="ascendente">Liquidado</label>
-                                    <input type="radio" id="descendente" name="caja[orden]" value="descendente">
-                                    <label for="descendente">Adeudo</label>
-                                </div>
+                            <p>Saldo: </p>
+                            <div class="switch">
+                                <input type="radio" id="liquidado" name="caja[orden]" value="Liquidado" checked>
+                                <label for="liquidado">Liquidado</label>
+                                <input type="radio" id="adeudo" name="caja[orden]" value="adeudo">
+                                <label for="adeudo">Adeudo</label>
                             </div>
                         </div>
+                    </div>
                 </fieldset>
                 <!-- //aqui iriia el boton de descargar excel -->
             </form>
@@ -130,7 +131,7 @@
                     <div class="modalproveedores__filtrosbox">
                         <div class="modalproveedores__nombre">
                             <label for="nombreproveedor">Proveedor: </label>
-                            <input type="text" id="entradanombre" name="proveedor[nombre]">
+                            <input type="text" id="nombreproveedor" name="proveedor[nombre]">
                         </div>
                     </div>
                 </fieldset>
@@ -179,7 +180,7 @@
 </section>
 
 <!-- modal de añadir nuevo proveedor -->
-<section class="modalproveedores--aniadir modalproveedores--aniadir--show">
+<section class="modalproveedores--aniadir">
     <div class="modalproveedores--aniadir__contenedor">
         <div class="modalproveedores--aniadir__cerrar">
             <a href="#" class="modalproveedores--aniadir__refcerrar">
@@ -192,27 +193,44 @@
                 información.</h3>
         </div>
         <div class="modalproveedores--aniadir__entradas">
-            <form id="nuevoproveedor" method="POST" enctype="multipart/form-data">
+            <?php
+            foreach ($alertas as $key => $alerta):
+                foreach ($alerta as $mensaje):
+                    ?>
+
+                    <div class="modalproveedores__alerta <?php echo $key; ?>"><?php echo $mensaje; ?></div>
+
+                    <?php
+                endforeach;
+            endforeach;
+            ?>
+            <form id="nuevoproveedor" method="POST" action="/proveedores">
                 <fieldset>
                     <legend>+Anadir Proveedor</legend>
+
                     <div class="modalproveedores--aniadir__entradasbox">
                         <div class="modalproveedores--aniadir__nombre">
-                            <label for="nombreproveedor">Nombre: </label>
-                            <input type="text" id="entradanombre" name="proveedores[nombre]" placeholder="Coca - Cola" value="<?php echo s($proveedores->nombre); ?>">
+                            <?php if ($mensaje) { ?>
+                                <p class='modalproveedores__alerta modalproveedores__exito'> <?php echo $mensaje; ?> </p>
+                            <?php } ?>
+                            <label for="entradanombre">Nombre: </label>
+                            <input type="text" id="entradanombre" name="proveedores[nombre]" placeholder="Coca - Cola"
+                                value="<?php echo s($proveedores->nombre); ?>" required>
                         </div>
                         <div class="modalproveedores--aniadir__telefono">
                             <label for="phone">Teléfono: </label>
-                            <input type="tel" id="phone" name="proveedores[telefono]" placeholder="+52 (415) 456 7890" maxlength="19" value="<?php echo s($proveedores->telefono); ?>">
+                            <input type="tel" id="phone" name="proveedores[telefono]" placeholder="+52 (415) 456 7890"
+                                maxlength="19" value="<?php echo s($proveedores->telefono); ?>" required>
                         </div>
                         <div class="modalproveedores--aniadir__email">
-                            <label for="emailproveedor">Email: </label>
-                            <input type="text" id="entradaemail" name="proveedores[email]"
-                                placeholder="correo@correo.com" value="<?php echo s($proveedores->email); ?>" >
-                        </div>  
+                            <label for="entradaemail">Email: </label>
+                            <input type="email" id="entradaemail" name="proveedores[email]"
+                                placeholder="correo@correo.com" value="<?php echo s($proveedores->email); ?>">
+                        </div>
                     </div>
                 </fieldset>
-                <input value="Crear Proveedor"type="submit" class="modalproveedores--aniadir__botonaniadir">
+                <input value="Crear Proveedor" type="submit" class="modalproveedores--aniadir__botonaniadir">
             </form>
-            
+
         </div>
 </section>

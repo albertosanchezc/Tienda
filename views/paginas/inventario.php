@@ -1,59 +1,50 @@
-<main class="contenedor seccion">
-        <h1>Contacto</h1>
+<main class="contenedorprov seccionprov">
+    <div class="proveedores-titulo">
+        <h1>Inventario</h1>
+        <h3>Explora todos los productos en stock junto con las características detalladas de cada uno.<h3>
+    </div>
+</main>
 
-       <?php if($mensaje){ ?>
-            <p class='alerta exito'> <?php echo $mensaje; ?> </p>
-       <?php } ?>
-
-
-        <picture>
-            <source srcset="build/img/destacada3.webp" type="image/webp">
-            <source srcset="build/img/destacada3.jpg" type="image/jpeg">
-            <img loading="lazy" src="build/img/destacada3.jpg" alt="Imagen Contacto">
-        </picture>
-
-        <h2>Llene el formulario de Contacto</h2>
-        
-        <form class="formulario" action="/contacto" method="POST">
+<section class="imagen-slider">
+    <h2 id="slider-titulo">Añade un producto</h2>
+    <p id="slider-parrafo">Registra un nuevo producto en el inventario, incluyendo sus características y detalles esenciales.</p>
+    <a href="#"class="botonslider">Añadir nuevo Producto</a>
+    <div class="slider-puntos">
+                <span class="dot" onclick="setSlide(0)"></span>
+                <span class="dot" onclick="setSlide(1)"></span>
+                <span class="dot" onclick="setSlide(2)"></span>
+    </div>
+</section>
+<section class="contenedorcaja seccioncaja">
+    <div class="busqueda-titulo">
+        <h1>Histórico de Visitas de Proveedores</h1>
+        <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos generados durante sus visitas.<h3>
+    </div>
+    <div class="busqueda-filtros1">
+        <form id="buscador" action="/proveedores-generarexcel" method="POST">
             <fieldset>
-                <legend>Información Personal</legend>
-                <label for="nombre">Nombre</label>
-                <input type="text" placeholder="Tu Nombre" id="nombre" name="contacto[nombre]" required>
-
-                <label for="mensaje">Mensaje</label>
-                <textarea id="mensaje" name="contacto[mensaje] required"></textarea>
-            </fieldset>
-
-            <fieldset>
-                <legend>Información sobre la propiedad</legend>
-                <label for="opciones">Vende o Compra</label>
-                <select  id="opciones" name="contacto[tipo]" required>
-                    <option value="" disabled selected>-- Seleccione --</option>
-                    <option value="Compra" >Compra</option>
-                    <option value="Vende">Vende</option>
-                </select>
-
-                <label for="presupuesto">Precio o Presupuesto</label>
-                <input type="number" placeholder="Tu Precio o Presupuesto" id="presupuesto" name="contacto[precio]" required>
-            </fieldset>
-
-            <fieldset>
-                <legend>Información sobre la propiedad</legend>
-
-                <p>Como desea ser contactado</p>
-                <div class="forma-contacto">
-                    <label for="contactar-telefono">Teléfono</label>
-                    <input  type="radio" value="telefono" id="contactar-telefono" name="contacto[contacto]" required>
-
-                    <label for="contactar-email">E-mail</label>
-                    <input  type="radio" value="email" id="contactar-email" name="contacto[contacto]" required>
+                <legend>Búsqueda</legend>
+                <div class="caja-filtros1">
+                    <div class="fecha1">
+                        <label for="fecha1">Fecha de visita: </label>
+                        <input type="date" id="fecha1" name="caja[fecha1]">
+                    </div>
+                    <div class="fecha2">
+                        <label for="bnombre">Nombre: </label>
+                        <input type="text" id="bnombre" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
+                    </div>
+                    <div class="tipo-movimiento1">
+                        <p>Saldo: </p>
+                        <div class="switch">
+                            <input type="radio" id="liquidado" name="caja[orden]" value="Liquidado" checked>
+                            <label for="liquidado">Liquidado</label>
+                            <input type="radio" id="adeudo" name="caja[orden]" value="adeudo">
+                            <label for="adeudo">Adeudo</label>
+                        </div>
+                    </div>
                 </div>
-
-                <div id="contacto"></div>
-
             </fieldset>
-
-            <input type="submit" value="Enviar" class="boton-verde">
+            <!-- //aqui iriia el boton de descargar excel -->
         </form>
-
-    </main>
+    </div>
+</section>

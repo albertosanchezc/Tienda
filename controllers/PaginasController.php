@@ -81,6 +81,8 @@ class PaginasController
 
     public static function inventario(Router $router)
     {
+        $script = '<script src="/build/js/inventario.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
         $inventario = Inventario_completo::join2('productos', 'inventario');
         // debuguear($inventario);
@@ -93,7 +95,8 @@ class PaginasController
         $titulo = 'Inventario';
 
         $router->render('paginas/inventario', [
-            'titulo' => $titulo
+            'titulo' => $titulo,
+            'script' => $script
         ]);
     }
     public static function caja(Router $router)
@@ -123,23 +126,35 @@ class PaginasController
     {
         $script = '<script src="/build/js/proveedores.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
+        $alertas = [];
+
         $proveedores = Proveedor::all();
         $titulo = 'Proveedores';
+        $resultado = $_GET['resultado'] ?? null;
+        $alertas = Proveedor::getErrores();
+        // debuguear($resultado);
+
         if($_SERVER['REQUEST_METHOD']==="POST"){
-            $proveedorNuevo = new Proveedor();
+            
+            $proveedores = new Proveedor();
+            $alertas = Proveedor::getErrores();
             $args = $_POST['proveedores'];
-            $proveedorNuevo->sincronizar($args);
-            debuguear($proveedorNuevo);
-            $proveedorNuevo->guardar();
-
-
+            $proveedores->sincronizar($args);
+            $alertas = $proveedores->validar();
+// debuguear($alertas);
+            if(empty($alertas)){
+                $proveedores->guardar();
+                header('Location: /proveedores?resultado=2');
+            }
         }
-
 
         // debuguear($proveedores);
         $router->render('paginas/proveedores', [
             'script' => $script,
-            'titulo' => $titulo
+            'titulo' => $titulo,
+            'proveedores' => $proveedores,
+            'resultado' => $resultado,
+            'alertas'=> $alertas
         ]);
     }
 
