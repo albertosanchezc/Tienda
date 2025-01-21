@@ -210,11 +210,11 @@
             font-weight: bold;
             margin-bottom: 5px;
             display: block;
-            
+
 
         }
 
-        p{
+        p {
             font-weight: bold;
             margin-bottom: 5px;
             margin-top: 0;
@@ -231,6 +231,7 @@
             border-radius: 1rem;
             height: 43px;
         }
+
         input[type="number"] {
             width: 100%;
             padding: 5px;
@@ -239,6 +240,7 @@
             border-radius: 1rem;
             height: 43px;
         }
+
         .switch {
             display: flex;
             gap: 10px;
@@ -269,28 +271,217 @@
 
         input:hover {
             color: $negro;
-            background-color: #F9E7F2;
+            background-color: #ecf6fa;
         }
 
     }
 }
 
+.caja-filtrosinventario input::placeholder{
+    padding: 0 1rem;
+}
+
+.despliegueinventario {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Dos contenedores principales */
+    gap: 20px;
+    width: 100%;
+    margin-top: 5rem;
+    padding: 0 2rem;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+        /* Cambia a una columna en pantallas pequeñas */
+    }
+}
+
+.inventariogrid {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 3rem 5rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    /* Divide en dos columnas internas */
+    gap: 20px;
+
+    .gridcontenido1 {
+        grid-column: 1;
+        /* Ubica esta sección en la primera columna */
+    }
+
+    .dinerogrid {
+        grid-column: 2;
+        /* Ubica esta sección en la segunda columna */
+        text-align: right;
+        padding-top: 3rem;
+    }
+}
+
+.inventariogrid:hover {
+    background-color: #f3f4f5;
+
+}
+
+.inventarionombre {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+        width: 50px;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    h3 {
+        margin: 0;
+        font-size: 1.7rem;
+        font-weight: bold;
+        text-align: left;
 
 
+    }
+
+    p {
+        margin: 0;
+        font-weight: bold;
+        font-size: 1.3rem;
+        color: rgb(84, 196, 32);
+    }
+
+}
+
+.flexdescripcion,
+.flexcodigo,
+.flexproveedor,
+.flexreloj {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    p {
+        margin: 0;
+        font-size: 1.3rem;
+        color: #10101a;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .negritas {
+        font-weight: bold;
+
+    }
+}
 
 
+.inventarionombre,
+.flexdescripcion,
+.flexcodigo,
+.flexproveedor,
+.flexreloj {
+    margin-bottom: 1rem;
+    /* Añade separación entre elementos */
+
+}
+
+.preciodeventa,
+.preciodecompra,
+.gananciap,
+.gananciad {
+    margin-bottom: 0.5rem;
+
+    /* Espaciado entre los datos de la segunda columna */
 
 
+    p {
+        margin: 0;
+        font-size: 1.3rem;
+        color: #10101a;
+    }
+
+    .negritas {
+        font-weight: bold;
+
+    }
+
+    .dineros {
+        font-size: 1.82rem;
+        font-weight: bold;
+        background: linear-gradient(to right, #0400ff, #33cc33);
+        /* Otro degradado para el párrafo */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+    }
+
+    .dineros1{
+        color:#0400ff;
+        font-size: 1.82rem;
+        font-weight: bold;
+    }
+}
+
+.botonesinventario {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.botonactualizar,
+.botoneliminar {
+
+    /* Los botones ocupan ambas columnas */
+    // display: inline-block;
+    background-color: #f9f9f9;
+    border: solid 1px #007bff;
+    margin-top: 0;
+    padding: 1rem 1rem;
+    width: 40%;
+    border-radius: 1rem;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.botonactualizar:hover{
+    background-color: #2978e0;
+    color: #fff;
 
 
+}
+
+.botoneliminar:hover{
+    background-color: #f50909;
+    color: #fff;
+    border-color: #f50909;
+}
 
 
+.imgdescripcion,
+.imgcodigo,
+.imgproveedor,
+.imgreloj {
+    width: 2.7rem;
+    height: 2.7rem;
 
+}
+
+.imgcoca {
+    width: 100%;
+
+}
 
 @include telefono-1 {
     .proveedores-titulo {
         h3 {
-            padding: 0 15rem;
+            padding: 0 10rem;
         }
     }
 
@@ -304,42 +495,26 @@
             padding: 0 2rem;
         }
     }
-    .busqueda-filtrosinventario{
-    .caja-filtrosinventario{
-        grid-template-columns: 1fr;
-        grid-template-rows: max-content;
-    }
+
+    .busqueda-filtrosinventario {
+        .caja-filtrosinventario {
+            grid-template-columns: 1fr;
+            grid-template-rows: max-content;
+        }
     }
 
-    .tipo-movimiento1{
+    .tipo-movimiento1 {
         grid-column: 1;
         grid-row: 5;
     }
 
+    .inventariogrid{
+        padding: 3rem 2rem;
+        grid-template-columns: 1fr;
+
+    }
+
 }
-
-
-
-
-
-.imgdescripcion,
-.imgcodigo,
-.imgproveedor, .imgreloj
- {
-    width: 12px;
-    height: 12px;
-}
-
-.imgcoca{
-    width: 30px;
-}
-
-
-
-
-
-
-
 
 @include tablet {
     .proveedores-titulo {
@@ -359,16 +534,23 @@
         grid-template-rows: max-content;
 
     }
-    .caja-filtrosinventario{
+
+    .caja-filtrosinventario {
         grid-template-columns: 1fr;
         grid-template-rows: max-content;
     }
 
-    
-.tipo-movimiento1{
-    grid-column: 1;
-    grid-row: 5;
-}
+
+    .tipo-movimiento1 {
+        grid-column: 1;
+        grid-row: 5;
+    }
+
+    .inventariogrid{
+        padding: 3rem 8rem;
+        grid-template-columns: 1fr 1fr;
+
+    }
 }
 
 @include laptop-1 {
@@ -389,14 +571,20 @@
 
     }
 
-    .caja-filtrosinventario{
+    .caja-filtrosinventario {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: max-content;
     }
 
-    
-.tipo-movimiento1{
-    grid-column: 1/3;
-    grid-row: 3/5;
-}
+
+    .tipo-movimiento1 {
+        grid-column: 1/3;
+        grid-row: 3/5;
+    }
+
+    .inventariogrid{
+        padding: 3rem 8rem;
+        grid-template-columns: 1fr 1fr 1fr;
+
+    }
 }

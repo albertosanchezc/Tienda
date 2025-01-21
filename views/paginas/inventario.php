@@ -77,102 +77,70 @@
 
     <div class="despliegueinventario">
         <div class="inventariogrid">
-            <div class="inventarionombre">
-                <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca">
-                <h3>COCA COLA REFRESCO</h3>
-                <p>4 ARTÍCULOS EN STOCK</p>
-            </div>
-            <div class="flexdescripcion">
-                <img src="/build/img/descripcion-alternativa.png" alt="Logotipo de descripción" class="imgdescripcion">
-                <div class="contenidodescipcion">
-                    <p>Descripción: Coca light 600ml taparrosca</p>
+            <div class="gridcontenido1">
+                <div class="inventarionombre">
+                    <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca" />
+                    <div>
+                        <h3>COCA COLA REFRESCO</h3>
+                        <p>4 ARTÍCULOS EN STOCK</p>
+                    </div>
                 </div>
-            </div>
-            <div class="flexcodigo">
-                <img src="/build/img/codigo.png" alt="Logotipo de codigo" class="imgcodigo">
-                <div class="contenidocodigo">
-                    <p>Código de Barras: 0212365412</p>
+                <div class="flexdescripcion">
+                    <img src="/build/img/descripcion-alternativa.png" alt="Logotipo de descripción"
+                        class="imgdescripcion">
+                    <div>
+                        <p class="negritas">Descripción:</p>
+                        <p>Coca light 600ml taparrosca</p>
+                    </div>
                 </div>
-            </div>
-            <div class="flexproveedor">
-                <img src="/build/img/proveedor-alternativo.png" alt="Logotipo de proveedor" class="imgproveedor">
-                <div class="contenidoproveedor">
-                    <p>Proveedor: COCA COLA</p>
+                <div class="flexcodigo">
+                    <img src="/build/img/codigo.png" alt="Logotipo de codigo" class="imgcodigo" />
+                    <div>
+                        <p class="negritas">Código de Barras: </p>
+                        <p>0212365412</p>
+                    </div>
                 </div>
-            </div>
-            <div class="flexreloj">
-                <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="imgreloj">
-                <div class="contenidoreloj">
-                    <p>Último movimiento: 12/12/2000 15:53p.m.</p>
+                <div class="flexproveedor">
+                    <img src="/build/img/proveedor-alternativo.png" alt="Logotipo de proveedor" class="imgproveedor" />
+                    <div>
+                        <p class="negritas">Proveedor:</p>
+                        <p>COCA COLA</p>
+                    </div>
+
+                </div>
+                <div class="flexreloj">
+                    <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="imgreloj" />
+                    <div>
+                        <p class="negritas">Último movimiento:</p>
+                        <p> 12/12/2000 15:53p.m.</p>
+                    </div>
                 </div>
             </div>
 
             <div class="dinerogrid">
                 <div class="preciodeventa">
-                    <p>Precio de Venta: $1210</p>
+                    <p class="negritas">Precio de Venta unitario:</p>
+                    <p class="dineros1"> $1210.00</p>
                 </div>
                 <div class="preciodecompra">
-                    <p>Precio de Compra: $1100</p>
+                    <p class="negritas">Precio de Compra unitario: </p>
+                    <p class="dineros">$1100.00</p>
                 </div>
-                <div class="ganancia%">
-                    <p>% de ganancia: 10% </p>
+                <div class="gananciap">
+                    <p class="negritas">% de ganancia: </p>
+                    <p class="dineros">10%</p>
                 </div>
-                <div class="ganancia$">
-                    <p>$ de ganancia: $110 </p>
+                <div class="gananciad">
+                    <p class="negritas">$ de ganancia unitario:</p>
+                    <p class="dineros">$110</p>
                 </div>
             </div>
+
+            <div class="botonesinventario">
+
             <a href="#" class="botonactualizar">Actualizar</a>
             <a href="#" class="botoneliminar">Eliminar</a>
-
-        </div>
-        <div class="inventariogrid1">
-            <div class="inventarionombre">
-                <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca">
-                <h3>COCA COLA REFRESCO</h3>
-                <p>4 ARTÍCULOS EN STOCK</p>
             </div>
-            <div class="flexdescripcion">
-                <img src="/build/img/descripcion-alternativa.png" alt="Logotipo de descripción" class="imgdescripcion">
-                <div class="contenidodescipcion">
-                    <p>Descripción: Coca light 600ml taparrosca</p>
-                </div>
-            </div>
-            <div class="flexcodigo">
-                <img src="/build/img/codigo.png" alt="Logotipo de codigo" class="imgcodigo">
-                <div class="contenidocodigo">
-                    <p>Código de Barras: 0212365412</p>
-                </div>
-            </div>
-            <div class="flexproveedor">
-                <img src="/build/img/proveedor-alternativo.png" alt="Logotipo de proveedor" class="imgproveedor">
-                <div class="contenidoproveedor">
-                    <p>Proveedor: COCA COLA</p>
-                </div>
-            </div>
-            <div class="flexreloj">
-                <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="imgreloj">
-                <div class="contenidoreloj">
-                    <p>Último movimiento: 12/12/2000 15:53p.m.</p>
-                </div>
-            </div>
-
-            <div class="dinerogrid">
-                <div class="preciodeventa">
-                    <p>Precio de Venta: $1210</p>
-                </div>
-                <div class="preciodecompra">
-                    <p>Precio de Compra: $1100</p>
-                </div>
-                <div class="ganancia%">
-                    <p>% de ganancia: 10% </p>
-                </div>
-                <div class="ganancia$">
-                    <p>$ de ganancia: $110 </p>
-                </div>
-            </div>
-            <a href="#" class="botonactualizar">Actualizar</a>
-            <a href="#" class="botoneliminar">Eliminar</a>
-
         </div>
     </div>
 </section>
