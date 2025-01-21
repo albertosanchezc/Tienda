@@ -2,7 +2,7 @@
     <h1>Carrito</h1>
     <section class="ventas">
         <div class="grid-container">
-            <!-- Rectángulo grande productos-->
+            <!-- Rectángulo grande -->
             <div class="grid-item rectangulo-grande">
                 <h2>Escanea o introduce el código de barras para iniciar venta.</h2>
                 <div class="rectangulo-grande-bebe1">
@@ -45,8 +45,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Rectángulo pequeño 1 producto-detalles-->
-            <div class="grid-item rectangulo-pequeno">
+            <!-- Rectángulo pequeño 1 producto-->
+            <div data-test="contenedorDetalles" class=" grid-item rectangulo-pequeno">
                 <div class="rectangulo-pequeno-bebe1">
                     <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
 
@@ -99,7 +99,7 @@
                     <p>10:04 p.m.</p>
                 </div>
             </div>
-            <!-- Rectángulo adicional total-->
+            <!-- Rectángulo adicional -->
             <div class="grid-item rectangulo-grande-horizontal">
                 <div class="rectangulo-grande-horizontal-bebe1">
                     <h3>Total:</h3>
@@ -120,28 +120,28 @@
     </section>
 
     <!-- modal de bienvenida 1-->
-    <section class="modal modal--show">
+    <section data-test="modal" class="modal modal--show">
         <div class="modal__container">
             <img src="/build/img/bienvenida.svg" alt="Logotipo de bienvenida" class="modal__img">
             <h2 class="modal__title">¡Bienvenido al Carrito!</h2>
             <p class="modal__paragraph">
                 Haz click en el siguiente botón para comenzar a marcar los productos.
             </p>
-            <a href="#" class="modal__close">Iniciar Carrito</a>
+            <button data-test="modal__close" class="modal__close">Iniciar Carrito</button>
         </div>
     </section>
 
     <!-- modal de buscador manual 2-->
-    <section class="modal--manual">
+    <section data-test="modal--manual" class="modal--manual">
         <div class="modal--manual__container">
             <div class="modal--manual__fleximg">
                 <div class="modal--manual__fleximg1">
                     <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--manual__img1">
                 </div>
-                <div class="modal--manual__fleximg2">
-                    <a href="#" class="modal--manual__cerrar">
+                <div data-test="botonCerrarModalManual" class="modal--manual__fleximg2">
+                    <button class="modal--manual__cerrar">
                         <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--manual__img2">
-                    </a>
+                    </button>
                 </div>
             </div>
             <h2 class="modal--manual__title">¡Bienvenido a la busqueda manual!</h2>
@@ -149,7 +149,7 @@
                 Haz click en el siguiente recuadro para introducir el código de barras.
             </p>
             <label for="2">Código de Barras:</label>
-            <input id="2" class="modal--manual__close" type="text" placeholder="Ejemplo:  014555452636">
+            <input data-test="modal--manual__close" id="2" class="modal--manual__close" type="text" placeholder="Ejemplo:  014555452636">
             </input>
             <table class="modal__tabla--manual">
                 <thead>
@@ -189,9 +189,9 @@
                 <div class="modal--nombre__fleximg1">
                     <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--nombre__img1">
                 </div>
-                <div class="modal--nombre__fleximg2">
-                    <a href="#" class="modal--nombre__cerrar">
-                        <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--nombre__img2">
+                <div  class="modal--nombre__fleximg2">
+                    <a href="#"  class="modal--nombre__cerrar">
+                        <img data-test="botonCerrarModalNombre" src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--nombre__img2">
                     </a>
                 </div>
             </div>
@@ -200,7 +200,7 @@
                 Haz click en el siguiente recuadro para buscar por nombre.
             </p>
             <label for="3">Nombre del producto:</label>
-            <input id="3" class="modal--nombre__close" type="text" placeholder="Ejemplo:  Doritos">
+            <input data-test="modal--nombre__close"  id="3" class="modal--nombre__close" type="text" placeholder="Ejemplo:  Doritos">
             </input>
 
             <table class="modal__tabla--nombre">
@@ -240,7 +240,7 @@
             <div class="modal--granel__gridcantidad">
                 <div class="modal--granel__cantidad">
                     <label for="4"></label>
-                    <input id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
+                    <input  id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
                     </input>
                 </div>
                 <div class="modal--granel__gramos">
@@ -276,7 +276,7 @@
                 producto--.
             </p>
             <label for="5"></label>
-            <input id="5" class="modal--cantidad__close" type="number" placeholder="Ej.: 220.">
+            <input  id="5" class="modal--cantidad__close" type="number" placeholder="Ej.: 220.">
             </input>
             <div class="modal--cantidad__gridprecio">
                 <div class="modal--cantidad__titulo">
