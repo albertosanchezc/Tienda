@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
         inputCodigoManual.value = '';
         modalManual.classList.remove('modal--manual--show');
         terminosBusqueda.codigoBarras = '';
-        terminosBusqueda.nombre = '';    
+        terminosBusqueda.nombre = '';
         filtrar();
     })
 
@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 let { codigoBarras } = terminosBusqueda;
                 codigoBarras = e.target.value;
                 terminosBusqueda.codigoBarras = codigoBarras;
-                console.log("Terminos búsqueda antes de inventario modal",terminosBusqueda);
-                console.log("Inventario Desde abrir modal",inventario);
+                console.log("Terminos búsqueda antes de inventario modal", terminosBusqueda);
+                console.log("Inventario Desde abrir modal", inventario);
                 const resultados = filtrar();
                 if (resultados) {
                     mostrarProductosModalManual(resultados);
@@ -412,6 +412,87 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Función que inserta los productos en el tbody de la ventana modal de busqueda por nombre del producto 
+    function mostrarProductosModalNombre(productosFiltrados) {
+        limpiarHTMLElemento(tbodyTablaModalNombre);
+        productosFiltrados.forEach(producto => {
+            const { cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = producto;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `        
+                        <td data-test="nombreProductoTbody">${nombre}</td>
+                        <td data-test="descripcionProductoTbody">${descripcion}</td>
+                        <td data-test="cantidadProductoTbody">${cantidad}</td>
+                        <td data-test="precioUnitarioVentaProductoTbody">$${precio_unitario_venta}</td>
+                `;
+            tbodyTablaModalNombre.appendChild(tr);
+
+            tr.addEventListener('click', (e) => {
+
+                // Aquí se podría hacer el cálculo de la cantidad
+                const infoProducto = {
+                    nombre: tr.querySelector('[data-test="nombreProductoTbody"]').textContent,
+                    descripcion: tr.querySelector('[data-test="descripcionProductoTbody"]').textContent,
+                    cantidad: 1,
+                    precio_unitario_venta: tr.querySelector('[data-test="precioUnitarioVentaProductoTbody"]').textContent,
+                }
+
+                // const infoProductoCompleta = buscarEnCarrito(infoProducto);
+                console.log(infoProducto);
+                terminosBusqueda.nombre = infoProducto.nombre;
+
+                // Se detecta la fila al que se le da click y se obtiene su información del inventario
+                let productoClickeadoCompleto = filtrar();
+                
+                productoClickeadoCompleto = Array.isArray(productoClickeadoCompleto) ? productoClickeadoCompleto.flat() : productoClickeadoCompleto;
+                articulosCarrito = Array.isArray(articulosCarrito) ? articulosCarrito.flat() : articulosCarrito;
+
+
+               // se pegó después de este comentario 
+               console.log("Producto Clickeado completo: ", productoClickeadoCompleto);
+
+
+               let existe = articulosCarrito.some(producto => producto.id === productoClickeadoCompleto[0].id);
+               console.log("existe", existe);
+               if (existe) {
+                   // Actualizamos la cantidad
+                   const productos = articulosCarrito.map(producto => {
+
+                       if (producto.nombre === productoClickeadoCompleto[0].nombre) {
+                           console.log('Desde aquí modificaremos la cantidad:', productoClickeadoCompleto[0].cantidad);
+                           articuloCarritoAModificar = articulosCarrito.filter(p => p.nombre === productoClickeadoCompleto[0].nombre)
+                           let cantidadCarrito = articuloCarritoAModificar[0].cantidad;
+                           console.log(`El articulo a modificar es  ${articuloCarritoAModificar[0].nombre} y su cantidad es ${cantidadCarrito} `);
+                           producto.cantidad = cantidadCarrito;
+
+
+                           return { ...producto, cantidad: producto.cantidad + 1 };
+                       }
+                       return producto;
+                   });
+
+                   articulosCarrito = [...productos];
+                   console.log('Ya te conozco, te aumenté la cantidad');
+               } else {
+                   let cantidadCarrito = parseInt(productoClickeadoCompleto[0].cantidad);
+                   productoClickeadoCompleto[0].cantidad = 1;
+                   console.log('No te conozco, te añadiré al carrito', productoClickeadoCompleto);
+
+                   articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
+                   console.log('Agregar elementos al carrito', articulosCarrito);
+               }
+
+
+               // Mostrar en el carrito
+               // Cerrar la ventana modal y limpiar el input
+               inputNombreProducto.value = '';
+               terminosBusqueda.codigoBarras = '';
+               terminosBusqueda.nombre = '';
+               modalNombreProducto.classList.remove('modal--nombre--show');
+               mostrarProductosCarrito(articulosCarrito);
+            })
+        });
+    }
+
     theadCarrito.innerHTML = `
     <tr>
         <th>Cantidad</th>
@@ -460,43 +541,7 @@ document.addEventListener('DOMContentLoaded', function () {
         div2ContenidoProductos.appendChild(tablaCarrito);
     }
 
-    // Función que inserta los productos en el tbody de la ventana modal de busqueda por nombre del producto 
-    function mostrarProductosModalNombre(productosFiltrados) {
-        limpiarHTMLElemento(tbodyTablaModalNombre);
-        productosFiltrados.forEach(producto => {
-            const { cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras } = producto;
-            const tr = document.createElement('tr');
-            tr.innerHTML = `        
-                    <td data-test="nombreProductoTbody">${nombre}</td>
-                    <td data-test="descripcionProductoTbody">${descripcion}</td>
-                    <td data-test="cantidadProductoTbody">${cantidad}</td>
-                    <td data-test="precioUnitarioVentaProductoTbody">$${precio_unitario_venta}</td>
-            `;
-            tbodyTablaModalNombre.appendChild(tr);
 
-            tr.addEventListener('click', (e) => {
-
-                // Aquí se podría hacer el cálculo de la cantidad
-                const infoProducto = {
-                    nombre: tr.querySelector('[data-test="nombreProductoTbody"]').textContent,
-                    descripcion: tr.querySelector('[data-test="descripcionProductoTbody"]').textContent,
-                    cantidad: 1,
-                    precio_unitario_venta: tr.querySelector('[data-test="precioUnitarioVentaProductoTbody"]').textContent,
-                }
-
-                // const infoProductoCompleta = buscarEnCarrito(infoProducto);
-                console.log(infoProducto);
-                terminosBusqueda.nombre = infoProducto.nombre;
-
-                // Se detecta la fila al que se le da click y se obtiene su información del inventario
-                const productoClickeadoCompleto = filtrar();
-
-                console.log(productoClickeadoCompleto);
-
-                // buscarEnCarrito(infoProducto)
-            })
-        });
-    }
 
 
 });
