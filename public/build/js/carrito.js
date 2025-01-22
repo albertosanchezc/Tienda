@@ -67,6 +67,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const tbodyCarrito = document.createElement('tbody');
     const theadCarrito = document.createElement('thead');
 
+    const botonVaciarCarrito = document.createElement('BUTTON');
+    botonVaciarCarrito.classList.add('boton-rojo-block');
+    botonVaciarCarrito.textContent = 'Vaciar Carrito';
+
+    const imagenBotonVaciarCarrito = document.createElement('IMG');
+    imagenBotonVaciarCarrito.src = 'build/img/basura.svg';
+    imagenBotonVaciarCarrito.alt = 'Icono basura';
+    imagenBotonVaciarCarrito.loading = 'lazy';
+    botonVaciarCarrito.appendChild(imagenBotonVaciarCarrito);
 
     // Eventos
 
@@ -367,6 +376,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 console.log("Producto Clickeado completo: ", productoClickeadoCompleto);
 
+                cantidadCarrito = parseInt(productoClickeadoCompleto[0].cantidad);
+
 
                 let existe = articulosCarrito.some(producto => producto.id === productoClickeadoCompleto[0].id);
                 console.log("existe", existe);
@@ -407,6 +418,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 terminosBusqueda.nombre = '';
                 modalManual.classList.remove('modal--manual--show');
                 mostrarProductosCarrito(articulosCarrito);
+                const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id)
+                console.log("Esta prueba es para ver si obtenemos la cantidad chida", prueba);
+
+                if (prueba.length !== 0) {
+                    articuloCarritoAModificar[0].cantidad = prueba[0].cantidad;
+                } else {
+                    articuloCarritoAModificar.cantidad = 1;
+                }
+
                 mostrarProductoCarritoDetalles(articuloCarritoAModificar);
 
             })
@@ -543,7 +563,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function mostrarProductoCarritoDetalles(articuloCarritoAModificar) {
-        const { nombre, descripcion, cantidad,  precio_unitario_venta } = articuloCarritoAModificar[0];
+        limpiarHTMLElemento(contenedorDetalles);
+
+
+        const { nombre, descripcion, cantidad, precio_unitario_venta } = articuloCarritoAModificar[0];
+
+        console.log("Filas carrito ", articuloCarritoAModificar);
 
         const div1ContenidoDetalles = document.createElement('DIV');
         div1ContenidoDetalles.classList.add('rectangulo-pequeno-bebe1');
@@ -555,10 +580,10 @@ document.addEventListener('DOMContentLoaded', function () {
         div2ContenidoDetalles.classList.add('rectangulo-pequeno-bebe2');
         div2ContenidoDetalles.innerHTML = `
             <div class="rectangulo-pequeno-bebecito21">
-                <h3>${nombre}</h3>
+                <h3 data-test="nombreDetalles">${nombre}</h3>
             </div>
             <div class="rectangulo-pequeno-bebecito22">
-                <h3>${descripcion}</h3>
+                <h3 data-test="descripcionDetalles">${descripcion}</h3>
             </div>
         `;
 
@@ -567,16 +592,12 @@ document.addEventListener('DOMContentLoaded', function () {
         div3ContenidoDetalles.classList.add('rectangulo-pequeno-bebe3');
         div3ContenidoDetalles.innerHTML = `
             <div class="rectangulo-pequeno-bebecito31">
-                <h3>Cantidad: ${cantidad}</h3>
+                <h3 data-test="cantidadDetalles">Cantidad: ${cantidad}</h3>
             </div>
             <div class="rectangulo-pequeno-bebecito32">
                 <h3>Código de Barras</h3>
             </div>
         `;
-
-
-
-
 
         const div4ContenidoDetalles = document.createElement('DIV');
         div4ContenidoDetalles.classList.add('rectangulo-pequeno-bebe4');
@@ -585,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <h3>Subtotal: </h3>
             </div>
             <div class="rectangulo-pequeno-bebecito42">
-                <h3>$${precio_unitario_venta}</h3>
+                <h3 data-test="precioDetalles">$${precio_unitario_venta}</h3>
             </div>
         `;
 
@@ -594,6 +615,8 @@ document.addEventListener('DOMContentLoaded', function () {
         contenedorDetalles.appendChild(div3ContenidoDetalles);
         contenedorDetalles.appendChild(div4ContenidoDetalles);
 
+        const contenedorVaciarcarrito = document.querySelector('.icono');
+        contenedorVaciarcarrito.appendChild(botonVaciarCarrito);
     }
 
 });
