@@ -62,6 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const div2ContenidoProductos = document.createElement('DIV');
     const div3ContenidoProductos = document.createElement('DIV');
 
+    const div1ContenidoTotales = document.createElement('DIV');
+    const div2ContenidoTotales = document.createElement('DIV');
+    const div3ContenidoTotales = document.createElement('DIV');
+    const div4ContenidoTotales = document.createElement('DIV');
+
+
     const tablaCarrito = document.createElement('table');
     tablaCarrito.classList.add('ordenes');
     const tbodyCarrito = document.createElement('tbody');
@@ -303,26 +309,22 @@ document.addEventListener('DOMContentLoaded', function () {
         contenedorProductos.appendChild(div3ContenidoProductos);
 
         // Contenido del div de Totales
-        const div1ContenidoTotales = document.createElement('DIV');
         div1ContenidoTotales.classList.add('rectangulo-grande-horizontal-bebe1');
         div1ContenidoTotales.innerHTML = `
             <h3>Total:</h3>
         
         `;
-        const div2ContenidoTotales = document.createElement('DIV');
         div2ContenidoTotales.classList.add('rectangulo-grande-horizontal-bebe2');
         div2ContenidoTotales.innerHTML = `
             <h3 data-test="Cantidadtotal">$0</h3>
         
         `;
-        const div3ContenidoTotales = document.createElement('DIV');
         div3ContenidoTotales.classList.add('rectangulo-grande-horizontal-bebe3');
         div3ContenidoTotales.innerHTML = `
             <button data-test="botonPagar" id="pagar" class="boton-azul-block">
                 PAGAR <span>&gt;&gt;&gt;</span>
             </button>
         `;
-        const div4ContenidoTotales = document.createElement('DIV');
         div4ContenidoTotales.classList.add('rectangulo-grande-horizontal-bebe4');
         div4ContenidoTotales.innerHTML = `
             <h3 data-test="cantidadArticulosTxt">Cantidad de artículos:</h3>
@@ -428,6 +430,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 mostrarProductoCarritoDetalles(articuloCarritoAModificar);
+                mostrarTotalesCarrito(articulosCarrito);
 
             })
         });
@@ -565,7 +568,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function mostrarProductoCarritoDetalles(articuloCarritoAModificar) {
         limpiarHTMLElemento(contenedorDetalles);
 
-
         const { nombre, descripcion, cantidad, precio_unitario_venta } = articuloCarritoAModificar[0];
 
         console.log("Filas carrito ", articuloCarritoAModificar);
@@ -617,6 +619,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const contenedorVaciarcarrito = document.querySelector('.icono');
         contenedorVaciarcarrito.appendChild(botonVaciarCarrito);
+    }
+
+    function mostrarTotalesCarrito(articulosCarrito){
+        limpiarHTMLElemento(div2ContenidoTotales);
+        limpiarHTMLElemento(div4ContenidoTotales);
+
+        let articulosCorrect = articulosCarrito.flat();
+        console.log("Desde aquí queremos mandar articulosCarritoFull ",articulosCorrect);
+        let totalP = 0;
+        let cantidadP = 0;
+        
+        articulosCorrect.forEach( articulo => {
+            const {cantidad, precio_unitario_venta} = articulo;
+            totalP += cantidad*precio_unitario_venta;
+            cantidadP += cantidad;
+        })
+        console.log(`El total es : ${totalP} y la cantidad de artículos es ${cantidadP}`);
+        div2ContenidoTotales.innerHTML = `
+            <h3 data-test="Cantidadtotal">$${totalP}</h3>
+        `;
+
+        div4ContenidoTotales.innerHTML = `
+            <h3 data-test="cantidadArticulosTxt">Cantidad de artículos:</h3>
+            <h3 data-test="numeroArticulos">${cantidadP}</h3>
+        `;
+        
+        // Sólo es necesario actualizar los contenidos siguientes
+        contenedorTotales.appendChild(div2ContenidoTotales);
+        contenedorTotales.appendChild(div4ContenidoTotales);   
     }
 
 });
