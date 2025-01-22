@@ -26,8 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let articulosCarrito = [];
 
     let terminosBusqueda = {
+        id: '',
         codigoBarras: '',
-        nombre: ''
+        nombre: '',
+        
     }
     // Selectores
     // Ventanes modales
@@ -180,6 +182,16 @@ document.addEventListener('DOMContentLoaded', function () {
             return resultadosFiltrado.flat();
         }
     }
+
+    function filtrarProducto(inventarioFiltrado) {
+        return inventarioFiltrado.find(producto => {
+            return (
+                producto.id === terminosBusqueda.id &&
+                producto.nombre === terminosBusqueda.nombre
+            );
+        });
+    }
+
     function filtrarCodigoBarras(inventario) {
         const { codigoBarras } = terminosBusqueda;
 
@@ -343,9 +355,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function mostrarProductosModalManual(productosFiltrados) {
         limpiarHTMLElemento(tbodyTablaModalManual);
         productosFiltrados.forEach(producto => {
-            const { cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = producto;
+            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = producto;
             const tr = document.createElement('tr');
-            tr.innerHTML = `        
+            tr.innerHTML = `     
+                    <td hidden data-test="idProductoTbody">${id}</td>   
                     <td data-test="nombreProductoTbody">${nombre}</td>
                     <td data-test="descripcionProductoTbody">${descripcion}</td>
                     <td data-test="cantidadProductoTbody">${cantidad}</td>
@@ -357,6 +370,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Aquí se podría hacer el cálculo de la cantidad
                 const infoProducto = {
+                    id: tr.querySelector('[data-test="idProductoTbody"]').textContent,
                     nombre: tr.querySelector('[data-test="nombreProductoTbody"]').textContent,
                     descripcion: tr.querySelector('[data-test="descripcionProductoTbody"]').textContent,
                     cantidad: 1,
@@ -367,28 +381,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // const infoProductoCompleta = buscarEnCarrito(infoProducto);
                 terminosBusqueda.nombre = infoProducto.nombre;
-
+                terminosBusqueda.id = infoProducto.id;
                 // Se detecta la fila a la que se le da click y se obtiene su información del inventario
                 let productoClickeadoCompleto = filtrar();
+                productoClickeadoCompleto = filtrarProducto(productoClickeadoCompleto);
+                console.log("Producto CLickeado Corregido", productoClickeadoCompleto);
 
 
                 productoClickeadoCompleto = Array.isArray(productoClickeadoCompleto) ? productoClickeadoCompleto.flat() : productoClickeadoCompleto;
                 articulosCarrito = Array.isArray(articulosCarrito) ? articulosCarrito.flat() : articulosCarrito;
-                articuloCarritoAModificar = inventario.filter(p => p.nombre === productoClickeadoCompleto[0].nombre)
+                console.log("Producto CLickeado Corregido antes de donde creemos está el problema", productoClickeadoCompleto);
+
+                articuloCarritoAModificar = inventario.filter(p => p.id === productoClickeadoCompleto.id)
 
                 console.log("Producto Clickeado completo: ", productoClickeadoCompleto);
 
-                cantidadCarrito = parseInt(productoClickeadoCompleto[0].cantidad);
+                cantidadCarrito = parseInt(productoClickeadoCompleto.cantidad);
 
 
-                let existe = articulosCarrito.some(producto => producto.id === productoClickeadoCompleto[0].id);
+                let existe = articulosCarrito.some(producto => producto.id === productoClickeadoCompleto.id);
                 console.log("existe", existe);
                 if (existe) {
                     // Actualizamos la cantidad
                     const productos = articulosCarrito.map(producto => {
 
-                        if (producto.nombre === productoClickeadoCompleto[0].nombre) {
-                            console.log('Desde aquí modificaremos la cantidad:', productoClickeadoCompleto[0].cantidad);
+                        if (producto.id === productoClickeadoCompleto.id) {
+                            console.log('Desde aquí modificaremos la cantidad:', productoClickeadoCompleto.cantidad);
                             let cantidadCarrito = articuloCarritoAModificar[0].cantidad;
                             console.log(`El articulo a modificar es  ${articuloCarritoAModificar[0].nombre} y su cantidad es ${cantidadCarrito} `);
                             producto.cantidad = cantidadCarrito;
@@ -402,8 +420,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     articulosCarrito = [...productos];
                     console.log('Ya te conozco, te aumenté la cantidad');
                 } else {
-                    let cantidadCarrito = parseInt(productoClickeadoCompleto[0].cantidad);
-                    productoClickeadoCompleto[0].cantidad = 1;
+                    let cantidadCarrito = parseInt(productoClickeadoCompleto.cantidad);
+                    productoClickeadoCompleto.cantidad = 1;
                     console.log('No te conozco, te añadiré al carrito', productoClickeadoCompleto);
 
                     articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
@@ -418,6 +436,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 inputCodigoManual.value = '';
                 terminosBusqueda.codigoBarras = '';
                 terminosBusqueda.nombre = '';
+                terminosBusqueda.id = '';
+
                 modalManual.classList.remove('modal--manual--show');
                 mostrarProductosCarrito(articulosCarrito);
                 const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id)
