@@ -2,7 +2,11 @@ let inventario = [];
 let inventario_granel = [];
 let inventarioCompleto = [];
 const despliegueInventario = document.querySelector('.despliegueinventario');
-
+const btnCerrarModal = document.querySelector('.modal--inventario__imgcerrar');
+const modalInventario = document.querySelector('.modal--inventario');
+btnCerrarModal.addEventListener('click', () => {
+    modalInventario.classList.remove('modal--inventario--show');
+})
 const cardProducto = document.createElement('DIV');
 cardProducto.classList.add('inventariogrid');
 const slides = [
