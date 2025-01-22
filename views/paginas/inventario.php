@@ -76,7 +76,6 @@
     </div>
 
     <div class="despliegueinventario">
-
     </div>
 </section>
 
@@ -91,8 +90,8 @@
         </div>
         <div class="modal--inventario__titulo">
             <h1>Registrar Producto Nuevo</h1>
-            <h3>Completa el formulario con los datos del producto que deseas registrar. Si el producto existe, edita la
-                cantidad.</h3>
+            <h3>Completa el formulario con los datos del producto que deseas registrar. Si el producto existe, regresa y
+                da click en entrada de producto.</h3>
         </div>
         <div class="modal--inventario__entradas">
             <?php
@@ -116,16 +115,27 @@
                             <input type="text" id="nombreproductoentrada" name="productos[nombre]"
                                 placeholder="Coca - Cola" value="<?php echo s($productos->nombre); ?>" required>
                         </div>
-                        <div class="modal--inventario__telefono">
-                            <label for="phone">Descripción: </label>
-                            <input type="tel" id="phone" name="inventario[telefono]" placeholder="+52 (415) 456 7890"
-                                maxlength="19" value="<?php echo s($inventario->telefono); ?>" required>
+                        <div class="modal--inventario__descripcion">
+                            <label for="descripcioninv">Descripción: </label>
+                            <input type="text" id="descripcioninv" name="productos[descripcion]"
+                                placeholder="Jamón de Cerdo Americano" maxlength="30"
+                                value="<?php echo s($productos->descripcion); ?>" required>
                         </div>
-                        <div class="modal--inventario__email">
-                            <label for="entradaemail">Email: </label>
-                            <input type="email" id="entradaemail" name="inventario[email]"
-                                placeholder="correo@correo.com" value="<?php echo s($inventario->email); ?>">
+
+                        <!-- imagen -->
+
+                        <div class="modal--inventario__codigo_barras">
+                            <label for="entradacodigo_barras">Código de barras: </label>
+                            <input type="number" id="entradacodigo_barras" name="inventario[codigo_barras]"
+                                placeholder="0123456789" value="<?php echo s($productos->codigobarras); ?>">
                         </div>
+                        <div class="modal--inventario__categoria">
+                            <label for="descripcioninv">Descripción: </label>
+                            <input type="text" id="descripcioninv" name="productos[descripcion]"
+                                placeholder="Cremeria" maxlength="30"
+                                value="<?php echo s($productos->descripcion); ?>" required>
+                        </div>
+
                     </div>
                 </fieldset>
                 <input value="Crear Proveedor" type="submit" class="modal--inventario__botonaniadir">
