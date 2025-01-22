@@ -19,12 +19,12 @@
 
 <section class="contenedorcaja seccioncaja">
     <div class="botones">
-        <a href="#" class="botonslider1">+ Añadir nuevo Producto</a>
-        <a href="#" class="botonslider2">Entrada de producto</a>
-        <a href="#" class="botonslider3">Salida de producto</a>
+        <a href="#" class="botonslider1">Entrada de Producto</a>
+        <a href="#" class="botonslider2">Salida de Producto</a>
+        <a href="#" class="botonslider3">+ Añadir Nuevo Producto</a>
     </div>
     <div class="busqueda-titulo">
-        <h1>Productos de Inventario</h1>
+        <h1>Productos en Inventario</h1>
         <h3>Explora el registro completo de los artículos que tienes en stock, junto con los los costos y ganancias
             generadas de cada uno.<h3>
     </div>
@@ -76,71 +76,60 @@
     </div>
 
     <div class="despliegueinventario">
-        <div class="inventariogrid">
-            <div class="gridcontenido1">
-                <div class="inventarionombre">
-                    <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca" />
-                    <div>
-                        <h3>COCA COLA REFRESCO</h3>
-                        <p>4 ARTÍCULOS EN STOCK</p>
-                    </div>
-                </div>
-                <div class="flexdescripcion">
-                    <img src="/build/img/descripcion-alternativa.png" alt="Logotipo de descripción"
-                        class="imgdescripcion">
-                    <div>
-                        <p class="negritas">Descripción:</p>
-                        <p>Coca light 600ml taparrosca</p>
-                    </div>
-                </div>
-                <div class="flexcodigo">
-                    <img src="/build/img/codigo.png" alt="Logotipo de codigo" class="imgcodigo" />
-                    <div>
-                        <p class="negritas">Código de Barras: </p>
-                        <p>0212365412</p>
-                    </div>
-                </div>
-                <div class="flexproveedor">
-                    <img src="/build/img/proveedor-alternativo.png" alt="Logotipo de proveedor" class="imgproveedor" />
-                    <div>
-                        <p class="negritas">Proveedor:</p>
-                        <p>COCA COLA</p>
-                    </div>
 
-                </div>
-                <div class="flexreloj">
-                    <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="imgreloj" />
-                    <div>
-                        <p class="negritas">Último movimiento:</p>
-                        <p> 12/12/2000 15:53p.m.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dinerogrid">
-                <div class="preciodeventa">
-                    <p class="negritas">Precio de Venta unitario:</p>
-                    <p class="dineros1"> $1210.00</p>
-                </div>
-                <div class="preciodecompra">
-                    <p class="negritas">Precio de Compra unitario: </p>
-                    <p class="dineros">$1100.00</p>
-                </div>
-                <div class="gananciap">
-                    <p class="negritas">% de ganancia: </p>
-                    <p class="dineros">10%</p>
-                </div>
-                <div class="gananciad">
-                    <p class="negritas">$ de ganancia unitario:</p>
-                    <p class="dineros">$110</p>
-                </div>
-            </div>
-
-            <div class="botonesinventario">
-
-            <a href="#" class="botonactualizar">Actualizar</a>
-            <a href="#" class="botoneliminar">Eliminar</a>
-            </div>
-        </div>
     </div>
+</section>
+
+
+<!-- modal registrar nuevo producto (boton 3)-->
+<section class="modal--inventario modal--inventario--show">
+    <div class="modal--inventario__contenedor">
+        <div class="modal--inventario__cerrar">
+            <a href="#" class="modal--inventario__refcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--inventario__imgcerrar">
+            </a>
+        </div>
+        <div class="modal--inventario__titulo">
+            <h1>Registrar Producto Nuevo</h1>
+            <h3>Completa el formulario con los datos del producto que deseas registrar. Si el producto existe, edita la
+                cantidad.</h3>
+        </div>
+        <div class="modal--inventario__entradas">
+            <?php
+            foreach ($alertas as $key => $alerta):
+                foreach ($alerta as $mensaje):
+                    ?>
+                    <div class="modal--inventario__alerta <?php echo $key; ?>"><?php echo $mensaje; ?></div>
+                    <?php
+                endforeach;
+            endforeach;
+            ?>
+            <form id="nuevoproveedor" method="POST" action="/inventario">
+                <fieldset>
+                    <legend>+Anadir Nuevo Producto</legend>
+                    <div class="modal--inventario__entradasbox">
+                        <div class="modal--inventario__nombre">
+                            <?php if ($mensaje) { ?>
+                                <p class='modal--inventario__alerta modal--inventario__exito'> <?php echo $mensaje; ?> </p>
+                            <?php } ?>
+                            <label for="nombreproductoentrada">Nombre del producto: </label>
+                            <input type="text" id="nombreproductoentrada" name="productos[nombre]"
+                                placeholder="Coca - Cola" value="<?php echo s($productos->nombre); ?>" required>
+                        </div>
+                        <div class="modal--inventario__telefono">
+                            <label for="phone">Descripción: </label>
+                            <input type="tel" id="phone" name="inventario[telefono]" placeholder="+52 (415) 456 7890"
+                                maxlength="19" value="<?php echo s($inventario->telefono); ?>" required>
+                        </div>
+                        <div class="modal--inventario__email">
+                            <label for="entradaemail">Email: </label>
+                            <input type="email" id="entradaemail" name="inventario[email]"
+                                placeholder="correo@correo.com" value="<?php echo s($inventario->email); ?>">
+                        </div>
+                    </div>
+                </fieldset>
+                <input value="Crear Proveedor" type="submit" class="modal--inventario__botonaniadir">
+            </form>
+
+        </div>
 </section>
