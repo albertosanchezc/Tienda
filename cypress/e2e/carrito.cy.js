@@ -8,8 +8,8 @@ describe('Carrito', () => {
 
     })
 
+
     it(" 1: Mostrar Carrito Vacío", () => {
-        cy.screenshot('pagina-completa')
         cy.getByData("botonBusquedaManual").should('be.visible')
         cy.getByData("botonBusquedaNombre").should('be.visible')
         cy.getByData("botonPagar").should('be.visible')
@@ -97,10 +97,14 @@ describe('Carrito', () => {
 
         cy.getByData("botonBusquedaNombre").click()
         cy.getByData("modal--nombre__close").should('exist')
-        cy.getByData("botonCerrarModalNombre")
         cy.getByData("modal--nombre__close").should('exist')
         cy.getByData("modal--nombre__close").type("coc")
         cy.getByData("modal--nombre__close").should('have.value', 'coc');
+        cy.getByData("botonCerrarModalNombre")
+        cy.getByData("botonCerrarModalNombre").should('exist')
+        cy.getByData("botonCerrarModalNombre").click()
+
+
 
     })
 
@@ -214,7 +218,7 @@ describe('Carrito', () => {
     })
 
 
-    it("12: Abrir, escribir algo y cerrar modal buscar por nombre abrir modal de nuevo y ver que el input esté vacío", () => {
+    it("12: Abrir, escribir algo y cerrar modalbuscarpornombre abrir modal de nuevo y ver que el input esté vacío", () => {
         cy.getByData("botonBusquedaManual").should('be.visible')
         cy.getByData("botonBusquedaNombre").should('be.visible')
         cy.getByData("botonPagar").should('be.visible')
@@ -324,5 +328,26 @@ describe('Carrito', () => {
     })
 
 
+    it("16: Abrir, escribir algo y selelccionar una opción", () => {
+        cy.getByData("botonBusquedaManual").should('be.visible')
+        cy.getByData("botonBusquedaNombre").should('be.visible')
+        cy.getByData("botonPagar").should('be.visible')
+        cy.getByData("cantidadArticulosTxt").should('be.visible')
+        cy.getByData("numeroArticulos").should('be.visible')
+        cy.getByData("Cantidadtotal").should('be.visible')
+        cy.getByData("contenedorDetalles").should('be.visible')
+        // Después de revisar el carrito vacío
+
+
+        // Abrir ventana modal buscar por nombre y escribir en ella
+        cy.getByData("botonBusquedaNombre").click()
+        cy.getByData("modal--nombre__close").should('exist')
+        cy.getByData("modal--nombre__close").type("coc")
+
+        // Valores  arevisar
+        cy.getByData("nombreProductoTbody").should('exist')
+        cy.getByData("nombreProductoTbody").should('have.text', 'Coca-Cola')
+        cy.getByData("nombreProductoTbody").click()
+    })
 
 })
