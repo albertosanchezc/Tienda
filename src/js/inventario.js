@@ -1,3 +1,10 @@
+let inventario = [];
+let inventario_granel = [];
+let inventarioCompleto = [];
+const despliegueInventario = document.querySelector('.despliegueinventario');
+
+const cardProducto = document.createElement('DIV');
+cardProducto.classList.add('inventariogrid');
 const slides = [
     {
         titulo: "Añade un producto",
@@ -17,10 +24,27 @@ const slides = [
         enlace: "#",
         enlaceTexto: "Salida de producto"
     }
-    
+
 ];
 
 let currentIndex = 0;
+
+async function consultarAPI() {
+    try {
+        const server = window.location.host;
+
+        const url = `http://${server}/inventarios/api/inventarios`;
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+
+
+        inventario = resultado.inventario;
+        inventario_granel = resultado.inventario_granel;
+        mostrarCards(inventario);
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 // Función para mostrar el slide actual y actualizar los puntos
 function showSlide(index) {
@@ -62,6 +86,102 @@ function setSlide(index) {
 
 // Inicializa el slider al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
+    // limpiarHTMLElemento(despliegueInventario);
+
+    consultarAPI();
     showSlide(currentIndex); // Muestra el primer slide
     setInterval(nextSlide, 6000); // Cambia automáticamente cada 5 segundos
+
 });
+
+
+function mostrarCards(inventario) {
+    console.log(inventario);
+    inventario.forEach(producto => {
+        const { nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad } = producto;
+
+        let ganancia = precio_unitario_venta - precio_compra;
+        let porcentajeGanancia = ganancia * 100 / precio_compra;
+        cardProducto.innerHTML = `
+        <div class="gridcontenido1">
+        <div class="inventarionombre">
+            <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca">
+            <div>
+                <h3>${nombre} ${categoria_id} </h3>
+                <p>${cantidad} ARTÍCULOS EN STOCK</p>
+            </div>
+        </div>
+        <div class="flexdescripcion">
+            <img src="/build/img/descripcion-alternativa.png" alt="Logotipo de descripción" class="imgdescripcion">
+            <div>
+                <p class="negritas">Descripción:</p>
+                <p>${descripcion}</p>
+            </div>
+        </div>
+        <div class="flexcodigo">
+            <img src="/build/img/codigo.png" alt="Logotipo de codigo" class="imgcodigo">
+            <div>
+                <p class="negritas">Código de Barras: </p>
+                <p>${codigo_barras}</p>
+            </div>
+        </div>
+        <div class="flexproveedor">
+            <img src="/build/img/proveedor-alternativo.png" alt="Logotipo de proveedor" class="imgproveedor">
+            <div>
+                <p class="negritas">Proveedor:</p>
+                <p>${proveedor_id}</p>
+            </div>
+
+        </div>
+        <div class="flexreloj">
+            <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="imgreloj">
+            <div>
+                <p class="negritas">Último movimiento:</p>
+                <p> ${fecha_compra}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dinerogrid">
+        <div class="preciodeventa">
+            <p class="negritas">Precio de Venta unitario:</p>
+            <p class="dineros1"> $${precio_unitario_venta}</p>
+        </div>
+        <div class="preciodecompra">
+            <p class="negritas">Precio de Compra unitario: </p>
+            <p class="dineros">$${precio_compra}</p>
+        </div>
+        <div class="gananciap">
+            <p class="negritas">% de ganancia: </p>
+            <p class="dineros">${porcentajeGanancia}%</p>
+        </div>
+        <div class="gananciad">
+            <p class="negritas">Ganancia unitaria en $ :</p>
+            <p class="dineros">${ganancia}</p>
+        </div>
+    </div>
+
+    <div class="botonesinventario">
+
+    <a href="#" class="botonactualizar">Actualizar</a>
+    <a href="#" class="botoneliminar">Eliminar</a>
+    </div>
+    `;
+
+    });
+
+    despliegueInventario.appendChild(cardProducto);
+
+    console.log(despliegueInventario);
+
+
+}
+
+function limpiarHTMLElemento(elemento) {
+    // Forma lenta
+    // contenedorCarrito.innerHTML = '';
+
+    while (elemento.firstChild) {
+        elemento.removeChild(elemento.firstChild);
+    }
+}
