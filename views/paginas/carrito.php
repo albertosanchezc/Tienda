@@ -132,7 +132,7 @@
     </section>
 
     <!-- modal de buscador manual 2-->
-    <section data-test="modal--manual" class="modal--manual modal--manual--show" >
+    <section data-test="modal--manual" class="modal--manual" >
         <div class="modal--manual__container">
             <div class="modal--manual__fleximg">
                 <div class="modal--manual__fleximg1">
@@ -144,7 +144,7 @@
                     </button>
                 </div>
             </div>
-            <h2 class="modal--manual__title">¡Búsqueda por Código!</h2>
+            <h2 class="modal--manual__title">¡Búsqueda por Código de Barras!</h2>
             <p class="modal--manual__paragraph">
                 Introduce el código de barras para buscar algún producto.
             </p>
@@ -180,7 +180,7 @@
     </section>
 
     <!-- modal de buscador por nombre 3-->
-    <section class="modal--nombre">
+    <section class="modal--nombre modal--nombre--show">
         <div class="modal--nombre__container">
             <div class="modal--nombre__fleximg">
                 <div class="modal--nombre__fleximg1">
@@ -202,7 +202,7 @@
                 placeholder="Ejemplo:  Doritos">
             </input>
 
-            <table class="modal__tabla--nombre">
+            <table class="modal--nombre__tabla">
                 <thead>
                     <tr>
                         <th>Producto</th>
