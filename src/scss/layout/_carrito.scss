@@ -761,6 +761,7 @@ body {
         // width: 90%;
         max-width: 35px;
         max-height: 35px;
+        cursor: pointer;
     }
 
     &__precio {
@@ -817,7 +818,7 @@ body {
 
 .modal--cantidad,
 .modal--granel,
-.modal--manual {
+.modal--manual, .modal--nombre {
     &__container {
         gap: 0;
         max-height: 100%;
@@ -1007,12 +1008,11 @@ body {
 
 }
 
-.modal--manual {
+.modal--manual, .modal--nombre {
     &__tabla {
         width: 100%;
         border-collapse: collapse;
         table-layout: auto;
-        font-size: 1.3rem;
         margin:1rem 0;
 
         th {
@@ -1022,12 +1022,14 @@ body {
             background: linear-gradient(to right, #D56B26, #E6962C);
             color: white;
             font-weight: bold;
+            font-size: 1.3rem;
         }
 
         td {
             border: 1px solid #FFE0B2;
-            padding: 8px;
+            padding: 1px;
             text-align: left;
+            font-size: 1.2rem;
             cursor: pointer;
         }
 
