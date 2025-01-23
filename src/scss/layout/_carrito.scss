@@ -660,6 +660,9 @@ body {
 
     &__gramos {
         grid-column: 2;
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
 
         p {
             font-size: 3rem;
@@ -805,7 +808,7 @@ body {
 
 }
 
-.modal--cantidad {
+.modal--cantidad, .modal--granel {
     &__container {
         gap: 0;
         max-height: 100%;
@@ -948,6 +951,7 @@ body {
         border: 2px dotted #03BB02;
         padding: 20px;
         border-radius: 8px;
+        height: 15rem;
     }
 
     legend {
@@ -991,5 +995,39 @@ body {
         // margin-top: 1rem;
         max-width: 190px;
     }
+
+    &__btn {
+        background-color: #f80880;
+        color: #fff;
+    
+    }
+
+    &__btn:hover{
+        background-color: #fff;
+        color: #f80880;
+        border: solid 1px #f80880;
+
+    }
+
+    fieldset {
+        border: 2px dotted #c710df;
+    }
+
+    legend {
+        color: #c710df;
+    }
+
+    input[type="number"] {
+        border: solid 2px #03BB02;
+        background-color: #fff;
+
+    }
+
+    input[type="number"]:hover {
+        background-color: #e5f7dd;
+        border: solid 2px #0a960a;
+        color: black;
+    }
+    
 
 }

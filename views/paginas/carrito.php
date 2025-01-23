@@ -224,7 +224,7 @@
     </section>
 
     <!-- modal de y si es producto granel 4-->
-    <section class="modal--granel">
+    <section class="modal--granel modal--granel--show">
         <div class="modal--granel__container">
             <div class="modal--granel__fleximg">
                 <div class="modal--granel__fleximg1">
@@ -236,18 +236,53 @@
                     </a>
                 </div>
             </div>
-            <h2 class="modal--granel__title">¡Introduce la cantidad en gramos!</h2>
+            <h2 class="modal--granel__title">Introduce la cantidad en gramos</h2>
             <p class="modal--granel__paragraph">
-                Haz click en el siguiente recuadro para introducir la cantidad en gramos de --nombre del producto--.
+                Indica la cantidad en gramos que deseas vender.
             </p>
+            <fieldset>
+                <legend>Edita la Cantidad</legend>
             <div class="modal--granel__gridcantidad">
                 <div class="modal--granel__cantidad">
-                    <label for="4"></label>
+                    <label for="4">Cantidad en gramos:</label>
                     <input id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
                     </input>
                 </div>
                 <div class="modal--granel__gramos">
                     <p>g.</p>
+                </div>
+            </div>
+            </fieldset>
+            <div class="modal--cantidad__caracteristicas">
+                <div class="modal--cantidad__fila1-cantidad">
+                    <p>Cantidad</p>
+                </div>
+                <div class="modal--cantidad__fila1-nombre">
+                    <p>Nombre</p>
+                </div>
+                <div class="modal--cantidad__fila1-descripcion">
+                    <p>Descripción</p>
+                </div>
+                <div class="modal--cantidad__fila1-costoventa">
+                    <p>Costo por Kilogramo</p>
+                </div>
+                <div class="modal--cantidad__fila1-total">
+                    <p>Total</p>
+                </div>
+                <div class="modal--cantidad__fila2-cantidad">
+                    <p>250g</p>
+                </div>
+                <div class="modal--cantidad__fila2-nombre">
+                    <p>COCA COLA</p>
+                </div>
+                <div class="modal--cantidad__fila2-descripcion">
+                    <p>Taparosca 450ml.55565655</p>
+                </div>
+                <div class="modal--cantidad__fila2-costoventa">
+                    <p>58.00</p>
+                </div>
+                <div class="modal--cantidad__fila2-total">
+                    <p>852.58</p>
                 </div>
             </div>
             <div class="modal--granel__gridprecio">
@@ -258,10 +293,14 @@
                     <h2>$56.00</h2>
                 </div>
             </div>
+
+            <div class="modal--granel__boton">
+                <a href="#" class="modal--granel__btn">Aceptar</a>
+            </div>
     </section>
 
     <!-- modal de editar cantidad 5-->
-    <section class="modal--cantidad modal--cantidad--show">
+    <section class="modal--cantidad ">
         <div class="modal--cantidad__container">
             <div class="modal--cantidad__fleximg">
                 <div class="modal--cantidad__fleximg1">
