@@ -238,7 +238,7 @@ describe('Carrito', () => {
         cy.getByData("botonCerrarModalNombre")
         cy.getByData("botonCerrarModalNombre").click()
 
-         // Abrir de nuevo la ventana modal,
+        // Abrir de nuevo la ventana modal,
         cy.getByData("botonBusquedaNombre").should('be.visible')
         cy.getByData("botonBusquedaNombre").click()
         cy.getByData("modal--nombre__close").should("exist")
@@ -312,11 +312,11 @@ describe('Carrito', () => {
 
         // Valores a revisar
         cy.getByData("modal--manual__close").should('have.value', '7501')
-        
+
 
         cy.wait(1000).getByData("nombreProductoTbody").should('have.text', 'Coca-Cola')
-        cy.getByData("descripcionProductoTbody").should('have.text', '1.75 L')
-        cy.getByData("precioUnitarioVentaProductoTbody").should('have.text', '$38.00')
+        cy.getByData("descripcionProductoTbodyModalManual").should('have.text', '1.75 L')
+        cy.getByData("precioUnitarioVentaProductoTbodyModalManual").should('have.text', '$38.00')
         cy.getByData("cantidadProductoTbody").should('have.text', '1')
 
 
@@ -328,7 +328,7 @@ describe('Carrito', () => {
     })
 
 
-    it("16: Abrir, escribir algo y selelccionar una opción", () => {
+    it("16: Abrir, escribir algo y modal manual selelccionar una opción", () => {
         cy.getByData("botonBusquedaManual").should('be.visible')
         cy.getByData("botonBusquedaNombre").should('be.visible')
         cy.getByData("botonPagar").should('be.visible')
@@ -339,15 +339,17 @@ describe('Carrito', () => {
         // Después de revisar el carrito vacío
 
 
+        // Abrir ventana modal buscar por codigo de barras y escribir en ella
+        cy.getByData("botonBusquedaManual").click()
+        cy.getByData("modal--manual__close").should('exist')
+        cy.getByData("modal--manual__close").type("7501")
+        cy.getByData("descripcionProductoTbodyModalManual").contains('3 L').click()
         // Abrir ventana modal buscar por nombre y escribir en ella
         cy.getByData("botonBusquedaNombre").click()
         cy.getByData("modal--nombre__close").should('exist')
         cy.getByData("modal--nombre__close").type("coc")
-
-        // Valores  arevisar
-        cy.getByData("nombreProductoTbody").should('exist')
-        cy.getByData("nombreProductoTbody").should('have.text', 'Coca-Cola')
-        cy.getByData("nombreProductoTbody").click()
+        cy.getByData('descripcionProductoTbodyModalManual')
+        cy.getByData("descripcionProductoTbodyModalManual").contains('3 L').click()
     })
 
 })

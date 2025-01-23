@@ -23,7 +23,6 @@ class PaginasController
     {
         $inicio = true;
         $titulo = 'Inicio';
-
         $router->render('paginas/index', [
             'inicio' => $inicio,
             'titulo' => $titulo

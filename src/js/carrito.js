@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         id: '',
         codigoBarras: '',
         nombre: '',
-        
+
     }
     // Selectores
     // Ventanes modales
@@ -358,28 +358,29 @@ document.addEventListener('DOMContentLoaded', function () {
             const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = producto;
             const tr = document.createElement('tr');
             tr.innerHTML = `     
-                    <td hidden data-test="idProductoTbody">${id}</td>   
-                    <td data-test="nombreProductoTbody">${nombre}</td>
-                    <td data-test="descripcionProductoTbody">${descripcion}</td>
-                    <td data-test="cantidadProductoTbody">${cantidad}</td>
-                    <td data-test="precioUnitarioVentaProductoTbody">$${precio_unitario_venta}</td>
+                    <td hidden data-test="idProductoTbodyModalManual">${id}</td>   
+                    <td data-test="nombreProductoTbodyModalManual">${nombre}</td>
+                    <td data-test="descripcionProductoTbodyModalManual">${descripcion}</td>
+                    <td data-test="cantidadProductoTbodyModalManual">${cantidad}</td>
+                    <td data-test="precioUnitarioVentaProductoTbodyModalManual">$${precio_unitario_venta}</td>
             `;
             tbodyTablaModalManual.appendChild(tr);
 
             tr.addEventListener('click', (e) => {
-                
+
                 // Aquí se podría hacer el cálculo de la cantidad
                 const infoProducto = {
-                    id: tr.querySelector('[data-test="idProductoTbody"]').textContent,
-                    nombre: tr.querySelector('[data-test="nombreProductoTbody"]').textContent,
-                    descripcion: tr.querySelector('[data-test="descripcionProductoTbody"]').textContent,
+                    id: tr.querySelector('[data-test="idProductoTbodyModalManual"]').textContent,
+                    nombre: tr.querySelector('[data-test="nombreProductoTbodyModalManual"]').textContent,
+                    descripcion: tr.querySelector('[data-test="descripcionProductoTbodyModalManual"]').textContent,
                     cantidad: 1,
-                    precio_unitario_venta: tr.querySelector('[data-test="precioUnitarioVentaProductoTbody"]').textContent,
+                    precio_unitario_venta: tr.querySelector('[data-test="precioUnitarioVentaProductoTbodyModalManual"]').textContent,
                 }
 
 
 
                 // const infoProductoCompleta = buscarEnCarrito(infoProducto);
+                console.log(infoProducto);
                 terminosBusqueda.nombre = infoProducto.nombre;
                 terminosBusqueda.id = infoProducto.id;
                 // Se detecta la fila a la que se le da click y se obtiene su información del inventario
@@ -459,14 +460,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function mostrarProductosModalNombre(productosFiltrados) {
         limpiarHTMLElemento(tbodyTablaModalNombre);
         productosFiltrados.forEach(producto => {
-            const {id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = producto;
+            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = producto;
             const tr = document.createElement('tr');
             tr.innerHTML = `   
-                        <td hidden data-test="idProductoTbody">${id}</td>   
-                        <td data-test="nombreProductoTbody">${nombre}</td>
-                        <td data-test="descripcionProductoTbody">${descripcion}</td>
-                        <td data-test="cantidadProductoTbody">${cantidad}</td>
-                        <td data-test="precioUnitarioVentaProductoTbody">$${precio_unitario_venta}</td>
+                        <td hidden data-test="idProductoTbodyModalNombre">${id}</td>   
+                        <td data-test="nombreProductoTbodyModalNombre">${nombre}</td>
+                        <td data-test="descripcionProductoTbodyModalNombre">${descripcion}</td>
+                        <td data-test="cantidadProductoTbodyModalNombre">${cantidad}</td>
+                        <td data-test="precioUnitarioVentaProductoTbodyModalNombre">$${precio_unitario_venta}</td>
                 `;
             tbodyTablaModalNombre.appendChild(tr);
 
@@ -474,23 +475,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Aquí se podría hacer el cálculo de la cantidad
                 const infoProducto = {
-                    id: tr.querySelector('[data-test="idProductoTbody"]').textContent,
-                    nombre: tr.querySelector('[data-test="nombreProductoTbody"]').textContent,
-                    descripcion: tr.querySelector('[data-test="descripcionProductoTbody"]').textContent,
+                    id: tr.querySelector('[data-test="idProductoTbodyModalNombre"]').textContent,
+                    nombre: tr.querySelector('[data-test="nombreProductoTbodyModalNombre"]').textContent,
+                    descripcion: tr.querySelector('[data-test="descripcionProductoTbodyModalNombre"]').textContent,
                     cantidad: 1,
-                    precio_unitario_venta: tr.querySelector('[data-test="precioUnitarioVentaProductoTbody"]').textContent,
+                    precio_unitario_venta: tr.querySelector('[data-test="precioUnitarioVentaProductoTbodyModalNombre"]').textContent,
                 }
 
                 // const infoProductoCompleta = buscarEnCarrito(infoProducto);
                 console.log(infoProducto);
                 terminosBusqueda.nombre = infoProducto.nombre;
                 terminosBusqueda.id = infoProducto.id;
-                
+
 
                 // Se detecta la fila al que se le da click y se obtiene su información del inventario
                 let productoClickeadoCompleto = filtrar();
                 productoClickeadoCompleto = filtrarProducto(productoClickeadoCompleto);
                 console.log("Producto CLickeado Corregido desde Mod Nombre", productoClickeadoCompleto);
+                articuloCarritoAModificar = inventario.filter(p => p.id === productoClickeadoCompleto.id)
 
 
                 productoClickeadoCompleto = Array.isArray(productoClickeadoCompleto) ? productoClickeadoCompleto.flat() : productoClickeadoCompleto;
@@ -528,7 +530,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
                     console.log('Agregar elementos al carrito', articulosCarrito);
                 }
-                console.log("Articulo carrito a modificar", articuloCarritoAModificar);
+                console.log("Articulo carrito a modificar antes del error", articuloCarritoAModificar);
 
                 // Mostrar en el carrito
                 // Cerrar la ventana modal y limpiar el input
@@ -660,18 +662,18 @@ document.addEventListener('DOMContentLoaded', function () {
         contenedorVaciarcarrito.appendChild(botonVaciarCarrito);
     }
 
-    function mostrarTotalesCarrito(articulosCarrito){
+    function mostrarTotalesCarrito(articulosCarrito) {
         limpiarHTMLElemento(div2ContenidoTotales);
         limpiarHTMLElemento(div4ContenidoTotales);
 
         let articulosCorrect = articulosCarrito.flat();
-        console.log("Desde aquí queremos mandar articulosCarritoFull ",articulosCorrect);
+        console.log("Desde aquí queremos mandar articulosCarritoFull ", articulosCorrect);
         let totalP = 0;
         let cantidadP = 0;
-        
-        articulosCorrect.forEach( articulo => {
-            const {cantidad, precio_unitario_venta} = articulo;
-            totalP += cantidad*precio_unitario_venta;
+
+        articulosCorrect.forEach(articulo => {
+            const { cantidad, precio_unitario_venta } = articulo;
+            totalP += cantidad * precio_unitario_venta;
             cantidadP += cantidad;
         })
         console.log(`El total es : ${totalP} y la cantidad de artículos es ${cantidadP}`);
@@ -683,10 +685,10 @@ document.addEventListener('DOMContentLoaded', function () {
             <h3 data-test="cantidadArticulosTxt">Cantidad de artículos:</h3>
             <h3 data-test="numeroArticulos">${cantidadP}</h3>
         `;
-        
+
         // Sólo es necesario actualizar los contenidos siguientes
         contenedorTotales.appendChild(div2ContenidoTotales);
-        contenedorTotales.appendChild(div4ContenidoTotales);   
+        contenedorTotales.appendChild(div4ContenidoTotales);
     }
 
 });
