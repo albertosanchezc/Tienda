@@ -132,7 +132,7 @@
     </section>
 
     <!-- modal de buscador manual 2-->
-    <section data-test="modal--manual" class="modal--manual">
+    <section data-test="modal--manual" class="modal--manual modal--manual--show" >
         <div class="modal--manual__container">
             <div class="modal--manual__fleximg">
                 <div class="modal--manual__fleximg1">
@@ -144,20 +144,24 @@
                     </button>
                 </div>
             </div>
-            <h2 class="modal--manual__title">¡Bienvenido a la busqueda manual!</h2>
+            <h2 class="modal--manual__title">¡Búsqueda por Código!</h2>
             <p class="modal--manual__paragraph">
-                Haz click en el siguiente recuadro para introducir el código de barras.
+                Introduce el código de barras para buscar algún producto.
             </p>
+            <fieldset>
+                <legend>Búsqueda</legend>
             <label for="2">Código de Barras:</label>
             <input data-test="modal--manual__close" id="2" class="modal--manual__close" type="text"
                 placeholder="Ejemplo:  014555452636">
             </input>
-            <table class="modal__tabla--manual">
+            </fieldset>
+            <table class="modal--manual__tabla">
                 <thead>
                     <tr>
                         <th>Producto</th>
                         <th>Descripción</th>
                         <th>Imagen</th>
+                        <th>Código de Barras</th>
                         <th>Precio</th>
                     </tr>
                 </thead>
@@ -167,16 +171,8 @@
                         <td>2</td>
                         <td>Coca-Cola</td>
                         <td>1.75 L</td>
-                        <td>7501055313532</td>
+                        <td>7501055313500</td>
                         <td>38.00</td>
-                        <td>
-                            <div class="editar-cantidad">
-                                <a href="#" class="botoneditar-cantidad">Editar</a>
-                            </div>
-                            <div class="eliminar-producto">
-                                <a href="#" class="botoneliminar-producto">Eliminar</a>
-                            </div>
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -224,7 +220,7 @@
     </section>
 
     <!-- modal de y si es producto granel 4-->
-    <section class="modal--granel modal--granel--show">
+    <section class="modal--granel ">
         <div class="modal--granel__container">
             <div class="modal--granel__fleximg">
                 <div class="modal--granel__fleximg1">
@@ -253,35 +249,35 @@
                 </div>
             </div>
             </fieldset>
-            <div class="modal--cantidad__caracteristicas">
-                <div class="modal--cantidad__fila1-cantidad">
+            <div class="modal--granel__caracteristicas">
+                <div class="modal--granel__fila1-cantidad">
                     <p>Cantidad</p>
                 </div>
-                <div class="modal--cantidad__fila1-nombre">
+                <div class="modal--granel__fila1-nombre">
                     <p>Nombre</p>
                 </div>
-                <div class="modal--cantidad__fila1-descripcion">
+                <div class="modal--granel__fila1-descripcion">
                     <p>Descripción</p>
                 </div>
-                <div class="modal--cantidad__fila1-costoventa">
+                <div class="modal--granel__fila1-costoventa">
                     <p>Costo por Kilogramo</p>
                 </div>
-                <div class="modal--cantidad__fila1-total">
+                <div class="modal--granel__fila1-total">
                     <p>Total</p>
                 </div>
-                <div class="modal--cantidad__fila2-cantidad">
+                <div class="modal--granel__fila2-cantidad">
                     <p>250g</p>
                 </div>
-                <div class="modal--cantidad__fila2-nombre">
+                <div class="modal--granel__fila2-nombre">
                     <p>COCA COLA</p>
                 </div>
-                <div class="modal--cantidad__fila2-descripcion">
+                <div class="modal--granel__fila2-descripcion">
                     <p>Taparosca 450ml.55565655</p>
                 </div>
-                <div class="modal--cantidad__fila2-costoventa">
+                <div class="modal--granel__fila2-costoventa">
                     <p>58.00</p>
                 </div>
-                <div class="modal--cantidad__fila2-total">
+                <div class="modal--granel__fila2-total">
                     <p>852.58</p>
                 </div>
             </div>
