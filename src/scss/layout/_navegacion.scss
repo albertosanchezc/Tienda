@@ -48,6 +48,10 @@
     height: 0;
     transition: visibility .3s ease-in-out, opacity 0.5s linear, height 0.5s linear;
 
+    &:hover{
+        cursor: pointer;
+    }
+
     @include tablet {
         display: flex;
         align-items: center;
@@ -107,7 +111,14 @@
 
     img {
         width: 5rem;
+        
     }
+
+    &:hover{
+        cursor: pointer;
+    }
+
+
 }
 
 .mostrar {

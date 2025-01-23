@@ -180,7 +180,7 @@
     </section>
 
     <!-- modal de buscador por nombre 3-->
-    <section class="modal--nombre modal--nombre--show">
+    <section class="modal--nombre">
         <div class="modal--nombre__container">
             <div class="modal--nombre__fleximg">
                 <div class="modal--nombre__fleximg1">
@@ -193,21 +193,25 @@
                     </a>
                 </div>
             </div>
-            <h2 class="modal--nombre__title">¡Bienvenido a la busqueda por nombre!</h2>
+            <h2 class="modal--nombre__title">¡Busqueda por nombre del Producto!</h2>
             <p class="modal--nombre__paragraph">
                 Haz click en el siguiente recuadro para buscar por nombre.
             </p>
+            <fieldset>
+                <legend>Búsqueda</legend>
             <label for="3">Nombre del producto:</label>
             <input data-test="modal--nombre__close" id="3" class="modal--nombre__close" type="text"
                 placeholder="Ejemplo:  Doritos">
             </input>
+            </fieldset>
 
             <table class="modal--nombre__tabla">
                 <thead>
                     <tr>
-                        <th>Producto</th>
+                        <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Imagen</th>
+                        <th>Código de Barras</th>
                         <th>Precio</th>
                     </tr>
                 </thead>
@@ -362,4 +366,6 @@
                 <a href="#" class="modal--cantidad__btn">Cambiar Cantidad</a>
             </div>
     </section>
+
+
 </main>
