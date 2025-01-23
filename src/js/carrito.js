@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalCantidad = document.querySelector('.modal--cantidad');
     const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__cerrar');
     const ContenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
+
     // const 
 
 
@@ -450,16 +451,82 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
+
+
+    theadCarrito.innerHTML = `
+    <tr>
+        <th>Cantidad</th>
+        <th>Producto</th>
+        <th>Descripción</th>
+        <th>Imagen</th>
+        <th>Subtotal</th>
+        <th>Acciones</th>
+    </tr>
+`;
+
+    tablaCarrito.appendChild(theadCarrito);
+
+
+
+    function mostrarProductosCarrito() {
+        limpiarHTMLElemento(tbodyCarrito);
+        const productos = articulosCarrito;
+        // Aquí ya tenemos bien el arreglo sin repetidos;
+        console.log('Articulos carrito desde mostrar productosCarrito', productos);
+        productos.forEach(articulo => {
+            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = articulo;
+            console.log(articulosCarrito);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td hidden id="idCarritoTbody">${id}</td>   
+                <td id="cantidadCarritoTbody">${cantidad}</td>
+                <td id="nombreCarritoTbody">${nombre}</td>
+                <td id="descripcionCarritoTbody">${descripcion}</td>
+                <td id="codigoBarrasCarritoTbody">${codigo_barras}</td>
+                <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
+                <td>
+                    <div class="editar-cantidad">
+                        <a href="#" class="botoneditar-cantidad">Editar</a>
+                    </div>
+                    <div class="eliminar-producto">
+                        <a href="#" class="botoneliminar-producto">Eliminar</a>
+                    </div>
+                </td>
+            `;
+
+            tbodyCarrito.appendChild(row);
+        });
+
+        tablaCarrito.appendChild(tbodyCarrito);
+        div2ContenidoProductos.appendChild(tablaCarrito);
+    }
+
+    function eliminarArticulo(articulo) {
+        const resultado = articulosCarrito.filter(p => p.id !== articulo.id);
+        mostrarTotalesCarrito(resultado);
+        mostrarProductosCarrito();
+        return resultado;
+    }
+    function actualizarCantidad(articulo){
+        console.log("Articulo al que deseas modificar la cantidad", articulo);
+        let { cantidad, nombre, descripcion, precio_unitario_venta } = articulo;
+
+        
+
+        
+
+    }
     function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
         limpiarHTMLElemento(tbodyTablaModal);
         productosFiltrados.forEach(producto => {
-            const { id, cantidad, nombre, descripcion, precio_unitario_venta } = producto;
+            const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras } = producto;
             const tr = document.createElement('tr');
             tr.innerHTML = `     
                 <td hidden data-test="idProductoTbodyModal${tipo}">${id}</td>   
                 <td data-test="nombreProductoTbodyModal${tipo}">${nombre}</td>
                 <td data-test="descripcionProductoTbodyModal${tipo}">${descripcion}</td>
                 <td data-test="cantidadProductoTbodyModal${tipo}">${cantidad}</td>
+                <td data-test="cantidadProductoTbodyModal${tipo}">${codigo_barras}</td>
                 <td data-test="precioUnitarioVentaProductoTbodyModal${tipo}">$${precio_unitario_venta}</td>
             `;
             tbodyTablaModal.appendChild(tr);
@@ -530,69 +597,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 segundoEstadoCarrito();
             });
         });
-    }
-
-
-    theadCarrito.innerHTML = `
-    <tr>
-        <th>Cantidad</th>
-        <th>Producto</th>
-        <th>Descripción</th>
-        <th>Imagen</th>
-        <th>Subtotal</th>
-        <th>Acciones</th>
-    </tr>
-`;
-
-    tablaCarrito.appendChild(theadCarrito);
-
-
-
-    function mostrarProductosCarrito() {
-        limpiarHTMLElemento(tbodyCarrito);
-        const productos = articulosCarrito;
-        // Aquí ya tenemos bien el arreglo sin repetidos;
-        console.log('Articulos carrito desde mostrar productosCarrito', productos);
-        productos.forEach(articulo => {
-            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = articulo;
-            console.log(articulosCarrito);
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td hidden id="idCarritoTbody">${id}</td>   
-                <td id="cantidadCarritoTbody">${cantidad}</td>
-                <td id="nombreCarritoTbody">${nombre}</td>
-                <td id="descripcionCarritoTbody">${descripcion}</td>
-                <td id="codigoBarrasCarritoTbody">${codigo_barras}</td>
-                <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
-                <td>
-                    <div class="editar-cantidad">
-                        <a href="#" class="botoneditar-cantidad">Editar</a>
-                    </div>
-                    <div class="eliminar-producto">
-                        <a href="#" class="botoneliminar-producto">Eliminar</a>
-                    </div>
-                </td>
-            `;
-
-            tbodyCarrito.appendChild(row);
-        });
-
-        tablaCarrito.appendChild(tbodyCarrito);
-        div2ContenidoProductos.appendChild(tablaCarrito);
-    }
-
-    function eliminarArticulo(articulo) {
-        const resultado = articulosCarrito.filter(p => p.id !== articulo.id);
-        mostrarTotalesCarrito(resultado);
-        mostrarProductosCarrito();
-        return resultado;
-    }
-    function actualizarCantidad(articulo){
-        console.log("Articulo al que deseas modificar la cantidad", articulo);
-        let { cantidad, nombre, descripcion, precio_unitario_venta } = articulo;
-
-        
-
     }
 
 
