@@ -131,8 +131,8 @@ document.addEventListener('DOMContentLoaded', function () {
         modalGranel.classList.remove('modal--granel--show');
     })
 
-    botonVaciarCarrito.addEventListener('click',() => {
-
+    botonVaciarCarrito.addEventListener('click', () => {
+        vaciarCarrito();
     })
 
 
@@ -144,7 +144,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Busqueda manual del código
         if (e.target && e.target.id === 'busqueda-manual') {
             filtrar();
-            mostrarProductosModalManual(inventario);
+            // mostrarProductosModalManual(inventario);
+            mostrarProductosModal(inventario, tbodyTablaModalManual, 'Manual');
             modalManual.classList.add('modal--manual--show');
             inputCodigoManual.disabled = false;
             inputCodigoManual.focus();
@@ -156,7 +157,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("Inventario Desde abrir modal", inventario);
                 const resultados = filtrar();
                 if (resultados) {
-                    mostrarProductosModalManual(resultados);
+                    // mostrarProductosModalManual(resultados);
+                    mostrarProductosModal(resultados, tbodyTablaModalManual, 'Manual');
                 } else {
                     noResultado(tablaModalManual, parrafoModalManual);
                 }
@@ -166,8 +168,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Busqueda por nombre
         if (e.target && e.target.id === 'busqueda-producto') {
-            mostrarProductosModalNombre(inventario);
-
+            // mostrarProductosModalNombre(inventario);
+            mostrarProductosModal(inventario, tbodyTablaModalNombre, 'Nombre');
             modalNombreProducto.classList.add('modal--nombre--show');
             inputNombreProducto.disabled = false;
             inputNombreProducto.focus();
@@ -177,7 +179,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 terminosBusqueda.nombre = nombre;
                 const resultados = filtrar();
                 if (resultados) {
-                    mostrarProductosModalNombre(resultados);
+                    // mostrarProductosModalNombre(resultados);
+                    mostrarProductosModal(resultados, tbodyTablaModalNombre, 'Nombre');
                 } else {
                     noResultado(tablaModalNombre);
                 }
@@ -441,214 +444,88 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
-    // Función que inserta los productos en el tbody de la ventana modal de busqueda manual 
-    function mostrarProductosModalManual(productosFiltrados) {
-        limpiarHTMLElemento(tbodyTablaModalManual);
+    function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
+        limpiarHTMLElemento(tbodyTablaModal);
         productosFiltrados.forEach(producto => {
-            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = producto;
+            const { id, cantidad, nombre, descripcion, precio_unitario_venta } = producto;
             const tr = document.createElement('tr');
             tr.innerHTML = `     
-                    <td hidden data-test="idProductoTbodyModalManual">${id}</td>   
-                    <td data-test="nombreProductoTbodyModalManual">${nombre}</td>
-                    <td data-test="descripcionProductoTbodyModalManual">${descripcion}</td>
-                    <td data-test="cantidadProductoTbodyModalManual">${cantidad}</td>
-                    <td data-test="precioUnitarioVentaProductoTbodyModalManual">$${precio_unitario_venta}</td>
+                <td hidden data-test="idProductoTbodyModal${tipo}">${id}</td>   
+                <td data-test="nombreProductoTbodyModal${tipo}">${nombre}</td>
+                <td data-test="descripcionProductoTbodyModal${tipo}">${descripcion}</td>
+                <td data-test="cantidadProductoTbodyModal${tipo}">${cantidad}</td>
+                <td data-test="precioUnitarioVentaProductoTbodyModal${tipo}">$${precio_unitario_venta}</td>
             `;
-            tbodyTablaModalManual.appendChild(tr);
-
-            tr.addEventListener('click', (e) => {
-
-                // Aquí se podría hacer el cálculo de la cantidad
+            tbodyTablaModal.appendChild(tr);
+    
+            tr.addEventListener('click', () => {
                 const infoProducto = {
-                    id: tr.querySelector('[data-test="idProductoTbodyModalManual"]').textContent,
-                    nombre: tr.querySelector('[data-test="nombreProductoTbodyModalManual"]').textContent,
-                    descripcion: tr.querySelector('[data-test="descripcionProductoTbodyModalManual"]').textContent,
+                    id: tr.querySelector(`[data-test="idProductoTbodyModal${tipo}"]`).textContent,
+                    nombre: tr.querySelector(`[data-test="nombreProductoTbodyModal${tipo}"]`).textContent,
+                    descripcion: tr.querySelector(`[data-test="descripcionProductoTbodyModal${tipo}"]`).textContent,
                     cantidad: 1,
-                    precio_unitario_venta: tr.querySelector('[data-test="precioUnitarioVentaProductoTbodyModalManual"]').textContent,
-                }
-
-
-
-                // const infoProductoCompleta = buscarEnCarrito(infoProducto);
+                    precio_unitario_venta: tr.querySelector(`[data-test="precioUnitarioVentaProductoTbodyModal${tipo}"]`).textContent,
+                };
+    
                 console.log(infoProducto);
                 terminosBusqueda.nombre = infoProducto.nombre;
                 terminosBusqueda.id = infoProducto.id;
-                // Se detecta la fila a la que se le da click y se obtiene su información del inventario
+    
                 let productoClickeadoCompleto = filtrar();
                 productoClickeadoCompleto = filtrarProducto(productoClickeadoCompleto);
-                console.log("Producto CLickeado Corregido", productoClickeadoCompleto);
-
-
+                console.log("Producto Clickeado Corregido", productoClickeadoCompleto);
+    
+                articuloCarritoAModificar = inventario.filter(p => p.id === productoClickeadoCompleto.id);
+    
                 productoClickeadoCompleto = Array.isArray(productoClickeadoCompleto) ? productoClickeadoCompleto.flat() : productoClickeadoCompleto;
                 articulosCarrito = Array.isArray(articulosCarrito) ? articulosCarrito.flat() : articulosCarrito;
-                console.log("Producto Clickeado Corregido antes de donde creemos está el problema", productoClickeadoCompleto);
-
-                articuloCarritoAModificar = inventario.filter(p => p.id === productoClickeadoCompleto.id)
-
-                console.log("Producto Clickeado completo: ", productoClickeadoCompleto);
-
-                cantidadCarrito = parseInt(productoClickeadoCompleto.cantidad);
-
-
+    
                 let existe = articulosCarrito.some(producto => producto.id === productoClickeadoCompleto.id);
-                console.log("existe", existe);
+    
                 if (existe) {
-                    // Actualizamos la cantidad
-                    const productos = articulosCarrito.map(producto => {
-
+                    articulosCarrito = articulosCarrito.map(producto => {
                         if (producto.id === productoClickeadoCompleto.id) {
-                            console.log('Desde aquí modificaremos la cantidad:', productoClickeadoCompleto.cantidad);
-                            let cantidadCarrito = articuloCarritoAModificar[0].cantidad;
-                            console.log(`El articulo a modificar es  ${articuloCarritoAModificar[0].nombre} y su cantidad es ${cantidadCarrito} `);
-                            producto.cantidad = cantidadCarrito;
-
-
+                            producto.cantidad = articuloCarritoAModificar[0].cantidad;
                             return { ...producto, cantidad: producto.cantidad + 1 };
                         }
                         return producto;
                     });
-
-                    articulosCarrito = [...productos];
+    
                     console.log('Ya te conozco, te aumenté la cantidad');
                 } else {
-                    let cantidadCarrito = parseInt(productoClickeadoCompleto.cantidad);
                     productoClickeadoCompleto.cantidad = 1;
-                    console.log('No te conozco, te añadiré al carrito', productoClickeadoCompleto);
-
                     articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
-                    console.log('Agregar elementos al carrito', articulosCarrito);
+                    console.log('No te conozco, te añadiré al carrito', productoClickeadoCompleto);
                 }
-
-                console.log("Articulo carrito a modificar", articuloCarritoAModificar);
-
-                // Mostrar en el carrito
-                // Cerrar la ventana modal y limpiar el input
+    
+                inputNombreProducto.value = '';
                 inputCodigoManual.value = '';
                 terminosBusqueda.codigoBarras = '';
                 terminosBusqueda.nombre = '';
                 terminosBusqueda.id = '';
-
-                modalManual.classList.remove('modal--manual--show');
+    
+                if (tipo === 'Manual') {
+                    modalManual.classList.remove('modal--manual--show');
+                } else if (tipo === 'Nombre') {
+                    modalNombreProducto.classList.remove('modal--nombre--show');
+                }
+    
                 mostrarProductosCarrito(articulosCarrito);
-                const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id)
-                console.log("Esta prueba es para ver si obtenemos la cantidad chida", prueba);
-
+    
+                const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id);
                 if (prueba.length !== 0) {
                     articuloCarritoAModificar[0].cantidad = prueba[0].cantidad;
                 } else {
                     articuloCarritoAModificar.cantidad = 1;
                 }
-
+    
                 mostrarProductoCarritoDetalles(articuloCarritoAModificar);
                 mostrarTotalesCarrito(articulosCarrito);
                 segundoEstadoCarrito();
-
-            })
+            });
         });
     }
 
-    // Función que inserta los productos en el tbody de la ventana modal de busqueda por nombre del producto 
-    function mostrarProductosModalNombre(productosFiltrados) {
-        limpiarHTMLElemento(tbodyTablaModalNombre);
-        productosFiltrados.forEach(producto => {
-            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = producto;
-            const tr = document.createElement('tr');
-            tr.innerHTML = `   
-                        <td hidden data-test="idProductoTbodyModalNombre">${id}</td>   
-                        <td data-test="nombreProductoTbodyModalNombre">${nombre}</td>
-                        <td data-test="descripcionProductoTbodyModalNombre">${descripcion}</td>
-                        <td data-test="cantidadProductoTbodyModalNombre">${cantidad}</td>
-                        <td data-test="precioUnitarioVentaProductoTbodyModalNombre">$${precio_unitario_venta}</td>
-                `;
-            tbodyTablaModalNombre.appendChild(tr);
-
-            tr.addEventListener('click', (e) => {
-
-                // Aquí se podría hacer el cálculo de la cantidad
-                const infoProducto = {
-                    id: tr.querySelector('[data-test="idProductoTbodyModalNombre"]').textContent,
-                    nombre: tr.querySelector('[data-test="nombreProductoTbodyModalNombre"]').textContent,
-                    descripcion: tr.querySelector('[data-test="descripcionProductoTbodyModalNombre"]').textContent,
-                    cantidad: 1,
-                    precio_unitario_venta: tr.querySelector('[data-test="precioUnitarioVentaProductoTbodyModalNombre"]').textContent,
-                }
-
-                // const infoProductoCompleta = buscarEnCarrito(infoProducto);
-                console.log(infoProducto);
-                terminosBusqueda.nombre = infoProducto.nombre;
-                terminosBusqueda.id = infoProducto.id;
-
-
-                // Se detecta la fila al que se le da click y se obtiene su información del inventario
-                let productoClickeadoCompleto = filtrar();
-                productoClickeadoCompleto = filtrarProducto(productoClickeadoCompleto);
-                console.log("Producto CLickeado Corregido desde Mod Nombre", productoClickeadoCompleto);
-                articuloCarritoAModificar = inventario.filter(p => p.id === productoClickeadoCompleto.id)
-
-
-                productoClickeadoCompleto = Array.isArray(productoClickeadoCompleto) ? productoClickeadoCompleto.flat() : productoClickeadoCompleto;
-                articulosCarrito = Array.isArray(articulosCarrito) ? articulosCarrito.flat() : articulosCarrito;
-                console.log("Producto Clickeado Corregido antes de donde creemos está el problema", productoClickeadoCompleto);
-
-                cantidadCarrito = parseInt(productoClickeadoCompleto.cantidad);
-
-
-                let existe = articulosCarrito.some(producto => producto.id === productoClickeadoCompleto.id);
-                console.log("existe", existe);
-                if (existe) {
-                    // Actualizamos la cantidad
-                    const productos = articulosCarrito.map(producto => {
-
-                        if (producto.id === productoClickeadoCompleto.id) {
-                            console.log('Desde aquí modificaremos la cantidad:', productoClickeadoCompleto.cantidad);
-                            let cantidadCarrito = articuloCarritoAModificar[0].cantidad;
-                            console.log(`El articulo a modificar es  ${articuloCarritoAModificar[0].nombre} y su cantidad es ${cantidadCarrito} `);
-                            producto.cantidad = cantidadCarrito;
-
-
-                            return { ...producto, cantidad: producto.cantidad + 1 };
-                        }
-                        return producto;
-                    });
-
-                    articulosCarrito = [...productos];
-                    console.log('Ya te conozco, te aumenté la cantidad');
-                } else {
-                    let cantidadCarrito = parseInt(productoClickeadoCompleto.cantidad);
-                    productoClickeadoCompleto.cantidad = 1;
-                    console.log('No te conozco, te añadiré al carrito', productoClickeadoCompleto);
-
-                    articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
-                    console.log('Agregar elementos al carrito', articulosCarrito);
-                }
-                console.log("Articulo carrito a modificar antes del error", articuloCarritoAModificar);
-
-                // Mostrar en el carrito
-                // Cerrar la ventana modal y limpiar el input
-                inputNombreProducto.value = '';
-                terminosBusqueda.codigoBarras = '';
-                terminosBusqueda.nombre = '';
-                terminosBusqueda.id = '';
-
-                modalNombreProducto.classList.remove('modal--nombre--show');
-                mostrarProductosCarrito(articulosCarrito);
-                mostrarProductosCarrito(articulosCarrito);
-                const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id)
-                console.log("Esta prueba es para ver si obtenemos la cantidad chida", prueba);
-
-                if (prueba.length !== 0) {
-                    articuloCarritoAModificar[0].cantidad = prueba[0].cantidad;
-                } else {
-                    articuloCarritoAModificar.cantidad = 1;
-                }
-
-                mostrarProductoCarritoDetalles(articuloCarritoAModificar);
-                mostrarTotalesCarrito(articulosCarrito);
-                segundoEstadoCarrito();
-
-            })
-        });
-    }
 
     theadCarrito.innerHTML = `
     <tr>
