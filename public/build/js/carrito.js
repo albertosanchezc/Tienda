@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalCantidad = document.querySelector('.modal--cantidad');
     const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__cerrar');
 
+    const modalGranel = document.querySelector('.modal--granel');
+
+
     // Contenedores del section ventas
     const contenedorProductos = document.querySelector('.rectangulo-grande');
     const contenedorDetalles = document.querySelector('.rectangulo-pequeno');
@@ -92,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
     imagenBotonVaciarCarrito.loading = 'lazy';
     botonVaciarCarrito.appendChild(imagenBotonVaciarCarrito);
 
-    const modalGranel = document.querySelector('.modal--granel');
     const btnCerrarModalGranel = document.querySelector('.modal--granel__cerrar');
 
     // Eventos
@@ -127,6 +129,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     btnCerrarModalGranel.addEventListener('click', () => {
         modalGranel.classList.remove('modal--granel--show');
+    })
+
+    botonVaciarCarrito.addEventListener('click',() => {
+
     })
 
 
@@ -403,8 +409,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         };
 
                         articulosCarrito = eliminarArticulo(infoProductoCarrito);
-                        segundoEstadoCarrito();
-                        console.log("Articulos Carrito", articulosCarrito);
+                        if (articulosCarrito.length > 0) {
+                            segundoEstadoCarrito();
+                        } else {
+                            primerEstadoCarrito();
+                        }
                         break;
                     case "botoneditar-cantidad":
                         e.preventDefault();
@@ -658,11 +667,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function mostrarProductosCarrito() {
         limpiarHTMLElemento(tbodyCarrito);
-        // const articulosCarritoFlat = articulosCarrito.flat(); // Aplana el array de arrays
-        // const arregloSinRepetidos = [...new Map(articulosCarritoFlat.map(item => [item.id, item])).values()];
         const productos = articulosCarrito;
         // Aquí ya tenemos bien el arreglo sin repetidos;
-        // console.log("Arreglo sin repetidos", arregloSinRepetidos.flat());
         console.log('Articulos carrito desde mostrar productosCarrito', productos);
         productos.forEach(articulo => {
             const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = articulo;
@@ -694,6 +700,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function eliminarArticulo(articulo) {
         const resultado = articulosCarrito.filter(p => p.id !== articulo.id);
+        mostrarTotalesCarrito(resultado);
         mostrarProductosCarrito();
         return resultado;
     }
