@@ -652,6 +652,7 @@ body {
             font-weight: bold;
             display: unset;
             text-align: center;
+            margin-bottom: 1rem;
 
         }
 
@@ -659,6 +660,9 @@ body {
 
     &__gramos {
         grid-column: 2;
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
 
         p {
             font-size: 3rem;
@@ -733,6 +737,12 @@ body {
         position: absolute;
         top: 3px;
         right: 0;
+        transition: background-color .3s;
+        filter: invert(1) brightness(60%) grayscale(100%);
+    }
+
+    &__fleximg2:hover {
+        filter: none;
     }
 
     &__img1 {
@@ -798,10 +808,10 @@ body {
 
 }
 
-.modal--cantidad {
+.modal--cantidad, .modal--granel {
     &__container {
         gap: 0;
-        max-height: 80%;
+        max-height: 100%;
     }
 
     &__img1 {
@@ -822,11 +832,6 @@ body {
         display: grid;
         grid-template-columns: repeat(5, auto);
         grid-template-rows: 1fr 1fr;
-
-
-
-
-
     }
 
     &__fila1-cantidad,
@@ -924,18 +929,29 @@ body {
     }
 
     &__btn {
-        background-color: green;
+        background-color: #03aa03;
         color: #fff;
-        padding: 5px;
+        padding: 1rem 2rem;
         border-radius: 1rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        font-weight: bold;
+    
+    }
 
+    &__btn:hover{
+        background-color: #fff;
+        color: #03BB02;
+        border: solid 1px #03aa03;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 
     }
 
     fieldset {
-        border: 2px dotted #088F44;
+        border: 2px dotted #03BB02;
         padding: 20px;
         border-radius: 8px;
+        height: 15rem;
     }
 
     legend {
@@ -952,6 +968,8 @@ body {
         background-color: #fff;
         border-radius: 1rem;
         height: 43px;
+        cursor: pointer;
+
     }
 
     input[type="number"]:hover {
@@ -977,5 +995,39 @@ body {
         // margin-top: 1rem;
         max-width: 190px;
     }
+
+    &__btn {
+        background-color: #f80880;
+        color: #fff;
+    
+    }
+
+    &__btn:hover{
+        background-color: #fff;
+        color: #f80880;
+        border: solid 1px #f80880;
+
+    }
+
+    fieldset {
+        border: 2px dotted #c710df;
+    }
+
+    legend {
+        color: #c710df;
+    }
+
+    input[type="number"] {
+        border: solid 2px #03BB02;
+        background-color: #fff;
+
+    }
+
+    input[type="number"]:hover {
+        background-color: #e5f7dd;
+        border: solid 2px #0a960a;
+        color: black;
+    }
+    
 
 }
