@@ -59,7 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Selectores del modal Cantidad 
     const modalCantidad = document.querySelector('.modal--cantidad');
     const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__cerrar');
-    const ContenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
+    const contenedorTotalModalCantidad = modalCantidad.querySelector('.modal--cantidad__gridprecio');
+    const inputModalCantidad = modalCantidad.querySelector('.modal--cantidad__close');
 
     // const 
 
@@ -101,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
     botonVaciarCarrito.appendChild(imagenBotonVaciarCarrito);
 
     const btnCerrarModalGranel = document.querySelector('.modal--granel__cerrar');
-
+    const contenedorTablaModalCantidad = document.querySelector('.modal--cantidad__caracteristicas');
     // Eventos
 
     btnCerrarBienvenida.addEventListener('click', (e) => {
@@ -434,10 +435,23 @@ document.addEventListener('DOMContentLoaded', function () {
                             codigo_barras: tr.querySelector('#codigoBarrasCarritoTbody').textContent,
                             precio_unitario_venta: tr.querySelector('#precioUnitarioCarritoTbody').textContent
                         };
-
+                        const articuloAntes = articulosCarrito.filter(p => p.id === articulosCarrito.id );
+                        const cantidadAntes = articuloAntes.cantidad;
                         articulosCarrito = actualizarCantidad(infoProductoCarrito);
 
                         modalCantidad.classList.add('modal--cantidad--show');
+                        inputModalCantidad.disabled = false;
+                        inputModalCantidad.focus();
+                        inputCodigoManual.min = 0;
+                        inputModalCantidad.addEventListener('input', (e) => {
+                            console.log(e.target.value);
+                            if(e.target.value >= 1){
+                                infoProductoCarrito.cantidad = parseInt(e.target.value);
+                            } else{
+                                infoProductoCarrito.cantidad = 1;
+                            }
+                            actualizarCantidad(infoProductoCarrito);
+                        });
                         break;
                     default:
 
@@ -507,13 +521,56 @@ document.addEventListener('DOMContentLoaded', function () {
         mostrarProductosCarrito();
         return resultado;
     }
-    function actualizarCantidad(articulo){
+    function actualizarCantidad(articulo) {
         console.log("Articulo al que deseas modificar la cantidad", articulo);
         let { cantidad, nombre, descripcion, precio_unitario_venta } = articulo;
+        const contenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
 
-        
+        let total = cantidad * precio_unitario_venta;
+        limpiarHTMLElemento(contenedorTablaModalCantidad);
+        limpiarHTMLElemento(contenedorTotalModalCantidad);
+        contenedorTablaModalCantidad.innerHTML = `
+        <div class="modal--cantidad__fila1-cantidad">
+            <p>Cantidad</p>
+        </div>
+        <div class="modal--cantidad__fila1-nombre">
+            <p>Nombre</p>
+        </div>
+        <div class="modal--cantidad__fila1-descripcion">
+            <p>Descripción</p>
+        </div>
+        <div class="modal--cantidad__fila1-costoventa">
+            <p>Costo de Venta</p>
+        </div>
+        <div class="modal--cantidad__fila1-total">
+            <p>Total</p>
+        </div>
+        <div class="modal--cantidad__fila2-cantidad">
+            <p>${cantidad}</p>
+        </div>
+        <div class="modal--cantidad__fila2-nombre">
+            <p>${nombre}</p>
+        </div>
+        <div class="modal--cantidad__fila2-descripcion">
+            <p>${descripcion}</p>
+        </div>
+        <div class="modal--cantidad__fila2-costoventa">
+            <p>$${precio_unitario_venta}</p>
+        </div>
+        <div class="modal--cantidad__fila2-total">
+            <p>$${total}</p>
+        </div>
+        `;
 
-        
+
+        contenedorTotalModalCantidad.innerHTML = `
+            <div class="modal--cantidad__titulo">
+                <h2>Total:</h2>
+            </div>
+            <div class="modal--cantidad__precio">
+                <h2>$${total}</h2>
+            </div>
+        `;
 
     }
     function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
@@ -526,11 +583,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td data-test="nombreProductoTbodyModal${tipo}">${nombre}</td>
                 <td data-test="descripcionProductoTbodyModal${tipo}">${descripcion}</td>
                 <td data-test="cantidadProductoTbodyModal${tipo}">${cantidad}</td>
-                <td data-test="cantidadProductoTbodyModal${tipo}">${codigo_barras}</td>
+                <td data-test="codigoProductoTbodyModal${tipo}">${codigo_barras}</td>
                 <td data-test="precioUnitarioVentaProductoTbodyModal${tipo}">$${precio_unitario_venta}</td>
             `;
             tbodyTablaModal.appendChild(tr);
-    
+
             tr.addEventListener('click', () => {
                 const infoProducto = {
                     id: tr.querySelector(`[data-test="idProductoTbodyModal${tipo}"]`).textContent,
@@ -539,22 +596,22 @@ document.addEventListener('DOMContentLoaded', function () {
                     cantidad: 1,
                     precio_unitario_venta: tr.querySelector(`[data-test="precioUnitarioVentaProductoTbodyModal${tipo}"]`).textContent,
                 };
-    
+
                 console.log(infoProducto);
                 terminosBusqueda.nombre = infoProducto.nombre;
                 terminosBusqueda.id = infoProducto.id;
-    
+
                 let productoClickeadoCompleto = filtrar();
                 productoClickeadoCompleto = filtrarProducto(productoClickeadoCompleto);
                 console.log("Producto Clickeado Corregido", productoClickeadoCompleto);
-    
+
                 articuloCarritoAModificar = inventario.filter(p => p.id === productoClickeadoCompleto.id);
-    
+
                 productoClickeadoCompleto = Array.isArray(productoClickeadoCompleto) ? productoClickeadoCompleto.flat() : productoClickeadoCompleto;
                 articulosCarrito = Array.isArray(articulosCarrito) ? articulosCarrito.flat() : articulosCarrito;
-    
+
                 let existe = articulosCarrito.some(producto => producto.id === productoClickeadoCompleto.id);
-    
+
                 if (existe) {
                     articulosCarrito = articulosCarrito.map(producto => {
                         if (producto.id === productoClickeadoCompleto.id) {
@@ -563,35 +620,35 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                         return producto;
                     });
-    
+
                     console.log('Ya te conozco, te aumenté la cantidad');
                 } else {
                     productoClickeadoCompleto.cantidad = 1;
                     articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
                     console.log('No te conozco, te añadiré al carrito', productoClickeadoCompleto);
                 }
-    
+
                 inputNombreProducto.value = '';
                 inputCodigoManual.value = '';
                 terminosBusqueda.codigoBarras = '';
                 terminosBusqueda.nombre = '';
                 terminosBusqueda.id = '';
-    
+
                 if (tipo === 'Manual') {
                     modalManual.classList.remove('modal--manual--show');
                 } else if (tipo === 'Nombre') {
                     modalNombreProducto.classList.remove('modal--nombre--show');
                 }
-    
+
                 mostrarProductosCarrito(articulosCarrito);
-    
+
                 const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id);
                 if (prueba.length !== 0) {
                     articuloCarritoAModificar[0].cantidad = prueba[0].cantidad;
                 } else {
                     articuloCarritoAModificar.cantidad = 1;
                 }
-    
+
                 mostrarProductoCarritoDetalles(articuloCarritoAModificar);
                 mostrarTotalesCarrito(articulosCarrito);
                 segundoEstadoCarrito();
