@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalManual = document.querySelector('.modal--manual');
     const botonCerrarModalManual = document.querySelector('.modal--manual__img2');
     const inputCodigoManual = document.getElementById("2");
-    const tablaModalManual = document.querySelector('.modal__tabla--manual');
+    const tablaModalManual = document.querySelector('.modal--manual__tabla');
     const tbodyTablaModalManual = tablaModalManual.querySelector('tbody');
     const parrafoModalManual = document.querySelector('.modal--manual__paragraph');
 
@@ -55,9 +55,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const tbodyTablaModalNombre = tablaModalNombre.querySelector('tbody');
 
 
+
     // Selectores del modal Cantidad 
     const modalCantidad = document.querySelector('.modal--cantidad');
     const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__cerrar');
+    const ContenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
+    // const 
+
 
     const modalGranel = document.querySelector('.modal--granel');
 
@@ -430,6 +434,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             precio_unitario_venta: tr.querySelector('#precioUnitarioCarritoTbody').textContent
                         };
 
+                        articulosCarrito = actualizarCantidad(infoProductoCarrito);
+
                         modalCantidad.classList.add('modal--cantidad--show');
                         break;
                     default:
@@ -580,6 +586,9 @@ document.addEventListener('DOMContentLoaded', function () {
         mostrarTotalesCarrito(resultado);
         mostrarProductosCarrito();
         return resultado;
+    }
+    function actualizarCantidad(articulo){
+        console.log("Articulo al que deseas modificar la cantidad", articulo);
     }
 
 
