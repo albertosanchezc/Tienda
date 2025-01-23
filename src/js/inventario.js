@@ -94,7 +94,7 @@ function setSlide(index) {
 
 // Inicializa el slider al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-    // limpiarHTMLElemento(despliegueInventario);
+    limpiarHTMLElemento(despliegueInventario);
 
     consultarAPI();
     showSlide(currentIndex); // Muestra el primer slide

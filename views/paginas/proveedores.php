@@ -31,8 +31,7 @@
     <section class="contenedorcaja seccioncaja">
         <div class="busqueda-titulo">
             <h1>Histórico de Visitas de Proveedores</h1>
-            <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos
-                generados durante sus visitas.<h3>
+            <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos generados durante sus visitas.<h3>
         </div>
         <div class="busqueda-filtros1">
             <form id="buscador" action="/proveedores-generarexcel" method="POST">
@@ -173,7 +172,7 @@
                     <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="modalproveedores__imgreloj">
                     <div class="modalproveedores__ultimoregistro">Últ. Visita: 26/10/2020</div>
                 </div>
-                <a href="#" class="modalproveedores__botonactualizar">Actualizar</a>
+                <a href="#" class="modalproveedores__botonactualizar">Actualizar Producto</a>
                 <a href="#" class="modalproveedores__botoneliminar">Eliminar</a>
             </div>
         </div>

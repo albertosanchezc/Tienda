@@ -103,7 +103,6 @@
 <!-- modal de añadir -->
 <section class="modal--aniadir">
     <div class="modal--aniadir__container">
-    <div class="modal--aniadir__border"></div>
         <div class="modal--aniadir__fleximg1">
             <img src="/build/img/dinero.png" alt="Logotipo de dinero" class="modal--aniadir__img">
         </div>
@@ -116,12 +115,16 @@
         <p class="modal--aniadir__paragraph">
             Introduce la cantidad en efectivo que deseas abonar a la caja.
         </p>
-        <div class="modal--aniadir__cantidad">
-        
-        <label for="11">$ </label>
-            <input href="#" id="11" class="modal--aniadir__close" type="number" placeholder="Ejemplo:  1576">
-        </input>
-        </div>
+        <fieldset>
+            <legend>+Añadir Efectivo</legend>
+            <div class="modal--aniadir__cantidad">
+                <div class="modal--aniadir__flexdineros">
+                    <label for="11">Efectivo Entrante: </label>
+                    <input href="#" id="11" class="modal--aniadir__close" step="0.01" type="number" placeholder="$">
+                    </input>
+                </div>
+            </div>
+        </fieldset>
         <a href="#" class="modal--aniadir__close1">+ Añadir</a>
     </div>
 </section>
@@ -129,7 +132,7 @@
 <!-- modal de retirar -->
 <section class="modal--retirar">
     <div class="modal--retirar__container">
-    <div class="modal--retirar__border"></div>
+        <div class="modal--retirar__border"></div>
         <div class="modal--retirar__fleximg1">
             <img src="/build/img/dinero1.png" alt="Logotipo de dinero1" class="modal--retirar__img">
         </div>
@@ -142,13 +145,16 @@
         <p class="modal--retirar__paragraph">
             Introduce la cantidad en efectivo que deseas retirar de la caja.
         </p>
-        <div class="modal--retirar__cantidad">
-        
-        <label for="12">$ </label>
-
-            <input href="#" id="12" class="modal--retirar__close" type="number" placeholder="Ejemplo:  1576">
-        </input>
-        </div>
+        <fieldset>
+            <legend>-Retirar Efectivo</legend>
+            <div class="modal--retirar__cantidad">
+                <div class="modal--retirar__flexdineros">
+                    <label for="12">Efectivo a retirar: </label>
+                    <input href="#" id="12" class="modal--retirar__close" type="text" placeholder="$" step="0.01">
+                    </input>
+                </div>
+            </div>
+        </fieldset>
         <a href="#" class="modal--retirar__close1">- Retirar</a>
     </div>
 </section>

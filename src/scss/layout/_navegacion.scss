@@ -70,11 +70,33 @@
             }
         }
 
-        &:hover{
-            color: $amarillo;
-        }
+
     }
     
+}
+
+.verde:hover{
+    color: rgb(8, 194, 8);
+}
+
+.azul:hover{
+    color: rgb(20, 57, 219);
+}
+
+.naranja:hover{
+    color: rgb(226, 118, 17);
+}
+
+.rojo:hover{
+    color: rgb(218, 45, 22);
+}
+
+.rosa:hover{
+    color: rgb(233, 30, 148);
+}
+
+.morado:hover{
+    color: rgb(163, 3, 142);
 }
 
 // Menú de hamburguesa
