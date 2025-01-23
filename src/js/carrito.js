@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalNombreProducto = document.querySelector('.modal--nombre');
     const botonCerrarModalProducto = document.querySelector('.modal--nombre__img2');
     const inputNombreProducto = document.getElementById("3");
-    const tablaModalNombre = document.querySelector('.modal__tabla--nombre');
+    const tablaModalNombre = document.querySelector('.modal--nombre__tabla');
     const tbodyTablaModalNombre = tablaModalNombre.querySelector('tbody');
 
 
@@ -589,6 +589,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function actualizarCantidad(articulo){
         console.log("Articulo al que deseas modificar la cantidad", articulo);
+        let { cantidad, nombre, descripcion, precio_unitario_venta } = articulo;
+
+        
+
     }
 
 
