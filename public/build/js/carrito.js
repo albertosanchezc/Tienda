@@ -435,10 +435,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             codigo_barras: tr.querySelector('#codigoBarrasCarritoTbody').textContent,
                             precio_unitario_venta: tr.querySelector('#precioUnitarioCarritoTbody').textContent
                         };
-                        const articuloAntes = articulosCarrito.filter(p => p.id === articulosCarrito.id );
-                        const cantidadAntes = articuloAntes.cantidad;
+                        const articuloAntes = articulosCarrito.filter(p => p.id === infoProductoCarrito.id );
+                        const cantidadAntes = articuloAntes[0].cantidad;
                         articulosCarrito = actualizarCantidad(infoProductoCarrito);
-
+                        
                         modalCantidad.classList.add('modal--cantidad--show');
                         inputModalCantidad.disabled = false;
                         inputModalCantidad.focus();
@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             if(e.target.value >= 1){
                                 infoProductoCarrito.cantidad = parseInt(e.target.value);
                             } else{
-                                infoProductoCarrito.cantidad = 1;
+                                infoProductoCarrito.cantidad = cantidadAntes;
                             }
                             actualizarCantidad(infoProductoCarrito);
                         });
