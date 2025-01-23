@@ -419,69 +419,80 @@ body {
 
 }
 
-.fecha{
+.fecha {
     grid-column: 1;
     display: flex;
     align-items: center;
 }
 
-.fecha p{
+.fecha p {
     font-size: 1.3rem;
     font-weight: bold;
     margin: 0 0 0 5rem;
 
 }
 
-.hora{
+.hora {
     grid-column: 2;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     justify-content: flex-end;
 
-    img{
+    img {
         max-width: 15px;
         max-height: 15px;
         background-color: transparent;
     }
 
-    p{
+    p {
         font-size: 1.3rem;
         font-weight: bold;
         margin: 0 5rem 0 0;
-    
+
     }
 }
 
 //animación verde
 
 .rectangulo-pequeno-1 {
-    position: relative; /* Para contener el pseudo-elemento */
-    overflow: hidden; /* Asegura que el pseudo-elemento no sobresalga */
+    position: relative;
+    /* Para contener el pseudo-elemento */
+    overflow: hidden;
+    /* Asegura que el pseudo-elemento no sobresalga */
 }
 
 .rectangulo-pequeno-1::before {
-    content: ""; /* Pseudo-elemento para el fondo animado */
+    content: "";
+    /* Pseudo-elemento para el fondo animado */
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    width: 0; /* Comienza invisible */
-    background-color: rgba(0, 255, 0, 0.6); /* Verde con transparencia */
-    z-index: 0; /* Coloca el fondo detrás del contenido */
-    animation: carga-verde 2s linear infinite; /* Animación continua */
+    width: 0;
+    /* Comienza invisible */
+    background-color: rgba(0, 255, 0, 0.6);
+    /* Verde con transparencia */
+    z-index: 0;
+    /* Coloca el fondo detrás del contenido */
+    animation: carga-verde 2s linear infinite;
+    /* Animación continua */
 }
 
 @keyframes carga-verde {
     0% {
-        width: 0; /* Comienza sin mostrar */
+        width: 0;
+        /* Comienza sin mostrar */
     }
+
     100% {
-        width: 100%; /* Llena el ancho completo */
+        width: 100%;
+        /* Llena el ancho completo */
     }
 }
 
-.fecha, .hora {
+.fecha,
+.hora {
     position: relative;
 
 }
@@ -490,7 +501,8 @@ body {
 .modal,
 .modal--manual,
 .modal--nombre,
-.modal--granel, .modal--cantidad {
+.modal--granel,
+.modal--cantidad {
     position: fixed;
     top: 0;
     left: 0;
@@ -597,7 +609,10 @@ body {
 
 }
 
-.modal--granel, .modal--cantidad,.modal--nombre,.modal--manual {
+.modal--granel,
+.modal--cantidad,
+.modal--nombre,
+.modal--manual {
     &__gridcantidad {
         display: grid;
         gap: 3rem;
@@ -625,12 +640,14 @@ body {
         align-items: center;
 
 
+
+
     }
 
     &__precio {
         grid-column: 2;
 
-        h2{
+        h2 {
             font-size: 4rem;
             font-weight: bold;
             display: unset;
@@ -655,9 +672,9 @@ body {
     &__titulo {
         grid-column: 1;
 
-        h2{
+        h2 {
             font-size: large;
-            font-weight:normal;
+            font-weight: normal;
             display: flex;
         }
 
@@ -668,6 +685,7 @@ body {
         margin-top: 0.8rem;
 
     }
+
     input {
 
         display: flex;
@@ -688,8 +706,11 @@ body {
 
 }
 
-.modal--cantidad, .modal--granel,.modal--nombre, .modal--manual{
-    &__fleximg{
+.modal--cantidad,
+.modal--granel,
+.modal--nombre,
+.modal--manual {
+    &__fleximg {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -698,7 +719,7 @@ body {
         height: 100%;
     }
 
-    &__fleximg1{
+    &__fleximg1 {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -708,32 +729,37 @@ body {
 
     }
 
-    &__fleximg2{
+    &__fleximg2 {
         position: absolute;
         top: 3px;
         right: 0;
     }
 
-    &__img1{
+    &__img1 {
         // margin-top: 1rem;
         max-width: 70px;
     }
 
-    &__img2{
+    &__img2 {
         // margin-top: 1rem;
         // width: 90%;
-         max-width: 35px;
-         max-height: 35px;
+        max-width: 35px;
+        max-height: 35px;
     }
-       
+
     &__precio {
         grid-column: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       
 
-        h2{
+        h2 {
             font-size: 4rem;
             font-weight: bold;
             display: unset;
             text-align: center;
+            margin-top: 1.5rem;
 
         }
 
@@ -746,6 +772,7 @@ body {
         margin: 0;
         margin-bottom: 0;
         padding: 0;
+
 
     }
 
@@ -761,21 +788,194 @@ body {
         border-radius: 0;
         transition: background-color .3s;
 
-        
+
     }
 
-    &__cerrar:hover {    
+    &__cerrar:hover {
         filter: saturate(9) hue-rotate(0deg) contrast(1.2);
     }
 
-    
+
 }
 
-.modal--granel{
-    &__img1{
+.modal--cantidad {
+    &__container {
+        gap: 0;
+        max-height: 80%;
+    }
+
+    &__img1 {
+        height: 2.5rem;
+    }
+
+    &__title {
+        font-size: 2.2rem;
+
+
+    }
+
+    &__paragraph {
+        padding: 0 0 1rem 0;
+    }
+
+    &__caracteristicas {
+        display: grid;
+        grid-template-columns: repeat(5, auto);
+        grid-template-rows: 1fr 1fr;
+
+
+
+
+
+    }
+
+    &__fila1-cantidad,
+    &__fila1-nombre,
+    &__fila1-descripcion,
+    &__fila1-costoventa,
+    &__fila1-total {
+        grid-row: 1;
+        background: linear-gradient(to right, #03BB02, #47fa3a);
+        margin-top: 2rem;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        height: 2.4rem;
+
+        p {
+            font-weight: bold;
+            padding: 0 3px;
+            font-size: 1.1rem;
+            align-items: center;
+
+        }
+
+    }
+
+    &__fila2-cantidad,
+    &__fila2-nombre,
+    &__fila2-descripcion,
+    &__fila2-costoventa,
+    &__fila2-total {
+        grid-row: 2;
+        border: solid 1px #7cf77c;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        max-height: min-content;
+
+        p {
+            font-size: 1.1rem;
+        }
+    }
+
+
+    &__fila1-cantidad {
+        grid-column: 1;
+    }
+
+    &__fila1-nombre {
+        grid-column: 2;
+    }
+
+    &__fila1-descripcion {
+        grid-column: 3;
+    }
+
+    &__fila1-costoventa {
+        grid-column: 4;
+    }
+
+    &__fila1-total {
+        grid-column: 5;
+    }
+
+    &__fila2-cantidad {
+        grid-column: 1;
+    }
+
+    &__fila2-nombre {
+        grid-column: 2;
+    }
+
+    &__fila2-descripcion {
+        grid-column: 3;
+    }
+
+    &__fila2-costoventa {
+        grid-column: 4;
+    }
+
+    &__fila2-total {
+        grid-column: 5;
+    }
+
+    &__boton {
+        display: flex;
+    }
+
+    &__titulo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        
+    }
+
+    &__btn {
+        background-color: green;
+        color: #fff;
+        padding: 5px;
+        border-radius: 1rem;
+
+
+    }
+
+    fieldset {
+        border: 2px dotted #088F44;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    legend {
+        color: #03BB02;
+        font-weight: bold;
+        padding: 0 10px;
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: 5px;
+        font-size: 16px;
+        border: solid 2px #03BB02;
+        background-color: #fff;
+        border-radius: 1rem;
+        height: 43px;
+    }
+
+    input[type="number"]:hover {
+        background-color: #e5f7dd;
+        border: solid 2px #0a960a;
+        color: black;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+
+    }
+
+
+
+
+}
+
+.modal--granel {
+    &__img1 {
         // margin-top: 1rem;
         max-width: 190px;
     }
 
 }
-

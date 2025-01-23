@@ -149,7 +149,8 @@
                 Haz click en el siguiente recuadro para introducir el código de barras.
             </p>
             <label for="2">Código de Barras:</label>
-            <input data-test="modal--manual__close" id="2" class="modal--manual__close" type="text" placeholder="Ejemplo:  014555452636">
+            <input data-test="modal--manual__close" id="2" class="modal--manual__close" type="text"
+                placeholder="Ejemplo:  014555452636">
             </input>
             <table class="modal__tabla--manual">
                 <thead>
@@ -189,9 +190,10 @@
                 <div class="modal--nombre__fleximg1">
                     <img src="/build/img/lupa.png" alt="Logotipo de lupa" class="modal--nombre__img1">
                 </div>
-                <div  class="modal--nombre__fleximg2">
-                    <a href="#"  class="modal--nombre__cerrar">
-                        <img data-test="botonCerrarModalNombre" src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--nombre__img2">
+                <div class="modal--nombre__fleximg2">
+                    <a href="#" class="modal--nombre__cerrar">
+                        <img data-test="botonCerrarModalNombre" src="/build/img/cerrar.png" alt="Logotipo de cerrar"
+                            class="modal--nombre__img2">
                     </a>
                 </div>
             </div>
@@ -200,7 +202,8 @@
                 Haz click en el siguiente recuadro para buscar por nombre.
             </p>
             <label for="3">Nombre del producto:</label>
-            <input data-test="modal--nombre__close"  id="3" class="modal--nombre__close" type="text" placeholder="Ejemplo:  Doritos">
+            <input data-test="modal--nombre__close" id="3" class="modal--nombre__close" type="text"
+                placeholder="Ejemplo:  Doritos">
             </input>
 
             <table class="modal__tabla--nombre">
@@ -240,7 +243,7 @@
             <div class="modal--granel__gridcantidad">
                 <div class="modal--granel__cantidad">
                     <label for="4"></label>
-                    <input  id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
+                    <input id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
                     </input>
                 </div>
                 <div class="modal--granel__gramos">
@@ -258,7 +261,7 @@
     </section>
 
     <!-- modal de editar cantidad 5-->
-    <section class="modal--cantidad">
+    <section class="modal--cantidad modal--cantidad--show">
         <div class="modal--cantidad__container">
             <div class="modal--cantidad__fleximg">
                 <div class="modal--cantidad__fleximg1">
@@ -270,21 +273,58 @@
                     </a>
                 </div>
             </div>
-            <h2 class="modal--cantidad__title">¡Edita la cantidad!</h2>
+            <h2 class="modal--cantidad__title">Cambia la cantidad de artículos</h2>
             <p class="modal--cantidad__paragraph">
-                Haz click en el siguiente recuadro para editar la cantidad que deseas vender de --nombre del
-                producto--.
+                Introduce la cantidad que deseas vender.
             </p>
-            <label for="5"></label>
-            <input  id="5" class="modal--cantidad__close" type="number" placeholder="Ej.: 220.">
-            </input>
+            <fieldset>
+                <legend>Edita la Cantidad</legend>
+                <label for="5">Cantidad:</label>
+                <input id="5" class="modal--cantidad__close" type="number" placeholder="Ej.: 220.">
+                </input>
+            </fieldset>
+            <div class="modal--cantidad__caracteristicas">
+                <div class="modal--cantidad__fila1-cantidad">
+                    <p>Cantidad</p>
+                </div>
+                <div class="modal--cantidad__fila1-nombre">
+                    <p>Nombre</p>
+                </div>
+                <div class="modal--cantidad__fila1-descripcion">
+                    <p>Descripción</p>
+                </div>
+                <div class="modal--cantidad__fila1-costoventa">
+                    <p>Costo de Venta</p>
+                </div>
+                <div class="modal--cantidad__fila1-total">
+                    <p>Total</p>
+                </div>
+                <div class="modal--cantidad__fila2-cantidad">
+                    <p>1</p>
+                </div>
+                <div class="modal--cantidad__fila2-nombre">
+                    <p>COCA COLA</p>
+                </div>
+                <div class="modal--cantidad__fila2-descripcion">
+                    <p>Taparosca 450ml.55565655</p>
+                </div>
+                <div class="modal--cantidad__fila2-costoventa">
+                    <p>58.00</p>
+                </div>
+                <div class="modal--cantidad__fila2-total">
+                    <p>852.58</p>
+                </div>
+            </div>
             <div class="modal--cantidad__gridprecio">
                 <div class="modal--cantidad__titulo">
                     <h2>Total:</h2>
                 </div>
                 <div class="modal--cantidad__precio">
-                    <h2>$56.00</h2>
+                    <h2>$582.00</h2>
                 </div>
+            </div>
+            <div class="modal--cantidad__boton">
+                <a href="#" class="modal--cantidad__btn">Cambiar Cantidad</a>
             </div>
     </section>
 </main>

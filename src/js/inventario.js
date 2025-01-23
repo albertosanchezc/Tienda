@@ -180,8 +180,15 @@ function mostrarCards(inventario) {
         `;
 
         botonesGrid.innerHTML = `
-            <a href="#" class="botonactualizar">Actualizar</a>
+
+        <div class="primerafila">
+            <a href="#" class="botonactualizarstock">Actualizar Stock</a>
+        </div>
+        <div class="segundafila">
+            <a href="#" class="botonactualizar">Actualizar Producto</a>
             <a href="#" class="botoneliminar">Eliminar</a>
+        </div>
+
         `;
 
 

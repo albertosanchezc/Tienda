@@ -135,9 +135,13 @@
                 </div>
             </div>
             <div class="botonesinventario">
-                <a href="#" class="botonactualizarstock">Actualizar Stock</a>
-                <a href="#" class="botonactualizar">Actualizar Producto</a>
-                <a href="#" class="botoneliminar">Eliminar</a>
+                <div class="primerafila">
+                    <a href="#" class="botonactualizarstock">Actualizar Stock</a>
+                </div>
+                <div class="segundafila">
+                    <a href="#" class="botonactualizar">Actualizar Producto</a>
+                    <a href="#" class="botoneliminar">Eliminar</a>
+                </div>
             </div>
         </div>
     </div>
