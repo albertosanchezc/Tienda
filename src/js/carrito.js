@@ -376,6 +376,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Al menos un artículo en el carrito, se habilita la lectura de 
     function segundoEstadoCarrito() {
+        mostrarProductosCarrito();
         const tabla = document.querySelector('.ordenes');
         const tbody = tabla.querySelector('tbody');
         const articulos = tbody.querySelectorAll('tr');
@@ -402,6 +403,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         };
 
                         articulosCarrito = eliminarArticulo(infoProductoCarrito);
+                        segundoEstadoCarrito();
                         console.log("Articulos Carrito", articulosCarrito);
                         break;
                     case "botoneditar-cantidad":
@@ -692,8 +694,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function eliminarArticulo(articulo) {
         const resultado = articulosCarrito.filter(p => p.id !== articulo.id);
-        limpiarHTMLElemento(tbodyCarrito);
-        carritoHTML();
+        mostrarProductosCarrito();
         return resultado;
     }
 
