@@ -20,6 +20,7 @@ if (!isset($inicio)) {
     <link rel="icon" href="/build/img/logo.svg" type="image/svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/build/css/app.css">
 
 </head>
@@ -39,12 +40,12 @@ if (!isset($inicio)) {
                 <div class="derecha">
                     <img src="/build/img/dark-mode.svg" alt="Boton Modo Oscuro" class="dark-mode-boton">
                     <nav class="navegacion">
-                        <a href="/carrito">Carrito</a>
-                        <a href="/inventario">Inventario</a>
-                        <a href="/caja">Caja</a>
-                        <a href="/ventas">Ventas y Cancelaciones</a>
-                        <a href="/metricas">Métricas</a>
-                        <a href="/proveedores">Proveedores</a>
+                        <a class="verde" href="/carrito">Carrito</a>
+                        <a class="azul" href="/inventario">Inventario</a>
+                        <a class="naranja" href="/caja">Caja</a>
+                        <a class="rojo" href="/ventas">Ventas y Cancelaciones</a>
+                        <a class="rosa" href="/metricas">Métricas</a>
+                        <a class="morado" href="/proveedores">Proveedores</a>
 
 
                         <?php if ($auth) { ?>
@@ -137,12 +138,12 @@ if (!isset($inicio)) {
     <footer class="footer seccion">
         <div class="contenedor contenedor-footer">
             <nav class="navegacion">
-                <a href="/carrito">Carrito</a>
-                <a href="/inventario">Inventario</a>
-                <a href="/caja">Caja</a>
-                <a href="/ventas">Ventas y Cancelaciones</a>
-                <a href="/metricas">Métricas</a>
-                <a href="/proveedores">Proveedores</a>
+                <a class="verde" href="/carrito">Carrito</a>
+                <a class="azul" href="/inventario">Inventario</a>
+                <a class="naranja" href="/caja">Caja</a>
+                <a class="rojo" href="/ventas">Ventas y Cancelaciones</a>
+                <a class="rosa" href="/metricas">Métricas</a>
+                <a class="morado" href="/proveedores">Proveedores</a>
                 <?php if ($auth) { ?>
                     <a href="/logout">Cerrar Sesión</a>
                 <?php } else { ?>

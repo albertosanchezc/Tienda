@@ -75,6 +75,8 @@
 
 
 
+
+
 .botonslider,
 .botonslider1,
 .botonslider2,
@@ -276,6 +278,14 @@
 
     }
 }
+
+   span{
+        color: #10101a;
+        display: grid;
+        opacity: 1;
+        font-size: xx-large;
+        font-weight: bolder;
+    }
 
 .caja-filtrosinventario input::placeholder {
     padding: 0 1rem;

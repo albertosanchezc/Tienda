@@ -1,4 +1,6 @@
-.modalproveedores, .modalproveedores--aniadir, .modal--inventario {
+.modalproveedores,
+.modalproveedores--aniadir,
+.modal--inventario {
     position: fixed;
     top: 0;
     left: 0;
@@ -37,17 +39,17 @@
         padding: 1.8rem 2.5rem 2.5rem 2.5rem;
 
         @media (min-width: #{$telefono-1}) {
-        max-height: 100%;
+            max-height: 100%;
 
         }
-        
-        @media (min-width: #{$tablet}) {
-        max-height: 90%;
 
-        }        
-        
+        @media (min-width: #{$tablet}) {
+            max-height: 90%;
+
+        }
+
         @media (min-width: #{$laptop-1}) {
-        max-height: 90%;
+            max-height: 90%;
 
         }
     }
@@ -173,17 +175,19 @@
             grid-template-columns: 1fr;
             margin: 1rem 30rem 0 30rem;
         }
-        
+
         @media (min-width: #{$tablet}) {
-        grid-template-columns: repeat(2, 1fr);
-        }        
-        
-        @media (min-width: #{$laptop-1}) {
-        grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
         }
-        
+
+        @media (min-width: #{$laptop-1}) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
     }
-    &__datosgrid, &__datosgrid1 {
+
+    &__datosgrid,
+    &__datosgrid1 {
         background-color: #f9f9f9;
         border: 1px solid #ddd;
         border-radius: 8px;
@@ -191,10 +195,11 @@
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         text-align: center;
         cursor: pointer;
-       
+
     }
 
-    &__datosgrid h3, &__datosgrid1 h3 {
+    &__datosgrid h3,
+    &__datosgrid1 h3 {
         font-size: medium;
         font-weight: 500;
         padding: 0;
@@ -204,7 +209,8 @@
 
     }
 
-    &__datosgrid p, &__datosgrid1 p {
+    &__datosgrid p,
+    &__datosgrid1 p {
         padding: 0;
         margin-top: 0;
         margin-bottom: 1rem;
@@ -213,7 +219,8 @@
         text-align: left;
     }
 
-    &__datosgrid:hover, &__datosgrid1:hover {
+    &__datosgrid:hover,
+    &__datosgrid1:hover {
         background-color: #F2F2F2
     }
 
@@ -242,17 +249,19 @@
         transition: background-color 0.3s ease;
 
         @media (min-width: #{$telefono-1}) {
-            margin:3px 0 0 0;
+            margin: 3px 0 0 0;
             padding: 2px 20px;
         }
-        
+
         @media (min-width: #{$tablet}) {
-            margin-top: 10px;;
+            margin-top: 10px;
+            ;
             padding: 8px 20px;
-        }        
-        
+        }
+
         @media (min-width: #{$laptop-1}) {
-            margin-top: 10px;;
+            margin-top: 10px;
+            ;
             padding: 8px 20px;
         }
     }
@@ -279,7 +288,8 @@
     }
 }
 
-.modalproveedores{
+.modalproveedores {
+
     &__telefono,
     &__email,
     &__ultimoregistro {
@@ -345,7 +355,7 @@
 
         input::placeholder {
             padding: 1px 5px;
-            
+
         }
 
         input[type="tel"] {
@@ -361,30 +371,28 @@
             color: $negro;
             background-color: #f2f2f2;
         }
-    
-    }
-
-    &__alerta{
-
-        
-
-            padding: 0.5rem;
-            text-align: center;
-            color: $blanco;
-            font-weight: $bold;
-            text-transform: uppercase;
-            margin: 1rem 0;
-            border-radius: 1rem;
 
     }
 
-    &__exito{
+    &__alerta {
+        padding: 0.5rem;
+        text-align: center;
+        color: $blanco;
+        font-weight: $bold;
+        text-transform: uppercase;
+        margin: 1rem 0;
+        border-radius: 1rem;
+    }
+
+    &__exito {
         background-color: $verde;
+    }
 
+    &__error {
+        background-color: red;
 
     }
 
-    &__error
     &__botonaniadir {
         margin-top: 15px;
         height: 40px;
@@ -400,11 +408,309 @@
     }
 
     &__botonaniadir:hover {
-        background-color:darkgreen;
+        background-color: darkgreen;
         color: #fff;
         border-color: darkgreen;
     }
-
-    
 }
 
+.modal--inventario {
+
+    &__titulo {
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+    }
+
+    &__contenedor {
+        max-height: 100%;
+    }
+
+    &__entradas {
+        margin: 1rem auto;
+
+        fieldset {
+            border: 2px dotted #2932b0;
+            padding: 1.9rem 3.5rem 2.5rem 3.5rem;
+            border-radius: 1rem;
+
+        }
+
+        legend {
+            color: #3a5eac;
+            font-weight: bold;
+            padding: 0 10px;
+
+        }
+    }
+
+    &__entradasbox {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1.4rem;
+        margin-top: 0;
+        width: 100%;
+
+        label {
+            font-weight: bold;
+            margin-bottom: 2px;
+            display: block;
+            font-size: 1.4rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 1.3rem;
+            border-color: #1e4599;
+            border-radius: 1rem;
+            height: 3.2rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 5px;
+            font-size: 1.3rem;
+            border: 2px solid #1e4599;
+            border-radius: 1rem;
+            height: 3.2rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 1.3rem;
+            border-color: #1e4599;
+            border-radius: 1rem;
+            height: 3.2rem;
+        }
+
+        input::placeholder {
+            padding: 1px 5px;
+
+        }
+
+        select option {
+            width: 100%;
+            padding: 5px;
+            font-size: 1.3rem;
+            border-color: #1e4599;
+            border-radius: 1rem;
+            height: 33px;
+
+        }
+
+        input:hover {
+            color: $negro;
+            background-color: #f2f2f2;
+        }
+    }
+
+    &__nombre {
+        grid-column: 1;
+        grid-row: 1;
+
+    }
+
+    &__descripcion {
+        grid-column: 2;
+        grid-row: 1;
+
+    }
+
+    &__codigo_barras {
+        grid-column: 1;
+        grid-row: 2;
+
+    }
+
+    &__categoria {
+        grid-column: 2;
+        grid-row: 2;
+
+    }
+
+    &__proveedor {
+        grid-column: 1;
+        grid-row: 3;
+
+    }
+
+    &__granelono {
+        grid-column: 2;
+        grid-row: 3;
+
+        p {
+            font-weight: bold;
+            margin-top: 0;
+            padding-top: 0;
+            margin-bottom: 1px;
+            display: block;
+            font-size: 1.4rem;
+        }
+
+        .switch {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .switch input[type="radio"] {
+            display: none;
+            height: 3.2rem;
+
+        }
+
+        .switch label {
+            padding: 8px 15px;
+            background-color: #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .switch input[type="radio"]:checked+label {
+            background-color: blue;
+            color: white;
+        }
+
+        input:hover {
+            color: $negro;
+            background-color: #F9E7F2;
+        }
+    }
+
+    &__precio_compra {
+        grid-column: 1;
+        grid-row: 4;
+
+        p {
+            font-size: 1.3rem;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+
+        }
+    }
+
+    &__precio_unitario_venta {
+        grid-column: 2;
+        grid-row: 4;
+
+        label {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        p {
+            font-size: 1.4rem;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+
+        }
+    }
+
+    &__imagen {
+        grid-column: 1/3;
+        grid-row: 5;
+        margin-top: 0;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+
+        p{
+            font-weight: bold;
+            margin-bottom: 0;
+            // es estee
+            font-size: 1.4rem;
+            display: contents;
+
+        }
+
+        input[type="file"] 
+        {
+            font-size: 1.3rem;
+            margin-top: 0;
+            padding-top: 0;
+            display: none;
+
+        }
+
+    }
+
+
+    &__botonimagen{
+        height: 33px;
+        width: 58%;
+        font-size: small;
+        display: flex;
+        margin-left:2px ;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        border: solid 1px blue;
+        font-weight: bold;
+        background-color: blue;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+
+    }
+
+    
+    &__botonimagen:hover{
+        background-color: #5eaae9;
+        color: #fff;
+        border: solid 1px #5eaae9;
+        
+    }
+
+    &__imgcargar{
+        height: 2rem;
+        display: inline-flex;
+        align-items: center;
+        
+        width: 2rem;
+        margin-right: 4px;
+        padding-top: 5px;
+        filter: invert(1) brightness(2);
+        transition: filter 0.3s ease;
+        
+    }
+
+    &__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__botonaniadir {
+
+        margin-top: 15px;
+        height: 35px;
+        width: 50%;
+        font-size: small;
+        text-decoration: none;
+        color: #fff;
+        border: solid 1px blue;
+        font-weight: bold;
+        background-color: blue;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    &__botonaniadir:hover {
+        background-color: #fff;
+        color: blue;
+        border-color: solid 1px blue;
+    }
+}
