@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    let estado = 0;
     let inventario = [];
     let inventario_granel = [];
     let infoProducto = {};
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnCerrarBienvenida = document.querySelector('.modal__close');
 
     // Selectores del modal busqueda manual código de barras
+
     const modalManual = document.querySelector('.modal--manual');
     const botonCerrarModalManual = document.querySelector('.modal--manual__img2');
     const inputCodigoManual = document.getElementById("2");
@@ -51,6 +53,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const inputNombreProducto = document.getElementById("3");
     const tablaModalNombre = document.querySelector('.modal__tabla--nombre');
     const tbodyTablaModalNombre = tablaModalNombre.querySelector('tbody');
+
+
+    // Selectores del modal Cantidad 
+    const modalCantidad = document.querySelector('.modal--cantidad');
+    const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__cerrar');
 
     // Contenedores del section ventas
     const contenedorProductos = document.querySelector('.rectangulo-grande');
@@ -85,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function () {
     imagenBotonVaciarCarrito.loading = 'lazy';
     botonVaciarCarrito.appendChild(imagenBotonVaciarCarrito);
 
+    const modalGranel = document.querySelector('.modal--granel');
+    const btnCerrarModalGranel = document.querySelector('.modal--granel__cerrar');
+
     // Eventos
 
     btnCerrarBienvenida.addEventListener('click', (e) => {
@@ -109,6 +119,14 @@ document.addEventListener('DOMContentLoaded', function () {
         terminosBusqueda.codigoBarras = '';
         terminosBusqueda.nombre = '';
         filtrar();
+    })
+
+    btnCerrarModalCantidad.addEventListener('click', () => {
+        modalCantidad.classList.remove('modal--cantidad--show');
+    })
+
+    btnCerrarModalGranel.addEventListener('click', () => {
+        modalGranel.classList.remove('modal--granel--show');
     })
 
 
@@ -280,7 +298,12 @@ document.addEventListener('DOMContentLoaded', function () {
         limpiarHTMLElemento(contenedorTotales);
     }
 
-    // Primer estado (Carrito Vacío o iniciado)
+    function vaciarCarrito() {
+        articulosCarrito = [];
+        primerEstadoCarrito();
+    }
+
+    // Primer estado (Carrito Vacío o iniciado(vacío))
     function primerEstadoCarrito() {
 
 
@@ -349,6 +372,62 @@ document.addEventListener('DOMContentLoaded', function () {
         contenedorTotales.appendChild(div3ContenidoTotales);
         contenedorTotales.appendChild(div4ContenidoTotales);
 
+    }
+
+    // Al menos un artículo en el carrito, se habilita la lectura de 
+    function segundoEstadoCarrito() {
+        const tabla = document.querySelector('.ordenes');
+        const tbody = tabla.querySelector('tbody');
+        const articulos = tbody.querySelectorAll('tr');
+
+
+        articulos.forEach(articulo => {
+            articulo.addEventListener('click', (e) => {
+                let tr = e.target.parentElement.parentElement.parentElement;
+
+                // Diferenciar si se selecciona un botón 
+                switch (e.target.classList[0]) {
+                    case "botoneliminar-producto":
+                        e.preventDefault();
+
+                        console.log("El botón seleccionado fue eliminar");
+                        infoProductoCarrito = {
+                            id: tr.querySelector('#idCarritoTbody').textContent,
+                            cantidad: tr.querySelector('#cantidadCarritoTbody').textContent,
+                            nombre: tr.querySelector('#nombreCarritoTbody').textContent,
+                            descripcion: tr.querySelector('#descripcionCarritoTbody').textContent,
+                            codigo_barras: tr.querySelector('#codigoBarrasCarritoTbody').textContent,
+                            precio_unitario_venta: tr.querySelector('#precioUnitarioCarritoTbody').textContent
+
+                        };
+
+                        articulosCarrito = eliminarArticulo(infoProductoCarrito);
+                        console.log("Articulos Carrito", articulosCarrito);
+                        break;
+                    case "botoneditar-cantidad":
+                        e.preventDefault();
+                        console.log("El botón seleccionado fue editar");
+                        infoProductoCarrito = {
+                            id: tr.querySelector('#idCarritoTbody').textContent,
+                            cantidad: tr.querySelector('#cantidadCarritoTbody').textContent,
+                            nombre: tr.querySelector('#nombreCarritoTbody').textContent,
+                            descripcion: tr.querySelector('#descripcionCarritoTbody').textContent,
+                            codigo_barras: tr.querySelector('#codigoBarrasCarritoTbody').textContent,
+                            precio_unitario_venta: tr.querySelector('#precioUnitarioCarritoTbody').textContent
+                        };
+
+                        modalCantidad.classList.add('modal--cantidad--show');
+                        break;
+                    default:
+
+                        console.log('No presionaste en ninguno de ellos');
+                        break;
+                }
+
+                console.log("Esperamos llegar aquí");
+
+            })
+        })
     }
 
     // Función que inserta los productos en el tbody de la ventana modal de busqueda manual 
@@ -451,6 +530,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 mostrarProductoCarritoDetalles(articuloCarritoAModificar);
                 mostrarTotalesCarrito(articulosCarrito);
+                segundoEstadoCarrito();
 
             })
         });
@@ -553,6 +633,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 mostrarProductoCarritoDetalles(articuloCarritoAModificar);
                 mostrarTotalesCarrito(articulosCarrito);
+                segundoEstadoCarrito();
 
             })
         });
@@ -571,24 +652,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     tablaCarrito.appendChild(theadCarrito);
 
+
+
     function mostrarProductosCarrito() {
         limpiarHTMLElemento(tbodyCarrito);
-        const articulosCarritoFlat = articulosCarrito.flat(); // Aplana el array de arrays
-        const arregloSinRepetidos = [...new Map(articulosCarritoFlat.map(item => [item.id, item])).values()];
-        const productos = arregloSinRepetidos;
+        // const articulosCarritoFlat = articulosCarrito.flat(); // Aplana el array de arrays
+        // const arregloSinRepetidos = [...new Map(articulosCarritoFlat.map(item => [item.id, item])).values()];
+        const productos = articulosCarrito;
         // Aquí ya tenemos bien el arreglo sin repetidos;
-        console.log("Arreglo sin repetidos", arregloSinRepetidos.flat());
+        // console.log("Arreglo sin repetidos", arregloSinRepetidos.flat());
         console.log('Articulos carrito desde mostrar productosCarrito', productos);
         productos.forEach(articulo => {
-            const { cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = articulo;
+            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = articulo;
             console.log(articulosCarrito);
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${cantidad}</td>
-                <td>${nombre}</td>
-                <td>${descripcion}</td>
-                <td>${codigo_barras}</td>
-                <td>${precio_unitario_venta}</td>
+                <td hidden id="idCarritoTbody">${id}</td>   
+                <td id="cantidadCarritoTbody">${cantidad}</td>
+                <td id="nombreCarritoTbody">${nombre}</td>
+                <td id="descripcionCarritoTbody">${descripcion}</td>
+                <td id="codigoBarrasCarritoTbody">${codigo_barras}</td>
+                <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
                 <td>
                     <div class="editar-cantidad">
                         <a href="#" class="botoneditar-cantidad">Editar</a>
@@ -605,6 +689,14 @@ document.addEventListener('DOMContentLoaded', function () {
         tablaCarrito.appendChild(tbodyCarrito);
         div2ContenidoProductos.appendChild(tablaCarrito);
     }
+
+    function eliminarArticulo(articulo) {
+        const resultado = articulosCarrito.filter(p => p.id !== articulo.id);
+        limpiarHTMLElemento(tbodyCarrito);
+        carritoHTML();
+        return resultado;
+    }
+
 
     function mostrarProductoCarritoDetalles(articuloCarritoAModificar) {
         limpiarHTMLElemento(contenedorDetalles);
@@ -690,5 +782,6 @@ document.addEventListener('DOMContentLoaded', function () {
         contenedorTotales.appendChild(div2ContenidoTotales);
         contenedorTotales.appendChild(div4ContenidoTotales);
     }
+
 
 });
