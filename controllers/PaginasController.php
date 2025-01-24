@@ -52,7 +52,7 @@ class PaginasController
             'inventario' => $inventario,
             // 'inventario_granel' => $inventario_granel,
             'caja' => $caja,
-            'script' => $script,
+            // 'script' => $script,
             'titulo' => $titulo
         ]);
     }
@@ -86,7 +86,6 @@ class PaginasController
         $inventario = Inventario_completo::join2('productos', 'inventario');
         // debuguear($inventario);
 
-        $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         // debuguear($inventario_granel);
 
         // debuguear([$inventario, $inventario_granel]);
