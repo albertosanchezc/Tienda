@@ -1,4 +1,30 @@
 describe('Carrito', () => {
+
+    context( 'Cuando se Acaba de visitar el sitio', () => {
+        beforeEach(() => {
+            cy.visit('http://localhost:3000/carrito')
+    
+            // Captura de la página completa
+            cy.getByData("modal__close")
+            cy.getByData("modal__close").click()
+    
+        })
+
+        it(" 1: Revisar el contenido que debe ser visible", () => {
+            cy.getByData("botonBusquedaManual").should('be.visible')
+            cy.getByData("botonBusquedaNombre").should('be.visible')
+            cy.getByData("botonPagar").should('be.visible')
+            cy.getByData("cantidadArticulosTxt").should('be.visible')
+            cy.getByData("numeroArticulos").should('be.visible')
+            cy.getByData("Cantidadtotal").should('be.visible')
+            cy.getByData("contenedorDetalles").should('be.visible')
+        })
+
+
+
+    })
+
+    context('')
     beforeEach(() => {
         cy.visit('http://localhost:3000/carrito')
 
@@ -9,15 +35,6 @@ describe('Carrito', () => {
     })
 
 
-    it(" 1: Mostrar Carrito Vacío", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-    })
 
     it("2: Abrir ventana modal manual", () => {
         cy.getByData("botonBusquedaManual").should('be.visible')
@@ -328,7 +345,7 @@ describe('Carrito', () => {
     })
 
 
-    it("16: Abrir, escribir algo y modal manual selelccionar una opción", () => {
+    it("16: Abrir, escribir algo seleccionar una opción de cada modal filtrando", () => {
         cy.getByData("botonBusquedaManual").should('be.visible')
         cy.getByData("botonBusquedaNombre").should('be.visible')
         cy.getByData("botonPagar").should('be.visible')
@@ -347,9 +364,9 @@ describe('Carrito', () => {
         // Abrir ventana modal buscar por nombre y escribir en ella
         cy.getByData("botonBusquedaNombre").click()
         cy.getByData("modal--nombre__close").should('exist')
-        cy.getByData("modal--nombre__close").type("coc")
-        cy.getByData('descripcionProductoTbodyModalManual')
-        cy.getByData("descripcionProductoTbodyModalManual").contains('3 L').click()
+        cy.getByData("modal--nombre__close").type("cig")
+        cy.getByData('descripcionProductoTbodyModalNombre')
+        cy.getByData("descripcionProductoTbodyModalNombre").contains('20').click()
     })
 
 })
