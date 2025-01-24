@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const div3ContenidoProductos = document.createElement('DIV');
     const div4ContenidoProductos = document.createElement('DIV');// Alerta
     const div5ContenidoProductos = document.createElement('DIV');
+    div5ContenidoProductos.classList.add('rectangulo-grande-bebe5');
 
 
     const div1ContenidoTotales = document.createElement('DIV');
@@ -90,10 +91,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const paginacionDiv = document.createElement('DIV');
     paginacionDiv.classList.add('paginacion--container');
 
+    const contenedorTablaCarrito = document.createElement('DIV');
+    contenedorTablaCarrito.classList.add('tablamg');
+
     const tablaCarrito = document.createElement('table');
     tablaCarrito.classList.add('ordenes');
     const tbodyCarrito = document.createElement('tbody');
     const theadCarrito = document.createElement('thead');
+
+    const contenedorTablaTicket = document.createElement('DIV');
+    contenedorTablaTicket.classList.add('tabla-ticket');
+    const tablaTicket = document.createElement('TABLE');
+    tablaTicket.classList.add('ticket');
+    const theadTicket = document.createElement('THEAD');
+    const tbodyTicket = document.createElement('TBODY');
+
 
     const botonVaciarCarrito = document.createElement('BUTTON');
     botonVaciarCarrito.classList.add('boton-rojo-block');
@@ -162,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
             filtrar();
             // mostrarProductosModalManual(inventario);
             modalManual.classList.add('modal--manual--show');
-            mostrarProductosModal(inventario, parrafoModalManual, tbodyTablaModalManual, 'Manual');
+            mostrarProductosModal(inventario, tbodyTablaModalManual, 'Manual');
 
             inputCodigoManual.disabled = false;
             inputCodigoManual.focus();
@@ -175,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const resultados = filtrar();
                 if (resultados) {
                     // mostrarProductosModalManual(resultados);
-                    mostrarProductosModal(resultados, modalManualContainer, tbodyTablaModalManual, 'Manual');
+                    mostrarProductosModal(resultados, tbodyTablaModalManual, 'Manual');
                 } else {
                     noResultado(tablaModalManual, parrafoModalManual);
                 }
@@ -186,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Busqueda por nombre
         if (e.target && e.target.id === 'busqueda-producto') {
             // mostrarProductosModalNombre(inventario);
-            mostrarProductosModal(inventario, modalNombreContainer, tbodyTablaModalNombre, 'Nombre');
+            mostrarProductosModal(inventario, tbodyTablaModalNombre, 'Nombre');
             modalNombreProducto.classList.add('modal--nombre--show');
             inputNombreProducto.disabled = false;
             inputNombreProducto.focus();
@@ -197,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const resultados = filtrar();
                 if (resultados) {
                     // mostrarProductosModalNombre(resultados);
-                    mostrarProductosModal(resultados, modalNombreContainer, tbodyTablaModalNombre, 'Nombre');
+                    mostrarProductosModal(resultados, tbodyTablaModalNombre, 'Nombre');
                 } else {
                     noResultado(tablaModalNombre);
                 }
@@ -210,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Funciones
-    limpiarTodo();
+    // limpiarTodo();
     mostrarHora();
     // Actualizar la hora cada segundo
     setInterval(mostrarHora, 1000);
@@ -371,6 +383,9 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
+
+
+
         // Insertamos en productos su contenido inicial
         contenedorProductos.appendChild(div1ContenidoProductos);
         contenedorProductos.appendChild(div2ContenidoProductos);
@@ -409,6 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Al menos un artículo en el carrito, se habilita la lectura de 
     function segundoEstadoCarrito() {
+
         mostrarProductosCarrito();
         const tabla = document.querySelector('.ordenes');
         const tbody = tabla.querySelector('tbody');
@@ -492,18 +508,40 @@ document.addEventListener('DOMContentLoaded', function () {
         <th>Cantidad</th>
         <th>Producto</th>
         <th>Descripción</th>
+        <th>Código</th>
         <th>Imagen</th>
-        <th>Subtotal</th>
+        <th>Precio</th>
         <th>Acciones</th>
     </tr>
-`;
+    `;
+
+    theadTicket.innerHTML = `
+        <tr>
+            <th>Cant.</th>
+            <th>Producto</th>
+            <th>C.U.</th>
+            <th>Subtotal</th>
+        </tr>
+    `;
+
+
+
 
     tablaCarrito.appendChild(theadCarrito);
+
+    tablaTicket.appendChild(theadTicket);
 
 
 
     function mostrarProductosCarrito() {
         limpiarHTMLElemento(tbodyCarrito);
+        limpiarHTMLElemento(tbodyTicket);
+        contenedorProductos.appendChild(div1ContenidoProductos);
+        contenedorProductos.appendChild(div2ContenidoProductos);
+        contenedorProductos.appendChild(div5ContenidoProductos);
+        contenedorProductos.appendChild(div3ContenidoProductos);
+        contenedorProductos.appendChild(div4ContenidoProductos);
+
         const productos = articulosCarrito;
         // Aquí ya tenemos bien el arreglo sin repetidos;
         console.log('Articulos carrito desde mostrar productosCarrito', productos);
@@ -517,6 +555,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td id="nombreCarritoTbody">${nombre}</td>
                 <td id="descripcionCarritoTbody">${descripcion}</td>
                 <td id="codigoBarrasCarritoTbody">${codigo_barras}</td>
+                <td>
+                    <img src="/build/img/doritos.webp" alt="Logotipo de producto" class="imagen-producto">
+                </td>
                 <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
                 <td>
                     <div class="editar-cantidad">
@@ -529,10 +570,27 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
 
             tbodyCarrito.appendChild(row);
-        });
 
+
+            const rowTicket = document.createElement('tr');
+            rowTicket.innerHTML = `
+                <td hidden id="idTicketTbody">${id}</td>   
+                 <td>${cantidad}</td>
+                 <td>${nombre}</td>
+                 <td>${precio_unitario_venta}</td>
+                 <td>${(precio_unitario_venta*cantidad).toFixed(2)}</td>
+            `
+            tbodyTicket.appendChild(rowTicket);
+            
+        });
         tablaCarrito.appendChild(tbodyCarrito);
-        div2ContenidoProductos.appendChild(tablaCarrito);
+        contenedorTablaCarrito.appendChild(tablaCarrito);
+        div2ContenidoProductos.appendChild(contenedorTablaCarrito);
+
+        tablaTicket.appendChild(theadTicket);
+        tablaTicket.appendChild(tbodyTicket);
+        contenedorTablaTicket.appendChild(tablaTicket);
+        div5ContenidoProductos.appendChild(contenedorTablaTicket);
     }
 
     function eliminarArticulo(articulo) {
@@ -546,12 +604,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return parseInt(Math.ceil(total / registrosPorPagina));
     }
 
-    function mostrarPagina(pagina){
-        const inicio = (pagina -1) * elementosPorPagina;
+    function mostrarPagina(pagina) {
+        const inicio = (pagina - 1) * elementosPorPagina;
         const fin = inicio + registrosPorPagina;
         const registrosPorPagina = inventario.slice(inicio, fin);
 
-        
+
     }
 
     function actualizarCantidad(articulo) {
@@ -559,7 +617,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let { cantidad, nombre, descripcion, precio_unitario_venta } = articulo;
         const contenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
 
-        let total = cantidad * precio_unitario_venta;
+        let total = (cantidad * precio_unitario_venta).toFixed(2);
         limpiarHTMLElemento(contenedorTablaModalCantidad);
         limpiarHTMLElemento(contenedorTotalModalCantidad);
         contenedorTablaModalCantidad.innerHTML = `
@@ -717,7 +775,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     articuloCarritoAModificar.cantidad = 1;
                 }
 
-                mostrarProductoCarritoDetalles(articuloCarritoAModificar);
+                mostrarDetallesProducto(articuloCarritoAModificar);
                 mostrarTotalesCarrito(articulosCarrito);
                 segundoEstadoCarrito();
 
@@ -726,7 +784,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    function mostrarProductoCarritoDetalles(articuloCarritoAModificar) {
+    function mostrarDetallesProducto(articuloCarritoAModificar) {
         limpiarHTMLElemento(contenedorDetalles);
 
         const { nombre, descripcion, cantidad, precio_unitario_venta } = articuloCarritoAModificar[0];
@@ -772,6 +830,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 <h3 data-test="precioDetalles">$${precio_unitario_venta}</h3>
             </div>
         `;
+
+        const div5ContenidoDetalles = document.createElement('DIV');
+        div5ContenidoDetalles.classList.add('rectangulo-pequeno-bebe5');
+        div5ContenidoDetalles.innerHTML = `
+            <div class="rectangulo-pequeno-bebecito41">
+                <h3>Subtotal: </h3>
+            </div>
+            <div class="rectangulo-pequeno-bebecito42">
+                <h3 data-test="precioDetalles">$${precio_unitario_venta}</h3>
+            </div>
+        `;
+
 
         contenedorDetalles.appendChild(div1ContenidoDetalles);
         contenedorDetalles.appendChild(div2ContenidoDetalles);

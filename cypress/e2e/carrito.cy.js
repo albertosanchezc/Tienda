@@ -24,7 +24,6 @@ describe('Carrito', () => {
 
     })
 
-    context('')
     beforeEach(() => {
         cy.visit('http://localhost:3000/carrito')
 
