@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__cerrar');
     const contenedorTotalModalCantidad = modalCantidad.querySelector('.modal--cantidad__gridprecio');
     const inputModalCantidad = modalCantidad.querySelector('.modal--cantidad__close');
-
+    const btnConfirmarEditarCantidad = modalCantidad.querySelector('.modal--cantidad__btn');
     // const 
 
 
@@ -435,22 +435,22 @@ document.addEventListener('DOMContentLoaded', function () {
                             codigo_barras: tr.querySelector('#codigoBarrasCarritoTbody').textContent,
                             precio_unitario_venta: tr.querySelector('#precioUnitarioCarritoTbody').textContent
                         };
-                        const articuloAntes = articulosCarrito.filter(p => p.id === infoProductoCarrito.id );
+                        const articuloAntes = articulosCarrito.filter(p => p.id === infoProductoCarrito.id);
                         const cantidadAntes = articuloAntes[0].cantidad;
-                        articulosCarrito = actualizarCantidad(infoProductoCarrito);
-                        
+                        actualizarCantidad(infoProductoCarrito);
+
                         modalCantidad.classList.add('modal--cantidad--show');
                         inputModalCantidad.disabled = false;
                         inputModalCantidad.focus();
                         inputCodigoManual.min = 0;
                         inputModalCantidad.addEventListener('input', (e) => {
                             console.log(e.target.value);
-                            if(e.target.value >= 1){
+                            if (e.target.value >= 1) {
                                 infoProductoCarrito.cantidad = parseInt(e.target.value);
-                            } else{
+                            } else {
                                 infoProductoCarrito.cantidad = cantidadAntes;
                             }
-                            actualizarCantidad(infoProductoCarrito);
+                            actualizarCantidad(infoProductoCarrito, articulosCarrito);
                         });
                         break;
                     default:
@@ -521,8 +521,9 @@ document.addEventListener('DOMContentLoaded', function () {
         mostrarProductosCarrito();
         return resultado;
     }
+
     function actualizarCantidad(articulo) {
-        console.log("Articulo al que deseas modificar la cantidad", articulo);
+
         let { cantidad, nombre, descripcion, precio_unitario_venta } = articulo;
         const contenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
 
@@ -572,7 +573,36 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
+        btnConfirmarEditarCantidad.addEventListener('click', (e) => {
+            e.preventDefault();
+            const resultado = modificarCantidadCarrito(articulo);
+            modalCantidad.classList.remove('modal--cantidad--show');
+            mostrarTotalesCarrito(articulosCarrito);
+            inputModalCantidad.value = '';
+        });
+
     }
+
+    function modificarCantidadCarrito(articuloModificado) {
+        const { id, cantidad } = articuloModificado;
+        console.log(id, cantidad);
+
+        const tabla = document.querySelector('.ordenes');
+        const filas = tabla.querySelectorAll('#idCarritoTbody');
+        // Artículo del carrito sin modificar 
+        let articuloCarrito = articulosCarrito.filter(articulo => articulo.id === articuloModificado.id);
+        filas.forEach(td => {
+            if (td.textContent === articuloModificado.id) {
+                const cantidadArticuloCarrito = td.parentElement.querySelector('#cantidadCarritoTbody');
+                cantidadArticuloCarrito.textContent = articuloModificado.cantidad;
+                articuloCarrito[0].cantidad = articuloModificado.cantidad;
+            }
+        })
+
+        return articuloCarrito;
+
+    }
+
     function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
         limpiarHTMLElemento(tbodyTablaModal);
         productosFiltrados.forEach(producto => {
@@ -729,7 +759,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         console.log(`El total es : ${totalP} y la cantidad de artículos es ${cantidadP}`);
         div2ContenidoTotales.innerHTML = `
-            <h3 data-test="Cantidadtotal">$${totalP}</h3>
+            <h3 data-test="Cantidadtotal">$${totalP.toFixed(2)}</h3>
         `;
 
         div4ContenidoTotales.innerHTML = `
