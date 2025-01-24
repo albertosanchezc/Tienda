@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div class="rectangulo-grande-bebe5">
-                <div class="tabla-ticket">
+                    <div class="tabla-ticket">
                         <table class="ticket">
                             <thead>
                                 <tr>
@@ -166,67 +166,67 @@
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
-                               <tr>
+                                </tr>
+                                <tr>
                                     <td>2</td>
                                     <td>Coca-Cola 25ml taparrosca</td>
                                     <td>$150.00</td>
                                     <td>$300.00</td>
-                               </tr>
+                                </tr>
                             </tbody>
 
                             <!-- borrar esto al terminar -->
@@ -282,18 +282,21 @@
                 </div>
                 <div class="rectangulo-pequeno-bebe3">
                     <div class="rectangulo-pequeno-bebecito31">
-                        <h3>Cantidad:</h3>
+                        <h3>Cantidad: 10</h3>
                     </div>
                     <div class="rectangulo-pequeno-bebecito32">
-                        <h3>Código de Barras</h3>
+                        <h3>Código de Barras:</h3>
+                        <img loading="lazy" src="build/img/barcode.png" alt="barcode">
                     </div>
                 </div>
                 <div class="rectangulo-pequeno-bebe4">
                     <div class="rectangulo-pequeno-bebecito41">
-                        <h3>Subtotal:</h3>
+                            <h3>Costo Unitario:</h3>
+                            <p>$35.95</p>
                     </div>
                     <div class="rectangulo-pequeno-bebecito42">
-                        <h3>$10000.00</h3>
+                            <h3>Subtotal:</h3>
+                            <p>$75.95</p>
                     </div>
                 </div>
             </div>
