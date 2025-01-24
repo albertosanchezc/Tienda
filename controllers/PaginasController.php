@@ -33,7 +33,7 @@ class PaginasController
     {
         // Pasamos todos los productos a la vista
         $inventario = Inventario_completo::join2('productos', 'inventario');
-        $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
+        // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
 
         $script = '<script src="/build/js/carrito.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
@@ -50,7 +50,7 @@ class PaginasController
 
         $router->render('paginas/carrito', [
             'inventario' => $inventario,
-            'inventario_granel' => $inventario_granel,
+            // 'inventario_granel' => $inventario_granel,
             'caja' => $caja,
             'script' => $script,
             'titulo' => $titulo
@@ -60,10 +60,10 @@ class PaginasController
     public static function inventarioAPI()
     {
         $inventario = Inventario_completo::join2('productos', 'inventario');
-        $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
+        // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
             'inventario' => $inventario,
-            'inventario_granel' => $inventario_granel
+            // 'inventario_granel' => $inventario_granel
         ]);
     }
 

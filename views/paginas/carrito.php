@@ -10,22 +10,44 @@
                     <h3>Productos</h3>
                 </div>
                 <div class="rectangulo-grande-bebe2">
-                    <table class="ordenes">
-                        <thead>
-                            <tr>
-                                <th>Cantidad</th>
-                                <th>Producto</th>
-                                <th>Descripción</th>
-                                <th>Imagen</th>
-                                <th>Subtotal</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <!-- Mostrar los resultados -->
-                        <tbody>
+                    <div class="tablamg">
+                        <table class="ordenes">
+                            <thead>
+                                <tr>
+                                    <th>Cant.</th>
+                                    <th>Producto</th>
+                                    <th>Descripción</th>
+                                    <th>Código</th>
+                                    <th>Imagen</th>
+                                    <th>Subtotal</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <!-- Mostrar los resultados -->
+                            <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                            <!-- borrar esto al terminar -->
+                            <tbody>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola</td>
+                                    <td>1.75 L</td>
+                                    <td>7501055313500</td>
+                                    <td>38.00</td>
+                                </tr>
+                            </tbody>
 
-                        </tbody>
-                    </table>
+                            <!-- borrar esto al terminar -->
+                            <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                        </table>
+                    </div>
                 </div>
                 <div class="rectangulo-grande-bebe5">
                     <p>Ticket</p>
@@ -50,7 +72,7 @@
                 </div>
                 <div class="rectangulo-grande-bebe4">
                     <div class="alertas ">
-                    <p class="color-verde">¡Artículo Escaneado con Éxito!</p>
+                        <p class="color-verde">¡Artículo Escaneado con Éxito!</p>
                     </div>
                 </div>
 
