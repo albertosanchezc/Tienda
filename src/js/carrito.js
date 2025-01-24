@@ -62,8 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const contenedorTotalModalCantidad = modalCantidad.querySelector('.modal--cantidad__gridprecio');
     const inputModalCantidad = modalCantidad.querySelector('.modal--cantidad__close');
     const btnConfirmarEditarCantidad = modalCantidad.querySelector('.modal--cantidad__btn');
-    // const 
-
 
     const modalGranel = document.querySelector('.modal--granel');
 
@@ -79,6 +77,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const div1ContenidoProductos = document.createElement('DIV');
     const div2ContenidoProductos = document.createElement('DIV');
     const div3ContenidoProductos = document.createElement('DIV');
+    const div4ContenidoProductos = document.createElement('DIV');// Alerta
+    const div5ContenidoProductos = document.createElement('DIV');
+
 
     const div1ContenidoTotales = document.createElement('DIV');
     const div2ContenidoTotales = document.createElement('DIV');
@@ -108,9 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
     btnCerrarBienvenida.addEventListener('click', (e) => {
         // e.preventDefault();
         modalBienvenida.remove();
-
         primerEstadoCarrito();
-
+        mostrarAlerta('Escane o realiza una búsqueda para añadir al carrito', 'negro');
     })
 
     botonCerrarModalManual.addEventListener('click', () => {
@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
         terminosBusqueda.codigoBarras = '';
         terminosBusqueda.nombre = '';
         filtrar();
+        mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
     })
 
     botonCerrarModalProducto.addEventListener('click', () => {
@@ -127,10 +128,15 @@ document.addEventListener('DOMContentLoaded', function () {
         terminosBusqueda.codigoBarras = '';
         terminosBusqueda.nombre = '';
         filtrar();
+        mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
     })
 
-    btnCerrarModalCantidad.addEventListener('click', () => {
+    btnCerrarModalCantidad.addEventListener('click', (e) => {
+        e.preventDefault();
+        inputModalCantidad.value = '';
         modalCantidad.classList.remove('modal--cantidad--show');
+        mostrarAlerta('¡No se modificó la cantidad, debido a que cerraste la ventana!', 'rojo');
+
     })
 
     btnCerrarModalGranel.addEventListener('click', () => {
@@ -139,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     botonVaciarCarrito.addEventListener('click', () => {
         vaciarCarrito();
+        mostrarAlerta('¡Se Vació el carrito exitosamente!','verde');
     })
 
 
@@ -209,8 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const resultadosFiltrado = inventario.filter(filtrarCodigoBarras).filter(filtrarNombreProducto);
         if (resultadosFiltrado.length) {
             return resultadosFiltrado.flat();
-            // oultarMensajeNoResultados();
-            // mostrarResultados(resultadosFiltrado);
+
         } else {
             return resultadosFiltrado.flat();
         }
@@ -333,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function () {
         div2ContenidoProductos.classList.add('rectangulo-grande-bebe2');
         div2ContenidoProductos.innerHTML = `
 
-    `;
+        `;
 
         // const div3ContenidoProductos = document.createElement('DIV');
         div3ContenidoProductos.classList.add('rectangulo-grande-bebe3');
@@ -353,10 +359,19 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
     `;
 
+        // const div4ContenidoProductos = document.createElement('DIV');
+        div4ContenidoProductos.classList.add('rectangulo-grande-bebe4');
+        div4ContenidoProductos.innerHTML = `
+            <div class="alertas">
+                <p class="color-negro">Escanea el código o realiza una búsqueda</p>
+            </div>
+        `;
+
         // Insertamos en productos su contenido inicial
         contenedorProductos.appendChild(div1ContenidoProductos);
         contenedorProductos.appendChild(div2ContenidoProductos);
         contenedorProductos.appendChild(div3ContenidoProductos);
+        contenedorProductos.appendChild(div4ContenidoProductos);
 
         // Contenido del div de Totales
         div1ContenidoTotales.classList.add('rectangulo-grande-horizontal-bebe1');
@@ -386,7 +401,6 @@ document.addEventListener('DOMContentLoaded', function () {
         contenedorTotales.appendChild(div2ContenidoTotales);
         contenedorTotales.appendChild(div3ContenidoTotales);
         contenedorTotales.appendChild(div4ContenidoTotales);
-
     }
 
     // Al menos un artículo en el carrito, se habilita la lectura de 
@@ -420,8 +434,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         articulosCarrito = eliminarArticulo(infoProductoCarrito);
                         if (articulosCarrito.length > 0) {
                             segundoEstadoCarrito();
+                            mostrarAlerta(`¡Artículo ${infoProductoCarrito.nombre} Eliminado Correctamente!`, 'verde');
+
                         } else {
+
                             primerEstadoCarrito();
+                            mostrarAlerta(`¡Se Vació el carrito Correctamente!`, 'verde');
                         }
                         break;
                     case "botoneditar-cantidad":
@@ -447,20 +465,18 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.log(e.target.value);
                             if (e.target.value >= 1) {
                                 infoProductoCarrito.cantidad = parseInt(e.target.value);
+                                mostrarAlerta(`¡La cantidad de ${infoProductoCarrito.nombre} se modificó a ${infoProductoCarrito.cantidad}!`, 'verde');
                             } else {
                                 infoProductoCarrito.cantidad = cantidadAntes;
+                                mostrarAlerta(`¡La cantidad de ${infoProductoCarrito.nombre} no se modificó!`, 'verde');
                             }
                             actualizarCantidad(infoProductoCarrito, articulosCarrito);
                         });
                         break;
                     default:
-
-                        console.log('No presionaste en ninguno de ellos');
+                        mostrarAlerta(`¡No se presionó ningún botón!`, 'rojo');
                         break;
                 }
-
-                console.log("Esperamos llegar aquí");
-
             })
         })
     }
@@ -646,16 +662,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     articulosCarrito = articulosCarrito.map(producto => {
                         if (producto.id === productoClickeadoCompleto.id) {
                             producto.cantidad = articuloCarritoAModificar[0].cantidad;
+                            mostrarAlerta('¡Artículo ya existente, se aumentó la cantidad!', 'verde');
+
                             return { ...producto, cantidad: producto.cantidad + 1 };
                         }
+
+
                         return producto;
                     });
 
-                    console.log('Ya te conozco, te aumenté la cantidad');
                 } else {
                     productoClickeadoCompleto.cantidad = 1;
                     articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
-                    console.log('No te conozco, te añadiré al carrito', productoClickeadoCompleto);
+                    mostrarAlerta('¡Se añadió el artículo al carrito!', 'verde');
                 }
 
                 inputNombreProducto.value = '';
@@ -682,6 +701,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 mostrarProductoCarritoDetalles(articuloCarritoAModificar);
                 mostrarTotalesCarrito(articulosCarrito);
                 segundoEstadoCarrito();
+
             });
         });
     }
@@ -741,6 +761,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const contenedorVaciarcarrito = document.querySelector('.icono');
         contenedorVaciarcarrito.appendChild(botonVaciarCarrito);
+    }
+
+    function mostrarAlerta(mensaje, color) {
+        const contenedorAlerta = document.querySelector('.alertas')
+        const parrafoAlerta = document.querySelector('.alertas').firstElementChild;
+
+        limpiarHTMLElemento(parrafoAlerta);
+        parrafoAlerta.classList = '';
+        parrafoAlerta.classList.add(`color-${color}`);
+        parrafoAlerta.innerHTML = `${mensaje}`;
+        contenedorAlerta.appendChild(parrafoAlerta);
     }
 
     function mostrarTotalesCarrito(articulosCarrito) {
