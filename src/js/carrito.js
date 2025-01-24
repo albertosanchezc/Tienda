@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     let estado = 0;
     let inventario = [];
-    let inventario_granel = [];
     let infoProducto = {};
     let articuloCarritoAModificar = {};
     async function consultarAPI() {
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             inventario = resultado.inventario;
-            inventario_granel = resultado.inventario_granel;
+            totalPaginas = calcularPaginas(inventario.length, 4);
 
             filtrar(inventario);
         } catch (e) {
@@ -25,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
     consultarAPI();
     // Variables
     let articulosCarrito = [];
-
+    const registrosPorPagina = 4;
+    let paginaActual = 1;
     let terminosBusqueda = {
         id: '',
         codigoBarras: '',
@@ -40,15 +40,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Selectores del modal busqueda manual código de barras
 
     const modalManual = document.querySelector('.modal--manual');
+    const modalManualContainer = document.querySelector('.modal--manual--container');
     const botonCerrarModalManual = document.querySelector('.modal--manual__img2');
     const inputCodigoManual = document.getElementById("2");
     const tablaModalManual = document.querySelector('.modal--manual__tabla');
     const tbodyTablaModalManual = tablaModalManual.querySelector('tbody');
     const parrafoModalManual = document.querySelector('.modal--manual__paragraph');
 
-
     // Selectores del modal busqueda por nombre del producto
     const modalNombreProducto = document.querySelector('.modal--nombre');
+    const modalNombreContainer = document.querySelector('.modal--nombre--container');
     const botonCerrarModalProducto = document.querySelector('.modal--nombre__img2');
     const inputNombreProducto = document.getElementById("3");
     const tablaModalNombre = document.querySelector('.modal--nombre__tabla');
@@ -86,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const div3ContenidoTotales = document.createElement('DIV');
     const div4ContenidoTotales = document.createElement('DIV');
 
+    const paginacionDiv = document.createElement('DIV');
+    paginacionDiv.classList.add('paginacion--container');
 
     const tablaCarrito = document.createElement('table');
     tablaCarrito.classList.add('ordenes');
@@ -107,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Eventos
 
     btnCerrarBienvenida.addEventListener('click', (e) => {
-        // e.preventDefault();
         modalBienvenida.remove();
         primerEstadoCarrito();
         mostrarAlerta('Escane o realiza una búsqueda para añadir al carrito', 'negro');
@@ -122,9 +124,10 @@ document.addEventListener('DOMContentLoaded', function () {
         mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
     })
 
-    botonCerrarModalProducto.addEventListener('click', () => {
+    botonCerrarModalProducto.addEventListener('click', (e) => {
         inputNombreProducto.value = '';
         modalNombreProducto.classList.remove('modal--nombre--show');
+        e.preventDefault();
         terminosBusqueda.codigoBarras = '';
         terminosBusqueda.nombre = '';
         filtrar();
@@ -145,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     botonVaciarCarrito.addEventListener('click', () => {
         vaciarCarrito();
-        mostrarAlerta('¡Se Vació el carrito exitosamente!','verde');
+        mostrarAlerta('¡Se Vació el carrito exitosamente!', 'verde');
     })
 
 
@@ -158,8 +161,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target && e.target.id === 'busqueda-manual') {
             filtrar();
             // mostrarProductosModalManual(inventario);
-            mostrarProductosModal(inventario, tbodyTablaModalManual, 'Manual');
             modalManual.classList.add('modal--manual--show');
+            mostrarProductosModal(inventario, parrafoModalManual, tbodyTablaModalManual, 'Manual');
+
             inputCodigoManual.disabled = false;
             inputCodigoManual.focus();
             inputCodigoManual.addEventListener('input', (e) => {
@@ -171,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const resultados = filtrar();
                 if (resultados) {
                     // mostrarProductosModalManual(resultados);
-                    mostrarProductosModal(resultados, tbodyTablaModalManual, 'Manual');
+                    mostrarProductosModal(resultados, modalManualContainer, tbodyTablaModalManual, 'Manual');
                 } else {
                     noResultado(tablaModalManual, parrafoModalManual);
                 }
@@ -182,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Busqueda por nombre
         if (e.target && e.target.id === 'busqueda-producto') {
             // mostrarProductosModalNombre(inventario);
-            mostrarProductosModal(inventario, tbodyTablaModalNombre, 'Nombre');
+            mostrarProductosModal(inventario, modalNombreContainer, tbodyTablaModalNombre, 'Nombre');
             modalNombreProducto.classList.add('modal--nombre--show');
             inputNombreProducto.disabled = false;
             inputNombreProducto.focus();
@@ -193,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const resultados = filtrar();
                 if (resultados) {
                     // mostrarProductosModalNombre(resultados);
-                    mostrarProductosModal(resultados, tbodyTablaModalNombre, 'Nombre');
+                    mostrarProductosModal(resultados, modalNombreContainer, tbodyTablaModalNombre, 'Nombre');
                 } else {
                     noResultado(tablaModalNombre);
                 }
@@ -516,10 +520,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
                 <td>
                     <div class="editar-cantidad">
-                        <a href="#" class="botoneditar-cantidad">Editar</a>
+                        <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
                     </div>
                     <div class="eliminar-producto">
-                        <a href="#" class="botoneliminar-producto">Eliminar</a>
+                        <a href="#" class="botoneliminar-producto">Eliminar Artículo</a>
                     </div>
                 </td>
             `;
@@ -536,6 +540,18 @@ document.addEventListener('DOMContentLoaded', function () {
         mostrarTotalesCarrito(resultado);
         mostrarProductosCarrito();
         return resultado;
+    }
+
+    function calcularPaginas(total, registrosPorPagina) {
+        return parseInt(Math.ceil(total / registrosPorPagina));
+    }
+
+    function mostrarPagina(pagina){
+        const inicio = (pagina -1) * elementosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const registrosPorPagina = inventario.slice(inicio, fin);
+
+        
     }
 
     function actualizarCantidad(articulo) {
@@ -621,6 +637,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
         limpiarHTMLElemento(tbodyTablaModal);
+
+
         productosFiltrados.forEach(producto => {
             const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras } = producto;
             const tr = document.createElement('tr');
@@ -674,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     productoClickeadoCompleto.cantidad = 1;
                     articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
-                    mostrarAlerta('¡Se añadió el artículo al carrito!', 'verde');
+                    mostrarAlerta(`¡Se añadió el artículo ${productoClickeadoCompleto.nombre} al carrito!`, 'verde');
                 }
 
                 inputNombreProducto.value = '';
@@ -687,6 +705,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     modalManual.classList.remove('modal--manual--show');
                 } else if (tipo === 'Nombre') {
                     modalNombreProducto.classList.remove('modal--nombre--show');
+
                 }
 
                 mostrarProductosCarrito(articulosCarrito);
