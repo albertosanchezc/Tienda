@@ -43,6 +43,9 @@ $router->get('/proveedores/api/proveedores', [PaginasController::class, 'proveed
 $router->get('/inventario', [PaginasController::class, 'inventario']);
 $router->post('/inventario', [PaginasController::class, 'inventario']);
 
+$router->get('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
+$router->post('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
+
 $router->get('/caja', [PaginasController::class, 'caja']);
 $router->post('/caja', [PaginasController::class, 'caja']);
 

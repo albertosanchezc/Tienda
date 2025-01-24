@@ -1,10 +1,11 @@
 <main class="contenedor-11 seccion-11 contenido-centrado-11">
     <h1>Carrito</h1>
+
+    <!-- ventas -->
     <section class="ventas">
         <div class="grid-container">
             <!-- Rectángulo grande -->
             <div class="grid-item rectangulo-grande">
-                <h2>Escanea o introduce el código de barras para iniciar venta.</h2>
                 <div class="rectangulo-grande-bebe1">
                     <h3>Productos</h3>
                 </div>
@@ -26,13 +27,16 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="rectangulo-grande-bebe5">
+                    <p>Ticket</p>
+                </div>
                 <div class="rectangulo-grande-bebe3">
                     <div class="rectangulo-grande-bebecito1">
                         <button id="busqueda-manual" class="boton-azul-block">
-                            Introducir código manual.
+                            Introducir Código de Barras.
                         </button>
                         <button id="busqueda-producto" class="boton-azul-block">
-                            Buscar productos por nombre.
+                            Buscar por Nombre del Producto.
                         </button>
                     </div>
                     <div class="rectangulo-grande-bebecito2">
@@ -44,6 +48,12 @@
                         </button>
                     </div>
                 </div>
+                <div class="rectangulo-grande-bebe4">
+                    <div class="alertas ">
+                    <p class="color-verde">¡Artículo Escaneado con Éxito!</p>
+                    </div>
+                </div>
+
             </div>
             <!-- Rectángulo pequeño 1 producto-->
             <div data-test="contenedorDetalles" class=" grid-item rectangulo-pequeno">
@@ -99,7 +109,7 @@
                     <p>10:04 p.m.</p>
                 </div>
             </div>
-            <!-- Rectángulo adicional -->
+            <!-- Rectángulo adicional total-->
             <div class="grid-item rectangulo-grande-horizontal">
                 <div class="rectangulo-grande-horizontal-bebe1">
                     <h3>Total:</h3>
@@ -120,7 +130,7 @@
     </section>
 
     <!-- modal de bienvenida 1-->
-    <section data-test="modal" class="modal modal--show">
+    <section data-test="modal" class="modal">
         <div class="modal__container">
             <img src="/build/img/bienvenida.svg" alt="Logotipo de bienvenida" class="modal__img">
             <h2 class="modal__title">¡Bienvenido al Carrito!</h2>
@@ -132,7 +142,7 @@
     </section>
 
     <!-- modal de buscador manual 2-->
-    <section data-test="modal--manual" class="modal--manual" >
+    <section data-test="modal--manual" class="modal--manual">
         <div class="modal--manual__container">
             <div class="modal--manual__fleximg">
                 <div class="modal--manual__fleximg1">
@@ -150,10 +160,10 @@
             </p>
             <fieldset>
                 <legend>Búsqueda</legend>
-            <label for="2">Código de Barras:</label>
-            <input data-test="modal--manual__close" id="2" class="modal--manual__close" type="text"
-                placeholder="Ejemplo:  014555452636">
-            </input>
+                <label for="2">Código de Barras:</label>
+                <input data-test="modal--manual__close" id="2" class="modal--manual__close" type="text"
+                    placeholder="Ejemplo:  014555452636">
+                </input>
             </fieldset>
             <table class="modal--manual__tabla">
                 <thead>
@@ -199,10 +209,10 @@
             </p>
             <fieldset>
                 <legend>Búsqueda</legend>
-            <label for="3">Nombre del producto:</label>
-            <input data-test="modal--nombre__close" id="3" class="modal--nombre__close" type="text"
-                placeholder="Ejemplo:  Doritos">
-            </input>
+                <label for="3">Nombre del producto:</label>
+                <input data-test="modal--nombre__close" id="3" class="modal--nombre__close" type="text"
+                    placeholder="Ejemplo:  Doritos">
+                </input>
             </fieldset>
 
             <table class="modal--nombre__tabla">
@@ -242,16 +252,16 @@
             </p>
             <fieldset>
                 <legend>Edita la Cantidad</legend>
-            <div class="modal--granel__gridcantidad">
-                <div class="modal--granel__cantidad">
-                    <label for="4">Cantidad en gramos:</label>
-                    <input id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
-                    </input>
+                <div class="modal--granel__gridcantidad">
+                    <div class="modal--granel__cantidad">
+                        <label for="4">Cantidad en gramos:</label>
+                        <input id="4" class="modal--granel__close" type="number" placeholder="Ej.: 1kg. = 1000g.">
+                        </input>
+                    </div>
+                    <div class="modal--granel__gramos">
+                        <p>g.</p>
+                    </div>
                 </div>
-                <div class="modal--granel__gramos">
-                    <p>g.</p>
-                </div>
-            </div>
             </fieldset>
             <div class="modal--granel__caracteristicas">
                 <div class="modal--granel__fila1-cantidad">

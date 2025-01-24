@@ -43,7 +43,7 @@ if (!isset($inicio)) {
                         <a class="verde" href="/carrito">Carrito</a>
                         <a class="azul" href="/inventario">Inventario</a>
                         <a class="naranja" href="/caja">Caja</a>
-                        <a class="rojo" href="/ventas">Ventas y Cancelaciones</a>
+                        <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
                         <a class="rosa" href="/metricas">Métricas</a>
                         <a class="morado" href="/proveedores">Proveedores</a>
 
@@ -141,7 +141,7 @@ if (!isset($inicio)) {
                 <a class="verde" href="/carrito">Carrito</a>
                 <a class="azul" href="/inventario">Inventario</a>
                 <a class="naranja" href="/caja">Caja</a>
-                <a class="rojo" href="/ventas">Ventas y Cancelaciones</a>
+                <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
                 <a class="rosa" href="/metricas">Métricas</a>
                 <a class="morado" href="/proveedores">Proveedores</a>
                 <?php if ($auth) { ?>

@@ -121,6 +121,16 @@ class PaginasController
             'titulo' => $titulo
         ]);
     }
+
+    public static function ventasycancelaciones(Router $router)
+    {
+        $titulo = 'Ventas y cancelaciones';
+
+        $router->render('paginas/ventasycancelaciones',[
+            'titulo' => $titulo
+        ]);
+    }
+
     public static function proveedores(Router $router)
     {
         $script = '<script src="/build/js/proveedores.js"></script>
