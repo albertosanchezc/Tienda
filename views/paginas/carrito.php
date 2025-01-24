@@ -36,7 +36,100 @@
                                     <td>Coca-Cola</td>
                                     <td>1.75 L</td>
                                     <td>7501055313500</td>
+                                    <td>
+                                        <img src="/build/img/doritos.webp" alt="Logotipo de producto"
+                                            class="imagen-producto">
+
+                                    </td>
                                     <td>38.00</td>
+                                    <td>
+                                        <div class="editar-cantidad">
+                                            <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
+                                        </div>
+                                        <div class="eliminar-producto">
+                                            <a href="#" class="botoneliminar-producto">Eliminar Artículo</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola</td>
+                                    <td>1.75 L</td>
+                                    <td>7501055313500</td>
+                                    <td>
+                                        <img src="/build/img/doritos.webp" alt="Logotipo de producto"
+                                            class="imagen-producto">
+
+                                    </td>
+                                    <td>38.00</td>
+                                    <td>
+                                        <div class="editar-cantidad">
+                                            <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
+                                        </div>
+                                        <div class="eliminar-producto">
+                                            <a href="#" class="botoneliminar-producto">Eliminar Artículo</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola</td>
+                                    <td>1.75 L</td>
+                                    <td>7501055313500</td>
+                                    <td>
+                                        <img src="/build/img/doritos.webp" alt="Logotipo de producto"
+                                            class="imagen-producto">
+
+                                    </td>
+                                    <td>38.00</td>
+                                    <td>
+                                        <div class="editar-cantidad">
+                                            <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
+                                        </div>
+                                        <div class="eliminar-producto">
+                                            <a href="#" class="botoneliminar-producto">Eliminar Artículo</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola</td>
+                                    <td>1.75 L</td>
+                                    <td>7501055313500</td>
+                                    <td>
+                                        <img src="/build/img/doritos.webp" alt="Logotipo de producto"
+                                            class="imagen-producto">
+
+                                    </td>
+                                    <td>38.00</td>
+                                    <td>
+                                        <div class="editar-cantidad">
+                                            <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
+                                        </div>
+                                        <div class="eliminar-producto">
+                                            <a href="#" class="botoneliminar-producto">Eliminar Artículo</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola</td>
+                                    <td>1.75 L</td>
+                                    <td>7501055313500</td>
+                                    <td>
+                                        <img src="/build/img/doritos.webp" alt="Logotipo de producto"
+                                            class="imagen-producto">
+
+                                    </td>
+                                    <td>38.00</td>
+                                    <td>
+                                        <div class="editar-cantidad">
+                                            <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
+                                        </div>
+                                        <div class="eliminar-producto">
+                                            <a href="#" class="botoneliminar-producto">Eliminar Artículo</a>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
 
@@ -50,7 +143,103 @@
                     </div>
                 </div>
                 <div class="rectangulo-grande-bebe5">
-                    <p>Ticket</p>
+                <div class="tabla-ticket">
+                        <table class="ticket">
+                            <thead>
+                                <tr>
+                                    <th>Cant.</th>
+                                    <th>Producto</th>
+                                    <th>C.U.</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <!-- Mostrar los resultados -->
+                            <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                            <!-- borrar esto al terminar -->
+                            <tbody>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                               <tr>
+                                    <td>2</td>
+                                    <td>Coca-Cola 25ml taparrosca</td>
+                                    <td>$150.00</td>
+                                    <td>$300.00</td>
+                               </tr>
+                            </tbody>
+
+                            <!-- borrar esto al terminar -->
+                            <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                        </table>
+                    </div>
+                    <div class="total-ticket">
+                        <p>Total: $519.32</p>
+                    </div>
                 </div>
                 <div class="rectangulo-grande-bebe3">
                     <div class="rectangulo-grande-bebecito1">
