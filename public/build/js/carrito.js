@@ -653,7 +653,6 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         `;
 
-
         contenedorTotalModalCantidad.innerHTML = `
             <div class="modal--cantidad__titulo">
                 <h2>Total:</h2>
@@ -668,6 +667,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const resultado = modificarCantidadCarrito(articulo);
             modalCantidad.classList.remove('modal--cantidad--show');
             mostrarTotalesCarrito(articulosCarrito);
+            mostrarProductosCarrito();
             inputModalCantidad.value = '';
         });
 
@@ -766,7 +766,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 }
 
-                mostrarProductosCarrito(articulosCarrito);
 
                 const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id);
                 if (prueba.length !== 0) {
@@ -774,6 +773,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     articuloCarritoAModificar.cantidad = 1;
                 }
+                mostrarProductosCarrito(articulosCarrito);
 
                 mostrarDetallesProducto(articuloCarritoAModificar);
                 mostrarTotalesCarrito(articulosCarrito);
