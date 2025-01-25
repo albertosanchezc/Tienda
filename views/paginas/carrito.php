@@ -111,26 +111,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coca-Cola</td>
-                                    <td>1.75 L</td>
-                                    <td>7501055313500</td>
-                                    <td>
-                                        <img src="/build/img/doritos.webp" alt="Logotipo de producto"
-                                            class="imagen-producto">
 
-                                    </td>
-                                    <td>38.00</td>
-                                    <td>
-                                        <div class="editar-cantidad">
-                                            <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
-                                        </div>
-                                        <div class="eliminar-producto">
-                                            <a href="#" class="botoneliminar-producto">Eliminar Artículo</a>
-                                        </div>
-                                    </td>
-                                </tr>
                             </tbody>
 
                             <!-- borrar esto al terminar -->
@@ -140,6 +121,35 @@
                             !
                             ! -->
                         </table>
+                    </div>
+                    <div class="paginador">
+                        <button class="paginas">
+                            Página Anterior 
+                        </button>
+                        <button class="numero">
+                            1
+                        </button>
+                        <button class="numero">
+                            2
+                        </button>
+                        <button class="numero">
+                            3
+                        </button>
+                        <button class="numero">
+                            4
+                        </button>
+                        <button class="numero">
+                            5
+                        </button>
+                        <button class="numero">
+                            6
+                        </button>
+                        <button class="numero">
+                            7
+                        </button>
+                        <button class="paginas">
+                            Página Siguiente
+                        </button>
                     </div>
                 </div>
                 <div class="rectangulo-grande-bebe5">
@@ -185,48 +195,7 @@
                                     <td>$150.00</td>
                                     <td>$300.00</td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coca-Cola 25ml taparrosca</td>
-                                    <td>$150.00</td>
-                                    <td>$300.00</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coca-Cola 25ml taparrosca</td>
-                                    <td>$150.00</td>
-                                    <td>$300.00</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coca-Cola 25ml taparrosca</td>
-                                    <td>$150.00</td>
-                                    <td>$300.00</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coca-Cola 25ml taparrosca</td>
-                                    <td>$150.00</td>
-                                    <td>$300.00</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coca-Cola 25ml taparrosca</td>
-                                    <td>$150.00</td>
-                                    <td>$300.00</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coca-Cola 25ml taparrosca</td>
-                                    <td>$150.00</td>
-                                    <td>$300.00</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coca-Cola 25ml taparrosca</td>
-                                    <td>$150.00</td>
-                                    <td>$300.00</td>
-                                </tr>
+
                             </tbody>
 
                             <!-- borrar esto al terminar -->
@@ -264,7 +233,6 @@
                         <p class="color-verde">¡Artículo Escaneado con Éxito!</p>
                     </div>
                 </div>
-
             </div>
             <!-- Rectángulo pequeño 1 producto-->
             <div data-test="contenedorDetalles" class=" grid-item rectangulo-pequeno">
@@ -291,12 +259,12 @@
                 </div>
                 <div class="rectangulo-pequeno-bebe4">
                     <div class="rectangulo-pequeno-bebecito41">
-                            <h3>Costo Unitario:</h3>
-                            <p>$35.95</p>
+                        <h3>Costo Unitario:</h3>
+                        <p>$35.95</p>
                     </div>
                     <div class="rectangulo-pequeno-bebecito42">
-                            <h3>Subtotal:</h3>
-                            <p>$75.95</p>
+                        <h3>Subtotal:</h3>
+                        <p>$75.95</p>
                     </div>
                 </div>
             </div>
@@ -344,7 +312,7 @@
     </section>
 
     <!-- modal de bienvenida 1-->
-    <section data-test="modal" class="modal modal--show">
+    <section data-test="modal" class="modal">
         <div class="modal__container">
             <img src="/build/img/bienvenida.svg" alt="Logotipo de bienvenida" class="modal__img">
             <h2 class="modal__title">¡Bienvenido al Carrito!</h2>
@@ -400,6 +368,35 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="paginador-1">
+                <button class="paginas">
+                    Página Anterior
+                </button>
+                <button class="numero">
+                    1
+                </button>
+                <button class="numero">
+                    2
+                </button>
+                <button class="numero">
+                    3
+                </button>
+                <button class="numero">
+                    4
+                </button>
+                <button class="numero">
+                    5
+                </button>
+                <button class="numero">
+                    6
+                </button>
+                <button class="numero">
+                    7
+                </button>
+                <button class="paginas">
+                    Página Siguiente
+                </button>
+            </div>
         </div>
     </section>
 
@@ -444,6 +441,35 @@
 
                 </tbody>
             </table>
+            <div class="paginador-2">
+                <button class="paginas">
+                    Página Anterior
+                </button>
+                <button class="numero">
+                    1
+                </button>
+                <button class="numero">
+                    2
+                </button>
+                <button class="numero">
+                    3
+                </button>
+                <button class="numero">
+                    4
+                </button>
+                <button class="numero">
+                    5
+                </button>
+                <button class="numero">
+                    6
+                </button>
+                <button class="numero">
+                    7
+                </button>
+                <button class="paginas">
+                    Página Siguiente
+                </button>
+            </div>
         </div>
     </section>
 
@@ -591,5 +617,33 @@
             </div>
     </section>
 
+    <!-- modal de pregunta eliminar-->
+    <section class="modal--eliminar ">
+        <div class="modal--eliminar__container">
+            <h2 class="modal--eliminar__title">¿Seguro que deseas eliminar este artículo?</h2>
+            <div class="modal--eliminar__opciones">
+                <p class="modal--eliminar__si">
+                    Si
+                </p>
+                <p class="modal--eliminar__no">
+                    No
+                </p>
+            </div>
+        </div>
+    </section>
 
+    <!-- modal de pregunta eliminarCarrito-->
+    <section class="modal--eliminarCarrito">
+        <div class="modal--eliminarCarrito__container">
+            <h2 class="modal--eliminarCarrito__title">¿Seguro que deseas vaciar el carrito?</h2>
+            <div class="modal--eliminarCarrito__opciones">
+                <p class="modal--eliminarCarrito__si">
+                    Si
+                </p>
+                <p class="modal--eliminarCarrito__no">
+                    No
+                </p>
+            </div>
+        </div>
+    </section>
 </main>

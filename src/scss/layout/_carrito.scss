@@ -37,7 +37,7 @@ body {
 }
 
 .grid-item {
-    grid-template-rows: 1fr 10fr 2fr 2fr;
+    grid-template-rows: 1fr 10fr 2fr 1fr;
     grid-template-columns: 24fr 10fr;
 }
 
@@ -78,26 +78,22 @@ body {
         width: 100%;
         height: 100%;
         box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: first baseline;
-        justify-content: center;
 
         margin-top: 0;
         padding-top: 0;
-        // flex-grow: 1;
         margin-left: 2rem;
-        /* Habilitar scroll horizontal si la tabla es demasiado ancha */
         overflow-x: auto;
         background-color: #fff;
-
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
 
 
         .tablamg {
             align-items: center;
             width: 90%;
             justify-content: center;
-
-
 
             .ordenes {
                 width: 100%;
@@ -106,13 +102,13 @@ body {
                 font-size: 1.2rem;
 
                 td {
-                    padding: 5px 1px 8px 1px;
+                    padding: 4px 1px;
                     text-align: left;
                     border: solid 1px #ccd1ff;
                 }
 
                 th {
-                    padding: 5px 1px;
+                    padding: 2px 1px;
                     text-align: left;
                     font-weight: bold;
                     color: black;
@@ -136,9 +132,10 @@ body {
                 }
 
                 .botoneditar-cantidad {
+                    margin-bottom: 1px;
                     background-color: #1b31ff;
                     color: #fff;
-                    padding: 2px;
+                    padding: 1px;
                     border-radius: 5px;
                     display: block;
                     font-weight: bold;
@@ -154,15 +151,14 @@ body {
                 }
 
                 .botoneliminar-producto {
+                    margin-top: 2px;
                     background-color: #ff1e1e;
                     color: #fff;
-                    padding: 2px;
+                    padding: 1px;
                     border-radius: 5px;
                     display: block;
                     font-weight: bold;
                     text-align: center;
-
-
                 }
 
                 .botoneliminar-producto:hover {
@@ -170,12 +166,11 @@ body {
                     border: solid 1px #ff1e1e;
                     background-color: #fff;
                     color: #ff1e1e;
-
                 }
-
-
             }
         }
+
+
 
     }
 
@@ -277,15 +272,22 @@ body {
 
         .alertas {
             width: 80%;
+            height: 100%;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             border-radius: 1rem;
             margin-bottom: 1rem;
+            padding: 0;
+            justify-content: center;
+            text-align: center;
 
             p {
+                padding: 0;
                 font-size: 1.6rem;
                 font-weight: bold;
                 text-align: center;
+                justify-content: center;
+                margin: 0;
 
             }
 
@@ -413,6 +415,7 @@ body {
         background-color: #fff;
         border-top-left-radius: 1rem;
         margin-top: 2rem;
+        padding-left: 1rem;
 
 
         img {
@@ -436,7 +439,7 @@ body {
         background-color: #fff;
         height: 100%;
         padding-top: 1rem;
-        padding-right: 1rem;
+        padding-right: 2rem;
 
         display: grid;
         grid-template-rows: 1fr 3fr;
@@ -478,7 +481,7 @@ body {
         justify-content: center;
         align-items: center;
         padding-bottom: 1rem;
-        padding-left: 1rem;
+        padding-left: 2rem;
 
         .rectangulo-pequeno-bebecito31 {
             grid-row: 1;
@@ -523,6 +526,7 @@ body {
         padding-top: 1rem;
         margin-bottom: 2rem;
         border-bottom-right-radius: 1rem;
+        padding-right: 1rem;
 
         .rectangulo-pequeno-bebecito41 {
             grid-row: 1;
@@ -532,7 +536,8 @@ body {
             // flex-direction: column;
             padding: 0;
             margin: 0;
-            p{
+
+            p {
                 font-size: 1.9rem;
                 padding: 0;
                 margin: 0;
@@ -540,32 +545,29 @@ body {
                 font-weight: bold;
             }
 
-           
 
-                h3 {
-                    font-size: 1.3rem;
-                    font-weight: $bold;
-                    margin: 0 0 0 0;
-                    padding: 0 0 0 0;
-                }
-            
+
+            h3 {
+                font-size: 1.3rem;
+                font-weight: $bold;
+                margin: 0 0 0 0;
+                padding: 0 0 0 0;
+            }
+
         }
 
         .rectangulo-pequeno-bebecito42 {
             grid-row: 2;
             margin: 0;
             padding: 0;
-            
 
-            p{
+            p {
                 padding: 0;
                 margin: 0;
                 font-size: 2.4rem;
                 text-align: center;
                 font-weight: bold;
             }
-
-            
 
             h3 {
                 font-size: 1.3rem;
@@ -596,7 +598,6 @@ body {
     margin-top: 0;
     margin-bottom: 0;
 
-
     h3 {
         font-weight: $bold;
         margin: 0;
@@ -609,7 +610,6 @@ body {
         display: flex;
         margin: 0;
         padding: 0;
-
         align-items: center;
         justify-content: right;
 
@@ -783,7 +783,9 @@ body {
 .modal--manual,
 .modal--nombre,
 .modal--granel,
-.modal--cantidad {
+.modal--cantidad,
+.modal--eliminar,
+.modal--eliminarCarrito {
     position: fixed;
     top: 0;
     left: 0;
@@ -1425,5 +1427,185 @@ body {
         color: black;
     }
 
+
+}
+
+.modal--eliminar,
+.modal--eliminarCarrito {
+    h2 {
+        font-size: 2.2rem;
+        margin-top: 4rem;
+        color: #2e2c2c;
+
+    }
+
+    &__opciones {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        gap: 8rem;
+        margin-bottom: 3rem;
+
+        p {
+            font-size: 1.9rem;
+        }
+    }
+
+    &__si {
+        display: flex;
+        background-color: #ff0000;
+        border-radius: 5px;
+        color: #fff;
+        padding: 2px 1.4rem;
+        // min-width: 59%;
+        text-align: center;
+
+        &:hover {
+            border: solid 1px #ff0000;
+            background-color: #fff;
+            color: #ff0000;
+            cursor: pointer;
+        }
+
+    }
+
+    &__no {
+        display: flex;
+        border-radius: 5px;
+        background-color: #ff0000;
+        color: #fff;
+        padding: 2px 1.1rem;
+
+        &:hover {
+            border: solid 1px #ff0000;
+            background-color: #fff;
+            color: #ff0000;
+            cursor: pointer;
+        }
+
+    }
+
+
+
+}
+
+.paginador {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+    justify-content: center;
+
+    .numero {
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1px 6px;
+        margin: 0 5px;
+        background-color: #0222b1;
+        border-color: #0222b1;
+        font-weight: bold;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border-radius: 3px;
+
+
+        &:hover {
+            cursor: pointer;
+            background-color: #fff;
+            color: #0222b1;
+            border-color: #0222b1;
+        }
+
+
+
+
+    }
+
+    .paginas {
+        padding: 2px;
+        margin: 0 1rem;
+        display: inline-block;
+        font-weight: bold;
+
+        max-height: 2rem;
+        background-color: #0222b1;
+        border-color: #0222b1;
+        color: #fff;
+        border-radius: 3px;
+
+
+        &:hover {
+            cursor: pointer;
+            background-color: #fff;
+            color: #0222b1;
+            border-color: #0222b1;
+        }
+
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+}
+
+.paginador-1, .paginador-2 {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+    justify-content: center;
+
+    .numero {
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1px 6px;
+        margin: 0 2px;
+        background: linear-gradient(to right, #D56B26, #E6962C);
+        border-color: #D56B26;
+        font-weight: bold;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border-radius: 3px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #fff;
+            color: #D56B26;
+            background: none;
+            border-color: #D56B26;
+        }
+    }
+
+    .paginas {
+        padding: 2px;
+        margin: 0 1rem;
+        display: inline-block;
+        font-weight: bold;
+        max-height: 2rem;
+        background: linear-gradient(to right, #D56B26, #E6962C);
+        border-color: #D56B26;
+        color: #fff;
+        border-radius: 3px;
+
+
+        &:hover {
+            cursor: pointer;
+            background-color: #fff;
+            color: #D56B26;
+            background: none;
+            border-color: #D56B26;
+        }
+
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
 
 }
