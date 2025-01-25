@@ -3,6 +3,13 @@ document.addEventListener('DOMContentLoaded', function () {
     let inventario = [];
     let infoProducto = {};
     let articuloCarritoAModificar = {};
+    let articulosCarrito = [];
+    let terminosBusqueda = {
+        id: '',
+        codigoBarras: '',
+        nombre: ''
+    }
+
     async function consultarAPI() {
         try {
             const server = window.location.host;
@@ -13,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             inventario = resultado.inventario;
-            totalPaginas = calcularPaginas(inventario.length, 4);
 
             filtrar(inventario);
         } catch (e) {
@@ -23,15 +29,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // limpiarTodo();
     consultarAPI();
     // Variables
-    let articulosCarrito = [];
-    const registrosPorPagina = 4;
-    let paginaActual = 1;
-    let terminosBusqueda = {
-        id: '',
-        codigoBarras: '',
-        nombre: '',
+    // const configuraciones = {
+    //     'principal': { datos: articulosCarrito, registrosPorPagina: 5, paginaActual: 1 },
+    //     'modalManual': { datos: datosModal1, registrosPorPagina: 4, paginaActual: 1 },
+    //     'modalNombre': { datos: datosModal2, registrosPorPagina: 4, paginaActual: 1 }
+    // };
 
-    }
     // Selectores
     // Ventanes modales
     const modalBienvenida = document.querySelector('.modal');
@@ -46,6 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const tablaModalManual = document.querySelector('.modal--manual__tabla');
     const tbodyTablaModalManual = tablaModalManual.querySelector('tbody');
     const parrafoModalManual = document.querySelector('.modal--manual__paragraph');
+    const paginacionManualContainer = document.createElement('DIV');
+    paginacionManualContainer.classList.add('modal--manual--paginacion');
+
 
     // Selectores del modal busqueda por nombre del producto
     const modalNombreProducto = document.querySelector('.modal--nombre');
@@ -54,6 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const inputNombreProducto = document.getElementById("3");
     const tablaModalNombre = document.querySelector('.modal--nombre__tabla');
     const tbodyTablaModalNombre = tablaModalNombre.querySelector('tbody');
+    const paginacionNombreContainer = document.createElement('DIV');
+    paginacionNombreContainer.classList.add('modal--manual--paginacion');
+
 
 
 
@@ -73,6 +82,9 @@ document.addEventListener('DOMContentLoaded', function () {
     contenedorDetalles.classList.remove('grid-item');
     const contenedorTotales = document.querySelector('.rectangulo-grande-horizontal');
     const hora = document.querySelector('.hora');
+    const paginacionCarritoContainer = document.createElement('DIV');
+    paginacionCarritoContainer.classList.add('modal--manual--paginacion');
+
 
 
     const div1ContenidoProductos = document.createElement('DIV');
@@ -88,8 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const div3ContenidoTotales = document.createElement('DIV');
     const div4ContenidoTotales = document.createElement('DIV');
 
-    const paginacionDiv = document.createElement('DIV');
-    paginacionDiv.classList.add('paginacion--container');
+
 
     const contenedorTablaCarrito = document.createElement('DIV');
     contenedorTablaCarrito.classList.add('tablamg');
@@ -188,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (resultados) {
                     // mostrarProductosModalManual(resultados);
                     mostrarProductosModal(resultados, tbodyTablaModalManual, 'Manual');
+
                 } else {
                     noResultado(tablaModalManual, parrafoModalManual);
                 }
@@ -217,7 +229,6 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         }
     })
-
 
 
 
@@ -578,10 +589,10 @@ document.addEventListener('DOMContentLoaded', function () {
                  <td>${cantidad}</td>
                  <td>${nombre}</td>
                  <td>${precio_unitario_venta}</td>
-                 <td>${(precio_unitario_venta*cantidad).toFixed(2)}</td>
+                 <td>${(precio_unitario_venta * cantidad).toFixed(2)}</td>
             `
             tbodyTicket.appendChild(rowTicket);
-            
+
         });
         tablaCarrito.appendChild(tbodyCarrito);
         contenedorTablaCarrito.appendChild(tablaCarrito);
@@ -600,17 +611,84 @@ document.addEventListener('DOMContentLoaded', function () {
         return resultado;
     }
 
-    function calcularPaginas(total, registrosPorPagina) {
-        return parseInt(Math.ceil(total / registrosPorPagina));
+    // Función genérica para mostrar la página correspondiente
+    function mostrarPagina(contenedor) {
+        const config = configuraciones[contenedor];
+        const { datos, elementosPorPagina, paginaActual } = config;
+
+        const inicio = (paginaActual - 1) * elementosPorPagina;
+        const fin = inicio + elementosPorPagina;
+        const elementosPagina = datos.slice(inicio, fin);
+
+        // Renderizar datos en el contenedor correspondiente
+        document.getElementById(`contenedor-${contenedor}`).innerHTML = elementosPagina
+            .map(item => `<p>${item}</p>`)
+            .join("");
+
+        // Generar los controles de paginación
+        generarPaginador(contenedor);
     }
 
-    function mostrarPagina(pagina) {
-        const inicio = (pagina - 1) * elementosPorPagina;
-        const fin = inicio + registrosPorPagina;
-        const registrosPorPagina = inventario.slice(inicio, fin);
+    // Función para generar paginadores dinámicos
+    function generarPaginador(contenedorId) {
+        const config = configuraciones[contenedorId];
+        const totalPaginas = Math.ceil(config.datos.length / config.elementosPorPagina);
+        let paginadorHTML = '';
 
+        if (config.paginaActual > 1) {
+            paginadorHTML += `<button onclick="cambiarPagina('${contenedorId}', ${config.paginaActual - 1})">Anterior</button>`;
+        }
 
+        for (let i = 1; i <= totalPaginas; i++) {
+            paginadorHTML += `<button onclick="cambiarPagina('${contenedorId}', ${i})" ${config.paginaActual === i ? 'disabled' : ''}>${i}</button>`;
+        }
+
+        if (config.paginaActual < totalPaginas) {
+            paginadorHTML += `<button onclick="cambiarPagina('${contenedorId}', ${config.paginaActual + 1})">Siguiente</button>`;
+        }
+
+        document.getElementById(`paginador-${contenedorId}`).innerHTML = paginadorHTML;
     }
+
+    // Función para cambiar de página
+    function cambiarPagina(contenedor, nuevaPagina) {
+        configuraciones[contenedor].paginaActual = nuevaPagina;
+        mostrarPagina(contenedor);
+    }
+
+    // Inicializar paginadores para cada sección 
+    mostrarPagina('principal');
+    mostrarPagina('modal1');
+    mostrarPagina('modal2');
+
+
+    // Función para generar los botones del paginador
+    function generarPaginador() {
+        const totalPaginas = Math.ceil(inventario.length / registrosPorPagina);
+        let paginadorHTML = '';
+        if (paginaActual > 1) {
+            paginadorHTML += `<button onclick="cambiarPagina(${paginaActual - 1})">Anterior</button>`;
+        }
+
+        for (let i = 1; i <= totalPaginas; i++) {
+            paginadorHTML += `<button onclick="cambiarPagina(${i})" ${paginaActual === i ? 'disabled' : ''}>${i}</button>`;
+        }
+
+        if (paginaActual < totalPaginas) {
+            paginadorHTML += `<button onclick="cambiarPagina(${paginaActual + 1})">Siguiente</button>`;
+        }
+
+        return paginadorHTML;
+    }
+
+    // Función para cambiar de página
+    function cambiarPagina(pagina) {
+        paginaActual = pagina;
+        mostrarPagina(paginaActual);
+    }
+
+    // Inicializar la primera pagina 
+    // mostrarPagina(paginaActual);
 
     function actualizarCantidad(articulo) {
 
@@ -789,59 +867,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const { nombre, descripcion, cantidad, precio_unitario_venta } = articuloCarritoAModificar[0];
 
+        const totalD = precio_unitario_venta*cantidad;
         console.log("Filas carrito ", articuloCarritoAModificar);
 
         const div1ContenidoDetalles = document.createElement('DIV');
         div1ContenidoDetalles.classList.add('rectangulo-pequeno-bebe1');
         div1ContenidoDetalles.innerHTML = `
-            <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
+        <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
         `;
 
         const div2ContenidoDetalles = document.createElement('DIV');
         div2ContenidoDetalles.classList.add('rectangulo-pequeno-bebe2');
         div2ContenidoDetalles.innerHTML = `
-            <div class="rectangulo-pequeno-bebecito21">
-                <h3 data-test="nombreDetalles">${nombre}</h3>
-            </div>
-            <div class="rectangulo-pequeno-bebecito22">
-                <h3 data-test="descripcionDetalles">${descripcion}</h3>
-            </div>
+        <div class="rectangulo-pequeno-bebecito21">
+            <h3>${nombre}</h3>
+        </div>
+        <div class="rectangulo-pequeno-bebecito22">
+            <h3>${descripcion}</h3>
+        </div>
         `;
 
 
         const div3ContenidoDetalles = document.createElement('DIV');
         div3ContenidoDetalles.classList.add('rectangulo-pequeno-bebe3');
         div3ContenidoDetalles.innerHTML = `
-            <div class="rectangulo-pequeno-bebecito31">
-                <h3 data-test="cantidadDetalles">Cantidad: ${cantidad}</h3>
-            </div>
-            <div class="rectangulo-pequeno-bebecito32">
-                <h3>Código de Barras</h3>
-            </div>
+        <div class="rectangulo-pequeno-bebecito31">
+            <h3>Cantidad: ${cantidad}</h3>
+        </div>
+        <div class="rectangulo-pequeno-bebecito32">
+            <h3>Código de Barras:</h3>
+            <img loading="lazy" src="build/img/barcode.png" alt="barcode">
+        </div>
         `;
 
         const div4ContenidoDetalles = document.createElement('DIV');
         div4ContenidoDetalles.classList.add('rectangulo-pequeno-bebe4');
         div4ContenidoDetalles.innerHTML = `
-            <div class="rectangulo-pequeno-bebecito41">
-                <h3>Subtotal: </h3>
-            </div>
-            <div class="rectangulo-pequeno-bebecito42">
-                <h3 data-test="precioDetalles">$${precio_unitario_venta}</h3>
-            </div>
+        <div class="rectangulo-pequeno-bebecito41">
+                <h3>Costo Unitario:</h3>
+                <p>${precio_unitario_venta.toFixed()}</p>
+        </div>
+        <div class="rectangulo-pequeno-bebecito42">
+                <h3>Subtotal:</h3>
+                <p>$${totalD.toFixed()}</p>
+        </div>
         `;
-
-        const div5ContenidoDetalles = document.createElement('DIV');
-        div5ContenidoDetalles.classList.add('rectangulo-pequeno-bebe5');
-        div5ContenidoDetalles.innerHTML = `
-            <div class="rectangulo-pequeno-bebecito41">
-                <h3>Subtotal: </h3>
-            </div>
-            <div class="rectangulo-pequeno-bebecito42">
-                <h3 data-test="precioDetalles">$${precio_unitario_venta}</h3>
-            </div>
-        `;
-
 
         contenedorDetalles.appendChild(div1ContenidoDetalles);
         contenedorDetalles.appendChild(div2ContenidoDetalles);
