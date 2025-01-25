@@ -351,7 +351,7 @@ function generarPaginador(inventario) {
 
 function cambiarPagina(pagina, datos = inventario) {
     paginaActual = pagina;
-    mostrarPagina(paginaActua, datos);
+    mostrarPagina(paginaActual, datos);
 }
 
 
