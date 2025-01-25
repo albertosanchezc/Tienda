@@ -1,6 +1,15 @@
+// Selectores
 let inventario = [];
 let inventario_granel = [];
 let inventarioCompleto = [];
+let terminosBusqueda = {
+    id: '',
+    nombre: '',
+    codigoBarras: '',
+    categoria: '',
+    proveedor: '',
+}
+
 const despliegueInventario = document.querySelector('.despliegueinventario');
 const btnCerrarModal = document.querySelector('.modal--inventario__imgcerrar');
 const modalInventario = document.querySelector('.modal--inventario');
@@ -11,6 +20,10 @@ btnCerrarModal.addEventListener('click', (e) => {
     modalInventario.classList.remove('modal--inventario--show');
 })
 
+const inputNombreBusqueda = document.getElementById('nombre-producto');
+const inputCategoriaBusqueda = document.getElementById('categoria-producto');
+const inputProveedorBusqueda = document.getElementById('proveedor-producto');
+const inputCodigoBarrasBusqueda = document.getElementById('codigo-barras');
 
 
 const slides = [
@@ -37,6 +50,8 @@ const slides = [
 
 let currentIndex = 0;
 
+// Funciones
+
 async function consultarAPI() {
     try {
         const server = window.location.host;
@@ -47,8 +62,8 @@ async function consultarAPI() {
 
 
         inventario = resultado.inventario;
-        inventario_granel = resultado.inventario_granel;
-        mostrarCards(inventario);
+        // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
+        filtrar()
     } catch (e) {
         console.log(e);
     }
@@ -92,19 +107,53 @@ function setSlide(index) {
     showSlide(currentIndex);
 }
 
-// Inicializa el slider al cargar la página
-document.addEventListener("DOMContentLoaded", () => {
-    limpiarHTMLElemento(despliegueInventario);
 
-    consultarAPI();
-    showSlide(currentIndex); // Muestra el primer slide
-    setInterval(nextSlide, 6000); // Cambia automáticamente cada 5 segundos
+function filtrar() {
+    const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras);
+    if (resultadosFiltrado.length > 0) {
+        console.log(resultadosFiltrado);
+        mostrarCards(resultadosFiltrado.flat());
+        return resultadosFiltrado.flat();
+    } else {
+        mostrarCards(resultadosFiltrado.flat());
 
-});
+        return resultadosFiltrado.flat();
+    }
+}
+
+function filtrarNombre(inventario) {
+    let { nombre } = terminosBusqueda;
+
+    if (nombre) {
+        return inventario.nombre.toLowerCase().includes(nombre.toLowerCase());
+    }
+
+    return inventario;
+}
+
+function filtrarCodigoBarras(inventario) {
+    let { codigoBarras } = terminosBusqueda;
+
+    if (codigoBarras) {
+        return inventario.codigo_barras.includes(codigoBarras);
+    }
+
+    return inventario;
+}
+
+// Funciones por implementar
+// function filtrarCategoria(){
+
+// }
+
+// function filtrarProveedor(){
+
+// }
+
 
 
 function mostrarCards(inventario) {
-
+    limpiarHTMLElemento(despliegueInventario);
     console.log(inventario);
     console.log("Producto desde mostrarCards", inventario);
 
@@ -213,3 +262,53 @@ function limpiarHTMLElemento(elemento) {
         elemento.removeChild(elemento.firstChild);
     }
 }
+
+
+// Eventos
+
+inputNombreBusqueda.addEventListener('input', (e) => {
+    let { nombre } = terminosBusqueda;
+    nombre = e.target.value;
+    terminosBusqueda.nombre = nombre;
+    console.log(terminosBusqueda);
+    filtrar();
+});
+
+inputCategoriaBusqueda.addEventListener('input', (e) => {
+    let { categoria } = terminosBusqueda;
+    categoria = e.target.value;
+    terminosBusqueda.categoria = categoria;
+    console.log(terminosBusqueda);
+
+    filtrar();
+});
+
+inputCodigoBarrasBusqueda.addEventListener('input', (e) => {
+    let { codigoBarras } = terminosBusqueda;
+    codigoBarras = e.target.value;
+    terminosBusqueda.codigoBarras = codigoBarras;
+    console.log(terminosBusqueda);
+
+    filtrar();
+})
+
+inputProveedorBusqueda.addEventListener('input', (e) => {
+    let { proveedor } = terminosBusqueda;
+    proveedor = e.target.value;
+    terminosBusqueda.proveedor = proveedor;
+    console.log(terminosBusqueda);
+
+    filtrar();
+})
+
+
+// Inicializa el slider al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    limpiarHTMLElemento(despliegueInventario);
+
+    consultarAPI();
+    showSlide(currentIndex); // Muestra el primer slide
+    setInterval(nextSlide, 6000); // Cambia automáticamente cada 5 segundos
+
+});
+
