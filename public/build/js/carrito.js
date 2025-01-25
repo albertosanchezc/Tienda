@@ -612,22 +612,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Función genérica para mostrar la página correspondiente
-    function mostrarPagina(contenedor) {
-        const config = configuraciones[contenedor];
-        const { datos, elementosPorPagina, paginaActual } = config;
+    // function mostrarPagina(contenedor) {
+    //     const config = configuraciones[contenedor];
+    //     const { datos, elementosPorPagina, paginaActual } = config;
 
-        const inicio = (paginaActual - 1) * elementosPorPagina;
-        const fin = inicio + elementosPorPagina;
-        const elementosPagina = datos.slice(inicio, fin);
+    //     const inicio = (paginaActual - 1) * elementosPorPagina;
+    //     const fin = inicio + elementosPorPagina;
+    //     const elementosPagina = datos.slice(inicio, fin);
 
-        // Renderizar datos en el contenedor correspondiente
-        document.getElementById(`contenedor-${contenedor}`).innerHTML = elementosPagina
-            .map(item => `<p>${item}</p>`)
-            .join("");
+    //     // Renderizar datos en el contenedor correspondiente
+    //     document.getElementById(`contenedor-${contenedor}`).innerHTML = elementosPagina
+    //         .map(item => `<p>${item}</p>`)
+    //         .join("");
 
-        // Generar los controles de paginación
-        generarPaginador(contenedor);
-    }
+    //     // Generar los controles de paginación
+    //     generarPaginador(contenedor);
+    // }
 
     // Función para generar paginadores dinámicos
     function generarPaginador(contenedorId) {
@@ -657,9 +657,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Inicializar paginadores para cada sección 
-    mostrarPagina('principal');
-    mostrarPagina('modal1');
-    mostrarPagina('modal2');
+    // mostrarPagina('principal');
+    // mostrarPagina('modal1');
+    // mostrarPagina('modal2');
 
 
     // Función para generar los botones del paginador
@@ -867,7 +867,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const { nombre, descripcion, cantidad, precio_unitario_venta } = articuloCarritoAModificar[0];
 
-        const totalD = precio_unitario_venta*cantidad;
+        const totalD = (precio_unitario_venta*cantidad).toFixed(2);
         console.log("Filas carrito ", articuloCarritoAModificar);
 
         const div1ContenidoDetalles = document.createElement('DIV');
@@ -905,11 +905,11 @@ document.addEventListener('DOMContentLoaded', function () {
         div4ContenidoDetalles.innerHTML = `
         <div class="rectangulo-pequeno-bebecito41">
                 <h3>Costo Unitario:</h3>
-                <p>${precio_unitario_venta.toFixed()}</p>
+                <p>${precio_unitario_venta}</p>
         </div>
         <div class="rectangulo-pequeno-bebecito42">
                 <h3>Subtotal:</h3>
-                <p>$${totalD.toFixed()}</p>
+                <p>$${totalD}</p>
         </div>
         `;
 

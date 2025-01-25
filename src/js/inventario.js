@@ -9,6 +9,8 @@ let terminosBusqueda = {
     categoria: '',
     proveedor: '',
 }
+const registrosPorPagina = 2;
+let paginaActual = 1;
 
 const despliegueInventario = document.querySelector('.despliegueinventario');
 const btnCerrarModal = document.querySelector('.modal--inventario__imgcerrar');
@@ -19,6 +21,12 @@ btnCerrarModal.addEventListener('click', (e) => {
     e.preventDefault();
     modalInventario.classList.remove('modal--inventario--show');
 })
+
+const busqueda = document.querySelector('.busqueda-filtrosinventario');
+const paginadorContainer = document.createElement('DIV');
+paginadorContainer.classList.add('paginador');
+busqueda.parentElement.appendChild(paginadorContainer);
+
 
 const inputNombreBusqueda = document.getElementById('nombre-producto');
 const inputCategoriaBusqueda = document.getElementById('categoria-producto');
@@ -64,6 +72,8 @@ async function consultarAPI() {
         inventario = resultado.inventario;
         // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
         filtrar()
+        // mostrarCards(inventario);
+
     } catch (e) {
         console.log(e);
     }
@@ -112,11 +122,10 @@ function filtrar() {
     const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras);
     if (resultadosFiltrado.length > 0) {
         console.log(resultadosFiltrado);
-        mostrarCards(resultadosFiltrado.flat());
+        mostrarPagina(1,resultadosFiltrado);
         return resultadosFiltrado.flat();
     } else {
-        mostrarCards(resultadosFiltrado.flat());
-
+        mostrarPagina(1,resultadosFiltrado);
         return resultadosFiltrado.flat();
     }
 }
@@ -141,16 +150,23 @@ function filtrarCodigoBarras(inventario) {
     return inventario;
 }
 
-// Funciones por implementar
-// function filtrarCategoria(){
+function filtrarCategoria() {
+    let { categoria } = terminosBusqueda;
 
-// }
+    if (categoria) {
+        return inventario.categoria.includes(categoria);
+    }
 
-// function filtrarProveedor(){
+    return inventario;
+}
 
-// }
+function filtrarProveedor() {
+    let { proveedor } = terminosBusqueda;
 
-
+    if (proveedor) {
+        return inventario.proveedor.includes(proveedor);
+    }
+}
 
 function mostrarCards(inventario) {
     limpiarHTMLElemento(despliegueInventario);
@@ -209,6 +225,7 @@ function mostrarCards(inventario) {
                 </div>
             </div>
         `;
+
         dineroGrid.innerHTML = `
             <div class="preciodeventa">
                 <p class="negritas">Precio de Venta unitario:</p>
@@ -240,7 +257,6 @@ function mostrarCards(inventario) {
 
         `;
 
-
         inventarioGrid.appendChild(gridContenido);
         inventarioGrid.appendChild(dineroGrid);
         inventarioGrid.appendChild(botonesGrid);
@@ -248,10 +264,7 @@ function mostrarCards(inventario) {
 
     });
 
-
     console.log(despliegueInventario);
-
-
 }
 
 function limpiarHTMLElemento(elemento) {
@@ -290,7 +303,7 @@ inputCodigoBarrasBusqueda.addEventListener('input', (e) => {
     console.log(terminosBusqueda);
 
     filtrar();
-})
+});
 
 inputProveedorBusqueda.addEventListener('input', (e) => {
     let { proveedor } = terminosBusqueda;
@@ -299,13 +312,52 @@ inputProveedorBusqueda.addEventListener('input', (e) => {
     console.log(terminosBusqueda);
 
     filtrar();
-})
+});
+
+
+function mostrarPagina(pagina, datos = inventario) {
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = inicio + registrosPorPagina;
+    const inventarioPagina = datos.slice(inicio, fin);
+
+    console.log("Inventario Pagina: ",inventarioPagina);
+    paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+    mostrarCards(inventarioPagina);
+    generarPaginador(datos);
+
+}
+
+
+function generarPaginador(inventario) {
+    const totalPaginas = Math.ceil(inventario.length / registrosPorPagina);
+    console.log("Total de páginas desde generar Paginador", totalPaginas);
+    let paginadorHTML = '';
+
+    if (paginaActual > 1) {
+        paginadorHTML += `<button onclick="cambiarPagina(${paginaActual - 1})">Anterior</button>`;
+    }
+
+    for (let i = 1; i <= totalPaginas; i++) {
+        paginadorHTML += `<button onclick="cambiarPagina(${i})" ${paginaActual === i ? 'disabled' : ''}>${i}</button>`;
+    }
+
+    if (paginaActual < totalPaginas) {
+        paginadorHTML += `<button onclick="cambiarPagina(${paginaActual + 1})">Siguiente</button>`;
+    }
+
+
+    paginadorContainer.innerHTML = paginadorHTML;
+}
+
+function cambiarPagina(pagina, datos = inventario) {
+    paginaActual = pagina;
+    mostrarPagina(paginaActua, datos);
+}
 
 
 // Inicializa el slider al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     limpiarHTMLElemento(despliegueInventario);
-
     consultarAPI();
     showSlide(currentIndex); // Muestra el primer slide
     setInterval(nextSlide, 6000); // Cambia automáticamente cada 5 segundos
