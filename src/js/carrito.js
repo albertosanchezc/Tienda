@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let infoProducto = {};
     let articuloCarritoAModificar = {};
     let articulosCarrito = [];
-    const registrosPorPagina = 5;
+    const registrosPorPagina = 4;
     let paginaActual = 1;
 
     let terminosBusqueda = {
@@ -24,7 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             inventario = resultado.inventario;
 
-            filtrar(inventario);
+            filtrar();
+
+            mostrarPagina(1, inventario, paginadorModalManualContainer);
+            mostrarPagina(1, inventario, paginadorModalNombreContainer);
+
         } catch (e) {
             console.log(e);
         }
@@ -198,7 +202,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // mostrarProductosModalManual(inventario);
             modalManual.classList.add('modal--manual--show');
-            mostrarProductosModal(inventario, tbodyTablaModalManual, 'Manual');
+            let inventarioPaginado = mostrarPagina(paginaActual, resultadosFiltrado, paginacionManualContainer);
+            mostrarProductosModal(inventarioPaginado, tbodyTablaModalManual, 'Manual');
 
 
             inputCodigoManual.disabled = false;
@@ -210,11 +215,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("Terminos búsqueda antes de inventario modal", terminosBusqueda);
                 console.log("Inventario Desde abrir modal", inventario);
                 const resultados = filtrar();
-                
 
                 if (resultados) {
                     // mostrarProductosModalManual(resultados);
-                    mostrarProductosModal(resultados, tbodyTablaModalManual, 'Manual');
+                    inventarioPaginado = mostrarPagina(paginaActual, resultados, paginacionManualContainer);
+                    mostrarProductosModal(inventarioPaginado, tbodyTablaModalManual, 'Manual');
+    
 
                 } else {
                     noResultado(tablaModalManual, parrafoModalManual);
@@ -316,7 +322,11 @@ document.addEventListener('DOMContentLoaded', function () {
         paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
         // Revisar cómo pasar el elemento a limpiar
         // limpiarHTMLElemento(despliegueInventario)
+        mostrarProductosModal(inventarioPagina, tbodyTablaModalManual, 'Manual')
+        mostrarProductosModal(inventarioPagina, tbodyTablaModalNombre, 'Nombre')
         generarPaginador(datos, paginadorContainer);
+
+
         return inventarioPagina;
     }
 
@@ -341,6 +351,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         paginadorContainer.innerHTML = paginadorHTML;
+
 
     }
 
@@ -671,19 +682,6 @@ document.addEventListener('DOMContentLoaded', function () {
         limpiarHTMLElemento(tbodyCarrito);
         limpiarHTMLElemento(tbodyTicket);
         contenedorProductos.appendChild(div1ContenidoProductos);
-
-        paginadorCarritoContainer.innerHTML = `
-        <button class="paginas">
-            Página Anterior
-        </button>
-        <button class="numero">
-            1
-        </button>
-
-        <button class="paginas">
-            Página Siguiente
-        </button>            
-        `;
 
         contenedorProductos.appendChild(div2ContenidoProductos);
         contenedorProductos.appendChild(div5ContenidoProductos);
