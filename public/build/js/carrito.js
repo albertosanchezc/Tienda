@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
             inventario = resultado.inventario;
 
             filtrar();
-
             mostrarPagina(1, inventario, paginadorModalManualContainer);
             mostrarPagina(1, inventario, paginadorModalNombreContainer);
 
@@ -279,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Funciones
-    // limpiarTodo();
+    limpiarTodo();
     mostrarHora();
     // Actualizar la hora cada segundo
     setInterval(mostrarHora, 1000);
@@ -837,8 +836,15 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
-        btnConfirmarEditarCantidad.addEventListener('click', (e) => {
-            e.preventDefault();
+        inputModalCantidad.addEventListener('keydown', (e) => {
+            console.log(e.key);
+            if(e.key === 'Enter'){
+                btnConfirmarEditarCantidad.click();
+            } 
+       })
+
+
+        btnConfirmarEditarCantidad.addEventListener('click', () => {
             const resultado = modificarCantidadCarrito(articulo);
             modalCantidad.classList.remove('modal--cantidad--show');
             mostrarTotalesCarrito(articulosCarrito);
@@ -847,6 +853,8 @@ document.addEventListener('DOMContentLoaded', function () {
             mostrarDetallesProducto(resultado);
             segundoEstadoCarrito();
         });
+
+
 
     }
 
