@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let infoProducto = {};
     let articuloCarritoAModificar = {};
     let articulosCarrito = [];
-    const registrosPorPagina = 4;
+    const registrosPorPagina = 5;
     let paginaActual = 1;
 
     let terminosBusqueda = {
@@ -77,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnConfirmarEditarCantidad = modalCantidad.querySelector('.modal--cantidad__btn');
 
     const modalGranel = document.querySelector('.modal--granel');
+
+    const modalEliminarProducto = document.querySelector('.modal--eliminar');
 
 
     // Contenedores del section ventas
@@ -220,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // mostrarProductosModalManual(resultados);
                     inventarioPaginado = mostrarPagina(paginaActual, resultados, paginacionManualContainer);
                     mostrarProductosModal(inventarioPaginado, tbodyTablaModalManual, 'Manual');
-    
+
 
                 } else {
                     noResultado(tablaModalManual, parrafoModalManual);
@@ -234,10 +236,10 @@ document.addEventListener('DOMContentLoaded', function () {
             // mostrarProductosModalNombre(inventario);
             let resultadosFiltrado = filtrar();
             modalNombreProducto.classList.add('modal--nombre--show');
-            let inventarioPaginado = mostrarPagina(paginaActual,resultadosFiltrado,paginacionNombreContainer);
+            let inventarioPaginado = mostrarPagina(paginaActual, resultadosFiltrado, paginacionNombreContainer);
             mostrarProductosModal(inventarioPaginado, tbodyTablaModalNombre, 'Nombre');
 
-            
+
             inputNombreProducto.disabled = false;
             inputNombreProducto.focus();
             inputNombreProducto.addEventListener('input', (e) => {
@@ -592,6 +594,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 switch (e.target.classList[0]) {
                     case "botoneliminar-producto":
                         e.preventDefault();
+                        modalEliminarProducto.classList.add('modal--eliminar--show');
 
                         console.log("El botón seleccionado fue eliminar");
                         infoProductoCarrito = {
@@ -604,16 +607,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         };
 
-                        articulosCarrito = eliminarArticulo(infoProductoCarrito);
-                        if (articulosCarrito.length > 0) {
-                            segundoEstadoCarrito();
-                            mostrarAlerta(`¡Artículo ${infoProductoCarrito.nombre} Eliminado Correctamente!`, 'verde');
+                        modalEliminarProducto.addEventListener('click', (e) => {
+                            console.log(e.target.classList == 'modal--eliminar__si');
+                            console.log(e.target.classList == 'modal--eliminar__no');
+                            if (e.target.classList == 'modal--eliminar__si') {
+                                // Si se selecciona en si dentro de la modal entonces eliminaos el articulo
+                                articulosCarrito = eliminarArticulo(infoProductoCarrito);
+                                modalEliminarProducto.classList.remove('modal--eliminar--show');
+                                
+                                // Si la nueva extensión de artículos carrito es mayor a cero, seguimos teniendo artículos en el carrito
+                                if (articulosCarrito.length > 0) {
+                                    segundoEstadoCarrito();
+                                    mostrarAlerta(`¡Artículo ${infoProductoCarrito.nombre} Eliminado Correctamente!`, 'verde');
 
-                        } else {
+                                } else {
 
-                            primerEstadoCarrito();
-                            mostrarAlerta(`¡Se Vació el carrito Correctamente!`, 'verde');
-                        }
+                                    primerEstadoCarrito();
+                                    mostrarAlerta(`¡Artículo ${infoProductoCarrito.nombre} Eliminado Correctamente, carrito vacío!`, 'verde');
+                                }
+                            } else if (e.target.classList == 'modal--eliminar__no') {
+                                modalEliminarProducto.classList.remove('modal--eliminar--show');
+                            }
+
+                        })
+
                         break;
                     case "botoneditar-cantidad":
                         e.preventDefault();
@@ -755,7 +772,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function actualizarCantidad(articulo) {
 
-        let { cantidad, nombre, descripcion, precio_unitario_venta } = articulo;
+        let { nombre, cantidad,  descripcion, precio_unitario_venta } = articulo;
         const contenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
 
         let total = (cantidad * precio_unitario_venta).toFixed(2);
@@ -810,6 +827,8 @@ document.addEventListener('DOMContentLoaded', function () {
             mostrarTotalesCarrito(articulosCarrito);
             mostrarProductosCarrito();
             inputModalCantidad.value = '';
+            mostrarDetallesProducto(resultado);
+            segundoEstadoCarrito();
         });
 
     }
