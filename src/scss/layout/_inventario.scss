@@ -184,7 +184,7 @@
 
 }
 
-.busqueda-filtrosinventario {
+.busqueda-filtrosinventario, .busqueda-filtrosventas,.busqueda-filtroscancelaciones {
     width: 40%;
     margin: 20px auto;
     display: flex;
@@ -203,7 +203,7 @@
     }
 
 
-    .caja-filtrosinventario {
+    .caja-filtrosinventario, .caja-filtrosventas, .caja-filtroscancelaciones {
         display: grid;
         grid-gap: 20px;
         width: 100%;
@@ -235,6 +235,15 @@
         }
 
         input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border-color: rgb(0, 89, 255);
+            border-radius: 1rem;
+            height: 43px;
+        }
+
+        input[type="date"] {
             width: 100%;
             padding: 5px;
             font-size: 16px;
@@ -288,6 +297,10 @@ span {
 }
 
 .caja-filtrosinventario input::placeholder {
+    padding: 0 1rem;
+}
+
+.caja-filtrosventas input::placeholder {
     padding: 0 1rem;
 }
 
@@ -658,12 +671,12 @@ span {
     }
 
     .inventariogrid {
-        padding: 3rem 6rem;
+        padding: 3rem 1.3rem;
 
     }
 
     .despliegueinventario {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 

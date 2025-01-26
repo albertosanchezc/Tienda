@@ -248,13 +248,13 @@
     }
 }
 
-.tabladecontenido {
+.tabladecontenido, .tabladecontenido-ventas, .tabladecontenido-cancelaciones {
     width: 100%;
     overflow-x: auto;
     margin: 60px 0 20px 0;
 }
 
-.tabla-contenido {
+.tabla-contenido, .tabla-contenido-cancelaciones, .tabla-contenido-ventas  {
     width: 100%;
     border-collapse: collapse;
     table-layout: auto;
@@ -262,7 +262,9 @@
 }
 
 .tabla-contenido th,
-.tabla-contenido td {
+.tabla-contenido td, .tabla-contenido-cancelaciones th,
+.tabla-contenido-cancelaciones td, .tabla-contenido-ventas th,
+.tabla-contenido-ventas td {
     border: 1px solid #FFE0B2;
     padding: 8px;
     text-align: left;

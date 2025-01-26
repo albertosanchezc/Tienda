@@ -368,35 +368,6 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="paginador-1">
-                <button class="paginas">
-                    Página Anterior
-                </button>
-                <button class="numero">
-                    1
-                </button>
-                <button class="numero">
-                    2
-                </button>
-                <button class="numero">
-                    3
-                </button>
-                <button class="numero">
-                    4
-                </button>
-                <button class="numero">
-                    5
-                </button>
-                <button class="numero">
-                    6
-                </button>
-                <button class="numero">
-                    7
-                </button>
-                <button class="paginas">
-                    Página Siguiente
-                </button>
-            </div>
         </div>
     </section>
 
@@ -441,35 +412,7 @@
 
                 </tbody>
             </table>
-            <div class="paginador-2">
-                <button class="paginas">
-                    Página Anterior
-                </button>
-                <button class="numero">
-                    1
-                </button>
-                <button class="numero">
-                    2
-                </button>
-                <button class="numero">
-                    3
-                </button>
-                <button class="numero">
-                    4
-                </button>
-                <button class="numero">
-                    5
-                </button>
-                <button class="numero">
-                    6
-                </button>
-                <button class="numero">
-                    7
-                </button>
-                <button class="paginas">
-                    Página Siguiente
-                </button>
-            </div>
+        
         </div>
     </section>
 
@@ -641,6 +584,21 @@
                     Si
                 </p>
                 <p class="modal--eliminarCarrito__no">
+                    No
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- modal de pagar-->
+    <section class="modal--pagar">
+        <div class="modal--pagar__container">
+            <h2 class="modal--pagar__title">¿Seguro que deseas vaciar el carrito?</h2>
+            <div class="modal--pagar__opciones">
+                <p class="modal--pagar__si">
+                    Si
+                </p>
+                <p class="modal--pagar__no">
                     No
                 </p>
             </div>

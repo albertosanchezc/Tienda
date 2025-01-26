@@ -1,0 +1,85 @@
+.botonesventas{
+    display: flex;
+    justify-content: center;
+    gap:3rem;
+    align-items: center;
+    
+
+    .rojoclaro, .rojooscuro{
+        border-radius: 1rem;
+        font-size: 1.9rem;
+        color: #fff;
+        padding: 1rem;
+        min-width: 25%;
+        text-align: center;
+        &:hover{
+            background-color: #fff;
+            color: #990000;
+            border: 1px solid #990000;
+        }
+
+    }
+
+    .rojooscuro{
+        background-color: #660000;
+        
+    }
+
+    .rojoclaro{
+        background-color: #990000;
+
+        
+    }
+
+    
+}
+
+.busqueda-filtrosventas, .busqueda-filtroscancelaciones{
+    fieldset{
+        border: 2px dotted #b30000;
+
+    }
+
+    legend {
+        color: #b30000;}
+
+        .caja-filtrosventas, .caja-filtroscancelaciones{
+        input[type="date"] {
+            border-color: #cc0000;
+
+        }
+
+        input[type="number"] {
+            border-color: #cc0000;
+        
+        }
+        }
+}
+
+.tabla-contenido-cancelaciones th,
+.tabla-contenido-cancelaciones td, .tabla-contenido-ventas th,
+.tabla-contenido-ventas td {
+    border: 1px solid #ff6565;}
+
+.tabla-contenido-ventas th, .tabla-contenido-cancelaciones th {
+    background: linear-gradient(to right, #990000, #cc0000);
+    color: white;
+    font-weight: bold;
+}
+
+.tabla-contenido-ventas tbody tr:nth-child(even) {
+    background-color: #FFF3E0;
+}
+
+.tabla-contenido-cancelaciones tbody tr:nth-child(even) {
+    background-color: #FFF3E0;
+}
+
+.tabla-contenido-ventas tbody tr:hover {
+    background-color: #F7D9A8;
+}
+
+.tabla-contenido-cancelaciones tbody tr:hover {
+    background-color: #F7D9A8;
+}
+
