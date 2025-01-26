@@ -15,7 +15,7 @@
                             <thead>
                                 <tr>
                                     <th>Cant.</th>
-                                    <th>Producto</th>
+                                    <th>Prod.</th>
                                     <th>Descripción</th>
                                     <th>Código</th>
                                     <th>Imagen</th>
@@ -591,16 +591,22 @@
     </section>
 
     <!-- modal de pagar-->
-    <section class="modal--pagar">
+    <section class="modal--paga">
         <div class="modal--pagar__container">
-            <h2 class="modal--pagar__title">¿Seguro que deseas vaciar el carrito?</h2>
-            <div class="modal--pagar__opciones">
-                <p class="modal--pagar__si">
-                    Si
-                </p>
-                <p class="modal--pagar__no">
-                    No
-                </p>
+        <h2 class="modal--pagar__title">Total: $1500.03</h2>
+            <p class="modal--pagar__paragraph">
+                Introduce la cantidad de efectivo con la que te están pagando.
+            </p>
+            <fieldset>
+                <legend>Efectivo</legend>
+                <label for="5">Efectivo:</label>
+                <input id="5" class="modal--pagar__close" type="text" placeholder="$250">
+                </input>
+            </fieldset>
+            <h2 class="modal--pagar__title">Cambio: $65.03</h2>
+
+            <div class="modal--cantidad__boton">
+                <a href="#" class="modal--cantidad__btn">PAGAR >>> </a>
             </div>
         </div>
     </section>
