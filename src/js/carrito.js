@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let infoProducto = {};
     let articuloCarritoAModificar = {};
     let articulosCarrito = [];
+
     let terminosBusqueda = {
         id: '',
         codigoBarras: '',
@@ -29,11 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // limpiarTodo();
     consultarAPI();
     // Variables
-    // const configuraciones = {
-    //     'principal': { datos: articulosCarrito, registrosPorPagina: 5, paginaActual: 1 },
-    //     'modalManual': { datos: datosModal1, registrosPorPagina: 4, paginaActual: 1 },
-    //     'modalNombre': { datos: datosModal2, registrosPorPagina: 4, paginaActual: 1 }
-    // };
+
 
     // Selectores
     // Ventanes modales
@@ -43,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Selectores del modal busqueda manual código de barras
 
     const modalManual = document.querySelector('.modal--manual');
-    const modalManualContainer = document.querySelector('.modal--manual--container');
+    const modalManualContainer = document.querySelector('.modal--manual__container');
     const botonCerrarModalManual = document.querySelector('.modal--manual__img2');
     const inputCodigoManual = document.getElementById("2");
     const tablaModalManual = document.querySelector('.modal--manual__tabla');
@@ -93,6 +90,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const div4ContenidoProductos = document.createElement('DIV');// Alerta
     const div5ContenidoProductos = document.createElement('DIV');
     div5ContenidoProductos.classList.add('rectangulo-grande-bebe5');
+
+    const paginadorCarritoContainer = document.createElement('DIV');
+    paginadorCarritoContainer.classList.add('paginador');
+    const paginadorModalManualContainer = document.createElement('DIV');
+    paginadorModalManualContainer.classList.add('paginador-1');
+    const paginadorModalNombreContainer = document.createElement('DIV');
+    paginadorModalNombreContainer.classList.add('paginador-2');
+
+    modalManualContainer.appendChild(paginadorModalManualContainer);
+
 
 
     const div1ContenidoTotales = document.createElement('DIV');
@@ -183,9 +190,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Busqueda manual del código
         if (e.target && e.target.id === 'busqueda-manual') {
             filtrar();
+
             // mostrarProductosModalManual(inventario);
             modalManual.classList.add('modal--manual--show');
             mostrarProductosModal(inventario, tbodyTablaModalManual, 'Manual');
+
 
             inputCodigoManual.disabled = false;
             inputCodigoManual.focus();
@@ -543,11 +552,69 @@ document.addEventListener('DOMContentLoaded', function () {
     tablaTicket.appendChild(theadTicket);
 
 
+    function mostrarPagina(contenedorConf, contenedor) {
+        const config = configuraciones[contenedorConf];
+        const { datos, registrosPorPagina, paginaActual } = config;
+
+        const inicio = (paginaActual - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const elementosPagina = datos.slice(inicio, fin);
+        console.log(configuraciones[contenedorConf]);
+
+        console.log(`ElementosPagina: ${elementosPagina}`);
+        contenedor.innerHTML = elementosPagina
+            .map(item => `<p>${item}</p>`)
+            .join("");
+
+        generarPaginador(contenedorConf, contenedor);
+    }
+
+    function generarPaginador(contenedorConf,contenedor) {
+        const config = configuraciones[contenedorConf];
+        const totalPaginas = Math.ceil(config.datos.length / config.registrosPorPagina);
+        let paginadorHTML = '';
+
+        if (config.paginaActual > 1) {
+            paginadorHTML += `<button onclick="cambiarPagina('${contenedor}', ${config.paginaActual - 1})" class="paginas">Anterior</button>`;
+        }
+
+        for (let i = 1; i <= totalPaginas; i++) {
+            paginadorHTML += `<button class="numero" onclick="cambiarPagina('${contenedor}', ${i})" ${config.paginaActual === i ? 'disabled' : ''}>${i}</button>`;
+        }
+
+        if (config.paginaActual < totalPaginas) {
+            paginadorHTML += `<button onclick="cambiarPagina('${contenedor}', ${config.paginaActual + 1})" class="paginas">Siguiente</button>`;
+        }
+
+        contenedor.innerHTML = paginadorHTML;
+    }
+
+
+    function  cambiarPagina(contenedor, nuevaPagina){
+        configuraciones[contenedor].paginaActual = nuevaPagina;
+        mostrarPagina(contenedor);
+    }
+
+    mostrarPagina('modalManual',paginadorModalManualContainer);
 
     function mostrarProductosCarrito() {
         limpiarHTMLElemento(tbodyCarrito);
         limpiarHTMLElemento(tbodyTicket);
         contenedorProductos.appendChild(div1ContenidoProductos);
+
+        paginadorCarritoContainer.innerHTML = `
+        <button class="paginas">
+            Página Anterior
+        </button>
+        <button class="numero">
+            1
+        </button>
+
+        <button class="paginas">
+            Página Siguiente
+        </button>            
+        `;
+
         contenedorProductos.appendChild(div2ContenidoProductos);
         contenedorProductos.appendChild(div5ContenidoProductos);
         contenedorProductos.appendChild(div3ContenidoProductos);
@@ -597,7 +664,7 @@ document.addEventListener('DOMContentLoaded', function () {
         tablaCarrito.appendChild(tbodyCarrito);
         contenedorTablaCarrito.appendChild(tablaCarrito);
         div2ContenidoProductos.appendChild(contenedorTablaCarrito);
-
+        div2ContenidoProductos.appendChild(paginadorCarritoContainer);
         tablaTicket.appendChild(theadTicket);
         tablaTicket.appendChild(tbodyTicket);
         contenedorTablaTicket.appendChild(tablaTicket);
@@ -611,84 +678,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return resultado;
     }
 
-    // Función genérica para mostrar la página correspondiente
-    // function mostrarPagina(contenedor) {
-    //     const config = configuraciones[contenedor];
-    //     const { datos, elementosPorPagina, paginaActual } = config;
-
-    //     const inicio = (paginaActual - 1) * elementosPorPagina;
-    //     const fin = inicio + elementosPorPagina;
-    //     const elementosPagina = datos.slice(inicio, fin);
-
-    //     // Renderizar datos en el contenedor correspondiente
-    //     document.getElementById(`contenedor-${contenedor}`).innerHTML = elementosPagina
-    //         .map(item => `<p>${item}</p>`)
-    //         .join("");
-
-    //     // Generar los controles de paginación
-    //     generarPaginador(contenedor);
-    // }
-
-    // Función para generar paginadores dinámicos
-    function generarPaginador(contenedorId) {
-        const config = configuraciones[contenedorId];
-        const totalPaginas = Math.ceil(config.datos.length / config.elementosPorPagina);
-        let paginadorHTML = '';
-
-        if (config.paginaActual > 1) {
-            paginadorHTML += `<button onclick="cambiarPagina('${contenedorId}', ${config.paginaActual - 1})">Anterior</button>`;
-        }
-
-        for (let i = 1; i <= totalPaginas; i++) {
-            paginadorHTML += `<button onclick="cambiarPagina('${contenedorId}', ${i})" ${config.paginaActual === i ? 'disabled' : ''}>${i}</button>`;
-        }
-
-        if (config.paginaActual < totalPaginas) {
-            paginadorHTML += `<button onclick="cambiarPagina('${contenedorId}', ${config.paginaActual + 1})">Siguiente</button>`;
-        }
-
-        document.getElementById(`paginador-${contenedorId}`).innerHTML = paginadorHTML;
-    }
-
-    // Función para cambiar de página
-    function cambiarPagina(contenedor, nuevaPagina) {
-        configuraciones[contenedor].paginaActual = nuevaPagina;
-        mostrarPagina(contenedor);
-    }
-
-    // Inicializar paginadores para cada sección 
-    // mostrarPagina('principal');
-    // mostrarPagina('modal1');
-    // mostrarPagina('modal2');
-
-
-    // Función para generar los botones del paginador
-    function generarPaginador() {
-        const totalPaginas = Math.ceil(inventario.length / registrosPorPagina);
-        let paginadorHTML = '';
-        if (paginaActual > 1) {
-            paginadorHTML += `<button onclick="cambiarPagina(${paginaActual - 1})">Anterior</button>`;
-        }
-
-        for (let i = 1; i <= totalPaginas; i++) {
-            paginadorHTML += `<button onclick="cambiarPagina(${i})" ${paginaActual === i ? 'disabled' : ''}>${i}</button>`;
-        }
-
-        if (paginaActual < totalPaginas) {
-            paginadorHTML += `<button onclick="cambiarPagina(${paginaActual + 1})">Siguiente</button>`;
-        }
-
-        return paginadorHTML;
-    }
-
-    // Función para cambiar de página
-    function cambiarPagina(pagina) {
-        paginaActual = pagina;
-        mostrarPagina(paginaActual);
-    }
-
-    // Inicializar la primera pagina 
-    // mostrarPagina(paginaActual);
 
     function actualizarCantidad(articulo) {
 
@@ -771,10 +760,97 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    function mostrarDetallesProducto(articuloCarritoAModificar) {
+        limpiarHTMLElemento(contenedorDetalles);
+
+        const { nombre, descripcion, cantidad, precio_unitario_venta } = articuloCarritoAModificar[0];
+
+        const totalD = (precio_unitario_venta * cantidad).toFixed(2);
+        console.log("Filas carrito ", articuloCarritoAModificar);
+
+        const div1ContenidoDetalles = document.createElement('DIV');
+        div1ContenidoDetalles.classList.add('rectangulo-pequeno-bebe1');
+        div1ContenidoDetalles.innerHTML = `
+        <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
+        `;
+
+        const div2ContenidoDetalles = document.createElement('DIV');
+        div2ContenidoDetalles.classList.add('rectangulo-pequeno-bebe2');
+        div2ContenidoDetalles.innerHTML = `
+        <div class="rectangulo-pequeno-bebecito21">
+            <h3>${nombre}</h3>
+        </div>
+        <div class="rectangulo-pequeno-bebecito22">
+            <h3>${descripcion}</h3>
+        </div>
+        `;
+
+
+        const div3ContenidoDetalles = document.createElement('DIV');
+        div3ContenidoDetalles.classList.add('rectangulo-pequeno-bebe3');
+        div3ContenidoDetalles.innerHTML = `
+        <div class="rectangulo-pequeno-bebecito31">
+            <h3>Cantidad: ${cantidad}</h3>
+        </div>
+        <div class="rectangulo-pequeno-bebecito32">
+            <h3>Código de Barras:</h3>
+            <img loading="lazy" src="build/img/barcode.png" alt="barcode">
+        </div>
+        `;
+
+        const div4ContenidoDetalles = document.createElement('DIV');
+        div4ContenidoDetalles.classList.add('rectangulo-pequeno-bebe4');
+        div4ContenidoDetalles.innerHTML = `
+        <div class="rectangulo-pequeno-bebecito41">
+                <h3>Costo Unitario:</h3>
+                <p>${precio_unitario_venta}</p>
+        </div>
+        <div class="rectangulo-pequeno-bebecito42">
+                <h3>Subtotal:</h3>
+                <p>$${totalD}</p>
+        </div>
+        `;
+
+        contenedorDetalles.appendChild(div1ContenidoDetalles);
+        contenedorDetalles.appendChild(div2ContenidoDetalles);
+        contenedorDetalles.appendChild(div3ContenidoDetalles);
+        contenedorDetalles.appendChild(div4ContenidoDetalles);
+
+        const contenedorVaciarcarrito = document.querySelector('.icono');
+        contenedorVaciarcarrito.appendChild(botonVaciarCarrito);
+    }
+
+    function mostrarTotalesCarrito(articulosCarrito) {
+        limpiarHTMLElemento(div2ContenidoTotales);
+        limpiarHTMLElemento(div4ContenidoTotales);
+
+        let articulosCorrect = articulosCarrito.flat();
+        console.log("Desde aquí queremos mandar articulosCarritoFull ", articulosCorrect);
+        let totalP = 0;
+        let cantidadP = 0;
+
+        articulosCorrect.forEach(articulo => {
+            const { cantidad, precio_unitario_venta } = articulo;
+            totalP += cantidad * precio_unitario_venta;
+            cantidadP += cantidad;
+        })
+        console.log(`El total es : ${totalP} y la cantidad de artículos es ${cantidadP}`);
+        div2ContenidoTotales.innerHTML = `
+            <h3 data-test="Cantidadtotal">$${totalP.toFixed(2)}</h3>
+        `;
+
+        div4ContenidoTotales.innerHTML = `
+            <h3 data-test="cantidadArticulosTxt">Cantidad de artículos:</h3>
+            <h3 data-test="numeroArticulos">${cantidadP}</h3>
+        `;
+
+        // Sólo es necesario actualizar los contenidos siguientes
+        contenedorTotales.appendChild(div2ContenidoTotales);
+        contenedorTotales.appendChild(div4ContenidoTotales);
+    }
+
     function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
         limpiarHTMLElemento(tbodyTablaModal);
-
-
         productosFiltrados.forEach(producto => {
             const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras } = producto;
             const tr = document.createElement('tr');
@@ -861,67 +937,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
-    function mostrarDetallesProducto(articuloCarritoAModificar) {
-        limpiarHTMLElemento(contenedorDetalles);
-
-        const { nombre, descripcion, cantidad, precio_unitario_venta } = articuloCarritoAModificar[0];
-
-        const totalD = (precio_unitario_venta*cantidad).toFixed(2);
-        console.log("Filas carrito ", articuloCarritoAModificar);
-
-        const div1ContenidoDetalles = document.createElement('DIV');
-        div1ContenidoDetalles.classList.add('rectangulo-pequeno-bebe1');
-        div1ContenidoDetalles.innerHTML = `
-        <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
-        `;
-
-        const div2ContenidoDetalles = document.createElement('DIV');
-        div2ContenidoDetalles.classList.add('rectangulo-pequeno-bebe2');
-        div2ContenidoDetalles.innerHTML = `
-        <div class="rectangulo-pequeno-bebecito21">
-            <h3>${nombre}</h3>
-        </div>
-        <div class="rectangulo-pequeno-bebecito22">
-            <h3>${descripcion}</h3>
-        </div>
-        `;
-
-
-        const div3ContenidoDetalles = document.createElement('DIV');
-        div3ContenidoDetalles.classList.add('rectangulo-pequeno-bebe3');
-        div3ContenidoDetalles.innerHTML = `
-        <div class="rectangulo-pequeno-bebecito31">
-            <h3>Cantidad: ${cantidad}</h3>
-        </div>
-        <div class="rectangulo-pequeno-bebecito32">
-            <h3>Código de Barras:</h3>
-            <img loading="lazy" src="build/img/barcode.png" alt="barcode">
-        </div>
-        `;
-
-        const div4ContenidoDetalles = document.createElement('DIV');
-        div4ContenidoDetalles.classList.add('rectangulo-pequeno-bebe4');
-        div4ContenidoDetalles.innerHTML = `
-        <div class="rectangulo-pequeno-bebecito41">
-                <h3>Costo Unitario:</h3>
-                <p>${precio_unitario_venta}</p>
-        </div>
-        <div class="rectangulo-pequeno-bebecito42">
-                <h3>Subtotal:</h3>
-                <p>$${totalD}</p>
-        </div>
-        `;
-
-        contenedorDetalles.appendChild(div1ContenidoDetalles);
-        contenedorDetalles.appendChild(div2ContenidoDetalles);
-        contenedorDetalles.appendChild(div3ContenidoDetalles);
-        contenedorDetalles.appendChild(div4ContenidoDetalles);
-
-        const contenedorVaciarcarrito = document.querySelector('.icono');
-        contenedorVaciarcarrito.appendChild(botonVaciarCarrito);
-    }
-
     function mostrarAlerta(mensaje, color) {
         const contenedorAlerta = document.querySelector('.alertas')
         const parrafoAlerta = document.querySelector('.alertas').firstElementChild;
@@ -931,35 +946,6 @@ document.addEventListener('DOMContentLoaded', function () {
         parrafoAlerta.classList.add(`color-${color}`);
         parrafoAlerta.innerHTML = `${mensaje}`;
         contenedorAlerta.appendChild(parrafoAlerta);
-    }
-
-    function mostrarTotalesCarrito(articulosCarrito) {
-        limpiarHTMLElemento(div2ContenidoTotales);
-        limpiarHTMLElemento(div4ContenidoTotales);
-
-        let articulosCorrect = articulosCarrito.flat();
-        console.log("Desde aquí queremos mandar articulosCarritoFull ", articulosCorrect);
-        let totalP = 0;
-        let cantidadP = 0;
-
-        articulosCorrect.forEach(articulo => {
-            const { cantidad, precio_unitario_venta } = articulo;
-            totalP += cantidad * precio_unitario_venta;
-            cantidadP += cantidad;
-        })
-        console.log(`El total es : ${totalP} y la cantidad de artículos es ${cantidadP}`);
-        div2ContenidoTotales.innerHTML = `
-            <h3 data-test="Cantidadtotal">$${totalP.toFixed(2)}</h3>
-        `;
-
-        div4ContenidoTotales.innerHTML = `
-            <h3 data-test="cantidadArticulosTxt">Cantidad de artículos:</h3>
-            <h3 data-test="numeroArticulos">${cantidadP}</h3>
-        `;
-
-        // Sólo es necesario actualizar los contenidos siguientes
-        contenedorTotales.appendChild(div2ContenidoTotales);
-        contenedorTotales.appendChild(div4ContenidoTotales);
     }
 
 

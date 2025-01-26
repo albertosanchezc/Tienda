@@ -117,19 +117,25 @@ function setSlide(index) {
     showSlide(currentIndex);
 }
 
-
+// Función que realiza la búsqueda a partir de los inputs
 function filtrar() {
     const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras);
     if (resultadosFiltrado.length > 0) {
         console.log(resultadosFiltrado);
-        mostrarPagina(1,resultadosFiltrado);
+        mostrarPagina(1, resultadosFiltrado);
+
+        generarPaginador(resultadosFiltrado);
         return resultadosFiltrado.flat();
     } else {
-        mostrarPagina(1,resultadosFiltrado);
+        // mostrarPagina(1,resultadosFiltrado);
+        mostrarPagina(1, resultadosFiltrado);
+        generarPaginador(resultadosFiltrado);
+
         return resultadosFiltrado.flat();
     }
 }
 
+// Busca todos los nombres que se parezcan al input nombre dentro del inventario
 function filtrarNombre(inventario) {
     let { nombre } = terminosBusqueda;
 
@@ -140,6 +146,7 @@ function filtrarNombre(inventario) {
     return inventario;
 }
 
+// Busca todos los nombres que se parezcan al input nombre dentro del inventario
 function filtrarCodigoBarras(inventario) {
     let { codigoBarras } = terminosBusqueda;
 
@@ -150,6 +157,7 @@ function filtrarCodigoBarras(inventario) {
     return inventario;
 }
 
+// Busca todas lss categorias que se parezcan al input categoria dentro del inventario
 function filtrarCategoria() {
     let { categoria } = terminosBusqueda;
 
@@ -160,6 +168,7 @@ function filtrarCategoria() {
     return inventario;
 }
 
+// Busca todos los proveedores que se parezcan al input proveedor dentro del inventario
 function filtrarProveedor() {
     let { proveedor } = terminosBusqueda;
 
@@ -169,7 +178,6 @@ function filtrarProveedor() {
 }
 
 function mostrarCards(inventario) {
-    limpiarHTMLElemento(despliegueInventario);
     console.log(inventario);
     console.log("Producto desde mostrarCards", inventario);
 
@@ -241,7 +249,7 @@ function mostrarCards(inventario) {
             </div>
             <div class="gananciad">
                 <p class="negritas">Ganancia unitaria en $ :</p>
-                <p class="dineros">${ganancia}</p>
+                <p class="dineros">${ganancia.toFixed(2)}</p>
             </div>
         `;
 
@@ -263,8 +271,6 @@ function mostrarCards(inventario) {
         despliegueInventario.appendChild(inventarioGrid);
 
     });
-
-    console.log(despliegueInventario);
 }
 
 function limpiarHTMLElemento(elemento) {
@@ -278,7 +284,6 @@ function limpiarHTMLElemento(elemento) {
 
 
 // Eventos
-
 inputNombreBusqueda.addEventListener('input', (e) => {
     let { nombre } = terminosBusqueda;
     nombre = e.target.value;
@@ -315,44 +320,68 @@ inputProveedorBusqueda.addEventListener('input', (e) => {
 });
 
 
+// Función que muestra el paginador con base en la página actual y los datos recibidos 
 function mostrarPagina(pagina, datos = inventario) {
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     const inventarioPagina = datos.slice(inicio, fin);
 
-    console.log("Inventario Pagina: ",inventarioPagina);
+    console.log("Inventario Pagina: ", inventarioPagina);
     paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+    limpiarHTMLElemento(despliegueInventario);
     mostrarCards(inventarioPagina);
-    generarPaginador(datos);
-
+    generarPaginador(datos)
+    return inventarioPagina;
 }
 
 
-function generarPaginador(inventario) {
-    const totalPaginas = Math.ceil(inventario.length / registrosPorPagina);
+function generarPaginador(datos = inventario) {
+    const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
     console.log("Total de páginas desde generar Paginador", totalPaginas);
     let paginadorHTML = '';
 
     if (paginaActual > 1) {
-        paginadorHTML += `<button onclick="cambiarPagina(${paginaActual - 1})">Anterior</button>`;
+        //  onclick="cambiarPagina(${paginaActual - 1})"
+        paginadorHTML += `<button class="paginas">Anterior</button>`;
     }
 
     for (let i = 1; i <= totalPaginas; i++) {
-        paginadorHTML += `<button onclick="cambiarPagina(${i})" ${paginaActual === i ? 'disabled' : ''}>${i}</button>`;
+        // onclick="cambiarPagina(${i})"
+        paginadorHTML += `<button class="numero"  ${paginaActual === i ? 'disabled' : ''}>${i}</button>`;
     }
 
     if (paginaActual < totalPaginas) {
-        paginadorHTML += `<button onclick="cambiarPagina(${paginaActual + 1})">Siguiente</button>`;
+        // onclick="cambiarPagina(${paginaActual + 1})"
+        paginadorHTML += `<button class="paginas" >Siguiente</button>`;
     }
 
-
     paginadorContainer.innerHTML = paginadorHTML;
+
 }
 
-function cambiarPagina(pagina, datos = inventario) {
-    paginaActual = pagina;
-    mostrarPagina(paginaActual, datos);
-}
+
+// Leer la página a la que se le da click y asignar paginaActual
+paginadorContainer.addEventListener('click', (e) => {
+    console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+    if (e.target.classList == 'numero') {
+
+        paginaActual = parseInt(e.target.textContent);
+    }
+    if (e.target.classList == 'paginas') {
+        if (e.target.textContent == 'Siguiente') {
+            paginaActual = paginaActual + 1;
+        } else {
+            paginaActual = paginaActual - 1;
+
+        }
+    }
+    let resultados = filtrar()
+    mostrarPagina(paginaActual,resultados);
+})
+
+
+
 
 
 // Inicializa el slider al cargar la página
@@ -361,6 +390,5 @@ document.addEventListener("DOMContentLoaded", () => {
     consultarAPI();
     showSlide(currentIndex); // Muestra el primer slide
     setInterval(nextSlide, 6000); // Cambia automáticamente cada 5 segundos
-
 });
 
