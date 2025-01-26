@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const modalEliminarProducto = document.querySelector('.modal--eliminar');
 
+    const modalVaciarCarrito = document.querySelector('modal--eliminarCarrito');
+
 
     // Contenedores del section ventas
     const contenedorProductos = document.querySelector('.rectangulo-grande');
@@ -188,8 +190,13 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     botonVaciarCarrito.addEventListener('click', () => {
-        vaciarCarrito();
-        mostrarAlerta('¡Se Vació el carrito exitosamente!', 'verde');
+
+        modalVaciarCarrito.classList.add('modal--eliminarCarrito--show');
+        modalVaciarCarrito.addEventListener('click', (e) => {
+            mostrarAlerta("prueba exitosa", "verde");
+        })
+        // vaciarCarrito();
+        // mostrarAlerta('¡Se Vació el carrito exitosamente!', 'verde');
     })
 
 
@@ -627,6 +634,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 }
                             } else if (e.target.classList == 'modal--eliminar__no') {
                                 modalEliminarProducto.classList.remove('modal--eliminar--show');
+                                mostrarAlerta(`¡Artículo ${infoProductoCarrito.nombre} no se eliminó!`, 'verde');
+
                             }
 
                         })
@@ -675,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     theadCarrito.innerHTML = `
     <tr>
-        <th>Cantidad</th>
+        <th>Cant.</th>
         <th>Producto</th>
         <th>Descripción</th>
         <th>Código</th>
