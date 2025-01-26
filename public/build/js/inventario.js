@@ -9,7 +9,7 @@ let terminosBusqueda = {
     categoria: '',
     proveedor: '',
 }
-const registrosPorPagina = 2;
+const registrosPorPagina = 6;
 let paginaActual = 1;
 
 const despliegueInventario = document.querySelector('.despliegueinventario');

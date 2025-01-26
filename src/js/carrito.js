@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     modalManualContainer.appendChild(paginadorModalManualContainer);
     modalNombreContainer.appendChild(paginadorModalNombreContainer);
-    
-    
+
+
 
 
 
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Busqueda manual del código
         if (e.target && e.target.id === 'busqueda-manual') {
-            filtrar();
+            let resultadosFiltrado = filtrar();
 
             // mostrarProductosModalManual(inventario);
             modalManual.classList.add('modal--manual--show');
@@ -210,6 +210,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("Terminos búsqueda antes de inventario modal", terminosBusqueda);
                 console.log("Inventario Desde abrir modal", inventario);
                 const resultados = filtrar();
+                
+
                 if (resultados) {
                     // mostrarProductosModalManual(resultados);
                     mostrarProductosModal(resultados, tbodyTablaModalManual, 'Manual');
@@ -256,9 +258,20 @@ document.addEventListener('DOMContentLoaded', function () {
     function filtrar() {
         const resultadosFiltrado = inventario.filter(filtrarCodigoBarras).filter(filtrarNombreProducto);
         if (resultadosFiltrado.length) {
+            mostrarPagina(1, resultadosFiltrado, paginadorModalManualContainer);
+            mostrarPagina(1, resultadosFiltrado, paginacionNombreContainer);
+
+            generarPaginador(resultadosFiltrado, paginacionManualContainer);
+            generarPaginador(resultadosFiltrado, paginacionNombreContainer);
+
             return resultadosFiltrado.flat();
 
         } else {
+            mostrarPagina(1, resultadosFiltrado, paginadorModalManualContainer);
+            mostrarPagina(1, resultadosFiltrado, paginacionNombreContainer);
+            generarPaginador(resultadosFiltrado, paginacionManualContainer);
+            generarPaginador(resultadosFiltrado, paginacionNombreContainer);
+
             return resultadosFiltrado.flat();
         }
     }
@@ -303,11 +316,11 @@ document.addEventListener('DOMContentLoaded', function () {
         paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
         // Revisar cómo pasar el elemento a limpiar
         // limpiarHTMLElemento(despliegueInventario)
-        generarPaginador(datos);
+        generarPaginador(datos, paginadorContainer);
         return inventarioPagina;
     }
 
-    function generarPaginador(datos = inventario) {
+    function generarPaginador(datos = inventario, paginadorContainer) {
         const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
         console.log("Total de páginas desde generar Paginador", totalPaginas);
         let paginadorHTML = '';
@@ -319,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         for (let i = 1; i <= totalPaginas; i++) {
             // onclick="cambiarPagina(${i})"
-            paginadorHTML += `<button class="numero"  ${paginaActual === i ? 'selected' : ''}>${i}</button>`;
+            paginadorHTML += `<button ${paginaActual === i ? 'selected' : 'class="numero"'}>${i}</button>`;
         }
 
         if (paginaActual < totalPaginas) {
@@ -348,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         let resultados = filtrar()
-        mostrarPagina(paginaActual, resultados);
+        mostrarPagina(paginaActual, resultados, paginadorModalManualContainer);
     })
 
     paginadorModalNombreContainer.addEventListener('click', (e) => {
@@ -367,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         let resultados = filtrar()
-        mostrarPagina(paginaActual, resultados);
+        mostrarPagina(paginaActual, resultados, paginadorModalNombreContainer);
     })
 
 
@@ -386,8 +399,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
         }
-        let resultados = filtrar()
-        mostrarPagina(paginaActual, resultados);
+        // let resultados = filtrar()
+        mostrarPagina(paginaActual, resultados, paginadorCarritoContainer);
     })
 
 
