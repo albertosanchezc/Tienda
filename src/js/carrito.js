@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let infoProducto = {};
     let articuloCarritoAModificar = {};
     let articulosCarrito = [];
+    const registrosPorPagina = 5;
+    let paginaActual = 1;
 
     let terminosBusqueda = {
         id: '',
@@ -99,6 +101,8 @@ document.addEventListener('DOMContentLoaded', function () {
     paginadorModalNombreContainer.classList.add('paginador-2');
 
     modalManualContainer.appendChild(paginadorModalManualContainer);
+    modalNombreContainer.appendChild(paginadorModalNombreContainer);
+    
 
 
 
@@ -286,6 +290,104 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return inventario;
     }
+
+
+    function mostrarPagina(pagina, datos = inventario, paginadorContainer) {
+        const inicio = (pagina - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const inventarioPagina = datos.slice(inicio, fin);
+
+
+        console.log("Inventario Pagina", inventarioPagina);
+        paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+        // Revisar cómo pasar el elemento a limpiar
+        // limpiarHTMLElemento(despliegueInventario)
+        generarPaginador(datos);
+        return inventarioPagina;
+    }
+
+    function generarPaginador(datos = inventario) {
+        const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+        console.log("Total de páginas desde generar Paginador", totalPaginas);
+        let paginadorHTML = '';
+
+        if (paginaActual > 1) {
+            //  onclick="cambiarPagina(${paginaActual - 1})"
+            paginadorHTML += `<button class="paginas">Anterior</button>`;
+        }
+
+        for (let i = 1; i <= totalPaginas; i++) {
+            // onclick="cambiarPagina(${i})"
+            paginadorHTML += `<button class="numero"  ${paginaActual === i ? 'disabled' : ''}>${i}</button>`;
+        }
+
+        if (paginaActual < totalPaginas) {
+            // onclick="cambiarPagina(${paginaActual + 1})"
+            paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+        }
+
+        paginadorContainer.innerHTML = paginadorHTML;
+
+    }
+
+    // Leer la página a la que se le da click y asignar paginaActual
+    paginadorModalManualContainer.addEventListener('click', (e) => {
+        console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+        if (e.target.classList == 'numero') {
+
+            paginaActual = parseInt(e.target.textContent);
+        }
+        if (e.target.classList == 'paginas') {
+            if (e.target.textContent == 'Siguiente') {
+                paginaActual = paginaActual + 1;
+            } else {
+                paginaActual = paginaActual - 1;
+
+            }
+        }
+        let resultados = filtrar()
+        mostrarPagina(paginaActual, resultados);
+    })
+
+    paginadorModalNombreContainer.addEventListener('click', (e) => {
+        console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+        if (e.target.classList == 'numero') {
+
+            paginaActual = parseInt(e.target.textContent);
+        }
+        if (e.target.classList == 'paginas') {
+            if (e.target.textContent == 'Siguiente') {
+                paginaActual = paginaActual + 1;
+            } else {
+                paginaActual = paginaActual - 1;
+
+            }
+        }
+        let resultados = filtrar()
+        mostrarPagina(paginaActual, resultados);
+    })
+
+
+    paginadorCarritoContainer.addEventListener('click', (e) => {
+        console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+        if (e.target.classList == 'numero') {
+
+            paginaActual = parseInt(e.target.textContent);
+        }
+        if (e.target.classList == 'paginas') {
+            if (e.target.textContent == 'Siguiente') {
+                paginaActual = paginaActual + 1;
+            } else {
+                paginaActual = paginaActual - 1;
+
+            }
+        }
+        let resultados = filtrar()
+        mostrarPagina(paginaActual, resultados);
+    })
 
 
     // // Función para actualizar la hora
@@ -550,52 +652,6 @@ document.addEventListener('DOMContentLoaded', function () {
     tablaCarrito.appendChild(theadCarrito);
 
     tablaTicket.appendChild(theadTicket);
-
-
-    function mostrarPagina(contenedorConf, contenedor) {
-        const config = configuraciones[contenedorConf];
-        const { datos, registrosPorPagina, paginaActual } = config;
-
-        const inicio = (paginaActual - 1) * registrosPorPagina;
-        const fin = inicio + registrosPorPagina;
-        const elementosPagina = datos.slice(inicio, fin);
-        console.log(configuraciones[contenedorConf]);
-
-        console.log(`ElementosPagina: ${elementosPagina}`);
-        contenedor.innerHTML = elementosPagina
-            .map(item => `<p>${item}</p>`)
-            .join("");
-
-        generarPaginador(contenedorConf, contenedor);
-    }
-
-    function generarPaginador(contenedorConf,contenedor) {
-        const config = configuraciones[contenedorConf];
-        const totalPaginas = Math.ceil(config.datos.length / config.registrosPorPagina);
-        let paginadorHTML = '';
-
-        if (config.paginaActual > 1) {
-            paginadorHTML += `<button onclick="cambiarPagina('${contenedor}', ${config.paginaActual - 1})" class="paginas">Anterior</button>`;
-        }
-
-        for (let i = 1; i <= totalPaginas; i++) {
-            paginadorHTML += `<button class="numero" onclick="cambiarPagina('${contenedor}', ${i})" ${config.paginaActual === i ? 'disabled' : ''}>${i}</button>`;
-        }
-
-        if (config.paginaActual < totalPaginas) {
-            paginadorHTML += `<button onclick="cambiarPagina('${contenedor}', ${config.paginaActual + 1})" class="paginas">Siguiente</button>`;
-        }
-
-        contenedor.innerHTML = paginadorHTML;
-    }
-
-
-    function  cambiarPagina(contenedor, nuevaPagina){
-        configuraciones[contenedor].paginaActual = nuevaPagina;
-        mostrarPagina(contenedor);
-    }
-
-    mostrarPagina('modalManual',paginadorModalManualContainer);
 
     function mostrarProductosCarrito() {
         limpiarHTMLElemento(tbodyCarrito);
