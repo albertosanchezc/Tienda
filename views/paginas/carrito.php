@@ -124,7 +124,7 @@
                     </div>
                     <div class="paginador">
                         <button class="paginas">
-                            Página Anterior 
+                            Página Anterior
                         </button>
                         <button class="numero">
                             1
@@ -412,7 +412,7 @@
 
                 </tbody>
             </table>
-        
+
         </div>
     </section>
 
@@ -591,22 +591,25 @@
     </section>
 
     <!-- modal de pagar-->
-    <section class="modal--paga">
+    <section class="modal--pagar">
         <div class="modal--pagar__container">
-        <h2 class="modal--pagar__title">Total: $1500.03</h2>
+            
             <p class="modal--pagar__paragraph">
                 Introduce la cantidad de efectivo con la que te están pagando.
             </p>
+           
             <fieldset>
                 <legend>Efectivo</legend>
                 <label for="5">Efectivo:</label>
                 <input id="5" class="modal--pagar__close" type="text" placeholder="$250">
                 </input>
             </fieldset>
-            <h2 class="modal--pagar__title">Cambio: $65.03</h2>
+            <h2 class="modal--pagar__title"> <span>Total: </span> $1500.03</h2>
+            <h2 class="modal--pagar__cambio"><span>Cambio: </span> $65.03</h2>
 
-            <div class="modal--cantidad__boton">
-                <a href="#" class="modal--cantidad__btn">PAGAR >>> </a>
+            <div class="modal--pagar__botones">
+                <a href="#" class="modal--pagar__btncancelar"><span>&lt;&lt;&lt;</span> REGRESAR</a>
+                <input type="submit" class="modal--pagar__btn" value="PAGAR >>>"> </input>
             </div>
         </div>
     </section>
