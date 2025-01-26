@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const modalEliminarProducto = document.querySelector('.modal--eliminar');
 
-    const modalVaciarCarrito = document.querySelector('modal--eliminarCarrito');
+    const modalVaciarCarrito = document.querySelector('.modal--eliminarCarrito');
 
 
     // Contenedores del section ventas
@@ -193,10 +193,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         modalVaciarCarrito.classList.add('modal--eliminarCarrito--show');
         modalVaciarCarrito.addEventListener('click', (e) => {
-            mostrarAlerta("prueba exitosa", "verde");
-        })
-        // vaciarCarrito();
-        // mostrarAlerta('¡Se Vació el carrito exitosamente!', 'verde');
+            console.log(e.target.classList);
+            if (e.target.classList[0] === 'modal--eliminarCarrito__si') {
+                vaciarCarrito();
+                modalVaciarCarrito.classList.remove('modal--eliminarCarrito--show');
+
+                mostrarAlerta('¡Se Vació el carrito exitosamente!', 'verde');
+            } else if (e.target.classList[0] === 'modal--eliminarCarrito__no') {
+                modalVaciarCarrito.classList.remove('modal--eliminarCarrito--show');
+
+                mostrarAlerta('¡No se vació el carrito!', 'verde');
+            }
+        });
+
     })
 
 
@@ -621,7 +630,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 // Si se selecciona en si dentro de la modal entonces eliminaos el articulo
                                 articulosCarrito = eliminarArticulo(infoProductoCarrito);
                                 modalEliminarProducto.classList.remove('modal--eliminar--show');
-                                
+
                                 // Si la nueva extensión de artículos carrito es mayor a cero, seguimos teniendo artículos en el carrito
                                 if (articulosCarrito.length > 0) {
                                     segundoEstadoCarrito();
@@ -681,10 +690,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-
     theadCarrito.innerHTML = `
     <tr>
-        <th>Cant.</th>
+        <th>#Art.</th>
         <th>Producto</th>
         <th>Descripción</th>
         <th>Código</th>
@@ -781,7 +789,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function actualizarCantidad(articulo) {
 
-        let { nombre, cantidad,  descripcion, precio_unitario_venta } = articulo;
+        let { nombre, cantidad, descripcion, precio_unitario_venta } = articulo;
         const contenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
 
         let total = (cantidad * precio_unitario_venta).toFixed(2);
