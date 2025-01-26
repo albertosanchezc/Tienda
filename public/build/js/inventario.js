@@ -347,7 +347,7 @@ function generarPaginador(datos = inventario) {
 
     for (let i = 1; i <= totalPaginas; i++) {
         // onclick="cambiarPagina(${i})"
-        paginadorHTML += `<button class="numero"  ${paginaActual === i ? 'selected' : ''}>${i}</button>`;
+        paginadorHTML += `<button   ${paginaActual === i ? 'selected' : 'class="numero"'}>${i}</button>`;
     }
 
     if (paginaActual < totalPaginas) {

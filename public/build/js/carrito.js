@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Selectores del modal busqueda por nombre del producto
     const modalNombreProducto = document.querySelector('.modal--nombre');
-    const modalNombreContainer = document.querySelector('.modal--nombre--container');
+    const modalNombreContainer = document.querySelector('.modal--nombre__container');
     const botonCerrarModalProducto = document.querySelector('.modal--nombre__img2');
     const inputNombreProducto = document.getElementById("3");
     const tablaModalNombre = document.querySelector('.modal--nombre__tabla');
@@ -81,8 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
     contenedorDetalles.classList.remove('grid-item');
     const contenedorTotales = document.querySelector('.rectangulo-grande-horizontal');
     const hora = document.querySelector('.hora');
-    const paginacionCarritoContainer = document.createElement('DIV');
-    paginacionCarritoContainer.classList.add('modal--manual--paginacion');
+
 
 
 
@@ -100,8 +99,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const paginadorModalNombreContainer = document.createElement('DIV');
     paginadorModalNombreContainer.classList.add('paginador-2');
 
+
     modalManualContainer.appendChild(paginadorModalManualContainer);
     modalNombreContainer.appendChild(paginadorModalNombreContainer);
+    
     
 
 
@@ -318,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         for (let i = 1; i <= totalPaginas; i++) {
             // onclick="cambiarPagina(${i})"
-            paginadorHTML += `<button class="numero"  ${paginaActual === i ? 'disabled' : ''}>${i}</button>`;
+            paginadorHTML += `<button class="numero"  ${paginaActual === i ? 'selected' : ''}>${i}</button>`;
         }
 
         if (paginaActual < totalPaginas) {
