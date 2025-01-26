@@ -232,8 +232,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // Busqueda por nombre
         if (e.target && e.target.id === 'busqueda-producto') {
             // mostrarProductosModalNombre(inventario);
-            mostrarProductosModal(inventario, tbodyTablaModalNombre, 'Nombre');
+            let resultadosFiltrado = filtrar();
             modalNombreProducto.classList.add('modal--nombre--show');
+            let inventarioPaginado = mostrarPagina(paginaActual,resultadosFiltrado,paginacionNombreContainer);
+            mostrarProductosModal(inventarioPaginado, tbodyTablaModalNombre, 'Nombre');
+
+            
             inputNombreProducto.disabled = false;
             inputNombreProducto.focus();
             inputNombreProducto.addEventListener('input', (e) => {
@@ -243,7 +247,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const resultados = filtrar();
                 if (resultados) {
                     // mostrarProductosModalNombre(resultados);
-                    mostrarProductosModal(resultados, tbodyTablaModalNombre, 'Nombre');
+
+                    inventarioPaginado = mostrarPagina(paginaActual, resultados, paginacionNombreContainer);
+                    mostrarProductosModal(inventarioPaginado, tbodyTablaModalNombre, 'Nombre');
                 } else {
                     noResultado(tablaModalNombre);
                 }
@@ -265,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const resultadosFiltrado = inventario.filter(filtrarCodigoBarras).filter(filtrarNombreProducto);
         if (resultadosFiltrado.length) {
             mostrarPagina(1, resultadosFiltrado, paginadorModalManualContainer);
-            mostrarPagina(1, resultadosFiltrado, paginacionNombreContainer);
+            mostrarPagina(1, resultadosFiltrado, paginadorModalNombreContainer);
 
             generarPaginador(resultadosFiltrado, paginacionManualContainer);
             generarPaginador(resultadosFiltrado, paginacionNombreContainer);
@@ -274,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } else {
             mostrarPagina(1, resultadosFiltrado, paginadorModalManualContainer);
-            mostrarPagina(1, resultadosFiltrado, paginacionNombreContainer);
+            mostrarPagina(1, resultadosFiltrado, paginadorModalNombreContainer);
             generarPaginador(resultadosFiltrado, paginacionManualContainer);
             generarPaginador(resultadosFiltrado, paginacionNombreContainer);
 
