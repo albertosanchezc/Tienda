@@ -740,13 +740,13 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(articulosCarrito);
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td hidden id="idCarritoTbody">${id}</td>   
-                <td id="cantidadCarritoTbody">${cantidad}</td>
-                <td id="nombreCarritoTbody">${nombre}</td>
-                <td id="descripcionCarritoTbody">${descripcion}</td>
-                <td id="codigoBarrasCarritoTbody">${codigo_barras}</td>
+                <td data-test="idCarrito" hidden id="idCarritoTbody">${id}</td>   
+                <td data-test="cantidadCarrito" id="cantidadCarritoTbody">${cantidad}</td>
+                <td data-test="nombreCarrito" id="nombreCarritoTbody">${nombre}</td>
+                <td data-test="descripcionCarrito" id="descripcionCarritoTbody">${descripcion}</td>
+                <td data-test="codigoBarrasCarrito" id="codigoBarrasCarritoTbody">${codigo_barras}</td>
                 <td>
-                    <img src="/build/img/doritos.webp" alt="Logotipo de producto" class="imagen-producto">
+                    <img data-test="imgCarrito" src="/build/img/doritos.webp" alt="Logotipo de producto" class="imagen-producto">
                 </td>
                 <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
                 <td>

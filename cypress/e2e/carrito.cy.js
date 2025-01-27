@@ -162,6 +162,69 @@ describe('Pruebas del carrito de compras', () => {
     })
 
 
+    context('Añadir producto con modal código barras', () => {
+        beforeEach(() => {
+            // Abrir ventana modal buscar por codigo de barras y escribir en ella
+            cy.getByData("botonBusquedaManual").click()
+            cy.getByData("modal--manual__close").should('exist')
+            cy.getByData("modal--manual__close").type("7507")
+            cy.getByData("descripcionProductoTbodyModalManual").should('exist')
+            cy.getByData("descripcionProductoTbodyModalManual").contains('20').click()
+        })
+
+        it("Se debe mostrar en el carrito", () => {
+            cy.getByData("idCarrito").should('exist')
+            cy.getByData("cantidadCarrito").should('exist')
+            cy.getByData("nombreCarrito").should('exist')
+            cy.getByData("descripcionCarrito").should('exist')
+            cy.getByData("codigoBarrasCarrito").should('exist')
+            cy.getByData("imgCarrito").should('exist')
+        })
+
+        it("Debe tener los valores correcto", () => {
+            cy.getByData("idCarrito").should('have.text','2')
+            cy.getByData("cantidadCarrito").should('have.text','1')
+            cy.getByData("nombreCarrito").should('have.text','Cigarros Shots Classics')
+            cy.getByData("descripcionCarrito").should('have.text','20')
+            cy.getByData("codigoBarrasCarrito").should('have.text','75078843')
+            cy.getByData("imgCarrito").should('exist')
+        })
+
+    })
+
+    context('Añadir producto con modal código barras', () => {
+        beforeEach(() => {
+            // Abrir ventana modal buscar por codigo de barras y escribir en ella
+            cy.getByData("botonBusquedaNombre").click()
+            cy.getByData("modal--nombre__close").should('exist')
+            cy.getByData("modal--nombre__close").type("cig")
+            cy.getByData('descripcionProductoTbodyModalNombre').should('exist')
+            cy.getByData("descripcionProductoTbodyModalNombre").contains('20').click()
+        })
+
+        it("Se debe mostrar en el carrito", () => {
+            cy.getByData("idCarrito").should('exist')
+            cy.getByData("cantidadCarrito").should('exist')
+            cy.getByData("nombreCarrito").should('exist')
+            cy.getByData("descripcionCarrito").should('exist')
+            cy.getByData("codigoBarrasCarrito").should('exist')
+            cy.getByData("imgCarrito").should('exist')
+        })
+
+        it("Debe tener los valores correcto", () => {
+            cy.getByData("idCarrito").should('have.text','2')
+            cy.getByData("cantidadCarrito").should('have.text','1')
+            cy.getByData("nombreCarrito").should('have.text','Cigarros Shots Classics')
+            cy.getByData("descripcionCarrito").should('have.text','20')
+            cy.getByData("codigoBarrasCarrito").should('have.text','75078843')
+            cy.getByData("imgCarrito").should('exist')
+        })
+        
+    })
+
+
+    
+
     it("16: Abrir, escribir algo seleccionar una opción de cada modal filtrando", () => {
         cy.getByData("botonBusquedaManual").should('be.visible')
         cy.getByData("botonBusquedaNombre").should('be.visible')
