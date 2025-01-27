@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const modalPagar = document.querySelector('.modal--pagar');
 
-    const btnAbrirModalPagar = document.querySelector('#pagar');
 
     // Contenedores del section ventas
     const contenedorProductos = document.querySelector('.rectangulo-grande');
@@ -210,7 +209,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     })
 
-    
+
+
+
 
 
     // Evento que escucha el botón que se presiona para abrir su respectiva modal
@@ -595,6 +596,33 @@ document.addEventListener('DOMContentLoaded', function () {
         contenedorTotales.appendChild(div2ContenidoTotales);
         contenedorTotales.appendChild(div3ContenidoTotales);
         contenedorTotales.appendChild(div4ContenidoTotales);
+
+        const btnAbrirModalPagar = document.querySelector('#pagar');
+        btnAbrirModalPagar.addEventListener('click', abrirPagar)
+
+    }
+
+    function abrirPagar(){
+        if(articulosCarrito.length > 0){
+            modalPagar.classList.add('modal--pagar--show');
+            let total = calcularTotalAPagar(articulosCarrito);
+
+            actualizarModalPagar(total);
+        } else {
+            mostrarAlerta('Necesitas añadir artículos al carrito para pagar','rojo')
+        }
+    }
+
+    function calcularTotalAPagar(articulosCarrito){
+
+        let totalPagar = 0;
+        articulosCarrito.forEach( producto => totalPagar += parseFloat(producto.precio_unitario_venta)*parseFloat(producto.cantidad) );
+        mostrarAlerta(`El total a pagar es ${totalPagar}`);
+        return(totalPagar);
+    }
+
+    function actualizarModalPagar(total){
+        
     }
 
     // Al menos un artículo en el carrito, se habilita la lectura de 
@@ -843,10 +871,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         inputModalCantidad.addEventListener('keydown', (e) => {
             console.log(e.key);
-            if(e.key === 'Enter'){
+            if (e.key === 'Enter') {
                 btnConfirmarEditarCantidad.click();
-            } 
-       })
+            }
+        })
 
 
         btnConfirmarEditarCantidad.addEventListener('click', () => {
@@ -969,7 +997,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Sólo es necesario actualizar los contenidos siguientes
         contenedorTotales.appendChild(div2ContenidoTotales);
-        contenedorTotales.appendChild(div4ContenidoTotales);    
+        contenedorTotales.appendChild(div4ContenidoTotales);
     }
 
     function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {

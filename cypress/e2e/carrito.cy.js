@@ -39,59 +39,64 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("cantidadProductoTbodyModalManual").should('have.text', '4')
         })
 
-        it("No debe arrojar resultados", () => {
-            cy.getByData("modal--manual__close").should('exist')
-            cy.getByData("modal--manual__close").type("coc")
+        describe("Si se hace una búsqueda por letras en código de barras", () => {
+            it("No debe arrojar resultados", () => {
+                cy.getByData("modal--manual__close").should('exist')
+                cy.getByData("modal--manual__close").type("coc")
+            })
+
         })
 
-        it("Debería Cerrar la ventana modal manual sin haber escrito en ella", () => {
-            // Cerrar ventana modal busqueda por codigo de barras
-            cy.getByData("botonCerrarModalManual").should('exist')
-            cy.getByData("botonCerrarModalManual").click()
-        })
+        describe("Pruebas a cerrar ventana modal y de escritura en su input", () => {
+            it("Debería Cerrar la ventana modal manual sin haber escrito en ella", () => {
+                // Cerrar ventana modal busqueda por codigo de barras
+                cy.getByData("botonCerrarModalManual").should('exist')
+                cy.getByData("botonCerrarModalManual").click()
+            })
 
-        it("Debería escribir en el input y cerrar la modal", () => {
-            cy.getByData("modal--manual__close").should('exist')
-            cy.getByData("modal--manual__close").type("7507")
+            it("Debería escribir en el input y cerrar la modal", () => {
+                cy.getByData("modal--manual__close").should('exist')
+                cy.getByData("modal--manual__close").type("7507")
 
 
-            // Cerrar ventana modal busqueda por código de barras
-            cy.getByData("botonCerrarModalManual").should('exist')
-            cy.getByData("botonCerrarModalManual").click()
-        })
+                // Cerrar ventana modal busqueda por código de barras
+                cy.getByData("botonCerrarModalManual").should('exist')
+                cy.getByData("botonCerrarModalManual").click()
+            })
 
-        it("Debe estar vacío el input de la otra modal al cerrar modalManual sin dar click en un producto", () => {
-            cy.getByData("modal--manual__close").should('exist')
-            cy.getByData("modal--manual__close").type("7507")
+            it("Debe estar vacío el input de la otra modal al cerrar modalManual sin dar click en un producto", () => {
+                cy.getByData("modal--manual__close").should('exist')
+                cy.getByData("modal--manual__close").type("7507")
 
-            // Cerrar ventana modal busqueda por código de barras
-            cy.getByData("botonCerrarModalManual").should('exist')
-            cy.getByData("botonCerrarModalManual").click()
+                // Cerrar ventana modal busqueda por código de barras
+                cy.getByData("botonCerrarModalManual").should('exist')
+                cy.getByData("botonCerrarModalManual").click()
 
-            // Abrir de nuevo la ventana modal, 
-            cy.getByData("botonBusquedaNombre").should('be.visible')
-            cy.getByData("botonBusquedaNombre").click()
-            cy.getByData("modal--nombre__close").should("exist")
-            // Valores a revisar
-            cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
-            cy.getByData("modal--nombre__close").should('not.have.value', '7507');
-        })
+                // Abrir de nuevo la ventana modal, 
+                cy.getByData("botonBusquedaNombre").should('be.visible')
+                cy.getByData("botonBusquedaNombre").click()
+                cy.getByData("modal--nombre__close").should("exist")
+                // Valores a revisar
+                cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+                cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+            })
 
-        it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
-            cy.getByData("modal--manual__close").should('exist')
-            cy.getByData("modal--manual__close").type("7507")
+            it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
+                cy.getByData("modal--manual__close").should('exist')
+                cy.getByData("modal--manual__close").type("7507")
 
-            // Cerrar ventana modal busqueda por código de barras
-            cy.getByData("botonCerrarModalManual").should('exist')
-            cy.getByData("botonCerrarModalManual").click()
+                // Cerrar ventana modal busqueda por código de barras
+                cy.getByData("botonCerrarModalManual").should('exist')
+                cy.getByData("botonCerrarModalManual").click()
 
-            // Abrir de nuevo la ventana modal, 
-            cy.getByData("botonBusquedaManual").should('be.visible')
-            cy.getByData("botonBusquedaManual").click()
-            cy.getByData("modal--manual__close").should("exist")
-            // Valores a revisar
-            cy.getByData("modal--manual__close").should('not.have.value', 'coc');
-            cy.getByData("modal--manual__close").should('not.have.value', '7507');
+                // Abrir de nuevo la ventana modal, 
+                cy.getByData("botonBusquedaManual").should('be.visible')
+                cy.getByData("botonBusquedaManual").click()
+                cy.getByData("modal--manual__close").should("exist")
+                // Valores a revisar
+                cy.getByData("modal--manual__close").should('not.have.value', 'coc');
+                cy.getByData("modal--manual__close").should('not.have.value', '7507');
+            })
         })
 
     })
@@ -105,60 +110,64 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("modal--nombre__close").should('exist')
         })
 
-        it("No debe arrojar resultados", () => {
-            cy.getByData("modal--nombre__close").should('exist')
-            cy.getByData("modal--nombre__close").type("7501")
+
+        describe("Si se hace una búsqueda por nombre inexistente o código de barras", () => {
+            it("No debe arrojar resultados", () => {
+                cy.getByData("modal--nombre__close").should('exist')
+                cy.getByData("modal--nombre__close").type("7501")
+            })
         })
 
-        it("Debería Cerrar la ventana modal nombre sin haber escrito en ella", () => {
-            // Cerrar ventana modal busqueda por codigo de barras
-            cy.getByData("modal--nombre__close").should('exist')
-            cy.getByData("botonCerrarModalNombre").should('exist')
-            cy.getByData("botonCerrarModalNombre").click()
+        describe("Pruebas a cerrar ventana modal y de escritura en su input", () => {
+            it("Debería Cerrar la ventana modal nombre sin haber escrito en ella", () => {
+                // Cerrar ventana modal busqueda por codigo de barras
+                cy.getByData("modal--nombre__close").should('exist')
+                cy.getByData("botonCerrarModalNombre").should('exist')
+                cy.getByData("botonCerrarModalNombre").click()
+            })
+    
+            it("Debería escribir en el input y cerrar la modal", () => {
+                // Abrir ventana modal buscar por nombre
+                cy.getByData("modal--nombre__close").should('exist')
+                // Escribir algo, cerrar ventana modal buscar por nombre
+                cy.getByData("modal--nombre__close").type("cigc")
+                cy.getByData("botonCerrarModalNombre").click()
+            })
+    
+            it("Debe estar vacío el input de la otra modal al cerrar modalNombre sin dar click en un producto", () => {
+                cy.getByData("modal--nombre__close").should('exist')
+                cy.getByData("modal--nombre__close").type("cig")
+    
+                // Cerrar ventana modal busqueda por código de barras
+                cy.getByData("botonCerrarModalNombre").should('exist')
+                cy.getByData("botonCerrarModalNombre").click()
+    
+                // Abrir de nuevo la ventana modal, 
+                cy.getByData("botonBusquedaManual").should('be.visible')
+                cy.getByData("botonBusquedaManual").click()
+                cy.getByData("modal--manual__close").should("exist")
+                // Valores a revisar
+                cy.getByData("modal--manual__close").should('not.have.value', 'coc');
+                cy.getByData("modal--manual__close").should('not.have.value', '7507');
+            })
+    
+            it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
+                cy.getByData("modal--nombre__close").should('exist')
+                cy.getByData("modal--nombre__close").type("cig")
+    
+                // Cerrar ventana modal busqueda por código de barras
+                cy.getByData("botonCerrarModalNombre").should('exist')
+                cy.getByData("botonCerrarModalNombre").click()
+    
+                // Abrir de nuevo la ventana modal, 
+                cy.getByData("botonBusquedaNombre").should('be.visible')
+                cy.getByData("botonBusquedaNombre").click()
+                cy.getByData("modal--nombre__close").should("exist")
+                // Valores a revisar
+                cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+                cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+            })
         })
-
-        it("Debería escribir en el input y cerrar la modal", () => {
-            // Abrir ventana modal buscar por nombre
-            cy.getByData("modal--nombre__close").should('exist')
-            // Escribir algo, cerrar ventana modal buscar por nombre
-            cy.getByData("modal--nombre__close").type("cigc")
-            cy.getByData("botonCerrarModalNombre").click()
-        })
-
-        it("Debe estar vacío el input de la otra modal al cerrar modalNombre sin dar click en un producto", () => {
-            cy.getByData("modal--nombre__close").should('exist')
-            cy.getByData("modal--nombre__close").type("cig")
-
-            // Cerrar ventana modal busqueda por código de barras
-            cy.getByData("botonCerrarModalNombre").should('exist')
-            cy.getByData("botonCerrarModalNombre").click()
-
-            // Abrir de nuevo la ventana modal, 
-            cy.getByData("botonBusquedaManual").should('be.visible')
-            cy.getByData("botonBusquedaManual").click()
-            cy.getByData("modal--manual__close").should("exist")
-            // Valores a revisar
-            cy.getByData("modal--manual__close").should('not.have.value', 'coc');
-            cy.getByData("modal--manual__close").should('not.have.value', '7507');
-        })
-
-        it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
-            cy.getByData("modal--nombre__close").should('exist')
-            cy.getByData("modal--nombre__close").type("cig")
-
-            // Cerrar ventana modal busqueda por código de barras
-            cy.getByData("botonCerrarModalNombre").should('exist')
-            cy.getByData("botonCerrarModalNombre").click()
-
-            // Abrir de nuevo la ventana modal, 
-            cy.getByData("botonBusquedaNombre").should('be.visible')
-            cy.getByData("botonBusquedaNombre").click()
-            cy.getByData("modal--nombre__close").should("exist")
-            // Valores a revisar
-            cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
-            cy.getByData("modal--nombre__close").should('not.have.value', '7507');
-        })
-
     })
 
 
@@ -182,11 +191,11 @@ describe('Pruebas del carrito de compras', () => {
         })
 
         it("Debe tener los valores correcto", () => {
-            cy.getByData("idCarrito").should('have.text','2')
-            cy.getByData("cantidadCarrito").should('have.text','1')
-            cy.getByData("nombreCarrito").should('have.text','Cigarros Shots Classics')
-            cy.getByData("descripcionCarrito").should('have.text','20')
-            cy.getByData("codigoBarrasCarrito").should('have.text','75078843')
+            cy.getByData("idCarrito").should('have.text', '2')
+            cy.getByData("cantidadCarrito").should('have.text', '1')
+            cy.getByData("nombreCarrito").should('have.text', 'Cigarros Shots Classics')
+            cy.getByData("descripcionCarrito").should('have.text', '20')
+            cy.getByData("codigoBarrasCarrito").should('have.text', '75078843')
             cy.getByData("imgCarrito").should('exist')
         })
 
@@ -212,18 +221,18 @@ describe('Pruebas del carrito de compras', () => {
         })
 
         it("Debe tener los valores correcto", () => {
-            cy.getByData("idCarrito").should('have.text','2')
-            cy.getByData("cantidadCarrito").should('have.text','1')
-            cy.getByData("nombreCarrito").should('have.text','Cigarros Shots Classics')
-            cy.getByData("descripcionCarrito").should('have.text','20')
-            cy.getByData("codigoBarrasCarrito").should('have.text','75078843')
+            cy.getByData("idCarrito").should('have.text', '2')
+            cy.getByData("cantidadCarrito").should('have.text', '1')
+            cy.getByData("nombreCarrito").should('have.text', 'Cigarros Shots Classics')
+            cy.getByData("descripcionCarrito").should('have.text', '20')
+            cy.getByData("codigoBarrasCarrito").should('have.text', '75078843')
             cy.getByData("imgCarrito").should('exist')
         })
-        
+
     })
 
 
-    
+
 
     it("16: Abrir, escribir algo seleccionar una opción de cada modal filtrando", () => {
         cy.getByData("botonBusquedaManual").should('be.visible')
