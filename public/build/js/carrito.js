@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const modalPagar = document.querySelector('.modal--pagar');
 
-    let btnPagar = document.querySelector('#pagar');
+    const btnAbrirModalPagar = document.querySelector('#pagar');
 
     // Contenedores del section ventas
     const contenedorProductos = document.querySelector('.rectangulo-grande');

@@ -1,28 +1,4 @@
-describe('Carrito', () => {
-
-    context( 'Cuando se Acaba de visitar el sitio', () => {
-        beforeEach(() => {
-            cy.visit('http://localhost:3000/carrito')
-    
-            // Captura de la página completa
-            cy.getByData("modal__close")
-            cy.getByData("modal__close").click()
-    
-        })
-
-        it(" 1: Revisar el contenido que debe ser visible", () => {
-            cy.getByData("botonBusquedaManual").should('be.visible')
-            cy.getByData("botonBusquedaNombre").should('be.visible')
-            cy.getByData("botonPagar").should('be.visible')
-            cy.getByData("cantidadArticulosTxt").should('be.visible')
-            cy.getByData("numeroArticulos").should('be.visible')
-            cy.getByData("Cantidadtotal").should('be.visible')
-            cy.getByData("contenedorDetalles").should('be.visible')
-        })
-
-
-
-    })
+describe('Pruebas del carrito de compras', () => {
 
     beforeEach(() => {
         cy.visit('http://localhost:3000/carrito')
@@ -30,12 +6,6 @@ describe('Carrito', () => {
         // Captura de la página completa
         cy.getByData("modal__close")
         cy.getByData("modal__close").click()
-
-    })
-
-
-
-    it("2: Abrir ventana modal manual", () => {
         cy.getByData("botonBusquedaManual").should('be.visible')
         cy.getByData("botonBusquedaNombre").should('be.visible')
         cy.getByData("botonPagar").should('be.visible')
@@ -43,303 +13,151 @@ describe('Carrito', () => {
         cy.getByData("numeroArticulos").should('be.visible')
         cy.getByData("Cantidadtotal").should('be.visible')
         cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
-
-        cy.getByData("botonBusquedaManual").click()
-        cy.getByData("modal--manual__close").should('exist')
     })
 
+    context('Buscar producto con modal código barras', () => {
+        beforeEach(() => {
+            // preparar el entorno para añadir productos
 
-    it("3: Llenar el select de busqueda manual", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
+            cy.getByData("botonBusquedaManual").click()
+            cy.getByData("modal--manual__close").should('exist')
+        })
+        it("Debería Filtrar por código de barras", () => {
+            cy.getByData("modal--manual__close").should('exist')
+            cy.getByData("modal--manual__close").type("7507")
 
+            cy.getByData("nombreProductoTbodyModalManual").should("exist")
+            cy.getByData("descripcionProductoTbodyModalManual").should("exist")
+            cy.getByData("precioUnitarioVentaProductoTbodyModalManual").should("exist")
 
-        cy.getByData("botonBusquedaManual").click()
-        cy.getByData("modal--manual__close").should('exist')
-        cy.getByData("modal--manual__close").type("7501")
-    })
-
-    it("4: Abrir ventana modal nombre", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
+            cy.getByData("modal--manual__close").should('have.value', '7507')
 
 
-        cy.getByData("botonBusquedaNombre").click()
-        cy.getByData("modal--manual__close").should('not.be.visible')
-        cy.getByData("modal--nombre__close").should('be.visible')
-    })
+            cy.getByData("nombreProductoTbodyModalManual").should('have.text', 'Cigarros Shots Classics')
+            cy.getByData("descripcionProductoTbodyModalManual").should('have.text', '20')
+            cy.getByData("precioUnitarioVentaProductoTbodyModalManual").should('have.text', '$50.48')
+            cy.getByData("cantidadProductoTbodyModalManual").should('have.text', '4')
+        })
 
-    it("5: Llenar el select de busqueda por nombre", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
+        it("No debe arrojar resultados", () => {
+            cy.getByData("modal--manual__close").should('exist')
+            cy.getByData("modal--manual__close").type("coc")
+        })
 
+        it("Debería Cerrar la ventana modal manual sin haber escrito en ella", () => {
+            // Cerrar ventana modal busqueda por codigo de barras
+            cy.getByData("botonCerrarModalManual").should('exist')
+            cy.getByData("botonCerrarModalManual").click()
+        })
 
-        cy.getByData("botonBusquedaNombre").click()
-        cy.getByData("modal--nombre__close").should('exist')
-        cy.getByData("modal--nombre__close").type("coc")
-        cy.getByData("modal--nombre__close").should('have.value', 'coc');
-
-    })
-
-    it("6: Llenar el select de busqueda por nombre y cerrar la modal sin seleccionar nada", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
+        it("Debería escribir en el input y cerrar la modal", () => {
+            cy.getByData("modal--manual__close").should('exist')
+            cy.getByData("modal--manual__close").type("7507")
 
 
-        cy.getByData("botonBusquedaNombre").click()
-        cy.getByData("modal--nombre__close").should('exist')
-        cy.getByData("modal--nombre__close").should('exist')
-        cy.getByData("modal--nombre__close").type("coc")
-        cy.getByData("modal--nombre__close").should('have.value', 'coc');
-        cy.getByData("botonCerrarModalNombre")
-        cy.getByData("botonCerrarModalNombre").should('exist')
-        cy.getByData("botonCerrarModalNombre").click()
+            // Cerrar ventana modal busqueda por código de barras
+            cy.getByData("botonCerrarModalManual").should('exist')
+            cy.getByData("botonCerrarModalManual").click()
+        })
 
+        it("Debe estar vacío el input de la otra modal al cerrar modalManual sin dar click en un producto", () => {
+            cy.getByData("modal--manual__close").should('exist')
+            cy.getByData("modal--manual__close").type("7507")
 
+            // Cerrar ventana modal busqueda por código de barras
+            cy.getByData("botonCerrarModalManual").should('exist')
+            cy.getByData("botonCerrarModalManual").click()
 
-    })
+            // Abrir de nuevo la ventana modal, 
+            cy.getByData("botonBusquedaNombre").should('be.visible')
+            cy.getByData("botonBusquedaNombre").click()
+            cy.getByData("modal--nombre__close").should("exist")
+            // Valores a revisar
+            cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+            cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+        })
 
-    it("7: Abrir sin escribir algo y cerrar modal buscar por Código de barras ", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
+        it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
+            cy.getByData("modal--manual__close").should('exist')
+            cy.getByData("modal--manual__close").type("7507")
 
-        // Abrir ventana modal busqueda por codigo de barras
-        cy.getByData("botonBusquedaManual").should('exist');
-        cy.getByData("botonBusquedaManual").click()
+            // Cerrar ventana modal busqueda por código de barras
+            cy.getByData("botonCerrarModalManual").should('exist')
+            cy.getByData("botonCerrarModalManual").click()
 
-        // Cerrar ventana modal busqueda por codigo de barras
-        cy.getByData("botonCerrarModalManual").should('exist')
-        cy.getByData("botonCerrarModalManual").click()
-    })
-
-    it("8: Abrir sin escribir algo y cerrar modal buscar por nombre", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
-
-        // Abrir ventana modal busqueda por nombre
-        cy.getByData("botonBusquedaNombre").click()
-        cy.getByData("modal--nombre__close").should('exist')
-        // Cerrar ventana modal busqueda por nombre
-        cy.getByData("botonCerrarModalNombre").should('exist')
-        cy.getByData("botonCerrarModalNombre").click()
-    })
-
-    it("9: Abrir escribir algo y cerrar modal buscar por Código de barras ", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
-
-
-        // Abrir ventana modal busqueda por nombre, escribir algo
-        cy.getByData("botonBusquedaManual").click()
-        cy.getByData("modal--manual__close").should('exist')
-        cy.getByData("modal--manual__close").type("7501")
-
-        // Cerrar ventana modal busqueda por codigo de barras
-        cy.getByData("botonCerrarModalManual").should('exist')
-        cy.getByData("botonCerrarModalManual").click()
-
-    })
-
-    it("10: Abrir escribir algo y cerrar modal buscar por nombre", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
-
-        // Abrir ventana modal buscar por nombre
-        cy.getByData("botonBusquedaNombre").click()
-        cy.getByData("modal--nombre__close").should('exist')
-        // Escribir algo, cerrar ventana modal buscar por nombre
-        cy.getByData("modal--nombre__close").type("coc")
-        cy.getByData("botonCerrarModalNombre").click()
-
-
-    })
-
-    it("11: Abrir, escribir algo y cerrar modal buscar por Código de barras abrir modal de nuevo y ver que el input esté vacío", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
-
-
-        // Abrir ventana modal buscar por codigo de barras y escribir en ella
-        cy.getByData("botonBusquedaManual").click()
-        cy.getByData("modal--manual__close").should('exist')
-        cy.getByData("modal--manual__close").type("7501")
-
-        // Cerrar ventana modal buscar por nombre
-        cy.getByData("botonCerrarModalManual")
-        cy.getByData("botonCerrarModalManual").click()
-
-        // Abrir de nuevo la ventana modal, 
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaManual").click()
-        cy.getByData("modal--manual__close").should("exist")
-        // Valores a revisar
-        cy.getByData("modal--manual__close").should('not.have.value', 'coc');
-        cy.getByData("modal--manual__close").should('not.have.value', '7501');
+            // Abrir de nuevo la ventana modal, 
+            cy.getByData("botonBusquedaManual").should('be.visible')
+            cy.getByData("botonBusquedaManual").click()
+            cy.getByData("modal--manual__close").should("exist")
+            // Valores a revisar
+            cy.getByData("modal--manual__close").should('not.have.value', 'coc');
+            cy.getByData("modal--manual__close").should('not.have.value', '7507');
+        })
 
     })
 
 
-    it("12: Abrir, escribir algo y cerrar modalbuscarpornombre abrir modal de nuevo y ver que el input esté vacío", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
+    context('Buscar producto con modal nombre', () => {
+        beforeEach(() => {
+            // preparar el entorno para añadir productos
 
+            cy.getByData("botonBusquedaNombre").click()
+            cy.getByData("modal--nombre__close").should('exist')
+        })
 
-        // Abrir ventana modal buscar por nombre y escribir en ella
-        cy.getByData("botonBusquedaNombre").click()
-        cy.getByData("modal--nombre__close").should('exist')
-        cy.getByData("modal--nombre__close").type("coc")
+        it("No debe arrojar resultados", () => {
+            cy.getByData("modal--nombre__close").should('exist')
+            cy.getByData("modal--nombre__close").type("7501")
+        })
 
-        // Cerrar ventana modal buscar por nombre
-        cy.getByData("botonCerrarModalNombre")
-        cy.getByData("botonCerrarModalNombre").click()
+        it("Debería Cerrar la ventana modal nombre sin haber escrito en ella", () => {
+            // Cerrar ventana modal busqueda por codigo de barras
+            cy.getByData("modal--nombre__close").should('exist')
+            cy.getByData("botonCerrarModalNombre").should('exist')
+            cy.getByData("botonCerrarModalNombre").click()
+        })
 
-        // Abrir de nuevo la ventana modal,
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonBusquedaNombre").click()
-        cy.getByData("modal--nombre__close").should("exist")
-        // Valores  arevisar
-        cy.getByData("modal--nombre__close").should('not.have.value', '7501');
-        cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+        it("Debería escribir en el input y cerrar la modal", () => {
+            // Abrir ventana modal buscar por nombre
+            cy.getByData("modal--nombre__close").should('exist')
+            // Escribir algo, cerrar ventana modal buscar por nombre
+            cy.getByData("modal--nombre__close").type("cigc")
+            cy.getByData("botonCerrarModalNombre").click()
+        })
 
-    })
+        it("Debe estar vacío el input de la otra modal al cerrar modalNombre sin dar click en un producto", () => {
+            cy.getByData("modal--nombre__close").should('exist')
+            cy.getByData("modal--nombre__close").type("cig")
 
-    it("13: Abrir modal busqueda codigo barras manual, hacer una búsqueda que no arroje resultados", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
+            // Cerrar ventana modal busqueda por código de barras
+            cy.getByData("botonCerrarModalNombre").should('exist')
+            cy.getByData("botonCerrarModalNombre").click()
 
+            // Abrir de nuevo la ventana modal, 
+            cy.getByData("botonBusquedaManual").should('be.visible')
+            cy.getByData("botonBusquedaManual").click()
+            cy.getByData("modal--manual__close").should("exist")
+            // Valores a revisar
+            cy.getByData("modal--manual__close").should('not.have.value', 'coc');
+            cy.getByData("modal--manual__close").should('not.have.value', '7507');
+        })
 
-        // Abrir ventana modal buscar por codigo de barras y escribir en ella
-        cy.getByData("botonBusquedaManual").click()
-        cy.getByData("modal--manual__close").should('exist')
-        cy.getByData("modal--manual__close").type("coc")
+        it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
+            cy.getByData("modal--nombre__close").should('exist')
+            cy.getByData("modal--nombre__close").type("cig")
 
-    })
+            // Cerrar ventana modal busqueda por código de barras
+            cy.getByData("botonCerrarModalNombre").should('exist')
+            cy.getByData("botonCerrarModalNombre").click()
 
-
-    it("14: Abrir modal busqueda por nombre, hacer una búsqueda que no arroje resultados", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
-
-
-        // Abrir ventana modal buscar por nombre y escribir en ella
-        cy.getByData("botonBusquedaNombre").click()
-        cy.getByData("modal--nombre__close").should('exist')
-        cy.getByData("modal--nombre__close").type("7501")
-
-    })
-
-
-    it("15: Abrir, escribir algo y comprobar que se esté filtrando correctamente", () => {
-        cy.getByData("botonBusquedaManual").should('be.visible')
-        cy.getByData("botonBusquedaNombre").should('be.visible')
-        cy.getByData("botonPagar").should('be.visible')
-        cy.getByData("cantidadArticulosTxt").should('be.visible')
-        cy.getByData("numeroArticulos").should('be.visible')
-        cy.getByData("Cantidadtotal").should('be.visible')
-        cy.getByData("contenedorDetalles").should('be.visible')
-        // Después de revisar el carrito vacío
-
-
-        // Abrir ventana modal buscar por codigo de barras y escribir en ella
-        cy.getByData("botonBusquedaManual").click()
-        cy.getByData("modal--manual__close").should('exist')
-        cy.getByData("modal--manual__close").type("7501")
-
-
-        // Abrir de nuevo la ventana modal
-        cy.getByData("nombreProductoTbody").should("exist")
-        cy.getByData("descripcionProductoTbody").should("exist")
-        cy.getByData("cantidadProductoTbody").should("exist")
-        cy.getByData("precioUnitarioVentaProductoTbody").should("exist")
-
-
-        // Valores a revisar
-        cy.getByData("modal--manual__close").should('have.value', '7501')
-
-
-        cy.wait(1000).getByData("nombreProductoTbody").should('have.text', 'Coca-Cola')
-        cy.getByData("descripcionProductoTbodyModalManual").should('have.text', '1.75 L')
-        cy.getByData("precioUnitarioVentaProductoTbodyModalManual").should('have.text', '$38.00')
-        cy.getByData("cantidadProductoTbody").should('have.text', '1')
-
-
-        // Cerrar ventana modal buscar por nombre
-        // cy.getByData("botonCerrarModalManual")
-        // cy.getByData("botonCerrarModalManual").click()
-
+            // Abrir de nuevo la ventana modal, 
+            cy.getByData("botonBusquedaNombre").should('be.visible')
+            cy.getByData("botonBusquedaNombre").click()
+            cy.getByData("modal--nombre__close").should("exist")
+            // Valores a revisar
+            cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+            cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+        })
 
     })
 
@@ -358,8 +176,8 @@ describe('Carrito', () => {
         // Abrir ventana modal buscar por codigo de barras y escribir en ella
         cy.getByData("botonBusquedaManual").click()
         cy.getByData("modal--manual__close").should('exist')
-        cy.getByData("modal--manual__close").type("7501")
-        cy.getByData("descripcionProductoTbodyModalManual").contains('3 L').click()
+        cy.getByData("modal--manual__close").type("7507")
+        cy.getByData("descripcionProductoTbodyModalManual").contains('20').click()
         // Abrir ventana modal buscar por nombre y escribir en ella
         cy.getByData("botonBusquedaNombre").click()
         cy.getByData("modal--nombre__close").should('exist')

@@ -129,7 +129,7 @@ class ActiveRecord
     {
         return static::$errores;
     }
-    public static function setAlrta($tipo, $mensaje){
+    public static function setAlerta($tipo, $mensaje){
         static::$errores[$tipo][] = $mensaje;
     }
 
