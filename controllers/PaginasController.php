@@ -78,25 +78,7 @@ class PaginasController
     }
     
 
-    public static function inventario(Router $router)
-    {
-        $script = '<script src="/build/js/inventario.js"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />';
-
-        $inventario = Inventario_completo::join2('productos', 'inventario');
-        // debuguear($inventario);
-
-        // debuguear($inventario_granel);
-
-        // debuguear([$inventario, $inventario_granel]);
-
-        $titulo = 'Inventario';
-
-        $router->render('paginas/inventario', [
-            'titulo' => $titulo,
-            'script' => $script
-        ]);
-    }
+    
     public static function caja(Router $router)
     {
         $caja = Caja::find(1);

@@ -38,7 +38,7 @@ class Inventario extends ActiveRecord{
         $this->categoria_id = $args['categoria_id'] ?? '';
         $this->codigo_barras = $args['codigo_barras'] ?? '';
         $this->precio_compra = $args['precio_compra'] ?? '';
-        $this->fecha_compra = $args['fecha_compra'] ?? '';
+        $this->fecha_compra = $args['fecha_compra'] ?? date('Y/m/d');
         $this->proveedor_id = $args['proveedor_id'] ?? '';
 
     }

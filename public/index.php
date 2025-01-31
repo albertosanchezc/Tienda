@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/app.php';
 use MVC\Router;
 use Controllers\LoginController;
 use Controllers\PaginasController;
+use Controllers\InventarioController;
 
 $router = new Router();
 
@@ -40,8 +41,8 @@ $router->get('/proveedores/api/proveedores', [PaginasController::class, 'proveed
 
 
 
-$router->get('/inventario', [PaginasController::class, 'inventario']);
-$router->post('/inventario', [PaginasController::class, 'inventario']);
+$router->get('/inventario', [InventarioController::class, 'inventario']);
+$router->post('/inventario', [InventarioController::class, 'inventario']);
 
 $router->get('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
 $router->post('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
