@@ -10,7 +10,7 @@
     <h2 id="slider-titulo">Añade un producto</h2>
     <p id="slider-parrafo">Registra un nuevo producto en el inventario, incluyendo sus características y detalles
         esenciales.</p>
-    <a href="#" class="botonslider">Añadir nuevo Producto</a>
+    <a href="#" class="botonslider"><span>Añadir nuevo Producto</span></a>
     <div class="slider-puntos">
         <span class="dot" onclick="setSlide(0)"></span>
         <span class="dot" onclick="setSlide(1)"></span>
@@ -20,9 +20,9 @@
 
 <section class="contenedorcaja seccioncaja">
     <div class="botones">
-        <a href="#" class="botonslider1">Entrada de Producto</a>
-        <a href="#" class="botonslider2">Salida de Producto</a>
-        <a href="#" class="botonslider3">+ Añadir Nuevo Producto</a>
+        <a href="#" class="botonslider1"><span>Entrada de Producto</span></a>
+        <a href="#" class="botonslider2"><span>Salida de Producto </span></a>
+        <a href="#" class="botonslider3"><span>+ Añadir Nuevo Producto</span></a>
     </div>
     <div class="busqueda-titulo">
         <h1>Productos en Inventario</h1>
@@ -148,7 +148,7 @@
 
 
 <!-- modal registrar nuevo producto (boton 3)-->
-<section class="modal--inventario modal--inventario--show">
+<section class="modal--inventario">
     <div class="modal--inventario__contenedor">
         <div class="modal--inventario__cerrar">
             <a href="#" class="modal--inventario__refcerrar">

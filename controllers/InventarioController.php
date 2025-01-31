@@ -101,7 +101,7 @@ class InventarioController
 
         $router->render('paginas/inventario', [
             'titulo' => $titulo,
-            'script' => $script,
+            // 'script' => $script,
             'categorias' => $categorias,
             'proveedores' => $proveedores,
             'inventario_nuevo' => $inventario_nuevo,
