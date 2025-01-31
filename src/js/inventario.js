@@ -293,10 +293,35 @@ function mostrarCards(inventario) {
                 abrirModalNuevoProducto(e);
 
                 const h1Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H1');
-
+                h1Modal.innerHTML = 'Actualizar Producto';
+                const h3Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H3');
+                h3Modal.innerHTML = `Edita los datos de ${nombre}`;
                 
                 // const cardActualizar = e.target.
+                const inputNombre = document.querySelector('.modal--inventario__contenedor').querySelector('#nombreproductoentrada');
 
+                const inputDescripcion = document.querySelector('.modal--inventario__contenedor').querySelector('#descripcioninv');
+
+                const inputCodigo = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacodigo_barras');
+
+                const inputCategoria = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacategoria');
+
+                const inputProveedor = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaproveedor');
+
+                const inputPrecioCompra = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_compra');
+
+                const inputPrecioVenta = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_unitario_venta');
+
+
+                inputNombre.value = `${nombre}`;
+                inputDescripcion.value = `${descripcion}`;
+                inputCodigo.value = `${codigo_barras}`;
+                inputCategoria.value = `${categoria_id}`;
+                inputProveedor.value = `${proveedor_id}`;
+                inputPrecioCompra.value = `${precio_compra}`;
+                inputPrecioVenta.value = `${precio_unitario_venta}`;
+
+                
 
             }
         })

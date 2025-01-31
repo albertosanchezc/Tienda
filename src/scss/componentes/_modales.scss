@@ -427,6 +427,16 @@
         overflow-y: auto;
     }
 
+    &__contenedor::-webkit-scrollbar{
+        height: 8px;
+    }
+
+    &__contenedor::-webkit-scrollbar-thumb{
+        background-color: #1f1cdf;
+    border-radius: 10px;
+     padding: 0 3px;
+    }
+
     &__entradas {
         margin: 1rem auto;
 
