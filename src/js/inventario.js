@@ -87,17 +87,25 @@ async function consultarAPI() {
 
 // Función para mostrar el slide actual y actualizar los puntos
 function showSlide(index) {
+    const botonSlider = document.querySelector('.botonslider');
+    limpiarHTMLElemento(botonSlider);
     const tituloElement = document.getElementById("slider-titulo");
     const parrafoElement = document.getElementById("slider-parrafo");
     const enlaceElement = document.querySelector(".botonslider");
     const dots = document.querySelectorAll(".slider-puntos .dot");
+    const spanHref = document.createElement('SPAN');
 
     // Actualiza el contenido del slider
     tituloElement.textContent = slides[index].titulo;
     parrafoElement.textContent = slides[index].parrafo;
     enlaceElement.href = slides[index].enlace;
-    enlaceElement.textContent = slides[index].enlaceTexto;
 
+    spanHref.textContent = slides[index].enlaceTexto;
+    enlaceElement.appendChild(spanHref);
+
+    // enlaceElement.textContent = slides[index].enlaceTexto;
+
+    // enlaceElement.appendChild(e);
     // Actualiza los colores del botón (clase dinámica)
     const colores = ["color1", "color2", "color3"];
     enlaceElement.classList.remove(...colores); // Elimina las clases de color previas
@@ -207,7 +215,7 @@ function mostrarCards(inventario) {
             <div class="inventarionombre">
                 <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
                 <div>
-                    <h3>${nombre} ${categoria_id} </h3>
+                    <h3>${nombre} ${categoria_id}</h3>
                     <p>${cantidad} ARTÍCULOS EN STOCK</p>
                 </div>
             </div>
@@ -278,6 +286,20 @@ function mostrarCards(inventario) {
         inventarioGrid.appendChild(botonesGrid);
         despliegueInventario.appendChild(inventarioGrid);
 
+        inventarioGrid.addEventListener('click', (e) => {
+            if(e.target.classList == 'botonactualizar'){
+                const productoAModificar = e.target.parentElement.parentElement.parentElement;
+                console.log(producto);
+                abrirModalNuevoProducto(e);
+
+                const h1Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H1');
+
+                
+                // const cardActualizar = e.target.
+
+
+            }
+        })
     });
 }
 
