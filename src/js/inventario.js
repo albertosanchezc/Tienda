@@ -322,8 +322,8 @@ function mostrarCards(inventario) {
                 const divId = document.createElement('DIV');
                 divId.classList.add('modal--inventario__id')
                 divId.innerHTML = `
-                <input type="hidden" id="idproductoentrada" name="productos[id]"  value="${producto_id}">
-                <input type="hidden" id="idproductoentrada" name="inventario[id]"  value="${id}">
+                <input type="hidden" id="idproductoentrada" name="productos[id]"  value="${id}">
+                <input type="hidden" id="idInventarioentrada" name="inventario[id]"  value="${producto_id}">
                                 
                 `;
                 

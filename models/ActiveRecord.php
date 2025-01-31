@@ -42,7 +42,6 @@ class ActiveRecord
         $query .= " ) VALUES ('";
         $query .= join("' , '", array_values($atributos));
         $query .= "')";
-        // debuguear($query);
         $resultado = self::$db->query($query);
 
     }
@@ -60,7 +59,6 @@ class ActiveRecord
         $query .= join(', ', $valores);
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 ";
-        // debuguear($query);
 
 
         $resultado = self::$db->query($query);
