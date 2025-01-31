@@ -25,6 +25,29 @@ class Productos extends ActiveRecord{
         
     }
 
+    public function validarNuevoProducto()
+    {
+
+        if (!$this->nombre) {
+            self::$alertas['error'][] = 'El nombre  es Obligatorio';
+        }
+
+        if (!$this->descripcion) {
+            self::$alertas['error'][] = 'La descripción es Obligatoria';
+        }
+
+        if (!$this->codigo_barras) {
+            self::$alertas['error'][] = 'El Codigo de Barras es Obligatorio';
+        }
+
+        if (!$this->imagen) {
+            self::$alertas['error'][] = 'La imagen del Producto es Obligatoria';
+        }
+
+        
+        return self::$alertas;
+    }
+
 }
 
 

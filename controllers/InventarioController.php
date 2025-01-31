@@ -32,7 +32,6 @@ class InventarioController
             $alertas = Productos::getAlertas();
             $producto = new Productos($_POST['productos']);
             $inventario_nuevo = new Inventario($_POST['inventario']);
-            $alertas = $inventario_nuevo->validarNuevoProducto();
 
             $categoriaId = $_POST['categoria']['id'];
 
@@ -57,8 +56,8 @@ class InventarioController
 
             // debuguear($producto);
             // debuguear($inventario);
+            $alertas = $producto->validarNuevoProducto();
 
-            $errores = $producto->validar();
             if (empty($alertas)) {
 
                 if (!is_dir(CARPETA_IMAGENES)) {
@@ -76,13 +75,17 @@ class InventarioController
 
 
                 $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
+                $alertas = $inventario_nuevo->validarNuevoProducto();
+
                 $inventario_nuevo->guardar();
+
 
                 // debuguear($producto);
                 // debuguear($inventario);
                 // $alertas = $inventario_nuevo->validarLogin();
-                Inventario::setAlerta('exito', 'Guardado Correctamente');
                 header('Location:/inventario');
+
+                Inventario::setAlerta('exito', 'Guardado Correctamente');
             }
 
         }
@@ -101,8 +104,11 @@ class InventarioController
             'script' => $script,
             'categorias' => $categorias,
             'proveedores' => $proveedores,
-            'inventario' => $inventario,
-            'alertas' => $alertas
+            'inventario_nuevo' => $inventario_nuevo,
+            'alertas' => $alertas,
+            'producto' => $producto
+
+            
 
         ]);
     }

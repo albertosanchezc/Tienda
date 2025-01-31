@@ -53,10 +53,6 @@ class Inventario extends ActiveRecord{
             self::$alertas['error'][] = 'La Categoria  es Obligatoria';
         }
 
-        if (!$this->codigo_barras) {
-            self::$alertas['error'][] = 'El Codigo de Barras es Obligatorio';
-        }
-
         if (!$this->precio_compra || $this->precio_compra<=0) {
             self::$alertas['error'][] = 'El Precio de Compra debe ser mayor a 0';
         }

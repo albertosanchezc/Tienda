@@ -17,6 +17,7 @@ class Inventario_completo extends ActiveRecord{
         'precio_compra',
         'fecha_compra',
         'proveedor_id',
+        'imagen'
     ];
 
     public $id;
@@ -30,6 +31,7 @@ class Inventario_completo extends ActiveRecord{
     public $precio_compra;
     public $fecha_compra;
     public $proveedor_id;
+    public $imagen;
     
 
 
@@ -46,6 +48,7 @@ class Inventario_completo extends ActiveRecord{
         $this->precio_compra = $args['precio_compra'] ?? '';
         $this->fecha_compra = $args['fecha_compra'] ?? '';
         $this->proveedor_id = $args['proveedor_id'] ?? '';
+        $this->imagen = $args['imagen'] ?? '';
 
     }
 }
