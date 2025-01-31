@@ -429,12 +429,23 @@
 
     &__contenedor::-webkit-scrollbar{
         height: 8px;
+//  width: rem;
+//  margin-right: 3rem;
     }
 
     &__contenedor::-webkit-scrollbar-thumb{
         background-color: #1f1cdf;
     border-radius: 10px;
-     padding: 0 3px;
+    // right: 3px;
+    border: 3px solid transparent; /* Bordes para dar efecto de separación */
+    background-clip: padding-box;
+
+    }
+
+    &__contenedor::-webkit-scrollbar-track {
+        background: transparent; /* Fondo transparente */
+    margin: 1rem;
+
     }
 
     &__entradas {
