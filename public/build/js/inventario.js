@@ -205,7 +205,7 @@ function mostrarCards(inventario) {
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonesinventario');
 
-        let { nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen } = producto;
+        let {id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id } = producto;
 
         let ganancia = precio_unitario_venta - precio_compra;
         let porcentajeGanancia = ganancia * 100 / precio_compra;
@@ -286,12 +286,11 @@ function mostrarCards(inventario) {
         inventarioGrid.appendChild(botonesGrid);
         despliegueInventario.appendChild(inventarioGrid);
 
-        inventarioGrid.addEventListener('click', (e) => {
-            if(e.target.classList == 'botonactualizar'){
-                const productoAModificar = e.target.parentElement.parentElement.parentElement;
-                console.log(producto);
-                abrirModalNuevoProducto(e);
 
+        inventarioGrid.addEventListener('click', (e) => {
+            // Si se selecciona actulizar producto  en algún card
+            if(e.target.classList == 'botonactualizar'){
+                abrirModalNuevoProducto(e);
                 const h1Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H1');
                 h1Modal.innerHTML = 'Actualizar Producto';
                 const h3Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H3');
@@ -320,9 +319,18 @@ function mostrarCards(inventario) {
                 inputProveedor.value = `${proveedor_id}`;
                 inputPrecioCompra.value = `${precio_compra}`;
                 inputPrecioVenta.value = `${precio_unitario_venta}`;
+                const divId = document.createElement('DIV');
+                divId.classList.add('modal--inventario__id')
+                divId.innerHTML = `
+                <input type="hidden" id="idproductoentrada" name="productos[id]"  value="${producto_id}">
+                <input type="hidden" id="idproductoentrada" name="inventario[id]"  value="${id}">
+                                
+                `;
+                
+                const contenedorEntradas = document.querySelector('.modal--inventario__entradasbox');
+                contenedorEntradas.appendChild(divId);
 
                 
-
             }
         })
     });
