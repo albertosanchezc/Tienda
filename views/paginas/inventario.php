@@ -1,6 +1,6 @@
 <main class="contenedorprov seccionprov">
     <div class="proveedores-titulo">
-    <?php include_once __DIR__ . '/../templates/alertas.php'; ?>
+        <?php include_once __DIR__ . '/../templates/alertas.php'; ?>
         <h1>Inventario</h1>
         <h3>Edita y explora todos los productos en stock junto con las características detalladas de cada uno.<h3>
     </div>
@@ -216,24 +216,31 @@
                         </div>
                         <div class="modal--inventario__precio_compra">
                             <label for="entradaprecio_compra">$ Precio de Compra</label>
-                            <p>(Precio por Kilogramo):</p>
-                            <input type="number" step="0.01" id="entradaprecio_compra" name="inventario[precio_compra]"
-                                placeholder="12.23" maxlength="30"
-                                value="<?php echo s($inventario_nuevo->precio_compra); ?>">
+                            <p class="kilocompra">(Precio por Kilogramo):</p>
+                            <div class="modal--inventario__flexcompra">
+                                <p>$</p>
+                                <input type="number" step="0.01" id="entradaprecio_compra"
+                                    name="inventario[precio_compra]" placeholder="12.23" maxlength="30"
+                                    value="<?php echo s($inventario_nuevo->precio_compra); ?>">
+                            </div>
                         </div>
                         <div class="modal--inventario__precio_unitario_venta">
                             <label for="entradaprecio_unitario_venta">$ Precio de Venta </label>
-                            <p>(Precio por Kilogramo):</p>
-                            <input type="text" step="0.01" id="entradaprecio_unitario_venta"
-                                name="inventario[precio_unitario_venta]" placeholder="12.23" maxlength="30"
-                                value="<?php echo s($inventario_nuevo->precio_unitario_venta); ?>">
+                            <p class="kiloventa">(Precio por Kilogramo):</p>
+                            <div class="modal--inventario__flexcompra">
+                                <p>$</p>
+                                <input type="text" step="0.01" id="entradaprecio_unitario_venta"
+                                    name="inventario[precio_unitario_venta]" placeholder="12.23" maxlength="30"
+                                    value="<?php echo s($inventario_nuevo->precio_unitario_venta); ?>">
+                            </div>
                         </div>
                         <div class="modal--inventario__imagen">
                             <p>Imagen Producto:</p>
                             <div class="modal--inventario__botonimagen">
-                                <label for="imagen"><img src="/build/img/cargar.png" alt="Icono de Cargar" 
+                                <label for="imagen"><img src="/build/img/cargar.png" alt="Icono de Cargar"
                                         class="modal--inventario__imgcargar">Cargar imagen</label>
-                                <input type="file" id="imagen" accept="image/jpeg, image/png" name="productos[imagen]" value="<?php echo $producto->imagen; ?>">
+                                <input type="file" id="imagen" accept="image/jpeg, image/png" name="productos[imagen]"
+                                    value="<?php echo $producto->imagen; ?>">
 
 
                             </div>
