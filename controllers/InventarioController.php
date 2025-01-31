@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+
 use MVC\Router;
 use Model\Inventario_completo;
 use Model\Productos;
@@ -50,8 +51,6 @@ class InventarioController
                 //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
                 $image = Image::make($_FILES['productos']['tmp_name']['imagen'])->fit(600, 800);
                 $producto->setImagen($nombreImagen);
-
-
             }
 
             // debuguear($producto);
@@ -68,26 +67,30 @@ class InventarioController
 
                 $codigo_barras = $producto->codigo_barras;
                 $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
-                if (!$producto_nuevo) { // Si no se encuentra dentro de la base
-                    $producto->guardar();
+                if (!empty($producto_nuevo)) { // Si no se encuentra dentro de la base
+                    Inventario::setError('El Código de barras ya existe en otro producto');
+                    $alertas = Inventario::getErrores();
                 }
-                $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
+                $producto->guardar();
+
+                // $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
 
 
                 $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
                 $alertas = $inventario_nuevo->validarNuevoProducto();
 
-                $inventario_nuevo->guardar();
+                if (empty($alertas)) {
+                    $inventario_nuevo->guardar();
+                    header('Location:/inventario');
+                    Inventario::setAlerta('exito', 'Guardado Correctamente');
+                }
 
 
                 // debuguear($producto);
                 // debuguear($inventario);
                 // $alertas = $inventario_nuevo->validarLogin();
-                header('Location:/inventario');
 
-                Inventario::setAlerta('exito', 'Guardado Correctamente');
             }
-
         }
 
         // $inventario = Inventario_completo::join2('productos', 'inventario');
@@ -108,7 +111,7 @@ class InventarioController
             'alertas' => $alertas,
             'producto' => $producto
 
-            
+
 
         ]);
     }
@@ -135,8 +138,6 @@ class InventarioController
                 //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
                 $image = Image::make($_FILES['productos']['tmp_name']['imagen'])->fit(600, 800);
                 $producto->setImagen($nombreImagen);
-
-
             }
 
             $errores = $producto->validar();
@@ -150,10 +151,6 @@ class InventarioController
                 $producto->guardar();
                 header('Location:/inventario');
             }
-
-
-
-
         }
 
         $router->render('paginas/inventario', [
@@ -163,7 +160,5 @@ class InventarioController
             'errores' => $errores,
             'inventario_completo' => $inventario_completo
         ]);
-
-
     }
 }
