@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const modalVaciarCarrito = document.querySelector('.modal--eliminarCarrito');
 
+    const modalPagar = document.querySelector('.modal--pagar');
+
 
     // Contenedores del section ventas
     const contenedorProductos = document.querySelector('.rectangulo-grande');
@@ -206,6 +208,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     })
+
+
+
+
 
 
     // Evento que escucha el botón que se presiona para abrir su respectiva modal
@@ -590,6 +596,33 @@ document.addEventListener('DOMContentLoaded', function () {
         contenedorTotales.appendChild(div2ContenidoTotales);
         contenedorTotales.appendChild(div3ContenidoTotales);
         contenedorTotales.appendChild(div4ContenidoTotales);
+
+        const btnAbrirModalPagar = document.querySelector('#pagar');
+        btnAbrirModalPagar.addEventListener('click', abrirPagar)
+
+    }
+
+    function abrirPagar(){
+        if(articulosCarrito.length > 0){
+            modalPagar.classList.add('modal--pagar--show');
+            let total = calcularTotalAPagar(articulosCarrito);
+
+            actualizarModalPagar(total);
+        } else {
+            mostrarAlerta('Necesitas añadir artículos al carrito para pagar','rojo')
+        }
+    }
+
+    function calcularTotalAPagar(articulosCarrito){
+
+        let totalPagar = 0;
+        articulosCarrito.forEach( producto => totalPagar += parseFloat(producto.precio_unitario_venta)*parseFloat(producto.cantidad) );
+        mostrarAlerta(`El total a pagar es ${totalPagar}`);
+        return(totalPagar);
+    }
+
+    function actualizarModalPagar(total){
+        
     }
 
     // Al menos un artículo en el carrito, se habilita la lectura de 
@@ -735,13 +768,13 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(articulosCarrito);
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td hidden id="idCarritoTbody">${id}</td>   
-                <td id="cantidadCarritoTbody">${cantidad}</td>
-                <td id="nombreCarritoTbody">${nombre}</td>
-                <td id="descripcionCarritoTbody">${descripcion}</td>
-                <td id="codigoBarrasCarritoTbody">${codigo_barras}</td>
+                <td data-test="idCarrito" hidden id="idCarritoTbody">${id}</td>   
+                <td data-test="cantidadCarrito" id="cantidadCarritoTbody">${cantidad}</td>
+                <td data-test="nombreCarrito" id="nombreCarritoTbody">${nombre}</td>
+                <td data-test="descripcionCarrito" id="descripcionCarritoTbody">${descripcion}</td>
+                <td data-test="codigoBarrasCarrito" id="codigoBarrasCarritoTbody">${codigo_barras}</td>
                 <td>
-                    <img src="/build/img/doritos.webp" alt="Logotipo de producto" class="imagen-producto">
+                    <img data-test="imgCarrito" src="/build/img/doritos.webp" alt="Logotipo de producto" class="imagen-producto">
                 </td>
                 <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
                 <td>
@@ -838,10 +871,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         inputModalCantidad.addEventListener('keydown', (e) => {
             console.log(e.key);
-            if(e.key === 'Enter'){
+            if (e.key === 'Enter') {
                 btnConfirmarEditarCantidad.click();
-            } 
-       })
+            }
+        })
 
 
         btnConfirmarEditarCantidad.addEventListener('click', () => {

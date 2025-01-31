@@ -129,6 +129,9 @@ class ActiveRecord
     {
         return static::$errores;
     }
+    public static function setAlerta($tipo, $mensaje){
+        static::$errores[$tipo][] = $mensaje;
+    }
 
     public static function setError($mensaje)
     {
