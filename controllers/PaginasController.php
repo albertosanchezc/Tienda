@@ -5,6 +5,7 @@ namespace Controllers;
 use Model\Blog;
 use Model\Caja;
 use Model\Caja_historico;
+use Model\Categorias;
 use Model\Inventario;
 use Model\Inventario_completo;
 use Model\Inventario_Completo_Granel;
@@ -60,10 +61,11 @@ class PaginasController
     public static function inventarioAPI()
     {
         $inventario = Inventario_completo::join2('productos', 'inventario');
+        $categorias = Categorias::all();
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
             'inventario' => $inventario,
-            // 'inventario_granel' => $inventario_granel
+            'categorias' => $categorias
         ]);
     }
 

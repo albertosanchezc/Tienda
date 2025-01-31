@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalVaciarCarrito = document.querySelector('.modal--eliminarCarrito');
 
     const modalPagar = document.querySelector('.modal--pagar');
+    const contenedorModalPagar = document.querySelector('modal--pagar__container');
 
 
     // Contenedores del section ventas
@@ -602,27 +603,74 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    function abrirPagar(){
-        if(articulosCarrito.length > 0){
+    function abrirPagar() {
+        if (articulosCarrito.length > 0) {
             modalPagar.classList.add('modal--pagar--show');
             let total = calcularTotalAPagar(articulosCarrito);
 
             actualizarModalPagar(total);
         } else {
-            mostrarAlerta('Necesitas añadir artículos al carrito para pagar','rojo')
+            mostrarAlerta('Necesitas añadir artículos al carrito para pagar', 'rojo')
         }
     }
 
-    function calcularTotalAPagar(articulosCarrito){
+    function calcularTotalAPagar(articulosCarrito) {
 
         let totalPagar = 0;
-        articulosCarrito.forEach( producto => totalPagar += parseFloat(producto.precio_unitario_venta)*parseFloat(producto.cantidad) );
+        articulosCarrito.forEach(producto => totalPagar += (parseFloat(producto.precio_unitario_venta) * parseFloat(producto.cantidad).toFixed(2)));
         mostrarAlerta(`El total a pagar es ${totalPagar}`);
-        return(totalPagar);
+        return (totalPagar);
     }
 
-    function actualizarModalPagar(total){
-        
+    function actualizarModalPagar(total) {
+        const h2ModalTitle = document.querySelector('.modal--pagar__title');
+        const h2ModalCambio = document.querySelector('.modal--pagar__cambio');
+        const inputModalPagar = document.querySelector('.modal--pagar__close');
+        const btnCerrarModalPagar = document.querySelector('.modal--pagar__btncancelar');
+
+        limpiarHTMLElemento(h2ModalTitle);
+        limpiarHTMLElemento(h2ModalCambio);
+
+        h2ModalTitle.innerHTML = `
+            <span>Total: </span>
+            $${total}
+        `;
+
+
+        inputModalPagar.addEventListener('input', (e) => {
+            if (!isNaN(parseFloat(e.target.value))) {
+                let pagado = parseFloat(e.target.value)
+                let cambio = (pagado - total).toFixed(2);
+                if (cambio > 0) {
+                    h2ModalCambio.innerHTML = `
+                    <span>Cambio: </span>
+                    $${cambio}
+                `;
+                } else {
+                    h2ModalCambio.innerHTML = `
+                    <span>Faltan: </span>
+                    $${cambio*-1}
+                `;
+                }
+            }
+            else {
+                h2ModalCambio.innerHTML = `
+                <span>Debes introducir sólo la cantidad con la que te pagaron p. ej 100</span>
+                `;
+            }
+        })
+
+        btnCerrarModalPagar.addEventListener('click', (e) => {
+            e.preventDefault();
+            modalPagar.classList.remove('modal--pagar--show');
+        })
+
+
+
+
+
+
+
     }
 
     // Al menos un artículo en el carrito, se habilita la lectura de 
@@ -1047,7 +1095,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             return { ...producto, cantidad: producto.cantidad + 1 };
                         }
-
 
                         return producto;
                     });

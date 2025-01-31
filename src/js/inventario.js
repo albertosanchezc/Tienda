@@ -14,13 +14,18 @@ let paginaActual = 1;
 
 const despliegueInventario = document.querySelector('.despliegueinventario');
 const btnCerrarModal = document.querySelector('.modal--inventario__imgcerrar');
+const sliderContainer = document.querySelector('.imagen-slider');
+const btnAbrirModalNuevoProductoFijo = document.querySelector('.botonslider3');
 const modalInventario = document.querySelector('.modal--inventario');
 const inventarioGrid = document.createElement('DIV');
 inventarioGrid.classList.add('inventariogrid');
+
 btnCerrarModal.addEventListener('click', (e) => {
     e.preventDefault();
     modalInventario.classList.remove('modal--inventario--show');
 })
+
+
 
 const busqueda = document.querySelector('.busqueda-filtrosinventario');
 const paginadorContainer = document.createElement('DIV');
@@ -35,12 +40,7 @@ const inputCodigoBarrasBusqueda = document.getElementById('codigo-barras');
 
 
 const slides = [
-    {
-        titulo: "Añade un producto",
-        parrafo: "Registra un nuevo producto en el inventario, incluyendo sus características y detalles esenciales.",
-        enlace: "#",
-        enlaceTexto: "+ Añadir nuevo Producto"
-    },
+
     {
         titulo: "Entrada de producto",
         parrafo: "Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
@@ -52,7 +52,13 @@ const slides = [
         parrafo: "Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
         enlace: "#",
         enlaceTexto: "Salida de producto"
-    }
+    },
+    {
+        titulo: "Añade un producto",
+        parrafo: "Registra un nuevo producto en el inventario, incluyendo sus características y detalles esenciales.",
+        enlace: "#",
+        enlaceTexto: "+ Añadir nuevo Producto"
+    },
 
 ];
 
@@ -195,6 +201,8 @@ function mostrarCards(inventario) {
 
         let ganancia = precio_unitario_venta - precio_compra;
         let porcentajeGanancia = ganancia * 100 / precio_compra;
+
+        // let categoriaNombre = categorias.find()
         gridContenido.innerHTML = `
             <div class="inventarionombre">
                 <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
@@ -319,6 +327,15 @@ inputProveedorBusqueda.addEventListener('input', (e) => {
     filtrar();
 });
 
+sliderContainer.addEventListener('click', (e) => {
+    if(e.target.textContent === '+ Añadir nuevo Producto'){
+        abrirModalNuevoProducto(e);
+    }
+})
+
+
+btnAbrirModalNuevoProductoFijo.addEventListener('click', e => abrirModalNuevoProducto(e));
+
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
 function mostrarPagina(pagina, datos = inventario) {
@@ -377,8 +394,14 @@ paginadorContainer.addEventListener('click', (e) => {
         }
     }
     let resultados = filtrar()
-    mostrarPagina(paginaActual,resultados);
+    mostrarPagina(paginaActual, resultados);
 })
+
+
+function abrirModalNuevoProducto(e){
+    e.preventDefault();
+    modalInventario.classList.add('modal--inventario--show');
+}
 
 
 
