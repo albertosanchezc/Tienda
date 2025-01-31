@@ -42,6 +42,30 @@ class Inventario extends ActiveRecord{
         $this->proveedor_id = $args['proveedor_id'] ?? '';
 
     }
+
+    public function validarNuevoProducto()
+    {
+        if (!$this->precio_unitario_venta || $this->precio_unitario_venta<=0) {
+            self::$alertas['error'][] = 'El Precio de Venta debe ser mayor a 0';
+        }
+
+        if (!$this->categoria_id) {
+            self::$alertas['error'][] = 'La Categoria  es Obligatoria';
+        }
+
+        if (!$this->codigo_barras) {
+            self::$alertas['error'][] = 'El Codigo de Barras es Obligatorio';
+        }
+
+        if (!$this->precio_compra || $this->precio_compra<=0) {
+            self::$alertas['error'][] = 'El Precio de Compra debe ser mayor a 0';
+        }
+
+        if (!$this->proveedor_id) {
+            self::$alertas['error'][] = 'El Proveedor es Obligatorio';
+        }
+        return self::$alertas;
+    }
 }
 
 

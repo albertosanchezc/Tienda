@@ -17,19 +17,22 @@ class InventarioController
         $script = '<script src="/build/js/inventario.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
+        $alertas = [];
+
         $producto = new Productos;
         $categorias = Categorias::all();
         $proveedores = Proveedor::all();
         $inventario = Inventario::all();
         //arreglo con mrnsaje de errores
-        $errores = Productos::getErrores();
+        $alertas = Productos::getAlertas();
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // debuguear($_POST);
 
-            $errores = Productos::getErrores();
+            $alertas = Productos::getAlertas();
             $producto = new Productos($_POST['productos']);
             $inventario_nuevo = new Inventario($_POST['inventario']);
+            $alertas = $inventario_nuevo->validarNuevoProducto();
 
             $categoriaId = $_POST['categoria']['id'];
 
@@ -56,20 +59,20 @@ class InventarioController
             // debuguear($inventario);
 
             $errores = $producto->validar();
-            if (empty($errores)) {
+            if (empty($alertas)) {
 
-                if(!is_dir(CARPETA_IMAGENES)){
+                if (!is_dir(CARPETA_IMAGENES)) {
                     mkdir(CARPETA_IMAGENES);
                 }
                 $image->save(CARPETA_IMAGENES . $nombreImagen);
 
 
                 $codigo_barras = $producto->codigo_barras;
-                $producto_nuevo = Productos::where('codigo_barras',$codigo_barras);
-                if(!$producto_nuevo){ // Si no se encuentra dentro de la base
+                $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
+                if (!$producto_nuevo) { // Si no se encuentra dentro de la base
                     $producto->guardar();
                 }
-                $producto_nuevo = Productos::where('codigo_barras',$codigo_barras);
+                $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
 
 
                 $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
@@ -77,11 +80,10 @@ class InventarioController
 
                 // debuguear($producto);
                 // debuguear($inventario);
+                // $alertas = $inventario_nuevo->validarLogin();
+                Inventario::setAlerta('exito', 'Guardado Correctamente');
                 header('Location:/inventario');
             }
-
-
-
 
         }
 
@@ -99,7 +101,8 @@ class InventarioController
             'script' => $script,
             'categorias' => $categorias,
             'proveedores' => $proveedores,
-            'inventario' => $inventario
+            'inventario' => $inventario,
+            'alertas' => $alertas
 
         ]);
     }

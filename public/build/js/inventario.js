@@ -191,7 +191,7 @@ function mostrarCards(inventario) {
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonesinventario');
 
-        let { nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad } = producto;
+        let { nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen } = producto;
 
         let ganancia = precio_unitario_venta - precio_compra;
         let porcentajeGanancia = ganancia * 100 / precio_compra;
@@ -218,7 +218,7 @@ function mostrarCards(inventario) {
                 </div>
             </div>
             <div class="flexproveedor">
-                <img src="/build/img/proveedor-alternativo.png" alt="Logotipo de proveedor" class="imgproveedor">
+                <img src="${imagen}" alt="Logotipo de proveedor" class="imgproveedor">
                 <div>
                     <p class="negritas">Proveedor:</p>
                     <p>${proveedor_id}</p>

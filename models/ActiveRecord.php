@@ -12,6 +12,8 @@ class ActiveRecord
 
     // Errores
     protected static $errores = [];
+    protected static $alertas = [];
+
 
     // Definir la conexión a la BD
     public static function setDB($database)
@@ -128,6 +130,11 @@ class ActiveRecord
     public static function getErrores()
     {
         return static::$errores;
+    }
+
+    public static function getAlertas()
+    {
+        return static::$alertas;
     }
     public static function setAlerta($tipo, $mensaje){
         static::$errores[$tipo][] = $mensaje;
