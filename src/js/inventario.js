@@ -197,7 +197,7 @@ function mostrarCards(inventario) {
         let porcentajeGanancia = ganancia * 100 / precio_compra;
         gridContenido.innerHTML = `
             <div class="inventarionombre">
-                <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca">
+                <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
                 <div>
                     <h3>${nombre} ${categoria_id} </h3>
                     <p>${cantidad} ARTÍCULOS EN STOCK</p>
@@ -218,7 +218,7 @@ function mostrarCards(inventario) {
                 </div>
             </div>
             <div class="flexproveedor">
-                <img src="${imagen}" alt="Logotipo de proveedor" class="imgproveedor">
+                <img src="/build/img/proveedor-alternativo.png" alt="Logotipo de proveedor" class="imgproveedor">
                 <div>
                     <p class="negritas">Proveedor:</p>
                     <p>${proveedor_id}</p>

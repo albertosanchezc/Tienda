@@ -191,13 +191,13 @@ function mostrarCards(inventario) {
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonesinventario');
 
-        let { nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad } = producto;
+        let { nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen } = producto;
 
         let ganancia = precio_unitario_venta - precio_compra;
         let porcentajeGanancia = ganancia * 100 / precio_compra;
         gridContenido.innerHTML = `
             <div class="inventarionombre">
-                <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca">
+                <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
                 <div>
                     <h3>${nombre} ${categoria_id} </h3>
                     <p>${cantidad} ARTÍCULOS EN STOCK</p>
