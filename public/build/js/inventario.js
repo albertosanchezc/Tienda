@@ -19,10 +19,28 @@ const btnAbrirModalNuevoProductoFijo = document.querySelector('.botonslider3');
 const modalInventario = document.querySelector('.modal--inventario');
 const inventarioGrid = document.createElement('DIV');
 inventarioGrid.classList.add('inventariogrid');
+const btnOptionCrear = modalInventario.querySelector('.switch');
+const pKiloCompra = document.querySelector('.kilocompra');
+const pKiloVenta = document.querySelector('.kiloventa');
+
 
 btnCerrarModal.addEventListener('click', (e) => {
     e.preventDefault();
     modalInventario.classList.remove('modal--inventario--show');
+})
+
+btnOptionCrear.addEventListener('click', (e) => {
+    if (e.target.value === 'optiongranel') {
+        pKiloCompra.textContent = '(Precio por Kilogramo):';
+        pKiloVenta.textContent = '(Precio por Kilogramo):';
+
+    }
+    if (e.target.value === 'optionpieza') {
+        pKiloCompra.textContent = '(Precio por Pieza):';
+        pKiloVenta.textContent = '(Precio por Pieza):';
+
+    }
+
 })
 
 
@@ -205,17 +223,25 @@ function mostrarCards(inventario) {
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonesinventario');
 
-        let {id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id } = producto;
+        let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id } = producto;
 
         let ganancia = precio_unitario_venta - precio_compra;
         let porcentajeGanancia = ganancia * 100 / precio_compra;
 
+        const parrafoContainer=document.createElement('div');
+        parrafoContainer.classList.add('nombreprod');
+        parrafoContainer.innerHTML=`
+        <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
+
+        <P> ${nombre}</P>
+        `;
+
         // let categoriaNombre = categorias.find()
         gridContenido.innerHTML = `
             <div class="inventarionombre">
-                <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
+                
                 <div>
-                    <h3>${nombre} ${categoria_id}</h3>
+                    <h3>Abarrotes</h3>
                     <p>${cantidad} ARTÍCULOS EN STOCK</p>
                 </div>
             </div>
@@ -281,6 +307,7 @@ function mostrarCards(inventario) {
 
         `;
 
+        inventarioGrid.appendChild(parrafoContainer);
         inventarioGrid.appendChild(gridContenido);
         inventarioGrid.appendChild(dineroGrid);
         inventarioGrid.appendChild(botonesGrid);
@@ -289,13 +316,13 @@ function mostrarCards(inventario) {
 
         inventarioGrid.addEventListener('click', (e) => {
             // Si se selecciona actulizar producto  en algún card
-            if(e.target.classList == 'botonactualizar'){
+            if (e.target.classList == 'botonactualizar') {
                 abrirModalNuevoProducto(e);
                 const h1Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H1');
                 h1Modal.innerHTML = 'Actualizar Producto';
                 const h3Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H3');
                 h3Modal.innerHTML = `Edita los datos de ${nombre}`;
-                
+
                 // const cardActualizar = e.target.
                 const inputNombre = document.querySelector('.modal--inventario__contenedor').querySelector('#nombreproductoentrada');
 
@@ -326,11 +353,11 @@ function mostrarCards(inventario) {
                 <input type="hidden" id="idInventarioentrada" name="inventario[id]"  value="${producto_id}">
                                 
                 `;
-                
+
                 const contenedorEntradas = document.querySelector('.modal--inventario__entradasbox');
                 contenedorEntradas.appendChild(divId);
 
-                
+
             }
         })
     });
@@ -383,13 +410,17 @@ inputProveedorBusqueda.addEventListener('input', (e) => {
 });
 
 sliderContainer.addEventListener('click', (e) => {
-    if(e.target.textContent === '+ Añadir nuevo Producto'){
+    if (e.target.textContent === '+ Añadir nuevo Producto') {
         abrirModalNuevoProducto(e);
+
     }
 })
 
 
-btnAbrirModalNuevoProductoFijo.addEventListener('click', e => abrirModalNuevoProducto(e));
+btnAbrirModalNuevoProductoFijo.addEventListener('click', e => {
+    abrirModalNuevoProducto(e)
+
+});
 
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
@@ -453,13 +484,101 @@ paginadorContainer.addEventListener('click', (e) => {
 })
 
 
-function abrirModalNuevoProducto(e){
+function abrirModalNuevoProducto(e) {
     e.preventDefault();
     modalInventario.classList.add('modal--inventario--show');
 }
 
 
+document.getElementById('nuevoproducto').addEventListener('submit', function (e) {
+    // document.getElementById('nuevoproducto').reset();
+    e.preventDefault(); // Evita que el formulario se envíe automáticamente
+    const {codigo_barras} = inventario;
 
+
+    // Limpiar alertas anteriores
+    const alertas = document.querySelectorAll('.alerta');
+    alertas.forEach(alerta => alerta.remove());
+
+    // Validar campos
+    let errores = [];
+
+    // Validar nombre del producto
+    const nombre = document.getElementById('nombreproductoentrada').value.trim();
+    if (!nombre) {
+        errores.push('El nombre es obligatorio');
+    }
+
+    // Validar descripción
+    const descripcion = document.getElementById('descripcioninv').value.trim();
+    if (!descripcion) {
+        errores.push('La descripción es obligatoria');
+    }
+
+
+    // Validar código de barras
+    const codigoBarras = document.getElementById('entradacodigo_barras').value.trim();
+    if (!codigoBarras) {
+        errores.push('El código de barras es obligatorio');
+    }
+
+    const resultado=inventario.find(producto => producto.codigo_barras === codigoBarras);
+    if(resultado){
+        errores.push('Este código de barras es de un producto ya registrado');
+    }
+
+    // Validar categoría
+    const categoria = document.getElementById('entradacategoria').value;
+    if (!categoria) {
+        errores.push('La categoría es obligatoria');
+    }
+
+    // Validar proveedor
+    const proveedor = document.getElementById('entradaproveedor').value;
+    if (!proveedor) {
+        errores.push('El proveedor es obligatorio');
+    }
+
+    // Validar método de venta (granel o pieza)
+    const metodoVenta = document.querySelector('input[name="optionpieza"]:checked');
+    if (!metodoVenta) {
+        errores.push('El método de venta es obligatorio');
+    }
+
+
+    // Validar precio de compra
+    const precioCompra = parseFloat(document.getElementById('entradaprecio_compra').value);
+    if (!precioCompra || precioCompra <= 0) {
+        errores.push('El precio de compra debe ser mayor a 0');
+    }
+
+    // Validar precio de venta
+    const precioVenta = parseFloat(document.getElementById('entradaprecio_unitario_venta').value);
+    if (!precioVenta || precioVenta <= 0) {
+        errores.push('El precio de venta debe ser mayor a 0');
+    }
+
+
+    // Validar imagen
+    const imagen = document.getElementById('imagen').files[0];
+    if (!imagen) {
+        errores.push('La imagen del producto es obligatoria');
+    }
+
+    // Mostrar errores
+    if (errores.length > 0) {
+        errores.forEach(error => {
+            const alerta = document.createElement('div');
+            alerta.className = 'alerta error';
+            alerta.textContent = error;
+            document.querySelector('.modal--inventario__entradas').prepend(alerta);
+        });
+    } else {
+        // Si no hay errores, enviar el formulario
+        this.submit();
+
+    }
+});
 
 
 // Inicializa el slider al cargar la página
@@ -469,4 +588,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showSlide(currentIndex); // Muestra el primer slide
     setInterval(nextSlide, 6000); // Cambia automáticamente cada 5 segundos
 });
+
+
 

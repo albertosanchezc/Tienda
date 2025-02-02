@@ -14,7 +14,9 @@ class Inventario extends ActiveRecord{
         'codigo_barras',
         'precio_compra',
         'fecha_compra',
-        'proveedor_id'
+        'proveedor_id',
+        'granel'
+
     ];
 
     public $id;
@@ -26,6 +28,8 @@ class Inventario extends ActiveRecord{
     public $precio_compra;
     public $fecha_compra;
     public $proveedor_id;
+    public $granel;
+
 
 
 
@@ -40,26 +44,32 @@ class Inventario extends ActiveRecord{
         $this->precio_compra = $args['precio_compra'] ?? '';
         $this->fecha_compra = $args['fecha_compra'] ?? date('Y/m/d');
         $this->proveedor_id = $args['proveedor_id'] ?? '';
+        $this->granel = $args['granel'] ?? '';
 
     }
 
     public function validarNuevoProducto()
     {
-        if (!$this->precio_unitario_venta || $this->precio_unitario_venta<=0) {
-            self::$alertas['error'][] = 'El Precio de Venta debe ser mayor a 0';
-        }
-
         if (!$this->categoria_id) {
             self::$alertas['error'][] = 'La Categoria  es Obligatoria';
+        }
+
+        if (!$this->proveedor_id) {
+            self::$alertas['error'][] = 'El Proveedor es Obligatorio';
+        }
+
+        if (!$this->granel) {
+            self::$alertas['error'][] = 'El Método de Venta es Obligatorio';
         }
 
         if (!$this->precio_compra || $this->precio_compra<=0) {
             self::$alertas['error'][] = 'El Precio de Compra debe ser mayor a 0';
         }
 
-        if (!$this->proveedor_id) {
-            self::$alertas['error'][] = 'El Proveedor es Obligatorio';
-        }
+
+        if (!$this->precio_unitario_venta || $this->precio_unitario_venta<=0) {
+            self::$alertas['error'][] = 'El Precio de Venta debe ser mayor a 0';
+        }      
         return self::$alertas;
     }
 }

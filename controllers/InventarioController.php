@@ -24,20 +24,25 @@ class InventarioController
         $categorias = Categorias::all();
         $proveedores = Proveedor::all();
         $inventario = Inventario::all();
-        //arreglo con mrnsaje de errores
         $alertas = Productos::getAlertas();
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // debuguear($_POST);
-
             $alertas = Productos::getAlertas();
             $producto = new Productos($_POST['productos']);
             $inventario_nuevo = new Inventario($_POST['inventario']);
 
             $categoriaId = $_POST['categoria']['id'];
+            $optionpieza = $_POST['optionpieza'];
 
+            if ($optionpieza === 'optiongranel') {
+                $inventario_nuevo->granel = 1;
 
-            // debuguear($producto);
+            } else {
+                $inventario_nuevo->granel = 0;
+
+            }
+            // debuguear($inventario_nuevo);
 
             $inventario_nuevo->cantidad = 0;
             $inventario_nuevo->categoria_id = $categoriaId;
@@ -57,9 +62,10 @@ class InventarioController
 
             // debuguear($producto);
             // debuguear($inventario);
-            $alertas = $producto->validarNuevoProducto();
+            // $alertas = $producto->validarNuevoProducto();
+            // $alertas = $inventario_nuevo->validarNuevoProducto();
 
-            if (empty($alertas)) {
+            // if (empty($alertas)) {
 
                 if (!is_dir(CARPETA_IMAGENES)) {
                     mkdir(CARPETA_IMAGENES);
@@ -69,25 +75,25 @@ class InventarioController
 
                 $codigo_barras = $producto->codigo_barras;
                 $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
-                if (!$producto_nuevo) { // Si no se encuentra dentro de la base
+                if (empty($producto_nuevo)) { // Si no se encuentra dentro de la base
                     $producto->guardar();
                 }
                 $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
 
 
                 $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
-                $alertas = $inventario_nuevo->validarNuevoProducto();
 
                 $inventario_nuevo->guardar();
+                header('Location: /inventario');
 
 
                 // debuguear($producto);
                 // debuguear($inventario);
                 // $alertas = $inventario_nuevo->validarLogin();
-                header('Location:/inventario');
+                
 
-                Inventario::setAlerta('exito', 'Guardado Correctamente');
-            }
+                // Inventario::setAlerta('exito', 'Guardado Correctamente');
+            // }
 
         }
 
@@ -109,7 +115,7 @@ class InventarioController
             'alertas' => $alertas,
             'producto' => $producto
 
-            
+
 
         ]);
     }

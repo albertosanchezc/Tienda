@@ -1,6 +1,5 @@
 <main class="contenedorprov seccionprov">
     <div class="proveedores-titulo">
-        <?php require __DIR__ . '/../templates/alertas.php'; ?>
         <h1>Inventario</h1>
         <h3>Edita y explora todos los productos en stock junto con las características detalladas de cada uno.<h3>
     </div>
@@ -76,9 +75,13 @@
 
     <div class="despliegueinventario">
         <div class="inventariogrid">
+            <div class="nombreprod">
+                <P>Nombre del producto</P>
+            </div>
             <div class="gridcontenido1">
+
                 <div class="inventarionombre">
-                    <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca" />
+                    <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca">
                     <div>
                         <h3>COCA COLA REFRESCO</h3>
                         <p>4 ARTÍCULOS EN STOCK</p>
@@ -161,7 +164,7 @@
         </div>
         <div class="modal--inventario__entradas">
             <?php require __DIR__ . '/../templates/alertas.php'; ?>
-            <form id="nuevoproducto" method="POST" action="/inventario" enctype="multipart/form-data">
+            <form id="nuevoproducto" method="POST" enctype="multipart/form-data">
                 <fieldset>
                     <legend>+Anadir Nuevo Producto</legend>
                     <div class="modal--inventario__entradasbox">
@@ -215,8 +218,8 @@
                             </div>
                         </div>
                         <div class="modal--inventario__precio_compra">
-                            <label for="entradaprecio_compra">$ Precio de Compra</label>
-                            <p class="kilocompra">(Precio por Kilogramo):</p>
+                            <label for="entradaprecio_compra">Precio de Compra</label>
+                            <p class="kilocompra"></p>
                             <div class="modal--inventario__flexcompra">
                                 <p>$</p>
                                 <input type="number" step="0.01" id="entradaprecio_compra"
@@ -225,8 +228,8 @@
                             </div>
                         </div>
                         <div class="modal--inventario__precio_unitario_venta">
-                            <label for="entradaprecio_unitario_venta">$ Precio de Venta </label>
-                            <p class="kiloventa">(Precio por Kilogramo):</p>
+                            <label for="entradaprecio_unitario_venta">Precio de Venta </label>
+                            <p class="kiloventa"></p>
                             <div class="modal--inventario__flexcompra">
                                 <p>$</p>
                                 <input type="text" step="0.01" id="entradaprecio_unitario_venta"
@@ -255,6 +258,5 @@
                     <input value="Crear Producto" type="submit" class="modal--inventario__botonaniadir">
                 </div>
             </form>
-
         </div>
 </section>
