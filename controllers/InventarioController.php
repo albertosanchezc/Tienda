@@ -39,57 +39,87 @@ class InventarioController
 
             // debuguear($producto);
 
-            $inventario_nuevo->cantidad = 0;
             $inventario_nuevo->categoria_id = $categoriaId;
             $inventario_nuevo->codigo_barras = $producto->codigo_barras;
-
-
-
             $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
 
-            if ($_FILES['productos']['tmp_name']['imagen']) {
-                //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
-                $image = Image::make($_FILES['productos']['tmp_name']['imagen'])->fit(600, 800);
-                $producto->setImagen($nombreImagen);
-            }
+            $existeProducto = Productos::where('codigo_barras', $producto->codigo_barras);
+            // Es un producto nuevo
+            if (empty($existeProducto)) {
 
-            // debuguear($producto);
-            // debuguear($inventario);
-            $alertas = $producto->validarNuevoProducto();
+                $inventario_nuevo->cantidad = 0;
+                $inventario_nuevo->categoria_id = $categoriaId;
 
-            if (empty($alertas)) {
+                $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
 
-                if (!is_dir(CARPETA_IMAGENES)) {
-                    mkdir(CARPETA_IMAGENES);
+                if ($_FILES['productos']['tmp_name']['imagen']) {
+                    //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
+                    $image = Image::make($_FILES['productos']['tmp_name']['imagen'])->fit(600, 800);
+                    $producto->setImagen($nombreImagen);
                 }
-                $image->save(CARPETA_IMAGENES . $nombreImagen);
-
-
-                $codigo_barras = $producto->codigo_barras;
-                $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
-                if (!empty($producto_nuevo)) { // Si no se encuentra dentro de la base
-                    Inventario::setError('El Código de barras ya existe en otro producto');
-                    $alertas = Inventario::getErrores();
-                }
-                $producto->guardar();
-
-                // $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
-
-
-                $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
-                $alertas = $inventario_nuevo->validarNuevoProducto();
-
-                if (empty($alertas)) {
-                    $inventario_nuevo->guardar();
-                    header('Location:/inventario');
-                    Inventario::setAlerta('exito', 'Guardado Correctamente');
-                }
-
 
                 // debuguear($producto);
                 // debuguear($inventario);
-                // $alertas = $inventario_nuevo->validarLogin();
+                $alertas = $producto->validarNuevoProducto();
 
+                if (empty($alertas)) {
+
+                    if (!is_dir(CARPETA_IMAGENES)) {
+                        mkdir(CARPETA_IMAGENES);
+                    }
+                    $image->save(CARPETA_IMAGENES . $nombreImagen);
+
+
+                    $codigo_barras = $producto->codigo_barras;
+
+                    $producto->guardar();
+
+                    $existeProducto = $producto->where('codigo_barras',$codigo_barras);
+
+                    $inventario_nuevo->producto_id = $existeProducto[0]->id;
+                    $alertas = $inventario_nuevo->validarNuevoProducto();
+
+                    if (empty($alertas)) {
+                        $inventario_nuevo->guardar();
+                        Inventario::setAlerta('exito', 'Guardado Correctamente');
+                    }
+                }
+            } else { // Se está actulizando el producto
+                $mismoNombre = Productos::where('nombre', $producto->nombre);
+                $mismaDescripcion = Productos::where('descripcion', $producto->descripcion);
+
+                // Tiene el mismo nombre y descripción ... actuallizar
+                if ($mismoNombre[0]->nombre === $producto->nombre && $mismaDescripcion[0]->descripcion === $producto->descripcion) {
+                    $existeProducto[0]->sincronizar($_POST['productos']);
+
+                    $producto->sincronizar($existeProducto[0]);
+
+                    // debuguear($producto);
+                    $existeInventario = Inventario::where('codigo_barras', $producto->codigo_barras);
+
+                    if ($_FILES['productos']['tmp_name']['imagen']) {
+                        //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
+                        $image = Image::make($_FILES['productos']['tmp_name']['imagen'])->fit(600, 800);
+                        $producto->setImagen($nombreImagen);
+                        if (!is_dir(CARPETA_IMAGENES)) {
+                            mkdir(CARPETA_IMAGENES);
+                        }
+                        $image->save(CARPETA_IMAGENES . $nombreImagen);
+                    }
+
+                    
+                    // $inventario_nuevo->sincronizar($existeInventario); 
+                    $inventario_nuevo->producto_id = $existeProducto[0]->id;
+                    $inventario_nuevo->cantidad = $existeInventario[0]->cantidad;
+
+                    $producto->guardar();
+                    $inventario_nuevo->guardar();
+                    Inventario::setAlerta('exito', 'Actualizado Correctamente');
+                    $alertas = Inventario::getAlertas();
+                } else{
+                    $producto->setAlerta('error','Ya existe un producto con ese código de barras');
+                    $alertas = $producto->getAlertas();
+                }
             }
         }
 

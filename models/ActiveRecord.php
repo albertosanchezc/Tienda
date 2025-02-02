@@ -42,6 +42,7 @@ class ActiveRecord
         $query .= " ) VALUES ('";
         $query .= join("' , '", array_values($atributos));
         $query .= "')";
+        debuguear($query);
         $resultado = self::$db->query($query);
 
     }
@@ -60,6 +61,7 @@ class ActiveRecord
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 ";
 
+        // debuguear($query);
 
         $resultado = self::$db->query($query);
 
@@ -135,7 +137,7 @@ class ActiveRecord
         return static::$alertas;
     }
     public static function setAlerta($tipo, $mensaje){
-        static::$errores[$tipo][] = $mensaje;
+        static::$alertas[$tipo][] = $mensaje;
     }
 
     public static function setError($mensaje)
