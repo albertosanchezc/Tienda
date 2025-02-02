@@ -53,7 +53,7 @@ class PaginasController
             'inventario' => $inventario,
             // 'inventario_granel' => $inventario_granel,
             'caja' => $caja,
-            'script' => $script,
+            // 'script' => $script,
             'titulo' => $titulo
         ]);
     }

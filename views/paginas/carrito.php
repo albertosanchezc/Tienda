@@ -238,7 +238,6 @@
             <div data-test="contenedorDetalles" class=" grid-item rectangulo-pequeno">
                 <div class="rectangulo-pequeno-bebe1">
                     <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
-
                 </div>
                 <div class="rectangulo-pequeno-bebe2">
                     <div class="rectangulo-pequeno-bebecito21">
@@ -312,7 +311,7 @@
     </section>
 
     <!-- modal de bienvenida 1-->
-    <section data-test="modal" class="modal modal--show">
+    <section data-test="modal" class="modal">
         <div class="modal__container">
             <img src="/build/img/bienvenida.svg" alt="Logotipo de bienvenida" class="modal__img">
             <h2 class="modal__title">¡Bienvenido al Carrito!</h2>

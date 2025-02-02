@@ -1,6 +1,6 @@
 <main class="contenedorprov seccionprov">
     <div class="proveedores-titulo">
-        <?php include_once __DIR__ . '/../templates/alertas.php'; ?>
+        <?php require __DIR__ . '/../templates/alertas.php'; ?>
         <h1>Inventario</h1>
         <h3>Edita y explora todos los productos en stock junto con las características detalladas de cada uno.<h3>
     </div>
@@ -160,7 +160,7 @@
             <h3>Crea un nuevo producto. Si ya existe, regresa y editalo.</h3>
         </div>
         <div class="modal--inventario__entradas">
-            <?php include_once __DIR__ . '/../templates/alertas.php'; ?>
+            <?php require __DIR__ . '/../templates/alertas.php'; ?>
             <form id="nuevoproducto" method="POST" action="/inventario" enctype="multipart/form-data">
                 <fieldset>
                     <legend>+Anadir Nuevo Producto</legend>
