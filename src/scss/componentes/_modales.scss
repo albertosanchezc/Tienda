@@ -1,6 +1,6 @@
 .modalproveedores,
 .modalproveedores--aniadir,
-.modal--inventario {
+.modal--inventario, .modal--inventario--actualizar {
     position: fixed;
     top: 0;
     left: 0;
@@ -413,7 +413,7 @@
     }
 }
 
-.modal--inventario {
+.modal--inventario, .modal--inventario--actualizar {
 
     &__titulo {
         h1 {

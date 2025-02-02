@@ -26,6 +26,7 @@ class InventarioController
         $inventario = Inventario::all();
         $alertas = Productos::getAlertas();
 
+
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // debuguear($_POST);
             $alertas = Productos::getAlertas();
@@ -77,6 +78,7 @@ class InventarioController
                 $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
                 if (empty($producto_nuevo)) { // Si no se encuentra dentro de la base
                     $producto->guardar();
+                    // Inventario::setAlerta('exito', 'Guardado Correctamente');
                 }
                 $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
 
@@ -84,6 +86,9 @@ class InventarioController
                 $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
 
                 $inventario_nuevo->guardar();
+        // $alertas = Inventario::getAlertas();
+                
+                
                 header('Location: /inventario');
 
 
@@ -91,8 +96,10 @@ class InventarioController
                 // debuguear($inventario);
                 // $alertas = $inventario_nuevo->validarLogin();
                 
+                
+                
 
-                // Inventario::setAlerta('exito', 'Guardado Correctamente');
+
             // }
 
         }

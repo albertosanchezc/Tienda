@@ -228,9 +228,9 @@ function mostrarCards(inventario) {
         let ganancia = precio_unitario_venta - precio_compra;
         let porcentajeGanancia = ganancia * 100 / precio_compra;
 
-        const parrafoContainer=document.createElement('div');
+        const parrafoContainer = document.createElement('div');
         parrafoContainer.classList.add('nombreprod');
-        parrafoContainer.innerHTML=`
+        parrafoContainer.innerHTML = `
         <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
 
         <P> ${nombre}</P>
@@ -317,45 +317,45 @@ function mostrarCards(inventario) {
         inventarioGrid.addEventListener('click', (e) => {
             // Si se selecciona actulizar producto  en algún card
             if (e.target.classList == 'botonactualizar') {
-                abrirModalNuevoProducto(e);
-                const h1Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H1');
-                h1Modal.innerHTML = 'Actualizar Producto';
-                const h3Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H3');
-                h3Modal.innerHTML = `Edita los datos de ${nombre}`;
+                // abrirModalNuevoProducto(e);
+                // const h1Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H1');
+                // h1Modal.innerHTML = 'Actualizar Producto';
+                // const h3Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H3');
+                // h3Modal.innerHTML = `Edita los datos de ${nombre}`;
 
-                // const cardActualizar = e.target.
-                const inputNombre = document.querySelector('.modal--inventario__contenedor').querySelector('#nombreproductoentrada');
+                // // const cardActualizar = e.target.
+                // const inputNombre = document.querySelector('.modal--inventario__contenedor').querySelector('#nombreproductoentrada');
 
-                const inputDescripcion = document.querySelector('.modal--inventario__contenedor').querySelector('#descripcioninv');
+                // const inputDescripcion = document.querySelector('.modal--inventario__contenedor').querySelector('#descripcioninv');
 
-                const inputCodigo = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacodigo_barras');
+                // const inputCodigo = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacodigo_barras');
 
-                const inputCategoria = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacategoria');
+                // const inputCategoria = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacategoria');
 
-                const inputProveedor = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaproveedor');
+                // const inputProveedor = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaproveedor');
 
-                const inputPrecioCompra = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_compra');
+                // const inputPrecioCompra = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_compra');
 
-                const inputPrecioVenta = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_unitario_venta');
+                // const inputPrecioVenta = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_unitario_venta');
 
 
-                inputNombre.value = `${nombre}`;
-                inputDescripcion.value = `${descripcion}`;
-                inputCodigo.value = `${codigo_barras}`;
-                inputCategoria.value = `${categoria_id}`;
-                inputProveedor.value = `${proveedor_id}`;
-                inputPrecioCompra.value = `${precio_compra}`;
-                inputPrecioVenta.value = `${precio_unitario_venta}`;
-                const divId = document.createElement('DIV');
-                divId.classList.add('modal--inventario__id')
-                divId.innerHTML = `
-                <input type="hidden" id="idproductoentrada" name="productos[id]"  value="${id}">
-                <input type="hidden" id="idInventarioentrada" name="inventario[id]"  value="${producto_id}">
-                                
-                `;
+                // inputNombre.value = `${nombre}`;
+                // inputDescripcion.value = `${descripcion}`;
+                // inputCodigo.value = `${codigo_barras}`;
+                // inputCategoria.value = `${categoria_id}`;
+                // inputProveedor.value = `${proveedor_id}`;
+                // inputPrecioCompra.value = `${precio_compra}`;
+                // inputPrecioVenta.value = `${precio_unitario_venta}`;
+                // const divId = document.createElement('DIV');
+                // divId.classList.add('modal--inventario__id')
+                // divId.innerHTML = `
+                // <input type="hidden" id="idproductoentrada" name="productos[id]"  value="${id}">
+                // <input type="hidden" id="idInventarioentrada" name="inventario[id]"  value="${producto_id}">
 
-                const contenedorEntradas = document.querySelector('.modal--inventario__entradasbox');
-                contenedorEntradas.appendChild(divId);
+                // `;
+
+                // const contenedorEntradas = document.querySelector('.modal--inventario__entradasbox');
+                // contenedorEntradas.appendChild(divId);
 
 
             }
@@ -493,7 +493,7 @@ function abrirModalNuevoProducto(e) {
 document.getElementById('nuevoproducto').addEventListener('submit', function (e) {
     // document.getElementById('nuevoproducto').reset();
     e.preventDefault(); // Evita que el formulario se envíe automáticamente
-    const {codigo_barras} = inventario;
+    const { codigo_barras } = inventario;
 
 
     // Limpiar alertas anteriores
@@ -522,8 +522,9 @@ document.getElementById('nuevoproducto').addEventListener('submit', function (e)
         errores.push('El código de barras es obligatorio');
     }
 
-    const resultado=inventario.find(producto => producto.codigo_barras === codigoBarras);
-    if(resultado){
+    // Validar código de barras único
+    const resultado = inventario.find(producto => producto.codigo_barras === codigoBarras);
+    if (resultado) {
         errores.push('Este código de barras es de un producto ya registrado');
     }
 
@@ -575,7 +576,17 @@ document.getElementById('nuevoproducto').addEventListener('submit', function (e)
         });
     } else {
         // Si no hay errores, enviar el formulario
-        this.submit();
+
+        const alertaExito = document.createElement('div');
+        alertaExito.className = 'alerta exito';
+        alertaExito.textContent = 'Creado con éxito';
+        document.querySelector('.modal--inventario__entradas').prepend(alertaExito);
+
+        setTimeout(() => {
+            this.submit();
+
+        }, 3000);
+
 
     }
 });
