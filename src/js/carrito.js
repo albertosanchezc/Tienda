@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let infoProducto = {};
     let articuloCarritoAModificar = {};
     let articulosCarrito = [];
-    const registrosPorPagina = 5;
+    const registrosPorPagina = 3;
     let paginaActual = 1;
 
     let terminosBusqueda = {
@@ -664,11 +664,6 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             modalPagar.classList.remove('modal--pagar--show');
         })
-
-
-
-
-
 
 
     }
