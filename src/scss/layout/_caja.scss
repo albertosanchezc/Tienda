@@ -320,7 +320,7 @@
         margin: auto;
         width: 90%;
         max-width: 500px;
-        max-height: 75%;
+        max-height: 100%;
         background-color: #fff;
         border-radius: 10px;
         display: grid;
@@ -328,6 +328,7 @@
         grid-auto-columns: 100%;
         transform: var(--transform);
         transition: var(--transition);
+        overflow-y: auto;
         // border: 3px double #02B126;
         border: none;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
@@ -428,6 +429,8 @@
         border-radius: 10px;
         display: inline-block;
         font-weight: 505;
+        border: 2px solid #04a524;
+        cursor: pointer;
         transition: background-color .3s;
     }
 
@@ -493,6 +496,76 @@
         font-weight: bold;
         padding: 0 10px;
     }
+
+    &__flex1{
+        margin-top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap:5px;
+
+        p{
+            margin: 0;
+            padding: 0;
+        }
+
+        input[type="number"]{
+            padding: 0 1rem;
+            margin: 0;
+        }
+    }
+
+    &__saldoactual{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 1.8rem;
+
+        h1{
+            font-size: medium;
+            font-weight:bold;
+            padding: 0;
+            margin: 0;
+        }
+        p{
+            font-weight: bold;
+            font-size: 1.8rem;
+            padding: 0;
+            margin: 0;
+            color: green;
+
+        }
+    }
+
+    &__saldoresultante{
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        h1{
+            font-size:medium;
+            font-weight:bold;
+            padding: 0;
+            margin: 0;
+        }
+        p{
+            font-weight: bold;
+            font-size: large;
+            padding: 0;
+            margin: 0;
+            color: green;
+
+
+        }
+    }
+
+    &__close2{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 
@@ -500,6 +573,7 @@
     &__close {
         color: #BE2414;
         background-color: #fff;
+        border: solid 2px red;
 
     }
 
@@ -537,5 +611,17 @@
 
     legend{
         color:red;
+    }
+
+    &__saldoactual{
+        p{
+            color: green;
+        }
+    }
+
+    &__saldoresultante{
+        p{
+            color: red;
+        }
     }
 }

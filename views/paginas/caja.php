@@ -115,23 +115,39 @@
         <p class="modal--aniadir__paragraph">
             Introduce la cantidad en efectivo que deseas abonar a la caja.
         </p>
-        <fieldset>
-            <legend>+Añadir Efectivo</legend>
-            <div class="modal--aniadir__cantidad">
-                <div class="modal--aniadir__flexdineros">
-                    <label for="11">Efectivo Entrante: </label>
-                    <input href="#" id="11" class="modal--aniadir__close" step="0.01" type="number" placeholder="$">
-                    </input>
+        <form id="aniadircaja" method="POST">
+            <fieldset>
+                <legend>+Añadir Efectivo</legend>
+                <div class="modal--aniadir__cantidad">
+                    <div class="modal--aniadir__flexdineros">
+                        <label for="11">Efectivo Entrante: </label>
+                        <div class="modal--aniadir__flex1">
+                            <p>$</p>
+                            <input href="#" id="11" class="modal--aniadir__close" type="number" placeholder="Ej. 1000"
+                                name="aniadirCaja[cantidad_caja]" value="<?php echo s($caja->cantidad_caja); ?>">
+                            </input>
+                        </div>
+                    </div>
                 </div>
+            </fieldset>
+            <div class="modal--aniadir__saldoactual">
+                <h1>Efectivo Actual:</h1>
+                <p>$196.09</p>
             </div>
-        </fieldset>
-        <a href="#" class="modal--aniadir__close1">+ Añadir</a>
+            <div class="modal--aniadir__saldoresultante">
+                <h1>Efectivo Resultante:</h1>
+                <p>$196.09</p>
+            </div>
+            <div class="modal--aniadir__close2">
+                <input type="submit" class="modal--aniadir__close1" value="+ Añadir">
+            </div>
+        </form>
     </div>
 </section>
 
 <!-- modal de retirar -->
 <section class="modal--retirar">
-    <div class="modal--retirar__container">
+    < class="modal--retirar__container">
         <div class="modal--retirar__border"></div>
         <div class="modal--retirar__fleximg1">
             <img src="/build/img/dinero1.png" alt="Logotipo de dinero1" class="modal--retirar__img">
@@ -145,16 +161,32 @@
         <p class="modal--retirar__paragraph">
             Introduce la cantidad en efectivo que deseas retirar de la caja.
         </p>
-        <fieldset>
-            <legend>-Retirar Efectivo</legend>
-            <div class="modal--retirar__cantidad">
-                <div class="modal--retirar__flexdineros">
-                    <label for="12">Efectivo a retirar: </label>
-                    <input href="#" id="12" class="modal--retirar__close" type="text" placeholder="$" step="0.01">
-                    </input>
+        <form id="retirarcaja" method="POST">
+            <fieldset>
+                <legend>-Retirar Efectivo</legend>
+                <div class="modal--retirar__cantidad">
+                    <div class="modal--retirar__flexdineros">
+                        <label for="12">Efectivo a retirar: </label>
+                        <div class="modal--aniadir__flex1">
+                            <p>$</p>
+                            <input href="#" id="12" class="modal--retirar__close" type="text" placeholder="$"
+                                step="0.01">
+                            </input>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
-        <a href="#" class="modal--retirar__close1">- Retirar</a>
-    </div>
+            </fieldset>
+        </form>
+        <div class="modal--retirar__saldoactual">
+            <h1>Efectivo Actual:</h1>
+            <p>$196.09</p>
+        </div>
+        <div class="modal--retirar__saldoresultante">
+            <h1>Efectivo Resultante:</h1>
+            <p>$196.09</p>
+        </div>
+        <div class="modal--retirar__close2">
+            <input type="submit" class="modal--retirar__close1" value="- Retirar">
+        </div>
+        </div>
 </section>

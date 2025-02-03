@@ -93,21 +93,7 @@ class PaginasController
     
 
     
-    public static function caja(Router $router)
-    {
-        $caja = Caja::find(1);
-        // debuguear($caja);
-
-        $script = '<script src="/build/js/caja.js"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />';
-        $titulo = 'Caja';
-
-        $caja_historico = Caja_historico::all();
-        $router->render('paginas/caja', [
-            'script' => $script,
-            'titulo' => $titulo
-        ]);
-    }
+   
     public static function metricas(Router $router)
     {
         $titulo = 'Métricas';

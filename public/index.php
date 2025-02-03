@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\CajaController;
 use MVC\Router;
 use Controllers\LoginController;
 use Controllers\PaginasController;
@@ -49,8 +50,8 @@ $router->post('/inventario', [InventarioController::class, 'inventario']);
 $router->get('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
 $router->post('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
 
-$router->get('/caja', [PaginasController::class, 'caja']);
-$router->post('/caja', [PaginasController::class, 'caja']);
+$router->get('/caja', [CajaController::class, 'caja']);
+$router->post('/caja', [CajaController::class, 'caja']);
 
 $router->get('/metricas', [PaginasController::class, 'metricas']);
 

@@ -298,7 +298,7 @@
 
         }
 
-        .switch label{
+        .switch label {
             padding: 8px 15px;
             background-color: #ddd;
             border-radius: 20px;
@@ -309,7 +309,7 @@
             font-weight: bold;
         }
 
-        .switch input[type="radio"]:checked+label{
+        .switch input[type="radio"]:checked+label {
             background-color: rgb(0, 153, 255);
             color: white;
         }
@@ -378,7 +378,7 @@ span {
 
 }
 
-.nombreprod{
+.nombreprod {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -386,13 +386,14 @@ span {
     margin: 0;
     padding: 0;
     gap: 2rem;
+
     img {
         width: 10rem;
         height: auto;
         border-radius: 8px;
     }
-    
-    p{
+
+    p {
         margin: 0;
         padding: 0;
         font-size: 1.7rem;
@@ -412,7 +413,7 @@ span {
     align-items: center;
     gap: 10px;
 
-    
+
 
     h3 {
         margin: 0;
@@ -736,16 +737,17 @@ span {
     }
 }
 
-.modal--inventarioEliminar{
-    &__opciones{
-display: flex;
-justify-content: center;
-align-items: center;
+.modal--inventarioEliminar {
+    &__opciones {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-input{
-    text-align: center;
-    padding: 5px;
-    width: 3.5rem;
-    
-}
+
+    input {
+        text-align: center;
+        padding: 5px;
+        width: 3.5rem;
+
+    }
 }
