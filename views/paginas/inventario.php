@@ -21,8 +21,8 @@
 
 <section class="contenedorcaja seccioncaja">
     <div class="botones">
-        <a href="#" class="botonslider1"><span>Entrada de Producto</span></a>
-        <a href="#" class="botonslider2"><span>Salida de Producto </span></a>
+        <a href="#" class="botonslider1"><span>Movimiento de Producto</span></a>
+        <a href="#" class="botonslider2"><span>Ver Categorías </span></a>
         <a href="#" class="botonslider3"><span>+ Añadir Nuevo Producto</span></a>
     </div>
     <div class="busqueda-titulo">
@@ -390,9 +390,20 @@
         </div>
         <div class="modal--inventario--actualizarStock__entradas">
             <form id="actualizarStock" method="POST">
+            <div class="modal--inventario--actualizarStock__agregaroquitar">
+                    <p>Tipo de Movimiento: </p>
+                            <div class="switch">
+                                <input type="radio" id="optionaniadir" name="inventarioActualizarStock[optionaniadir]"
+                                    value="optionaniadir" checked>
+                                <label for="optionaniadir">Añadir a Stock</label>
+                                <input type="radio" id="optioneliminar" name="inventarioActualizarStock[optionaniadir]"
+                                    value="optioneliminar">
+                                <label for="optioneliminar">Eliminar de Stock</label>
+                            </div>
+                    </div>
                 <fieldset>
                     <legend>+Actualizar Stock</legend>
-                    
+                 
                     <div class="modal--inventario--actualizarStock__entradasbox">
 
                         <div class="modal--inventario--actualizarStock__nombre">
