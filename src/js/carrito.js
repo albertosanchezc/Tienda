@@ -1051,13 +1051,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
         limpiarHTMLElemento(tbodyTablaModal);
         productosFiltrados.forEach(producto => {
-            const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras } = producto;
+            const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras, imagen } = producto;
             const tr = document.createElement('tr');
             tr.innerHTML = `     
                 <td hidden data-test="idProductoTbodyModal${tipo}">${id}</td>   
                 <td data-test="nombreProductoTbodyModal${tipo}">${nombre}</td>
                 <td data-test="descripcionProductoTbodyModal${tipo}">${descripcion}</td>
-                <td data-test="cantidadProductoTbodyModal${tipo}">${cantidad}</td>
+                <td data-test="imagenProductoTbodyModal${tipo}"><img data-test="imgModal" src="/imagenes/${imagen}" alt="Imágen ${nombre}" class="imagen-producto"></td>
                 <td data-test="codigoProductoTbodyModal${tipo}">${codigo_barras}</td>
                 <td data-test="precioUnitarioVentaProductoTbodyModal${tipo}">$${precio_unitario_venta}</td>
             `;
