@@ -14,16 +14,73 @@ let paginaActual = 1;
 
 const despliegueInventario = document.querySelector('.despliegueinventario');
 const btnCerrarModal = document.querySelector('.modal--inventario__imgcerrar');
+const btnCerrarModalActualizar = document.querySelector('.modal--inventario--actualizar__imgcerrar');
 const sliderContainer = document.querySelector('.imagen-slider');
 const btnAbrirModalNuevoProductoFijo = document.querySelector('.botonslider3');
 const modalInventario = document.querySelector('.modal--inventario');
+const modalActualizarInventario = document.querySelector('.modal--inventario--actualizar');
 const inventarioGrid = document.createElement('DIV');
 inventarioGrid.classList.add('inventariogrid');
+const btnOptionCrear = modalInventario.querySelector('.switch');
+const pKiloCompra = document.querySelector('.kilocompra');
+const pKiloVenta = document.querySelector('.kiloventa');
+
 
 btnCerrarModal.addEventListener('click', (e) => {
     e.preventDefault();
     modalInventario.classList.remove('modal--inventario--show');
 })
+btnCerrarModalActualizar.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalActualizarInventario.classList.remove('modal--inventario--actualizar--show');
+});
+
+btnOptionCrear.addEventListener('click', (e) => {
+    if (e.target.value === 'optiongranel') {
+        pKiloCompra.textContent = '(Precio por Kilogramo):';
+        pKiloVenta.textContent = '(Precio por Kilogramo):';
+
+    }
+    if (e.target.value === 'optionpieza') {
+        pKiloCompra.textContent = '(Precio por Pieza):';
+        pKiloVenta.textContent = '(Precio por Pieza):';
+
+    }
+
+})
+
+// Selecciona el input de tipo file
+const inputNuevaImagen = modalInventario.querySelector('#imagen');
+
+// Selecciona el contenedor de la vista previa de la imagen
+const vistaPreviaImagen = modalInventario.querySelector('#vistaPreviaImagen');
+
+
+// Escucha el evento "change" del input de tipo file
+inputNuevaImagen.addEventListener('change', (event) => {
+    // Obtiene el archivo seleccionado por el usuario
+    const file = event.target.files[0];
+
+    // Verifica si se seleccionó un archivo
+    if (file) {
+        // Crea una instancia de FileReader
+        const reader = new FileReader();
+
+        // Define lo que sucede cuando FileReader termina de leer el archivo
+        reader.onload = function (e) {
+            // Asigna la imagen leída al atributo "src" del contenedor de vista previa
+            vistaPreviaImagen.src = e.target.result;
+        };
+
+        // Lee el archivo como una URL de datos (data URL)
+        reader.readAsDataURL(file);
+    } else {
+        // Si no se selecciona un archivo, muestra la imagen actual (o un placeholder)
+        vistaPreviaImagen.src = "/imagenes/<?php echo $producto->imagen; ?>";
+    }
+});
+
+
 
 
 
@@ -205,17 +262,25 @@ function mostrarCards(inventario) {
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonesinventario');
 
-        let {id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id } = producto;
+        let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel } = producto;
 
         let ganancia = precio_unitario_venta - precio_compra;
         let porcentajeGanancia = ganancia * 100 / precio_compra;
 
+        const parrafoContainer = document.createElement('div');
+        parrafoContainer.classList.add('nombreprod');
+        parrafoContainer.innerHTML = `
+        <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
+
+        <P> ${nombre}</P>
+        `;
+
         // let categoriaNombre = categorias.find()
         gridContenido.innerHTML = `
             <div class="inventarionombre">
-                <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
+                
                 <div>
-                    <h3>${nombre} ${categoria_id}</h3>
+                    <h3>Abarrotes</h3>
                     <p>${cantidad} ARTÍCULOS EN STOCK</p>
                 </div>
             </div>
@@ -281,6 +346,7 @@ function mostrarCards(inventario) {
 
         `;
 
+        inventarioGrid.appendChild(parrafoContainer);
         inventarioGrid.appendChild(gridContenido);
         inventarioGrid.appendChild(dineroGrid);
         inventarioGrid.appendChild(botonesGrid);
@@ -289,27 +355,37 @@ function mostrarCards(inventario) {
 
         inventarioGrid.addEventListener('click', (e) => {
             // Si se selecciona actulizar producto  en algún card
-            if(e.target.classList == 'botonactualizar'){
-                abrirModalNuevoProducto(e);
-                const h1Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H1');
+            if (e.target.classList == 'botonactualizar') {
+                abrirModalActualizarProducto(e);
+                const h1Modal = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('H1');
                 h1Modal.innerHTML = 'Actualizar Producto';
-                const h3Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H3');
+                const h3Modal = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('H3');
                 h3Modal.innerHTML = `Edita los datos de ${nombre}`;
-                
+
                 // const cardActualizar = e.target.
-                const inputNombre = document.querySelector('.modal--inventario__contenedor').querySelector('#nombreproductoentrada');
+                const inputNombre = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#nombreproductoentrada');
 
-                const inputDescripcion = document.querySelector('.modal--inventario__contenedor').querySelector('#descripcioninv');
+                const inputDescripcion = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#descripcioninv');
 
-                const inputCodigo = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacodigo_barras');
+                const inputCodigo = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradacodigo_barras');
 
-                const inputCategoria = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacategoria');
+                const inputCategoria = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradacategoria');
 
-                const inputProveedor = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaproveedor');
+                const inputProveedor = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradaproveedor');
 
-                const inputPrecioCompra = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_compra');
+                if (granel === '1') {
+                    const inputGranel = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#optiongranel');
+                    inputGranel.click()
+                } else {
+                    const inputGranel = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#optionpieza');
+                    inputGranel.click()
 
-                const inputPrecioVenta = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_unitario_venta');
+                }
+
+
+                const inputPrecioCompra = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradaprecio_compra');
+
+                const inputPrecioVenta = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradaprecio_unitario_venta');
 
 
                 inputNombre.value = `${nombre}`;
@@ -319,18 +395,78 @@ function mostrarCards(inventario) {
                 inputProveedor.value = `${proveedor_id}`;
                 inputPrecioCompra.value = `${precio_compra}`;
                 inputPrecioVenta.value = `${precio_unitario_venta}`;
-                const divId = document.createElement('DIV');
-                divId.classList.add('modal--inventario__id')
-                divId.innerHTML = `
-                <input type="hidden" id="idproductoentrada" name="productos[id]"  value="${id}">
-                <input type="hidden" id="idInventarioentrada" name="inventario[id]"  value="${producto_id}">
-                                
-                `;
-                
-                const contenedorEntradas = document.querySelector('.modal--inventario__entradasbox');
-                contenedorEntradas.appendChild(divId);
+                const vistaPreviaImagen = modalActualizarInventario.querySelector('#vistaPreviaImagen');
+                vistaPreviaImagen.src = `/imagenes/${imagen}`;
 
                 
+
+                const imagenActual = document.querySelector('.modal--inventario--actualizar__imagen .imagen-small');
+                if (imagen) {
+                    imagenActual.src = `/imagenes/${imagen}`;
+                }
+
+                // Configurar el input de tipo file
+                // const inputNuevaImagen = document.querySelector('#imagen');
+                // inputNuevaImagen.value = ''; // Limpiar el input de tipo file
+
+                // // Manejar la selección de una nueva imagen
+                // inputNuevaImagen.addEventListener('change', (event) => {
+                //     const file = event.target.files[0];
+                //     if (file) {
+                //         const reader = new FileReader();
+                //         reader.onload = function (e) {
+                //             if (imagenActual) {
+                //                 imagenActual.src = e.target.result;
+                //             }
+                //         };
+                //         reader.readAsDataURL(file);
+                //     }
+                // });
+
+                // Selecciona el input de tipo file
+                const inputNuevaImagen = modalActualizarInventario.querySelector('#imagen');
+
+                // Selecciona el contenedor de la vista previa de la imagen
+
+                inputNuevaImagen.addEventListener('change', (event) => {
+                    // Obtiene el archivo seleccionado por el usuario
+                    const file1 = event.target.files[0];
+                    console.log(file1);
+
+                    // Verifica si se seleccionó un archivo
+                    if (file1) {
+                        // Crea una instancia de FileReader
+                        const reader = new FileReader();
+
+                        // Define lo que sucede cuando FileReader termina de leer el archivo
+                        reader.onload = function (e) {
+                            // Asigna la imagen leída al atributo "src" del contenedor de vista previa
+                            vistaPreviaImagen.src = e.target.result;
+                        };
+
+                        // Lee el archivo como una URL de datos (data URL)
+                        reader.readAsDataURL(file1);
+                    } else {
+                        const resultado = inventario.find(p => p.codigo_barras === codigo_barras);
+                        
+
+                        // Si no se selecciona un archivo, muestra la imagen actual (o un placeholder)
+                        vistaPreviaImagen.src = `/imagenes/${imagen}`;
+                    }
+                });
+
+                const divId = document.createElement('DIV');
+                divId.classList.add('modal--inventario--actualizar__id')
+                divId.innerHTML = `
+                <input type="hidden" id="idproductoentrada" name="productosActualizar[id]"  value="${id}">
+                <input type="hidden" id="idInventarioentrada" name="inventarioActualizar[id]"  value="${producto_id}">
+
+                `;
+
+                const contenedorEntradas = document.querySelector('.modal--inventario--actualizar__entradasbox');
+                contenedorEntradas.appendChild(divId);
+
+
             }
         })
     });
@@ -383,13 +519,17 @@ inputProveedorBusqueda.addEventListener('input', (e) => {
 });
 
 sliderContainer.addEventListener('click', (e) => {
-    if(e.target.textContent === '+ Añadir nuevo Producto'){
+    if (e.target.textContent === '+ Añadir nuevo Producto') {
         abrirModalNuevoProducto(e);
+
     }
 })
 
 
-btnAbrirModalNuevoProductoFijo.addEventListener('click', e => abrirModalNuevoProducto(e));
+btnAbrirModalNuevoProductoFijo.addEventListener('click', e => {
+    abrirModalNuevoProducto(e)
+
+});
 
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
@@ -453,13 +593,119 @@ paginadorContainer.addEventListener('click', (e) => {
 })
 
 
-function abrirModalNuevoProducto(e){
+function abrirModalNuevoProducto(e) {
     e.preventDefault();
     modalInventario.classList.add('modal--inventario--show');
 }
 
+function abrirModalActualizarProducto(e) {
+    e.preventDefault();
+    modalActualizarInventario.classList.add('modal--inventario--actualizar--show');
+}
 
 
+document.getElementById('nuevoproducto').addEventListener('submit', function (e) {
+    // document.getElementById('nuevoproducto').reset();
+    e.preventDefault(); // Evita que el formulario se envíe automáticamente
+    const { codigo_barras } = inventario;
+
+
+    // Limpiar alertas anteriores
+    const alertas = document.querySelectorAll('.alerta');
+    alertas.forEach(alerta => alerta.remove());
+
+    // Validar campos
+    let errores = [];
+
+    // Validar nombre del producto
+    const nombre = document.getElementById('nombreproductoentrada').value.trim();
+    if (!nombre) {
+        errores.push('El nombre es obligatorio');
+    }
+
+    // Validar descripción
+    const descripcion = document.getElementById('descripcioninv').value.trim();
+    if (!descripcion) {
+        errores.push('La descripción es obligatoria');
+    }
+
+
+    // Validar código de barras
+    const codigoBarras = document.getElementById('entradacodigo_barras').value.trim();
+    if (!codigoBarras) {
+        errores.push('El código de barras es obligatorio');
+    }
+
+    // Validar código de barras único
+    const resultado = inventario.find(producto => producto.codigo_barras === codigoBarras);
+    if (resultado) {
+        errores.push('Este código de barras es de un producto ya registrado');
+    }
+
+    // Validar categoría
+    const categoria = document.getElementById('entradacategoria').value;
+    if (!categoria) {
+        errores.push('La categoría es obligatoria');
+    }
+
+    // Validar proveedor
+    const proveedor = document.getElementById('entradaproveedor').value;
+    if (!proveedor) {
+        errores.push('El proveedor es obligatorio');
+    }
+
+    // Validar método de venta (granel o pieza)
+    const metodoVenta = document.querySelector('input[name="optionpieza"]:checked');
+    if (!metodoVenta) {
+        errores.push('El método de venta es obligatorio');
+    }
+
+
+    // Validar precio de compra
+    const precioCompra = parseFloat(document.getElementById('entradaprecio_compra').value);
+    if (!precioCompra || precioCompra <= 0) {
+        errores.push('El precio de compra debe ser mayor a 0');
+    }
+
+    // Validar precio de venta
+    const precioVenta = parseFloat(document.getElementById('entradaprecio_unitario_venta').value);
+    if (!precioVenta || precioVenta <= 0) {
+        errores.push('El precio de venta debe ser mayor a 0');
+    }
+
+
+    // Validar imagen
+    const imagen = document.getElementById('imagen').files[0];
+    if (!imagen) {
+        errores.push('La imagen del producto es obligatoria');
+    }
+
+
+
+    // Mostrar errores
+    if (errores.length > 0) {
+        errores.forEach(error => {
+            const alerta = document.createElement('div');
+            alerta.className = 'alerta error';
+            alerta.textContent = error;
+            document.querySelector('.modal--inventario__entradas').prepend(alerta);
+        });
+    } else {
+        // Si no hay errores, enviar el formulario
+
+        const alertaExito = document.createElement('div');
+        alertaExito.className = 'alerta exito';
+        alertaExito.textContent = 'Creado con éxito';
+        document.querySelector('.modal--inventario__entradas').prepend(alertaExito);
+
+        setTimeout(() => {
+            this.submit();
+
+        }, 3000);
+
+
+    }
+});
 
 
 // Inicializa el slider al cargar la página
@@ -469,4 +715,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showSlide(currentIndex); // Muestra el primer slide
     setInterval(nextSlide, 6000); // Cambia automáticamente cada 5 segundos
 });
+
+
 

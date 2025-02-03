@@ -885,4 +885,13 @@
         color: blue;
         border-color: solid 1px blue;
     }
+
+    &__imgcarga{
+        grid-column: 1/3;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
 }

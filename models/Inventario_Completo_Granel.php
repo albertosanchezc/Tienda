@@ -17,6 +17,7 @@ class Inventario_Completo_Granel extends ActiveRecord{
         'precio_kg_compra',
         'fecha_compra',
         'proveedor_id',
+        'granel'
     ];
 
     public $id;
@@ -30,6 +31,8 @@ class Inventario_Completo_Granel extends ActiveRecord{
     public $precio_kg_compra;
     public $fecha_compra;
     public $proveedor_id;
+    public $granel;
+
     
 
     public function __construct($args = [])
@@ -45,7 +48,7 @@ class Inventario_Completo_Granel extends ActiveRecord{
         $this->precio_kg_compra = $args['precio_kg_compra'] ?? '';
         $this->fecha_compra = $args['fecha_compra'] ?? '';
         $this->proveedor_id = $args['proveedor_id'] ?? '';
-
+        $this->granel = $args['granel'] ?? '';
     }
 }
 

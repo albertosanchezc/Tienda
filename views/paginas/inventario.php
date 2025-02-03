@@ -213,7 +213,7 @@
                         <div class="modal--inventario__granelono">
                             <p>Metodo de Venta: </p>
                             <div class="switch">
-                                <input type="radio" id="optionpieza" name="optionpieza" value="optionpieza" selected>
+                                <input type="radio" id="optionpieza" name="optionpieza" value="optionpieza" checked>
                                 <label for="optionpieza">Por pieza</label>
                                 <input type="radio" id="optiongranel" name="optionpieza" value="optiongranel">
                                 <label for="optiongranel">A Granel</label>
@@ -246,13 +246,10 @@
                                         class="modal--inventario__imgcargar">Cargar imagen</label>
                                 <input type="file" id="imagen" accept="image/jpeg, image/png" name="productos[imagen]"
                                     value="<?php echo $producto->imagen; ?>">
-
-
-                            </div>
-                            <?php if ($producto->imagen) { ?>
-                                <img src="/imagenes/<?php echo $producto->imagen; ?>" class="imagen-small">
-
-                            <?php } ?>
+                            </div>  
+                        </div>
+                        <div class="modal--inventario__imgcarga">
+                            <img id="vistaPreviaImagen" src="/imagenes/<?php echo $producto->imagen; ?>" class="imagen-small">
                         </div>
                     </div>
                 </fieldset>
@@ -272,8 +269,8 @@
             </a>
         </div>
         <div class="modal--inventario--actualizar__titulo">
-            <h1>Nuevo Producto</h1>
-            <h3>Crea un nuevo producto. Si ya existe, regresa y editalo.</h3>
+            <h1>Actualizar Producto</h1>
+            <h3>Actualiza las características de este producto.</h3>
         </div>
         <div class="modal--inventario--actualizar__entradas">
             <form id="actualizarproducto" method="POST" enctype="multipart/form-data">
@@ -282,23 +279,23 @@
                     <div class="modal--inventario--actualizar__entradasbox">
                         <div class="modal--inventario--actualizar__nombre">
                             <label for="nombreproductoentrada">Nombre del producto: </label>
-                            <input type="text" id="nombreproductoentrada" name="productos[nombre]" maxlength="30"
+                            <input type="text" id="nombreproductoentrada" name="productosActualizar[nombre]" maxlength="30"
                                 placeholder="Coca - Cola" value="<?php echo s($producto->nombre); ?>">
                         </div>
                         <div class="modal--inventario--actualizar__descripcion">
                             <label for="descripcioninv">Descripción: </label>
-                            <input type="text" id="descripcioninv" name="productos[descripcion]"
+                            <input type="text" id="descripcioninv" name="productosActualizar[descripcion]"
                                 placeholder="Jamón de Cerdo Americano" maxlength="30"
                                 value="<?php echo s($producto->descripcion); ?>">
                         </div>
                         <div class="modal--inventario--actualizar__codigo_barras">
                             <label for="entradacodigo_barras">Código de barras: </label>
-                            <input type="number" id="entradacodigo_barras" name="productos[codigo_barras]"
+                            <input type="number" id="entradacodigo_barras" name="productosActualizar[codigo_barras]"
                                 placeholder="0123456789" value="<?php echo s($producto->codigo_barras); ?>">
                         </div>
                         <div class="modal--inventario--actualizar__categoria">
                             <label for="entradacategoria">Categoría: </label>
-                            <select name="categoria[id]" id="entradacategoria">
+                            <select name="categoriaActualizar[id]" id="entradacategoria">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
                                     <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
@@ -310,7 +307,7 @@
                         </div>
                         <div class="modal--inventario--actualizar__proveedor">
                             <label for="entradaproveedor">Proveedor: </label>
-                            <select name="inventario[proveedor_id]" id="entradaproveedor">
+                            <select name="inventarioActualizar[proveedor_id]" id="entradaproveedor">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
                                     <option <?php echo $inventario->$proveedor_id === $proveedor->$id ? 'selected' : ''; ?>
@@ -323,9 +320,9 @@
                         <div class="modal--inventario--actualizar__granelono">
                             <p>Metodo de Venta: </p>
                             <div class="switch">
-                                <input type="radio" id="optionpieza" name="optionpieza" value="optionpieza" selected>
+                                <input type="radio" id="optionpieza" name="optionpiezaActualizar" value="optionpieza">
                                 <label for="optionpieza">Por pieza</label>
-                                <input type="radio" id="optiongranel" name="optionpieza" value="optiongranel">
+                                <input type="radio" id="optiongranel" name="optionpiezaActualizar" value="optiongranel">
                                 <label for="optiongranel">A Granel</label>
                             </div>
                         </div>
@@ -335,7 +332,7 @@
                             <div class="modal--inventario--actualizar__flexcompra">
                                 <p>$</p>
                                 <input type="number" step="0.01" id="entradaprecio_compra"
-                                    name="inventario[precio_compra]" placeholder="12.23" maxlength="30"
+                                    name="inventarioActualizar[precio_compra]" placeholder="12.23" maxlength="30"
                                     value="<?php echo s($inventario_nuevo->precio_compra); ?>">
                             </div>
                         </div>
@@ -345,7 +342,7 @@
                             <div class="modal--inventario--actualizar__flexcompra">
                                 <p>$</p>
                                 <input type="text" step="0.01" id="entradaprecio_unitario_venta"
-                                    name="inventario[precio_unitario_venta]" placeholder="12.23" maxlength="30"
+                                    name="inventarioActualizar[precio_unitario_venta]" placeholder="12.23" maxlength="30"
                                     value="<?php echo s($inventario_nuevo->precio_unitario_venta); ?>">
                             </div>
                         </div>
@@ -354,18 +351,17 @@
                             <div class="modal--inventario--actualizar__botonimagen">
                                 <label for="imagen"><img src="/build/img/cargar.png" alt="Icono de Cargar"
                                         class="modal--inventario--actualizar__imgcargar">Cargar imagen</label>
-                                <input type="file" id="imagen" accept="image/jpeg, image/png" name="productos[imagen]"
+                                <input type="file" id="imagen" accept="image/jpeg, image/png" name="productosActualizar[imagen]"
                                     value="<?php echo $producto->imagen; ?>">
                             </div>
-                            <?php if ($producto->imagen) { ?>
-                                <img src="/imagenes/<?php echo $producto->imagen; ?>" class="imagen-small">
-
-                            <?php } ?>
+                        </div>
+                        <div class="modal--inventario--actualizar__imgcarga">
+                            <img id="vistaPreviaImagen" src="/imagenes/<?php echo $producto->imagen; ?>" class="imagen-small">
                         </div>
                     </div>
                 </fieldset>
                 <div class="modal--inventario--actualizar__btn">
-                    <input value="Crear Producto" type="submit" class="modal--inventario--actualizar__botonaniadir">
+                    <input value="Actualizar Producto" type="submit" class="modal--inventario--actualizar__botonaniadir">
                 </div>
             </form>
         </div>
