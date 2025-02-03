@@ -15,10 +15,13 @@ let paginaActual = 1;
 const despliegueInventario = document.querySelector('.despliegueinventario');
 const btnCerrarModal = document.querySelector('.modal--inventario__imgcerrar');
 const btnCerrarModalActualizar = document.querySelector('.modal--inventario--actualizar__imgcerrar');
+const btnCerrarModalActualizarStock = document.querySelector('.modal--inventario--actualizarStock__imgcerrar');
 const sliderContainer = document.querySelector('.imagen-slider');
 const btnAbrirModalNuevoProductoFijo = document.querySelector('.botonslider3');
 const modalInventario = document.querySelector('.modal--inventario');
 const modalActualizarInventario = document.querySelector('.modal--inventario--actualizar');
+const modalActualizarStock = document.querySelector('.modal--inventario--actualizarStock');
+const modalActualizarInventarioContainer = document.querySelector('.modal--inventario--actualizar__contenedor');
 const inventarioGrid = document.createElement('DIV');
 inventarioGrid.classList.add('inventariogrid');
 const btnOptionCrear = modalInventario.querySelector('.switch');
@@ -33,6 +36,11 @@ btnCerrarModal.addEventListener('click', (e) => {
 btnCerrarModalActualizar.addEventListener('click', (e) => {
     e.preventDefault();
     modalActualizarInventario.classList.remove('modal--inventario--actualizar--show');
+});
+
+btnCerrarModalActualizarStock.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalActualizarStock.classList.remove('modal--inventario--actualizarStock--show');
 });
 
 btnOptionCrear.addEventListener('click', (e) => {
@@ -81,7 +89,39 @@ inputNuevaImagen.addEventListener('change', (event) => {
 });
 
 
+const inputNuevaImagenActualizar = modalActualizarInventarioContainer.querySelector('#imagenActualizar');
 
+// Selecciona el contenedor de la vista previa de la imagen
+
+const vistaPreviaImagenActualizar = modalActualizarInventarioContainer.querySelector('#vistaPreviaImagenActualizar');
+
+inputNuevaImagenActualizar.addEventListener('change', (event) => {
+    // Obtiene el archivo seleccionado por el usuario
+    const file1 = event.target.files[0];
+    console.log(file1);
+
+    
+    // Verifica si se seleccionó un archivo
+    if (file1) {
+        // Crea una instancia de FileReader
+        const reader1 = new FileReader();
+
+        // Define lo que sucede cuando FileReader termina de leer el archivo
+        reader1.onload = function (e) {
+            // Asigna la imagen leída al atributo "src" del contenedor de vista previa
+            vistaPreviaImagenActualizar.src = e.target.result;
+        };
+
+        // Lee el archivo como una URL de datos (data URL)
+        reader1.readAsDataURL(file1);
+    } else {
+        const resultado = inventario.find(p => p.codigo_barras === codigo_barras);
+
+
+        // Si no se selecciona un archivo, muestra la imagen actual (o un placeholder)
+        vistaPreviaImagenActualizar.src = `/imagenes/${imagen}`;
+    }
+});
 
 
 const busqueda = document.querySelector('.busqueda-filtrosinventario');
@@ -355,6 +395,7 @@ function mostrarCards(inventario) {
 
         inventarioGrid.addEventListener('click', (e) => {
             // Si se selecciona actulizar producto  en algún card
+            console.log(e.target.classList);
             if (e.target.classList == 'botonactualizar') {
                 abrirModalActualizarProducto(e);
                 const h1Modal = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('H1');
@@ -395,15 +436,17 @@ function mostrarCards(inventario) {
                 inputProveedor.value = `${proveedor_id}`;
                 inputPrecioCompra.value = `${precio_compra}`;
                 inputPrecioVenta.value = `${precio_unitario_venta}`;
-                const vistaPreviaImagen = modalActualizarInventario.querySelector('#vistaPreviaImagen');
-                vistaPreviaImagen.src = `/imagenes/${imagen}`;
 
-                
 
-                const imagenActual = document.querySelector('.modal--inventario--actualizar__imagen .imagen-small');
-                if (imagen) {
-                    imagenActual.src = `/imagenes/${imagen}`;
-                }
+                const vistaPreviaImagenActualizar = modalActualizarInventario.querySelector('#vistaPreviaImagenActualizar');
+                vistaPreviaImagenActualizar.src = `/imagenes/${imagen}`;
+
+
+
+                // const imagenActual = document.querySelector('.modal--inventario--actualizar__imagen .imagen-small');
+                // if (imagen) {
+                //     imagenActual.src = `/imagenes/${imagen}`;
+                // }
 
                 // Configurar el input de tipo file
                 // const inputNuevaImagen = document.querySelector('#imagen');
@@ -424,47 +467,70 @@ function mostrarCards(inventario) {
                 // });
 
                 // Selecciona el input de tipo file
-                const inputNuevaImagen = modalActualizarInventario.querySelector('#imagen');
+                // const inputNuevaImagenActualizar = modalActualizarInventario.querySelector('#imagen');
 
-                // Selecciona el contenedor de la vista previa de la imagen
+                // // Selecciona el contenedor de la vista previa de la imagen
 
-                inputNuevaImagen.addEventListener('change', (event) => {
-                    // Obtiene el archivo seleccionado por el usuario
-                    const file1 = event.target.files[0];
-                    console.log(file1);
+                // const vistaPreviaImagenActualizar = modalActualizarInventario.querySelector('#vistaPreviaImagen');
 
-                    // Verifica si se seleccionó un archivo
-                    if (file1) {
-                        // Crea una instancia de FileReader
-                        const reader = new FileReader();
 
-                        // Define lo que sucede cuando FileReader termina de leer el archivo
-                        reader.onload = function (e) {
-                            // Asigna la imagen leída al atributo "src" del contenedor de vista previa
-                            vistaPreviaImagen.src = e.target.result;
-                        };
+                // inputNuevaImagenActualizar.addEventListener('change', (event) => {
+                //     // Obtiene el archivo seleccionado por el usuario
+                //     const file1 = event.target.files[0];
+                //     console.log(file1);
 
-                        // Lee el archivo como una URL de datos (data URL)
-                        reader.readAsDataURL(file1);
-                    } else {
-                        const resultado = inventario.find(p => p.codigo_barras === codigo_barras);
-                        
+                //     // Verifica si se seleccionó un archivo
+                //     if (file1) {
+                //         // Crea una instancia de FileReader
+                //         const reader1 = new FileReader();
 
-                        // Si no se selecciona un archivo, muestra la imagen actual (o un placeholder)
-                        vistaPreviaImagen.src = `/imagenes/${imagen}`;
-                    }
-                });
+                //         // Define lo que sucede cuando FileReader termina de leer el archivo
+                //         reader1.onload = function (e) {
+                //             // Asigna la imagen leída al atributo "src" del contenedor de vista previa
+                //             vistaPreviaImagenActualizar.src = e.target.result;
+                //         };
+
+                //         // Lee el archivo como una URL de datos (data URL)
+                //         reader1.readAsDataURL(file1);
+                //     } else {
+                //         const resultado = inventario.find(p => p.codigo_barras === codigo_barras);
+
+
+                //         // Si no se selecciona un archivo, muestra la imagen actual (o un placeholder)
+                //         vistaPreviaImagenActualizar.src = `/imagenes/${imagen}`;
+                //     }
+                // });
 
                 const divId = document.createElement('DIV');
                 divId.classList.add('modal--inventario--actualizar__id')
                 divId.innerHTML = `
-                <input type="hidden" id="idproductoentrada" name="productosActualizar[id]"  value="${id}">
+                <input type="hidden" id="idproductoentrada" name="inventarioActualizar[producto_id]"  value="${id}">
                 <input type="hidden" id="idInventarioentrada" name="inventarioActualizar[id]"  value="${producto_id}">
 
                 `;
 
                 const contenedorEntradas = document.querySelector('.modal--inventario--actualizar__entradasbox');
                 contenedorEntradas.appendChild(divId);
+
+
+            }
+            if(e.target.classList == 'botonactualizarstock'){
+                abrirModalActualizarStock(e);
+                console.log(cantidad);
+                const h3ModalAS = document.querySelector('.modal--inventario--actualizarStock__titulo').querySelector('H3');
+                h3ModalAS.innerHTML = `Actualiza la cantidad en Stock de ${nombre}`;
+                const pModalAS = document.querySelector('.modal--inventario--actualizarStock__cantidadActual').querySelector('P');
+                pModalAS.innerHTML = `${cantidad}  Artículos en Stock`;
+                const inputModalActualizarStock = document.querySelector('.modal--inventario--actualizarStock__nombre').querySelector('INPUT');
+                inputModalActualizarStock.value = cantidad;
+
+                const divId = document.createElement('DIV');
+                divId.classList.add('modal--inventario--actualizarStock__id');
+                divId.innerHTML = `
+                <input type="hidden" id="idInventarioentrada" name="inventarioActualizarStock[id]"  value="${producto_id}">
+                `;
+                const formularioStock = document.querySelector('#actualizarStock');
+                formularioStock.appendChild(divId);
 
 
             }
@@ -602,6 +668,10 @@ function abrirModalActualizarProducto(e) {
     e.preventDefault();
     modalActualizarInventario.classList.add('modal--inventario--actualizar--show');
 }
+function abrirModalActualizarStock(e) {
+    e.preventDefault();
+    modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
+}
 
 
 document.getElementById('nuevoproducto').addEventListener('submit', function (e) {
@@ -655,7 +725,7 @@ document.getElementById('nuevoproducto').addEventListener('submit', function (e)
     }
 
     // Validar método de venta (granel o pieza)
-    const metodoVenta = document.querySelector('input[name="optionpieza"]:checked');
+    const metodoVenta = document.querySelector('input[name="inventarioCrear[optionpieza]"]:checked');
     if (!metodoVenta) {
         errores.push('El método de venta es obligatorio');
     }
@@ -697,6 +767,149 @@ document.getElementById('nuevoproducto').addEventListener('submit', function (e)
         alertaExito.className = 'alerta exito';
         alertaExito.textContent = 'Creado con éxito';
         document.querySelector('.modal--inventario__entradas').prepend(alertaExito);
+
+        setTimeout(() => {
+            this.submit();
+
+        }, 3000);
+
+
+    }
+});
+
+document.getElementById('actualizarproducto').addEventListener('submit', function (e) {
+    // document.getElementById('nuevoproducto').reset();
+    e.preventDefault(); // Evita que el formulario se envíe automáticamente
+    const { codigo_barras } = inventario;
+
+
+    // Limpiar alertas anteriores
+    const alertas = modalActualizarInventario.querySelectorAll('.alerta');
+    alertas.forEach(alerta => alerta.remove());
+
+    // Validar campos
+    let errores = [];
+
+    // Validar nombre del producto
+    const nombre = modalActualizarInventario.querySelector('#nombreproductoentrada').value;
+    if (!nombre) {
+        errores.push('El nombre es obligatorio');
+    }
+
+    // Validar descripción
+    const descripcion = modalActualizarInventario.querySelector('#descripcioninv').value.trim();
+    if (!descripcion) {
+        errores.push('La descripción es obligatoria');
+    }
+
+
+    // Validar código de barras
+    const codigoBarras = modalActualizarInventario.querySelector('#entradacodigo_barras').value;
+    if (!codigoBarras) {
+        errores.push('El código de barras es obligatorio');
+    }
+
+
+    // Validar categoría
+    const categoria = modalActualizarInventario.querySelector('#entradacategoria').value;
+    if (!categoria) {
+        errores.push('La categoría es obligatoria');
+    }
+
+    // Validar proveedor
+    const proveedor = modalActualizarInventario.querySelector('#entradaproveedor').value;
+    if (!proveedor) {
+        errores.push('El proveedor es obligatorio');
+    }
+
+    // Validar método de venta (granel o pieza)
+    const metodoVenta = modalActualizarInventario.querySelector('input[name="inventarioActualizar[optionpieza]"]:checked');
+    if (!metodoVenta) {
+        errores.push('El método de venta es obligatorio');
+    }
+
+
+    // Validar precio de compra
+    const precioCompra = parseFloat(modalActualizarInventario.querySelector('#entradaprecio_compra').value);
+    if (!precioCompra || precioCompra <= 0) {
+        errores.push('El precio de compra debe ser mayor a 0');
+    }
+
+    // Validar precio de venta
+    const precioVenta = parseFloat(modalActualizarInventario.querySelector('#entradaprecio_unitario_venta').value);
+    if (!precioVenta || precioVenta <= 0) {
+        errores.push('El precio de venta debe ser mayor a 0');
+    }
+
+
+    // Validar imagen
+    // const imagen = modalActualizarInventario.querySelector('#imagenActualizar').files[0];
+    // if (!imagen) {
+    //     errores.push('La imagen del producto es obligatoria');
+    // }
+
+
+
+    // Mostrar errores
+    if (errores.length > 0) {
+        errores.forEach(error => {
+            const alerta = document.createElement('div');
+            alerta.className = 'alerta error';
+            alerta.textContent = error;
+            modalActualizarInventario.querySelector('.modal--inventario--actualizar__entradas').prepend(alerta);
+        });
+    } else {
+        // Si no hay errores, enviar el formulario
+
+        const alertaExito = document.createElement('div');
+        alertaExito.className = 'alerta exito';
+        alertaExito.textContent = 'Producto Actualizado con éxito';
+        document.querySelector('.modal--inventario--actualizar__entradas').prepend(alertaExito);
+
+        setTimeout(() => {
+            this.submit();
+
+        }, 3000);
+
+
+    }
+});
+
+document.getElementById('actualizarStock').addEventListener('submit', function (e) {
+    // document.getElementById('nuevoproducto').reset();
+    e.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+    // Limpiar alertas anteriores
+    const alertas = modalActualizarStock.querySelectorAll('.alerta');
+    alertas.forEach(alerta => alerta.remove());
+
+    // Validar campos
+    let errores = [];
+
+    // Validar nombre del producto
+    const cantidad = modalActualizarStock.querySelector('#cantidadStock').value;
+    if (!cantidad) {
+        errores.push('La cantidad es obligatoria');
+    }
+    if (cantidad<0) {
+        errores.push('La cantidad debe ser mayor a 0');
+    }
+
+    // Mostrar errores
+    if (errores.length > 0) {
+        errores.forEach(error => {
+            const alerta = document.createElement('div');
+            alerta.className = 'alerta error';
+            alerta.textContent = error;
+            modalActualizarStock.querySelector('.modal--inventario--actualizarStock__entradas').prepend(alerta);
+        });
+    } else {
+        // Si no hay errores, enviar el formulario
+
+        const alertaExito = document.createElement('div');
+        alertaExito.className = 'alerta exito';
+        alertaExito.textContent = 'Stock Actualizado con éxito';
+        document.querySelector('.modal--inventario--actualizarStock__entradas').prepend(alertaExito);
 
         setTimeout(() => {
             this.submit();

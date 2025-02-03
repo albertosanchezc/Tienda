@@ -1,6 +1,8 @@
 .modalproveedores,
 .modalproveedores--aniadir,
-.modal--inventario, .modal--inventario--actualizar {
+.modal--inventario,
+.modal--inventario--actualizar,
+.modal--inventario--actualizarStock {
     position: fixed;
     top: 0;
     left: 0;
@@ -327,6 +329,8 @@
         margin-top: 0;
         width: 95%;
 
+
+
         label {
             font-weight: bold;
             margin-bottom: 5px;
@@ -373,6 +377,7 @@
 
     }
 
+
     &__alerta {
         padding: 0.5rem;
         text-align: center;
@@ -413,7 +418,9 @@
     }
 }
 
-.modal--inventario, .modal--inventario--actualizar {
+.modal--inventario,
+.modal--inventario--actualizar,
+.modal--inventario--actualizarStock {
 
     &__titulo {
         h1 {
@@ -427,24 +434,26 @@
         overflow-y: auto;
     }
 
-    &__contenedor::-webkit-scrollbar{
+    &__contenedor::-webkit-scrollbar {
         height: 8px;
-//  width: rem;
-//  margin-right: 3rem;
+        //  width: rem;
+        //  margin-right: 3rem;
     }
 
-    &__contenedor::-webkit-scrollbar-thumb{
+    &__contenedor::-webkit-scrollbar-thumb {
         background-color: #1f1cdf;
-    border-radius: 10px;
-    // right: 3px;
-    border: 3px solid transparent; /* Bordes para dar efecto de separación */
-    background-clip: padding-box;
+        border-radius: 10px;
+        // right: 3px;
+        border: 3px solid transparent;
+        /* Bordes para dar efecto de separación */
+        background-clip: padding-box;
 
     }
 
     &__contenedor::-webkit-scrollbar-track {
-        background: transparent; /* Fondo transparente */
-    margin: 1rem;
+        background: transparent;
+        /* Fondo transparente */
+        margin: 1rem;
 
     }
 
@@ -886,12 +895,50 @@
         border-color: solid 1px blue;
     }
 
-    &__imgcarga{
+    &__imgcarga {
         grid-column: 1/3;
-        
+
         display: flex;
         justify-content: center;
         align-items: center;
 
     }
+}
+
+.modal--inventario--actualizarStock {
+    &__entradasbox {
+        display: grid;
+        grid-template-columns: 1;
+        grid-template-rows: repeat(2);
+    }
+
+    &__nombre {
+        grid-column: 1/3;
+
+        label {
+            font-size: medium;
+        }
+    }
+
+    &__cantidadActual {
+        h3 {
+            font-weight: bold;
+            margin-bottom: 0;
+            display: block;
+            font-size: medium;
+            padding: 0;
+            margin-top: 0;
+            text-align: left;
+
+        }
+
+        p {
+            margin: 0 0 8px 0;
+            padding: 0;
+            color: green;
+            font-weight: bold;
+
+        }
+    }
+
 }

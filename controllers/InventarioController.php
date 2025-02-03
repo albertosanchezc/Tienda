@@ -28,50 +28,61 @@ class InventarioController
 
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            debuguear($_POST);
+            // debuguear($_POST);
             $alertas = Productos::getAlertas();
-            $producto = new Productos($_POST['productos']);
-            $inventario_nuevo = new Inventario($_POST['inventario']);
-
-            $categoriaId = $_POST['categoria']['id'];
-            $optionpieza = $_POST['optionpieza'];
-
-            if ($optionpieza === 'optiongranel') {
-                $inventario_nuevo->granel = 1;
-
-            } else {
-                $inventario_nuevo->granel = 0;
-
-            }
-            // debuguear($inventario_nuevo);
-
-            $inventario_nuevo->cantidad = 0;
-            $inventario_nuevo->categoria_id = $categoriaId;
-            $inventario_nuevo->codigo_barras = $producto->codigo_barras;
+            $argsCrear = $_POST['inventarioCrear'];
+            $argsActualizar = $_POST['inventarioActualizar'];
+            $argsActualizarStock = $_POST['inventarioActualizarStock'];
 
 
+            $producto = new Productos();
 
-            $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+            $metodoCrear = !empty($argsCrear);
+            $metodoActualizar = !empty($argsActualizar);
+            $metodoActualizarStock = !empty($argsActualizarStock);
 
-            if ($_FILES['productos']['tmp_name']['imagen']) {
-                //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
-                $image = Image::make($_FILES['productos']['tmp_name']['imagen'])->fit(600, 800);
-                $producto->setImagen($nombreImagen);
+            if ($metodoCrear) {
+                // Llenamos el objeto de producto con sus datos del post
+                $producto->nombre = $argsCrear['nombre'];
+                $producto->descripcion = $argsCrear['descripcion'];
+                $producto->codigo_barras = $argsCrear['codigo_barras'];
 
 
-            }
+                // debuguear($producto);
 
-            // debuguear($producto);
-            // debuguear($inventario);
-            // $alertas = $producto->validarNuevoProducto();
-            // $alertas = $inventario_nuevo->validarNuevoProducto();
+                $inventario_nuevo = new Inventario();
+                $inventario_nuevo->precio_unitario_venta = $argsCrear['precio_unitario_venta'];
+                $inventario_nuevo->precio_compra = $argsCrear['precio_compra'];
+                $inventario_nuevo->categoria_id = $argsCrear['categoria_id'];
+                $inventario_nuevo->codigo_barras = $argsCrear['codigo_barras'];
+                $inventario_nuevo->proveedor_id = $argsCrear['proveedor_id'];
+                $optionpieza = $argsCrear['optionpieza'];
+                if ($optionpieza === 'optiongranel') {
+                    $inventario_nuevo->granel = 1;
 
-            // if (empty($alertas)) {
-
-                if (!is_dir(CARPETA_IMAGENES)) {
-                    mkdir(CARPETA_IMAGENES);
+                } else {
+                    $inventario_nuevo->granel = 0;
                 }
-                $image->save(CARPETA_IMAGENES . $nombreImagen);
+                // debuguear($inventario_nuevo);
+                // Al ser un producto nuevo su cantidad es 0
+                $inventario_nuevo->cantidad = 0;
+
+                $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+
+                if ($_FILES['inventarioCrear']['tmp_name']['imagen']) {
+                    //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
+                    $image = Image::make($_FILES['inventarioCrear']['tmp_name']['imagen'])->fit(900, 800);
+                    $producto->setImagen($nombreImagen);
+                    if (!is_dir(CARPETA_IMAGENES)) {
+                        mkdir(CARPETA_IMAGENES);
+                    }
+                    $image->save(CARPETA_IMAGENES . $nombreImagen);
+
+                }
+
+
+                // if (empty($alertas)) {
+
 
 
                 $codigo_barras = $producto->codigo_barras;
@@ -86,21 +97,51 @@ class InventarioController
                 $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
 
                 $inventario_nuevo->guardar();
-        // $alertas = Inventario::getAlertas();
-                
-                
-                header('Location: /inventario');
+            } elseif ($metodoActualizar) {
+                $inventarioActualizar = new Inventario($argsActualizar);
+                $productoActualizar = new Productos($argsActualizar);
+                $optionpieza = $argsActualizar['optionpieza'];
+                $id = $inventarioActualizar->id;
+                $inventarioViejo = Inventario::find($id);
+                $cantidad = $inventarioViejo->cantidad;
+                if ($optionpieza === 'optiongranel') {
+                    $inventarioActualizar->granel = 1;
 
+                } else {
+                    $inventarioActualizar->granel = 0;
+                }
+                $inventarioActualizar->cantidad = $cantidad;
+                $productoAnterior = Productos::find($id);
+                $inventarioActualizar->codigo_barras = $productoAnterior->codigo_barras;
+                $inventarioActualizar->guardar();
 
-                // debuguear($producto);
-                // debuguear($inventario);
-                // $alertas = $inventario_nuevo->validarLogin();
-                
-                
-                
+                $nombreImagenActualizar = md5(uniqid(rand(), true)) . ".jpg";
+                // debuguear($_FILES);
+                if (!empty($_FILES['inventarioActualizar']['tmp_name']['imagen'])) {
+                    //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
+                    $image = Image::make($_FILES['inventarioActualizar']['tmp_name']['imagen'])->fit(900, 800);
+                    $productoActualizar->setImagen($nombreImagenActualizar);
+                    if (!is_dir(CARPETA_IMAGENES)) {
+                        mkdir(CARPETA_IMAGENES);
+                    }
+                    $image->save(CARPETA_IMAGENES . $nombreImagenActualizar);
 
+                } else {
+                    $id = $productoActualizar->id;
+                    $productoActualizar->imagen = $productoAnterior->imagen;
 
-            // }
+                }
+                $productoActualizar->codigo_barras = $productoAnterior->codigo_barras;
+                // debuguear($productoActualizar);
+                $productoActualizar->guardar();
+            } elseif ($metodoActualizarStock) {
+                $id = $argsActualizarStock['id'];
+                $productoActualizarStock = Inventario::find($id);
+                $productoActualizarStock->cantidad = $argsActualizarStock['cantidad'];
+                $productoActualizarStock->guardar();
+            }
+
+            header('Location: /inventario');
 
         }
 
@@ -124,52 +165,6 @@ class InventarioController
 
 
 
-        ]);
-    }
-    public static function crear(Router $router)
-    {
-        $producto = new Productos;
-        $categorias = Categorias::all();
-        debuguear($categorias);
-        $proveedores = Proveedor::all();
-        $inventario_completo = Inventario_completo::all();
-        //arreglo con mrnsaje de errores
-        $errores = Productos::getErrores();
-
-
-        if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            debuguear($_POST);
-
-            $errores = Productos::getErrores();
-            $producto = new Productos($_POST['productos']);
-
-            $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
-
-            if ($_FILES['productos']['tmp_name']['imagen']) {
-                //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
-                $image = Image::make($_FILES['productos']['tmp_name']['imagen'])->fit(600, 800);
-                $producto->setImagen($nombreImagen);
-            }
-
-            $errores = $producto->validar();
-            if (empty($errores)) {
-                if ($_FILES['productos']['tmp_name']['imagen']) {
-
-                    //Guarda la imagen en el servidor
-                    $image->save(CARPETA_IMAGENES . $nombreImagen);
-                }
-
-                $producto->guardar();
-                header('Location:/inventario');
-            }
-        }
-
-        $router->render('paginas/inventario', [
-            'producto' => $producto,
-            'proveedores' => $proveedores,
-            'categorias' => $categorias,
-            'errores' => $errores,
-            'inventario_completo' => $inventario_completo
         ]);
     }
 }
