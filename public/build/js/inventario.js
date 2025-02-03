@@ -140,16 +140,16 @@ const inputCodigoBarrasBusqueda = document.getElementById('codigo-barras');
 const slides = [
 
     {
-        titulo: "Entrada de producto",
+        titulo: "Movimiento de producto",
         parrafo: "Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
         enlace: "#",
         enlaceTexto: "Entrada de producto"
     },
     {
-        titulo: "Salida de Producto",
-        parrafo: "Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
+        titulo: "Ver Categorías",
+        parrafo: "Busca y gestiona las categorías disponibles para poder clasificar correctamente tus productos.",
         enlace: "#",
-        enlaceTexto: "Salida de producto"
+        enlaceTexto: "Ver Categorías"
     },
     {
         titulo: "Añade un producto",
