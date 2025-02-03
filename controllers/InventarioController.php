@@ -33,14 +33,16 @@ class InventarioController
             $argsCrear = $_POST['inventarioCrear'];
             $argsActualizar = $_POST['inventarioActualizar'];
             $argsActualizarStock = $_POST['inventarioActualizarStock'];
-
+            $argsEliminarStock = $_POST['inventarioEliminarStock'];
 
             $producto = new Productos();
 
             $metodoCrear = !empty($argsCrear);
             $metodoActualizar = !empty($argsActualizar);
             $metodoActualizarStock = !empty($argsActualizarStock);
+            $metodoEliminarStock = !empty($argsEliminarStock);
 
+            // El método fue crear
             if ($metodoCrear) {
                 // Llenamos el objeto de producto con sus datos del post
                 $producto->nombre = $argsCrear['nombre'];
@@ -97,7 +99,7 @@ class InventarioController
                 $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
 
                 $inventario_nuevo->guardar();
-            } elseif ($metodoActualizar) {
+            } elseif ($metodoActualizar) { // El método fue actualizar
                 $inventarioActualizar = new Inventario($argsActualizar);
                 $productoActualizar = new Productos($argsActualizar);
                 $optionpieza = $argsActualizar['optionpieza'];
@@ -134,11 +136,17 @@ class InventarioController
                 $productoActualizar->codigo_barras = $productoAnterior->codigo_barras;
                 // debuguear($productoActualizar);
                 $productoActualizar->guardar();
-            } elseif ($metodoActualizarStock) {
+            } elseif ($metodoActualizarStock) { // El método fue actualizar Stock
                 $id = $argsActualizarStock['id'];
                 $productoActualizarStock = Inventario::find($id);
                 $productoActualizarStock->cantidad = $argsActualizarStock['cantidad'];
                 $productoActualizarStock->guardar();
+            } elseif ($metodoEliminarStock){
+                $id = $argsEliminarStock['id'];
+                $productoEliminarStock = Productos::find($id);
+                $productoEliminarStock->eliminar();
+                $inventarioEliminarStock = Inventario::find($id);
+                $inventarioEliminarStock->eliminar();
             }
 
             header('Location: /inventario');

@@ -21,6 +21,7 @@ const btnAbrirModalNuevoProductoFijo = document.querySelector('.botonslider3');
 const modalInventario = document.querySelector('.modal--inventario');
 const modalActualizarInventario = document.querySelector('.modal--inventario--actualizar');
 const modalActualizarStock = document.querySelector('.modal--inventario--actualizarStock');
+const modalEliminarInventario = document.querySelector('.modal--inventarioEliminar');
 const modalActualizarInventarioContainer = document.querySelector('.modal--inventario--actualizar__contenedor');
 const inventarioGrid = document.createElement('DIV');
 inventarioGrid.classList.add('inventariogrid');
@@ -534,6 +535,32 @@ function mostrarCards(inventario) {
 
 
             }
+            if(e.target.classList == 'botoneliminar'){
+                abrirModalEliminarProducto(e);
+                const h2ModalE = modalEliminarInventario.querySelector('.modal--inventarioEliminar__container').querySelector('H2');
+                h2ModalE.innerHTML = `¿Seguro que deseas eliminar del registro a ${nombre} ?`;
+
+                const divId = document.createElement('DIV');
+                divId.classList.add('modal--inventario--EliminarStock__id');
+                divId.innerHTML = `
+                <input type="hidden" id="idInventarioentrada" name="inventarioEliminarStock[id]"  value="${producto_id}">
+                `;
+                const formularioEliminar = document.querySelector('#eliminarStock');
+                formularioEliminar.appendChild(divId);
+
+
+                modalEliminarInventario.addEventListener('click',(e)=>{
+                    if(e.target.classList == 'modal--inventarioEliminar__si'){
+
+                    }
+                    if(e.target.classList == 'modal--inventarioEliminar__no'){
+                        modalEliminarInventario.classList.remove('modal--inventarioEliminar--show');
+                    }
+                })
+                
+
+            }
+            
         })
     });
 }
@@ -671,6 +698,10 @@ function abrirModalActualizarProducto(e) {
 function abrirModalActualizarStock(e) {
     e.preventDefault();
     modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
+}
+function abrirModalEliminarProducto(e) {
+    e.preventDefault();
+    modalEliminarInventario.classList.add('modal--inventarioEliminar--show');
 }
 
 
