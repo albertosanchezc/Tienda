@@ -503,7 +503,7 @@ body {
         grid-column: 1;
         height: 100%;
         display: flex;
-        justify-content: right;
+        justify-content: center;
         align-items: center;
         background-color: #fff;
         border-top-left-radius: 1rem;
@@ -519,7 +519,7 @@ body {
             justify-content: center;     
         }
         @media (min-width: #{$laptop-1}){
-            justify-content: right;   
+            justify-content: center;   
         }
 
 
@@ -1272,6 +1272,7 @@ body {
 
     &__container {
         padding: 1rem 2.5rem 1rem 2.5rem;
+        overflow-y: auto;
     }
 
     &__cerrar {
@@ -1510,6 +1511,15 @@ body {
             text-align: left;
             font-size: 1.2rem;
             cursor: pointer;
+            // align-items: center;
+
+            
+        }
+
+        img{
+            // align-items: center;
+            max-width: 4rem;
+            height: auto;
         }
 
         tbody tr:nth-child(even) {

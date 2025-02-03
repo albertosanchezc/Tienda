@@ -223,7 +223,7 @@
                         </div>
                         <div class="modal--inventario__precio_compra">
                             <label for="entradaprecio_compra">Precio de Compra</label>
-                            <p class="kilocompra"></p>
+                            <p class="kiloventa"></p>
                             <div class="modal--inventario__flexcompra">
                                 <p>$</p>
                                 <input type="number" step="0.01" id="entradaprecio_compra"
@@ -233,7 +233,7 @@
                         </div>
                         <div class="modal--inventario__precio_unitario_venta">
                             <label for="entradaprecio_unitario_venta">Precio de Venta </label>
-                            <p class="kiloventa"></p>
+                            <p class="kilocompra"></p>
                             <div class="modal--inventario__flexcompra">
                                 <p>$</p>
                                 <input type="text" step="0.01" id="entradaprecio_unitario_venta"
@@ -322,19 +322,19 @@
                             </select>
                         </div>
                         <div class="modal--inventario--actualizar__granelono">
-                            <p>Metodo de Venta: </p>
+                        <p>Metodo de Venta: </p>
                             <div class="switch">
-                                <input type="radio" id="optionpieza" name="inventarioActualizar[optionpieza]"
-                                    value="optionpieza">
-                                <label for="optionpieza">Por pieza</label>
-                                <input type="radio" id="optiongranel" name="inventarioActualizar[optionpieza]"
+                                <input type="radio" id="optionpiezaActualizar" name="inventarioActualizar[optionpieza]"
+                                    value="optionpieza" checked>
+                                <label for="optionpiezaActualizar">Por pieza</label>
+                                <input type="radio" id="optiongranelActualizar" name="inventarioActualizar[optionpieza]"
                                     value="optiongranel">
-                                <label for="optiongranel">A Granel</label>
+                                <label for="optiongranelActualizar">A Granel</label>
                             </div>
                         </div>
                         <div class="modal--inventario--actualizar__precio_compra">
                             <label for="entradaprecio_compra">Precio de Compra</label>
-                            <p class="kilocompra"></p>
+                            <p class="kilocompra">()</p>
                             <div class="modal--inventario--actualizar__flexcompra">
                                 <p>$</p>
                                 <input type="number" step="0.01" id="entradaprecio_compra"
@@ -344,7 +344,7 @@
                         </div>
                         <div class="modal--inventario--actualizar__precio_unitario_venta">
                             <label for="entradaprecio_unitario_venta">Precio de Venta </label>
-                            <p class="kiloventa"></p>
+                            <p class="kiloventa">()</p>
                             <div class="modal--inventario--actualizar__flexcompra">
                                 <p>$</p>
                                 <input type="text" step="0.01" id="entradaprecio_unitario_venta"
