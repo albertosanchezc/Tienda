@@ -1,7 +1,8 @@
 // Selectores
 let inventario = [];
-let inventario_granel = [];
-let inventarioCompleto = [];
+let proveedores = [];
+let categorias = [];
+
 let terminosBusqueda = {
     id: '',
     nombre: '',
@@ -21,7 +22,6 @@ const btnAbrirModalNuevoProductoFijo = document.querySelector('.botonslider3');
 const modalInventario = document.querySelector('.modal--inventario');
 const modalActualizarInventario = document.querySelector('.modal--inventario--actualizar');
 const modalActualizarStock = document.querySelector('.modal--inventario--actualizarStock');
-const inputHidden = modalActualizarStock.querySelector('#cantidadInventarioentrada');
 
 const modalEliminarInventario = document.querySelector('.modal--inventarioEliminar');
 const modalActualizarInventarioContainer = document.querySelector('.modal--inventario--actualizar__contenedor');
@@ -199,6 +199,8 @@ async function consultarAPI() {
 
 
         inventario = resultado.inventario;
+        proveedores = resultado.proveedores;
+        categorias = resultado.categorias;
         // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
         filtrar()
         // mostrarCards(inventario);
@@ -259,13 +261,13 @@ function filtrar() {
     const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras);
     if (resultadosFiltrado.length > 0) {
         console.log(resultadosFiltrado);
-        mostrarPagina(1, resultadosFiltrado);
+        mostrarPagina(1, resultadosFiltrado,proveedores);
 
         generarPaginador(resultadosFiltrado);
         return resultadosFiltrado.flat();
     } else {
         // mostrarPagina(1,resultadosFiltrado);
-        mostrarPagina(1, resultadosFiltrado);
+        mostrarPagina(1, resultadosFiltrado,proveedores);
         generarPaginador(resultadosFiltrado);
 
         return resultadosFiltrado.flat();
@@ -314,7 +316,7 @@ function filtrarProveedor() {
     }
 }
 
-function mostrarCards(inventario) {
+function mostrarCards(inventario, proveedores) {
     console.log(inventario);
     console.log("Producto desde mostrarCards", inventario);
 
@@ -342,7 +344,21 @@ function mostrarCards(inventario) {
         `;
 
         // let categoriaNombre = categorias.find()
-        gridContenido.innerHTML = `
+        const div = document.createElement('DIV');
+        div.classList.add('inventarionombre');
+        const contenidoDiv = document.createElement('P');
+        if(granel === '1'){
+            contenidoDiv.innerHTML = `
+            <div class="inventarionombre">
+                
+                <div>
+                    <h3>Abarrotes</h3>
+                    <p>${cantidad} GRAMOS EN STOCK</p>
+                </div>
+            </div>
+            `;
+        } else {
+            contenidoDiv.innerHTML = `
             <div class="inventarionombre">
                 
                 <div>
@@ -350,6 +366,12 @@ function mostrarCards(inventario) {
                     <p>${cantidad} ARTÍCULOS EN STOCK</p>
                 </div>
             </div>
+            `;
+        }
+        div.appendChild(contenidoDiv);
+        const proveedor = proveedores.find(p => p.id === proveedor_id)
+        const proveedorNombre = proveedor.nombre;
+        gridContenido.innerHTML = `
             <div class="flexdescripcion">
                 <img src="/build/img/descripcion-alternativa.png" alt="Logotipo de descripción" class="imgdescripcion">
                 <div>
@@ -368,7 +390,7 @@ function mostrarCards(inventario) {
                 <img src="/build/img/proveedor-alternativo.png" alt="Logotipo de proveedor" class="imgproveedor">
                 <div>
                     <p class="negritas">Proveedor:</p>
-                    <p>${proveedor_id}</p>
+                    <p>${proveedorNombre}</p>
                 </div>
 
             </div>
@@ -411,8 +433,8 @@ function mostrarCards(inventario) {
         </div>
 
         `;
-
         inventarioGrid.appendChild(parrafoContainer);
+        gridContenido.prepend(div);
         inventarioGrid.appendChild(gridContenido);
         inventarioGrid.appendChild(dineroGrid);
         inventarioGrid.appendChild(botonesGrid);
@@ -439,8 +461,7 @@ function mostrarCards(inventario) {
                 const inputCategoria = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradacategoria');
 
                 const inputProveedor = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradaproveedor');
-                const pKiloCompraActualizar = modalActualizarInventario.querySelector('.kilocompra');
-                const pKiloVentaActualizar = modalActualizarInventario.querySelector('.kiloventa');
+
 
                 if (granel === '1') {
                     const inputGranel = modalActualizarInventario.querySelector('#optiongranelActualizar');
@@ -484,10 +505,7 @@ function mostrarCards(inventario) {
 
             }
             if (e.target.classList == 'botonactualizarstock') {
-                abrirModalActualizarStock(e, cantidad, granel);
                 console.log(granel);
-
-
                 const h3ModalAS = document.querySelector('.modal--inventario--actualizarStock__titulo').querySelector('H3');
                 h3ModalAS.innerHTML = `Actualiza la cantidad en Stock de ${nombre}`;
 
@@ -498,11 +516,16 @@ function mostrarCards(inventario) {
                 divId.classList.add('modal--inventario--actualizarStock__id');
                 divId.innerHTML = `
                 <input type="hidden" id="idInventarioentrada" name="inventarioActualizarStock[id]"  value="${producto_id}">
-                <input type="hidden" id="cantidadInventarioentrada" name="inventarioActualizarStock[cantidad]" value="${cantidad}">
+                <input type="hidden" id="cantidadInventarioentrada" name="inventarioActualizarStock[cantidad]" value="">
 
                 `;
-                const formularioStock = document.querySelector('#actualizarStock');
+                const formularioStock = modalActualizarStock.querySelector('#actualizarStock');
                 formularioStock.appendChild(divId);
+
+                const inputHidden = document.querySelector('#cantidadInventarioentrada');
+
+                abrirModalActualizarStock(inputHidden,e, cantidad, granel);
+
 
 
             }
@@ -597,7 +620,7 @@ btnAbrirModalNuevoProductoFijo.addEventListener('click', e => {
 
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
-function mostrarPagina(pagina, datos = inventario) {
+function mostrarPagina(pagina, datos = inventario, proveedores) {
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     const inventarioPagina = datos.slice(inicio, fin);
@@ -605,7 +628,7 @@ function mostrarPagina(pagina, datos = inventario) {
     console.log("Inventario Pagina: ", inventarioPagina);
     paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
     limpiarHTMLElemento(despliegueInventario);
-    mostrarCards(inventarioPagina);
+    mostrarCards(inventarioPagina,proveedores);
     generarPaginador(datos)
     return inventarioPagina;
 }
@@ -653,7 +676,7 @@ paginadorContainer.addEventListener('click', (e) => {
         }
     }
     let resultados = filtrar()
-    mostrarPagina(paginaActual, resultados);
+    mostrarPagina(paginaActual, resultados, proveedores);
 })
 
 
@@ -666,16 +689,16 @@ function abrirModalActualizarProducto(e) {
     e.preventDefault();
     modalActualizarInventario.classList.add('modal--inventario--actualizar--show');
 }
-function abrirModalActualizarStock(e, cantidad, granel) {
+function abrirModalActualizarStock(inputHidden,e, cantidad, granel) {
     e.preventDefault();
     modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
     // modalActualizarStock.querySelector('switch').querySelector('#optionaniadir').click();
 
     let resultado = cantidad;
 
-    console.log(inputHidden.value);
+    // console.log(inputHidden.value);
     imprimirParrafosModal(granel, cantidad, resultado);
-    
+
     const inputModalActualizarStock = modalActualizarStock.querySelector('#cantidadStock');
     inputModalActualizarStock.addEventListener('input', (e) => {
         if (e.target.value !== '') {
@@ -734,8 +757,8 @@ function imprimirParrafosModal(granel, cantidad, resultado) {
     const parrafoCantidadActual = document.querySelector('.modal--inventario--actualizarStock__cantidadActual').querySelector('P');
     const parrafoCantidadResultado = document.querySelector('.modal--inventario--actualizarStock__resultadocantidad').querySelector('P');
     if (granel === '1') {
-        parrafoCantidadActual.innerHTML = `${cantidad}  Kg en Stock`;
-        parrafoCantidadResultado.innerHTML = `${resultado} kg en Stock`;
+        parrafoCantidadActual.innerHTML = `${cantidad}  g en Stock`;
+        parrafoCantidadResultado.innerHTML = `${resultado} g en Stock`;
     } else {
         parrafoCantidadActual.innerHTML = `${cantidad}  Artículos en Stock`;
         parrafoCantidadResultado.innerHTML = `${resultado} Artículos en Stock`;

@@ -28,12 +28,13 @@ class InventarioController
 
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            debuguear($_POST);
+            // debuguear($_POST);
             $alertas = Productos::getAlertas();
             $argsCrear = $_POST['inventarioCrear'];
             $argsActualizar = $_POST['inventarioActualizar'];
             $argsActualizarStock = $_POST['inventarioActualizarStock'];
             $argsEliminarStock = $_POST['inventarioEliminarStock'];
+            
 
             $producto = new Productos();
 
