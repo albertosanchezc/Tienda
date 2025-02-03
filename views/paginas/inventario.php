@@ -392,19 +392,25 @@
             <form id="actualizarStock" method="POST">
                 <fieldset>
                     <legend>+Actualizar Stock</legend>
-                    <div class="modal--inventario--actualizarStock__cantidadActual">
-                        <h3>Cantidad Registrada: </h3>
-                        <p>10 Artículos en Stock</p>
-                    </div>
+                    
                     <div class="modal--inventario--actualizarStock__entradasbox">
 
                         <div class="modal--inventario--actualizarStock__nombre">
-                            <label for="cantidadStock">Nueva Cantidad: </label>
+                            <label for="cantidadStock"> Cantidad a Agregar: </label>
                             <input type="number" id="cantidadStock" name="inventarioActualizarStock[cantidad]" min="0"
                                 placeholder="Ej. 10" value="<?php echo s($inventario->cantidad); ?>">
+                            
                         </div>
                     </div>
                 </fieldset>
+                <div class="modal--inventario--actualizarStock__cantidadActual">
+                        <h3>Cantidad Registrada: </h3>
+                        <p>10 Artículos en Stock</p>
+                    </div>
+                <div class="modal--inventario--actualizarStock__resultadocantidad">
+                                <h3>Cantidad Resultante:</h3>
+                                <p>10 Artículos en Stock</p>
+                            </div>
                 <div class="modal--inventario--actualizarStock__btn">
                     <input value="Actualizar Stock" type="submit"
                         class="modal--inventario--actualizarStock__botonaniadir">
@@ -419,8 +425,8 @@
         <h2 class="modal--inventarioEliminar__title">¿Seguro que deseas eliminar del registro --nombre?</h2>
         <form id="eliminarStock" method="POST">
             <div class="modal--inventarioEliminar__opciones">
-                <input value= "Si" type="submit" class="modal--inventarioEliminar__si">
-                <input value= "No" class="modal--inventarioEliminar__no">    
+                <input value="Si" type="submit" class="modal--inventarioEliminar__si">
+                <input value="No" class="modal--inventarioEliminar__no">
             </div>
         </form>
     </div>
