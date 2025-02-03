@@ -13,6 +13,7 @@ describe('Pruebas del carrito de compras', () => {
         cy.getByData("numeroArticulos").should('be.visible')
         cy.getByData("Cantidadtotal").should('be.visible')
         cy.getByData("contenedorDetalles").should('be.visible')
+
     })
 
     context('Buscar producto con modal código barras', () => {
@@ -31,7 +32,6 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("precioUnitarioVentaProductoTbodyModalManual").should("exist")
 
             cy.getByData("modal--manual__close").should('have.value', '7507')
-
 
             cy.getByData("nombreProductoTbodyModalManual").should('have.text', 'Cigarros Shots Classics')
             cy.getByData("descripcionProductoTbodyModalManual").should('have.text', '20')
@@ -57,8 +57,12 @@ describe('Pruebas del carrito de compras', () => {
             it("Debería escribir en el input y cerrar la modal", () => {
                 cy.getByData("modal--manual__close").should('exist')
                 cy.getByData("modal--manual__close").type("7507")
-
-
+                cy.screenshot('Escribir en el input', {
+                    capture: 'viewport',            // Define qué parte capturar
+                    disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                    scale: true,                     // Escala la imagen en pantallas con alta resolución
+                    timeout: 5000                     // Espera hasta 5 segundos antes de capturar
+                  })
                 // Cerrar ventana modal busqueda por código de barras
                 cy.getByData("botonCerrarModalManual").should('exist')
                 cy.getByData("botonCerrarModalManual").click()
@@ -177,6 +181,12 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("botonBusquedaManual").click()
             cy.getByData("modal--manual__close").should('exist')
             cy.getByData("modal--manual__close").type("7507")
+            cy.screenshot('Filtrar en busqueda manual', {
+                capture: 'runner',            // Define qué parte capturar
+                disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                scale: true,                     // Escala la imagen en pantallas con alta resolución
+                timeout: 5000                     // Espera hasta 5 segundos antes de capturar
+              })
             cy.getByData("descripcionProductoTbodyModalManual").should('exist')
             cy.getByData("descripcionProductoTbodyModalManual").contains('20').click()
         })
@@ -188,6 +198,12 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("descripcionCarrito").should('exist')
             cy.getByData("codigoBarrasCarrito").should('exist')
             cy.getByData("imgCarrito").should('exist')
+            cy.screenshot('Mostrar en el carrito', {
+                capture: 'runner',            // Define qué parte capturar
+                disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                scale: true,                     // Escala la imagen en pantallas con alta resolución
+                timeout: 5000                     // Espera hasta 5 segundos antes de capturar
+              })
         })
 
         it("Debe tener los valores correcto", () => {

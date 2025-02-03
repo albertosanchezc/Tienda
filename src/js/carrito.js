@@ -812,7 +812,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Aquí ya tenemos bien el arreglo sin repetidos;
         console.log('Articulos carrito desde mostrar productosCarrito', productos);
         productos.forEach(articulo => {
-            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta } = articulo;
+            const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta, imagen } = articulo;
             console.log(articulosCarrito);
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -822,7 +822,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td data-test="descripcionCarrito" id="descripcionCarritoTbody">${descripcion}</td>
                 <td data-test="codigoBarrasCarrito" id="codigoBarrasCarritoTbody">${codigo_barras}</td>
                 <td>
-                    <img data-test="imgCarrito" src="/build/img/doritos.webp" alt="Logotipo de producto" class="imagen-producto">
+                    <img data-test="imgCarrito" src="/imagenes/${imagen}" alt="Logotipo de producto" class="imagen-producto">
                 </td>
                 <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
                 <td>
@@ -962,7 +962,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function mostrarDetallesProducto(articuloCarritoAModificar) {
         limpiarHTMLElemento(contenedorDetalles);
 
-        const { nombre, descripcion, cantidad, precio_unitario_venta } = articuloCarritoAModificar[0];
+        const { nombre, descripcion, cantidad, precio_unitario_venta, imagen } = articuloCarritoAModificar[0];
 
         const totalD = (precio_unitario_venta * cantidad).toFixed(2);
         console.log("Filas carrito ", articuloCarritoAModificar);
@@ -970,7 +970,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const div1ContenidoDetalles = document.createElement('DIV');
         div1ContenidoDetalles.classList.add('rectangulo-pequeno-bebe1');
         div1ContenidoDetalles.innerHTML = `
-        <img loading="lazy" src="build/img/doritos.webp" alt="anuncio">
+        <img  src="/imagenes/${imagen}" alt="anuncio">
         `;
 
         const div2ContenidoDetalles = document.createElement('DIV');
