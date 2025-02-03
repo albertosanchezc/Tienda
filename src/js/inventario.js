@@ -25,9 +25,15 @@ const modalEliminarInventario = document.querySelector('.modal--inventarioElimin
 const modalActualizarInventarioContainer = document.querySelector('.modal--inventario--actualizar__contenedor');
 const inventarioGrid = document.createElement('DIV');
 inventarioGrid.classList.add('inventariogrid');
+
 const btnOptionCrear = modalInventario.querySelector('.switch');
+const btnOptionActualizar = modalActualizarInventario.querySelector('.switch');
+
 const pKiloCompra = document.querySelector('.kilocompra');
 const pKiloVenta = document.querySelector('.kiloventa');
+
+const pKiloCompraActualizar = modalActualizarInventario.querySelector('.kilocompra');
+const pKiloVentaActualizar = modalActualizarInventario.querySelector('.kiloventa');
 
 
 btnCerrarModal.addEventListener('click', (e) => {
@@ -44,6 +50,8 @@ btnCerrarModalActualizarStock.addEventListener('click', (e) => {
     modalActualizarStock.classList.remove('modal--inventario--actualizarStock--show');
 });
 
+
+
 btnOptionCrear.addEventListener('click', (e) => {
     if (e.target.value === 'optiongranel') {
         pKiloCompra.textContent = '(Precio por Kilogramo):';
@@ -57,6 +65,21 @@ btnOptionCrear.addEventListener('click', (e) => {
     }
 
 })
+
+btnOptionActualizar.addEventListener('click', (e) => {
+    if (e.target.value === 'optiongranel') {
+        pKiloCompraActualizar.textContent = '(Precio por Kilogramo):';
+        pKiloVentaActualizar.textContent = '(Precio por Kilogramo):';
+
+    }
+    if (e.target.value === 'optionpieza') {
+        pKiloCompraActualizar.textContent = '(Precio por Pieza):';
+        pKiloVentaActualizar.textContent = '(Precio por Pieza):';
+
+    }
+
+})
+
 
 // Selecciona el input de tipo file
 const inputNuevaImagen = modalInventario.querySelector('#imagen');
@@ -101,7 +124,7 @@ inputNuevaImagenActualizar.addEventListener('change', (event) => {
     const file1 = event.target.files[0];
     console.log(file1);
 
-    
+
     // Verifica si se seleccionó un archivo
     if (file1) {
         // Crea una instancia de FileReader
@@ -414,13 +437,20 @@ function mostrarCards(inventario) {
                 const inputCategoria = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradacategoria');
 
                 const inputProveedor = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#entradaproveedor');
+                const pKiloCompraActualizar = modalActualizarInventario.querySelector('.kilocompra');
+                const pKiloVentaActualizar = modalActualizarInventario.querySelector('.kiloventa');
 
                 if (granel === '1') {
-                    const inputGranel = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#optiongranel');
+                    const inputGranel = modalActualizarInventario.querySelector('#optiongranelActualizar');
                     inputGranel.click()
+                    // pKiloCompraActualizar.textContent = '(Precio por Kilogramo):';
+                    // pKiloVentaActualizar.textContent = '(Precio por Kilogramo):';
+
                 } else {
-                    const inputGranel = document.querySelector('.modal--inventario--actualizar__contenedor').querySelector('#optionpieza');
-                    inputGranel.click()
+                    const inputPieza = modalActualizarInventario.querySelector('#optionpiezaActualizar');
+                    inputPieza.click()
+                    // pKiloCompraActualizar.textContent = '(Precio por Pieza):';
+                    // pKiloVentaActualizar.textContent = '(Precio por Pieza):';
 
                 }
 
@@ -444,64 +474,6 @@ function mostrarCards(inventario) {
 
 
 
-                // const imagenActual = document.querySelector('.modal--inventario--actualizar__imagen .imagen-small');
-                // if (imagen) {
-                //     imagenActual.src = `/imagenes/${imagen}`;
-                // }
-
-                // Configurar el input de tipo file
-                // const inputNuevaImagen = document.querySelector('#imagen');
-                // inputNuevaImagen.value = ''; // Limpiar el input de tipo file
-
-                // // Manejar la selección de una nueva imagen
-                // inputNuevaImagen.addEventListener('change', (event) => {
-                //     const file = event.target.files[0];
-                //     if (file) {
-                //         const reader = new FileReader();
-                //         reader.onload = function (e) {
-                //             if (imagenActual) {
-                //                 imagenActual.src = e.target.result;
-                //             }
-                //         };
-                //         reader.readAsDataURL(file);
-                //     }
-                // });
-
-                // Selecciona el input de tipo file
-                // const inputNuevaImagenActualizar = modalActualizarInventario.querySelector('#imagen');
-
-                // // Selecciona el contenedor de la vista previa de la imagen
-
-                // const vistaPreviaImagenActualizar = modalActualizarInventario.querySelector('#vistaPreviaImagen');
-
-
-                // inputNuevaImagenActualizar.addEventListener('change', (event) => {
-                //     // Obtiene el archivo seleccionado por el usuario
-                //     const file1 = event.target.files[0];
-                //     console.log(file1);
-
-                //     // Verifica si se seleccionó un archivo
-                //     if (file1) {
-                //         // Crea una instancia de FileReader
-                //         const reader1 = new FileReader();
-
-                //         // Define lo que sucede cuando FileReader termina de leer el archivo
-                //         reader1.onload = function (e) {
-                //             // Asigna la imagen leída al atributo "src" del contenedor de vista previa
-                //             vistaPreviaImagenActualizar.src = e.target.result;
-                //         };
-
-                //         // Lee el archivo como una URL de datos (data URL)
-                //         reader1.readAsDataURL(file1);
-                //     } else {
-                //         const resultado = inventario.find(p => p.codigo_barras === codigo_barras);
-
-
-                //         // Si no se selecciona un archivo, muestra la imagen actual (o un placeholder)
-                //         vistaPreviaImagenActualizar.src = `/imagenes/${imagen}`;
-                //     }
-                // });
-
                 const divId = document.createElement('DIV');
                 divId.classList.add('modal--inventario--actualizar__id')
                 divId.innerHTML = `
@@ -515,7 +487,7 @@ function mostrarCards(inventario) {
 
 
             }
-            if(e.target.classList == 'botonactualizarstock'){
+            if (e.target.classList == 'botonactualizarstock') {
                 abrirModalActualizarStock(e);
                 console.log(cantidad);
                 const h3ModalAS = document.querySelector('.modal--inventario--actualizarStock__titulo').querySelector('H3');
@@ -535,7 +507,7 @@ function mostrarCards(inventario) {
 
 
             }
-            if(e.target.classList == 'botoneliminar'){
+            if (e.target.classList == 'botoneliminar') {
                 abrirModalEliminarProducto(e);
                 const h2ModalE = modalEliminarInventario.querySelector('.modal--inventarioEliminar__container').querySelector('H2');
                 h2ModalE.innerHTML = `¿Seguro que deseas eliminar del registro a ${nombre} ?`;
@@ -549,18 +521,18 @@ function mostrarCards(inventario) {
                 formularioEliminar.appendChild(divId);
 
 
-                modalEliminarInventario.addEventListener('click',(e)=>{
-                    if(e.target.classList == 'modal--inventarioEliminar__si'){
+                modalEliminarInventario.addEventListener('click', (e) => {
+                    if (e.target.classList == 'modal--inventarioEliminar__si') {
 
                     }
-                    if(e.target.classList == 'modal--inventarioEliminar__no'){
+                    if (e.target.classList == 'modal--inventarioEliminar__no') {
                         modalEliminarInventario.classList.remove('modal--inventarioEliminar--show');
                     }
                 })
-                
+
 
             }
-            
+
         })
     });
 }
@@ -922,7 +894,7 @@ document.getElementById('actualizarStock').addEventListener('submit', function (
     if (!cantidad) {
         errores.push('La cantidad es obligatoria');
     }
-    if (cantidad<0) {
+    if (cantidad < 0) {
         errores.push('La cantidad debe ser mayor a 0');
     }
 
