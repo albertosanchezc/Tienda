@@ -78,6 +78,15 @@ class PaginasController
             'visitas_proveedores' => $visitas_proveedores
         ]);
     }
+
+    public static function cajaAPI(){
+        $caja = Caja::find(1);
+        $cajas_historicos = Caja_historico::all();
+        echo json_encode([
+            'caja' => $caja,
+            'cajas_historicos' => $cajas_historicos
+        ]);
+    }
     
 
     

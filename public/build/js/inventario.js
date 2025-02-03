@@ -21,6 +21,8 @@ const btnAbrirModalNuevoProductoFijo = document.querySelector('.botonslider3');
 const modalInventario = document.querySelector('.modal--inventario');
 const modalActualizarInventario = document.querySelector('.modal--inventario--actualizar');
 const modalActualizarStock = document.querySelector('.modal--inventario--actualizarStock');
+const inputHidden = modalActualizarStock.querySelector('#cantidadInventarioentrada');
+
 const modalEliminarInventario = document.querySelector('.modal--inventarioEliminar');
 const modalActualizarInventarioContainer = document.querySelector('.modal--inventario--actualizar__contenedor');
 const inventarioGrid = document.createElement('DIV');
@@ -34,6 +36,9 @@ const pKiloVenta = document.querySelector('.kiloventa');
 
 const pKiloCompraActualizar = modalActualizarInventario.querySelector('.kilocompra');
 const pKiloVentaActualizar = modalActualizarInventario.querySelector('.kiloventa');
+
+const contenedorModalActualizarCantidad = document.querySelector('.modal--inventario--actualizarStock__cantidadActual');
+const parrafoModalActualizarCantidad = contenedorModalActualizarCantidad.querySelector('P');
 
 
 btnCerrarModal.addEventListener('click', (e) => {
@@ -70,15 +75,12 @@ btnOptionActualizar.addEventListener('click', (e) => {
     if (e.target.value === 'optiongranel') {
         pKiloCompraActualizar.textContent = '(Precio por Kilogramo):';
         pKiloVentaActualizar.textContent = '(Precio por Kilogramo):';
-
     }
     if (e.target.value === 'optionpieza') {
         pKiloCompraActualizar.textContent = '(Precio por Pieza):';
         pKiloVentaActualizar.textContent = '(Precio por Pieza):';
-
     }
-
-})
+});
 
 
 // Selecciona el input de tipo file
@@ -443,15 +445,9 @@ function mostrarCards(inventario) {
                 if (granel === '1') {
                     const inputGranel = modalActualizarInventario.querySelector('#optiongranelActualizar');
                     inputGranel.click()
-                    // pKiloCompraActualizar.textContent = '(Precio por Kilogramo):';
-                    // pKiloVentaActualizar.textContent = '(Precio por Kilogramo):';
-
                 } else {
                     const inputPieza = modalActualizarInventario.querySelector('#optionpiezaActualizar');
                     inputPieza.click()
-                    // pKiloCompraActualizar.textContent = '(Precio por Pieza):';
-                    // pKiloVentaActualizar.textContent = '(Precio por Pieza):';
-
                 }
 
 
@@ -488,19 +484,22 @@ function mostrarCards(inventario) {
 
             }
             if (e.target.classList == 'botonactualizarstock') {
-                abrirModalActualizarStock(e);
-                console.log(cantidad);
+                abrirModalActualizarStock(e, cantidad, granel);
+                console.log(granel);
+
+
                 const h3ModalAS = document.querySelector('.modal--inventario--actualizarStock__titulo').querySelector('H3');
                 h3ModalAS.innerHTML = `Actualiza la cantidad en Stock de ${nombre}`;
-                const pModalAS = document.querySelector('.modal--inventario--actualizarStock__cantidadActual').querySelector('P');
-                pModalAS.innerHTML = `${cantidad}  Artículos en Stock`;
-                const inputModalActualizarStock = document.querySelector('.modal--inventario--actualizarStock__nombre').querySelector('INPUT');
-                inputModalActualizarStock.value = cantidad;
+
+                // pModalAS.innerHTML = `${cantidad}  Artículos en Stock`;
+
 
                 const divId = document.createElement('DIV');
                 divId.classList.add('modal--inventario--actualizarStock__id');
                 divId.innerHTML = `
                 <input type="hidden" id="idInventarioentrada" name="inventarioActualizarStock[id]"  value="${producto_id}">
+                <input type="hidden" id="cantidadInventarioentrada" name="inventarioActualizarStock[cantidad]" value="${cantidad}">
+
                 `;
                 const formularioStock = document.querySelector('#actualizarStock');
                 formularioStock.appendChild(divId);
@@ -667,13 +666,80 @@ function abrirModalActualizarProducto(e) {
     e.preventDefault();
     modalActualizarInventario.classList.add('modal--inventario--actualizar--show');
 }
-function abrirModalActualizarStock(e) {
+function abrirModalActualizarStock(e, cantidad, granel) {
     e.preventDefault();
     modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
+    // modalActualizarStock.querySelector('switch').querySelector('#optionaniadir').click();
+
+    let resultado = cantidad;
+
+    console.log(inputHidden.value);
+    imprimirParrafosModal(granel, cantidad, resultado);
+    
+    const inputModalActualizarStock = modalActualizarStock.querySelector('#cantidadStock');
+    inputModalActualizarStock.addEventListener('input', (e) => {
+        if (e.target.value !== '') {
+            resultado = parseFloat(cantidad) + parseFloat(e.target.value);
+        } else {
+            resultado = cantidad;
+        }
+        // resultado = parseFloat(e.target.value) + parseFloat(cantidad);
+
+        imprimirParrafosModal(granel, cantidad, resultado);
+        inputHidden.value = resultado;
+    });
+
+    const switchContainer = modalActualizarStock.querySelector('.switch');
+    switchContainer.addEventListener('click', (e) => {
+        console.log(e.target.id);
+        if (e.target.id === 'optionaniadir') {
+            inputModalActualizarStock.addEventListener('input', (e) => {
+                if (e.target.value !== '') {
+                    resultado = parseFloat(cantidad) + parseFloat(e.target.value);
+                } else {
+                    resultado = cantidad;
+                }
+                // resultado = parseFloat(e.target.value) + parseFloat(cantidad);
+                inputHidden.value = resultado;
+                imprimirParrafosModal(granel, cantidad, resultado);
+            });
+        }
+        if (e.target.id === 'optioneliminar') {
+            inputModalActualizarStock.addEventListener('input', (e) => {
+                if (e.target.value !== '') {
+                    resultado = parseFloat(cantidad) - parseFloat(e.target.value);
+                    if (resultado < 0) {
+                        resultado = 0;
+                        inputModalActualizarStock.value = cantidad;
+                    }
+                } else {
+                    resultado = cantidad;
+                }
+                // resultado = parseFloat(e.target.value) + parseFloat(cantidad);
+                inputHidden.value = resultado;
+                imprimirParrafosModal(granel, cantidad, resultado);
+
+            });
+        }
+    })
+
 }
 function abrirModalEliminarProducto(e) {
     e.preventDefault();
     modalEliminarInventario.classList.add('modal--inventarioEliminar--show');
+}
+
+function imprimirParrafosModal(granel, cantidad, resultado) {
+
+    const parrafoCantidadActual = document.querySelector('.modal--inventario--actualizarStock__cantidadActual').querySelector('P');
+    const parrafoCantidadResultado = document.querySelector('.modal--inventario--actualizarStock__resultadocantidad').querySelector('P');
+    if (granel === '1') {
+        parrafoCantidadActual.innerHTML = `${cantidad}  Kg en Stock`;
+        parrafoCantidadResultado.innerHTML = `${resultado} kg en Stock`;
+    } else {
+        parrafoCantidadActual.innerHTML = `${cantidad}  Artículos en Stock`;
+        parrafoCantidadResultado.innerHTML = `${resultado} Artículos en Stock`;
+    }
 }
 
 
