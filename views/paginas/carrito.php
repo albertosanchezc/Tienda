@@ -311,7 +311,7 @@
     </section>
 
     <!-- modal de bienvenida 1-->
-    <section data-test="modal" class="modal">
+    <section data-test="modal" class="modal modal--show">
         <div class="modal__container">
             <img src="/build/img/bienvenida.svg" alt="Logotipo de bienvenida" class="modal__img">
             <h2 class="modal__title">¡Bienvenido al Carrito!</h2>
