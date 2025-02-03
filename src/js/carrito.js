@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let infoProducto = {};
     let articuloCarritoAModificar = {};
     let articulosCarrito = [];
-    const registrosPorPagina = 3;
+    const registrosPorPagina = 4;
     let paginaActual = 1;
 
     let terminosBusqueda = {
@@ -1052,7 +1052,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td hidden data-test="idProductoTbodyModal${tipo}">${id}</td>   
                 <td data-test="nombreProductoTbodyModal${tipo}">${nombre}</td>
                 <td data-test="descripcionProductoTbodyModal${tipo}">${descripcion}</td>
-                <td data-test="imagenProductoTbodyModal${tipo}"><img data-test="imgModal" src="/imagenes/${imagen}" alt="Imágen ${nombre}" class="imagen-producto"></td>
+                <td data-test="imagenProductoTbodyModal${tipo}"><img data-test="imgModal" src="/imagenes/${imagen}" alt="Imágen producto" class="imagen-producto"></td>
                 <td data-test="codigoProductoTbodyModal${tipo}">${codigo_barras}</td>
                 <td data-test="precioUnitarioVentaProductoTbodyModal${tipo}">$${precio_unitario_venta}</td>
             `;
