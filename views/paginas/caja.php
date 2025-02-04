@@ -124,7 +124,8 @@
                         <div class="modal--aniadir__flex1">
                             <p>$</p>
                             <input href="#" id="11" class="modal--aniadir__close" type="number" placeholder="Ej. 1000"
-                                name="aniadirCaja[cantidad_caja]" value="<?php echo s($caja->cantidad_caja); ?>">
+                                id="cantidadaniadir" name="aniadirCaja[cantidad_caja]"
+                                value="<?php echo s($caja->cantidad_caja); ?>">
                             </input>
                         </div>
                     </div>
@@ -146,8 +147,8 @@
 </section>
 
 <!-- modal de retirar -->
-<section class="modal--retirar">
-    < class="modal--retirar__container">
+<div class="modal--retirar">
+    <div class="modal--retirar__container">
         <div class="modal--retirar__border"></div>
         <div class="modal--retirar__fleximg1">
             <img src="/build/img/dinero1.png" alt="Logotipo de dinero1" class="modal--retirar__img">
@@ -170,23 +171,25 @@
                         <div class="modal--aniadir__flex1">
                             <p>$</p>
                             <input href="#" id="12" class="modal--retirar__close" type="text" placeholder="$"
-                                step="0.01">
+                                step="0.01" name="retirarCaja[cantidad_caja]" value="<?php echo s($caja->cantidad_caja); ?>">
                             </input>
                         </div>
                     </div>
                 </div>
             </fieldset>
+            <div class="modal--retirar__saldoactual">
+                <h1>Efectivo Actual:</h1>
+                <p>$196.09</p>
+            </div>
+            <div class="modal--retirar__saldoresultante">
+                <h1>Efectivo Resultante:</h1>
+                <p>$196.09</p>
+            </div>
+            <div class="modal--retirar__close2">
+                <input type="submit" class="modal--retirar__close1" value="- Retirar">
+            </div>
         </form>
-        <div class="modal--retirar__saldoactual">
-            <h1>Efectivo Actual:</h1>
-            <p>$196.09</p>
-        </div>
-        <div class="modal--retirar__saldoresultante">
-            <h1>Efectivo Resultante:</h1>
-            <p>$196.09</p>
-        </div>
-        <div class="modal--retirar__close2">
-            <input type="submit" class="modal--retirar__close1" value="- Retirar">
-        </div>
-        </div>
+
+    </div>
+</div>
 </section>
