@@ -213,10 +213,16 @@
                 <div class="rectangulo-grande-bebe3">
                     <div class="rectangulo-grande-bebecito1">
                         <button id="busqueda-manual" class="boton-azul-block">
-                            Introducir Código de Barras.
+                            <div class="flexbtnbusqueda">
+                                <img loading="lazy" src="build/img/lupa.png" alt="Imagen de lupa">
+                                Introducir Código de Barras.
+                            </div>
                         </button>
                         <button id="busqueda-producto" class="boton-azul-block">
-                            Buscar por Nombre del Producto.
+                            <div class="flexbtnbusqueda">
+                                <img loading="lazy" src="build/img/lupa.png" alt="Imagen de lupa">
+                                Buscar por Nombre del Producto.
+                            </div>
                         </button>
                     </div>
                     <div class="rectangulo-grande-bebecito2">
@@ -594,7 +600,8 @@
         <div class="modal--pagar__container">
             <p class="modal--pagar__paragraph">
                 Introduce la cantidad de efectivo con la que te están pagando.
-            </p>   
+            </p>
+            <form id="pagarForm" method="POST"">
             <fieldset>
                 <legend>Efectivo</legend>
                 <label for="5">Efectivo:</label>
@@ -607,6 +614,7 @@
                 <a href="#" class="modal--pagar__btncancelar"><span>&lt;&lt;&lt;</span> REGRESAR</a>
                 <input type="submit" class="modal--pagar__btn" value="PAGAR >>>"> </input>
             </div>
+            </form>
         </div>
     </section>
 </main>

@@ -51,14 +51,15 @@
                             <input type="radio" id="abono" name="caja[tipo_movimiento]" value="abono">
                             <label for="abono">Abono</label>
                         </div>
-                        <div class="orden-caja">
-                            <label for="orden-caja">Orden: </label>
-                            <div class="switch">
-                                <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
-                                <label for="ascendente">Ascendente</label>
-                                <input type="radio" id="descendente" name="caja[orden]" value="descendente">
-                                <label for="descendente">Descendente</label>
-                            </div>
+                    </div>
+
+                    <div class="orden-caja">
+                        <label for="orden-caja">Orden: </label>
+                        <div class="switch">
+                            <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
+                            <label for="ascendente">Ascendente</label>
+                            <input type="radio" id="descendente" name="caja[orden]" value="descendente">
+                            <label for="descendente">Descendente</label>
                         </div>
                     </div>
             </fieldset>
@@ -171,7 +172,8 @@
                         <div class="modal--aniadir__flex1">
                             <p>$</p>
                             <input href="#" id="12" class="modal--retirar__close" type="text" placeholder="$"
-                                step="0.01" name="retirarCaja[cantidad_caja]" value="<?php echo s($caja->cantidad_caja); ?>">
+                                step="0.01" name="retirarCaja[cantidad_caja]"
+                                value="<?php echo s($caja->cantidad_caja); ?>">
                             </input>
                         </div>
                     </div>

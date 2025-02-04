@@ -29,7 +29,7 @@
     margin: 0 auto;
 
     @media (min-width: #{$telefono-1}) {
-        grid-template-rows: 2fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
         grid-template-columns: 1fr;
     height: 200vh;
 
@@ -37,7 +37,7 @@
     }
 
     @media (min-width: #{$tablet}) {
-        grid-template-rows: 2fr 1fr 1fr 1fr;
+        grid-template-rows: auto auto auto;
         grid-template-columns: 1fr;
     height: 200vh;
 
@@ -260,6 +260,18 @@ body {
             display: flex;
             justify-content: space-around;
             align-items: center;
+
+            .flexbtnbusqueda{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+
+                img{
+                    width: 2rem;
+                    height: auto;
+                }
+            }
 
 
             .boton-azul-block {
@@ -555,7 +567,7 @@ body {
 
         }
         @media (min-width: #{$laptop-1}){
-            padding-left: 1rem;
+            padding-left: 0;
 
         }
 
@@ -575,7 +587,7 @@ body {
 
             }
             @media (min-width: #{$laptop-1}){
-                justify-content: left;
+                justify-content: center;
 
             }
 
@@ -594,7 +606,7 @@ body {
  
                 }
                 @media (min-width: #{$laptop-1}){
-                    text-align: left;
+                    text-align: center;
   
                 }
             }
@@ -613,7 +625,7 @@ body {
                 justify-content: center;   
             }
             @media (min-width: #{$laptop-1}){
-                justify-content: left;   
+                justify-content: center;   
             }
 
             h3 {
@@ -759,7 +771,7 @@ body {
     padding: 0 5px;
     font-size: 1.2rem;
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto auto;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
     margin-top: 0;
@@ -768,6 +780,7 @@ body {
     @media (min-width: #{$telefono-1}){
         grid-row: 3/4;
         grid-column: 1;
+    //   height: min-content;
 
     }
 
@@ -775,13 +788,15 @@ body {
 
         grid-row: 3/4;
         grid-column: 1;
-        height: min-content;
+      
     }
 
     @media (min-width: #{$laptop-1}){
 
         grid-row: 2 / 3;
         grid-column: 2 / 3;
+        // height: max-content;
+
     }
 
 

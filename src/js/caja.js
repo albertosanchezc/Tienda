@@ -106,12 +106,14 @@
 
             caja = resultado.caja;
             cajas_historicos = resultado.cajas_historicos;
-            // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
+            // Teoría 1 aquí mandar llamar caja primero y luego mostrarCards
             console.log(caja);
             imprimirActualCaja(caja);
-            // filtrar()
-
             mostrartabla(cajas_historicos);
+
+            // caja()
+            
+
 
         } catch (e) {
             console.log(e);
@@ -144,20 +146,20 @@
     const inputHiddenAniadir = document.querySelector('#aniadirCategoriaEntrada');
     const inputHiddenRetirar = document.querySelector('#retirarCategoriaEntrada');
 
-    //filtross
+    // eventos de los filtross
 
     const inputFechaInicial = document.getElementById('fecha1C');
     const inputFechaFinal = document.getElementById('fecha2C');
     const inputRadioTipo = document.querySelector('.tipo-movimiento');
     const inputRadioOrden = document.querySelector('.orden-caja');
-  
+
 
     inputFechaInicial.addEventListener('input', (e) => {
         let { fechaI } = terminosBusqueda;
         fechaI = e.target.value;
         terminosBusqueda.fechaI = fechaI;
         console.log(terminosBusqueda);
-        filtrar();
+        filtrarcaja();
     })
 
     inputFechaFinal.addEventListener('input', (e) => {
@@ -165,26 +167,27 @@
         fechaF = e.target.value;
         terminosBusqueda.fechaF = fechaF;
         console.log(terminosBusqueda);
-        filtrar();
+        filtrarcaja();
     })
 
     inputRadioTipo.addEventListener('click', (e) => {
-        let { fechaI
-        
-         } = terminosBusqueda;
-        fechaI = e.target.value;
-        terminosBusqueda.fechaI = fechaI;
+        let { tipo } = terminosBusqueda;
+        tipo = e.target.value;
+        terminosBusqueda.tipo = tipo;
         console.log(terminosBusqueda);
-        filtrar();
+        filtrarcaja();
+
     })
 
     inputRadioOrden.addEventListener('click', (e) => {
-        let { fechaI } = terminosBusqueda;
-        fechaI = e.target.value;
-        terminosBusqueda.fechaI = fechaI;
+        let { orden } = terminosBusqueda;
+        orden = e.target.value;
+        terminosBusqueda.orden = orden;
         console.log(terminosBusqueda);
-        filtrar();
+        filtrarcaja();
     })
+
+
 
     botonCerrarModAniadir.addEventListener('click', () => {
         modalAniadir.classList.remove('modal--aniadir--show');
@@ -268,7 +271,6 @@
         // Crea el cuerpo de la tabla
         const tbody = document.createElement('tbody');
 
-
         cajas_historicos.forEach(caja_historico => {
 
             let { id, retiro_abono, cantidad, hora, fecha, saldo_caja } = caja_historico;
@@ -293,6 +295,70 @@
 
         tablaDinamica.appendChild(tbody);
         contenedorTabla.appendChild(tablaDinamica);
+    }
+
+    function filtrarcaja() {
+        let resultadosFiltrados = cajas_historicos;
+        // Aplicar filtro de fecha inicial si existe
+        if (terminosBusqueda.fechaI) {
+            resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaI);
+            mostrartabla(resultadosFiltrados);
+
+        }
+
+        // Aplicar filtro de fecha final si existe
+        if (terminosBusqueda.fechaF) {
+            resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaF);
+            mostrartabla(resultadosFiltrados);
+
+        }
+
+        // Aplicar otros filtros (tipo y orden) si es necesario
+        if (terminosBusqueda.tipo) {
+            resultadosFiltrados = resultadosFiltrados.filter(filtrarTipo);
+            mostrartabla(resultadosFiltrados);
+
+        }
+
+        if (terminosBusqueda.orden) {
+            resultadosFiltrados = resultadosFiltrados.filter(filtrarOrden);
+            // mostrartabla(resultadosFiltrados);
+
+        }
+
+        // Mostrar resultados en consola
+        console.log(resultadosFiltrados);
+        return resultadosFiltrados;
+
+
+    }
+
+    function limpiarHTMLElemento(elemento) {
+        // Forma lenta
+        // contenedorCarrito.innerHTML = '';
+    
+        while (elemento.firstChild) {
+            elemento.removeChild(elemento.firstChild);
+        }
+    }
+
+    function filtrarfechaI(cajas_historicos) {
+        const fechaCaja = new Date(cajas_historicos.fecha);
+        const fechaInicial = new Date(terminosBusqueda.fechaI);
+        return fechaCaja >= fechaInicial;
+    }
+    
+    // Función para filtrar por fecha final
+    function filtrarfechaF(cajas_historicos) {
+        const fechaCaja = new Date(cajas_historicos.fecha);
+        const fechaFinal = new Date(terminosBusqueda.fechaF);
+        return fechaCaja <= fechaFinal;
+    }
+
+    function filtrarTipo(cajas_historicos) {
+    const tipo = new Date(cajas_historicos.fecha);
+        const fechaFinal = new Date(terminosBusqueda.fechaF);
+        return tipo <= fechaFinal;
     }
 
 }())
