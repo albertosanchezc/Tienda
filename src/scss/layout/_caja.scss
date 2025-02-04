@@ -249,16 +249,22 @@
 }
 
 .tabladecontenido, .tabladecontenido-ventas, .tabladecontenido-cancelaciones {
-    width: 100%;
+    // width: 75%;
     overflow-x: auto;
-    margin: 60px 0 20px 0;
+    margin: 6rem 0 2rem 0;
+    display: grid;
+    // width: fit-content;
+    justify-content: center;
+    align-items: center;
 }
 
 .tabla-contenido, .tabla-contenido-cancelaciones, .tabla-contenido-ventas  {
     width: 100%;
     border-collapse: collapse;
     table-layout: auto;
-    font-size: 16px;
+    font-size: 14px;
+    justify-content: center;
+    align-items: center;
 }
 
 .tabla-contenido th,
@@ -266,7 +272,7 @@
 .tabla-contenido-cancelaciones td, .tabla-contenido-ventas th,
 .tabla-contenido-ventas td {
     border: 1px solid #FFE0B2;
-    padding: 8px;
+    padding: 6px 48px 6px 6px;
     text-align: left;
 }
 
@@ -274,6 +280,7 @@
     background: linear-gradient(to right, #D56B26, #E6962C);
     color: white;
     font-weight: bold;
+    
 }
 
 .tabla-contenido tbody tr:nth-child(even) {

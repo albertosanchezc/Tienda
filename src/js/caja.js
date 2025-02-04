@@ -85,6 +85,13 @@
 
     let caja = [];
     let cajas_historicos = [];
+    let terminosBusqueda = {
+        id: '',
+        fechaI: '',
+        fechaF: '',
+        tipo: '',
+        orden: '',
+    }
 
 
     async function consultarAPI() {
@@ -137,6 +144,47 @@
     const inputHiddenAniadir = document.querySelector('#aniadirCategoriaEntrada');
     const inputHiddenRetirar = document.querySelector('#retirarCategoriaEntrada');
 
+    //filtross
+
+    const inputFechaInicial = document.getElementById('fecha1C');
+    const inputFechaFinal = document.getElementById('fecha2C');
+    const inputRadioTipo = document.querySelector('.tipo-movimiento');
+    const inputRadioOrden = document.querySelector('.orden-caja');
+  
+
+    inputFechaInicial.addEventListener('input', (e) => {
+        let { fechaI } = terminosBusqueda;
+        fechaI = e.target.value;
+        terminosBusqueda.fechaI = fechaI;
+        console.log(terminosBusqueda);
+        filtrar();
+    })
+
+    inputFechaFinal.addEventListener('input', (e) => {
+        let { fechaF } = terminosBusqueda;
+        fechaF = e.target.value;
+        terminosBusqueda.fechaF = fechaF;
+        console.log(terminosBusqueda);
+        filtrar();
+    })
+
+    inputRadioTipo.addEventListener('click', (e) => {
+        let { fechaI
+        
+         } = terminosBusqueda;
+        fechaI = e.target.value;
+        terminosBusqueda.fechaI = fechaI;
+        console.log(terminosBusqueda);
+        filtrar();
+    })
+
+    inputRadioOrden.addEventListener('click', (e) => {
+        let { fechaI } = terminosBusqueda;
+        fechaI = e.target.value;
+        terminosBusqueda.fechaI = fechaI;
+        console.log(terminosBusqueda);
+        filtrar();
+    })
 
     botonCerrarModAniadir.addEventListener('click', () => {
         modalAniadir.classList.remove('modal--aniadir--show');
@@ -201,12 +249,12 @@
         console.log(cajas_historicos);
         const contenedorTabla = document.querySelector('.tabladecontenido');
 
-            contenedorTabla.innerHTML = '';
-            const tablaDinamica = document.createElement('table');
-            tablaDinamica.classList.add('tabla-contenido');
+        contenedorTabla.innerHTML = '';
+        const tablaDinamica = document.createElement('table');
+        tablaDinamica.classList.add('tabla-contenido');
 
-            const thead = document.createElement('thead');
-            thead.innerHTML = `
+        const thead = document.createElement('thead');
+        thead.innerHTML = `
                 <tr>
                     <th>Cantidad</th>
                     <th>Tipo</th>
@@ -215,24 +263,29 @@
                 </tr>
             `;
 
-            tablaDinamica.appendChild(thead);
+        tablaDinamica.appendChild(thead);
 
-            // Crea el cuerpo de la tabla
-            const tbody = document.createElement('tbody');
+        // Crea el cuerpo de la tabla
+        const tbody = document.createElement('tbody');
 
 
         cajas_historicos.forEach(caja_historico => {
 
             let { id, retiro_abono, cantidad, hora, fecha, saldo_caja } = caja_historico;
 
-            let tipoMovimiento = Number(retiro_abono) === 1 ?  "Retiro":"Abono";
+            let tipoMovimiento = Number(retiro_abono) === 1 ? "Retiro" : "Abono";
             let claseMovimiento = Number(retiro_abono) === 1 ? "letrasrojas" : "letrasverdes";
+
+            let fechaHora = new Date(`${fecha}T${hora}`);
+            let opcionesFecha = { day: 'numeric', month: 'long', year: 'numeric' };
+            let fechaFormateada = fechaHora.toLocaleDateString('es-ES', opcionesFecha); // "28 de agosto de 2024"
+            let horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // "23:02:04"
 
             const fila = document.createElement('tr');
             fila.innerHTML = `
-                <td>$ ${cantidad}</td>
+                <td class="${claseMovimiento}">$ ${cantidad}</td>
                 <td class="${claseMovimiento}">${tipoMovimiento}</td>
-                <td>El ${fecha} a las ${hora}</td>
+                <td>${fechaFormateada} a las ${horaFormateada}</td>
                 <td>$ ${saldo_caja}</td>
             `;
             tbody.appendChild(fila);
@@ -241,7 +294,5 @@
         tablaDinamica.appendChild(tbody);
         contenedorTabla.appendChild(tablaDinamica);
     }
-
-
 
 }())

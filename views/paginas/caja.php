@@ -35,11 +35,11 @@
                 <div class="caja-filtros">
                     <div class="fecha1">
                         <label for="fecha1">Fecha inicial: </label>
-                        <input type="date" id="fecha1" name="caja[fecha1]">
+                        <input type="date" id="fecha1C" name="caja[fecha1]">
                     </div>
                     <div class="fecha2">
                         <label for="fecha2">Fecha final: </label>
-                        <input type="date" id="fecha2" name="caja[fecha2]">
+                        <input type="date" id="fecha2C" name="caja[fecha2]">
                     </div>
                     <div class="tipo-movimiento">
                         <label for="tipo-movimiento">Tipo de movimiento: </label>
