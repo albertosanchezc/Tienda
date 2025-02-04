@@ -77,31 +77,64 @@ function mostrarPagina(pagina, datos = inventario, paginadorContainer) {
     return inventarioPagina;
 }
 
+// function generarPaginador(datos = inventario, paginadorContainer) {
+//     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+//     console.log("Total de páginas desde generar Paginador", totalPaginas);
+//     let paginadorHTML = '';
+
+//     if (paginaActual > 1) {
+//         //  onclick="cambiarPagina(${paginaActual - 1})"
+//         paginadorHTML += `<button class="paginas">Anterior</button>`;
+//     }
+
+//     for (let i = 1; i <= totalPaginas; i++) {
+//         // onclick="cambiarPagina(${i})"
+//         paginadorHTML += `<button ${paginaActual === i ? 'selected' : 'class="numero"'}>${i}</button>`;
+//     }
+
+//     if (paginaActual < totalPaginas) {
+//         // onclick="cambiarPagina(${paginaActual + 1})"
+//         paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+//     }
+
+//     paginadorContainer.innerHTML = paginadorHTML;
+
+// }
+
+// // Función para actualizar la hora
 function generarPaginador(datos = inventario, paginadorContainer) {
     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
     console.log("Total de páginas desde generar Paginador", totalPaginas);
     let paginadorHTML = '';
 
+    // Calcular el rango de páginas a mostrar
+    let inicio = Math.max(1, paginaActual - 4);
+    let fin = Math.min(totalPaginas, paginaActual + 4);
+
+    // Ajustar el rango si estamos cerca de los extremos
+    if (paginaActual <= 4) {
+        fin = Math.min(9, totalPaginas);
+    } else if (paginaActual >= totalPaginas - 4) {
+        inicio = Math.max(totalPaginas - 8, 1);
+    }
+
+    // Botón "Anterior"
     if (paginaActual > 1) {
-        //  onclick="cambiarPagina(${paginaActual - 1})"
-        paginadorHTML += `<button class="paginas">Anterior</button>`;
+        paginadorHTML += `<button class="paginas" onclick="cambiarPagina(${paginaActual - 1})">Anterior</button>`;
     }
 
-    for (let i = 1; i <= totalPaginas; i++) {
-        // onclick="cambiarPagina(${i})"
-        paginadorHTML += `<button ${paginaActual === i ? 'selected' : 'class="numero"'}>${i}</button>`;
+    // Botones de páginas
+    for (let i = inicio; i <= fin; i++) {
+        paginadorHTML += `<button ${paginaActual === i ? 'selected' : 'class="numero"'} onclick="cambiarPagina(${i})">${i}</button>`;
     }
 
+    // Botón "Siguiente"
     if (paginaActual < totalPaginas) {
-        // onclick="cambiarPagina(${paginaActual + 1})"
-        paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+        paginadorHTML += `<button class="paginas" onclick="cambiarPagina(${paginaActual + 1})">Siguiente</button>`;
     }
 
     paginadorContainer.innerHTML = paginadorHTML;
-
 }
-
-// // Función para actualizar la hora
 function mostrarHora() {
     const ahora = new Date();
 
