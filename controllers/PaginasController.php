@@ -36,7 +36,7 @@ class PaginasController
         $inventario = Inventario_completo::join2('productos', 'inventario');
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
 
-        $script = '<script src="/build/js/carrito.js"></script>
+        $script = '<script src="/build/js/carrito/carrito.js" type="module"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
         $venta = new Ventas;
