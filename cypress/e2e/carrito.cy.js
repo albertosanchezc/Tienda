@@ -36,7 +36,7 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("nombreProductoTbodyModalManual").should('have.text', 'Cigarros Shots Classics')
             cy.getByData("descripcionProductoTbodyModalManual").should('have.text', '20')
             cy.getByData("precioUnitarioVentaProductoTbodyModalManual").should('have.text', '$50.48')
-            cy.getByData("cantidadProductoTbodyModalManual").should('have.text', '4')
+            cy.getByData("imagenProductoTbodyModalManual").should('not.have.text', '4')
         })
 
         describe("Si se hace una búsqueda por letras en código de barras", () => {

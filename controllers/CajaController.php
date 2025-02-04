@@ -27,7 +27,6 @@ class CajaController
             $argsRetirarCaja = $_POST['retirarCaja'];
             $caja_historico = new Caja_historico();
             $metodoAniadir = !empty($argsAniadirCaja);
-
             $metodoRetirar = !empty($argsRetirarCaja);
 
             if ($metodoAniadir) {
@@ -39,8 +38,7 @@ class CajaController
                 $caja_historico->guardar();
             
 
-            } 
-            if ($metodoRetirar) {
+            } elseif ($metodoRetirar) {
                 $caja_historico->retiro_abono = 1;
                 $caja_historico->saldo_caja = $argsRetirarCaja['cantidad'];
                 $caja_historico->cantidad = $argsRetirarCaja['cantidad_caja'];

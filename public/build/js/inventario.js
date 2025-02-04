@@ -124,7 +124,7 @@ const vistaPreviaImagenActualizar = modalActualizarInventarioContainer.querySele
 inputNuevaImagenActualizar.addEventListener('change', (event) => {
     // Obtiene el archivo seleccionado por el usuario
     const file1 = event.target.files[0];
-    console.log(file1);
+    console.log('probando desde inventarioooo',file1);
 
 
     // Verifica si se seleccionó un archivo

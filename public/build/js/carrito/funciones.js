@@ -5,6 +5,7 @@ import { paginaActual,terminosBusqueda } from "./carrito.js";
 const registrosPorPagina = 4;
 let articulosCarrito = [];
 let infoProductoCarrito = {};
+let datosInsert = [];
 
 
 function filtrar(inventario) {
@@ -158,7 +159,7 @@ function mostrarHora() {
     const parrafoHora = document.createElement('p');
 
     if (horas >= 12) {
-        horasFormatodeseado = horas - 12;
+        const horasFormatodeseado = horas - 12;
         horaFormateada = `${horasFormatodeseado}:${minutos}:${segundos} p.m.`;
         parrafoHora.textContent = horaFormateada;
     } else {
@@ -285,7 +286,7 @@ function primerEstadoCarrito() {
 function abrirPagar() {
     if (articulosCarrito.length > 0) {
         modalPagar.classList.add('modal--pagar--show');
-        let total = calcularTotalAPagar(articulosCarrito);
+        let total = calcularTotalAPagar(articulosCarrito).toFixed(2);
 
         actualizarModalPagar(total);
     } else {
@@ -303,38 +304,53 @@ function calcularTotalAPagar(articulosCarrito) {
 
 
 function actualizarModalPagar(total) {
-    const h2ModalTitle = document.querySelector('.modal--pagar__title');
-    const h2ModalCambio = document.querySelector('.modal--pagar__cambio');
+    const h2ModalPagarTitle = document.querySelector('.modal--pagar__title');
+    const h2ModalPagarCambio = document.querySelector('.modal--pagar__cambio');
     const inputModalPagar = document.querySelector('.modal--pagar__close');
     const btnCerrarModalPagar = document.querySelector('.modal--pagar__btncancelar');
+    const btnPagarModal = document.querySelector('.modal--pagar__btn');
+    inputModalPagar.focus();
+    limpiarHTMLElemento(h2ModalPagarTitle);
+    limpiarHTMLElemento(h2ModalPagarCambio);
 
-    limpiarHTMLElemento(h2ModalTitle);
-    limpiarHTMLElemento(h2ModalCambio);
+    console.log('Articulos carrito desde pagar',articulosCarrito);
+    const inputHidden = document.createElement('INPUT');
+    inputHidden.type = 'hidden';
 
-    h2ModalTitle.innerHTML = `
+    const insert = articulosCarrito.map(articulo => ({
+        id: articulo.id,
+        cantidad: articulo.cantidad
+    }));
+    const insertJson = JSON.stringify(insert);
+    console.log(insertJson);
+
+    inputHidden.value = insertJson;
+    console.log(inputHidden);
+    h2ModalPagarTitle.innerHTML = `
             <span>Total: </span>
             $${total}
         `;
 
-
+    let pagado = 0;
+    let cambio = 0;
     inputModalPagar.addEventListener('input', (e) => {
         if (!isNaN(parseFloat(e.target.value))) {
-            let pagado = parseFloat(e.target.value)
-            let cambio = (pagado - total).toFixed(2);
+            pagado = parseFloat(e.target.value)
+            cambio = (pagado - total).toFixed(2);
             if (cambio > 0) {
-                h2ModalCambio.innerHTML = `
+                h2ModalPagarCambio.innerHTML = `
                     <span>Cambio: </span>
                     $${cambio}
                 `;
             } else {
-                h2ModalCambio.innerHTML = `
+                h2ModalPagarCambio.innerHTML = `
                     <span>Faltan: </span>
                     $${cambio * -1}
                 `;
             }
         }
         else {
-            h2ModalCambio.innerHTML = `
+            h2ModalPagarCambio.innerHTML = `
                 <span>Debes introducir sólo la cantidad con la que te pagaron p. ej 100</span>
                 `;
         }
@@ -343,6 +359,14 @@ function actualizarModalPagar(total) {
     btnCerrarModalPagar.addEventListener('click', (e) => {
         e.preventDefault();
         modalPagar.classList.remove('modal--pagar--show');
+    })
+
+    btnPagarModal.addEventListener('click', () => {
+        if(cambio >= 0){
+            console.log('Correcto, debemos hacer insert');
+        } else{
+            console.log('Incorrecto,  no debemos hacer insert');
+        }
     })
 
 
@@ -461,6 +485,11 @@ function mostrarProductosCarrito() {
     console.log('Articulos carrito desde mostrar productosCarrito', productos);
     productos.forEach(articulo => {
         const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta, imagen } = articulo;
+        let rutaImagen = '';
+        if(imagen){
+            rutaImagen = `/imagenes/${imagen}`;
+        }
+
         console.log(articulosCarrito);
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -470,7 +499,7 @@ function mostrarProductosCarrito() {
             <td data-test="descripcionCarrito" id="descripcionCarritoTbody">${descripcion}</td>
             <td data-test="codigoBarrasCarrito" id="codigoBarrasCarritoTbody">${codigo_barras}</td>
             <td>
-                <img data-test="imgCarrito" src="/imagenes/${imagen}" alt="Logotipo de producto" class="imagen-producto">
+                <img data-test="imgCarrito" src="${rutaImagen}" alt="Img producto" class="imagen-producto">
             </td>
             <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
             <td>
@@ -612,13 +641,16 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
 
     const { nombre, descripcion, cantidad, precio_unitario_venta, imagen } = articuloCarritoAModificar;
 
+    let rutaImagen = '';
+    if(rutaImagen != 'null'){
+        rutaImagen = `/imagenes/${imagen}`;
+    }
     const totalD = (precio_unitario_venta * cantidad).toFixed(2);
-    console.log("Fila carrito que nos interesaa", articuloCarritoAModificar);
 
     const div1ContenidoDetalles = document.createElement('DIV');
     div1ContenidoDetalles.classList.add('rectangulo-pequeno-bebe1');
     div1ContenidoDetalles.innerHTML = `
-    <img  src="/imagenes/${imagen}" alt="anuncio">
+    <img  src="${rutaImagen}" alt="anuncio">
     `;
 
     const div2ContenidoDetalles = document.createElement('DIV');
@@ -700,12 +732,16 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
     limpiarHTMLElemento(tbodyTablaModal);
     productosFiltrados.forEach(producto => {
         const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras, imagen } = producto;
+        let rutaImagen = '';
+        if(rutaImagen != 'null'){
+            rutaImagen = `/imagenes/${imagen}`;
+        }
         const tr = document.createElement('tr');
         tr.innerHTML = `     
             <td hidden data-test="idProductoTbodyModal${tipo}">${id}</td>   
             <td data-test="nombreProductoTbodyModal${tipo}">${nombre}</td>
             <td data-test="descripcionProductoTbodyModal${tipo}">${descripcion}</td>
-            <td data-test="imagenProductoTbodyModal${tipo}"><img data-test="imgModal" src="/imagenes/${imagen}" alt="Imágen producto" class="imagen-producto"></td>
+            <td data-test="imagenProductoTbodyModal${tipo}"><img data-test="imgModal" src="${rutaImagen}" alt="Imágen producto" class="imagen-producto"></td>
             <td data-test="codigoProductoTbodyModal${tipo}">${codigo_barras}</td>
             <td data-test="precioUnitarioVentaProductoTbodyModal${tipo}">$${precio_unitario_venta}</td>
         `;
