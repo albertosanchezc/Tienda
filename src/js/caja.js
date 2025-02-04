@@ -15,8 +15,8 @@
         const cantidadaniadir1 = modalAniadir.querySelector('.modal--aniadir__close').value;
         if (!cantidadaniadir1) {
             errores.push('No se añadió a caja, cierra la pestaña para volver');
-        } 
-        if(cantidadaniadir1<=0){
+        }
+        if (cantidadaniadir1 <= 0) {
             errores.push('La cantidad debe ser mayor a 0');
         }
 
@@ -32,15 +32,15 @@
                 }, 5000);
             });
         } else {
-        const alertaExito = document.createElement('div');
-        alertaExito.className = 'alerta exito';
-        alertaExito.textContent = 'Producto Actualizado con éxito';
-        document.querySelector('#aniadircaja').prepend(alertaExito);
+            const alertaExito = document.createElement('div');
+            alertaExito.className = 'alerta exito';
+            alertaExito.textContent = 'Producto Actualizado con éxito';
+            document.querySelector('#aniadircaja').prepend(alertaExito);
 
-        setTimeout(() => {
-            this.submit();
+            setTimeout(() => {
+                this.submit();
 
-        }, 3000);
+            }, 3000);
         }
     });
 
@@ -54,8 +54,8 @@
         const cantidadretirar1 = modalRetirar.querySelector('.modal--retirar__close').value;
         if (!cantidadretirar1) {
             errores.push('No se añadió a caja, cierra la pestaña para volver');
-        } 
-        if(cantidadretirar1<=0){
+        }
+        if (cantidadretirar1 <= 0) {
             errores.push('La cantidad debe ser mayor a 0, nosotros la restaremos');
         }
 
@@ -71,15 +71,15 @@
                 }, 5000);
             });
         } else {
-        const alertaExito = document.createElement('div');
-        alertaExito.className = 'alerta exito';
-        alertaExito.textContent = 'Producto Actualizado con éxito';
-        document.querySelector('#retirarcaja').prepend(alertaExito);
+            const alertaExito = document.createElement('div');
+            alertaExito.className = 'alerta exito';
+            alertaExito.textContent = 'Producto Actualizado con éxito';
+            document.querySelector('#retirarcaja').prepend(alertaExito);
 
-        setTimeout(() => {
-            this.submit();
+            setTimeout(() => {
+                this.submit();
 
-        }, 3000);
+            }, 3000);
         }
     });
 
@@ -104,7 +104,7 @@
             imprimirActualCaja(caja);
             // filtrar()
 
-            // mostrarCards(inventario);
+            mostrartabla(cajas_historicos);
 
         } catch (e) {
             console.log(e);
@@ -177,7 +177,7 @@
         inputR.focus();
         inputR.addEventListener('input', (e) => {
             console.log(e.target.value);
-            const resultado =  parseFloat(cantidad_caja)-parseFloat(e.target.value);
+            const resultado = parseFloat(cantidad_caja) - parseFloat(e.target.value);
 
             pEfectivoResultanteA.innerHTML = `$ ${resultado}`;
             inputHiddenRetirar.value = resultado;
@@ -197,6 +197,50 @@
         h1EfectivoCaja.innerHTML = `$ ${cantidad_caja}`;
     }
 
+    function mostrartabla(cajas_historicos) {
+        console.log(cajas_historicos);
+        const contenedorTabla = document.querySelector('.tabladecontenido');
+
+            contenedorTabla.innerHTML = '';
+            const tablaDinamica = document.createElement('table');
+            tablaDinamica.classList.add('tabla-contenido');
+
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Tipo</th>
+                    <th>Fecha y Hora</th>
+                    <th>Saldo en Caja</th>
+                </tr>
+            `;
+
+            tablaDinamica.appendChild(thead);
+
+            // Crea el cuerpo de la tabla
+            const tbody = document.createElement('tbody');
+
+
+        cajas_historicos.forEach(caja_historico => {
+
+            let { id, retiro_abono, cantidad, hora, fecha, saldo_caja } = caja_historico;
+
+            let tipoMovimiento = Number(retiro_abono) === 1 ?  "Retiro":"Abono";
+            let claseMovimiento = Number(retiro_abono) === 1 ? "letrasrojas" : "letrasverdes";
+
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>$ ${cantidad}</td>
+                <td class="${claseMovimiento}">${tipoMovimiento}</td>
+                <td>El ${fecha} a las ${hora}</td>
+                <td>$ ${saldo_caja}</td>
+            `;
+            tbody.appendChild(fila);
+        });
+
+        tablaDinamica.appendChild(tbody);
+        contenedorTabla.appendChild(tablaDinamica);
+    }
 
 
 
