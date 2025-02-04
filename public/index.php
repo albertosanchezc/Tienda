@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../includes/app.php';
 
 use Controllers\CajaController;
+use Controllers\CarritoController;
 use MVC\Router;
 use Controllers\LoginController;
 use Controllers\PaginasController;
@@ -35,8 +36,8 @@ $router->post('/reestablecer', [LoginController::class, 'reestablecer']);
 // Zona Privada 
 $router->get('/', [PaginasController::class, 'index']);
 
-$router->get('/carrito', [PaginasController::class, 'carrito']);
-$router->post('/carrito', [PaginasController::class, 'carrito']);
+$router->get('/carrito', [CarritoController::class, 'carrito']);
+$router->post('/carrito', [CarritoController::class, 'carrito']);
 $router->get('/inventarios/api/inventarios', [PaginasController::class, 'inventarioAPI']);
 $router->get('/proveedores/api/proveedores', [PaginasController::class, 'proveedoresAPI']);
 $router->get('/caja/api/caja', [PaginasController::class, 'cajaAPI']);

@@ -38,6 +38,8 @@ const modalEliminarProducto = document.querySelector('.modal--eliminar');
 const modalVaciarCarrito = document.querySelector('.modal--eliminarCarrito');
 
 const modalPagar = document.querySelector('.modal--pagar');
+const pagarForm = document.querySelector('#pagarForm');
+
 const contenedorModalPagar = document.querySelector('modal--pagar__container');
 
 
@@ -128,6 +130,8 @@ botonVaciarCarrito.appendChild(imagenBotonVaciarCarrito);
 const btnCerrarModalGranel = document.querySelector('.modal--granel__cerrar');
 const contenedorTablaModalCantidad = document.querySelector('.modal--cantidad__caracteristicas');
 
+const inputHiddenPagarForm = document.createElement('INPUT');
+
 
 export {
     modalBienvenida,
@@ -184,5 +188,6 @@ export {
     imagenBotonVaciarCarrito,
     btnCerrarModalGranel,
     contenedorTablaModalCantidad,
-
+    pagarForm,
+    inputHiddenPagarForm
 }

@@ -1,5 +1,5 @@
 import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito } from "./funciones.js";
-import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual,  paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad } from "./selectores.js";
+import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
     consultarAPI();
@@ -18,7 +18,7 @@ let terminosBusqueda = {
     nombre: ''
 }
 let paginaActual = 1;
-export{ paginaActual, terminosBusqueda};
+export { paginaActual, terminosBusqueda };
 
 
 
@@ -228,3 +228,42 @@ paginadorCarritoContainer.addEventListener('click', (e) => {
     let resultados = filtrar()
     mostrarPagina(paginaActual, resultados, paginadorCarritoContainer);
 })
+
+
+pagarForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const alertas = document.querySelectorAll('.alerta');
+    alertas.forEach(alerta => alerta.remove());
+
+    let errores = [];
+
+    const pagado = document.querySelector('.modal--pagar__close').value.trim();
+    if (!pagado) {
+        errores.push('La cantidad con la que se paga es Obligatoria');
+    }
+    if (pagado <= 0) {
+        errores.push('La cantidad con la que se paga debe ser mayor a cero');
+    }
+    // Mostrar errores
+    if (errores.length > 0) {
+        errores.forEach(error => {
+            const alerta = document.createElement('div');
+            alerta.className = 'alerta error';
+            alerta.textContent = error;
+            pagarForm.prepend(alerta);
+        });
+
+    } else {
+        // Si no hay errores, enviar el formulario
+
+        const alertaExito = document.createElement('div');
+        alertaExito.className = 'alerta exito';
+        alertaExito.textContent = 'Creado con éxito';
+        pagarForm.prepend(alertaExito);
+
+        setTimeout(() => {
+            this.submit();
+
+        }, 3000);
+    }
+});
