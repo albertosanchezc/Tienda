@@ -11,7 +11,7 @@ class CajaController
     public static function caja(Router $router)
     {
 
-        $script = '<script src="/build/js/caja.js"></script>
+        $script = '<script src="/build/js/caja/caja.js" type="module"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $titulo = 'Caja';
 
