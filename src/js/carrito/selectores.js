@@ -131,6 +131,8 @@ const btnCerrarModalGranel = document.querySelector('.modal--granel__cerrar');
 const contenedorTablaModalCantidad = document.querySelector('.modal--cantidad__caracteristicas');
 
 const inputHiddenPagarForm = document.createElement('INPUT');
+const inputHiddenPagarForm1 = document.createElement('INPUT');
+
 
 
 export {
@@ -189,5 +191,6 @@ export {
     btnCerrarModalGranel,
     contenedorTablaModalCantidad,
     pagarForm,
-    inputHiddenPagarForm
+    inputHiddenPagarForm,
+    inputHiddenPagarForm1
 }

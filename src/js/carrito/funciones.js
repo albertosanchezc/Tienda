@@ -1,4 +1,4 @@
-import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm } from "./selectores.js";
+import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm, inputHiddenPagarForm1 } from "./selectores.js";
 
 import { paginaActual,terminosBusqueda } from "./carrito.js";
 
@@ -318,6 +318,10 @@ function actualizarModalPagar(total) {
     inputHiddenPagarForm.name = 'pagarCarrito[articulosCarrito]';
     limpiarHTMLElemento(inputHiddenPagarForm);
 
+    inputHiddenPagarForm1.type = 'hidden';
+    inputHiddenPagarForm1.name = 'pagarCarrito[total]';
+    limpiarHTMLElemento(inputHiddenPagarForm1);
+
     const insert = articulosCarrito.map(articulo => ({
         id: articulo.id,
         cantidad: articulo.cantidad
@@ -325,7 +329,10 @@ function actualizarModalPagar(total) {
     const insertJson = JSON.stringify(insert);
 
     inputHiddenPagarForm.value = insertJson;
+    inputHiddenPagarForm1.value = total;
     pagarForm.querySelector('FIELDSET').appendChild(inputHiddenPagarForm);
+    pagarForm.querySelector('FIELDSET').appendChild(inputHiddenPagarForm1);
+
 
     h2ModalPagarTitle.innerHTML = `
             <span>Total: </span>
