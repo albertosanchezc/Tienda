@@ -141,6 +141,7 @@ class InventarioController
                 $id = $argsActualizarStock['id'];
                 $productoActualizarStock = Inventario::find($id);
                 $productoActualizarStock->cantidad = $argsActualizarStock['cantidad'];
+                // debuguear($productoActualizarStock);
                 $productoActualizarStock->guardar();
             } elseif ($metodoEliminarStock){// El método fue eliminar Stock
                 $id = $argsEliminarStock['id'];
