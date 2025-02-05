@@ -171,6 +171,20 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
         }
     });
 
+    document.querySelector('.imgdown').addEventListener('click', function() {
+        window.scrollTo({
+            top: 700, // Altura a la que deseas desplazarte
+            behavior: 'smooth' // Desplazamiento suave
+        });
+    });
+
+    document.querySelector('.btnfijar').addEventListener('click', function() {
+        var contenido = document.querySelector('.gridContCaja'); // Selecciona el div por su clase
+        contenido.style.position = 'fixed';
+        contenido.style.top = '0';
+        contenido.style.left = '0';
+    });
+
     botonCerrarModRetirar.addEventListener('click', () => {
         modalRetirar.classList.remove('modal--retirar--show');
     })

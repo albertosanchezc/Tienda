@@ -22,9 +22,24 @@
     </div>
 </main>
 
+<div class="imgbajar">
+    <img src="/build/img/bajar.gif" alt="Logotipo de bajar" class="imgdown">
+</div>
+
+
+
 <section class="contenedorcaja seccioncaja">
     <div class="busqueda-titulo">
-        <h1>Histórico de Entradas y Retiros de Caja</h1>
+        <div class="imgfix">
+            <div class="espaciador"></div>
+            <h1 class="titCentrado">Histórico de Entradas y Retiros de Caja </h1>
+            <div class="fx">
+                <div class="btnfijar">
+                    <p>Fijar</p>
+                    <img src="/build/img/fix.svg" alt="Logotipo de bajar">
+                </div>
+            </div>
+        </div>
         <h3>Consulta el registro completo de movimientos de caja con filtros para buscar y ordenar fácilmente las
             entradas y retiros según tus necesidades.</h3>
     </div>
@@ -100,6 +115,7 @@
                     </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 </section>
