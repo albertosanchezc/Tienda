@@ -2,7 +2,7 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         consultarAPI();
-        btnReciente.click();
+        // btnReciente.click();
 
     });
 
