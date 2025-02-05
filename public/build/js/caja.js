@@ -1,3 +1,4 @@
+import { generarPaginador, mostrarPagina } from "./funciones/paginador";
 (function () {
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -5,8 +6,7 @@
         // btnReciente.click();
 
     });
-
-
+    
     let caja = [];
     let cajas_historicos = [];
     let terminosBusqueda = {
@@ -16,6 +16,8 @@
         tipo: '',
         orden: '',
     }
+
+    let registrosPorPagina = 4;
 
 
     async function consultarAPI() {
@@ -36,7 +38,10 @@
             mostrartabla(cajas_historicos);
             btnReciente.click();
 
-            // caja()
+            
+            // generarPaginador(cajas_historicos,registrosPorPagina, paginadorContainer, filtrar, 1);
+            // mostrarPagina(1,cajas_historicos, paginadorContainer, filtrar);
+            // // caja()
 
 
 
