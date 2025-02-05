@@ -1,4 +1,4 @@
-import { generarPaginador, mostrarPagina } from "./funciones/paginador";
+import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
 (function () {
 
     document.addEventListener('DOMContentLoaded', function () {
