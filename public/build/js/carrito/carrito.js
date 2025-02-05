@@ -107,9 +107,10 @@ botonVaciarCarrito.addEventListener('click', () => {
 contenedorProductos.addEventListener('click', (e) => {
     // e.preventDefault();
     const { codigo_barras, nombre } = inventario;
-
+    let busquedaManual = e.target && (e.target.id === 'busqueda-manual' || e.target.classList[1] === 'busqueda-manual' || e.target.parentElement.classList[1] === 'busqueda-manual');
+    let busquedaNombre =  e.target && (e.target.id === 'busqueda-producto' || e.target.classList[1] === 'busqueda-producto' || e.target.parentElement.classList[1] === 'busqueda-producto');
     // Busqueda manual del código
-    if (e.target && e.target.id === 'busqueda-manual') {
+    if (busquedaManual ) {
         let resultadosFiltrado = filtrar(inventario);
 
         // mostrarProductosModalManual(inventario);
@@ -142,7 +143,7 @@ contenedorProductos.addEventListener('click', (e) => {
     }
 
     // Busqueda por nombre
-    if (e.target && e.target.id === 'busqueda-producto') {
+    if (busquedaNombre) {
         // mostrarProductosModalNombre(inventario);
         let resultadosFiltrado = filtrar(inventario);
         modalNombreProducto.classList.add('modal--nombre--show');

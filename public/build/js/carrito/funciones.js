@@ -1,6 +1,6 @@
 import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm, inputHiddenPagarForm1 } from "./selectores.js";
 
-import { paginaActual,terminosBusqueda } from "./carrito.js";
+import { paginaActual, terminosBusqueda } from "./carrito.js";
 
 const registrosPorPagina = 4;
 let articulosCarrito = [];
@@ -219,10 +219,16 @@ function primerEstadoCarrito() {
     div3ContenidoProductos.innerHTML = `
         <div class="rectangulo-grande-bebecito1">
             <button data-test="botonBusquedaManual" id="busqueda-manual" class="boton-azul-block">
-                Introducir código manual.
-            </button>
+                <div class="flexbtnbusqueda busqueda-manual">
+                    <img  src="build/img/lupa.png" alt="Imagen de lupa">
+                        Introducir Código de Barras.
+                </div>
+            </button>      
             <button data-test="botonBusquedaNombre" id="busqueda-producto" class="boton-azul-block">
-                Buscar productos por nombre.
+                <div class="flexbtnbusqueda busqueda-producto">
+                    <img  src="build/img/lupa.png" alt="Imagen de lupa">
+                    Buscar por Nombre del Producto.
+                </div>
             </button>
         </div>
         <div class="rectangulo-grande-bebecito2">
@@ -313,7 +319,7 @@ function actualizarModalPagar(total) {
     limpiarHTMLElemento(h2ModalPagarTitle);
     limpiarHTMLElemento(h2ModalPagarCambio);
 
-    console.log('Articulos carrito desde pagar',articulosCarrito);
+    console.log('Articulos carrito desde pagar', articulosCarrito);
     inputHiddenPagarForm.type = 'hidden';
     inputHiddenPagarForm.name = 'pagarCarrito[articulosCarrito]';
     limpiarHTMLElemento(inputHiddenPagarForm);
@@ -370,9 +376,9 @@ function actualizarModalPagar(total) {
     })
 
     btnPagarModal.addEventListener('click', () => {
-        if(cambio >= 0){
+        if (cambio >= 0) {
             console.log('Correcto, debemos hacer insert');
-        } else{
+        } else {
             console.log('Incorrecto,  no debemos hacer insert');
         }
     })
@@ -461,7 +467,7 @@ function segundoEstadoCarrito() {
                         if (e.target.value >= 1) {
                             infoProductoCarrito.cantidad = parseInt(e.target.value);
                             mostrarAlerta(`¡La cantidad de ${infoProductoCarrito.nombre} se modificó a ${infoProductoCarrito.cantidad}!`, 'verde');
-                            
+
                         } else {
                             infoProductoCarrito.cantidad = cantidadAntes;
                             mostrarAlerta(`¡La cantidad de ${infoProductoCarrito.nombre} no se modificó!`, 'verde');
@@ -494,7 +500,7 @@ function mostrarProductosCarrito() {
     productos.forEach(articulo => {
         const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta, imagen } = articulo;
         let rutaImagen = '';
-        if(imagen){
+        if (imagen) {
             rutaImagen = `/imagenes/${imagen}`;
         }
 
@@ -650,7 +656,7 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
     const { nombre, descripcion, cantidad, precio_unitario_venta, imagen } = articuloCarritoAModificar;
 
     let rutaImagen = '';
-    if(rutaImagen != 'null'){
+    if (rutaImagen != 'null') {
         rutaImagen = `/imagenes/${imagen}`;
     }
     const totalD = (precio_unitario_venta * cantidad).toFixed(2);
@@ -741,7 +747,7 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
     productosFiltrados.forEach(producto => {
         const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras, imagen } = producto;
         let rutaImagen = '';
-        if(rutaImagen != 'null'){
+        if (rutaImagen != 'null') {
             rutaImagen = `/imagenes/${imagen}`;
         }
         const tr = document.createElement('tr');
