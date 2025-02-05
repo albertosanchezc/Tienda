@@ -2,9 +2,92 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         consultarAPI();
+        btnReciente.click();
 
     });
 
+
+    let caja = [];
+    let cajas_historicos = [];
+    let terminosBusqueda = {
+        id: '',
+        fechaI: '',
+        fechaF: '',
+        tipo: '',
+        orden: '',
+    }
+
+
+    async function consultarAPI() {
+        try {
+            const server = window.location.host;
+            const api = '/caja/api/caja'
+
+            const url = `http://${server}${api}`;
+            const respuesta = await fetch(url);
+            const resultado = await respuesta.json();
+
+
+            caja = resultado.caja;
+            cajas_historicos = resultado.cajas_historicos;
+            // Teoría 1 aquí mandar llamar caja primero y luego mostrarCards
+            console.log(caja);
+            imprimirActualCaja(caja);
+            mostrartabla(cajas_historicos);
+            btnReciente.click();
+
+            // caja()
+
+
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // Selectores 
+
+    const botonCerrarModRetirar = document.querySelector('.modal--retirar__img2');
+    const modalRetirar = document.querySelector('.modal--retirar');
+
+    const botonCerrarModAniadir = document.querySelector('.modal--aniadir__img2');
+    const modalAniadir = document.querySelector('.modal--aniadir');
+    const divCantidad = document.createElement('DIV');
+    divCantidad.classList.add('modal--aniadir__container__cantidadRes');
+    divCantidad.innerHTML = `
+    <input type="hidden" id="aniadirCategoriaEntrada" name="aniadirCaja[cantidad]"  value="">
+    `;
+    const divCantidadR = document.createElement('DIV');
+    divCantidadR.classList.add('modal--retirar__container__cantidadRes');
+    divCantidadR.innerHTML = `
+    <input type="hidden" id="retirarCategoriaEntrada" name="retirarCaja[cantidad]"  value="">
+    `;
+    const formularioAniadir = document.querySelector('#aniadircaja');
+    const formulariorRetirar = document.querySelector('#retirarcaja');
+
+    formularioAniadir.appendChild(divCantidad);
+    formulariorRetirar.appendChild(divCantidadR);
+
+
+    const inputHiddenAniadir = document.querySelector('#aniadirCategoriaEntrada');
+    const inputHiddenRetirar = document.querySelector('#retirarCategoriaEntrada');
+
+    const inputFechaInicial = document.getElementById('fecha1C');
+    const inputFechaFinal = document.getElementById('fecha2C');
+    const inputRadioTipo = document.querySelector('.tipo-movimiento');
+    const inputRadioOrden = document.querySelector('.orden-caja');
+    const contenidoCaja = document.querySelector('.contenido-caja');
+    const h1EfectivoCaja = contenidoCaja.querySelector('.efectivo').querySelector('H1');
+    const btnReciente = document.querySelector('#ascendente');
+
+   
+    // eventos de los filtross
+
+
+
+
+
+    // Eventos 
     document.getElementById('aniadircaja').addEventListener('submit', function (e) {
         e.preventDefault();
         const alertas = modalAniadir.querySelectorAll('.alerta');
@@ -83,78 +166,10 @@
         }
     });
 
-    let caja = [];
-    let cajas_historicos = [];
-    let terminosBusqueda = {
-        id: '',
-        fechaI: '',
-        fechaF: '',
-        tipo: '',
-        orden: '',
-    }
-
-
-    async function consultarAPI() {
-        try {
-            const server = window.location.host;
-            const api = '/caja/api/caja'
-
-            const url = `http://${server}${api}`;
-            const respuesta = await fetch(url);
-            const resultado = await respuesta.json();
-
-
-            caja = resultado.caja;
-            cajas_historicos = resultado.cajas_historicos;
-            // Teoría 1 aquí mandar llamar caja primero y luego mostrarCards
-            console.log(caja);
-            imprimirActualCaja(caja);
-            mostrartabla(cajas_historicos);
-
-            // caja()
-            
-
-
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    const botonCerrarModRetirar = document.querySelector('.modal--retirar__img2');
-    const modalRetirar = document.querySelector('.modal--retirar');
     botonCerrarModRetirar.addEventListener('click', () => {
         modalRetirar.classList.remove('modal--retirar--show');
     })
-    const botonCerrarModAniadir = document.querySelector('.modal--aniadir__img2');
-    const modalAniadir = document.querySelector('.modal--aniadir');
-    const divCantidad = document.createElement('DIV');
-    divCantidad.classList.add('modal--aniadir__container__cantidadRes');
-    divCantidad.innerHTML = `
-    <input type="hidden" id="aniadirCategoriaEntrada" name="aniadirCaja[cantidad]"  value="">
-    `;
-    const divCantidadR = document.createElement('DIV');
-    divCantidadR.classList.add('modal--retirar__container__cantidadRes');
-    divCantidadR.innerHTML = `
-    <input type="hidden" id="retirarCategoriaEntrada" name="retirarCaja[cantidad]"  value="">
-    `;
-    const formularioAniadir = document.querySelector('#aniadircaja');
-    const formulariorRetirar = document.querySelector('#retirarcaja');
-
-    formularioAniadir.appendChild(divCantidad);
-    formulariorRetirar.appendChild(divCantidadR);
-
-    const inputHiddenAniadir = document.querySelector('#aniadirCategoriaEntrada');
-    const inputHiddenRetirar = document.querySelector('#retirarCategoriaEntrada');
-
-    // eventos de los filtross
-
-    const inputFechaInicial = document.getElementById('fecha1C');
-    const inputFechaFinal = document.getElementById('fecha2C');
-    const inputRadioTipo = document.querySelector('.tipo-movimiento');
-    const inputRadioOrden = document.querySelector('.orden-caja');
-
-
-    inputFechaInicial.addEventListener('input', (e) => {
+    inputFechaInicial.addEventListener('change', (e) => {
         let { fechaI } = terminosBusqueda;
         fechaI = e.target.value;
         terminosBusqueda.fechaI = fechaI;
@@ -162,7 +177,7 @@
         filtrarcaja();
     })
 
-    inputFechaFinal.addEventListener('input', (e) => {
+    inputFechaFinal.addEventListener('change', (e) => {
         let { fechaF } = terminosBusqueda;
         fechaF = e.target.value;
         terminosBusqueda.fechaF = fechaF;
@@ -237,9 +252,8 @@
 
     })
 
-    const contenidoCaja = document.querySelector('.contenido-caja');
-    const h1EfectivoCaja = contenidoCaja.querySelector('.efectivo').querySelector('H1');
 
+    // Funciones 
 
     function imprimirActualCaja(caja) {
         const { cantidad_caja } = caja;
@@ -296,6 +310,22 @@
         tablaDinamica.appendChild(tbody);
         contenedorTabla.appendChild(tablaDinamica);
     }
+   
+    function filtrar() {
+        const resultadosFiltrado = cajas_historicos.filter(filtrarfechaI).filter(filtrarfechaF).filter(filtrarTipo);
+        if (resultadosFiltrado.length > 0) {
+            console.log(resultadosFiltrado);
+            mostrartabla(resultadosFiltrados);
+
+    
+            return resultadosFiltrado.flat();
+        } else {
+            mostrartabla(resultadosFiltrados);
+    
+            return resultadosFiltrado.flat();
+        }
+    }
+
 
     function filtrarcaja() {
         let resultadosFiltrados = cajas_historicos;
@@ -321,8 +351,8 @@
         }
 
         if (terminosBusqueda.orden) {
-            resultadosFiltrados = resultadosFiltrados.filter(filtrarOrden);
-            // mostrartabla(resultadosFiltrados);
+            resultadosFiltrados = resultadosFiltrados.sort(filtrarOrden);
+            mostrartabla(resultadosFiltrados);
 
         }
 
@@ -336,7 +366,7 @@
     function limpiarHTMLElemento(elemento) {
         // Forma lenta
         // contenedorCarrito.innerHTML = '';
-    
+
         while (elemento.firstChild) {
             elemento.removeChild(elemento.firstChild);
         }
@@ -347,7 +377,7 @@
         const fechaInicial = new Date(terminosBusqueda.fechaI);
         return fechaCaja >= fechaInicial;
     }
-    
+
     // Función para filtrar por fecha final
     function filtrarfechaF(cajas_historicos) {
         const fechaCaja = new Date(cajas_historicos.fecha);
@@ -356,9 +386,37 @@
     }
 
     function filtrarTipo(cajas_historicos) {
-    const tipo = new Date(cajas_historicos.fecha);
-        const fechaFinal = new Date(terminosBusqueda.fechaF);
-        return tipo <= fechaFinal;
+        let { tipo } = terminosBusqueda;
+    
+        if (!tipo || tipo === "todos") {
+            return cajas_historicos; // Mostrar todos los resultados
+        }
+        if (tipo==="retiro"){
+            return cajas_historicos.retiro_abono === '1';
+
+        } else if(tipo === "abono") {
+            return cajas_historicos.retiro_abono === '0';
+        }
+    }
+
+    function filtrarOrden(a,b) {
+        let{orden} = terminosBusqueda;
+
+        const fechaA = new Date(a.fecha); // Acceso a la fecha del registro 'a'
+    const fechaB = new Date(b.fecha); // Acceso a la fecha del registro 'b'
+
+    // Orden ascendente (del más viejo al más reciente)
+    if (orden === "descendente") {
+        return fechaA - fechaB;
+    }
+
+    // Orden descendente (del más reciente al más viejo)
+    if (orden === "ascendente") {
+        return fechaB - fechaA;
+    }
+
+    // Por defecto, no se aplica ningún orden
+    return 0;
     }
 
 }())

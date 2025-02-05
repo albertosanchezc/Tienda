@@ -57,9 +57,9 @@
                         <label for="orden-caja">Orden: </label>
                         <div class="switch">
                             <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
-                            <label for="ascendente">Ascendente</label>
+                            <label for="ascendente">+ Reciente</label>
                             <input type="radio" id="descendente" name="caja[orden]" value="descendente">
-                            <label for="descendente">Descendente</label>
+                            <label for="descendente">+ Antiguo</label>
                         </div>
                     </div>
             </fieldset>
