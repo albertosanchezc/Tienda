@@ -61,7 +61,9 @@ describe('Pruebas del carrito de compras', () => {
                     capture: 'viewport',            // Define qué parte capturar
                     disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                     scale: true,                     // Escala la imagen en pantallas con alta resolución
-                    timeout: 5000                     // Espera hasta 5 segundos antes de capturar
+                    timout: 1000,                     // Espera hasta 5 segundos antes de 
+                    overwrite: truee
+                    // capturar
                   })
                 // Cerrar ventana modal busqueda por código de barras
                 cy.getByData("botonCerrarModalManual").should('exist')
@@ -181,12 +183,6 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("botonBusquedaManual").click()
             cy.getByData("modal--manual__close").should('exist')
             cy.getByData("modal--manual__close").type("7507")
-            cy.screenshot('Filtrar en busqueda manual', {
-                capture: 'runner',            // Define qué parte capturar
-                disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
-                scale: true,                     // Escala la imagen en pantallas con alta resolución
-                timeout: 5000                     // Espera hasta 5 segundos antes de capturar
-              })
             cy.getByData("descripcionProductoTbodyModalManual").should('exist')
             cy.getByData("descripcionProductoTbodyModalManual").contains('20').click()
         })
@@ -202,8 +198,9 @@ describe('Pruebas del carrito de compras', () => {
                 capture: 'runner',            // Define qué parte capturar
                 disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                 scale: true,                     // Escala la imagen en pantallas con alta resolución
-                timeout: 5000                     // Espera hasta 5 segundos antes de capturar
-              })
+                timeout: 1000,                     // Espera hasta 5 segundos antes de capturar
+                overwrite: true
+            })
         })
 
         it("Debe tener los valores correcto", () => {
@@ -213,6 +210,13 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("descripcionCarrito").should('have.text', '20')
             cy.getByData("codigoBarrasCarrito").should('have.text', '75078843')
             cy.getByData("imgCarrito").should('exist')
+            cy.screenshot('Filtrar en busqueda manual', {
+                capture: 'runner',            // Define qué parte capturar
+                disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                scale: true,                     // Escala la imagen en pantallas con alta resolución
+                timeout: 1000,                     // Espera hasta 5 segundos antes de capturar
+                overwrite: true
+            })
         })
 
     })
