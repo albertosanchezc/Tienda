@@ -1,4 +1,3 @@
-// Inicializa el slider
 document.addEventListener("DOMContentLoaded", () => {
   showText(currentIndex); // Muestra el primer texto
   setInterval(nextSlide, 5000); // Cambia cada 7 segundos
