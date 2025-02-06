@@ -1,6 +1,6 @@
 import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm, inputHiddenPagarForm1, modalGranel, inputModalGranel, modalBienvenida, modalVaciarCarrito } from "./selectores.js";
 
-import { paginaActual, terminosBusqueda } from "./carrito.js";
+import { paginaActual, terminosBusqueda, estadoModales, codigo_barras } from "./carrito.js";
 
 const registrosPorPagina = 4;
 let articulosCarrito = [];
@@ -30,6 +30,29 @@ function filtrar(inventario) {
     }
 }
 
+function filtrarCodigoExacto(inventario) {
+    const resultadosFiltrado = inventario.filter(filtrarProductoPorCodigo(inventario)).filter(filtrarNombreProducto);
+    console.log(`Resultado que me importa`, inventario);
+    if (resultadosFiltrado.length) {
+        mostrarPagina(1, resultadosFiltrado, paginadorModalManualContainer);
+        mostrarPagina(1, resultadosFiltrado, paginadorModalNombreContainer);
+
+        generarPaginador(resultadosFiltrado, paginacionManualContainer);
+        generarPaginador(resultadosFiltrado, paginacionNombreContainer);
+
+        return resultadosFiltrado.flat();
+
+    } else {
+        mostrarPagina(1, resultadosFiltrado, paginadorModalManualContainer);
+        mostrarPagina(1, resultadosFiltrado, paginadorModalNombreContainer);
+        generarPaginador(resultadosFiltrado, paginacionManualContainer);
+        generarPaginador(resultadosFiltrado, paginacionNombreContainer);
+
+        return resultadosFiltrado.flat();
+    }
+}
+
+
 function filtrarProducto(inventarioFiltrado) {
     return inventarioFiltrado.find(producto => {
         return (
@@ -39,8 +62,8 @@ function filtrarProducto(inventarioFiltrado) {
     });
 }
 
-function filtrarProductoPorCodigo(inventarioFiltrado) {
-    return inventarioFiltrado.find(producto => {
+function filtrarProductoPorCodigo(inventario) {
+    return inventario.find(producto => {
         return (
             producto.codigoBarras === terminosBusqueda.codigoBarras
         );
@@ -51,7 +74,7 @@ function filtrarCodigoBarras(inventario) {
     const { codigoBarras } = terminosBusqueda;
 
     if (codigoBarras) {
-        return inventario.codigo_barras === codigoBarras;
+        return inventario.codigo_barras.includes(codigoBarras);
     }
 
     return inventario;
@@ -276,6 +299,9 @@ function primerEstadoCarrito() {
 function abrirPagar() {
     if (articulosCarrito.length > 0) {
         modalPagar.classList.add('modal--pagar--show');
+        // estadoModales = true;
+        terminosBusqueda.codigoBarras = 0;
+        codigo_barras = '';
         let total = calcularTotalAPagar(articulosCarrito).toFixed(2);
 
         actualizarModalPagar(total);
@@ -286,9 +312,13 @@ function abrirPagar() {
 
 function abrirModalGranel(articuloCarritoAModificar) {
     modalGranel.classList.add('modal--granel--show');
+    // estadoModales = true;
+
     inputModalGranel.disabled = false;
     inputModalGranel.focus();
     actualizarModalGranel(articuloCarritoAModificar);
+    codigo_barras = '';
+    terminosBusqueda.codigoBarras = codigo_barras;
 }
 
 function actualizarModalGranel(articuloCarritoAModificar) {
@@ -404,12 +434,17 @@ function actualizarModalGranel(articuloCarritoAModificar) {
         e.preventDefault();
 
         modalGranel.classList.remove('modal--granel--show');
+        // estadoModales = false;
         mostrarTotalesCarrito(articulosCarrito);
         mostrarProductosCarrito();
         inputModalGranel.value = '';
+   
 
         mostrarDetallesProducto(articuloCarritoAModificar);
         segundoEstadoCarrito();
+        codigo_barras = '';
+        terminosBusqueda.codigoBarras = codigo_barras;
+
     })
 
 
@@ -504,6 +539,9 @@ function actualizarModalPagar(total) {
     btnCerrarModalPagar.addEventListener('click', (e) => {
         e.preventDefault();
         modalPagar.classList.remove('modal--pagar--show');
+        codigo_barras = '';
+        terminosBusqueda.codigoBarras = codigo_barras;
+
     })
 
     btnPagarModal.addEventListener('click', () => {
@@ -528,7 +566,8 @@ function aniadirArticuloAlCarrito(seleccionado) {
                 mostrarAlerta('Existe', 'verde');
                 producto.cantidad = articuloAModificar.cantidad;
                 mostrarAlerta(`¡Artículo ${producto.nombre} ya existente, se aumentó la cantidad!`, 'verde');
-
+                actualizarCantidad(producto);
+                // estadoModales = false;
 
                 return { ...producto, cantidad: producto.cantidad + 1 };
             }
@@ -552,18 +591,23 @@ function esGranel(seleccionado) {
         console.log('Desde aquí queremos ver si es de granel', seleccionado);
         console.log('Es de granel');
         abrirModalGranel(seleccionado);
-
+        codigoBarras = '';
+        terminosBusqueda.codigo_barras = codigoBarras;
     } else {
         mostrarProductosCarrito(articulosCarrito);
         mostrarDetallesProducto(seleccionado);
         mostrarTotalesCarrito(articulosCarrito);
         segundoEstadoCarrito();
+        // estadoModales = false;
+
+
     }
 }
 
 // Al menos un artículo en el carrito, se habilita la lectura de 
 function segundoEstadoCarrito() {
-
+    // codigoBarras = '';
+    // terminosBusqueda.codigo_barras = codigoBarras;
     mostrarProductosCarrito();
     const tabla = document.querySelector('.ordenes');
     const tbody = tabla.querySelector('tbody');
@@ -691,7 +735,7 @@ function mostrarProductosCarrito() {
             <td>
                 <img data-test="imgCarrito" src="${rutaImagen}" alt="Img producto" class="imagen-producto">
             </td>
-            <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}$</td>
+            <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
             <td>
                 <div class="editar-cantidad">
                     <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
@@ -759,8 +803,9 @@ function actualizarCantidad(articulo) {
 
     let { nombre, cantidad, descripcion, precio_unitario_venta } = articulo;
     const contenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
-
     let total = (cantidad * precio_unitario_venta).toFixed(2);
+    console.log('Total desde actualizar cantidad', articulo);
+
     limpiarHTMLElemento(contenedorTablaModalCantidad);
     limpiarHTMLElemento(contenedorTotalModalCantidad);
     contenedorTablaModalCantidad.innerHTML = `
@@ -816,12 +861,14 @@ function actualizarCantidad(articulo) {
     btnConfirmarEditarCantidad.addEventListener('click', () => {
         const resultado = modificarCantidadCarrito(articulo);
         modalCantidad.classList.remove('modal--cantidad--show');
-        mostrarTotalesCarrito(articulosCarrito);
-        mostrarProductosCarrito();
+        esGranel(resultado);
+        
+        // mostrarTotalesCarrito(articulosCarrito);
+        // mostrarProductosCarrito();
         inputModalCantidad.value = '';
 
-        mostrarDetallesProducto(resultado[0]);
-        segundoEstadoCarrito();
+        // mostrarDetallesProducto(resultado[0]);
+        // segundoEstadoCarrito();
     });
 
 
@@ -1019,9 +1066,10 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
 
             if (tipo === 'Manual') {
                 modalManual.classList.remove('modal--manual--show');
+                // estadoModales = false;
             } else if (tipo === 'Nombre') {
                 modalNombreProducto.classList.remove('modal--nombre--show');
-
+                // estadoModales = false;
             }
 
 
@@ -1032,51 +1080,11 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
             //     articuloCarritoAModificar.cantidad = 1;
             // }
 
-            // if (articuloCarritoAModificar[0].granel === '1') {
-            //     console.log('Desde aquí queremos ver si es de granel', articuloCarritoAModificar);
-            //     console.log('Es de granel');
-            //     abrirModalGranel(articuloCarritoAModificar[0]);
-
-            // } else {
-            //     mostrarProductosCarrito(articulosCarrito);
-            //     mostrarDetallesProducto(articuloCarritoAModificar[0]);
-            //     mostrarTotalesCarrito(articulosCarrito);
-            //     segundoEstadoCarrito();
-
-            // }
 
             esGranel(articuloCarritoAModificar[0]);
         });
     });
 }
-
-function leerEstadoModales() {
-    console.log(modalManual.classList.contains('modal--manual--show'))
-    console.log(modalNombreProducto.classList.contains('modal--nombre--show'))
-    console.log(modalGranel.classList.contains('modal--granel--show'))
-    console.log(modalCantidad.classList.contains('modal--cantidad--show'))
-    console.log(modalEliminarProducto.classList.contains('modal--eliminar--show'))
-    console.log(modalVaciarCarrito.classList.contains('modal--eliminarCarrito--show'))
-    console.log(modalPagar.classList.contains('modal--pagar--show'))
-
-
-    let modales = [
-        // modalBienvenida.classList.contains('modal--show'),
-        modalManual.classList.contains('modal--manual--show'),
-        modalNombreProducto.classList.contains('modal--nombre--show'),
-        modalGranel.classList.contains('modal--granel--show'),
-        modalCantidad.classList.contains('modal--cantidad--show'),
-        modalEliminarProducto.classList.contains('modal--eliminar--show'),
-        modalVaciarCarrito.classList.contains('modal--eliminarCarrito--show'),
-        modalPagar.classList.contains('modal--pagar--show')
-    ]
-    if (modales.includes(true)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 
 
 
@@ -1115,8 +1123,8 @@ export {
     mostrarTotalesCarrito,
     mostrarProductosModal,
     mostrarAlerta,
-    leerEstadoModales,
     filtrarProductoPorCodigo,
     aniadirArticuloAlCarrito,
-    esGranel
+    esGranel,
+    filtrarCodigoExacto
 }

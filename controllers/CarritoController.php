@@ -33,6 +33,7 @@ class CarritoController
             // debuguear($_POST);
             
             $argsPagarCarrito = $_POST['pagarCarrito'];
+            // debuguear($argsPagarCarrito);
         
             $arreglo = json_decode($argsPagarCarrito['articulosCarrito'], true);
 
