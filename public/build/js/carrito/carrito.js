@@ -1,11 +1,11 @@
-import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito } from "./funciones.js";
-import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm } from "./selectores.js";
+import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, leerEstadoModales, filtrarProductoPorCodigo, mostrarProductosCarrito, aniadirArticuloAlCarrito, filtrarCodigoBarras } from "./funciones.js";
+import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
     consultarAPI();
 });
 
-
+let estadoModales = true;
 let estado = 0;
 let inventario = [];
 let infoProducto = {};
@@ -51,7 +51,10 @@ setInterval(mostrarHora, 1000);
 btnCerrarBienvenida.addEventListener('click', (e) => {
     modalBienvenida.remove();
     primerEstadoCarrito();
+
     mostrarAlerta('Escane o realiza una búsqueda para añadir al carrito', 'negro');
+    return estadoModales = leerEstadoModales();
+
 })
 
 botonCerrarModalManual.addEventListener('click', () => {
@@ -59,8 +62,10 @@ botonCerrarModalManual.addEventListener('click', () => {
     modalManual.classList.remove('modal--manual--show');
     terminosBusqueda.codigoBarras = '';
     terminosBusqueda.nombre = '';
+
     filtrar(inventario);
     mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
+
 })
 
 botonCerrarModalProducto.addEventListener('click', (e) => {
@@ -71,6 +76,7 @@ botonCerrarModalProducto.addEventListener('click', (e) => {
     terminosBusqueda.nombre = '';
     filtrar(inventario);
     mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
+    return estadoModales = leerEstadoModales();
 })
 
 btnCerrarModalCantidad.addEventListener('click', (e) => {
@@ -78,11 +84,14 @@ btnCerrarModalCantidad.addEventListener('click', (e) => {
     inputModalCantidad.value = '';
     modalCantidad.classList.remove('modal--cantidad--show');
     mostrarAlerta('¡No se modificó la cantidad, debido a que cerraste la ventana!', 'rojo');
-
+    return estadoModales = leerEstadoModales();
 })
 
 btnCerrarModalGranel.addEventListener('click', () => {
     modalGranel.classList.remove('modal--granel--show');
+    estadoModales = leerEstadoModales();
+    return estadoModales = leerEstadoModales();
+
 })
 
 botonVaciarCarrito.addEventListener('click', () => {
@@ -93,24 +102,64 @@ botonVaciarCarrito.addEventListener('click', () => {
         if (e.target.classList[0] === 'modal--eliminarCarrito__si') {
             vaciarCarrito();
             modalVaciarCarrito.classList.remove('modal--eliminarCarrito--show');
+            estadoModales = leerEstadoModales();
 
             mostrarAlerta('¡Se Vació el carrito exitosamente!', 'verde');
         } else if (e.target.classList[0] === 'modal--eliminarCarrito__no') {
             modalVaciarCarrito.classList.remove('modal--eliminarCarrito--show');
+            estadoModales = leerEstadoModales();
 
             mostrarAlerta('¡No se vació el carrito!', 'verde');
         }
     });
 
 })
+let codigo_barras = ''; // Declarar la variable fuera del evento
+
+document.addEventListener('keydown', (e) => {
+    if (e.key >= 0 && e.key <= 9) { // Verificar si la tecla es un número
+        codigo_barras += e.key; // Concatenar el número al string
+
+        mostrarAlerta(`Código Escrito: ${codigo_barras}`, 'verde');
+    } if (e.key === 'Backspace' && codigo_barras.length > 0) {
+        // Eliminar el último carácter
+        codigo_barras = codigo_barras.substring(0, codigo_barras.length - 1);
+        mostrarAlerta(`Código Escrito: ${codigo_barras}`, 'verde');
+    }
+    if (e.key === 'Enter') {
+        terminosBusqueda.codigoBarras = codigo_barras;
+        console.log(terminosBusqueda);
+        let resultado = inventario.filter(filtrarCodigoBarras);
+        if (resultado.length > 1) {
+            mostrarAlerta('Debes insertar el código completo', 'rojo');
+        } else if (resultado.length === 0) {
+            mostrarAlerta('No se encontró el artículo', 'rojo');
+        }  
+        else {
+            // mostrarAlerta(`Producto Escaneado: ${resultado[0].nombre}`, 'verde');
+            aniadirArticuloAlCarrito(resultado[0]);
+            codigo_barras = '';
+            // terminosBusqueda.codigoBarras = '';
+            mostrarProductosCarrito();
+
+            // mostrarAlerta('Debes insertar el código completo', 'rojo');
+
+        }
+
+
+
+
+    }
+});
+
 // Evento que escucha el botón que se presiona para abrir su respectiva modal
 contenedorProductos.addEventListener('click', (e) => {
     // e.preventDefault();
     const { codigo_barras, nombre } = inventario;
     let busquedaManual = e.target && (e.target.id === 'busqueda-manual' || e.target.classList[1] === 'busqueda-manual' || e.target.parentElement.classList[1] === 'busqueda-manual');
-    let busquedaNombre =  e.target && (e.target.id === 'busqueda-producto' || e.target.classList[1] === 'busqueda-producto' || e.target.parentElement.classList[1] === 'busqueda-producto');
+    let busquedaNombre = e.target && (e.target.id === 'busqueda-producto' || e.target.classList[1] === 'busqueda-producto' || e.target.parentElement.classList[1] === 'busqueda-producto');
     // Busqueda manual del código
-    if (busquedaManual ) {
+    if (busquedaManual) {
         let resultadosFiltrado = filtrar(inventario);
 
         // mostrarProductosModalManual(inventario);

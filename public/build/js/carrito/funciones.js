@@ -1,4 +1,4 @@
-import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm, inputHiddenPagarForm1 } from "./selectores.js";
+import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm, inputHiddenPagarForm1, modalGranel, inputModalGranel, modalBienvenida, modalVaciarCarrito } from "./selectores.js";
 
 import { paginaActual, terminosBusqueda } from "./carrito.js";
 
@@ -39,11 +39,19 @@ function filtrarProducto(inventarioFiltrado) {
     });
 }
 
+function filtrarProductoPorCodigo(inventarioFiltrado) {
+    return inventarioFiltrado.find(producto => {
+        return (
+            producto.codigoBarras === terminosBusqueda.codigoBarras
+        );
+    });
+}
+
 function filtrarCodigoBarras(inventario) {
     const { codigoBarras } = terminosBusqueda;
 
     if (codigoBarras) {
-        return inventario.codigo_barras.includes(codigoBarras);
+        return inventario.codigo_barras === codigoBarras;
     }
 
     return inventario;
@@ -77,30 +85,6 @@ function mostrarPagina(pagina, datos = inventario, paginadorContainer) {
 
     return inventarioPagina;
 }
-
-// function generarPaginador(datos = inventario, paginadorContainer) {
-//     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
-//     console.log("Total de páginas desde generar Paginador", totalPaginas);
-//     let paginadorHTML = '';
-
-//     if (paginaActual > 1) {
-//         //  onclick="cambiarPagina(${paginaActual - 1})"
-//         paginadorHTML += `<button class="paginas">Anterior</button>`;
-//     }
-
-//     for (let i = 1; i <= totalPaginas; i++) {
-//         // onclick="cambiarPagina(${i})"
-//         paginadorHTML += `<button ${paginaActual === i ? 'selected' : 'class="numero"'}>${i}</button>`;
-//     }
-
-//     if (paginaActual < totalPaginas) {
-//         // onclick="cambiarPagina(${paginaActual + 1})"
-//         paginadorHTML += `<button class="paginas" >Siguiente</button>`;
-//     }
-
-//     paginadorContainer.innerHTML = paginadorHTML;
-
-// }
 
 // // Función para actualizar la hora
 function generarPaginador(datos = inventario, paginadorContainer) {
@@ -300,10 +284,157 @@ function abrirPagar() {
     }
 }
 
+function abrirModalGranel(articuloCarritoAModificar) {
+    modalGranel.classList.add('modal--granel--show');
+    inputModalGranel.disabled = false;
+    inputModalGranel.focus();
+    actualizarModalGranel(articuloCarritoAModificar);
+}
+
+function actualizarModalGranel(articuloCarritoAModificar) {
+    const { nombre, precio_unitario_venta, descripcion, cantidad } = articuloCarritoAModificar;
+    let h2ModalGranelTitle = modalGranel.querySelector('.modal--granel__title');
+    limpiarHTMLElemento(h2ModalGranelTitle);
+    h2ModalGranelTitle.textContent = `
+        Introduce la cantidad en gramos de ${nombre}
+    `;
+    const btnAniadirArticuloGranel = document.querySelector('.modal--granel__btn');
+
+    let total = (cantidad * precio_unitario_venta).toFixed(2);
+
+    let contenedorTablaModalGranel = modalGranel.querySelector('.modal--granel__caracteristicas');
+    // limpiarHTMLElemento(contenedor)
+    contenedorTablaModalGranel.innerHTML = `
+        <div class="modal--granel__fila1-cantidad">
+            <p>Cantidad</p>
+        </div>
+        <div class="modal--granel__fila1-nombre">
+            <p>Nombre</p>
+        </div>
+        <div class="modal--granel__fila1-descripcion">
+            <p>Descripción</p>
+        </div>
+        <div class="modal--granel__fila1-costoventa">
+            <p>Costo por Kilogramo</p>
+        </div>
+        <div class="modal--granel__fila1-total">
+            <p>Total</p>
+        </div>
+        <div class="modal--granel__fila2-cantidad">
+            <p>${cantidad}</p>
+        </div>
+        <div class="modal--granel__fila2-nombre">
+            <p>${nombre}</p>
+        </div>
+        <div class="modal--granel__fila2-descripcion">
+            <p>${descripcion}</p>
+        </div>
+        <div class="modal--granel__fila2-costoventa">
+            <p>$${precio_unitario_venta}</p>
+        </div>
+        <div class="modal--granel__fila2-total">
+            <p>$${total}</p>
+        </div>        
+    `;
+
+    let contenedorTotalModalGranel = modalGranel.querySelector('.modal--granel__gridprecio');
+    contenedorTotalModalGranel.innerHTML = `
+        <div class="modal--granel__titulo">
+            <h2>Total:</h2>
+        </div>
+        <div class="modal--granel__precio">
+            <h2>$${total}</h2>
+        </div>        
+    `;
+
+
+    inputModalGranel.addEventListener('input', (e) => {
+        let cantidadInput = e.target.value;
+        if (isNaN(parseFloat(e.target.value))) {
+            cantidadInput = 0;
+        }
+        total = ((precio_unitario_venta * cantidadInput) / 1000).toFixed(2);
+        articuloCarritoAModificar.cantidad = cantidadInput;
+        contenedorTablaModalGranel.innerHTML = `
+        <div class="modal--granel__fila1-cantidad">
+            <p>Cantidad</p>
+        </div>
+        <div class="modal--granel__fila1-nombre">
+            <p>Nombre</p>
+        </div>
+        <div class="modal--granel__fila1-descripcion">
+            <p>Descripción</p>
+        </div>
+        <div class="modal--granel__fila1-costoventa">
+            <p>Costo por Kilogramo</p>
+        </div>
+        <div class="modal--granel__fila1-total">
+            <p>Total</p>
+        </div>
+        <div class="modal--granel__fila2-cantidad">
+            <p>${cantidadInput}g</p>
+        </div>
+        <div class="modal--granel__fila2-nombre">
+            <p>${nombre}</p>
+        </div>
+        <div class="modal--granel__fila2-descripcion">
+            <p>${descripcion}</p>
+        </div>
+        <div class="modal--granel__fila2-costoventa">
+            <p>$${precio_unitario_venta}</p>
+        </div>
+        <div class="modal--granel__fila2-total">
+            <p>$${total}</p>
+        </div>        
+    `;
+
+        contenedorTotalModalGranel.innerHTML = `
+        <div class="modal--granel__titulo">
+            <h2>Total:</h2>
+        </div>
+        <div class="modal--granel__precio">
+            <h2>$${total}</h2>
+        </div>        
+    `;
+
+    })
+
+
+    btnAniadirArticuloGranel.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        modalGranel.classList.remove('modal--granel--show');
+        mostrarTotalesCarrito(articulosCarrito);
+        mostrarProductosCarrito();
+        inputModalGranel.value = '';
+
+        mostrarDetallesProducto(articuloCarritoAModificar);
+        segundoEstadoCarrito();
+    })
+
+
+
+
+
+
+
+
+
+}
+
 function calcularTotalAPagar(articulosCarrito) {
 
     let totalPagar = 0;
-    articulosCarrito.forEach(producto => totalPagar += (parseFloat(producto.precio_unitario_venta) * parseFloat(producto.cantidad).toFixed(2)));
+    articulosCarrito.forEach(producto => {
+        let { precio_unitario_venta, cantidad, granel } = producto;
+
+        if (granel === '0') {
+            totalPagar += (parseFloat(precio_unitario_venta) * parseFloat(cantidad))
+        } else {
+            totalPagar += ((parseFloat(precio_unitario_venta) * parseFloat(cantidad)) / 1000);
+        }
+
+    });
     mostrarAlerta(`El total a pagar es ${totalPagar}`);
     return (totalPagar);
 }
@@ -386,8 +517,37 @@ function actualizarModalPagar(total) {
 
 }
 
+function aniadirArticuloAlCarrito(seleccionado) {
+    let existe = articulosCarrito.some(producto => producto.id === seleccionado.id);
+    console.log('Existe?',existe);
+    let articuloAModificar = articulosCarrito.find(p => p.id === seleccionado.id);
+    if (existe) {
+        articulosCarrito = articulosCarrito.map(producto => {
+            if (producto.id === seleccionado.id) {
+
+                mostrarAlerta('Existe', 'verde');
+                producto.cantidad = articuloAModificar.cantidad;
+                mostrarAlerta('¡Artículo ya existente, se aumentó la cantidad!', 'verde');
+
+
+                return { ...producto, cantidad: producto.cantidad + 1 };
+            }
+            return producto;
+        });
+
+    } else {
+
+        seleccionado.cantidad = 1;
+        articulosCarrito = [...articulosCarrito, seleccionado]
+        mostrarAlerta(`¡Se añadió el artículo ${seleccionado.nombre} al carrito!`, 'verde');
+        return articulosCarrito;
+    }
+
+
+}
+
 // Al menos un artículo en el carrito, se habilita la lectura de 
-function segundoEstadoCarrito() {
+function segundoEstadoCarrito(articulosCarrito = datos) {
 
     mostrarProductosCarrito();
     const tabla = document.querySelector('.ordenes');
@@ -498,7 +658,7 @@ function mostrarProductosCarrito() {
     // Aquí ya tenemos bien el arreglo sin repetidos;
     console.log('Articulos carrito desde mostrar productosCarrito', productos);
     productos.forEach(articulo => {
-        const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta, imagen } = articulo;
+        const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta, imagen, granel } = articulo;
         let rutaImagen = '';
         if (imagen) {
             rutaImagen = `/imagenes/${imagen}`;
@@ -506,7 +666,8 @@ function mostrarProductosCarrito() {
 
         console.log(articulosCarrito);
         const row = document.createElement('tr');
-        row.innerHTML = `
+        if (granel === '0') {
+            row.innerHTML = `
             <td data-test="idCarrito" hidden id="idCarritoTbody">${id}</td>   
             <td data-test="cantidadCarrito" id="cantidadCarritoTbody">${cantidad}</td>
             <td data-test="nombreCarrito" id="nombreCarritoTbody">${nombre}</td>
@@ -515,7 +676,7 @@ function mostrarProductosCarrito() {
             <td>
                 <img data-test="imgCarrito" src="${rutaImagen}" alt="Img producto" class="imagen-producto">
             </td>
-            <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
+            <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}$</td>
             <td>
                 <div class="editar-cantidad">
                     <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
@@ -525,6 +686,28 @@ function mostrarProductosCarrito() {
                 </div>
             </td>
         `;
+        } else {
+            row.innerHTML = `
+            <td data-test="idCarrito" hidden id="idCarritoTbody">${id}</td>   
+            <td data-test="cantidadCarrito" id="cantidadCarritoTbody">${cantidad}g</td>
+            <td data-test="nombreCarrito" id="nombreCarritoTbody">${nombre}</td>
+            <td data-test="descripcionCarrito" id="descripcionCarritoTbody">${descripcion}</td>
+            <td data-test="codigoBarrasCarrito" id="codigoBarrasCarritoTbody">${codigo_barras}</td>
+            <td>
+                <img data-test="imgCarrito" src="${rutaImagen}" alt="Img producto" class="imagen-producto">
+            </td>
+            <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}$/kg</td>
+            <td>
+                <div class="editar-cantidad">
+                    <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
+                </div>
+                <div class="eliminar-producto">
+                    <a href="#" class="botoneliminar-producto">Eliminar Artículo</a>
+                </div>
+            </td>
+        `;
+
+        }
 
         tbodyCarrito.appendChild(row);
 
@@ -653,13 +836,20 @@ function modificarCantidadCarrito(articuloModificado) {
 function mostrarDetallesProducto(articuloCarritoAModificar) {
     limpiarHTMLElemento(contenedorDetalles);
 
-    const { nombre, descripcion, cantidad, precio_unitario_venta, imagen } = articuloCarritoAModificar;
+    console.log("Articulos desde mostrar detalles Producto", articuloCarritoAModificar);
+    const { nombre, descripcion, cantidad, precio_unitario_venta, imagen, granel } = articuloCarritoAModificar;
 
     let rutaImagen = '';
     if (rutaImagen != 'null') {
         rutaImagen = `/imagenes/${imagen}`;
     }
-    const totalD = (precio_unitario_venta * cantidad).toFixed(2);
+    let totalD = 0;
+    if (granel === '0') {
+        totalD = (precio_unitario_venta * cantidad).toFixed(2);
+
+    } else {
+        totalD = ((precio_unitario_venta * cantidad) / 1000).toFixed(2);
+    }
 
     const div1ContenidoDetalles = document.createElement('DIV');
     div1ContenidoDetalles.classList.add('rectangulo-pequeno-bebe1');
@@ -681,22 +871,36 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
 
     const div3ContenidoDetalles = document.createElement('DIV');
     div3ContenidoDetalles.classList.add('rectangulo-pequeno-bebe3');
-    div3ContenidoDetalles.innerHTML = `
-    <div class="rectangulo-pequeno-bebecito31">
-        <h3>Cantidad: ${cantidad}</h3>
-    </div>
-    <div class="rectangulo-pequeno-bebecito32">
-        <h3>Código de Barras:</h3>
-        <img loading="lazy" src="build/img/barcode.png" alt="barcode">
-    </div>
-    `;
+
+    if (granel === '0') {
+        div3ContenidoDetalles.innerHTML = `
+        <div class="rectangulo-pequeno-bebecito31">
+            <h3>Cantidad: ${cantidad}</h3>
+        </div>
+        <div class="rectangulo-pequeno-bebecito32">
+            <h3>Código de Barras:</h3>
+            <img loading="lazy" src="build/img/barcode.png" alt="barcode">
+        </div>
+        `;
+    } else {
+        div3ContenidoDetalles.innerHTML = `
+        <div class="rectangulo-pequeno-bebecito31">
+            <h3>Cantidad: ${cantidad}g</h3>
+        </div>
+        <div class="rectangulo-pequeno-bebecito32">
+            <h3>Código de Barras:</h3>
+            <img loading="lazy" src="build/img/barcode.png" alt="barcode">
+        </div>
+        `;
+    }
+
 
     const div4ContenidoDetalles = document.createElement('DIV');
     div4ContenidoDetalles.classList.add('rectangulo-pequeno-bebe4');
     div4ContenidoDetalles.innerHTML = `
     <div class="rectangulo-pequeno-bebecito41">
             <h3>Costo Unitario:</h3>
-            <p>${precio_unitario_venta}</p>
+            <p>$${precio_unitario_venta}</p>
     </div>
     <div class="rectangulo-pequeno-bebecito42">
             <h3>Subtotal:</h3>
@@ -723,13 +927,20 @@ function mostrarTotalesCarrito(articulosCarrito) {
     let cantidadP = 0;
 
     articulosCorrect.forEach(articulo => {
-        const { cantidad, precio_unitario_venta } = articulo;
-        totalP += cantidad * precio_unitario_venta;
-        cantidadP += cantidad;
+        const { cantidad, precio_unitario_venta, granel } = articulo;
+
+        if (granel === '0') {
+            totalP += (cantidad * precio_unitario_venta);
+            cantidadP += cantidad;
+        } else {
+            totalP += ((cantidad * precio_unitario_venta) / 1000);
+            cantidadP++;
+        }
+
     })
     console.log(`El total es : ${totalP} y la cantidad de artículos es ${cantidadP}`);
     div2ContenidoTotales.innerHTML = `
-        <h3 data-test="Cantidadtotal">$${totalP.toFixed(2)}</h3>
+        <h3 data-test="Cantidadtotal">$${totalP}</h3>
     `;
 
     div4ContenidoTotales.innerHTML = `
@@ -818,21 +1029,59 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
 
             }
 
+
             const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id);
             if (prueba.length !== 0) {
                 articuloCarritoAModificar[0].cantidad = prueba[0].cantidad;
             } else {
                 articuloCarritoAModificar.cantidad = 1;
             }
-            mostrarProductosCarrito(articulosCarrito);
 
-            mostrarDetallesProducto(articuloCarritoAModificar[0]);
-            mostrarTotalesCarrito(articulosCarrito);
-            segundoEstadoCarrito();
+            if (articuloCarritoAModificar[0].granel === '1') {
+                console.log('Desde aquí queremos ver si es de granel', articuloCarritoAModificar);
+                console.log('Es de granel');
+                abrirModalGranel(articuloCarritoAModificar[0]);
+
+            } else {
+                mostrarProductosCarrito(articulosCarrito);
+                mostrarDetallesProducto(articuloCarritoAModificar[0]);
+                mostrarTotalesCarrito(articulosCarrito);
+                segundoEstadoCarrito();
+
+            }
 
         });
     });
 }
+
+function leerEstadoModales() {
+    console.log(modalManual.classList.contains('modal--manual--show'))
+    console.log(modalNombreProducto.classList.contains('modal--nombre--show'))
+    console.log(modalGranel.classList.contains('modal--granel--show'))
+    console.log(modalCantidad.classList.contains('modal--cantidad--show'))
+    console.log(modalEliminarProducto.classList.contains('modal--eliminar--show'))
+    console.log(modalVaciarCarrito.classList.contains('modal--eliminarCarrito--show'))
+    console.log(modalPagar.classList.contains('modal--pagar--show'))
+
+
+    let modales = [
+        // modalBienvenida.classList.contains('modal--show'),
+        modalManual.classList.contains('modal--manual--show'),
+        modalNombreProducto.classList.contains('modal--nombre--show'),
+        modalGranel.classList.contains('modal--granel--show'),
+        modalCantidad.classList.contains('modal--cantidad--show'),
+        modalEliminarProducto.classList.contains('modal--eliminar--show'),
+        modalVaciarCarrito.classList.contains('modal--eliminarCarrito--show'),
+        modalPagar.classList.contains('modal--pagar--show')
+    ]
+    if (modales.includes(true)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 
 
 function mostrarAlerta(mensaje, color) {
@@ -869,5 +1118,8 @@ export {
     mostrarDetallesProducto,
     mostrarTotalesCarrito,
     mostrarProductosModal,
-    mostrarAlerta
+    mostrarAlerta,
+    leerEstadoModales,
+    filtrarProductoPorCodigo,
+    aniadirArticuloAlCarrito
 }

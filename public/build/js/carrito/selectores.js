@@ -29,9 +29,11 @@ const modalCantidad = document.querySelector('.modal--cantidad');
 const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__cerrar');
 const contenedorTotalModalCantidad = modalCantidad.querySelector('.modal--cantidad__gridprecio');
 const inputModalCantidad = modalCantidad.querySelector('.modal--cantidad__close');
+
 const btnConfirmarEditarCantidad = modalCantidad.querySelector('.modal--cantidad__btn');
 
 const modalGranel = document.querySelector('.modal--granel');
+const inputModalGranel = modalGranel.querySelector('.modal--granel__close');
 
 const modalEliminarProducto = document.querySelector('.modal--eliminar');
 
@@ -192,5 +194,6 @@ export {
     contenedorTablaModalCantidad,
     pagarForm,
     inputHiddenPagarForm,
-    inputHiddenPagarForm1
+    inputHiddenPagarForm1,
+    inputModalGranel
 }
