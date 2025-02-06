@@ -115,7 +115,9 @@
                     </tr>
                 </tbody>
             </table>
-
+          
+        </div>
+        <div class="paginador-1">
         </div>
     </div>
 </section>
