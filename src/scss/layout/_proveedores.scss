@@ -358,4 +358,26 @@
     background-color: #8D28A7;
 }
 
+.gridProveedorestabla{
+    @include telefono-1{
+        grid-template-columns: 1fr;
+
+        // .busqueda-filtros1{
+
+        // }
+        
+    }
+
+    @include tablet{
+        grid-template-columns: repeat(2,1fr);
+        
+    }
+
+    @include laptop-1{
+        grid-template-columns: repeat(2,1fr);
+
+        
+    }
+}
+
 

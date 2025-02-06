@@ -28,85 +28,102 @@
             </div>
         </div>
     </div>
+
+    <div class="imgbajar">
+        <img src="/build/img/bajarProveedores.gif" alt="Logotipo de bajar" class="imgdown imgdownsmall">
+    </div>
     <section class="contenedorcaja seccioncaja">
         <div class="busqueda-titulo">
-            <h1>Histórico de Visitas de Proveedores</h1>
-            <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos generados durante sus visitas.<h3>
-        </div>
-        <div class="busqueda-filtros1">
-            <form id="buscador" method="POST">
-                <fieldset>
-                    <legend>Búsqueda</legend>
-                    <div class="caja-filtros1">
-                        <div class="fecha1">
-                            <label for="fecha1">Fecha de visita: </label>
-                            <input type="date" id="fecha1" name="caja[fecha1]">
-                        </div>
-                        <div class="fecha2">
-                            <label for="bnombre">Nombre: </label>
-                            <input type="text" id="bnombre" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
-                        </div>
-                        <div class="tipo-movimiento1">
-                            <p>Saldo: </p>
-                            <div class="switch">
-                                <input type="radio" id="liquidado" name="caja[orden]" value="Liquidado" checked>
-                                <label for="liquidado">Liquidado</label>
-                                <input type="radio" id="adeudo" name="caja[orden]" value="adeudo">
-                                <label for="adeudo">Adeudo</label>
-                            </div>
-                        </div>
+            <div class="imgfix">
+                <div class="espaciador"></div>
+                <h1 class="titCentrado">Histórico de Visitas de Proveedores</h1>
+                <div class="fx">
+                    <div class="btnfijar btnmorado">
+                        <p>Fijar</p>
+                        <img src="/build/img/fix.svg" alt="Logotipo de fijar">
                     </div>
-                </fieldset>
-                <!-- //aqui iriia el boton de descargar excel -->
-            </form>
+                </div>
+            </div>
         </div>
+        <h3 class="busqueda-tituloh3">Explora el registro completo de los proveedores, junto con los productos
+            suministrados y los costos
+            generados durante sus visitas.</h3>
+        <div class="gridProveedorestabla">
+            <div class="busqueda-filtros1">
+                <form id="buscador" method="POST">
+                    <fieldset>
+                        <legend>Búsqueda</legend>
+                        <div class="caja-filtros1">
+                            <div class="fecha1">
+                                <label for="fecha1">Fecha de visita: </label>
+                                <input type="date" id="fecha1" name="caja[fecha1]">
+                            </div>
+                            <div class="fecha2">
+                                <label for="bnombre">Nombre: </label>
+                                <input type="text" id="bnombre" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
+                            </div>
+                            <div class="tipo-movimiento1">
+                                <p>Saldo: </p>
+                                <div class="switch">
+                                    <input type="radio" id="liquidado" name="caja[orden]" value="Liquidado" checked>
+                                    <label for="liquidado">Liquidado</label>
+                                    <input type="radio" id="adeudo" name="caja[orden]" value="adeudo">
+                                    <label for="adeudo">Adeudo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!-- //aqui iriia el boton de descargar excel -->
+                </form>
+            </div>
 
-        <div class="tabladeproveedores">
-            <table class="tabla-proveedores">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Fecha y Hora</th>
-                        <th>Total pagado</th>
-                        <th>Adeudo</th>
-                        <th>Productos comprados</th>
-                    </tr>
-                </thead>
-                <!-- Mostrar los resultados -->
-                <tbody>
-                    <tr>
-                        <td>Coca-cola</td>
-                        <td>27/09/25 10:58p.m.</td>
-                        <td>$15063.00</td>
-                        <td>$1500.00</td>
-                        <td>
-                            <div class="verproductos"><a href="#" class="botonverproductos">Ver productos</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Coca-cola</td>
-                        <td>27/09/25 10:58p.m.</td>
-                        <td>$15063.00</td>
-                        <td>$1500.00</td>
-                        <td>
-                            <div class="verproductos"><a href="#" class="botonverproductos">Ver productos</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Coca-cola</td>
-                        <td>27/09/25 10:58p.m.</td>
-                        <td>$15063.00</td>
-                        <td>$1500.00</td>
-                        <td>
-                            <div class="verproductos">
-                                <a href="#" class="botonverproductos">Ver productos</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tabladeproveedores">
+                <table class="tabla-proveedores">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fecha y Hora</th>
+                            <th>Total pagado</th>
+                            <th>Adeudo</th>
+                            <th>Productos comprados</th>
+                        </tr>
+                    </thead>
+                    <!-- Mostrar los resultados -->
+                    <tbody>
+                        <tr>
+                            <td>Coca-cola</td>
+                            <td>27/09/25 10:58p.m.</td>
+                            <td>$15063.00</td>
+                            <td>$1500.00</td>
+                            <td>
+                                <div class="verproductos"><a href="#" class="botonverproductos">Ver productos</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Coca-cola</td>
+                            <td>27/09/25 10:58p.m.</td>
+                            <td>$15063.00</td>
+                            <td>$1500.00</td>
+                            <td>
+                                <div class="verproductos"><a href="#" class="botonverproductos">Ver productos</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Coca-cola</td>
+                            <td>27/09/25 10:58p.m.</td>
+                            <td>$15063.00</td>
+                            <td>$1500.00</td>
+                            <td>
+                                <div class="verproductos">
+                                    <a href="#" class="botonverproductos">Ver productos</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 </main>
@@ -124,7 +141,7 @@
             <h3>Introduce el nombre del proveedor y visualiza o edita sus datos empresariales.</h3>
         </div>
         <div class="modalproveedores__filtros">
-            <form id="buscadorProveedor"  method="POST">
+            <form id="buscadorProveedor" method="POST">
                 <fieldset>
                     <legend>Búsqueda</legend>
                     <div class="modalproveedores__filtrosbox">
@@ -192,24 +209,27 @@
                 información.</h3>
         </div>
         <div class="modalproveedores--aniadir__entradas">
-            <form id="aniadirProveedor"" method="POST">
+            <form id="aniadirProveedor"" method=" POST">
                 <fieldset>
                     <legend>+Anadir Proveedor</legend>
                     <div class="modalproveedores--aniadir__entradasbox">
                         <div class="modalproveedores--aniadir__nombre">
                             <label for="entradanombre">Nombre: </label>
-                            <input class="modalproveedores--aniadir__inputNombre" type="text" id="entradanombre" name="proveedores[nombre]" placeholder="Coca - Cola"
+                            <input class="modalproveedores--aniadir__inputNombre" type="text" id="entradanombre"
+                                name="proveedores[nombre]" placeholder="Coca - Cola"
                                 value="<?php echo s($proveedores->nombre); ?>" required>
                         </div>
                         <div class="modalproveedores--aniadir__telefono">
                             <label for="phone">Teléfono: </label>
-                            <input class="modalproveedores--aniadir__inputTelefono" type="tel" id="phone" name="proveedores[telefono]" placeholder="+52 (415) 456 7890"
-                                maxlength="19" value="<?php echo s($proveedores->telefono); ?>">
+                            <input class="modalproveedores--aniadir__inputTelefono" type="tel" id="phone"
+                                name="proveedores[telefono]" placeholder="+52 (415) 456 7890" maxlength="19"
+                                value="<?php echo s($proveedores->telefono); ?>">
                         </div>
                         <div class="modalproveedores--aniadir__email">
                             <label for="entradaemail">Email: </label>
-                            <input class="modalproveedores--aniadir__inputEmail" type="email" id="entradaemail" name="proveedores[email]"
-                                placeholder="correo@correo.com" value="<?php echo s($proveedores->email); ?>">
+                            <input class="modalproveedores--aniadir__inputEmail" type="email" id="entradaemail"
+                                name="proveedores[email]" placeholder="correo@correo.com"
+                                value="<?php echo s($proveedores->email); ?>">
                         </div>
                     </div>
                 </fieldset>
