@@ -1,4 +1,4 @@
-import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, leerEstadoModales, filtrarProductoPorCodigo, mostrarProductosCarrito, aniadirArticuloAlCarrito, filtrarCodigoBarras } from "./funciones.js";
+import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, leerEstadoModales, filtrarProductoPorCodigo, mostrarProductosCarrito, aniadirArticuloAlCarrito, filtrarCodigoBarras, esGranel } from "./funciones.js";
 import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -132,15 +132,18 @@ document.addEventListener('keydown', (e) => {
         let resultado = inventario.filter(filtrarCodigoBarras);
         if (resultado.length > 1) {
             mostrarAlerta('Debes insertar el código completo', 'rojo');
+            codigo_barras = '';
         } else if (resultado.length === 0) {
             mostrarAlerta('No se encontró el artículo', 'rojo');
+            codigo_barras = '';
         }  
         else {
-            // mostrarAlerta(`Producto Escaneado: ${resultado[0].nombre}`, 'verde');
+            mostrarAlerta(`Producto Escaneado: ${resultado[0].nombre}`, 'verde');
             aniadirArticuloAlCarrito(resultado[0]);
             codigo_barras = '';
             // terminosBusqueda.codigoBarras = '';
             mostrarProductosCarrito();
+            esGranel(resultado[0]);
 
             // mostrarAlerta('Debes insertar el código completo', 'rojo');
 

@@ -519,7 +519,7 @@ function actualizarModalPagar(total) {
 
 function aniadirArticuloAlCarrito(seleccionado) {
     let existe = articulosCarrito.some(producto => producto.id === seleccionado.id);
-    console.log('Existe?',existe);
+    console.log('Existe?', existe);
     let articuloAModificar = articulosCarrito.find(p => p.id === seleccionado.id);
     if (existe) {
         articulosCarrito = articulosCarrito.map(producto => {
@@ -527,7 +527,7 @@ function aniadirArticuloAlCarrito(seleccionado) {
 
                 mostrarAlerta('Existe', 'verde');
                 producto.cantidad = articuloAModificar.cantidad;
-                mostrarAlerta('¡Artículo ya existente, se aumentó la cantidad!', 'verde');
+                mostrarAlerta(`¡Artículo ${producto.nombre} ya existente, se aumentó la cantidad!`, 'verde');
 
 
                 return { ...producto, cantidad: producto.cantidad + 1 };
@@ -546,8 +546,23 @@ function aniadirArticuloAlCarrito(seleccionado) {
 
 }
 
+// Función que evalúa si es granel, si lo es abre la modalGranel y realiza su lógica, sino inserta en el carrito
+function esGranel(seleccionado) {
+    if (seleccionado.granel === '1') {
+        console.log('Desde aquí queremos ver si es de granel', seleccionado);
+        console.log('Es de granel');
+        abrirModalGranel(seleccionado);
+
+    } else {
+        mostrarProductosCarrito(articulosCarrito);
+        mostrarDetallesProducto(seleccionado);
+        mostrarTotalesCarrito(articulosCarrito);
+        segundoEstadoCarrito();
+    }
+}
+
 // Al menos un artículo en el carrito, se habilita la lectura de 
-function segundoEstadoCarrito(articulosCarrito = datos) {
+function segundoEstadoCarrito() {
 
     mostrarProductosCarrito();
     const tabla = document.querySelector('.ordenes');
@@ -995,27 +1010,7 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
             articulosCarrito = Array.isArray(articulosCarrito) ? articulosCarrito.flat() : articulosCarrito;
 
 
-            let existe = articulosCarrito.some(producto => producto.id === productoClickeadoCompleto.id);
-
-            if (existe) {
-                articulosCarrito = articulosCarrito.map(producto => {
-                    if (producto.id === productoClickeadoCompleto.id) {
-                        producto.cantidad = articuloCarritoAModificar[0].cantidad;
-                        mostrarAlerta('¡Artículo ya existente, se aumentó la cantidad!', 'verde');
-                        console.log('producto cantidad', articuloCarritoAModificar[0]);
-
-                        return { ...producto, cantidad: producto.cantidad + 1 };
-                    }
-
-                    return producto;
-                });
-
-            } else {
-                productoClickeadoCompleto.cantidad = 1;
-                articulosCarrito = [...articulosCarrito, productoClickeadoCompleto];
-                mostrarAlerta(`¡Se añadió el artículo ${productoClickeadoCompleto.nombre} al carrito!`, 'verde');
-            }
-
+            aniadirArticuloAlCarrito(productoClickeadoCompleto);
             inputNombreProducto.value = '';
             inputCodigoManual.value = '';
             terminosBusqueda.codigoBarras = '';
@@ -1030,26 +1025,27 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
             }
 
 
-            const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id);
-            if (prueba.length !== 0) {
-                articuloCarritoAModificar[0].cantidad = prueba[0].cantidad;
-            } else {
-                articuloCarritoAModificar.cantidad = 1;
-            }
+            // const prueba = articulosCarrito.filter(a => a.id === articuloCarritoAModificar[0].id);
+            // if (prueba.length !== 0) {
+            //     articuloCarritoAModificar[0].cantidad = prueba[0].cantidad;
+            // } else {
+            //     articuloCarritoAModificar.cantidad = 1;
+            // }
 
-            if (articuloCarritoAModificar[0].granel === '1') {
-                console.log('Desde aquí queremos ver si es de granel', articuloCarritoAModificar);
-                console.log('Es de granel');
-                abrirModalGranel(articuloCarritoAModificar[0]);
+            // if (articuloCarritoAModificar[0].granel === '1') {
+            //     console.log('Desde aquí queremos ver si es de granel', articuloCarritoAModificar);
+            //     console.log('Es de granel');
+            //     abrirModalGranel(articuloCarritoAModificar[0]);
 
-            } else {
-                mostrarProductosCarrito(articulosCarrito);
-                mostrarDetallesProducto(articuloCarritoAModificar[0]);
-                mostrarTotalesCarrito(articulosCarrito);
-                segundoEstadoCarrito();
+            // } else {
+            //     mostrarProductosCarrito(articulosCarrito);
+            //     mostrarDetallesProducto(articuloCarritoAModificar[0]);
+            //     mostrarTotalesCarrito(articulosCarrito);
+            //     segundoEstadoCarrito();
 
-            }
+            // }
 
+            esGranel(articuloCarritoAModificar[0]);
         });
     });
 }
@@ -1121,5 +1117,6 @@ export {
     mostrarAlerta,
     leerEstadoModales,
     filtrarProductoPorCodigo,
-    aniadirArticuloAlCarrito
+    aniadirArticuloAlCarrito,
+    esGranel
 }
