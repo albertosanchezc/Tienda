@@ -34,7 +34,7 @@
             <h3>Explora el registro completo de los proveedores, junto con los productos suministrados y los costos generados durante sus visitas.<h3>
         </div>
         <div class="busqueda-filtros1">
-            <form id="buscador" action="/proveedores-generarexcel" method="POST">
+            <form id="buscador" method="POST">
                 <fieldset>
                     <legend>Búsqueda</legend>
                     <div class="caja-filtros1">
@@ -124,7 +124,7 @@
             <h3>Introduce el nombre del proveedor y visualiza o edita sus datos empresariales.</h3>
         </div>
         <div class="modalproveedores__filtros">
-            <form id="buscador" action="/proveedores-generarexcel" method="POST">
+            <form id="buscadorProveedor"  method="POST">
                 <fieldset>
                     <legend>Búsqueda</legend>
                     <div class="modalproveedores__filtrosbox">
@@ -192,38 +192,23 @@
                 información.</h3>
         </div>
         <div class="modalproveedores--aniadir__entradas">
-            <?php
-            foreach ($alertas as $key => $alerta):
-                foreach ($alerta as $mensaje):
-                    ?>
-
-                    <div class="modalproveedores__alerta <?php echo $key; ?>"><?php echo $mensaje; ?></div>
-
-                    <?php
-                endforeach;
-            endforeach;
-            ?>
-            <form id="nuevoproveedor" method="POST" action="/proveedores">
+            <form id="aniadirProveedor"" method="POST">
                 <fieldset>
                     <legend>+Anadir Proveedor</legend>
-
                     <div class="modalproveedores--aniadir__entradasbox">
                         <div class="modalproveedores--aniadir__nombre">
-                            <?php if ($mensaje) { ?>
-                                <p class='modalproveedores__alerta modalproveedores__exito'> <?php echo $mensaje; ?> </p>
-                            <?php } ?>
                             <label for="entradanombre">Nombre: </label>
-                            <input type="text" id="entradanombre" name="proveedores[nombre]" placeholder="Coca - Cola"
+                            <input class="modalproveedores--aniadir__inputNombre" type="text" id="entradanombre" name="proveedores[nombre]" placeholder="Coca - Cola"
                                 value="<?php echo s($proveedores->nombre); ?>" required>
                         </div>
                         <div class="modalproveedores--aniadir__telefono">
                             <label for="phone">Teléfono: </label>
-                            <input type="tel" id="phone" name="proveedores[telefono]" placeholder="+52 (415) 456 7890"
-                                maxlength="19" value="<?php echo s($proveedores->telefono); ?>" required>
+                            <input class="modalproveedores--aniadir__inputTelefono" type="tel" id="phone" name="proveedores[telefono]" placeholder="+52 (415) 456 7890"
+                                maxlength="19" value="<?php echo s($proveedores->telefono); ?>">
                         </div>
                         <div class="modalproveedores--aniadir__email">
                             <label for="entradaemail">Email: </label>
-                            <input type="email" id="entradaemail" name="proveedores[email]"
+                            <input class="modalproveedores--aniadir__inputEmail" type="email" id="entradaemail" name="proveedores[email]"
                                 placeholder="correo@correo.com" value="<?php echo s($proveedores->email); ?>">
                         </div>
                     </div>

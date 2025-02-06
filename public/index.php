@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/app.php';
 
 use Controllers\CajaController;
 use Controllers\CarritoController;
+use Controllers\ProveedoresController;
 use MVC\Router;
 use Controllers\LoginController;
 use Controllers\PaginasController;
@@ -39,7 +40,7 @@ $router->get('/', [PaginasController::class, 'index']);
 $router->get('/carrito', [CarritoController::class, 'carrito']);
 $router->post('/carrito', [CarritoController::class, 'carrito']);
 $router->get('/inventarios/api/inventarios', [PaginasController::class, 'inventarioAPI']);
-$router->get('/proveedores/api/proveedores', [PaginasController::class, 'proveedoresAPI']);
+$router->get('/proveedores/api/proveedores', [ProveedoresController::class, 'proveedoresAPI']);
 $router->get('/caja/api/caja', [PaginasController::class, 'cajaAPI']);
 
 
@@ -56,8 +57,8 @@ $router->post('/caja', [CajaController::class, 'caja']);
 
 $router->get('/metricas', [PaginasController::class, 'metricas']);
 
-$router->get('/proveedores', [PaginasController::class, 'proveedores']);
-$router->post('/proveedores', [PaginasController::class, 'proveedores']);
+$router->get('/proveedores', [ProveedoresController::class, 'proveedores']);
+$router->post('/proveedores', [ProveedoresController::class, 'proveedores']);
 
 $router->get('/404', [PaginasController::class, 'error']);
 

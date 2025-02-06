@@ -27,13 +27,13 @@ class Proveedor extends ActiveRecord
         if (!$this->nombre) {
             self::$errores[] = 'El Nombre es Obligatorio';
         }
-        if (!$this->telefono) {
-            self::$errores[] = 'El Telefono es Obligatorio';
-        }
+        // if (!$this->telefono) {
+        //     self::$errores[] = 'El Telefono es Obligatorio';
+        // }
 
-        if (strlen($this->telefono) !== 19) {
-            self::$errores[] = 'El Teléfono debe tener exactamente 10 caracteres';
-        }
+        // if (strlen($this->telefono) !== 19) {
+        //     self::$errores[] = 'El Teléfono debe tener exactamente 10 caracteres';
+        // }
         
 
         return self::$errores;

@@ -45,15 +45,7 @@ class PaginasController
         ]);
     }
 
-    public static function proveedoresAPI(){
-        $proveedores = Proveedor::all();
-        $visitas_proveedores = Visitas_proveedor::all();
-
-        echo json_encode([
-            'proveedores' => $proveedores,
-            'visitas_proveedores' => $visitas_proveedores
-        ]);
-    }
+    
 
     public static function cajaAPI(){
         $caja = Caja::find(1);
