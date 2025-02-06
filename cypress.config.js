@@ -2,7 +2,7 @@ const { defineConfig } = require("cypress");
 
 module.exports = {
   // Toma capturas automáticas en fallos
-  screenshotOnRunFailure: true,
+  // screenshotOnRunFailure: true,
 
   e2e: {
     setupNodeEvents(on, config) {

@@ -61,8 +61,8 @@ describe('Pruebas del carrito de compras', () => {
                     capture: 'viewport',            // Define qué parte capturar
                     disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                     scale: true,                     // Escala la imagen en pantallas con alta resolución
-                    timout: 1000,                     // Espera hasta 5 segundos antes de 
-                    overwrite: truee
+                    timout: 5000,                     // Espera hasta 5 segundos antes de 
+                    overwrite: true
                     // capturar
                   })
                 // Cerrar ventana modal busqueda por código de barras
@@ -198,7 +198,7 @@ describe('Pruebas del carrito de compras', () => {
                 capture: 'runner',            // Define qué parte capturar
                 disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                 scale: true,                     // Escala la imagen en pantallas con alta resolución
-                timeout: 1000,                     // Espera hasta 5 segundos antes de capturar
+                timeout: 5000,                     // Espera hasta 5 segundos antes de capturar
                 overwrite: true
             })
         })
@@ -214,7 +214,7 @@ describe('Pruebas del carrito de compras', () => {
                 capture: 'runner',            // Define qué parte capturar
                 disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                 scale: true,                     // Escala la imagen en pantallas con alta resolución
-                timeout: 1000,                     // Espera hasta 5 segundos antes de capturar
+                timeout: 5000,                     // Espera hasta 5 segundos antes de capturar
                 overwrite: true
             })
         })
