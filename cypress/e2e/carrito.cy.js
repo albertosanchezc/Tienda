@@ -25,13 +25,13 @@ describe('Pruebas del carrito de compras', () => {
         })
         it("Debería Filtrar por código de barras", () => {
             cy.getByData("modal--manual__close").should('exist')
-            cy.getByData("modal--manual__close").type("7507")
+            cy.getByData("modal--manual__close").type("75078843")
 
             cy.getByData("nombreProductoTbodyModalManual").should("exist")
             cy.getByData("descripcionProductoTbodyModalManual").should("exist")
             cy.getByData("precioUnitarioVentaProductoTbodyModalManual").should("exist")
 
-            cy.getByData("modal--manual__close").should('have.value', '7507')
+            cy.getByData("modal--manual__close").should('have.value', '75078843')
 
             cy.getByData("nombreProductoTbodyModalManual").should('have.text', 'Cigarros Shots Classics')
             cy.getByData("descripcionProductoTbodyModalManual").should('have.text', '20')
@@ -204,7 +204,7 @@ describe('Pruebas del carrito de compras', () => {
         })
 
         it("Debe tener los valores correcto", () => {
-            cy.getByData("idCarrito").should('have.text', '2')
+            cy.getByData("idCarrito").should('have.text', '39')
             cy.getByData("cantidadCarrito").should('have.text', '1')
             cy.getByData("nombreCarrito").should('have.text', 'Cigarros Shots Classics')
             cy.getByData("descripcionCarrito").should('have.text', '20')
@@ -241,7 +241,7 @@ describe('Pruebas del carrito de compras', () => {
         })
 
         it("Debe tener los valores correcto", () => {
-            cy.getByData("idCarrito").should('have.text', '2')
+            cy.getByData("idCarrito").should('have.text', '39')
             cy.getByData("cantidadCarrito").should('have.text', '1')
             cy.getByData("nombreCarrito").should('have.text', 'Cigarros Shots Classics')
             cy.getByData("descripcionCarrito").should('have.text', '20')

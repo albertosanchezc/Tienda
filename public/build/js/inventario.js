@@ -370,7 +370,7 @@ function mostrarCards(inventario, proveedores) {
         }
         div.appendChild(contenidoDiv);
         const proveedor = proveedores.find(p => p.id === proveedor_id)
-        const proveedorNombre = proveedor.nombre;
+        const proveedorNombre = nombre;
         gridContenido.innerHTML = `
             <div class="flexdescripcion">
                 <img src="/build/img/descripcion-alternativa.png" alt="Logotipo de descripción" class="imgdescripcion">
