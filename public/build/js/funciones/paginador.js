@@ -1,5 +1,5 @@
 
-function mostrarPagina(pagina, datos, paginadorContainer, filtrar) {
+function mostrarPagina(pagina, datos, registrosPorPagina, paginadorContainer, filtrar) {
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     const datosPagina = datos.slice(inicio, fin);

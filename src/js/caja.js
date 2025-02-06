@@ -1,4 +1,3 @@
-import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
 (function () {
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -6,7 +5,7 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
         // btnReciente.click();
 
     });
-    
+
     let caja = [];
     let cajas_historicos = [];
     let terminosBusqueda = {
@@ -17,7 +16,8 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
         orden: '',
     }
 
-    let registrosPorPagina = 4;
+    let registrosPorPagina = 9;
+    let paginaActual = 1;
 
 
     async function consultarAPI() {
@@ -35,12 +35,10 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
             // Teoría 1 aquí mandar llamar caja primero y luego mostrarCards
             console.log(caja);
             imprimirActualCaja(caja);
-            mostrartabla(cajas_historicos);
+            // mostrartabla(cajas_historicos);
             btnReciente.click();
 
-            
-            // generarPaginador(cajas_historicos,registrosPorPagina, paginadorContainer, filtrar, 1);
-            // mostrarPagina(1,cajas_historicos, paginadorContainer, filtrar);
+            filtrarcaja();
             // // caja()
 
 
@@ -85,13 +83,15 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
     const h1EfectivoCaja = contenidoCaja.querySelector('.efectivo').querySelector('H1');
     const btnReciente = document.querySelector('#ascendente');
 
-   
+    let estaFijado = false;
+
+    const fijarBtn = document.querySelector('.btnfijar');
+    const contenido = document.querySelector('.gridContCaja');
+    const imagendown = document.querySelector('.imgdown');
+    const paginadorContainer = document.querySelector('.paginador-1');
+
+
     // eventos de los filtross
-
-
-
-
-
     // Eventos 
     document.getElementById('aniadircaja').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -122,7 +122,7 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
         } else {
             const alertaExito = document.createElement('div');
             alertaExito.className = 'alerta exito';
-            alertaExito.textContent = 'Producto Actualizado con éxito';
+            alertaExito.textContent = 'Efectivo Añadido con éxito';
             document.querySelector('#aniadircaja').prepend(alertaExito);
 
             setTimeout(() => {
@@ -161,7 +161,7 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
         } else {
             const alertaExito = document.createElement('div');
             alertaExito.className = 'alerta exito';
-            alertaExito.textContent = 'Producto Actualizado con éxito';
+            alertaExito.textContent = 'Efectivo Retirado con éxito';
             document.querySelector('#retirarcaja').prepend(alertaExito);
 
             setTimeout(() => {
@@ -171,9 +171,47 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
         }
     });
 
+    fijarBtn.addEventListener('click', function () {
+        if (!estaFijado) {
+            // 1) Ir a la altura deseada (ej. 500px)
+            window.scrollTo({
+                top: 700,      // Ajusta a la altura que requieras
+                behavior: 'smooth'
+            });
+
+            // 2) Bloquea el scroll del body
+            document.body.style.overflow = 'hidden';
+
+            // Cambia el texto del botón
+            limpiarHTMLElemento(fijarBtn);
+            fijarBtn.innerHTML = `
+                <p>Desfijar</p>
+                <img src="/build/img/fix.svg" alt="Logotipo de bajar">
+              `;
+            estaFijado = true;
+        } else {
+            document.body.style.overflow = '';
+            limpiarHTMLElemento(fijarBtn);
+            fijarBtn.innerHTML = `
+                <p>Fijar</p>
+                <img src="/build/img/fix.svg" alt="Logotipo de bajar">
+              `;
+            estaFijado = false;
+        }
+    });
+
+    imagendown.addEventListener('click', function () {
+        window.scrollTo({
+            top: 700, // Altura a la que deseas desplazarte
+            behavior: 'smooth' // Desplazamiento suave
+        });
+    });
+
+
     botonCerrarModRetirar.addEventListener('click', () => {
         modalRetirar.classList.remove('modal--retirar--show');
     })
+
     inputFechaInicial.addEventListener('change', (e) => {
         let { fechaI } = terminosBusqueda;
         fechaI = e.target.value;
@@ -207,11 +245,29 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
         filtrarcaja();
     })
 
-
-
     botonCerrarModAniadir.addEventListener('click', () => {
         modalAniadir.classList.remove('modal--aniadir--show');
     })
+
+    paginadorContainer.addEventListener('click', (e) => {
+        console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+        if (e.target.classList == 'numero') {
+
+            paginaActual = parseInt(e.target.textContent);
+        }
+        if (e.target.classList == 'paginas') {
+            if (e.target.textContent == 'Siguiente') {
+                paginaActual = paginaActual + 1;
+            } else {
+                paginaActual = paginaActual - 1;
+
+            }
+        }
+        let resultados = filtrarcaja()
+        mostrarPagina(paginaActual, resultados);
+    })
+
     const btnAniadirCaja = document.querySelector('.añadircaja');
     btnAniadirCaja.addEventListener('click', () => {
         const { cantidad_caja } = caja;
@@ -233,6 +289,7 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
             inputHiddenAniadir.value = resultado;
         })
     })
+
     const btnRetirarCaja = document.querySelector('.quitarcaja');
     btnRetirarCaja.addEventListener('click', () => {
         const { cantidad_caja } = caja;
@@ -314,52 +371,48 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
 
         tablaDinamica.appendChild(tbody);
         contenedorTabla.appendChild(tablaDinamica);
-    }
-   
-    function filtrar() {
-        const resultadosFiltrado = cajas_historicos.filter(filtrarfechaI).filter(filtrarfechaF).filter(filtrarTipo);
-        if (resultadosFiltrado.length > 0) {
-            console.log(resultadosFiltrado);
-            mostrartabla(resultadosFiltrados);
+        // contenedorTabla.appendChild(paginador);
 
-    
-            return resultadosFiltrado.flat();
-        } else {
-            mostrartabla(resultadosFiltrados);
-    
-            return resultadosFiltrado.flat();
-        }
     }
-
 
     function filtrarcaja() {
         let resultadosFiltrados = cajas_historicos;
         // Aplicar filtro de fecha inicial si existe
         if (terminosBusqueda.fechaI) {
             resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaI);
-            mostrartabla(resultadosFiltrados);
 
+            mostrarPagina(1, resultadosFiltrados);
+            // mostrartabla(resultadosPagina);
+
+            generarPaginador(resultadosFiltrados);
         }
 
         // Aplicar filtro de fecha final si existe
         if (terminosBusqueda.fechaF) {
             resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaF);
-            mostrartabla(resultadosFiltrados);
 
+            mostrarPagina(1, resultadosFiltrados);
+            // mostrartabla(resultadosPagina);
+            generarPaginador(resultadosFiltrados);
         }
 
         // Aplicar otros filtros (tipo y orden) si es necesario
         if (terminosBusqueda.tipo) {
             resultadosFiltrados = resultadosFiltrados.filter(filtrarTipo);
-            mostrartabla(resultadosFiltrados);
 
+            mostrarPagina(1, resultadosFiltrados);
+            // mostrartabla(resultadosPagina);
+            generarPaginador(resultadosFiltrados);
         }
 
         if (terminosBusqueda.orden) {
             resultadosFiltrados = resultadosFiltrados.sort(filtrarOrden);
-            mostrartabla(resultadosFiltrados);
 
+            mostrarPagina(1, resultadosFiltrados);
+            // mostrartabla(resultadosPagina);
+            generarPaginador(resultadosFiltrados);
         }
+
 
         // Mostrar resultados en consola
         console.log(resultadosFiltrados);
@@ -392,36 +445,90 @@ import { generarPaginador, mostrarPagina } from "./funciones/paginador.js";
 
     function filtrarTipo(cajas_historicos) {
         let { tipo } = terminosBusqueda;
-    
+
         if (!tipo || tipo === "todos") {
             return cajas_historicos; // Mostrar todos los resultados
         }
-        if (tipo==="retiro"){
+        if (tipo === "retiro") {
             return cajas_historicos.retiro_abono === '1';
 
-        } else if(tipo === "abono") {
+        } else if (tipo === "abono") {
             return cajas_historicos.retiro_abono === '0';
         }
     }
 
-    function filtrarOrden(a,b) {
-        let{orden} = terminosBusqueda;
+    function filtrarOrden(a, b) {
+        let { orden } = terminosBusqueda;
 
         const fechaA = new Date(a.fecha); // Acceso a la fecha del registro 'a'
-    const fechaB = new Date(b.fecha); // Acceso a la fecha del registro 'b'
+        const fechaB = new Date(b.fecha); // Acceso a la fecha del registro 'b'
 
-    // Orden ascendente (del más viejo al más reciente)
-    if (orden === "descendente") {
-        return fechaA - fechaB;
+        // Orden ascendente (del más viejo al más reciente)
+        if (orden === "descendente") {
+            return fechaA - fechaB;
+        }
+
+        // Orden descendente (del más reciente al más viejo)
+        if (orden === "ascendente") {
+            return fechaB - fechaA;
+        }
+
+        // Por defecto, no se aplica ningún orden
+        return 0;
     }
 
-    // Orden descendente (del más reciente al más viejo)
-    if (orden === "ascendente") {
-        return fechaB - fechaA;
+    function mostrarPagina(pagina, datos = cajas_historicos) {
+        const inicio = (pagina - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const inventarioPagina = datos.slice(inicio, fin);
+
+
+        console.log("Inventario Pagina", inventarioPagina);
+        paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+        // Revisar cómo pasar el elemento a limpiar
+        // limpiarHTMLElemento(despliegueInventario)
+        // limpiarHTMLElemento(contenedorTabla);
+        mostrartabla(inventarioPagina);
+        generarPaginador(datos);
+
+
+        return inventarioPagina;
     }
 
-    // Por defecto, no se aplica ningún orden
-    return 0;
+    // // Función para actualizar la hora
+    function generarPaginador(datos = cajas_historicos) {
+        const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+        console.log("Total de páginas desde generar Paginador", totalPaginas);
+        let paginadorHTML = '';
+
+        // Calcular el rango de páginas a mostrar
+        let inicio = Math.max(1, paginaActual - 4);
+        let fin = Math.min(totalPaginas, paginaActual + 4);
+
+        // Ajustar el rango si estamos cerca de los extremos
+        if (paginaActual <= 4) {
+            fin = Math.min(9, totalPaginas);
+        } else if (paginaActual >= totalPaginas - 4) {
+            inicio = Math.max(totalPaginas - 8, 1);
+        }
+
+        // Botón "Anterior"
+        if (paginaActual > 1) {
+            //  onclick="cambiarPagina(${paginaActual - 1})"
+            paginadorHTML += `<button class="paginas">Anterior</button>`;
+        }
+
+        for (let i = inicio; i <= fin; i++) {
+            // onclick="cambiarPagina(${i})"
+            paginadorHTML += `<button   ${paginaActual === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
+        }
+
+        if (paginaActual < totalPaginas) {
+            // onclick="cambiarPagina(${paginaActual + 1})"
+            paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+        }
+
+        paginadorContainer.innerHTML = paginadorHTML;
     }
 
 }())
