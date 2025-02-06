@@ -48,7 +48,7 @@
         <h3 class="busqueda-tituloh3">Explora el registro completo de los proveedores, junto con los productos
             suministrados y los costos
             generados durante sus visitas.</h3>
-        <div class="gridProveedorestabla">
+        <div class="gridProveedoresTabla">
             <div class="busqueda-filtros1">
                 <form id="buscador" method="POST">
                     <fieldset>

@@ -205,9 +205,6 @@
 
 
     .caja-filtros1 {
-        // display: grid;
-        // grid-template-columns: 1fr;
-        // grid-template-rows: 2;
         width: 100%;
 
         label {
@@ -358,26 +355,51 @@
     background-color: #8D28A7;
 }
 
-.gridProveedorestabla{
+.gridProveedoresTabla{
     @include telefono-1{
+        display: grid;
         grid-template-columns: 1fr;
 
-        // .busqueda-filtros1{
 
-        // }
+        .busqueda-filtros1{
+            grid-column: 1/2;
+            
+        }
+        .tabladeproveedores{
+            grid-column: 1/2;
+
+        }
         
     }
 
     @include tablet{
-        grid-template-columns: repeat(2,1fr);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+
+        .busqueda-filtros1{
+            grid-column: 1/2;
+            
+        }
+        .tabladeproveedores{
+            grid-column: 2/3;
+
+        }
         
     }
 
     @include laptop-1{
-        grid-template-columns: repeat(2,1fr);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
 
-        
+        .busqueda-filtros1{
+            grid-column: 1/2;   
+        }
+        .tabladeproveedores{
+            grid-column: 2/3;
+        }
     }
 }
+
+
 
 

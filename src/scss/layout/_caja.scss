@@ -152,11 +152,23 @@
     }
 }
 
+.busqueda-tituloh3 {
+
+    font-size: 1.7rem;
+    font-weight: 399;
+    // margin: 0 5rem;
+}
+
 @include telefono-1 {
     .busqueda-titulo {
         h3 {
             padding: 0;
         }
+    }
+
+    .busqueda-tituloh3 {
+        padding: 0;
+
     }
 }
 
@@ -166,6 +178,10 @@
             padding: 0 5rem 0 5rem;
         }
     }
+
+    .busqueda-tituloh3 {
+            padding: 0 5rem 0 5rem;
+    }
 }
 
 @include laptop-1 {
@@ -173,6 +189,10 @@
         h3 {
             padding: 0 30rem 0 30rem;
         }
+    }
+
+    .busqueda-tituloh3 {
+            padding: 0 30rem 0 30rem;
     }
 }
 
@@ -208,7 +228,8 @@
         align-items: center;
         color: #d3d0d0;
     }
-    h1{
+
+    h1 {
         padding: 0;
         margin-top: 5rem;
         align-items: center;
@@ -217,37 +238,39 @@
     }
 }
 
-.titCentrado{
+.titCentrado {
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-.espaciador, .fx{
+.espaciador,
+.fx {
     flex: 1;
 
 }
 
-.fx{
+.fx {
     justify-content: flex-end;
     display: flex;
     flex: 1;
 
 }
 
-.btnfijar{
+.btnfijar {
     display: flex;
     justify-content: center;
     align-items: center;
     justify-content: right;
     width: min-content;
-    gap:5px;
+    gap: 5px;
     border-radius: 1rem;
 
     padding: 4px 7px;
     color: #d3d0d0;
     background: linear-gradient(to right, #D56B26, #E6962C);
-    p{
+
+    p {
         padding: 0;
         margin: 0;
         color: #ddd;
@@ -257,28 +280,50 @@
 
 }
 
-.btnfijar:hover{
+.btnmorado{
+    background: linear-gradient(to right, rgb(145, 3, 93), mediumvioletred);
+}
+
+.btnfijar:hover {
     cursor: pointer;
     background-color: #fff;
     border: solid 1px orange;
     background: none;
-    p{
+
+    p {
         color: orange;
 
     }
-    img{
+
+    img {
         // filter: sepia();
         filter: brightness(0) saturate(100%) invert(61%) sepia(88%) saturate(3340%) hue-rotate(3deg) brightness(98%) contrast(101%);
     }
 
 }
 
-.imgbajar{
-img:hover {
-    cursor: pointer;
-    transition: background-color .3s;
-    filter: invert(1) brightness(60%) grayscale(100%);
+.btnmorado:hover{
+    border: solid 1px mediumvioletred;
+    background: none;
+
+    p {
+        color: mediumvioletred;
+
+    }
+
+    img {
+        filter: none;
+        filter: brightness(0) saturate(100%) invert(16%) sepia(94%) saturate(7485%) hue-rotate(308deg) brightness(94%) contrast(108%);
+
+    }
 }
+
+.imgbajar {
+    img:hover {
+        cursor: pointer;
+        transition: background-color .3s;
+        filter: invert(1) brightness(60%) grayscale(100%);
+    }
 }
 
 .gridContCaja {
@@ -300,9 +345,11 @@ img:hover {
     @include laptop-1 {
         grid-template-columns: 1fr 2fr;
     }
-    .paginador-1{
+
+    .paginador-1 {
         grid-column: 2/3;
-        .numeroPActual{
+
+        .numeroPActual {
             background: none;
             background-color: #fff;
             border: solid 1px #db5903;
@@ -930,5 +977,11 @@ img:hover {
 .letrasverdes {
     color: green;
 
+}
+
+.imgbajar {
+    .imgdownsmall {
+        width: 2.8rem;
+    }
 }
 
