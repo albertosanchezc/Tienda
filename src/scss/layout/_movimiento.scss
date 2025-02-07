@@ -1,8 +1,8 @@
-.btnverde{
+.btnverde {
     background: linear-gradient(to right, green, rgb(4, 196, 4));
 }
 
-.btnverde:hover{
+.btnverde:hover {
     border: solid 1px rgb(4, 192, 4);
     background: none;
 
@@ -18,11 +18,12 @@
     }
 }
 
-.proveedorverde{
+.proveedorverde {
     fieldset {
         border: 2px dotted #149c02;
     }
-    legend{
+
+    legend {
         color: #139b07;
 
     }
@@ -38,33 +39,59 @@
     }
 }
 
-.movimientoContainer{
+.movimientoContainer {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    margin: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 2rem;
+    gap: 2rem;
 
 
-    .articulosproveedor{
-        grid-column: 1/2; 
+    .articulosproveedor {
+        grid-column: 1/2;
+
+        p {
+            margin-bottom: 0;
+            text-align: center;
+            font-size: medium;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, rgb(5, 46, 1), rgb(0, 170, 14));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     }
 
-    .articulosmodificar{
-        grid-column: 2/3; 
+    .articulosmodificar {
+        grid-column: 2/3;
+        margin: 1rem;
+
+        .art  {
+            text-align: center;
+            font-size: medium;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, rgb(5, 46, 1), rgb(0, 170, 14));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     }
-    
+
 }
 
-.containerBackground{
-    background-color: #c1ffd9;
+.containerBackground {
+    background-color: #dcfce8;
     border-radius: 5px;
-   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.tablaverde {
+    margin-top: 1rem;
 }
 
 
 .tabla-verde th,
 .tabla-verde td {
     border: 1px solid #0ba70b;
-    padding: 4px 7px;
+    padding: 2px 5px;
+    font-size: small;
 }
 
 .tabla-verde th {
@@ -89,10 +116,327 @@
 }
 
 .btnVerVerde {
-    color: #8D28A7;
+    color: #08df13;
     border: 1px solid rgb(4, 196, 4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    transition: background-color .3s;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+
+    a {
+        color: #08df13;
+    }
 }
 
 .btnVerVerde:hover {
+    text-decoration: none;
+    color: #fff;
     background-color: rgb(4, 196, 4);
+
+    a {
+        color: #fff
+    }
 }
+
+.gridmodificaciones {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+
+    .inventariogrid1 {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        // grid-column: 1/2;
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        // gap: 20px;
+
+        .gridcontenido1 {
+            grid-column: 1;
+            grid-row: 1fr;
+
+            img{
+                width: 2rem;
+            }
+
+            /* Ubica esta sección en la primera columna */
+        }
+
+        .dinerogrid {
+            grid-column: 2;
+            /* Ubica esta sección en la segunda columna */
+            text-align: right;
+            grid-row: 1fr;
+
+            padding-top: 3rem;
+        }
+
+    }
+
+
+    .inventariogrid:hover {
+        background-color: #f3f4f5;
+
+    }
+
+    .inventarionombre {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+
+
+        h3 {
+            margin: 0;
+            font-size: 1.7rem;
+            font-weight: bold;
+            text-align: left;
+            text-transform: uppercase;
+
+
+        }
+
+        p {
+            margin: 0;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: rgb(84, 196, 32);
+            text-transform: uppercase;
+
+        }
+
+    }
+
+    .flexdescripcion,
+    .flexcodigo,
+    .flexproveedor,
+    .flexreloj {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        p {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #10101a;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .negritas {
+            font-weight: bold;
+
+        }
+    }
+
+
+    .inventarionombre,
+    .flexdescripcion,
+    .flexcodigo,
+    .flexproveedor,
+    .flexreloj {
+        margin-bottom: 1rem;
+        /* Añade separación entre elementos */
+
+    }
+
+    .preciodeventa,
+    .preciodecompra,
+    .gananciap,
+    .gananciad {
+        margin-bottom: 0.5rem;
+
+        /* Espaciado entre los datos de la segunda columna */
+
+
+        p {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #10101a;
+        }
+
+        .negritas {
+            font-weight: bold;
+
+        }
+
+        .dineros {
+            font-size: 1.82rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #0400ff, #33cc33);
+            /* Otro degradado para el párrafo */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .dineros1 {
+            color: #0400ff;
+            font-size: 1.82rem;
+            font-weight: bold;
+        }
+    }
+
+}
+
+.botonStock {
+    grid-column: 1/3;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espacia los elementos en línea */
+    background: linear-gradient(to right, green, rgb(4, 196, 4));
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-size: small;
+    color: white;
+    // max-width: 200px;
+    // height: 40px; /* Ajusta la altura */
+    
+}
+
+.imagenmenos, .imagenmas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    p{
+        color:#096e0e;
+        font-weight: bold;
+    }
+}
+
+.stockCantidad {
+    display: flex;
+    flex-direction: column; /* Mantiene los textos uno arriba del otro */
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1; /* Ocupa el espacio del centro */
+    p{
+        color: #fff;
+        font-weight: bold;
+        padding: 0;
+        margin: 0;
+        font-size: 1.5rem;
+    }
+}
+
+
+.Stock, .Aniadidos {
+    margin: 1px 0;
+    font-size: small;
+}
+
+
+.imagenmas:hover{
+background-color: #008807;
+    p{
+        color:#fff;
+    }
+
+}
+.imagenmenos:hover{
+    background-color: #ff0404;
+        p{
+            color:#fff;
+        }
+    
+    }
+
+// .botonStock {
+//     grid-column: 1/3;
+    
+//     display: flex;
+//     justify-content: center; /* Centrar el botón */
+//     align-items: center;
+//     background: linear-gradient(to right, #D56B26, #E6962C);
+//     padding: 5px 10px;
+//     border-radius: 10px;
+//     font-size: small;
+//     color: white;
+//     // max-width: 200px; /* Ajusta según el tamaño deseado */
+// }
+
+// .primeracolumna {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     width: 100%;
+//     gap: 10px; /* Espacio entre columnas */
+// }
+
+// .imagenmenos, .imagenmas {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 30px; 
+//     height: 30px;
+//     background-color: white;
+//     border-radius: 50%;
+//     color: black;
+//     font-weight: bold;
+//     cursor: pointer;
+// }
+
+// .stockCantidad {
+//     display: flex;
+//     flex-direction: column; /* Para que los párrafos estén uno encima del otro */
+//     align-items: center;
+//     justify-content: center;
+// }
+
+// .Stock, .Aniadidos {
+//     margin: 2px 0;
+//     font-size: small;
+// }
+
+
+// .botonStock{
+//     display: block;
+// }
+
+// .primeracolunma{
+//     display: grid;
+//     grid-template-columns: repeat(3,1fr);
+
+//     p{
+//         margin: 0;
+//         padding: 0;
+//         font-size: smaller;
+//     }
+
+//     .imagenmenos{
+//         grid-column: 1/2;
+        
+//     }
+//     .stockCantidad{
+//         grid-column: 2/3;
+        
+//     }
+
+//     .imagenmas{
+//         grid-column: 3/4;
+        
+//     }
+    
+// }
