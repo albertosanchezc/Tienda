@@ -21,7 +21,7 @@
 
 <section class="contenedorcaja seccioncaja">
     <div class="botones">
-        <a href="#" class="botonslider1"><span>Movimiento de Producto</span></a>
+        <a href="/movimientoproducto" class="botonslider1"><span>Movimiento de Producto</span></a>
         <a href="#" class="botonslider2"><span>Ver Categorías </span></a>
         <a href="#" class="botonslider3"><span>+ Añadir Nuevo Producto</span></a>
     </div>
@@ -322,7 +322,7 @@
                             </select>
                         </div>
                         <div class="modal--inventario--actualizar__granelono">
-                        <p>Metodo de Venta: </p>
+                            <p>Metodo de Venta: </p>
                             <div class="switch">
                                 <input type="radio" id="optionpiezaActualizar" name="inventarioActualizar[optionpieza]"
                                     value="optionpieza" checked>
@@ -390,38 +390,38 @@
         </div>
         <div class="modal--inventario--actualizarStock__entradas">
             <form id="actualizarStock" method="POST">
-            <div class="modal--inventario--actualizarStock__agregaroquitar">
+                <div class="modal--inventario--actualizarStock__agregaroquitar">
                     <p>Tipo de Movimiento: </p>
-                            <div class="switch">
-                                <input type="radio" id="optionaniadir" name="inventarioActualizarStock[optionaniadir]"
-                                    value="optionaniadir" checked>
-                                <label for="optionaniadir">Añadir a Stock</label>
-                                <input type="radio" id="optioneliminar" name="inventarioActualizarStock[optionaniadir]"
-                                    value="optioneliminar">
-                                <label for="optioneliminar">Eliminar de Stock</label>
-                            </div>
+                    <div class="switch">
+                        <input type="radio" id="optionaniadir" name="inventarioActualizarStock[optionaniadir]"
+                            value="optionaniadir" checked>
+                        <label for="optionaniadir">Añadir a Stock</label>
+                        <input type="radio" id="optioneliminar" name="inventarioActualizarStock[optionaniadir]"
+                            value="optioneliminar">
+                        <label for="optioneliminar">Eliminar de Stock</label>
                     </div>
+                </div>
                 <fieldset>
                     <legend>+Actualizar Stock</legend>
-                 
+
                     <div class="modal--inventario--actualizarStock__entradasbox">
 
                         <div class="modal--inventario--actualizarStock__nombre">
                             <label for="cantidadStock"> Cantidad a Agregar: </label>
                             <input type="number" id="cantidadStock" name="inventarioActualizarStock[cantidad]" min="0"
                                 placeholder="Ej. 10" value="<?php echo s($inventario->cantidad); ?>">
-                            
+
                         </div>
                     </div>
                 </fieldset>
                 <div class="modal--inventario--actualizarStock__cantidadActual">
-                        <h3>Cantidad Registrada: </h3>
-                        <p>10 Artículos en Stock</p>
-                    </div>
+                    <h3>Cantidad Registrada: </h3>
+                    <p>10 Artículos en Stock</p>
+                </div>
                 <div class="modal--inventario--actualizarStock__resultadocantidad">
-                                <h3>Cantidad Resultante:</h3>
-                                <p>10 Artículos en Stock</p>
-                            </div>
+                    <h3>Cantidad Resultante:</h3>
+                    <p>10 Artículos en Stock</p>
+                </div>
                 <div class="modal--inventario--actualizarStock__btn">
                     <input value="Actualizar Stock" type="submit"
                         class="modal--inventario--actualizarStock__botonaniadir">
