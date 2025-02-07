@@ -1,8 +1,8 @@
-.btnverde{
+.btnverde {
     background: linear-gradient(to right, green, rgb(4, 196, 4));
 }
 
-.btnverde:hover{
+.btnverde:hover {
     border: solid 1px rgb(4, 192, 4);
     background: none;
 
@@ -18,11 +18,12 @@
     }
 }
 
-.proveedorverde{
+.proveedorverde {
     fieldset {
         border: 2px dotted #149c02;
     }
-    legend{
+
+    legend {
         color: #139b07;
 
     }
@@ -38,33 +39,121 @@
     }
 }
 
-.movimientoContainer{
+.movimientoContainer {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    margin: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 2rem;
+    gap: 2rem;
 
-
-    .articulosproveedor{
-        grid-column: 1/2; 
+    @include telefono-1 {
+        grid-template-columns: 1fr;
+        margin: 0;
     }
 
-    .articulosmodificar{
-        grid-column: 2/3; 
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 2rem;
+
+
     }
-    
+
+    @include laptop-1 {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 2rem;
+
+
+
+    }
+
+
+    .articulosproveedor {
+        grid-column: 1/2;
+        overflow-x: auto;
+
+        p {
+            text-align: center;
+            font-size: medium;
+            font-weight: bold;
+            // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, rgb(11, 129, 0), rgb(2, 255, 23));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moverFondo 2s linear infinite;
+        }
+
+        @keyframes moverFondo {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+    }
+
+    .articulosmodificar {
+        grid-column: 2/3;
+        margin: 1rem;
+
+        @include telefono-1 {
+            grid-column: 1/2;
+        }
+
+        @include tablet {
+            grid-column: 2/3;
+
+        }
+
+        @include laptop-1 {
+            grid-column: 2/3;
+
+        }
+
+        .art {
+            text-align: center;
+            font-size: medium;
+            font-weight: bold;
+            // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, rgb(11, 129, 0), rgb(2, 255, 23));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moverFondo 2s linear infinite;
+        }
+
+        @keyframes moverFondo {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+    }
+
 }
 
-.containerBackground{
-    background-color: #c1ffd9;
+.containerBackground {
+    background-color: #dcfce8;
     border-radius: 5px;
-   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    overflow-x: auto;
+
+}
+
+.tablaverde {
+    margin-top: 1rem;
 }
 
 
 .tabla-verde th,
 .tabla-verde td {
     border: 1px solid #0ba70b;
-    padding: 4px 7px;
+    padding: 2px 5px;
+    font-size: small;
 }
 
 .tabla-verde th {
@@ -89,10 +178,377 @@
 }
 
 .btnVerVerde {
-    color: #8D28A7;
+    color: #08df13;
     border: 1px solid rgb(4, 196, 4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    transition: background-color .3s;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+
+    a {
+        color: #08df13;
+    }
 }
 
 .btnVerVerde:hover {
+    text-decoration: none;
+    color: #fff;
     background-color: rgb(4, 196, 4);
+
+    a {
+        color: #fff
+    }
+}
+
+.gridmodificaciones {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    overflow-x: auto;
+
+    @include telefono-1 {
+        grid-template-columns: 1fr;
+    }
+
+    @include tablet {
+        grid-template-columns: 1fr;
+
+    }
+
+    @include laptop-1 {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+
+
+
+    .inventariogrid1 {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+
+        @include telefono-1 {
+            margin: 0 1rem;
+        }
+
+        @include tablet {
+            margin: 0 2rem;
+
+        }
+
+        @include laptop-1 {
+            margin: 0;
+
+        }
+
+        .gridcontenido1 {
+            grid-column: 1;
+            grid-row: 1fr;
+
+            img {
+                width: 2rem;
+            }
+
+            /* Ubica esta sección en la primera columna */
+        }
+
+        .dinerogrid {
+            grid-column: 2;
+            /* Ubica esta sección en la segunda columna */
+            text-align: right;
+            grid-row: 1fr;
+
+            padding-top: 3rem;
+        }
+
+    }
+
+
+    .inventariogrid:hover {
+        background-color: #f3f4f5;
+
+    }
+
+    .inventarionombre {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+
+
+        h3 {
+            margin: 0;
+            font-size: 1.7rem;
+            font-weight: bold;
+            text-align: left;
+            text-transform: uppercase;
+
+
+        }
+
+        p {
+            margin: 0;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: rgb(84, 196, 32);
+            text-transform: uppercase;
+
+        }
+
+    }
+
+    .flexdescripcion,
+    .flexcodigo,
+    .flexproveedor,
+    .flexreloj {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        p {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #10101a;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .negritas {
+            font-weight: bold;
+
+        }
+    }
+
+
+    .inventarionombre,
+    .flexdescripcion,
+    .flexcodigo,
+    .flexproveedor,
+    .flexreloj {
+        margin-bottom: 1rem;
+        /* Añade separación entre elementos */
+
+    }
+
+    .preciodeventa,
+    .preciodecompra,
+    .gananciap,
+    .gananciad {
+        margin-bottom: 0.5rem;
+
+        /* Espaciado entre los datos de la segunda columna */
+
+
+        p {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #10101a;
+        }
+
+        .negritas {
+            font-weight: bold;
+
+        }
+
+        .dineros {
+            font-size: 1.82rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #0400ff, #33cc33);
+            /* Otro degradado para el párrafo */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .dineros1 {
+            color: #0400ff;
+            font-size: 1.82rem;
+            font-weight: bold;
+        }
+    }
+
+}
+
+.botonStock {
+    grid-column: 1/3;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Espacia los elementos en línea */
+    background: linear-gradient(to right, green, rgb(4, 196, 4));
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-size: small;
+    color: white;
+    // max-width: 200px;
+    // height: 40px; /* Ajusta la altura */
+
+}
+
+.imagenmenos,
+.imagenmas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+
+    p {
+        color: #096e0e;
+        font-weight: bold;
+    }
+}
+
+.stockCantidad {
+    display: flex;
+    flex-direction: column;
+    /* Mantiene los textos uno arriba del otro */
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+
+    /* Ocupa el espacio del centro */
+    p {
+        color: #fff;
+        font-weight: bold;
+        padding: 0;
+        margin: 0;
+        font-size: 1.5rem;
+    }
+}
+
+
+.Stock,
+.Aniadidos {
+    margin: 1px 0;
+    font-size: small;
+}
+
+
+.imagenmas:hover {
+    background-color: #008807;
+
+    p {
+        color: #fff;
+    }
+
+}
+
+.imagenmenos:hover {
+    background-color: #ff0404;
+
+    p {
+        color: #fff;
+    }
+
+}
+
+.gridTotal {
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    justify-content: space-evenly;
+
+
+}
+
+.totalVisita {
+    font-weight: bold;
+
+    p {
+        text-align: center;
+    }
+
+}
+
+
+
+.estadoPago {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    text-align: right;
+    align-items: flex-end;
+    background-color: #91ffb6;
+    padding: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+
+    p {
+        font-size: 1.4rem;
+        padding: 0;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        text-align: right;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+        text-align: right;
+
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: 5px;
+        font-size: 16px;
+        border-color: #02b302;
+        border-radius: 1rem;
+        height: 43px;
+        margin-bottom: 2rem;
+        background-color: #dcfce8;
+
+    }
+}
+
+.flexdin {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    p {
+        font-size: 2rem;
+    }
+
+}
+
+.adeudo {
+    width: 100%;
+
+    p {
+        font-size: larger;
+        text-align: right;
+        font-weight: bold;
+    }
+
+
 }
