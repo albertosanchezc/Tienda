@@ -1,0 +1,98 @@
+.btnverde{
+    background: linear-gradient(to right, green, rgb(4, 196, 4));
+}
+
+.btnverde:hover{
+    border: solid 1px rgb(4, 192, 4);
+    background: none;
+
+    p {
+        color: rgb(4, 192, 4);
+
+    }
+
+    img {
+        filter: none;
+        filter: brightness(0) saturate(100%) invert(48%) sepia(98%) saturate(5000%) hue-rotate(90deg) brightness(95%) contrast(105%);
+
+    }
+}
+
+.proveedorverde{
+    fieldset {
+        border: 2px dotted #149c02;
+    }
+    legend{
+        color: #139b07;
+
+    }
+
+    select {
+        width: 100%;
+        padding: 5px;
+        font-size: 16px;
+        border-color: rgb(4, 192, 4);
+        border-radius: 1rem;
+        height: 45px;
+        margin-bottom: 1rem;
+    }
+}
+
+.movimientoContainer{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    margin: 1rem;
+
+
+    .articulosproveedor{
+        grid-column: 1/2; 
+    }
+
+    .articulosmodificar{
+        grid-column: 2/3; 
+    }
+    
+}
+
+.containerBackground{
+    background-color: #c1ffd9;
+    border-radius: 5px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+
+.tabla-verde th,
+.tabla-verde td {
+    border: 1px solid #0ba70b;
+    padding: 4px 7px;
+}
+
+.tabla-verde th {
+    background: linear-gradient(to right, green, rgb(4, 196, 4));
+}
+
+.tabla-verde tbody tr:nth-child(even) {
+    background-color: #f4fcf3;
+}
+
+.tabla-verde tbody tr:hover {
+    background-color: #e7f9e8;
+}
+
+.tablaverde::-webkit-scrollbar {
+    height: 8px;
+}
+
+.tablaverde::-webkit-scrollbar-thumb {
+    background-color: #017c26;
+    border-radius: 10px;
+}
+
+.btnVerVerde {
+    color: #8D28A7;
+    border: 1px solid rgb(4, 196, 4);
+}
+
+.btnVerVerde:hover {
+    background-color: rgb(4, 196, 4);
+}
