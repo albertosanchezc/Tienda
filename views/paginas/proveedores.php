@@ -23,7 +23,7 @@
                     <a href="#" class="p2boton1">+ Añadir Nuevo Proveedor</a>
                 </div>
                 <div class="presentacion2boton2">
-                    <a href="/proveedores/visitaproveedor" class="p2boton2">+ Registrar Visita de Proveedor</a>
+                    <a href="/proveedores/visitaproveedor" class="p2boton2">Movimiento de Producto</a>
                 </div>
             </div>
         </div>
