@@ -18,8 +18,6 @@ describe('Pruebas del carrito de compras', () => {
 
     context('Añadir producto con lector de  código barras', () => {
         beforeEach(() => {
-            // Abrir ventana modal buscar por codigo de barras y escribir en ella
-            cy.getByData("modal--nombre__close").should('exist')
             cy.getByData("documento")
             cy.getByData("documento").type('75078843')
             cy.document().trigger("keydown", { key: "Enter", keyCode: 13, which: 13 })
@@ -29,6 +27,20 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("descripcionCarrito").should('exist')
             cy.getByData("codigoBarrasCarrito").should('exist')
             cy.getByData("imgCarrito").should('exist')
+            
+            cy.getByData("imgDetallesProducto").should('exist')
+            cy.getByData("nombreDetallesProducto").should('exist')
+            cy.getByData("descripcionDetallesProducto").should('exist')
+            cy.getByData("cantidadDetallesProducto").should('exist')
+            cy.getByData("precioVentaDetallesProducto").should('exist')
+            cy.getByData("totalDetallesProducto").should('exist')
+            
+            cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
+            cy.getByData("descripcionDetallesProducto").contains('20')
+            cy.getByData("cantidadDetallesProducto").contains('Cantidad: 1')
+            cy.getByData("precioVentaDetallesProducto").contains('50.48')
+            cy.getByData("totalDetallesProducto").contains('50.48')
+            
         })
 
         describe("Si se escanea de nuevo el mismo producto", () => {
@@ -41,7 +53,17 @@ describe('Pruebas del carrito de compras', () => {
                 cy.getByData("descripcionCarrito").contains('20')
                 cy.getByData("codigoBarrasCarrito").contains('75078843')
                 cy.getByData("imgCarrito").should('exist')
-    
+
+
+                cy.getByData("Cantidadtotal").contains('100.96')
+                cy.getByData("numeroArticulos").contains('2')
+
+                cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
+                cy.getByData("descripcionDetallesProducto").contains('20')
+                cy.getByData("cantidadDetallesProducto").contains('Cantidad: 2')
+                cy.getByData("precioVentaDetallesProducto").contains('50.48')
+                cy.getByData("totalDetallesProducto").contains('100.96')
+
             })
         })
 
@@ -65,11 +87,6 @@ describe('Pruebas del carrito de compras', () => {
                 cy.getByData("imgCarrito").should('exist')
             })
         })
-        
-
-
-        
-
     })
 
 

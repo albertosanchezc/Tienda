@@ -5,13 +5,13 @@ namespace Model;
 class Visitas_proveedor extends ActiveRecord{
     // Base de datos
     protected static $tabla = 'visitas_proveedor';
-    protected static $columnasDB = ['id', 'proveedor_id', 'hora', 'fecha', 'producto_id', 'cantidad', 'total_visita', 'total_pagado', 'total_adeudo'];
+    protected static $columnasDB = ['id', 'proveedor_id', 'hora', 'fecha', 'visita_id', 'cantidad', 'total_visita', 'total_pagado', 'total_adeudo'];
 
     public $id;
     public $proveedor_id;
     public $hora;
     public $fecha;
-    public $producto_id;
+    public $visita_id;
     public $cantidad;
     public $total_visita;
     public $total_pagado;
@@ -28,7 +28,7 @@ class Visitas_proveedor extends ActiveRecord{
         $this->proveedor_id = $args['proveedor_id'] ?? '';
         $this->hora = $args['hora'] ?? '';
         $this->fecha = $args['fecha'] ?? '';
-        $this->producto_id = $args['producto_id'] ?? '';
+        $this->visita_id = $args['visita_id'] ?? '';
         $this->cantidad = $args['cantidad'] ?? '';
         $this->total_visita = $args['total_visita'] ?? '';
         $this->total_pagado = $args['total_pagado'] ?? '';

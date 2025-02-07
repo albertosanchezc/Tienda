@@ -1,4 +1,4 @@
-import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, mostrarProductosCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito } from "./funciones.js";
+import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, mostrarProductosCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarDetallesProducto, modificarCantidadCarrito } from "./funciones.js";
 import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel, modalEliminarProducto, modalPagar } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -192,11 +192,14 @@ document.addEventListener('keydown', (e) => {
             mostrarAlerta('No se encontró el artículo', 'rojo');
         } else if (resultado.length === 1) {
             mostrarAlerta(`Producto Escaneado: ${resultado[0].nombre}`, 'verde');
-            aniadirArticuloAlCarrito(resultado[0]);
-            mostrarProductosCarrito();
-            esGranel(resultado[0]);
+            articulosCarrito = aniadirArticuloAlCarrito(resultado[0]);
+            articuloCarritoAModificar = articulosCarrito.find(p => p.id === resultado[0].id);
+            console.log(articuloCarritoAModificar);
+            esGranel(articuloCarritoAModificar);
             segundoEstadoCarrito();
-            filtrar(inventario);
+            // mostrarProductosCarrito();
+            // esGranel(resultado[0]);
+
         }
 
         // Limpiar el código de barras después de procesar el Enter

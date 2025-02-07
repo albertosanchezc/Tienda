@@ -300,8 +300,6 @@ function abrirPagar() {
     if (articulosCarrito.length > 0) {
         modalPagar.classList.add('modal--pagar--show');
         // estadoModales = true;
-        terminosBusqueda.codigoBarras = 0;
-        codigo_barras = '';
         let total = calcularTotalAPagar(articulosCarrito).toFixed(2);
 
         actualizarModalPagar(total);
@@ -438,7 +436,7 @@ function actualizarModalGranel(articuloCarritoAModificar) {
         mostrarTotalesCarrito(articulosCarrito);
         mostrarProductosCarrito();
         inputModalGranel.value = '';
-   
+
 
         mostrarDetallesProducto(articuloCarritoAModificar);
         segundoEstadoCarrito();
@@ -470,7 +468,7 @@ function calcularTotalAPagar(articulosCarrito) {
         }
 
     });
-    mostrarAlerta(`El total a pagar es ${totalPagar}`);
+    mostrarAlerta(`El total a pagar es ${totalPagar.toFixed(2)}`);
     return (totalPagar);
 }
 
@@ -555,35 +553,72 @@ function actualizarModalPagar(total) {
 
 }
 
+
 function aniadirArticuloAlCarrito(seleccionado) {
     let existe = articulosCarrito.some(producto => producto.id === seleccionado.id);
     console.log('Existe?', existe);
-    let articuloAModificar = articulosCarrito.find(p => p.id === seleccionado.id);
+
     if (existe) {
-        articulosCarrito = articulosCarrito.map(producto => {
-            if (producto.id === seleccionado.id) {
+        // Encuentra el producto en el carrito
+        let articuloAModificar = articulosCarrito.find(p => p.id === seleccionado.id);
 
-                mostrarAlerta('Existe', 'verde');
-                producto.cantidad = articuloAModificar.cantidad;
-                mostrarAlerta(`¡Artículo ${producto.nombre} ya existente, se aumentó la cantidad!`, 'verde');
-                actualizarCantidad(producto);
-                // estadoModales = false;
+        // Incrementa la cantidad antes de actualizar el array
+        articuloAModificar.cantidad += 1;
 
-                return { ...producto, cantidad: producto.cantidad + 1 };
-            }
-            return producto;
-        });
+        // Actualiza el array con la nueva cantidad
+        articulosCarrito = articulosCarrito.map(producto =>
+            producto.id === seleccionado.id ? { ...producto, cantidad: articuloAModificar.cantidad } : producto
+        );
+
+        // Llama a la función de actualización aquí
+        actualizarCantidad(articuloAModificar);
+        mostrarDetallesProducto(articuloAModificar);
+        // Muestra la alerta
+        mostrarAlerta(`¡Artículo ${articuloAModificar.nombre} ya existente, se aumentó la cantidad!`, 'verde');
 
     } else {
-
+        // Si el producto no existe, agrégalo con cantidad 1
         seleccionado.cantidad = 1;
-        articulosCarrito = [...articulosCarrito, seleccionado]
+        articulosCarrito = [...articulosCarrito, seleccionado];
+
+        // Muestra la alerta
         mostrarAlerta(`¡Se añadió el artículo ${seleccionado.nombre} al carrito!`, 'verde');
-        return articulosCarrito;
     }
 
-
+    return articulosCarrito;
 }
+
+
+// Mi función
+// function aniadirArticuloAlCarrito(seleccionado) {
+//     let existe = articulosCarrito.some(producto => producto.id === seleccionado.id);
+//     console.log('Existe?', existe);
+//     let articuloAModificar = articulosCarrito.find(p => p.id === seleccionado.id);
+//     if (existe) {
+//         articulosCarrito = articulosCarrito.map(producto => {
+//             if (producto.id === seleccionado.id) {
+
+//                 producto.cantidad = articuloAModificar.cantidad;
+//                 // actualizarCantidad(producto);
+//                 mostrarAlerta(`¡Artículo ${producto.nombre} ya existente, se aumentó la cantidad!`, 'verde');
+
+//                 // estadoModales = false;
+
+//                 return { ...producto, cantidad: producto.cantidad + 1 };
+//             }
+//             return producto;
+//         });
+
+//     } else {
+
+//         seleccionado.cantidad = 1;
+//         articulosCarrito = [...articulosCarrito, seleccionado]
+//         mostrarAlerta(`¡Se añadió el artículo ${seleccionado.nombre} al carrito!`, 'verde');
+//         return articulosCarrito;
+//     }
+
+
+// }
 
 // Función que evalúa si es granel, si lo es abre la modalGranel y realiza su lógica, sino inserta en el carrito
 function esGranel(seleccionado) {
@@ -597,7 +632,6 @@ function esGranel(seleccionado) {
         mostrarProductosCarrito(articulosCarrito);
         mostrarDetallesProducto(seleccionado);
         mostrarTotalesCarrito(articulosCarrito);
-        segundoEstadoCarrito();
         // estadoModales = false;
 
 
@@ -677,22 +711,30 @@ function segundoEstadoCarrito() {
                     const cantidadAntes = articuloAntes[0].cantidad;
                     actualizarCantidad(infoProductoCarrito);
 
-                    modalCantidad.classList.add('modal--cantidad--show');
-                    inputModalCantidad.disabled = false;
-                    inputModalCantidad.focus();
-                    inputCodigoManual.min = 0;
-                    inputModalCantidad.addEventListener('input', (e) => {
-                        console.log(e.target.value);
-                        if (e.target.value >= 1) {
-                            infoProductoCarrito.cantidad = parseInt(e.target.value);
-                            mostrarAlerta(`¡La cantidad de ${infoProductoCarrito.nombre} se modificó a ${infoProductoCarrito.cantidad}!`, 'verde');
+                    if (articuloAntes[0].granel === '1') {
+                        abrirModalGranel();
+                    } else {
 
-                        } else {
-                            infoProductoCarrito.cantidad = cantidadAntes;
-                            mostrarAlerta(`¡La cantidad de ${infoProductoCarrito.nombre} no se modificó!`, 'verde');
-                        }
-                        actualizarCantidad(infoProductoCarrito);
-                    });
+
+                        modalCantidad.classList.add('modal--cantidad--show');
+                        inputModalCantidad.disabled = false;
+                        inputModalCantidad.focus();
+                        inputCodigoManual.min = 0;
+                        inputModalCantidad.addEventListener('input', (e) => {
+                            console.log(e.target.value);
+                            if (e.target.value >= 1) {
+                                infoProductoCarrito.cantidad = parseInt(e.target.value);
+                                mostrarAlerta(`¡La cantidad de ${infoProductoCarrito.nombre} se modificó a ${infoProductoCarrito.cantidad}!`, 'verde');
+
+                            } else {
+                                infoProductoCarrito.cantidad = cantidadAntes;
+                                mostrarAlerta(`¡La cantidad de ${infoProductoCarrito.nombre} no se modificó!`, 'verde');
+                            }
+                            actualizarCantidad(infoProductoCarrito);
+                        });
+
+                    }
+
                     break;
                 default:
                     mostrarAlerta(`¡No se presionó ningún botón!`, 'rojo');
@@ -862,7 +904,7 @@ function actualizarCantidad(articulo) {
         const resultado = modificarCantidadCarrito(articulo);
         modalCantidad.classList.remove('modal--cantidad--show');
         esGranel(resultado);
-        
+        segundoEstadoCarrito();
         // mostrarTotalesCarrito(articulosCarrito);
         // mostrarProductosCarrito();
         inputModalCantidad.value = '';
@@ -883,6 +925,7 @@ function modificarCantidadCarrito(articuloModificado) {
     const filas = tabla.querySelectorAll('#idCarritoTbody');
     // Artículo del carrito sin modificar 
     let articuloCarrito = articulosCarrito.filter(articulo => articulo.id === articuloModificado.id);
+    console.log(articuloCarrito);
     filas.forEach(td => {
         if (td.textContent === articuloModificado.id) {
             const cantidadArticuloCarrito = td.parentElement.querySelector('#cantidadCarritoTbody');
@@ -898,8 +941,9 @@ function modificarCantidadCarrito(articuloModificado) {
 function mostrarDetallesProducto(articuloCarritoAModificar) {
     limpiarHTMLElemento(contenedorDetalles);
 
-    console.log("Articulos desde mostrar detalles Producto", articuloCarritoAModificar);
+    console.log("Articulo desde mostrar detalles Producto", articuloCarritoAModificar);
     const { nombre, descripcion, cantidad, precio_unitario_venta, imagen, granel } = articuloCarritoAModificar;
+    console.log("Cantidad", articuloCarritoAModificar.cantidad);
 
     let rutaImagen = '';
     if (rutaImagen != 'null') {
@@ -916,17 +960,17 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
     const div1ContenidoDetalles = document.createElement('DIV');
     div1ContenidoDetalles.classList.add('rectangulo-pequeno-bebe1');
     div1ContenidoDetalles.innerHTML = `
-    <img  src="${rutaImagen}" alt="anuncio">
+    <img data-test="imgDetallesProducto"  src="${rutaImagen}" alt="anuncio">
     `;
 
     const div2ContenidoDetalles = document.createElement('DIV');
     div2ContenidoDetalles.classList.add('rectangulo-pequeno-bebe2');
     div2ContenidoDetalles.innerHTML = `
     <div class="rectangulo-pequeno-bebecito21">
-        <h3>${nombre}</h3>
+        <h3 data-test="nombreDetallesProducto">${nombre}</h3 > 
     </div>
     <div class="rectangulo-pequeno-bebecito22">
-        <h3>${descripcion}</h3>
+        <h3 data-test="descripcionDetallesProducto">${descripcion}</h3>
     </div>
     `;
 
@@ -937,7 +981,7 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
     if (granel === '0') {
         div3ContenidoDetalles.innerHTML = `
         <div class="rectangulo-pequeno-bebecito31">
-            <h3>Cantidad: ${cantidad}</h3>
+            <h3 data-test="cantidadDetallesProducto">Cantidad: ${cantidad}</h3>
         </div>
         <div class="rectangulo-pequeno-bebecito32">
             <h3>Código de Barras:</h3>
@@ -947,7 +991,7 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
     } else {
         div3ContenidoDetalles.innerHTML = `
         <div class="rectangulo-pequeno-bebecito31">
-            <h3>Cantidad: ${cantidad}g</h3>
+            <h3 data-test="cantidadDetallesProducto">Cantidad: ${cantidad}g</h3>
         </div>
         <div class="rectangulo-pequeno-bebecito32">
             <h3>Código de Barras:</h3>
@@ -962,11 +1006,11 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
     div4ContenidoDetalles.innerHTML = `
     <div class="rectangulo-pequeno-bebecito41">
             <h3>Costo Unitario:</h3>
-            <p>$${precio_unitario_venta}</p>
+            <p data-test="precioVentaDetallesProducto">$${precio_unitario_venta}</p>
     </div>
     <div class="rectangulo-pequeno-bebecito42">
             <h3>Subtotal:</h3>
-            <p>$${totalD}</p>
+            <p data-test="totalDetallesProducto">$${totalD}</p>
     </div>
     `;
 
@@ -998,11 +1042,10 @@ function mostrarTotalesCarrito(articulosCarrito) {
             totalP += ((cantidad * precio_unitario_venta) / 1000);
             cantidadP++;
         }
-
     })
     console.log(`El total es : ${totalP} y la cantidad de artículos es ${cantidadP}`);
     div2ContenidoTotales.innerHTML = `
-        <h3 data-test="Cantidadtotal">$${totalP}</h3>
+        <h3 data-test="Cantidadtotal">$${totalP.toFixed(2)}</h3>
     `;
 
     div4ContenidoTotales.innerHTML = `
@@ -1082,6 +1125,7 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
 
 
             esGranel(articuloCarritoAModificar[0]);
+            segundoEstadoCarrito();
         });
     });
 }
