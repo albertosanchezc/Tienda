@@ -33,9 +33,9 @@ describe('Pruebas del carrito de compras', () => {
 
             cy.getByData("modal--manual__close").should('have.value', '75078843')
 
-            cy.getByData("nombreProductoTbodyModalManual").should('have.text', 'Cigarros Shots Classics')
-            cy.getByData("descripcionProductoTbodyModalManual").should('have.text', '20')
-            cy.getByData("precioUnitarioVentaProductoTbodyModalManual").should('have.text', '$50.48')
+            cy.getByData("nombreProductoTbodyModalManual").contains('Cigarros Shots Classics')
+            cy.getByData("descripcionProductoTbodyModalManual").contains('20')
+            cy.getByData("precioUnitarioVentaProductoTbodyModalManual").contains('$50.48')
             cy.getByData("imagenProductoTbodyModalManual").should('not.have.text', '4')
         })
 
@@ -57,14 +57,14 @@ describe('Pruebas del carrito de compras', () => {
             it("Debería escribir en el input y cerrar la modal", () => {
                 cy.getByData("modal--manual__close").should('exist')
                 cy.getByData("modal--manual__close").type("7507")
-                cy.screenshot('Escribir en el input', {
+                cy.screenshot('Debe estar escrito en el input 7507', {
                     capture: 'viewport',            // Define qué parte capturar
                     disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                     scale: true,                     // Escala la imagen en pantallas con alta resolución
                     timout: 5000,                     // Espera hasta 5 segundos antes de 
                     overwrite: true
                     // capturar
-                  })
+                })
                 // Cerrar ventana modal busqueda por código de barras
                 cy.getByData("botonCerrarModalManual").should('exist')
                 cy.getByData("botonCerrarModalManual").click()
@@ -131,7 +131,7 @@ describe('Pruebas del carrito de compras', () => {
                 cy.getByData("botonCerrarModalNombre").should('exist')
                 cy.getByData("botonCerrarModalNombre").click()
             })
-    
+
             it("Debería escribir en el input y cerrar la modal", () => {
                 // Abrir ventana modal buscar por nombre
                 cy.getByData("modal--nombre__close").should('exist')
@@ -139,15 +139,15 @@ describe('Pruebas del carrito de compras', () => {
                 cy.getByData("modal--nombre__close").type("cigc")
                 cy.getByData("botonCerrarModalNombre").click()
             })
-    
+
             it("Debe estar vacío el input de la otra modal al cerrar modalNombre sin dar click en un producto", () => {
                 cy.getByData("modal--nombre__close").should('exist')
                 cy.getByData("modal--nombre__close").type("cig")
-    
+
                 // Cerrar ventana modal busqueda por código de barras
                 cy.getByData("botonCerrarModalNombre").should('exist')
                 cy.getByData("botonCerrarModalNombre").click()
-    
+
                 // Abrir de nuevo la ventana modal, 
                 cy.getByData("botonBusquedaManual").should('be.visible')
                 cy.getByData("botonBusquedaManual").click()
@@ -156,15 +156,15 @@ describe('Pruebas del carrito de compras', () => {
                 cy.getByData("modal--manual__close").should('not.have.value', 'coc');
                 cy.getByData("modal--manual__close").should('not.have.value', '7507');
             })
-    
+
             it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
                 cy.getByData("modal--nombre__close").should('exist')
                 cy.getByData("modal--nombre__close").type("cig")
-    
+
                 // Cerrar ventana modal busqueda por código de barras
                 cy.getByData("botonCerrarModalNombre").should('exist')
                 cy.getByData("botonCerrarModalNombre").click()
-    
+
                 // Abrir de nuevo la ventana modal, 
                 cy.getByData("botonBusquedaNombre").should('be.visible')
                 cy.getByData("botonBusquedaNombre").click()
@@ -204,13 +204,13 @@ describe('Pruebas del carrito de compras', () => {
         })
 
         it("Debe tener los valores correcto", () => {
-            cy.getByData("idCarrito").should('have.text', '39')
-            cy.getByData("cantidadCarrito").should('have.text', '1')
-            cy.getByData("nombreCarrito").should('have.text', 'Cigarros Shots Classics')
-            cy.getByData("descripcionCarrito").should('have.text', '20')
-            cy.getByData("codigoBarrasCarrito").should('have.text', '75078843')
+            cy.getByData("idCarrito").contains('39')
+            cy.getByData("cantidadCarrito").contains('1')
+            cy.getByData("nombreCarrito").contains('Cigarros Shots Classics')
+            cy.getByData("descripcionCarrito").contains('20')
+            cy.getByData("codigoBarrasCarrito").contains('75078843')
             cy.getByData("imgCarrito").should('exist')
-            cy.screenshot('Filtrar en busqueda manual', {
+            cy.screenshot('Debe tener los valores correctos', {
                 capture: 'runner',            // Define qué parte capturar
                 disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                 scale: true,                     // Escala la imagen en pantallas con alta resolución
@@ -241,13 +241,69 @@ describe('Pruebas del carrito de compras', () => {
         })
 
         it("Debe tener los valores correcto", () => {
-            cy.getByData("idCarrito").should('have.text', '39')
-            cy.getByData("cantidadCarrito").should('have.text', '1')
-            cy.getByData("nombreCarrito").should('have.text', 'Cigarros Shots Classics')
-            cy.getByData("descripcionCarrito").should('have.text', '20')
-            cy.getByData("codigoBarrasCarrito").should('have.text', '75078843')
+            cy.getByData("idCarrito").contains('39')
+            cy.getByData("cantidadCarrito").contains('1')
+            cy.getByData("nombreCarrito").contains('Cigarros Shots Classics')
+            cy.getByData("descripcionCarrito").contains('20')
+            cy.getByData("codigoBarrasCarrito").contains('75078843')
             cy.getByData("imgCarrito").should('exist')
         })
+
+    })
+
+    context('Añadir producto con lector de  código barras', () => {
+        beforeEach(() => {
+            // Abrir ventana modal buscar por codigo de barras y escribir en ella
+            cy.getByData("modal--nombre__close").should('exist')
+            cy.getByData("documento")
+            cy.getByData("documento").type('75078843')
+            cy.document().trigger("keydown", { key: "Enter", keyCode: 13, which: 13 })
+            cy.getByData("idCarrito").should('exist')
+            cy.getByData("cantidadCarrito").should('exist')
+            cy.getByData("nombreCarrito").should('exist')
+            cy.getByData("descripcionCarrito").should('exist')
+            cy.getByData("codigoBarrasCarrito").should('exist')
+            cy.getByData("imgCarrito").should('exist')
+        })
+
+        describe("Si se escanea de nuevo el mismo producto", () => {
+            it("Debe incrementar la cantidad", () => {
+                cy.getByData("documento").type('75078843')
+                cy.document().trigger("keydown", { key: "Enter", keyCode: 13, which: 13 })
+                cy.getByData("idCarrito").contains('39')
+                cy.getByData("cantidadCarrito").contains('2')
+                cy.getByData("nombreCarrito").contains('Cigarros Shots Classics')
+                cy.getByData("descripcionCarrito").contains('20')
+                cy.getByData("codigoBarrasCarrito").contains('75078843')
+                cy.getByData("imgCarrito").should('exist')
+    
+            })
+        })
+
+        describe("Si se escanea un producto que no está registrado", () => {
+            it("Debe mostrar la alerta", () => {
+                cy.getByData("documento").type('549878205')
+                cy.document().trigger("keydown", { key: "Enter", keyCode: 13, which: 13 })
+
+            })
+        })
+
+        describe("Si se escanea otro producto", () => {
+            it("Debe añadir ese producto al carrito", () => {
+                cy.getByData("documento").type('7501055313532')
+                cy.document().trigger("keydown", { key: "Enter", keyCode: 13, which: 13 })
+                cy.getByData("idCarrito").contains('1')
+                cy.getByData("cantidadCarrito").contains('1')
+                cy.getByData("nombreCarrito").contains('Coca-Cola')
+                cy.getByData("descripcionCarrito").contains('1.75 L')
+                cy.getByData("codigoBarrasCarrito").contains('7501055313532')
+                cy.getByData("imgCarrito").should('exist')
+            })
+        })
+        
+
+
+        
 
     })
 

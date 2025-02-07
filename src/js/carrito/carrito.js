@@ -3,7 +3,8 @@ import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrar
 
 document.addEventListener('DOMContentLoaded', function () {
     consultarAPI();
-});
+    document.querySelector('BODY').dataset.test = "documento";
+});;
 
 let estado = 0;
 let inventario = [];
@@ -127,14 +128,14 @@ const limpiarCodigoBarras = () => {
 };
 
 const modales = [
-    modalBienvenida, modalManual, modalNombreProducto, modalGranel, 
+    modalBienvenida, modalManual, modalNombreProducto, modalGranel,
     modalCantidad, modalEliminarProducto, modalVaciarCarrito, modalPagar
 ];
 
 // Detectar cuando cualquier modal se abre
 modales.forEach(modal => {
     modal.addEventListener('transitionend', () => {
-        if (modal.classList.contains('modal--show') || 
+        if (modal.classList.contains('modal--show') ||
             modal.classList.contains('modal--manual--show') ||
             modal.classList.contains('modal--nombre--show') ||
             modal.classList.contains('modal--granel--show') ||
