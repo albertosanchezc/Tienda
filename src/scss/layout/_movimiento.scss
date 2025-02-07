@@ -45,18 +45,51 @@
     margin: 2rem;
     gap: 2rem;
 
+    @include telefono-1 {
+        grid-template-columns: 1fr;
+        margin: 0;
+    }
+
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 2rem;
+
+
+    }
+
+    @include laptop-1 {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 2rem;
+
+
+
+    }
+
 
     .articulosproveedor {
         grid-column: 1/2;
+        overflow-x: auto;
 
         p {
-            margin-bottom: 0;
             text-align: center;
             font-size: medium;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            background: linear-gradient(to right, rgb(5, 46, 1), rgb(0, 170, 14));
+            font-weight: bold;
+            // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, rgb(11, 129, 0), rgb(2, 255, 23));
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: moverFondo 2s linear infinite;
+        }
+
+        @keyframes moverFondo {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
         }
     }
 
@@ -64,13 +97,40 @@
         grid-column: 2/3;
         margin: 1rem;
 
-        .art  {
+        @include telefono-1 {
+            grid-column: 1/2;
+        }
+
+        @include tablet {
+            grid-column: 2/3;
+
+        }
+
+        @include laptop-1 {
+            grid-column: 2/3;
+
+        }
+
+        .art {
             text-align: center;
             font-size: medium;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            background: linear-gradient(to right, rgb(5, 46, 1), rgb(0, 170, 14));
+            font-weight: bold;
+            // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, rgb(11, 129, 0), rgb(2, 255, 23));
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: moverFondo 2s linear infinite;
+        }
+
+        @keyframes moverFondo {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
         }
     }
 
@@ -80,6 +140,8 @@
     background-color: #dcfce8;
     border-radius: 5px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    overflow-x: auto;
+
 }
 
 .tablaverde {
@@ -149,6 +211,23 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    overflow-x: auto;
+
+    @include telefono-1 {
+        grid-template-columns: 1fr;
+    }
+
+    @include tablet {
+        grid-template-columns: 1fr;
+
+    }
+
+    @include laptop-1 {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+
 
 
     .inventariogrid1 {
@@ -157,16 +236,28 @@
         border-radius: 8px;
         padding: 1rem 1rem;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        // grid-column: 1/2;
         display: grid;
         grid-template-columns: 3fr 2fr;
-        // gap: 20px;
+
+        @include telefono-1 {
+            margin: 0 1rem;
+        }
+
+        @include tablet {
+            margin: 0 2rem;
+
+        }
+
+        @include laptop-1 {
+            margin: 0;
+
+        }
 
         .gridcontenido1 {
             grid-column: 1;
             grid-row: 1fr;
 
-            img{
+            img {
                 width: 2rem;
             }
 
@@ -295,10 +386,11 @@
 
 .botonStock {
     grid-column: 1/3;
-    
+
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Espacia los elementos en línea */
+    justify-content: space-between;
+    /* Espacia los elementos en línea */
     background: linear-gradient(to right, green, rgb(4, 196, 4));
     padding: 5px 20px;
     border-radius: 10px;
@@ -306,10 +398,11 @@
     color: white;
     // max-width: 200px;
     // height: 40px; /* Ajusta la altura */
-    
+
 }
 
-.imagenmenos, .imagenmas {
+.imagenmenos,
+.imagenmas {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -320,19 +413,23 @@
     color: black;
     font-weight: bold;
     cursor: pointer;
-    p{
-        color:#096e0e;
+
+    p {
+        color: #096e0e;
         font-weight: bold;
     }
 }
 
 .stockCantidad {
     display: flex;
-    flex-direction: column; /* Mantiene los textos uno arriba del otro */
+    flex-direction: column;
+    /* Mantiene los textos uno arriba del otro */
     align-items: center;
     justify-content: center;
-    flex-grow: 1; /* Ocupa el espacio del centro */
-    p{
+    flex-grow: 1;
+
+    /* Ocupa el espacio del centro */
+    p {
         color: #fff;
         font-weight: bold;
         padding: 0;
@@ -342,101 +439,116 @@
 }
 
 
-.Stock, .Aniadidos {
+.Stock,
+.Aniadidos {
     margin: 1px 0;
     font-size: small;
 }
 
 
-.imagenmas:hover{
-background-color: #008807;
-    p{
-        color:#fff;
+.imagenmas:hover {
+    background-color: #008807;
+
+    p {
+        color: #fff;
     }
 
 }
-.imagenmenos:hover{
+
+.imagenmenos:hover {
     background-color: #ff0404;
-        p{
-            color:#fff;
-        }
-    
+
+    p {
+        color: #fff;
     }
 
-// .botonStock {
-//     grid-column: 1/3;
-    
-//     display: flex;
-//     justify-content: center; /* Centrar el botón */
-//     align-items: center;
-//     background: linear-gradient(to right, #D56B26, #E6962C);
-//     padding: 5px 10px;
-//     border-radius: 10px;
-//     font-size: small;
-//     color: white;
-//     // max-width: 200px; /* Ajusta según el tamaño deseado */
-// }
+}
 
-// .primeracolumna {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     width: 100%;
-//     gap: 10px; /* Espacio entre columnas */
-// }
-
-// .imagenmenos, .imagenmas {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     width: 30px; 
-//     height: 30px;
-//     background-color: white;
-//     border-radius: 50%;
-//     color: black;
-//     font-weight: bold;
-//     cursor: pointer;
-// }
-
-// .stockCantidad {
-//     display: flex;
-//     flex-direction: column; /* Para que los párrafos estén uno encima del otro */
-//     align-items: center;
-//     justify-content: center;
-// }
-
-// .Stock, .Aniadidos {
-//     margin: 2px 0;
-//     font-size: small;
-// }
+.gridTotal {
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    justify-content: space-evenly;
 
 
-// .botonStock{
-//     display: block;
-// }
+}
 
-// .primeracolunma{
-//     display: grid;
-//     grid-template-columns: repeat(3,1fr);
+.totalVisita {
+    font-weight: bold;
 
-//     p{
-//         margin: 0;
-//         padding: 0;
-//         font-size: smaller;
-//     }
+    p {
+        text-align: center;
+    }
 
-//     .imagenmenos{
-//         grid-column: 1/2;
-        
-//     }
-//     .stockCantidad{
-//         grid-column: 2/3;
-        
-//     }
+}
 
-//     .imagenmas{
-//         grid-column: 3/4;
-        
-//     }
-    
-// }
+
+
+.estadoPago {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    text-align: right;
+    align-items: flex-end;
+    background-color: #91ffb6;
+    padding: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+
+    p {
+        font-size: 1.4rem;
+        padding: 0;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        text-align: right;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+        text-align: right;
+
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: 5px;
+        font-size: 16px;
+        border-color: #02b302;
+        border-radius: 1rem;
+        height: 43px;
+        margin-bottom: 2rem;
+        background-color: #dcfce8;
+
+    }
+}
+
+.flexdin {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    p {
+        font-size: 2rem;
+    }
+
+}
+
+.adeudo {
+    width: 100%;
+
+    p {
+        font-size: larger;
+        text-align: right;
+        font-weight: bold;
+    }
+
+
+}
