@@ -76,7 +76,11 @@
     const inputHiddenRetirar = document.querySelector('#retirarCategoriaEntrada');
 
     const inputFechaInicial = document.getElementById('fecha1C');
+    inputFechaInicial.dataset.test = 'inputFechaInicial';
+
     const inputFechaFinal = document.getElementById('fecha2C');
+    inputFechaFinal.dataset.test = 'inputFechaFinal';
+
     const inputRadioTipo = document.querySelector('.tipo-movimiento');
     const inputRadioOrden = document.querySelector('.orden-caja');
     const contenidoCaja = document.querySelector('.contenido-caja');
@@ -101,6 +105,7 @@
 
         // Validar la cantidad entrante de la caja
         const cantidadaniadir1 = modalAniadir.querySelector('.modal--aniadir__close').value;
+
         if (!cantidadaniadir1) {
             errores.push('No se añadió a caja, cierra la pestaña para volver');
         }
@@ -279,6 +284,8 @@
         pEfectivoResultante.innerHTML = `$ ${cantidad_caja}`;
 
         const input = document.querySelector('.modal--aniadir__close');
+        input.dataset.test = 'inputAniadir';
+
         input.value = '';
         input.focus();
         input.addEventListener('input', (e) => {
@@ -301,6 +308,8 @@
         pEfectivoResultanteA.innerHTML = `$ ${cantidad_caja}`;
 
         const inputR = document.querySelector('.modal--retirar__close');
+        inputR.dataset.test = 'inputRetirar';
+
         inputR.value = '';
         inputR.focus();
         inputR.addEventListener('input', (e) => {

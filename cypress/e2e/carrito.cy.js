@@ -195,7 +195,7 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("codigoBarrasCarrito").should('exist')
             cy.getByData("imgCarrito").should('exist')
             cy.screenshot('Mostrar en el carrito', {
-                capture: 'runner',            // Define qué parte capturar
+                capture: 'viewport',            // Define qué parte capturar
                 disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                 scale: true,                     // Escala la imagen en pantallas con alta resolución
                 timeout: 5000,                     // Espera hasta 5 segundos antes de capturar

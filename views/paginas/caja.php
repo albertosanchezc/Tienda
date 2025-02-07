@@ -60,12 +60,12 @@
                         <div class="tipo-movimiento">
                             <label for="tipo-movimiento">Tipo de movimiento: </label>
                             <div class="switch">
-                                <input type="radio" id="todos" name="caja[tipo_movimiento]" value="todos" checked>
-                                <label for="todos">Todos</label>
-                                <input type="radio" id="retiro" name="caja[tipo_movimiento]" value="retiro">
-                                <label for="retiro">Retiro</label>
-                                <input type="radio" id="abono" name="caja[tipo_movimiento]" value="abono">
-                                <label for="abono">Abono</label>
+                                <input type="radio" data-test="radioTodos" id="todos" name="caja[tipo_movimiento]" value="todos" checked>
+                                <label data-test="radioTodos" for="todos">Todos</label>
+                                <input type="radio" id="retiro" name="caja[tipo_movimiento]"  value="retiro">
+                                <label data-test="radioRetiro" for="retiro" >Retiro</label>
+                                <input type="radio" id="abono" name="caja[tipo_movimiento]"  value="abono">
+                                <label data-test="radioAbono" for="abono">Abono</label>
                             </div>
                         </div>
 
@@ -73,9 +73,9 @@
                             <label for="orden-caja">Orden: </label>
                             <div class="switch">
                                 <input type="radio" id="ascendente" name="caja[orden]" value="ascendente" checked>
-                                <label for="ascendente">+ Reciente</label>
+                                <label data-test="radioAscendente" for="ascendente">+ Reciente</label>
                                 <input type="radio" id="descendente" name="caja[orden]" value="descendente">
-                                <label for="descendente">+ Antiguo</label>
+                                <label data-test="radioDescendente" for="descendente">+ Antiguo</label>
                             </div>
                         </div>
                 </fieldset>
