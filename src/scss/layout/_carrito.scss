@@ -261,6 +261,7 @@ body {
             justify-content: space-around;
             align-items: center;
 
+
             .flexbtnbusqueda{
                 display: flex;
                 align-items: center;
@@ -297,6 +298,11 @@ body {
                     // border: solid 1px $amarillo;
                     // background-color: #f4f4f4;
                 }
+            }
+
+            .cursorPointer{
+                cursor: pointer;
+                width: 100%;
             }
         }
 

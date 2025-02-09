@@ -26,8 +26,6 @@
     <img src="/build/img/bajar.gif" alt="Logotipo de bajar" class="imgdown">
 </div>
 
-
-
 <section class="contenedorcaja seccioncaja">
     <div class="busqueda-titulo">
         <div class="imgfix">

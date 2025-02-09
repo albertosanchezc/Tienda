@@ -1,0 +1,74 @@
+.titulocategorias{
+    h3{
+        font-size: large;
+    }
+}
+
+.botonAniadirCategoria{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .borderverde{
+        border: solid 1px green;
+
+    }
+    .borderverde:hover{
+        color: green;
+
+        span{
+            color: green;
+        }
+        
+    }
+}
+
+.imgbigger{
+    width: 3rem;
+}
+
+.btnfijargreen{
+    background: none;
+    background: linear-gradient(to right, rgb(27, 117, 0), rgb(23, 255, 15));
+    border:solid 1px green;
+
+    img{
+        //rotacionn de la imagen
+        transition: transform 0.3s ease-in-out;
+    }
+}
+
+.btnfijargreen:hover{
+    border: solid 1px green;
+
+    p {
+        color: green;
+
+    }
+
+    img {
+        filter: none;
+        filter: brightness(0) saturate(100%) invert(36%) sepia(94%) saturate(7485%) hue-rotate(93deg) brightness(94%) contrast(108%);
+
+        
+        transform: rotate(45deg);
+
+    }
+}
+
+.btnfijargreenHover{
+    border: solid 1px green;
+
+    p {
+        color: green;
+
+    }
+
+    img {
+        filter: none;
+        filter: brightness(0) saturate(100%) invert(36%) sepia(94%) saturate(7485%) hue-rotate(93deg) brightness(94%) contrast(108%);
+
+        
+        transform: rotate(45deg);
+
+    }
+}

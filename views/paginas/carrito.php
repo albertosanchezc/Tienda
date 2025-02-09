@@ -212,12 +212,15 @@
                 </div>
                 <div class="rectangulo-grande-bebe3">
                     <div class="rectangulo-grande-bebecito1">
-                        <button id="busqueda-manual" class="boton-azul-block">
-                            <div class="flexbtnbusqueda">
-                                <img loading="lazy" src="build/img/lupa.png" alt="Imagen de lupa">
-                                Introducir Código de Barras.
-                            </div>
-                        </button>
+                        <div class="cursorPointer">
+                            <button id="busqueda-manual" class="boton-azul-block" value="">
+                                <div class="flexbtnbusqueda">
+                                    <img loading="lazy" src="build/img/lupa.png" alt="Imagen de lupa">Introducir Código
+                                    de Barras.
+
+                                </div>
+                            </button>
+                        </div>
                         <button id="busqueda-producto" class="boton-azul-block">
                             <div class="flexbtnbusqueda">
                                 <img loading="lazy" src="build/img/lupa.png" alt="Imagen de lupa">
@@ -604,16 +607,16 @@
             <form id="pagarForm" method="POST"">
             <fieldset>
                 <legend>Efectivo</legend>
-                <label for="5">Efectivo:</label>
+                <label for=" 5">Efectivo:</label>
                 <input id="5" class="modal--pagar__close" type="text" placeholder="$250">
                 </input>
-            </fieldset>
-            <h2 class="modal--pagar__title"> <span>Total: </span> $1500.03</h2>
-            <h2 class="modal--pagar__cambio"><span>Cambio: </span> $65.03</h2>
-            <div class="modal--pagar__botones">
-                <a href="#" class="modal--pagar__btncancelar"><span>&lt;&lt;&lt;</span> REGRESAR</a>
-                <input type="submit" class="modal--pagar__btn" value="PAGAR >>>"> </input>
-            </div>
+                </fieldset>
+                <h2 class="modal--pagar__title"> <span>Total: </span> $1500.03</h2>
+                <h2 class="modal--pagar__cambio"><span>Cambio: </span> $65.03</h2>
+                <div class="modal--pagar__botones">
+                    <a href="#" class="modal--pagar__btncancelar"><span>&lt;&lt;&lt;</span> REGRESAR</a>
+                    <input type="submit" class="modal--pagar__btn" value="PAGAR >>>"> </input>
+                </div>
             </form>
         </div>
     </section>
