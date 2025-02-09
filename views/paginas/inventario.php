@@ -22,7 +22,7 @@
 <section class="contenedorcaja seccioncaja">
     <div class="botones">
         <a href="/movimientoproducto" class="botonslider1"><span>Movimiento de Producto</span></a>
-        <a href="#" class="botonslider2"><span>Ver Categorías </span></a>
+        <a href="/categorias" class="botonslider2"><span>Ver Categorías </span></a>
         <a href="#" class="botonslider3"><span>+ Añadir Nuevo Producto</span></a>
     </div>
     <div class="busqueda-titulo">

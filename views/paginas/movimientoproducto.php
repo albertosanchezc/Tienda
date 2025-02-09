@@ -15,7 +15,6 @@
         éste. Primero escoge el proveedor, luego los productos que deseas editar en Stock.</h3>
 
     <div class="busqueda-filtros1 proveedorverde">
-        <form id="buscador" method="POST">
             <fieldset>
                 <legend>Selecciona Proveedor</legend>
                 <div class="caja-filtros1">
@@ -32,7 +31,6 @@
                 </div>
             </fieldset>
             <!-- //aqui iriia el boton de descargar excel -->
-        </form>
     </div>
 
 

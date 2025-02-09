@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/app.php';
 
 use Controllers\CajaController;
 use Controllers\CarritoController;
+use Controllers\CategoriasController;
 use Controllers\ProductoController;
 use Controllers\ProveedoresController;
 use MVC\Router;
@@ -49,8 +50,11 @@ $router->get('/caja/api/caja', [PaginasController::class, 'cajaAPI']);
 
 $router->get('/inventario', [InventarioController::class, 'inventario']);
 $router->post('/inventario', [InventarioController::class, 'inventario']);
-$router->post('/movimientoproducto', [ProductoController::class, 'movimientoproducto']);
 $router->get('/movimientoproducto', [ProductoController::class, 'movimientoproducto']);
+$router->post('/movimientoproducto', [ProductoController::class, 'movimientoproducto']);
+$router->get('/categorias', [CategoriasController::class, 'categorias']);
+$router->post('/categorias', [CategoriasController::class, 'categorias']);
+
 
 $router->get('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
 $router->post('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
