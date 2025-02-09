@@ -355,6 +355,7 @@
     background-color: #8D28A7;
 }
 
+<<<<<<< Updated upstream
 .gridProveedoresTabla{
     @include telefono-1{
         display: grid;
@@ -369,10 +370,16 @@
             grid-column: 1/2;
 
         }
+=======
+.gridProveedorestabla{
+    @include telefono-1{
+        grid-template-columns: 1fr;
+>>>>>>> Stashed changes
         
     }
 
     @include tablet{
+<<<<<<< Updated upstream
         display: grid;
         grid-template-columns: 1fr 2fr;
 
@@ -384,10 +391,14 @@
             grid-column: 2/3;
 
         }
+=======
+        grid-template-columns: repeat(2,1fr);
+>>>>>>> Stashed changes
         
     }
 
     @include laptop-1{
+<<<<<<< Updated upstream
         display: grid;
         grid-template-columns: 1fr 2fr;
 
@@ -401,5 +412,12 @@
 }
 
 
+=======
+        grid-template-columns: repeat(2,1fr);
+
+        
+    }
+}
+>>>>>>> Stashed changes
 
 
