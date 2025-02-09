@@ -47,6 +47,7 @@ const contenedorModalPagar = document.querySelector('modal--pagar__container');
 
 // Contenedores del section ventas
 const contenedorProductos = document.querySelector('.rectangulo-grande');
+const contenedorBotones = document.querySelector('.rectangulo-grande-bebe3');
 const contenedorDetalles = document.querySelector('.rectangulo-pequeno');
 contenedorDetalles.classList.remove('grid-item');
 const contenedorTotales = document.querySelector('.rectangulo-grande-horizontal');
@@ -195,5 +196,6 @@ export {
     pagarForm,
     inputHiddenPagarForm,
     inputHiddenPagarForm1,
-    inputModalGranel
+    inputModalGranel,
+    contenedorBotones
 }

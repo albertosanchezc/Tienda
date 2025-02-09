@@ -1,6 +1,6 @@
 import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm, inputHiddenPagarForm1, modalGranel, inputModalGranel, modalBienvenida, modalVaciarCarrito } from "./selectores.js";
 
-import { paginaActual, terminosBusqueda, estadoModales, codigo_barras } from "./carrito.js";
+import { paginaActual, terminosBusqueda, codigo_barras } from "./carrito.js";
 
 const registrosPorPagina = 4;
 let articulosCarrito = [];
@@ -178,27 +178,7 @@ function mostrarTicket() {
 
 
 
-// Leer la página a la que se le da click y asignar paginaActual
-paginadorCarritoContainer.addEventListener('click', (e) => {
-    console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
 
-    if (e.target.classList == 'numero') {
-
-        paginaActual = parseInt(e.target.textContent);
-    }
-    if (e.target.classList == 'paginas') {
-        if (e.target.textContent == 'Siguiente') {
-            paginaActual = paginaActual + 1;
-        } else {
-            paginaActual = paginaActual - 1;
-
-        }
-    }
-    // let resultados = filtrar()
-    let resultados = articulosCarrito;
-    return mostrarPaginaCarrito(paginaActual, resultados);
-
-})
 
 
 // // Función para actualizar la hora
@@ -291,6 +271,7 @@ function limpiarTodo() {
     limpiarHTMLElemento(contenedorDetalles);
     limpiarHTMLElemento(contenedorTotales);
 }
+limpiarTodo();
 
 function vaciarCarrito() {
     articulosCarrito = [];
@@ -317,15 +298,15 @@ function primerEstadoCarrito() {
     div3ContenidoProductos.classList.add('rectangulo-grande-bebe3');
     div3ContenidoProductos.innerHTML = `
         <div class="rectangulo-grande-bebecito1">
-            <button data-test="botonBusquedaManual" id="busqueda-manual" class="boton-azul-block">
-                <div class="flexbtnbusqueda busqueda-manual">
-                    <img  src="build/img/lupa.png" alt="Imagen de lupa">
+            <button data-test="botonBusquedaManual" id="busqueda-manual" class="boton-azul-block carritoBManual" >
+                <div class="flexbtnbusqueda busqueda-manual carritoBManual">
+                    <img class="carritoBManual"  src="build/img/lupa.png" alt="Imagen de lupa">
                         Introducir Código de Barras.
                 </div>
             </button>      
-            <button data-test="botonBusquedaNombre" id="busqueda-producto" class="boton-azul-block">
-                <div class="flexbtnbusqueda busqueda-producto">
-                    <img  src="build/img/lupa.png" alt="Imagen de lupa">
+            <button data-test="botonBusquedaNombre" id="busqueda-producto" class="boton-azul-block carritoBNombre">
+                <div class="flexbtnbusqueda carritoBNombre busqueda-producto">
+                    <img class="carritoBNombre" src="build/img/lupa.png" alt="Imagen de lupa">
                     Buscar por Nombre del Producto.
                 </div>
             </button>
@@ -387,6 +368,7 @@ function primerEstadoCarrito() {
     btnAbrirModalPagar.addEventListener('click', abrirPagar)
 
 }
+
 
 function abrirPagar() {
     if (articulosCarrito.length > 0) {
@@ -1264,5 +1246,6 @@ export {
     filtrarProductoPorCodigo,
     aniadirArticuloAlCarrito,
     esGranel,
-    filtrarCodigoExacto
+    filtrarCodigoExacto,
+    mostrarPaginaCarrito
 }

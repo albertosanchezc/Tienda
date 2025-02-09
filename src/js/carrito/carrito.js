@@ -1,17 +1,16 @@
-import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, mostrarProductosCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarDetallesProducto, modificarCantidadCarrito } from "./funciones.js";
-import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel, modalEliminarProducto, modalPagar } from "./selectores.js";
+import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito, limpiarTodo, } from "./funciones.js";
+import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel, modalEliminarProducto, modalPagar, contenedorBotones } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
+
     consultarAPI();
     document.querySelector('BODY').dataset.test = "documento";
 });;
 
-let estado = 0;
+// let estado = 0;
 let inventario = [];
-let infoProducto = {};
 let articuloCarritoAModificar = {};
 let articulosCarrito = [];
-const registrosPorPagina = 4;
 let terminosBusqueda = {
     id: '',
     codigoBarras: '',
@@ -23,6 +22,7 @@ let paginaActual = 1;
 
 async function consultarAPI() {
     try {
+
         const server = window.location.host;
 
         const url = `http://${server}/inventarios/api/inventarios`;
@@ -214,9 +214,11 @@ document.addEventListener('keydown', (e) => {
 // Evento que escucha el botón que se presiona para abrir su respectiva modal
 contenedorProductos.addEventListener('click', (e) => {
     // e.preventDefault();
+    console.log(e);
     let { codigo_barras, nombre } = inventario;
-    let busquedaManual = e.target && (e.target.id === 'busqueda-manual' || e.target.classList[1] === 'busqueda-manual' || e.target.parentElement.classList[1] === 'busqueda-manual');
-    let busquedaNombre = e.target && (e.target.id === 'busqueda-producto' || e.target.classList[1] === 'busqueda-producto' || e.target.parentElement.classList[1] === 'busqueda-producto');
+    // let busquedaManual = e.target && e.target.classList === 'cursorPointer';
+    let busquedaManual = e.target && (e.target.classList.contains('carritoBManual'));
+    let busquedaNombre = e.target && (e.target.classList.contains('carritoBNombre'));
     // Busqueda manual del código
     if (busquedaManual) {
         let resultadosFiltrado = filtrar(inventario);
@@ -285,6 +287,7 @@ contenedorProductos.addEventListener('click', (e) => {
 
         })
     }
+
 })
 
 // Leer la página a la que se le da click y asignar paginaActual
@@ -327,6 +330,7 @@ paginadorModalNombreContainer.addEventListener('click', (e) => {
 })
 
 
+// Leer la página a la que se le da click y asignar paginaActual
 paginadorCarritoContainer.addEventListener('click', (e) => {
     console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
 
@@ -342,8 +346,10 @@ paginadorCarritoContainer.addEventListener('click', (e) => {
 
         }
     }
-    let resultados = filtrar()
-    mostrarPagina(paginaActual, resultados, paginadorCarritoContainer);
+    // let resultados = filtrar()
+    let resultados = articulosCarrito;
+    return mostrarPaginaCarrito(paginaActual, resultados);
+
 })
 
 
