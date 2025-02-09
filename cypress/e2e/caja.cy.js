@@ -1,4 +1,4 @@
-describe('Pruebas de la caja', () => {
+describe('Pruebas de la caja sin post', () => {
 
     beforeEach(() => {
         cy.visit('http://localhost:3004/caja')

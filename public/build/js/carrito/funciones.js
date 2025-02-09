@@ -109,6 +109,98 @@ function mostrarPagina(pagina, datos = inventario, paginadorContainer) {
     return inventarioPagina;
 }
 
+// Función que muestra el paginador con base en la página actual y los datos recibidos 
+function generarPaginadorCarrito(datos = articulosCarrito) {
+    const registrosPorPagina = 1;
+    const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+    console.log("Total de páginas desde generar Paginador", totalPaginas);
+    let paginadorHTML = '';
+
+    if (paginaActual > 1) {
+        //  onclick="cambiarPagina(${paginaActual - 1})"
+        paginadorHTML += `<button class="paginas">Anterior</button>`;
+    }
+
+    for (let i = 1; i <= totalPaginas; i++) {
+        // onclick="cambiarPagina(${i})"
+        paginadorHTML += `<button   ${paginaActual === i ? 'selected' : 'class="numero"'}>${i}</button>`;
+    }
+
+    if (paginaActual < totalPaginas) {
+        // onclick="cambiarPagina(${paginaActual + 1})"
+        paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+    }
+
+    paginadorCarritoContainer.innerHTML = paginadorHTML;
+
+}
+
+function mostrarPaginaCarrito(pagina, datos = articulosCarrito) {
+    const registrosPorPagina = 1;
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = inicio + registrosPorPagina;
+    let datosPagina = datos.slice(inicio, fin);
+
+    console.log("Datos Pagina: ", datosPagina);
+    paginadorCarritoContainer.innerHTML = datosPagina.map(item => `<p>${item}</p>`).join("");
+    // limpiarHTMLElemento(despliegueInventario);
+    // mostrarCards(inventarioPagina,proveedores);
+    // mostrarProductosCarrito();
+    generarPaginadorCarrito(datos);
+    mostrarProductosCarrito(datosPagina);
+    return datosPagina;
+}
+
+function mostrarTicket() {
+    articulosCarrito.forEach(articulo => {
+        const { id, cantidad, nombre, precio_unitario_venta, granel } = articulo;
+        let total = 0
+        if (granel === '0') {
+            total = (precio_unitario_venta * cantidad).toFixed(2);
+        } else {
+            total = ((precio_unitario_venta * cantidad) / 1000).toFixed(2);
+        }
+        const rowTicket = document.createElement('tr');
+
+        rowTicket.innerHTML = `
+            <td hidden id="idTicketTbody">${id}</td>   
+             <td>${cantidad}</td>
+             <td>${nombre}</td>
+             <td>${precio_unitario_venta}</td>
+             <td>${total}</td>
+        `;
+
+        tbodyTicket.appendChild(rowTicket);
+
+    });
+
+}
+
+
+
+// Leer la página a la que se le da click y asignar paginaActual
+paginadorCarritoContainer.addEventListener('click', (e) => {
+    console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+    if (e.target.classList == 'numero') {
+
+        paginaActual = parseInt(e.target.textContent);
+    }
+    if (e.target.classList == 'paginas') {
+        if (e.target.textContent == 'Siguiente') {
+            paginaActual = paginaActual + 1;
+        } else {
+            paginaActual = paginaActual - 1;
+
+        }
+    }
+    // let resultados = filtrar()
+    let resultados = articulosCarrito;
+    return mostrarPaginaCarrito(paginaActual, resultados);
+
+})
+
+
 // // Función para actualizar la hora
 function generarPaginador(datos = inventario, paginadorContainer) {
     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
@@ -629,7 +721,7 @@ function esGranel(seleccionado) {
         codigoBarras = '';
         terminosBusqueda.codigo_barras = codigoBarras;
     } else {
-        mostrarProductosCarrito(articulosCarrito);
+        mostrarProductosCarrito();
         mostrarDetallesProducto(seleccionado);
         mostrarTotalesCarrito(articulosCarrito);
         // estadoModales = false;
@@ -642,7 +734,15 @@ function esGranel(seleccionado) {
 function segundoEstadoCarrito() {
     // codigoBarras = '';
     // terminosBusqueda.codigo_barras = codigoBarras;
-    mostrarProductosCarrito();
+    console.log('Articulos Carrito desde 2nd state', articulosCarrito);
+    mostrarTicket(articulosCarrito);
+    let articulosPagina = mostrarPaginaCarrito(1, articulosCarrito);
+    console.log(articulosCarrito);
+    generarPaginadorCarrito(articulosCarrito);
+
+    mostrarProductosCarrito(articulosPagina);
+    mostrarTicket(articulosCarrito);
+
     const tabla = document.querySelector('.ordenes');
     const tbody = tabla.querySelector('tbody');
     const articulos = tbody.querySelectorAll('tr');
@@ -745,7 +845,7 @@ function segundoEstadoCarrito() {
 }
 
 
-function mostrarProductosCarrito() {
+function mostrarProductosCarrito(productos = articulosCarrito) {
     limpiarHTMLElemento(tbodyCarrito);
     limpiarHTMLElemento(tbodyTicket);
     contenedorProductos.appendChild(div1ContenidoProductos);
@@ -755,9 +855,14 @@ function mostrarProductosCarrito() {
     contenedorProductos.appendChild(div3ContenidoProductos);
     contenedorProductos.appendChild(div4ContenidoProductos);
 
-    const productos = articulosCarrito;
+    // generarPaginadorCarrito(articulosCarrito);
+    // const productos = mostrarPaginaCarrito(paginaActual, articulosCarrito);
+    // mostrarPaginaCarrito(paginaActual,productos);
+    // generarPaginadorCarrito(productos)
+
     // Aquí ya tenemos bien el arreglo sin repetidos;
     console.log('Articulos carrito desde mostrar productosCarrito', productos);
+
     productos.forEach(articulo => {
         const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta, imagen, granel } = articulo;
         let rutaImagen = '';
@@ -811,17 +916,6 @@ function mostrarProductosCarrito() {
         }
 
         tbodyCarrito.appendChild(row);
-
-
-        const rowTicket = document.createElement('tr');
-        rowTicket.innerHTML = `
-            <td hidden id="idTicketTbody">${id}</td>   
-             <td>${cantidad}</td>
-             <td>${nombre}</td>
-             <td>${precio_unitario_venta}</td>
-             <td>${(precio_unitario_venta * cantidad).toFixed(2)}</td>
-        `
-        tbodyTicket.appendChild(rowTicket);
 
     });
     tablaCarrito.appendChild(tbodyCarrito);
