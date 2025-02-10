@@ -29,7 +29,11 @@
 
     const modalAniadirCategoria = document.querySelector('.modalCategorias--aniadir');
 
+    const modalActualizarCategoria = document.querySelector('.modalCategorias--actualizar');
+
     const btnCerrarModalAniadirCategoria = document.querySelector('.modalCategorias--aniadir__refcerrar');
+
+    const btnCerrarModalActualizarCategoria = document.querySelector('.modalCategorias--actualizar__refcerrar');
 
     const btnAbrirModalAniadirCategoria = document.querySelector('.btnAbrirModal');
 
@@ -96,6 +100,10 @@
 
     btnCerrarModalAniadirCategoria.addEventListener('click', () => {
         modalAniadirCategoria.classList.remove('modalCategorias--aniadir--show');
+    });
+
+    btnCerrarModalActualizarCategoria.addEventListener('click', () => {
+        modalActualizarCategoria.classList.remove('modalCategorias--actualizar--show');
     });
 
     paginadorContainer.addEventListener('click', (e) => {
@@ -173,6 +181,11 @@
         }
     }
 
+    function abrirModalActualizarCategoria(e) {
+        e.preventDefault();
+        modalActualizarCategoria.classList.add('modalCategorias--actualizar--show');
+    }
+
     function mostrartabla(categorias) {
         console.log(categorias);
         const contenedorCards = document.querySelector('.tabladecategorias');
@@ -181,10 +194,15 @@
 
         const gridcardCategorias = document.createElement('DIV');
         gridcardCategorias.classList.add('gridcardCategorias');
+        let inputIdForm = document.querySelector('#idcategoriaentradaForm');
+        inputIdForm = document.createElement('input');
+        inputIdForm.type = 'hidden';
+        inputIdForm.id = 'idcategoriaentradaForm';
+        inputIdForm.name = 'categoriasA[id]';
 
 
         categorias.forEach(categoria => {
-            const { nombre, descripcion } = categoria;
+            const { id, nombre, descripcion } = categoria;
 
             const cardCategorias = document.createElement('DIV');
             cardCategorias.classList.add('cardCategorias');
@@ -216,10 +234,47 @@
             cardCategorias.appendChild(nombreCategoria);
             cardCategorias.appendChild(descripcionCategoria);
             cardCategorias.appendChild(botonesCategorias);
+            let inputId = document.querySelector('#idcategoriaentrada');
+            inputId = document.createElement('input');
+            inputId.type = 'hidden';
+            inputId.id = 'idcategoriaentrada';
+            inputId.name = 'categoriasA[id]';
+            inputId.value = id;
+
+            cardCategorias.appendChild(inputId);
+
 
             gridcardCategorias.appendChild(cardCategorias);
 
-            
+            gridcardCategorias.addEventListener('click', (e) => {
+                // Si se selecciona actulizar producto  en algún card
+                console.log(e.target.classList);
+                if (e.target.classList.contains('botonesCategoriasA')) {
+                    abrirModalActualizarCategoria(e);
+
+                    const card = e.target.closest('.cardCategorias');
+
+                    if (!card) return; 
+
+                    const nombre = card.querySelector('.nombreCategoria p').textContent;
+                    const descripcion = card.querySelector('.descripcionCategoria p').textContent;
+
+                    const inputNombre = document.querySelector('#entradanombreA');
+                    const inputDescripcion = document.querySelector('#entradadescripcionA');
+
+                    inputNombre.value = nombre;
+                    inputDescripcion.value = descripcion;
+
+                    inputIdForm.value = card.querySelector('#idcategoriaentrada').value;
+                    document.querySelector('.modalCategorias--actualizar__entradasbox').appendChild(inputIdForm);
+                    console.log(inputId.value);
+
+
+                }
+
+
+            })
+
         });
 
 
@@ -237,7 +292,7 @@
             generarPaginador(resultadosFiltrado);
             return resultadosFiltrado.flat();
         } else {
-            mostrarPagina(1,resultadosFiltrado);
+            mostrarPagina(1, resultadosFiltrado);
             // mostrarPagina(1, resultadosFiltrado, proveedores);
             generarPaginador(resultadosFiltrado);
             // mostrartabla(resultadosFiltrado);

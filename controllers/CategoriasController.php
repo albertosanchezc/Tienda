@@ -20,11 +20,14 @@ class CategoriasController
         $alertas = Categorias::getAlertas();
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            // debuguear($_POST);
             $alertas = Categorias::getAlertas();
             $argsCrear = $_POST['categorias'];
             $argsActualizar = $_POST['categoriasA'];
+            $argsEliminar = $_POST['eliminarCategoria'];
             $metodoCrear = !empty($argsCrear);
             $metodoActualizar = !empty($argsActualizar);
+            $metodoEliminar = !empty($argsEliminar);
 
             if($metodoCrear){
             $categorias->nombre = $argsCrear['nombre'];
@@ -33,9 +36,15 @@ class CategoriasController
 
             } else if ($metodoActualizar){
                 $categoriasActualizar = new Categorias($argsActualizar);
-                debuguear($categoriasActualizar);
+                // debuguear($categoriasActualizar);
+
                 $categoriasActualizar->guardar();
-                // $categoriasActualizar->nombre = $nombre;
+
+            } else if($metodoEliminar){
+
+                $id = $argsEliminar['id'];
+                $categoriaseliminar = Categorias::find($id);
+                $categoriaseliminar->eliminar();
 
             }
             header('Location:/categorias');
@@ -48,6 +57,7 @@ class CategoriasController
             'titulo' => $titulo,
             'alertas' => $alertas,
             'script' => $script,
+            'categoriasActualizar' => $categoriasActualizar,
             'categorias' => $categorias
         ]);
     }

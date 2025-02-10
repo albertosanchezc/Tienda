@@ -132,7 +132,7 @@
         </div>
 </section>
 
-<section class="modalCategorias--actualizar modalCategorias--actualizar--show">
+<section class="modalCategorias--actualizar">
     <div class="modalCategorias--actualizar__contenedor">
         <div class="modalCategorias--actualizar__cerrar">
             <a href="#" class="modalCategorias--actualizar__refcerrar">
@@ -149,15 +149,15 @@
                     <legend>+Actualizar Categoría</legend>
                     <div class="modalCategorias--actualizar__entradasbox">
                         <div class="modalCategorias--actualizar__nombre">
-                            <label for="entradanombre">Nombre: </label>
-                            <input class="modalCategorias--actualizar__inputNombre" type="text" id="entradanombre"
+                            <label for="entradanombreA">Nombre: </label>
+                            <input class="modalCategorias--actualizar__inputNombre" type="text" id="entradanombreA"
                                 name="categoriasA[nombre]" placeholder="Ejemplo: Cremeria"
                                 value="<?php echo s($categorias->nombre); ?>" required>
                         </div>
                         <div class="modalCategorias--actualizar__nombre">
-                            <label for="entradadescripcion">Descripción: </label>
+                            <label for="entradadescripcionA">Descripción: </label>
                             <textarea rows="5" class="modalCategorias--actualizar__inputDescripcion"
-                                id="entradadescripcion" name="categoriasA[descripcion]"
+                                id="entradadescripcionA" name="categoriasA[descripcion]"
                                 placeholder="Escribe aquí la descripción..."
                                 value="<?php echo s($categorias->descripcion); ?>" required></textarea>
                         </div>
@@ -168,4 +168,16 @@
                 </div>
             </form>
         </div>
+</section>
+
+<section class="modal--inventarioEliminar">
+    <div class="modal--inventarioEliminar__container">
+        <h2 class="modal--inventarioEliminar__title">¿Seguro que deseas eliminar esta categoria definitivamente?</h2>
+        <form id="eliminarCategoria" method="POST">
+            <div class="modal--inventarioEliminar__opciones">
+                <input value="Si" type="submit" class="modal--inventarioEliminar__si">
+                <input value="No" class="modal--inventarioEliminar__no">
+            </div>
+        </form>
+    </div>
 </section>
