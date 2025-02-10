@@ -89,3 +89,40 @@
         </div>
     </div>
 </section>
+
+<section class="modalCategorias--aniadir modalCategorias--aniadir--show">
+    <div class="modalCategorias--aniadir__contenedor">
+        <div class="modalCategorias--aniadir__cerrar">
+            <a href="#" class="modalCategorias--aniadir__refcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalCategorias--aniadir__imgcerrar">
+            </a>
+        </div>
+        <div class="modalCategorias--aniadir__titulo">
+            <h1>Añadir Nueva Categoría</h1>
+            <h3>Rellena el formulario con los datos de la nueva categoría para organizar mejor tu inventario.</h3>
+        </div>
+        <div class="modalCategorias--aniadir__entradas">
+            <form id="aniadirCategoria"" method=" POST">
+                <fieldset>
+                    <legend>+Anadir Categoría</legend>
+                    <div class="modalCategorias--aniadir__entradasbox">
+                        <div class="modalCategorias--aniadir__nombre">
+                            <label for="entradanombre">Nombre: </label>
+                            <input class="modalCategorias--aniadir__inputNombre" type="text" id="entradanombre"
+                                name="categorias[nombre]" placeholder="Ejemplo: Cremeria"
+                                value="<?php echo s($categorias->nombre); ?>" required>
+                        </div>
+                        <div class="modalCategorias--aniadir__nombre">
+                            <label for="entradadescripcion">Descripción: </label>
+                            <textarea class="modalCategorias--aniadir__inputDescripcion" id="entradadescripcion"
+                                name="categorias[descripcion]"  placeholder="Escribe aquí la descripcion..."
+                                value="<?php echo s($categorias->descripcion); ?>" required>
+                            </textarea>
+                        </div>
+
+                    </div>
+                </fieldset>
+                <input value="Crear Categoría" type="submit" class="modalCategorias--aniadir__botonaniadir">
+            </form>
+        </div>
+</section>
