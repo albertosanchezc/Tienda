@@ -356,6 +356,7 @@
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .gridProveedoresTabla{
     @include telefono-1{
         display: grid;
@@ -375,10 +376,16 @@
     @include telefono-1{
         grid-template-columns: 1fr;
 >>>>>>> Stashed changes
+=======
+.gridProveedorestabla{
+    @include telefono-1{
+        grid-template-columns: 1fr;
+>>>>>>> Stashed changes
         
     }
 
     @include tablet{
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         display: grid;
         grid-template-columns: 1fr 2fr;
@@ -394,10 +401,14 @@
 =======
         grid-template-columns: repeat(2,1fr);
 >>>>>>> Stashed changes
+=======
+        grid-template-columns: repeat(2,1fr);
+>>>>>>> Stashed changes
         
     }
 
     @include laptop-1{
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         display: grid;
         grid-template-columns: 1fr 2fr;
@@ -413,11 +424,16 @@
 
 
 =======
+=======
+>>>>>>> Stashed changes
         grid-template-columns: repeat(2,1fr);
 
         
     }
 }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
