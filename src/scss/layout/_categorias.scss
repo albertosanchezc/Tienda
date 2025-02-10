@@ -50,26 +50,14 @@
     img {
         filter: none;
         filter: brightness(0) saturate(100%) invert(36%) sepia(94%) saturate(7485%) hue-rotate(93deg) brightness(94%) contrast(108%);
-
-
-        transform: rotate(45deg);
+        // transform: rotate(45deg);
 
     }
 }
 
 .btnfijarselector {
-    border: solid 1px green;
-
-    p {
-        color: green;
-
-    }
 
     img {
-        filter: none;
-        filter: brightness(0) saturate(100%) invert(36%) sepia(94%) saturate(7485%) hue-rotate(93deg) brightness(94%) contrast(108%);
-
-
         transform: rotate(45deg);
 
     }
@@ -164,21 +152,21 @@
             grid-template-columns: repeat(3, 1fr);
             align-items: center;
             justify-content: center;
-            gap:2rem;
+            gap: 2rem;
 
-            @include telefono-1{
+            @include telefono-1 {
                 margin: 0 5rem;
                 grid-template-columns: 1fr;
 
             }
 
-            @include tablet{
+            @include tablet {
                 margin: 0;
                 grid-template-columns: repeat(2, 1fr);
 
             }
 
-            @include laptop-1{
+            @include laptop-1 {
                 margin: 0;
                 grid-template-columns: repeat(3, 1fr);
 
@@ -191,12 +179,15 @@
             margin: 0;
             padding: 1rem 4rem;
             border-radius: 2rem;
-            color: white;
+            color: black;
             position: relative;
-            background: rgb(17, 94, 0);
-            background: radial-gradient(circle, rgb(18, 95, 0) 0%, rgb(34, 202, 0) 100%);
+            min-height: 22rem;
+            background: rgb(1, 158, 101);
+            background: linear-gradient(90deg, rgba(1, 158, 101, 1) 0%, rgba(118, 255, 79, 1) 50%, rgba(252, 179, 69, 1) 100%);
+            // background: rgb(17, 94, 0);
+            // background: radial-gradient(circle, rgb(18, 95, 0) 0%, rgb(34, 202, 0) 100%);
 
-            
+
             &::before,
             &::after {
                 position: absolute;
@@ -217,26 +208,26 @@
                 right: 0;
             }
 
-            .nombreCategoria{
-                p{
-                text-transform: uppercase;
-                text-align: center;
-                padding: 0;
-                margin: 0;
-                color: #fff;
-                font-weight: bold;
-                font-size: large;
+            .nombreCategoria {
+                p {
+                    text-transform: uppercase;
+                    text-align: center;
+                    padding: 0;
+                    margin: 0;
+                    color: black;
+                    font-weight: bold;
+                    font-size: large;
                 }
             }
 
-            .descripcionCategoria{
-                p{
-                text-align: center;
-                padding: 0;
-                margin: 0;
-                color: #fff;
-                font-size: medium;
-                margin-bottom: 5px;
+            .descripcionCategoria {
+                p {
+                    text-align: center;
+                    padding: 0;
+                    margin: 0;
+                    color: black;
+                    font-size: medium;
+                    margin-bottom: 5px;
 
                 }
             }

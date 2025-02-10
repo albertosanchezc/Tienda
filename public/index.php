@@ -44,6 +44,7 @@ $router->post('/carrito', [CarritoController::class, 'carrito']);
 $router->get('/inventarios/api/inventarios', [PaginasController::class, 'inventarioAPI']);
 $router->get('/proveedores/api/proveedores', [ProveedoresController::class, 'proveedoresAPI']);
 $router->get('/caja/api/caja', [PaginasController::class, 'cajaAPI']);
+$router->get('/categorias/api/categorias', [PaginasController::class, 'categoriasAPI']);
 
 
 

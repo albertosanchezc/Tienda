@@ -55,6 +55,14 @@ class PaginasController
             'cajas_historicos' => $cajas_historicos
         ]);
     }
+
+    public static function categoriasAPI(){
+        $categorias = Categorias::ALF('nombre','ASC');
+
+        echo json_encode([
+            'categorias' => $categorias
+        ]);
+    }
     
 
     

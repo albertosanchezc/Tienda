@@ -124,7 +124,7 @@ const vistaPreviaImagenActualizar = modalActualizarInventarioContainer.querySele
 inputNuevaImagenActualizar.addEventListener('change', (event) => {
     // Obtiene el archivo seleccionado por el usuario
     const file1 = event.target.files[0];
-    console.log('probando desde inventarioooo',file1);
+    console.log('probando desde inventarioooo', file1);
 
 
     // Verifica si se seleccionó un archivo
@@ -261,13 +261,13 @@ function filtrar() {
     const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras);
     if (resultadosFiltrado.length > 0) {
         console.log(resultadosFiltrado);
-        mostrarPagina(1, resultadosFiltrado,proveedores);
+        mostrarPagina(1, resultadosFiltrado, proveedores);
 
         generarPaginador(resultadosFiltrado);
         return resultadosFiltrado.flat();
     } else {
         // mostrarPagina(1,resultadosFiltrado);
-        mostrarPagina(1, resultadosFiltrado,proveedores);
+        mostrarPagina(1, resultadosFiltrado, proveedores);
         generarPaginador(resultadosFiltrado);
 
         return resultadosFiltrado.flat();
@@ -347,7 +347,7 @@ function mostrarCards(inventario, proveedores) {
         const div = document.createElement('DIV');
         div.classList.add('inventarionombre');
         const contenidoDiv = document.createElement('P');
-        if(granel === '1'){
+        if (granel === '1') {
             contenidoDiv.innerHTML = `
             <div class="inventarionombre">
                 
@@ -524,7 +524,7 @@ function mostrarCards(inventario, proveedores) {
 
                 const inputHidden = document.querySelector('#cantidadInventarioentrada');
 
-                abrirModalActualizarStock(inputHidden,e, cantidad, granel);
+                abrirModalActualizarStock(inputHidden, e, cantidad, granel);
 
 
 
@@ -628,7 +628,7 @@ function mostrarPagina(pagina, datos = inventario, proveedores) {
     console.log("Inventario Pagina: ", inventarioPagina);
     paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
     limpiarHTMLElemento(despliegueInventario);
-    mostrarCards(inventarioPagina,proveedores);
+    mostrarCards(inventarioPagina, proveedores);
     generarPaginador(datos)
     return inventarioPagina;
 }
@@ -689,7 +689,7 @@ function abrirModalActualizarProducto(e) {
     e.preventDefault();
     modalActualizarInventario.classList.add('modal--inventario--actualizar--show');
 }
-function abrirModalActualizarStock(inputHidden,e, cantidad, granel) {
+function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
     e.preventDefault();
     modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
     // modalActualizarStock.querySelector('switch').querySelector('#optionaniadir').click();

@@ -4,7 +4,7 @@
         <h3>Explora, añade y edita categorías para mantener tu registro actualizado.<h3>
     </div>
     <div class="botonAniadirCategoria">
-        <a href="#" class="botonslider1 btnverde borderverde"><span>+ Añadir Nueva Categoría</span></a>
+        <a href="#" class="botonslider1 btnverde borderverde btnAbrirModal"><span>+ Añadir Nueva Categoría</span></a>
     </div>
     <div class="imgbajar">
         <img src="/build/img/greenDown1.gif" alt="Logotipo de bajar" class="imgdown  imgbigger">
@@ -90,7 +90,7 @@
     </div>
 </section>
 
-<section class="modalCategorias--aniadir modalCategorias--aniadir--show">
+<section class="modalCategorias--aniadir">
     <div class="modalCategorias--aniadir__contenedor">
         <div class="modalCategorias--aniadir__cerrar">
             <a href="#" class="modalCategorias--aniadir__refcerrar">
@@ -102,7 +102,7 @@
             <h3>Rellena el formulario con los datos de la nueva categoría para organizar mejor tu inventario.</h3>
         </div>
         <div class="modalCategorias--aniadir__entradas">
-            <form id="aniadirCategoria"" method=" POST">
+            <form id="aniadirCategoria" method="POST">
                 <fieldset>
                     <legend>+Anadir Categoría</legend>
                     <div class="modalCategorias--aniadir__entradasbox">
@@ -116,8 +116,7 @@
                             <label for="entradadescripcion">Descripción: </label>
                             <textarea rows="5" class="modalCategorias--aniadir__inputDescripcion"
                                 id="entradadescripcion" name="categorias[descripcion]"
-                                placeholder="Escribe aquí la descripción..."
-                                required><?php echo s($categorias->descripcion); ?></textarea>
+                                placeholder="Escribe aquí la descripción..." value="<?php echo s($categorias->descripcion); ?>" required></textarea>
                         </div>
                     </div>
                 </fieldset>

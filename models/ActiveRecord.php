@@ -168,6 +168,14 @@ class ActiveRecord
         return $resultado;
     }
 
+    public static function ALF($columna, $orden)
+    {
+        $query = "SELECT * FROM " . static::$tabla . " ORDER BY ". $columna ." ". $orden;
+        $resultado = self::consultarSQL($query);
+
+        return $resultado;
+    }
+
 
     public static function join2($primera, $segunda){
         $query = "SELECT * FROM $primera JOIN $segunda ON " . $primera . ".id = " . $segunda . ".producto_id";
