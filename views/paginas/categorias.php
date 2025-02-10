@@ -114,15 +114,16 @@
                         </div>
                         <div class="modalCategorias--aniadir__nombre">
                             <label for="entradadescripcion">Descripción: </label>
-                            <textarea class="modalCategorias--aniadir__inputDescripcion" id="entradadescripcion"
-                                name="categorias[descripcion]"  placeholder="Escribe aquí la descripcion..."
-                                value="<?php echo s($categorias->descripcion); ?>" required>
-                            </textarea>
+                            <textarea rows="5" class="modalCategorias--aniadir__inputDescripcion"
+                                id="entradadescripcion" name="categorias[descripcion]"
+                                placeholder="Escribe aquí la descripción..."
+                                required><?php echo s($categorias->descripcion); ?></textarea>
                         </div>
-
                     </div>
                 </fieldset>
-                <input value="Crear Categoría" type="submit" class="modalCategorias--aniadir__botonaniadir">
+                <div class="modalCategorias--aniadir__botonaniadirS">
+                    <input value="Crear Categoría" type="submit" class="modalCategorias--aniadir__botonaniadir">
+                </div>
             </form>
         </div>
 </section>
