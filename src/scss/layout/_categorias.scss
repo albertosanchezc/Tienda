@@ -78,10 +78,43 @@
 .gridContCategorias {
     display: grid;
     grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+
+    @include telefono-1 {
+        grid-template-columns: 1fr;
+
+    }
+
+    @include tablet {
+        grid-template-columns: 1fr 2fr;
+
+    }
+
+    @include laptop-1 {
+        grid-template-columns: 1fr 3fr;
+
+    }
 
     .busqueda-categorias {
         grid-column: 1/2;
         padding: 1rem;
+
+        @include telefono-1 {
+            padding: 2rem 5rem;
+
+        }
+
+        @include tablet {
+            padding: 1rem;
+
+        }
+
+        @include laptop-1 {
+            padding: 1rem;
+
+        }
+
+
 
 
         fieldset {
@@ -110,6 +143,141 @@
 
     .tabladecategorias {
         grid-column: 2/3;
+
+        @include telefono-1 {
+            grid-column: 1/2;
+
+        }
+
+        @include tablet {
+            grid-column: 2/3;
+
+        }
+
+        @include laptop-1 {
+            grid-column: 2/3;
+
+        }
+
+        .gridcardCategorias {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            align-items: center;
+            justify-content: center;
+            gap:2rem;
+
+            @include telefono-1{
+                margin: 0 5rem;
+                grid-template-columns: 1fr;
+
+            }
+
+            @include tablet{
+                margin: 0;
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+
+            @include laptop-1{
+                margin: 0;
+                grid-template-columns: repeat(3, 1fr);
+
+            }
+
+        }
+
+        .cardCategorias {
+            width: 100%;
+            margin: 0;
+            padding: 1rem 4rem;
+            border-radius: 2rem;
+            color: white;
+            position: relative;
+            background: rgb(17, 94, 0);
+            background: radial-gradient(circle, rgb(18, 95, 0) 0%, rgb(34, 202, 0) 100%);
+
+            
+            &::before,
+            &::after {
+                position: absolute;
+                content: '';
+                background-color: white;
+                width: 5rem;
+                height: 5rem;
+                top: calc(50% - 2.5rem);
+            }
+
+            &::before {
+                clip-path: circle(50% at 25% 50%);
+                left: 0;
+            }
+
+            &::after {
+                clip-path: circle(50% at 75% 50%);
+                right: 0;
+            }
+
+            .nombreCategoria{
+                p{
+                text-transform: uppercase;
+                text-align: center;
+                padding: 0;
+                margin: 0;
+                color: #fff;
+                font-weight: bold;
+                font-size: large;
+                }
+            }
+
+            .descripcionCategoria{
+                p{
+                text-align: center;
+                padding: 0;
+                margin: 0;
+                color: #fff;
+                font-size: medium;
+                margin-bottom: 5px;
+
+                }
+            }
+
+            .botonesCategorias {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                .botonesCategoriasA {
+                    background-color: blue;
+                    border-radius: 1rem;
+                    padding: 5px;
+                    color: #fff;
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                .botonesCategoriasA:hover {
+                    cursor: pointer;
+                    background-color: rgb(255, 255, 255);
+                    color: blue;
+                }
+
+                .botonesCategoriasE {
+                    background-color: rgb(255, 0, 0);
+                    border-radius: 1rem;
+                    padding: 5px;
+                    color: #fff;
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                .botonesCategoriasE:hover {
+                    cursor: pointer;
+                    background-color: rgb(255, 255, 255);
+                    color: rgb(255, 0, 0);
+                }
+            }
+
+        }
     }
 
 

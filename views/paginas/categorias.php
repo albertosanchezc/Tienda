@@ -28,7 +28,7 @@
                 <legend>Búsqueda</legend>
                 <div class="caja-categorias">
                     <div class="nombre-producto">
-                        <label for="nombre-categorias">Nombre: </label>
+                        <label for="nombre-categorias">Nombre de la Categoría: </label>
                         <input type="text" id="nombre-categorias" name="categorias[nombre]" placeholder="Cremeria">
                     </div>
                 </div>
@@ -39,14 +39,50 @@
             <div class="gridcardCategorias">
                 <div class="cardCategorias">
                     <div class="nombreCategoria">
-                        Nombre: Cremeria
+                        <p>Cremeria</p>
                     </div>
                     <div class="descripcionCategoria">
-                        Descripción: Yogurt, Crema, Leche, Quesos, Carnes Frías.
+                        <p>Yogurt, Crema, Leche, Quesos, Carnes Frías.</p>
                     </div>
                     <div class="botonesCategorias">
-                    <a href="#" class="botonesCategoriasA">Actualizar Categoría</a>
-                    <a href="#" class="botonesCategoriasE">Eliminar</a>
+                        <a href="#" class="botonesCategoriasA">Actualizar </a>
+                        <a href="#" class="botonesCategoriasE">Eliminar</a>
+                    </div>
+                </div>
+                <div class="cardCategorias">
+                    <div class="nombreCategoria">
+                        <p>Cremeria</p>
+                    </div>
+                    <div class="descripcionCategoria">
+                        <p>Yogurt, Crema, Leche, Quesos, Carnes Frías.</p>
+                    </div>
+                    <div class="botonesCategorias">
+                        <a href="#" class="botonesCategoriasA">Actualizar</a>
+                        <a href="#" class="botonesCategoriasE">Eliminar</a>
+                    </div>
+                </div>
+                <div class="cardCategorias">
+                    <div class="nombreCategoria">
+                        <p>Cremeria</p>
+                    </div>
+                    <div class="descripcionCategoria">
+                        <p>Yogurt, Crema, Leche, Quesos, Carnes Frías.</p>
+                    </div>
+                    <div class="botonesCategorias">
+                        <a href="#" class="botonesCategoriasA">Actualizar</a>
+                        <a href="#" class="botonesCategoriasE">Eliminar</a>
+                    </div>
+                </div>
+                <div class="cardCategorias">
+                    <div class="nombreCategoria">
+                        <p>Cremeria</p>
+                    </div>
+                    <div class="descripcionCategoria">
+                        <p>Yogurt, Crema, Leche, Quesos, Carnes Frías.</p>
+                    </div>
+                    <div class="botonesCategorias">
+                        <a href="#" class="botonesCategoriasA">Actualizar</a>
+                        <a href="#" class="botonesCategoriasE">Eliminar</a>
                     </div>
                 </div>
             </div>
