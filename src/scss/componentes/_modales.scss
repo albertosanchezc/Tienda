@@ -3,7 +3,7 @@
 .modal--inventario,
 .modal--inventario--actualizar,
 .modal--inventario--actualizarStock,
-.modalCategorias--aniadir {
+.modalCategorias--aniadir, .modalCategorias--actualizar {
     position: fixed;
     top: 0;
     left: 0;
@@ -1113,7 +1113,7 @@
 
 }
 
-.modalCategorias--aniadir {
+.modalCategorias--aniadir, .modalCategorias--actualizar {
     &__entradas {
         fieldset {
             border: dotted 1px green;

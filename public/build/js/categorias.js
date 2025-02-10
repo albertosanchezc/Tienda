@@ -20,7 +20,7 @@
             console.log(categorias);
             // mostrartabla(categorias);
 
-            mostrartabla(categorias);
+            filtrar();
 
         } catch (e) {
             console.log(e);
@@ -39,11 +39,15 @@
 
     const fijarBtn = document.querySelector('.btnfijar');
 
+    const paginadorContainer = document.querySelector('.paginador-1');
+
     let estaFijado = false;
 
     let terminosBusqueda = {
         nombre: ''
     }
+    let registrosPorPagina = 12;
+    let paginaActual = 1;
 
     document.getElementById('aniadirCategoria').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -94,12 +98,23 @@
         modalAniadirCategoria.classList.remove('modalCategorias--aniadir--show');
     });
 
-    inputNombreBusqueda.addEventListener('input', (e) => {
-        let { nombre } = terminosBusqueda;
-        nombre = e.target.value;
-        terminosBusqueda.nombre = nombre;
-        console.log(terminosBusqueda);
-        filtrar();
+    paginadorContainer.addEventListener('click', (e) => {
+        console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+        if (e.target.classList == 'numero') {
+
+            paginaActual = parseInt(e.target.textContent);
+        }
+        if (e.target.classList == 'paginas') {
+            if (e.target.textContent == 'Siguiente') {
+                paginaActual = paginaActual + 1;
+            } else {
+                paginaActual = paginaActual - 1;
+
+            }
+        }
+        let resultados = filtrar();
+        mostrarPagina(paginaActual, resultados);
     });
 
     fijarBtn.addEventListener('click', function () {
@@ -139,6 +154,16 @@
             behavior: 'smooth' // Desplazamiento suave
         });
     });
+
+    inputNombreBusqueda.addEventListener('input', (e) => {
+        let { nombre } = terminosBusqueda;
+        nombre = e.target.value;
+        terminosBusqueda.nombre = nombre;
+        console.log(terminosBusqueda);
+        filtrar();
+    });
+
+
 
 
     function limpiarHTMLElemento(elemento) {
@@ -193,6 +218,8 @@
             cardCategorias.appendChild(botonesCategorias);
 
             gridcardCategorias.appendChild(cardCategorias);
+
+            
         });
 
 
@@ -204,16 +231,16 @@
         const resultadosFiltrado = categorias.filter(filtrarNombre);
         if (resultadosFiltrado.length > 0) {
             console.log(resultadosFiltrado);
-            mostrartabla(resultadosFiltrado);
-            // mostrarPagina(1, resultadosFiltrado, proveedores);
+            // mostrartabla(resultadosFiltrado);
+            mostrarPagina(1, resultadosFiltrado);
 
-            // generarPaginador(resultadosFiltrado);
+            generarPaginador(resultadosFiltrado);
             return resultadosFiltrado.flat();
         } else {
-            // mostrarPagina(1,resultadosFiltrado);
+            mostrarPagina(1,resultadosFiltrado);
             // mostrarPagina(1, resultadosFiltrado, proveedores);
-            // generarPaginador(resultadosFiltrado);
-            mostrartabla(resultadosFiltrado);
+            generarPaginador(resultadosFiltrado);
+            // mostrartabla(resultadosFiltrado);
 
             return resultadosFiltrado.flat();
         }
@@ -225,6 +252,60 @@
             return categorias.nombre.toLowerCase().includes(nombre.toLowerCase());
         }
         return categorias;
+    }
+
+    function mostrarPagina(pagina, datos = categorias) {
+        const inicio = (pagina - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const inventarioPagina = datos.slice(inicio, fin);
+
+
+        console.log("Inventario Pagina", inventarioPagina);
+        paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+        // Revisar cómo pasar el elemento a limpiar
+        // limpiarHTMLElemento(despliegueInventario)
+        // limpiarHTMLElemento(contenedorTabla);
+        mostrartabla(inventarioPagina);
+        generarPaginador(datos);
+
+
+        return inventarioPagina;
+    }
+
+    // // Función para actualizar la hora
+    function generarPaginador(datos = categorias) {
+        const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+        console.log("Total de páginas desde generar Paginador", totalPaginas);
+        let paginadorHTML = '';
+
+        // Calcular el rango de páginas a mostrar
+        let inicio = Math.max(1, paginaActual - 4);
+        let fin = Math.min(totalPaginas, paginaActual + 4);
+
+        // Ajustar el rango si estamos cerca de los extremos
+        if (paginaActual <= 4) {
+            fin = Math.min(9, totalPaginas);
+        } else if (paginaActual >= totalPaginas - 4) {
+            inicio = Math.max(totalPaginas - 8, 1);
+        }
+
+        // Botón "Anterior"
+        if (paginaActual > 1) {
+            //  onclick="cambiarPagina(${paginaActual - 1})"
+            paginadorHTML += `<button class="paginas">Anterior</button>`;
+        }
+
+        for (let i = inicio; i <= fin; i++) {
+            // onclick="cambiarPagina(${i})"
+            paginadorHTML += `<button   ${paginaActual === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
+        }
+
+        if (paginaActual < totalPaginas) {
+            // onclick="cambiarPagina(${paginaActual + 1})"
+            paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+        }
+
+        paginadorContainer.innerHTML = paginadorHTML;
     }
 
 }())

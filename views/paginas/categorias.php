@@ -87,6 +87,10 @@
                 </div>
             </div>
         </div>
+        <div class="paginador-1 pag">
+        </div>
+    </div>
+
     </div>
 </section>
 
@@ -116,12 +120,51 @@
                             <label for="entradadescripcion">Descripción: </label>
                             <textarea rows="5" class="modalCategorias--aniadir__inputDescripcion"
                                 id="entradadescripcion" name="categorias[descripcion]"
-                                placeholder="Escribe aquí la descripción..." value="<?php echo s($categorias->descripcion); ?>" required></textarea>
+                                placeholder="Escribe aquí la descripción..."
+                                value="<?php echo s($categorias->descripcion); ?>" required></textarea>
                         </div>
                     </div>
                 </fieldset>
                 <div class="modalCategorias--aniadir__botonaniadirS">
                     <input value="Crear Categoría" type="submit" class="modalCategorias--aniadir__botonaniadir">
+                </div>
+            </form>
+        </div>
+</section>
+
+<section class="modalCategorias--actualizar modalCategorias--actualizar--show">
+    <div class="modalCategorias--actualizar__contenedor">
+        <div class="modalCategorias--actualizar__cerrar">
+            <a href="#" class="modalCategorias--actualizar__refcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalCategorias--actualizar__imgcerrar">
+            </a>
+        </div>
+        <div class="modalCategorias--actualizar__titulo">
+            <h1>Actualizar Categoría</h1>
+            <h3>Actualiza los datos de la Categoría seleccionada.</h3>
+        </div>
+        <div class="modalCategorias--actualizar__entradas">
+            <form id="actualizarCategoria" method="POST">
+                <fieldset>
+                    <legend>+Actualizar Categoría</legend>
+                    <div class="modalCategorias--actualizar__entradasbox">
+                        <div class="modalCategorias--actualizar__nombre">
+                            <label for="entradanombre">Nombre: </label>
+                            <input class="modalCategorias--actualizar__inputNombre" type="text" id="entradanombre"
+                                name="categoriasA[nombre]" placeholder="Ejemplo: Cremeria"
+                                value="<?php echo s($categorias->nombre); ?>" required>
+                        </div>
+                        <div class="modalCategorias--actualizar__nombre">
+                            <label for="entradadescripcion">Descripción: </label>
+                            <textarea rows="5" class="modalCategorias--actualizar__inputDescripcion"
+                                id="entradadescripcion" name="categoriasA[descripcion]"
+                                placeholder="Escribe aquí la descripción..."
+                                value="<?php echo s($categorias->descripcion); ?>" required></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="modalCategorias--actualizar__botonaniadirS">
+                    <input value="Actualizar Categoría" type="submit" class="modalCategorias--actualizar__botonaniadir">
                 </div>
             </form>
         </div>

@@ -83,6 +83,41 @@
 
     }
 
+    .paginador-1.pag {
+        grid-column: 2/3;
+
+        .numero {
+            background: linear-gradient(to right, #0ea300, #57e62c);
+            border-color: #3ad526;
+
+            &:hover {
+                color: #23ad07;
+                background: none;
+                border-color: #24b300;
+            }
+        }
+
+        .numeroPActual {
+            background: none;
+            background-color: #fff;
+            border: solid 1px #03db0e;
+            color: #2fa500;
+            font-weight: bold;
+
+        }
+
+        .paginas {
+            background: linear-gradient(to right, #0ea300, #57e62c);
+            border-color: #3ad526;
+
+            &:hover {
+                color: #23ad07;
+                background: none;
+                border-color: #24b300;
+            }
+        }
+    }
+
     .busqueda-categorias {
         grid-column: 1/2;
         padding: 1rem;
