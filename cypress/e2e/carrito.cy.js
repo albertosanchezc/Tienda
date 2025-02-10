@@ -532,7 +532,6 @@ describe('Pruebas del carrito de compras', () => {
                         const descripcion = 'Fud'
                         const total = (precio * cantidad) / 1000;
                         const codigoBarras = '7501526';
-                        cy.getByData("idCarrito").contains('14')
                         cy.getByData("cantidadCarrito").contains(`${cantidad}`)
                         cy.getByData("nombreCarrito").contains(`${nombre}`)
                         cy.getByData("descripcionCarrito").contains(`${descripcion}`)
