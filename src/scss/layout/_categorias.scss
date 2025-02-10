@@ -1,43 +1,45 @@
-.titulocategorias{
-    h3{
+.titulocategorias {
+    h3 {
         font-size: large;
     }
 }
 
-.botonAniadirCategoria{
+.botonAniadirCategoria {
     display: flex;
     justify-content: center;
     align-items: center;
-    .borderverde{
+
+    .borderverde {
         border: solid 1px green;
 
     }
-    .borderverde:hover{
+
+    .borderverde:hover {
         color: green;
 
-        span{
+        span {
             color: green;
         }
-        
+
     }
 }
 
-.imgbigger{
+.imgbigger {
     width: 3rem;
 }
 
-.btnfijargreen{
+.btnfijargreen {
     background: none;
     background: linear-gradient(to right, rgb(27, 117, 0), rgb(23, 255, 15));
-    border:solid 1px green;
+    border: solid 1px green;
 
-    img{
+    img {
         //rotacionn de la imagen
         transition: transform 0.3s ease-in-out;
     }
 }
 
-.btnfijargreen:hover{
+.btnfijargreen:hover {
     border: solid 1px green;
 
     p {
@@ -49,13 +51,13 @@
         filter: none;
         filter: brightness(0) saturate(100%) invert(36%) sepia(94%) saturate(7485%) hue-rotate(93deg) brightness(94%) contrast(108%);
 
-        
+
         transform: rotate(45deg);
 
     }
 }
 
-.btnfijargreenHover{
+.btnfijarselector {
     border: solid 1px green;
 
     p {
@@ -67,8 +69,49 @@
         filter: none;
         filter: brightness(0) saturate(100%) invert(36%) sepia(94%) saturate(7485%) hue-rotate(93deg) brightness(94%) contrast(108%);
 
-        
+
         transform: rotate(45deg);
 
     }
+}
+
+.gridContCategorias {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    .busqueda-categorias {
+        grid-column: 1/2;
+        padding: 1rem;
+
+
+        fieldset {
+            border: dotted 1px green;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        legend {
+            color: green;
+            padding: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border-color: rgb(19, 224, 0);
+            border-radius: 1rem;
+            height: 43px;
+        }
+
+    }
+
+    .tabladecategorias {
+        grid-column: 2/3;
+    }
+
+
+
 }
