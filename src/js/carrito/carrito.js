@@ -1,4 +1,4 @@
-import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito, limpiarTodo, } from "./funciones.js";
+import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito } from "./funciones.js";
 import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel, modalEliminarProducto, modalPagar, contenedorBotones } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -214,11 +214,13 @@ document.addEventListener('keydown', (e) => {
 // Evento que escucha el botón que se presiona para abrir su respectiva modal
 contenedorProductos.addEventListener('click', (e) => {
     // e.preventDefault();
-    console.log(e);
+    console.log(e.target.classList);
     let { codigo_barras, nombre } = inventario;
-    // let busquedaManual = e.target && e.target.classList === 'cursorPointer';
     let busquedaManual = e.target && (e.target.classList.contains('carritoBManual'));
     let busquedaNombre = e.target && (e.target.classList.contains('carritoBNombre'));
+    let numero = e.target && (e.target.classList.contains('numeroCarrito'));
+    let paginas = e.target && (e.target.classList.contains('paginasCarrito'));
+
     // Busqueda manual del código
     if (busquedaManual) {
         let resultadosFiltrado = filtrar(inventario);
@@ -288,6 +290,11 @@ contenedorProductos.addEventListener('click', (e) => {
         })
     }
 
+    if(numero || paginas){
+        console.log(e.target.value);
+        segundoEstadoCarrito();        
+    }
+
 })
 
 // Leer la página a la que se le da click y asignar paginaActual
@@ -334,11 +341,11 @@ paginadorModalNombreContainer.addEventListener('click', (e) => {
 paginadorCarritoContainer.addEventListener('click', (e) => {
     console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
 
-    if (e.target.classList == 'numero') {
+    if (e.target.classList.contains('numeroCarrito')) {
 
         paginaActual = parseInt(e.target.textContent);
     }
-    if (e.target.classList == 'paginas') {
+    if (e.target.classList.contains('paginasCarrito')) {
         if (e.target.textContent == 'Siguiente') {
             paginaActual = paginaActual + 1;
         } else {
@@ -348,8 +355,8 @@ paginadorCarritoContainer.addEventListener('click', (e) => {
     }
     // let resultados = filtrar()
     let resultados = articulosCarrito;
-    return mostrarPaginaCarrito(paginaActual, resultados);
-
+    return mostrarPaginaCarrito(paginaActual);
+    
 })
 
 

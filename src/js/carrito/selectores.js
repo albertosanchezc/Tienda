@@ -26,14 +26,22 @@ paginacionNombreContainer.classList.add('modal--manual--paginacion');
 
 // Selectores del modal Cantidad 
 const modalCantidad = document.querySelector('.modal--cantidad');
+modalCantidad.dataset.test = 'modal--cantidad';
 const btnCerrarModalCantidad = document.querySelector('.modal--cantidad__cerrar');
 const contenedorTotalModalCantidad = modalCantidad.querySelector('.modal--cantidad__gridprecio');
 const inputModalCantidad = modalCantidad.querySelector('.modal--cantidad__close');
+inputModalCantidad.dataset.test = 'modal--cantidad__close';
 
 const btnConfirmarEditarCantidad = modalCantidad.querySelector('.modal--cantidad__btn');
+btnConfirmarEditarCantidad.dataset.test = 'botonConfirmarCantidadModalCantidad';
+
 
 const modalGranel = document.querySelector('.modal--granel');
+const modalGranelContainer = modalGranel.querySelector('.modal--granel__container');
+modalGranelContainer.dataset.test = 'modalGranel';
+
 const inputModalGranel = modalGranel.querySelector('.modal--granel__close');
+inputModalGranel.dataset.test = 'modal--granel__close';
 
 const modalEliminarProducto = document.querySelector('.modal--eliminar');
 

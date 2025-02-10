@@ -111,24 +111,24 @@ function mostrarPagina(pagina, datos = inventario, paginadorContainer) {
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
 function generarPaginadorCarrito(datos = articulosCarrito) {
-    const registrosPorPagina = 1;
+    const registrosPorPagina = 2;
     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
     console.log("Total de páginas desde generar Paginador", totalPaginas);
     let paginadorHTML = '';
 
     if (paginaActual > 1) {
         //  onclick="cambiarPagina(${paginaActual - 1})"
-        paginadorHTML += `<button class="paginas">Anterior</button>`;
+        paginadorHTML += `<button class="paginas paginasCarrito">Anterior</button>`;
     }
 
     for (let i = 1; i <= totalPaginas; i++) {
         // onclick="cambiarPagina(${i})"
-        paginadorHTML += `<button   ${paginaActual === i ? 'selected' : 'class="numero"'}>${i}</button>`;
+        paginadorHTML += `<button   ${paginaActual === i ? 'selected' : 'class="numero numeroCarrito"'}>${i}</button>`;
     }
 
     if (paginaActual < totalPaginas) {
         // onclick="cambiarPagina(${paginaActual + 1})"
-        paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+        paginadorHTML += `<button class="paginas paginasCarrito" >Siguiente</button>`;
     }
 
     paginadorCarritoContainer.innerHTML = paginadorHTML;
@@ -136,7 +136,7 @@ function generarPaginadorCarrito(datos = articulosCarrito) {
 }
 
 function mostrarPaginaCarrito(pagina, datos = articulosCarrito) {
-    const registrosPorPagina = 1;
+    const registrosPorPagina = 2;
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     let datosPagina = datos.slice(inicio, fin);
@@ -148,6 +148,7 @@ function mostrarPaginaCarrito(pagina, datos = articulosCarrito) {
     // mostrarProductosCarrito();
     generarPaginadorCarrito(datos);
     mostrarProductosCarrito(datosPagina);
+    mostrarTicket();
     return datosPagina;
 }
 
@@ -166,8 +167,8 @@ function mostrarTicket() {
             <td hidden id="idTicketTbody">${id}</td>   
              <td>${cantidad}</td>
              <td>${nombre}</td>
-             <td>${precio_unitario_venta}</td>
-             <td>${total}</td>
+             <td>$${precio_unitario_venta}</td>
+             <td>$${total}</td>
         `;
 
         tbodyTicket.appendChild(rowTicket);
@@ -389,8 +390,8 @@ function abrirModalGranel(articuloCarritoAModificar) {
     inputModalGranel.disabled = false;
     inputModalGranel.focus();
     actualizarModalGranel(articuloCarritoAModificar);
-    codigo_barras = '';
-    terminosBusqueda.codigoBarras = codigo_barras;
+    // codigo_barras = '';
+    // terminosBusqueda.codigoBarras = codigo_barras;
 }
 
 function actualizarModalGranel(articuloCarritoAModificar) {
@@ -401,13 +402,15 @@ function actualizarModalGranel(articuloCarritoAModificar) {
         Introduce la cantidad en gramos de ${nombre}
     `;
     const btnAniadirArticuloGranel = document.querySelector('.modal--granel__btn');
+    btnAniadirArticuloGranel.dataset.test = 'botonConfirmarCantidadModalGranel'
 
-    let total = (cantidad * precio_unitario_venta).toFixed(2);
+
+    let total = ((cantidad * precio_unitario_venta)/1000).toFixed(2);
 
     let contenedorTablaModalGranel = modalGranel.querySelector('.modal--granel__caracteristicas');
     // limpiarHTMLElemento(contenedor)
     contenedorTablaModalGranel.innerHTML = `
-        <div class="modal--granel__fila1-cantidad">
+        <div  class="modal--granel__fila1-cantidad">
             <p>Cantidad</p>
         </div>
         <div class="modal--granel__fila1-nombre">
@@ -422,19 +425,19 @@ function actualizarModalGranel(articuloCarritoAModificar) {
         <div class="modal--granel__fila1-total">
             <p>Total</p>
         </div>
-        <div class="modal--granel__fila2-cantidad">
+        <div data-test="cantidadTablaModalGranel" class="modal--granel__fila2-cantidad">
             <p>${cantidad}</p>
         </div>
-        <div class="modal--granel__fila2-nombre">
+        <div  data-test="nombreTablaModalGranel" class="modal--granel__fila2-nombre">
             <p>${nombre}</p>
         </div>
-        <div class="modal--granel__fila2-descripcion">
+        <div data-test="descripcionTablaModalGranel" class="modal--granel__fila2-descripcion">
             <p>${descripcion}</p>
         </div>
-        <div class="modal--granel__fila2-costoventa">
+        <div data-test="precioKiloTablaModalGranel" class="modal--granel__fila2-costoventa">
             <p>$${precio_unitario_venta}</p>
         </div>
-        <div class="modal--granel__fila2-total">
+        <div data-test="totalTablaModalGranel" class="modal--granel__fila2-total">
             <p>$${total}</p>
         </div>        
     `;
@@ -444,7 +447,7 @@ function actualizarModalGranel(articuloCarritoAModificar) {
         <div class="modal--granel__titulo">
             <h2>Total:</h2>
         </div>
-        <div class="modal--granel__precio">
+        <div data-test="totalmodalGranel" class="modal--granel__precio">
             <h2>$${total}</h2>
         </div>        
     `;
@@ -473,28 +476,29 @@ function actualizarModalGranel(articuloCarritoAModificar) {
         <div class="modal--granel__fila1-total">
             <p>Total</p>
         </div>
-        <div class="modal--granel__fila2-cantidad">
-            <p>${cantidadInput}g</p>
+        <div data-test="cantidadTablaModalGranel" class="modal--granel__fila2-cantidad">
+            <p>${cantidadInput}</p>
         </div>
-        <div class="modal--granel__fila2-nombre">
+        <div  data-test="nombreTablaModalGranel" class="modal--granel__fila2-nombre">
             <p>${nombre}</p>
         </div>
-        <div class="modal--granel__fila2-descripcion">
+        <div data-test="descripcionTablaModalGranel" class="modal--granel__fila2-descripcion">
             <p>${descripcion}</p>
         </div>
-        <div class="modal--granel__fila2-costoventa">
+        <div data-test="precioKiloTablaModalGranel" class="modal--granel__fila2-costoventa">
             <p>$${precio_unitario_venta}</p>
         </div>
-        <div class="modal--granel__fila2-total">
+        <div data-test="totalTablaModalGranel" class="modal--granel__fila2-total">
             <p>$${total}</p>
         </div>        
+      
     `;
 
         contenedorTotalModalGranel.innerHTML = `
         <div class="modal--granel__titulo">
             <h2>Total:</h2>
         </div>
-        <div class="modal--granel__precio">
+        <div data-test="totalmodalGranel" class="modal--granel__precio">
             <h2>$${total}</h2>
         </div>        
     `;
@@ -514,9 +518,6 @@ function actualizarModalGranel(articuloCarritoAModificar) {
 
         mostrarDetallesProducto(articuloCarritoAModificar);
         segundoEstadoCarrito();
-        codigo_barras = '';
-        terminosBusqueda.codigoBarras = codigo_barras;
-
     })
 
 
@@ -700,8 +701,6 @@ function esGranel(seleccionado) {
         console.log('Desde aquí queremos ver si es de granel', seleccionado);
         console.log('Es de granel');
         abrirModalGranel(seleccionado);
-        codigoBarras = '';
-        terminosBusqueda.codigo_barras = codigoBarras;
     } else {
         mostrarProductosCarrito();
         mostrarDetallesProducto(seleccionado);
@@ -714,8 +713,7 @@ function esGranel(seleccionado) {
 
 // Al menos un artículo en el carrito, se habilita la lectura de 
 function segundoEstadoCarrito() {
-    // codigoBarras = '';
-    // terminosBusqueda.codigo_barras = codigoBarras;
+
     console.log('Articulos Carrito desde 2nd state', articulosCarrito);
     mostrarTicket(articulosCarrito);
     let articulosPagina = mostrarPaginaCarrito(1, articulosCarrito);
@@ -791,11 +789,13 @@ function segundoEstadoCarrito() {
                     };
                     const articuloAntes = articulosCarrito.filter(p => p.id === infoProductoCarrito.id);
                     const cantidadAntes = articuloAntes[0].cantidad;
-                    actualizarCantidad(infoProductoCarrito);
+
+                    console.log(articuloAntes[0]);
 
                     if (articuloAntes[0].granel === '1') {
-                        abrirModalGranel();
+                        abrirModalGranel(articuloAntes[0]);
                     } else {
+                        actualizarCantidad(infoProductoCarrito);
 
 
                         modalCantidad.classList.add('modal--cantidad--show');
@@ -866,7 +866,7 @@ function mostrarProductosCarrito(productos = articulosCarrito) {
             </td>
             <td id="precioUnitarioCarritoTbody">${precio_unitario_venta}</td>
             <td>
-                <div class="editar-cantidad">
+                <div data-test="editar-cantidad-${id}" class="editar-cantidad">
                     <a href="#" class="botoneditar-cantidad">Editar Cantidad</a>
                 </div>
                 <div class="eliminar-producto">
@@ -921,6 +921,7 @@ function actualizarCantidad(articulo) {
 
     let { nombre, cantidad, descripcion, precio_unitario_venta } = articulo;
     const contenedorTablaModalCantidad = modalCantidad.querySelector('.modal--cantidad__caracteristicas');
+
     let total = (cantidad * precio_unitario_venta).toFixed(2);
     console.log('Total desde actualizar cantidad', articulo);
 
@@ -942,19 +943,19 @@ function actualizarCantidad(articulo) {
     <div class="modal--cantidad__fila1-total">
         <p>Total</p>
     </div>
-    <div class="modal--cantidad__fila2-cantidad">
+    <div data-test="cantidadTablaModalCantidad" class="modal--cantidad__fila2-cantidad">
         <p>${cantidad}</p>
     </div>
-    <div class="modal--cantidad__fila2-nombre">
+    <div data-test="nombreTablaModalCantidad" class="modal--cantidad__fila2-nombre">
         <p>${nombre}</p>
     </div>
-    <div class="modal--cantidad__fila2-descripcion">
+    <div data-test="descripcionTablaModalCantidad" class="modal--cantidad__fila2-descripcion">
         <p>${descripcion}</p>
     </div>
-    <div class="modal--cantidad__fila2-costoventa">
+    <div data-test="precioVentaTablaModalCantidad" class="modal--cantidad__fila2-costoventa">
         <p>$${precio_unitario_venta}</p>
     </div>
-    <div class="modal--cantidad__fila2-total">
+    <div data-test="totalTablaModalCantidad" class="modal--cantidad__fila2-total">
         <p>$${total}</p>
     </div>
     `;
@@ -980,6 +981,8 @@ function actualizarCantidad(articulo) {
         const resultado = modificarCantidadCarrito(articulo);
         modalCantidad.classList.remove('modal--cantidad--show');
         esGranel(resultado);
+        // console.log(resultado);
+        mostrarDetallesProducto(resultado[0]);
         segundoEstadoCarrito();
         // mostrarTotalesCarrito(articulosCarrito);
         // mostrarProductosCarrito();
@@ -1007,6 +1010,7 @@ function modificarCantidadCarrito(articuloModificado) {
             const cantidadArticuloCarrito = td.parentElement.querySelector('#cantidadCarritoTbody');
             cantidadArticuloCarrito.textContent = articuloModificado.cantidad;
             articuloCarrito[0].cantidad = articuloModificado.cantidad;
+            
         }
     })
 
@@ -1248,4 +1252,5 @@ export {
     esGranel,
     filtrarCodigoExacto,
     mostrarPaginaCarrito
+
 }

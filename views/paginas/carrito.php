@@ -604,7 +604,7 @@
             <p class="modal--pagar__paragraph">
                 Introduce la cantidad de efectivo con la que te están pagando.
             </p>
-            <form id="pagarForm" method="POST"">
+            <form id="pagarForm" method="POST">
             <fieldset>
                 <legend>Efectivo</legend>
                 <label for=" 5">Efectivo:</label>
