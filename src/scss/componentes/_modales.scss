@@ -2,7 +2,8 @@
 .modalproveedores--aniadir,
 .modal--inventario,
 .modal--inventario--actualizar,
-.modal--inventario--actualizarStock, .modalCategorias--aniadir {
+.modal--inventario--actualizarStock,
+.modalCategorias--aniadir {
     position: fixed;
     top: 0;
     left: 0;
@@ -421,8 +422,7 @@
 
 .modal--inventario,
 .modal--inventario--actualizar,
-.modal--inventario--actualizarStock
- {
+.modal--inventario--actualizarStock {
 
     &__titulo {
         h1 {
@@ -714,6 +714,7 @@
             background-color: #F9E7F2;
         }
     }
+
     &__granelono {
         grid-column: 2;
         grid-row: 3;
@@ -776,7 +777,7 @@
         }
     }
 
-    
+
 
     &__flexcompra {
         display: flex;
@@ -785,7 +786,7 @@
         justify-content: center;
         gap: 5px;
 
-        p{
+        p {
             font-size: small;
             font-weight: bold;
         }
@@ -988,6 +989,7 @@
 
 
     }
+
     &__nombre {
         grid-column: 1/3;
         margin-bottom: 1rem;
@@ -999,6 +1001,7 @@
 
     &__cantidadActual {
         margin-top: 1.5rem;
+
         h3 {
             font-weight: bold;
             margin-bottom: 0;
@@ -1007,7 +1010,7 @@
             padding: 0;
             margin-top: 0;
             text-align: center;
-            
+
 
         }
 
@@ -1110,8 +1113,8 @@
 
 }
 
-.modalCategorias--aniadir{
-    &__entradas{
+.modalCategorias--aniadir {
+    &__entradas {
         fieldset {
             border: dotted 1px green;
         }
@@ -1126,13 +1129,13 @@
         }
 
         // input[type="text"] {
-            
+
         // }
 
-        
+
     }
 
-    &__inputNombre{
+    &__inputNombre {
         width: 100%;
         padding: 5px;
         font-size: 16px;
@@ -1141,21 +1144,79 @@
         height: 43px;
     }
 
-    &__inputDescripcion{
+    &__inputDescripcion {
         width: 100%;
-            padding: 5px;
-            font-size: 16px;
-            border-color: rgb(19, 224, 0);
-            border-radius: 1rem;
-            // height: 43px;
+        padding: 5px;
+        font-size: 16px;
+        border-color: rgb(19, 224, 0);
+        border-radius: 1rem;
+        // height: 43px;
 
-            textarea {
-                text-align: left; /* Asegura alineación a la izquierda */
-                vertical-align: top; /* No afecta textarea, pero es buena práctica */
-                padding: 8px; /* Asegura que el texto no quede muy lejos del borde */
-                line-height: 1.5; /* Mejora la legibilidad */
-                resize: none; /* Opcional, evita redimensionar */
-            }
+        textarea {
+            text-align: left;
+            /* Asegura alineación a la izquierda */
+            vertical-align: top;
+            /* No afecta textarea, pero es buena práctica */
+            padding: 8px;
+            /* Asegura que el texto no quede muy lejos del borde */
+            line-height: 1.5;
+            /* Mejora la legibilidad */
+            resize: none;
+            /* Opcional, evita redimensionar */
+        }
 
     }
+
+    &__botonaniadirS {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+
+    }
+
+    &__botonaniadir {
+        font-size: 1.4rem;
+        padding: 1.5rem 4rem;
+        border-radius: 10px;
+        font-weight: 600;
+        display: inline-block;
+        text-align: center;
+        min-width: 30%;
+        color: #fff;
+        overflow: hidden;
+        cursor: pointer;
+        border: solid 1px green;
+        background: linear-gradient(to right, green, rgb(4, 196, 4));
+
+
+    }
+
+    &__botonaniadir::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background-color: #fff;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.5s ease, height 0.5s ease;
+        z-index: 0;
+    }
+
+    &__botonaniadir:hover::before {
+        width: 200%;
+        height: 200%;
+    }
+
+    &__botonaniadir:hover {
+        border: solid 1px rgb(4, 192, 4);
+        background: none;
+        background-color: #fff;
+        color: rgb(4, 192, 4);
+    }
+
+
 }
