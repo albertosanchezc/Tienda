@@ -1004,8 +1004,6 @@ describe('Pruebas del carrito de compras', () => {
     })
 
 
-
-
     it("16: Abrir, escribir algo seleccionar una opción de cada modal filtrando", () => {
         cy.getByData("botonBusquedaManual").should('be.visible')
         cy.getByData("botonBusquedaNombre").should('be.visible')

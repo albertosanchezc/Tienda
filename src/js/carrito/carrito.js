@@ -1,4 +1,4 @@
-import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito } from "./funciones.js";
+import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito, generarPaginador, generarPaginadorCarrito } from "./funciones.js";
 import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel, modalEliminarProducto, modalPagar, contenedorBotones } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -17,6 +17,7 @@ let terminosBusqueda = {
     nombre: ''
 }
 let paginaActual = 1;
+let paginaActualCarrito = 1;
 
 
 
@@ -52,17 +53,20 @@ btnCerrarBienvenida.addEventListener('click', (e) => {
     primerEstadoCarrito();
     estadoModales = false;
     mostrarAlerta('Escane o realiza una búsqueda para añadir al carrito', 'negro');
-    return estadoModales;
+    
 
 })
 
-botonCerrarModalManual.addEventListener('click', () => {
+botonCerrarModalManual.addEventListener('click', (e) => {
     inputCodigoManual.value = '';
     modalManual.classList.remove('modal--manual--show');
+    e.preventDefault();
+    paginaActualCarrito = 1;
     terminosBusqueda.codigoBarras = '';
     terminosBusqueda.nombre = '';
     filtrar(inventario);
     estadoModales = false;
+    // mostrarPagina(1,inventario,paginacionManualContainer);
 
     mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
 
@@ -72,12 +76,14 @@ botonCerrarModalProducto.addEventListener('click', (e) => {
     inputNombreProducto.value = '';
     modalNombreProducto.classList.remove('modal--nombre--show');
     e.preventDefault();
+    paginaActualCarrito = 1;
     estadoModales = false;
     terminosBusqueda.codigoBarras = '';
     terminosBusqueda.nombre = '';
     filtrar(inventario);
+    // mostrarPagina(1,inventario,paginacionManualContainer);
     mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
-    return estadoModales;
+    
 })
 
 btnCerrarModalCantidad.addEventListener('click', (e) => {
@@ -87,14 +93,14 @@ btnCerrarModalCantidad.addEventListener('click', (e) => {
     inputModalCantidad.value = '';
     modalCantidad.classList.remove('modal--cantidad--show');
     mostrarAlerta('¡No se modificó la cantidad, debido a que cerraste la ventana!', 'rojo');
-    return estadoModales;
+    
 })
 
 btnCerrarModalGranel.addEventListener('click', () => {
     estadoModales = false;
 
     modalGranel.classList.remove('modal--granel--show');
-    return estadoModales;
+    
 
 })
 
@@ -220,6 +226,8 @@ contenedorProductos.addEventListener('click', (e) => {
     let busquedaNombre = e.target && (e.target.classList.contains('carritoBNombre'));
     let numero = e.target && (e.target.classList.contains('numeroCarrito'));
     let paginas = e.target && (e.target.classList.contains('paginasCarrito'));
+    paginaActual = 1;
+
 
     // Busqueda manual del código
     if (busquedaManual) {
@@ -232,7 +240,7 @@ contenedorProductos.addEventListener('click', (e) => {
         let { nombre, codigoBarras } = terminosBusqueda;
         codigoBarras = '';
         terminosBusqueda.codigoBarras = codigoBarras;
-        let inventarioPaginado = mostrarPagina(paginaActual, resultadosFiltrado, paginacionManualContainer);
+        let inventarioPaginado = mostrarPagina(1, resultadosFiltrado, paginacionManualContainer);
         mostrarProductosModal(inventarioPaginado, tbodyTablaModalManual, 'Manual');
 
 
@@ -245,7 +253,7 @@ contenedorProductos.addEventListener('click', (e) => {
             console.log("Terminos búsqueda antes de inventario modal", terminosBusqueda);
             console.log("Inventario Desde abrir modal", inventario);
             const resultados = filtrar(inventario);
-
+            
             if (resultados) {
                 // mostrarProductosModalManual(resultados);
                 inventarioPaginado = mostrarPagina(paginaActual, resultados, paginacionManualContainer);
@@ -256,7 +264,7 @@ contenedorProductos.addEventListener('click', (e) => {
                 noResultado(tablaModalManual, parrafoModalManual);
             }
         })
-        return estadoModales;
+        
     }
 
     // Busqueda por nombre
@@ -343,19 +351,21 @@ paginadorCarritoContainer.addEventListener('click', (e) => {
 
     if (e.target.classList.contains('numeroCarrito')) {
 
-        paginaActual = parseInt(e.target.textContent);
+        paginaActualCarrito = parseInt(e.target.textContent);
     }
     if (e.target.classList.contains('paginasCarrito')) {
         if (e.target.textContent == 'Siguiente') {
-            paginaActual = paginaActual + 1;
+            paginaActualCarrito = paginaActualCarrito + 1;
         } else {
-            paginaActual = paginaActual - 1;
+            paginaActualCarrito = paginaActualCarrito - 1;
 
         }
     }
     // let resultados = filtrar()
     let resultados = articulosCarrito;
-    return mostrarPaginaCarrito(paginaActual);
+
+    mostrarPaginaCarrito(paginaActualCarrito);
+    // generarPaginadorCarrito(resultados, paginaActualCarrito);
     
 })
 
@@ -398,4 +408,6 @@ pagarForm.addEventListener('submit', function (e) {
     }
 });
 
-export { paginaActual, terminosBusqueda, estadoModales, codigo_barras };
+
+
+export { paginaActual, paginaActualCarrito, terminosBusqueda, estadoModales, codigo_barras };

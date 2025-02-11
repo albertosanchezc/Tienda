@@ -1,6 +1,6 @@
 import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm, inputHiddenPagarForm1, modalGranel, inputModalGranel, modalBienvenida, modalVaciarCarrito } from "./selectores.js";
 
-import { paginaActual, terminosBusqueda, codigo_barras } from "./carrito.js";
+import { paginaActual, paginaActualCarrito, terminosBusqueda, codigo_barras } from "./carrito.js";
 
 const registrosPorPagina = 4;
 let articulosCarrito = [];
@@ -91,54 +91,16 @@ function filtrarNombreProducto(inventario) {
 }
 
 
-function mostrarPagina(pagina, datos = inventario, paginadorContainer) {
-    const inicio = (pagina - 1) * registrosPorPagina;
-    const fin = inicio + registrosPorPagina;
-    const inventarioPagina = datos.slice(inicio, fin);
 
-
-    console.log("Inventario Pagina", inventarioPagina);
-    paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
-    // Revisar cómo pasar el elemento a limpiar
-    // limpiarHTMLElemento(despliegueInventario)
-    mostrarProductosModal(inventarioPagina, tbodyTablaModalManual, 'Manual')
-    mostrarProductosModal(inventarioPagina, tbodyTablaModalNombre, 'Nombre')
-    generarPaginador(datos, paginadorContainer);
-
-
-    return inventarioPagina;
-}
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
-function generarPaginadorCarrito(datos = articulosCarrito) {
-    const registrosPorPagina = 2;
-    const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
-    console.log("Total de páginas desde generar Paginador", totalPaginas);
-    let paginadorHTML = '';
+function mostrarPaginaCarrito(datos = [...articulosCarrito].reverse(), pagina = 'null') {
+    const registrosPorPagina = 1;
 
-    if (paginaActual > 1) {
-        //  onclick="cambiarPagina(${paginaActual - 1})"
-        paginadorHTML += `<button class="paginas paginasCarrito">Anterior</button>`;
-    }
-
-    for (let i = 1; i <= totalPaginas; i++) {
-        // onclick="cambiarPagina(${i})"
-        paginadorHTML += `<button   ${paginaActual === i ? 'selected' : 'class="numero numeroCarrito"'}>${i}</button>`;
-    }
-
-    if (paginaActual < totalPaginas) {
-        // onclick="cambiarPagina(${paginaActual + 1})"
-        paginadorHTML += `<button class="paginas paginasCarrito" >Siguiente</button>`;
-    }
-
-    paginadorCarritoContainer.innerHTML = paginadorHTML;
-
-}
-
-function mostrarPaginaCarrito(pagina, datos = articulosCarrito) {
-    const registrosPorPagina = 2;
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
+    console.log("Datos: ", datos);
+
     let datosPagina = datos.slice(inicio, fin);
 
     console.log("Datos Pagina: ", datosPagina);
@@ -146,11 +108,40 @@ function mostrarPaginaCarrito(pagina, datos = articulosCarrito) {
     // limpiarHTMLElemento(despliegueInventario);
     // mostrarCards(inventarioPagina,proveedores);
     // mostrarProductosCarrito();
-    generarPaginadorCarrito(datos);
-    mostrarProductosCarrito(datosPagina);
+    generarPaginadorCarrito(datos, pagina);
+    mostrarProductosCarrito(datos);
     mostrarTicket();
+
     return datosPagina;
 }
+
+function generarPaginadorCarrito(datos = [...articulosCarrito].reverse(), paginaActualCarrito = 1) {
+    const registrosPorPagina = 1;
+    const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+    console.log("Total de páginas desde generar Paginador", totalPaginas);
+    let paginadorHTML = '';
+
+    if (paginaActualCarrito > 1) {
+        //  onclick="cambiarPagina(${paginaActualCarrito - 1})"
+        paginadorHTML += `<button class="paginas paginasCarrito">Anterior</button>`;
+    }
+
+    for (let i = 1; i <= totalPaginas; i++) {
+        // onclick="cambiarPagina(${i})"
+        paginadorHTML += `<button   ${paginaActualCarrito === i ? 'selected' : 'class="numero numeroCarrito"'}>${i}</button>`;
+    }
+
+    if (paginaActualCarrito < totalPaginas) {
+        // onclick="cambiarPagina(${paginaActual + 1})"
+        paginadorHTML += `<button class="paginas paginasCarrito" >Siguiente</button>`;
+    }
+
+    paginadorCarritoContainer.innerHTML = paginadorHTML;
+
+
+}
+
+
 
 function mostrarTicket() {
     articulosCarrito.forEach(articulo => {
@@ -182,7 +173,22 @@ function mostrarTicket() {
 
 
 
-// // Función para actualizar la hora
+function mostrarPagina(pagina, datos = inventario, paginadorContainer) {
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = inicio + registrosPorPagina;
+    const inventarioPagina = datos.slice(inicio, fin);
+
+    console.log("Inventario Pagina", inventarioPagina);
+    paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+    // Revisar cómo pasar el elemento a limpiar
+    // limpiarHTMLElemento(despliegueInventario)
+    mostrarProductosModal(inventarioPagina, tbodyTablaModalManual, 'Manual')
+    mostrarProductosModal(inventarioPagina, tbodyTablaModalNombre, 'Nombre')
+    generarPaginador(datos, paginadorContainer);
+
+    return inventarioPagina;
+}
+
 function generarPaginador(datos = inventario, paginadorContainer) {
     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
     console.log("Total de páginas desde generar Paginador", totalPaginas);
@@ -216,6 +222,9 @@ function generarPaginador(datos = inventario, paginadorContainer) {
 
     paginadorContainer.innerHTML = paginadorHTML;
 }
+
+
+// // Función para actualizar la hora
 function mostrarHora() {
     const ahora = new Date();
 
@@ -405,7 +414,7 @@ function actualizarModalGranel(articuloCarritoAModificar) {
     btnAniadirArticuloGranel.dataset.test = 'botonConfirmarCantidadModalGranel'
 
 
-    let total = ((cantidad * precio_unitario_venta)/1000).toFixed(2);
+    let total = ((cantidad * precio_unitario_venta) / 1000).toFixed(2);
 
     let contenedorTablaModalGranel = modalGranel.querySelector('.modal--granel__caracteristicas');
     // limpiarHTMLElemento(contenedor)
@@ -716,9 +725,9 @@ function segundoEstadoCarrito() {
 
     console.log('Articulos Carrito desde 2nd state', articulosCarrito);
     mostrarTicket(articulosCarrito);
-    let articulosPagina = mostrarPaginaCarrito(1, articulosCarrito);
-    console.log(articulosCarrito);
-    generarPaginadorCarrito(articulosCarrito);
+    let articulosPagina = mostrarPaginaCarrito(articulosCarrito,paginaActualCarrito);
+    console.log(articulosPagina);
+    generarPaginadorCarrito(articulosCarrito, paginaActualCarrito);
 
     mostrarProductosCarrito(articulosPagina);
     mostrarTicket(articulosCarrito);
@@ -1010,7 +1019,7 @@ function modificarCantidadCarrito(articuloModificado) {
             const cantidadArticuloCarrito = td.parentElement.querySelector('#cantidadCarritoTbody');
             cantidadArticuloCarrito.textContent = articuloModificado.cantidad;
             articuloCarrito[0].cantidad = articuloModificado.cantidad;
-            
+
         }
     })
 
@@ -1251,6 +1260,6 @@ export {
     aniadirArticuloAlCarrito,
     esGranel,
     filtrarCodigoExacto,
-    mostrarPaginaCarrito
-
+    mostrarPaginaCarrito,
+    generarPaginadorCarrito
 }
