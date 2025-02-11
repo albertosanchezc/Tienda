@@ -95,7 +95,7 @@ function filtrarNombreProducto(inventario) {
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
 function mostrarPaginaCarrito(datos = [...articulosCarrito].reverse(), pagina = 'null') {
-    const registrosPorPagina = 1;
+    const registrosPorPagina = 4;
 
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
@@ -116,7 +116,7 @@ function mostrarPaginaCarrito(datos = [...articulosCarrito].reverse(), pagina = 
 }
 
 function generarPaginadorCarrito(datos = [...articulosCarrito].reverse(), paginaActualCarrito = 1) {
-    const registrosPorPagina = 1;
+    const registrosPorPagina = 4;
     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
     console.log("Total de páginas desde generar Paginador", totalPaginas);
     let paginadorHTML = '';
@@ -654,6 +654,8 @@ function aniadirArticuloAlCarrito(seleccionado) {
             producto.id === seleccionado.id ? { ...producto, cantidad: articuloAModificar.cantidad } : producto
         );
 
+        articulosCarrito = [...articulosCarrito].reverse();
+
         // Llama a la función de actualización aquí
         actualizarCantidad(articuloAModificar);
         mostrarDetallesProducto(articuloAModificar);
@@ -664,6 +666,7 @@ function aniadirArticuloAlCarrito(seleccionado) {
         // Si el producto no existe, agrégalo con cantidad 1
         seleccionado.cantidad = 1;
         articulosCarrito = [...articulosCarrito, seleccionado];
+        articulosCarrito = [...articulosCarrito].reverse();
 
         // Muestra la alerta
         mostrarAlerta(`¡Se añadió el artículo ${seleccionado.nombre} al carrito!`, 'verde');

@@ -365,7 +365,7 @@ paginadorCarritoContainer.addEventListener('click', (e) => {
     let resultados = articulosCarrito;
 
     mostrarPaginaCarrito(paginaActualCarrito);
-    // generarPaginadorCarrito(resultados, paginaActualCarrito);
+    generarPaginadorCarrito(resultados, paginaActualCarrito);
     
 })
 
