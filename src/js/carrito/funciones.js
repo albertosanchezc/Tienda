@@ -94,28 +94,28 @@ function filtrarNombreProducto(inventario) {
 
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
-function mostrarPaginaCarrito(datos = [...articulosCarrito].reverse(), pagina = 'null') {
+function mostrarPaginaCarrito(datos = articulosCarrito, pagina = 1) {
     const registrosPorPagina = 4;
 
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     console.log("Datos: ", datos);
-
-    let datosPagina = datos.slice(inicio, fin);
+    const datosInvertidos = [...datos];
+    let datosPagina = datosInvertidos.slice(inicio, fin);
 
     console.log("Datos Pagina: ", datosPagina);
     paginadorCarritoContainer.innerHTML = datosPagina.map(item => `<p>${item}</p>`).join("");
     // limpiarHTMLElemento(despliegueInventario);
     // mostrarCards(inventarioPagina,proveedores);
     // mostrarProductosCarrito();
-    generarPaginadorCarrito(datos, pagina);
-    mostrarProductosCarrito(datos);
+    generarPaginadorCarrito(datosInvertidos, pagina);
+    mostrarProductosCarrito(datosInvertidos);
     mostrarTicket();
 
     return datosPagina;
 }
 
-function generarPaginadorCarrito(datos = [...articulosCarrito].reverse(), paginaActualCarrito = 1) {
+function generarPaginadorCarrito(datos = articulosCarrito, paginaActualCarrito = 1) {
     const registrosPorPagina = 4;
     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
     console.log("Total de páginas desde generar Paginador", totalPaginas);
@@ -654,7 +654,6 @@ function aniadirArticuloAlCarrito(seleccionado) {
             producto.id === seleccionado.id ? { ...producto, cantidad: articuloAModificar.cantidad } : producto
         );
 
-        articulosCarrito = [...articulosCarrito].reverse();
 
         // Llama a la función de actualización aquí
         actualizarCantidad(articuloAModificar);
@@ -665,8 +664,8 @@ function aniadirArticuloAlCarrito(seleccionado) {
     } else {
         // Si el producto no existe, agrégalo con cantidad 1
         seleccionado.cantidad = 1;
-        articulosCarrito = [...articulosCarrito, seleccionado];
-        articulosCarrito = [...articulosCarrito].reverse();
+        articulosCarrito = [seleccionado, ...articulosCarrito];
+        // articulosCarrito = [...articulosCarrito];
 
         // Muestra la alerta
         mostrarAlerta(`¡Se añadió el artículo ${seleccionado.nombre} al carrito!`, 'verde');

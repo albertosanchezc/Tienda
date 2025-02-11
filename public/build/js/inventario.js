@@ -747,7 +747,7 @@ function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
     })
 
 }
-function abrirModalEliminarProducto(e) {
+function abrirModalEliminarCategoria(e) {
     e.preventDefault();
     modalEliminarInventario.classList.add('modal--inventarioEliminar--show');
 }

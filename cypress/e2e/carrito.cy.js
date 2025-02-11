@@ -805,7 +805,7 @@ describe('Pruebas del carrito de compras', () => {
                         capture: 'viewport',            // Define qué parte capturar
                         disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
                         scale: true,                     // Escala la imagen en pantallas con alta resolución
-                        timout: 1000,                     // Espera hasta 5 segundos antes de 
+                        timout: 5000,                     // Espera hasta 5 segundos antes de 
                         overwrite: true
                         // capturar
                     })

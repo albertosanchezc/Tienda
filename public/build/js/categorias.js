@@ -186,6 +186,11 @@
         modalActualizarCategoria.classList.add('modalCategorias--actualizar--show');
     }
 
+    function abrirModalEliminarCategoria (e){
+        e.preventDefault();
+        modalEliminarInventario.checkVisibility.
+    }
+
     function mostrartabla(categorias) {
         console.log(categorias);
         const contenedorCards = document.querySelector('.tabladecategorias');
@@ -269,6 +274,11 @@
                     document.querySelector('.modalCategorias--actualizar__entradasbox').appendChild(inputIdForm);
                     console.log(inputId.value);
 
+
+                }
+
+                if(e.target.classList.contains('botonesCategoriasE')){
+                abrirModalEliminarCategoria(e);
 
                 }
 
