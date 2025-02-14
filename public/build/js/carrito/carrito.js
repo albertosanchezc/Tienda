@@ -45,9 +45,9 @@ consultarAPI();
 mostrarHora();
 setInterval(mostrarHora, 1000);
 
-cerrarModalClickFuera(modalBienvenida, 'modal', 'modal--show')
+cerrarModalClickFuera(modalBienvenida, 'modal')
 
-btnCerrarBienvenida.addEventListener('click', (e) => {
+btnCerrarBienvenida.addEventListener('click', () => {
     cerrarModalBienvenida();
 })
 
@@ -83,7 +83,7 @@ btnCerrarModalGranel.addEventListener('click', () => {
 botonVaciarCarrito.addEventListener('click', () => {
 
     modalVaciarCarrito.classList.add('modal--eliminarCarrito--show');
-    cerrarModalClickFuera(modalVaciarCarrito, 'modal--eliminarCarrito', 'modal--eliminarCarrito--show');
+    cerrarModalClickFuera(modalVaciarCarrito, 'modal--eliminarCarrito');
     
     modalVaciarCarrito.addEventListener('click', (e) => {
         console.log(e.target.classList);
