@@ -1729,7 +1729,6 @@ body {
     justify-content: center;
 
     .numero {
-
         font-size: 1rem;
         display: flex;
         justify-content: center;
@@ -1753,9 +1752,13 @@ body {
 
     }
 
-
-
-
+    .paginadoresBlue {
+        background: none;
+        background-color: #fff;
+        border: solid 1px #0222b1;
+        color: #0222b1;
+        font-weight: bold;
+    }
 
     .paginas {
         padding: 2px;
@@ -1862,7 +1865,6 @@ body {
 }
 
 .modal--pagar {
-
     &__paragraph {
         margin-top: 3rem;
         margin-bottom: 0;
