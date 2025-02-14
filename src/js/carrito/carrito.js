@@ -1,4 +1,4 @@
-import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito, generarPaginador, generarPaginadorCarrito } from "./funciones.js";
+import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito, generarPaginador, generarPaginadorCarrito, cerrarModalClickFuera } from "./funciones.js";
 import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel, modalEliminarProducto, modalPagar, contenedorBotones } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -107,6 +107,8 @@ btnCerrarModalGranel.addEventListener('click', () => {
 botonVaciarCarrito.addEventListener('click', () => {
 
     modalVaciarCarrito.classList.add('modal--eliminarCarrito--show');
+    cerrarModalClickFuera(modalVaciarCarrito, 'modal--eliminarCarrito', 'modal--eliminarCarrito--show');
+    
     modalVaciarCarrito.addEventListener('click', (e) => {
         console.log(e.target.classList);
         if (e.target.classList[0] === 'modal--eliminarCarrito__si') {
@@ -153,6 +155,20 @@ modales.forEach(modal => {
         }
     });
 });
+let modalTrue = modales.indexOf(true);
+console.log(modalTrue)
+
+switch(modalTrue){
+    case 0:
+        cerrarModalClickFuera(modalBienvenida,'modal','modal--show');
+    break;
+
+    default:
+
+    break;
+
+}
+
 document.addEventListener('keydown', (e) => {
     // Verificar si algún modal está abierto
     const modales = [
@@ -167,8 +183,8 @@ document.addEventListener('keydown', (e) => {
     ];
 
     const estadoModales = modales.includes(true);
-
     // Si algún modal está abierto, limpiar el código de barras y salir
+
     if (estadoModales) {
         codigo_barras = '';
         terminosBusqueda.codigoBarras = codigo_barras;

@@ -95,7 +95,7 @@ function filtrarNombreProducto(inventario) {
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
 function mostrarPaginaCarrito(datos = articulosCarrito, pagina = 1) {
-    const registrosPorPagina = 4;
+    const registrosPorPagina = 3;
 
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
@@ -115,8 +115,19 @@ function mostrarPaginaCarrito(datos = articulosCarrito, pagina = 1) {
     return datosPagina;
 }
 
+
+function cerrarModalClickFuera(selector, modalClase, modalContenedorClase) {
+    selector.addEventListener('click', (e) => {
+        if (e.target.classList[0] === modalClase) {
+            selector.classList.remove(modalContenedorClase);
+            console.log(e.target.classList[0])
+        }
+    })
+}
+
+
 function generarPaginadorCarrito(datos = articulosCarrito, paginaActualCarrito = 1) {
-    const registrosPorPagina = 4;
+    const registrosPorPagina = 3;
     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
     console.log("Total de páginas desde generar Paginador", totalPaginas);
     let paginadorHTML = '';
@@ -383,6 +394,7 @@ function primerEstadoCarrito() {
 function abrirPagar() {
     if (articulosCarrito.length > 0) {
         modalPagar.classList.add('modal--pagar--show');
+        cerrarModalClickFuera(modalPagar, 'modal--pagar', 'modal--pagar--show');
         // estadoModales = true;
         let total = calcularTotalAPagar(articulosCarrito).toFixed(2);
 
@@ -727,7 +739,7 @@ function segundoEstadoCarrito() {
 
     console.log('Articulos Carrito desde 2nd state', articulosCarrito);
     mostrarTicket(articulosCarrito);
-    let articulosPagina = mostrarPaginaCarrito(articulosCarrito,paginaActualCarrito);
+    let articulosPagina = mostrarPaginaCarrito(articulosCarrito, paginaActualCarrito);
     console.log(articulosPagina);
     generarPaginadorCarrito(articulosCarrito, paginaActualCarrito);
 
@@ -748,6 +760,7 @@ function segundoEstadoCarrito() {
                 case "botoneliminar-producto":
                     e.preventDefault();
                     modalEliminarProducto.classList.add('modal--eliminar--show');
+                    cerrarModalClickFuera(modalEliminarProducto, 'modal--eliminar', 'modal--eliminar--show');
 
                     console.log("El botón seleccionado fue eliminar");
                     infoProductoCarrito = {
@@ -810,6 +823,8 @@ function segundoEstadoCarrito() {
 
 
                         modalCantidad.classList.add('modal--cantidad--show');
+                        cerrarModalClickFuera(modalCantidad, 'modal--cantidad', 'modal--cantidad--show');
+
                         inputModalCantidad.disabled = false;
                         inputModalCantidad.focus();
                         inputCodigoManual.min = 0;
@@ -1263,5 +1278,6 @@ export {
     esGranel,
     filtrarCodigoExacto,
     mostrarPaginaCarrito,
-    generarPaginadorCarrito
+    generarPaginadorCarrito,
+    cerrarModalClickFuera
 }
