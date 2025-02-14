@@ -154,8 +154,9 @@ function generarPaginadorCarrito(datos = articulosCarrito, paginaActualCarrito =
 
     for (let i = 1; i <= totalPaginas; i++) {
         // onclick="cambiarPagina(${i})"
-        paginadorHTML += `<button   ${paginaActualCarrito === i ? 'selected' : 'class="numero numeroCarrito numeroPActual"'}>${i}</button>`;
+        paginadorHTML += `<button ${paginaActualCarrito === i ? 'class="numero numeroCarrito paginadoresBlue"' : 'class="numero numeroCarrito"'}>${i}</button>`;
     }
+
 
     if (paginaActualCarrito < totalPaginas) {
         // onclick="cambiarPagina(${paginaActual + 1})"
