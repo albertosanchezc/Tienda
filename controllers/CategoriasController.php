@@ -20,11 +20,10 @@ class CategoriasController
         $alertas = Categorias::getAlertas();
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            // debuguear($_POST);
             $alertas = Categorias::getAlertas();
             $argsCrear = $_POST['categorias'];
             $argsActualizar = $_POST['categoriasA'];
-            $argsEliminar = $_POST['eliminarCategoria'];
+            $argsEliminar = $_POST['categoriasE'];
             $metodoCrear = !empty($argsCrear);
             $metodoActualizar = !empty($argsActualizar);
             $metodoEliminar = !empty($argsEliminar);

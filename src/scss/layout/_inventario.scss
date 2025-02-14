@@ -737,7 +737,7 @@ span {
     }
 }
 
-.modal--inventarioEliminar {
+.modal--inventarioEliminar, .modalCategorias--eliminar {
     &__opciones {
         display: flex;
         justify-content: center;

@@ -31,11 +31,15 @@
 
     const modalActualizarCategoria = document.querySelector('.modalCategorias--actualizar');
 
+    const modalEliminarCategoria = document.querySelector('.modalCategorias--eliminar');
+
     const btnCerrarModalAniadirCategoria = document.querySelector('.modalCategorias--aniadir__refcerrar');
 
     const btnCerrarModalActualizarCategoria = document.querySelector('.modalCategorias--actualizar__refcerrar');
 
     const btnAbrirModalAniadirCategoria = document.querySelector('.btnAbrirModal');
+
+    const btnCerrarModalEliminarCategoria = document.querySelector('.modalCategorias--eliminar__no');
 
     const inputNombreBusqueda = document.getElementById('nombre-categorias');
 
@@ -52,6 +56,47 @@
     }
     let registrosPorPagina = 12;
     let paginaActual = 1;
+
+    document.getElementById('actualizarCategoria').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const alertas = modalActualizarCategoria.querySelectorAll('.alerta');
+        alertas.forEach(alerta => alerta.remove());
+        let errores = [];
+
+        const nombreCategoria = modalActualizarCategoria.querySelector('.modalCategorias--actualizar__inputNombre').value;
+        const descripcionCategoria = modalActualizarCategoria.querySelector('.modalCategorias--actualizar__inputDescripcion').value;
+
+        if (!nombreCategoria) {
+            errores.push('El nombre es obligatorio')
+        }
+
+        if (!descripcionCategoria) {
+            errores.push('La descripción es obligatoria')
+        }
+
+        if (errores.length > 0) {
+            errores.forEach(error => {
+                const alerta = document.createElement('div');
+                alerta.className = 'alerta error';
+                alerta.textContent = error;
+                modalActualizarCategoria.querySelector('#actualizarCategoria').prepend(alerta);
+
+                setTimeout(() => {
+                    alerta.remove();
+                }, 5000);
+            });
+        } else {
+            const alertaExito = document.createElement('div');
+            alertaExito.className = 'alerta exito';
+            alertaExito.textContent = 'Categoría Actualizada con éxito';
+            document.querySelector('#actualizarCategoria').prepend(alertaExito);
+
+            setTimeout(() => {
+                this.submit();
+
+            }, 3000);
+        }
+    });
 
     document.getElementById('aniadirCategoria').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -104,6 +149,10 @@
 
     btnCerrarModalActualizarCategoria.addEventListener('click', () => {
         modalActualizarCategoria.classList.remove('modalCategorias--actualizar--show');
+    });
+
+    btnCerrarModalEliminarCategoria.addEventListener('click', () => {
+        modalEliminarCategoria.classList.remove('modalCategorias--eliminar--show');
     });
 
     paginadorContainer.addEventListener('click', (e) => {
@@ -186,9 +235,9 @@
         modalActualizarCategoria.classList.add('modalCategorias--actualizar--show');
     }
 
-    function abrirModalEliminarCategoria (e){
+    function abrirModalEliminarCategoria(e) {
         e.preventDefault();
-        modalEliminarInventario.checkVisibility.
+        modalEliminarCategoria.classList.add('modalCategorias--eliminar--show');
     }
 
     function mostrartabla(categorias) {
@@ -199,6 +248,7 @@
 
         const gridcardCategorias = document.createElement('DIV');
         gridcardCategorias.classList.add('gridcardCategorias');
+
         let inputIdForm = document.querySelector('#idcategoriaentradaForm');
         inputIdForm = document.createElement('input');
         inputIdForm.type = 'hidden';
@@ -246,12 +296,29 @@
             inputId.name = 'categoriasA[id]';
             inputId.value = id;
 
+
             cardCategorias.appendChild(inputId);
 
 
             gridcardCategorias.appendChild(cardCategorias);
 
+
+            // input hidden de eliminar
+
+            // const eliminarContainer = document.querySelector('.modalCategorias--eliminar__container');
+            // let inputIdeliminar = document.querySelector('#idcategoriaeliminar');
+            // inputIdeliminar = document.createElement('input');
+            // inputIdeliminar.type = 'hidden';
+            // inputIdeliminar.id = '#idcategoriaeliminar';
+            // inputIdeliminar.name = 'eliminar[id]';
+            // inputIdeliminar.value = id;
+
+            // eliminarContainer.appendChild(inputIdeliminar);
+
+
+
             gridcardCategorias.addEventListener('click', (e) => {
+
                 // Si se selecciona actulizar producto  en algún card
                 console.log(e.target.classList);
                 if (e.target.classList.contains('botonesCategoriasA')) {
@@ -259,7 +326,7 @@
 
                     const card = e.target.closest('.cardCategorias');
 
-                    if (!card) return; 
+                    if (!card) return;
 
                     const nombre = card.querySelector('.nombreCategoria p').textContent;
                     const descripcion = card.querySelector('.descripcionCategoria p').textContent;
@@ -269,18 +336,32 @@
 
                     inputNombre.value = nombre;
                     inputDescripcion.value = descripcion;
+                    inputId.name = 'categoriasA[id]';
+
 
                     inputIdForm.value = card.querySelector('#idcategoriaentrada').value;
                     document.querySelector('.modalCategorias--actualizar__entradasbox').appendChild(inputIdForm);
                     console.log(inputId.value);
 
+                }
+
+                if (e.target.classList.contains('botonesCategoriasE')) {
+                    abrirModalEliminarCategoria(e);
+                    // console.log(inputIdeliminar.value);
+
+                    const card = e.target.closest('.cardCategorias');
+
+                    if (!card) return;
+
+                    inputIdForm.value = card.querySelector('#idcategoriaentrada').value;
+                    inputIdForm.name = 'categoriasE[id]';
+                    document.querySelector('.modalCategorias--eliminar__opciones').appendChild(inputIdForm);
+                    console.log(inputId.value);
+
+
 
                 }
 
-                if(e.target.classList.contains('botonesCategoriasE')){
-                abrirModalEliminarCategoria(e);
-
-                }
 
 
             })

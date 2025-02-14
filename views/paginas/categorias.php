@@ -170,13 +170,13 @@
         </div>
 </section>
 
-<section class="modal--inventarioEliminar">
-    <div class="modal--inventarioEliminar__container">
-        <h2 class="modal--inventarioEliminar__title">¿Seguro que deseas eliminar esta categoria definitivamente?</h2>
+<section class="modalCategorias--eliminar">
+    <div class="modalCategorias--eliminar__container">
+        <h2 class="modalCategorias--eliminar__title">¿Seguro que deseas eliminar esta categoria definitivamente?</h2>
         <form id="eliminarCategoria" method="POST">
-            <div class="modal--inventarioEliminar__opciones">
-                <input value="Si" type="submit" class="modal--inventarioEliminar__si">
-                <input value="No" class="modal--inventarioEliminar__no">
+            <div class="modalCategorias--eliminar__opciones">
+                <input value="Si" type="submit" class="modalCategorias--eliminar__si">
+                <input value="No" class="modalCategorias--eliminar__no">
             </div>
         </form>
     </div>
