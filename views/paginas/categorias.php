@@ -176,7 +176,7 @@
         <form id="eliminarCategoria" method="POST">
             <div class="modalCategorias--eliminar__opciones">
                 <input value="Si" type="submit" class="modalCategorias--eliminar__si">
-                <input value="No" class="modalCategorias--eliminar__no">
+                <button class="modalCategorias--eliminar__no ajustebtn">No</button>
             </div>
         </form>
     </div>

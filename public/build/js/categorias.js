@@ -139,20 +139,40 @@
         }
     });
 
-    btnAbrirModalAniadirCategoria.addEventListener('click', () => {
+    document.getElementById('eliminarCategoria').addEventListener('submit', function (e) {
+        e.preventDefault();
+    
+            const alertaExito = document.createElement('div');
+            alertaExito.className = 'alerta exito';
+            alertaExito.textContent = 'Categoría Eliminada con éxito';
+            document.querySelector('#eliminarCategoria').prepend(alertaExito);
+
+            setTimeout(() => {
+                this.submit();
+
+            }, 3000);
+        
+    });
+
+    btnAbrirModalAniadirCategoria.addEventListener('click', (e) => {
+        e.preventDefault();
         modalAniadirCategoria.classList.add('modalCategorias--aniadir--show');
+        cerrarModalClickFuera(modalAniadirCategoria, 'modalCategorias--aniadir');
     });
 
-    btnCerrarModalAniadirCategoria.addEventListener('click', () => {
-        modalAniadirCategoria.classList.remove('modalCategorias--aniadir--show');
+    btnCerrarModalAniadirCategoria.addEventListener('click', (e) => {
+        e.preventDefault();
+        cerrarModalAniadirCategoria();
     });
 
-    btnCerrarModalActualizarCategoria.addEventListener('click', () => {
-        modalActualizarCategoria.classList.remove('modalCategorias--actualizar--show');
+    btnCerrarModalActualizarCategoria.addEventListener('click', (e) => {
+        e.preventDefault();
+        cerrarModalActualizarCategoria();
     });
 
-    btnCerrarModalEliminarCategoria.addEventListener('click', () => {
-        modalEliminarCategoria.classList.remove('modalCategorias--eliminar--show');
+    btnCerrarModalEliminarCategoria.addEventListener('click', (e) => {
+        e.preventDefault();
+        cerrarModalEliminarCategoria();
     });
 
     paginadorContainer.addEventListener('click', (e) => {
@@ -228,16 +248,6 @@
         while (elemento.firstChild) {
             elemento.removeChild(elemento.firstChild);
         }
-    }
-
-    function abrirModalActualizarCategoria(e) {
-        e.preventDefault();
-        modalActualizarCategoria.classList.add('modalCategorias--actualizar--show');
-    }
-
-    function abrirModalEliminarCategoria(e) {
-        e.preventDefault();
-        modalEliminarCategoria.classList.add('modalCategorias--eliminar--show');
     }
 
     function mostrartabla(categorias) {
@@ -453,5 +463,56 @@
 
         paginadorContainer.innerHTML = paginadorHTML;
     }
+
+    function cerrarModalClickFuera(selector, modalClase) {
+        selector.addEventListener('click', (e) => {
+            if (e.target.classList[0] === modalClase) {
+                selector.classList.remove(`${modalClase}--show`);
+                console.log(e.target.classList[0])
+                switch (modalClase) {
+                    case 'modalCategorias--aniadir':
+                        cerrarModalAniadirCategoria();
+                        break;
+    
+                    case 'modalCategorias--actualizar':
+                        cerrarModalActualizarCategoria();
+                        break;
+    
+                    case 'modalCategorias--eliminar':
+                        cerrarModalEliminarCategoria();
+                        break;
+    
+                    default:
+    
+                        break;
+                }
+            }
+        })
+    }
+
+    function abrirModalActualizarCategoria(e) {
+        e.preventDefault();
+        modalActualizarCategoria.classList.add('modalCategorias--actualizar--show');
+        cerrarModalClickFuera(modalActualizarCategoria, 'modalCategorias--actualizar');
+    }
+
+    function abrirModalEliminarCategoria(e) {
+        e.preventDefault();
+        modalEliminarCategoria.classList.add('modalCategorias--eliminar--show');
+        cerrarModalClickFuera(modalEliminarCategoria, 'modalCategorias--eliminar');
+    }
+
+    function cerrarModalAniadirCategoria(){
+        modalAniadirCategoria.classList.remove('modalCategorias--aniadir--show');
+    }
+
+    function cerrarModalActualizarCategoria(){
+        modalActualizarCategoria.classList.remove('modalCategorias--actualizar--show');
+    }
+
+    function cerrarModalEliminarCategoria(){
+        modalEliminarCategoria.classList.remove('modalCategorias--eliminar--show');
+    }
+    
 
 }())
