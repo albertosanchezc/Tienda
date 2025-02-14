@@ -1846,6 +1846,15 @@ body {
 
     }
 
+    .paginadoresOrange {
+        background: none;
+        background-color: #fff;
+        border: solid 1px #db5903;
+        color: #d85600;
+        font-weight: bold;
+
+    }
+
     input[type="radio"] {
         display: none;
     }
@@ -2009,12 +2018,3 @@ body {
         }
     }
 }
-
-.paginadoresOrange {
-        background: none;
-        background-color: #fff;
-        border: solid 1px #db5903;
-        color: #d85600;
-        font-weight: bold;
-
-    }
