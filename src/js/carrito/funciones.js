@@ -121,8 +121,23 @@ function cerrarModalClickFuera(selector, modalClase, modalContenedorClase) {
         if (e.target.classList[0] === modalClase) {
             selector.classList.remove(modalContenedorClase);
             console.log(e.target.classList[0])
+            switch (modalClase) {
+                case 'modal--pagar':
+                    cerrarModalPagar();
+                    break;
+
+                case 'modal--eliminar':
+                    cerrarModalEliminarProducto();
+                    break;
+
+                default:
+
+                    break;
+            }
         }
     })
+
+
 }
 
 
@@ -139,7 +154,7 @@ function generarPaginadorCarrito(datos = articulosCarrito, paginaActualCarrito =
 
     for (let i = 1; i <= totalPaginas; i++) {
         // onclick="cambiarPagina(${i})"
-        paginadorHTML += `<button   ${paginaActualCarrito === i ? 'selected' : 'class="numero numeroCarrito"'}>${i}</button>`;
+        paginadorHTML += `<button   ${paginaActualCarrito === i ? 'selected' : 'class="numero numeroCarrito numeroPActual"'}>${i}</button>`;
     }
 
     if (paginaActualCarrito < totalPaginas) {
@@ -223,7 +238,7 @@ function generarPaginador(datos = inventario, paginadorContainer) {
 
     // Botones de páginas
     for (let i = inicio; i <= fin; i++) {
-        paginadorHTML += `<button ${paginaActual === i ? 'selected' : 'class="numero"'} onclick="cambiarPagina(${i})">${i}</button>`;
+        paginadorHTML += `<button ${paginaActual === i ? 'class="numero paginadoresOrange"' : 'class="numero"' } onclick="cambiarPagina(${i})">${i}</button>`;
     }
 
     // Botón "Siguiente"
@@ -530,6 +545,7 @@ function actualizarModalGranel(articuloCarritoAModificar) {
     btnAniadirArticuloGranel.addEventListener('click', (e) => {
         e.preventDefault();
 
+
         modalGranel.classList.remove('modal--granel--show');
         // estadoModales = false;
         mostrarTotalesCarrito(articulosCarrito);
@@ -541,15 +557,9 @@ function actualizarModalGranel(articuloCarritoAModificar) {
         segundoEstadoCarrito();
     })
 
-
-
-
-
-
-
-
-
 }
+
+
 
 function calcularTotalAPagar(articulosCarrito) {
 
@@ -632,9 +642,7 @@ function actualizarModalPagar(total) {
 
     btnCerrarModalPagar.addEventListener('click', (e) => {
         e.preventDefault();
-        modalPagar.classList.remove('modal--pagar--show');
-        codigo_barras = '';
-        terminosBusqueda.codigoBarras = codigo_barras;
+        cerrarModalPagar();
 
     })
 
@@ -647,6 +655,18 @@ function actualizarModalPagar(total) {
     })
 
 
+}
+
+function cerrarModalPagar() {
+    modalPagar.classList.remove('modal--pagar--show');
+}
+
+function cerrarModalEliminarProducto(valor) {
+    modalEliminarProducto.classList.remove('modal--eliminar--show');
+
+    if (!valor) {
+        mostrarAlerta(`¡Artículo ${infoProductoCarrito.nombre} no se eliminó!`, 'verde');
+    }
 }
 
 
@@ -775,11 +795,11 @@ function segundoEstadoCarrito() {
 
                     modalEliminarProducto.addEventListener('click', (e) => {
                         console.log(e.target.classList == 'modal--eliminar__si');
-                        console.log(e.target.classList == 'modal--eliminar__no');
-                        if (e.target.classList == 'modal--eliminar__si') {
+                        let valor = e.target.classList == 'modal--eliminar__si';
+                        if (valor) {
                             // Si se selecciona en si dentro de la modal entonces eliminaos el articulo
                             articulosCarrito = eliminarArticulo(infoProductoCarrito);
-                            modalEliminarProducto.classList.remove('modal--eliminar--show');
+                            cerrarModalEliminarProducto(valor);
 
                             // Si la nueva extensión de artículos carrito es mayor a cero, seguimos teniendo artículos en el carrito
                             if (articulosCarrito.length > 0) {
@@ -792,9 +812,7 @@ function segundoEstadoCarrito() {
                                 mostrarAlerta(`¡Artículo ${infoProductoCarrito.nombre} Eliminado Correctamente, carrito vacío!`, 'verde');
                             }
                         } else if (e.target.classList == 'modal--eliminar__no') {
-                            modalEliminarProducto.classList.remove('modal--eliminar--show');
-                            mostrarAlerta(`¡Artículo ${infoProductoCarrito.nombre} no se eliminó!`, 'verde');
-
+                            cerrarModalEliminarProducto(valor);
                         }
 
                     })

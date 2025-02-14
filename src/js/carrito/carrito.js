@@ -155,19 +155,19 @@ modales.forEach(modal => {
         }
     });
 });
-let modalTrue = modales.indexOf(true);
-console.log(modalTrue)
+// let modalTrue = modales.indexOf(true);
+// console.log(modalTrue)
 
-switch(modalTrue){
-    case 0:
-        cerrarModalClickFuera(modalBienvenida,'modal','modal--show');
-    break;
+// switch(modalTrue){
+//     case 0:
+//         cerrarModalClickFuera(modalBienvenida,'modal','modal--show');
+//     break;
 
-    default:
+//     default:
 
-    break;
+//     break;
 
-}
+// }
 
 document.addEventListener('keydown', (e) => {
     // Verificar si algún modal está abierto
