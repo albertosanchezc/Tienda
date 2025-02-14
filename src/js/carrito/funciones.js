@@ -122,12 +122,29 @@ function cerrarModalClickFuera(selector, modalClase, modalContenedorClase) {
             selector.classList.remove(modalContenedorClase);
             console.log(e.target.classList[0])
             switch (modalClase) {
+                case 'modal':
+                    cerrarModalBienvenida();
+                    break;
+
                 case 'modal--pagar':
                     cerrarModalPagar();
                     break;
 
                 case 'modal--eliminar':
                     cerrarModalEliminarProducto();
+                    break;
+
+                case 'modal--cantidad':
+                    cerrarModalCantidad();
+                    break;
+
+                case 'modal--manual':
+                    cerrarModalManual();
+                    break;
+
+
+                case 'modal--nombre':
+                    // cerrarModalCantidad();
                     break;
 
                 default:
@@ -210,7 +227,10 @@ function mostrarPagina(pagina, datos = inventario, paginadorContainer) {
     // Revisar cómo pasar el elemento a limpiar
     // limpiarHTMLElemento(despliegueInventario)
     mostrarProductosModal(inventarioPagina, tbodyTablaModalManual, 'Manual')
+    cerrarModalClickFuera(modalManual, 'modal--manual', 'modal--manual--show')
     mostrarProductosModal(inventarioPagina, tbodyTablaModalNombre, 'Nombre')
+    cerrarModalClickFuera(modalNombreProducto, 'modal--nombre', 'modal--nombre--show')
+
     generarPaginador(datos, paginadorContainer);
 
     return inventarioPagina;
@@ -239,7 +259,7 @@ function generarPaginador(datos = inventario, paginadorContainer) {
 
     // Botones de páginas
     for (let i = inicio; i <= fin; i++) {
-        paginadorHTML += `<button ${paginaActual === i ? 'class="numero paginadoresOrange"' : 'class="numero"' } onclick="cambiarPagina(${i})">${i}</button>`;
+        paginadorHTML += `<button ${paginaActual === i ? 'class="numero paginadoresOrange"' : 'class="numero"'} onclick="cambiarPagina(${i})">${i}</button>`;
     }
 
     // Botón "Siguiente"
@@ -658,6 +678,12 @@ function actualizarModalPagar(total) {
 
 }
 
+function cerrarModalBienvenida(){
+    modalBienvenida.classList.remove('modal--show');
+    primerEstadoCarrito();
+    mostrarAlerta('Escane o realiza una búsqueda para añadir al carrito', 'negro');
+}
+
 function cerrarModalPagar() {
     modalPagar.classList.remove('modal--pagar--show');
 }
@@ -670,6 +696,38 @@ function cerrarModalEliminarProducto(valor) {
     }
 }
 
+function cerrarModalCantidad(valor) {
+    modalCantidad.classList.remove('modal--cantidad--show');
+
+    if (!valor) {
+        inputModalCantidad.value = '';
+        modalCantidad.classList.remove('modal--cantidad--show');
+        mostrarAlerta('¡No se modificó la cantidad, debido a que cerraste la ventana!', 'verde');
+    }
+
+}
+
+function cerrarModalManual(valor) {
+    
+    inputCodigoManual.value = '';
+    modalManual.classList.remove('modal--manual--show');
+    terminosBusqueda.codigoBarras = '';
+    terminosBusqueda.nombre = '';
+    if(!valor){
+        mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'verde');
+    }
+}
+
+function cerrarModalNombre(valor) {
+    inputNombreProducto.value = '';
+    modalNombreProducto.classList.remove('modal--nombre--show');
+    terminosBusqueda.codigoBarras = '';
+    terminosBusqueda.nombre = '';
+    if(!valor){
+        mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'verde');
+    }
+    
+}
 
 function aniadirArticuloAlCarrito(seleccionado) {
     let existe = articulosCarrito.some(producto => producto.id === seleccionado.id);
@@ -1024,7 +1082,8 @@ function actualizarCantidad(articulo) {
 
     btnConfirmarEditarCantidad.addEventListener('click', () => {
         const resultado = modificarCantidadCarrito(articulo);
-        modalCantidad.classList.remove('modal--cantidad--show');
+        // modalCantidad.classList.remove('modal--cantidad--show');
+        cerrarModalCantidad(resultado);
         esGranel(resultado);
         // console.log(resultado);
         mostrarDetallesProducto(resultado[0]);
@@ -1233,10 +1292,10 @@ function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
             terminosBusqueda.id = '';
 
             if (tipo === 'Manual') {
-                modalManual.classList.remove('modal--manual--show');
+                cerrarModalManual(tipo);
                 // estadoModales = false;
             } else if (tipo === 'Nombre') {
-                modalNombreProducto.classList.remove('modal--nombre--show');
+                cerrarModalNombre(tipo);
                 // estadoModales = false;
             }
 
@@ -1298,5 +1357,9 @@ export {
     filtrarCodigoExacto,
     mostrarPaginaCarrito,
     generarPaginadorCarrito,
-    cerrarModalClickFuera
+    cerrarModalClickFuera,
+    cerrarModalCantidad,
+    cerrarModalManual,
+    cerrarModalNombre,
+    cerrarModalBienvenida
 }

@@ -1,4 +1,4 @@
-import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito, generarPaginador, generarPaginadorCarrito, cerrarModalClickFuera } from "./funciones.js";
+import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito, generarPaginador, generarPaginadorCarrito, cerrarModalClickFuera, cerrarModalCantidad, cerrarModalManual, cerrarModalNombre, cerrarModalBienvenida } from "./funciones.js";
 import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel, modalEliminarProducto, modalPagar, contenedorBotones } from "./selectores.js";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -18,8 +18,6 @@ let terminosBusqueda = {
 }
 let paginaActual = 1;
 let paginaActualCarrito = 1;
-
-
 
 async function consultarAPI() {
     try {
@@ -47,53 +45,31 @@ consultarAPI();
 mostrarHora();
 setInterval(mostrarHora, 1000);
 
+cerrarModalClickFuera(modalBienvenida, 'modal', 'modal--show')
 
 btnCerrarBienvenida.addEventListener('click', (e) => {
-    modalBienvenida.classList.remove('modal--show');
-    primerEstadoCarrito();
-    estadoModales = false;
-    mostrarAlerta('Escane o realiza una búsqueda para añadir al carrito', 'negro');
-    
-
+    cerrarModalBienvenida();
 })
 
 botonCerrarModalManual.addEventListener('click', (e) => {
-    inputCodigoManual.value = '';
-    modalManual.classList.remove('modal--manual--show');
     e.preventDefault();
-    paginaActualCarrito = 1;
-    terminosBusqueda.codigoBarras = '';
-    terminosBusqueda.nombre = '';
-    filtrar(inventario);
-    estadoModales = false;
-    // mostrarPagina(1,inventario,paginacionManualContainer);
-
-    mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
-
+    cerrarModalManual();
 })
 
 botonCerrarModalProducto.addEventListener('click', (e) => {
-    inputNombreProducto.value = '';
-    modalNombreProducto.classList.remove('modal--nombre--show');
     e.preventDefault();
-    paginaActualCarrito = 1;
-    estadoModales = false;
-    terminosBusqueda.codigoBarras = '';
-    terminosBusqueda.nombre = '';
-    filtrar(inventario);
-    // mostrarPagina(1,inventario,paginacionManualContainer);
-    mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'rojo');
+    cerrarModalNombre();
+    // inputNombreProducto.value = '';
+    // modalNombreProducto.classList.remove('modal--nombre--show');
+    // terminosBusqueda.codigoBarras = '';
+    // terminosBusqueda.nombre = '';
+    // mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'verde');
     
 })
 
 btnCerrarModalCantidad.addEventListener('click', (e) => {
     e.preventDefault();
-    estadoModales = false;
-
-    inputModalCantidad.value = '';
-    modalCantidad.classList.remove('modal--cantidad--show');
-    mostrarAlerta('¡No se modificó la cantidad, debido a que cerraste la ventana!', 'rojo');
-    
+    cerrarModalCantidad();    
 })
 
 btnCerrarModalGranel.addEventListener('click', () => {
