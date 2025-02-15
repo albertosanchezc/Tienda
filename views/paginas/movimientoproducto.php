@@ -15,22 +15,22 @@
         éste. Primero escoge el proveedor, luego los productos que deseas editar en Stock.</h3>
 
     <div class="busqueda-filtros1 proveedorverde">
-            <fieldset>
-                <legend>Selecciona Proveedor</legend>
-                <div class="caja-filtros1">
-                    <label for="nombreproveedor">Proveedor: </label>
-                    <select name="proveedor[nombre]" id="nombreproveedor">
-                        <option selected value="">Selecciona un Proveedor</option>
-                        <?php foreach ($proveedores as $proveedor) { ?>
-                            <option <?php echo $inventario->$proveedor_id === $proveedor->$id ? 'selected' : ''; ?>
-                                value="<?php echo s($proveedor->id); ?>">
-                                <?php echo s($proveedor->nombre); ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-            </fieldset>
-            <!-- //aqui iriia el boton de descargar excel -->
+        <fieldset>
+            <legend>Selecciona Proveedor</legend>
+            <div class="caja-filtros1">
+                <label for="nombreproveedor">Proveedor: </label>
+                <select name="proveedor[nombre]" id="nombreproveedor">
+                    <option selected value="">Selecciona un Proveedor</option>
+                    <?php foreach ($proveedores as $proveedor) { ?>
+                        <option <?php echo $inventario->$proveedor_id === $proveedor->$id ? 'selected' : ''; ?>
+                            value="<?php echo s($proveedor->id); ?>">
+                            <?php echo s($proveedor->nombre); ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+        </fieldset>
+        <!-- //aqui iriia el boton de descargar excel -->
     </div>
 
 
@@ -233,21 +233,22 @@
                         <p>Total Resultante:</p>
                         <p>$ 145.00</p>
                     </div>
-                    <div class="estadoPago">
-                    <p>Introduce la cantidad que le pagaste al Proveedor</p>
-                        <label for="entradaestadoPago">Total Pagado:</label> 
-                        <div class="flexdin">
-                            <p>$</p>
-                            <input type="number" step="0.01" id="entradaestadoPago"
-                                name="visita_proveedor[total_pagado]" placeholder="12.23" maxlength="30"
-                                value="<?php echo s($vista_proveedor->total_pagado); ?>">
+                    <form id="" >
+                        <div class="estadoPago">
+                            <p>Introduce la cantidad que le pagaste al Proveedor</p>
+                            <label for="entradaestadoPago">Total Pagado:</label>
+                            <div class="flexdin">
+                                <p>$</p>
+                                <input type="number" step="0.01" id="entradaestadoPago"
+                                    name="visita_proveedor[total_pagado]" placeholder="12.23" maxlength="30"
+                                    value="<?php echo s($vista_proveedor->total_pagado); ?>">
+                            </div>
+                            <div class="adeudo">
+                                <p>Total Adeudo:</p>
+                                <p>$ 0</p>
+                            </div>
                         </div>
-                        <div class="adeudo">
-                        <p>Total Adeudo:</p>
-                        <p>$ 0</p>
-                        </div>
-
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
