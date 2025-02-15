@@ -33,12 +33,22 @@ describe('Pruebas del carrito de compras', () => {
         })
 
         describe('Pruebas a modal', () => {
-            it("Debería poder Cerrar la ventana modal manual sin haber escrito en ella", () => {
-                // Cerrar ventana modal busqueda por codigo de barras
-                cy.getByData("botonCerrarModalManual").should('exist')
-                cy.getByData("botonCerrarModalManual").click()
+            describe("Debería poder Cerrar la ventana modal manual sin haber escrito en ella", () => {
+                it("Debería poder Cerrar la ventana modal manual con el botón", () => {
+                    // Cerrar ventana modal busqueda por codigo de barras
+                    cy.getByData("botonCerrarModalManual").should('exist')
+                    cy.getByData("botonCerrarModalManual").click()
 
+                })
+
+                it("Debería poder Cerrar la ventana modal manual al dar click fuera de la modal", () => {
+                    // Cerrar ventana modal busqueda por codigo de barras
+                    cy.getByData("modal--manual").click(50, 30).should('not.be.visible')
+                })
             })
+
+
+
 
             describe("Si se hace una búsqueda por letras en código de barras", () => {
                 it("No debe arrojar resultados", () => {
@@ -82,64 +92,141 @@ describe('Pruebas del carrito de compras', () => {
                     })
                 })
 
-                it("Debería poder escribir en el input y cerrar la modal", () => {
-                    cy.getByData("modal--manual__close").should('exist')
-                    cy.getByData("modal--manual__close").type("7507")
-                    // Cerrar ventana modal busqueda por código de barras
-                    cy.getByData("botonCerrarModalManual").should('exist')
-                    cy.getByData("botonCerrarModalManual").click()
-                })
+                describe("Debería poder escribir en el input y cerrar la modal", () => {
+                    it("Debería poder Cerrar la ventana modal manual con el botón", () => {
+                        // Cerrar ventana modal busqueda por codigo de barras
+                        cy.getByData("modal--manual__close").should('exist')
+                        cy.getByData("modal--manual__close").type("7507")
+                        // Cerrar ventana modal busqueda por código de barras
+                        cy.getByData("botonCerrarModalManual").should('exist')
+                        cy.getByData("botonCerrarModalManual").click()
 
-                it("Debe estar vacío el input de la otra modal al cerrar modalManual sin dar click en un producto", () => {
-                    cy.getByData("modal--manual__close").should('exist')
-                    cy.getByData("modal--manual__close").type("7507")
+                    })
 
-                    // Cerrar ventana modal busqueda por código de barras
-                    cy.getByData("botonCerrarModalManual").should('exist')
-                    cy.getByData("botonCerrarModalManual").click()
+                    it("Debería poder Cerrar la ventana modal manual al dar click fuera de la modal", () => {
+                        // Cerrar ventana modal busqueda por codigo de barras
+                        cy.getByData("modal--manual__close").should('exist')
+                        cy.getByData("modal--manual__close").type("7507")
+                        // Cerrar ventana modal busqueda por código de barras
 
-                    // Abrir de nuevo la ventana modal, 
-                    cy.getByData("botonBusquedaNombre").should('be.visible')
-                    cy.getByData("botonBusquedaNombre").click()
-                    cy.getByData("modal--nombre__close").should("be.visible")
-                    // Valores a revisar
-                    cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
-                    cy.getByData("modal--nombre__close").should('not.have.value', 'cig');
-                    cy.getByData("modal--nombre__close").should('not.have.value', '7507');
-                    cy.screenshot('Input Reiniciado tras cerrar modal manual', {
-                        capture: 'viewport',            // Define qué parte capturar
-                        disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
-                        scale: true,                     // Escala la imagen en pantallas con alta resolución
-                        timout: 1000,                     // Espera hasta 5 segundos antes de 
-                        overwrite: true
-                        // capturar
+                        cy.getByData("modal--manual").click(50, 30).should('not.be.visible')
                     })
                 })
 
-                it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
-                    cy.getByData("modal--manual__close").should('exist')
-                    cy.getByData("modal--manual__close").type("7507")
+                describe("Debe estar vacío el input de la otra modal al cerrar modalManual sin dar click en un producto", () => {
+                    it("Debería poder Cerrar la ventana modal manual con el botón", () => {
+                        // Cerrar ventana modal busqueda por código de barras
+                        cy.getByData("botonCerrarModalManual").should('exist')
+                        cy.getByData("botonCerrarModalManual").click()
 
-                    // Cerrar ventana modal busqueda por código de barras
-                    cy.getByData("botonCerrarModalManual").should('exist')
-                    cy.getByData("botonCerrarModalManual").click()
+                        // Abrir de nuevo la ventana modal, 
+                        cy.getByData("botonBusquedaNombre").should('be.visible')
+                        cy.getByData("botonBusquedaNombre").click()
+                        cy.getByData("modal--nombre__close").should("be.visible")
+                        // Valores a revisar
+                        cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+                        cy.getByData("modal--nombre__close").should('not.have.value', 'cig');
+                        cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+                        cy.screenshot('Input Reiniciado tras cerrar modal manual botón', {
+                            capture: 'viewport',            // Define qué parte capturar
+                            disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                            scale: true,                     // Escala la imagen en pantallas con alta resolución
+                            timout: 1000,                     // Espera hasta 5 segundos antes de 
+                            overwrite: true
+                            // capturar
+                        })
 
-                    // Abrir de nuevo la ventana modal, 
-                    cy.getByData("botonBusquedaManual").should('be.visible')
-                    cy.getByData("botonBusquedaManual").click()
-                    cy.getByData("modal--manual__close").should("exist")
-                    // Valores a revisar
-                    cy.getByData("modal--manual__close").should('not.have.value', 'coc');
-                    cy.getByData("modal--manual__close").should('not.have.value', '7507');
-                    cy.screenshot('Input vacío en modal nombre tras cerrar modal manual', {
-                        capture: 'viewport',            // Define qué parte capturar
-                        disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
-                        scale: true,                     // Escala la imagen en pantallas con alta resolución
-                        timout: 1000,                     // Espera hasta 5 segundos antes de 
-                        overwrite: true
-                        // capturar
+
+                    })
+
+                    it("Debería poder Cerrar la ventana modal manual al dar click fuera de la modal", () => {
+                        // Cerrar ventana modal busqueda por codigo de barras
+                        cy.getByData("modal--manual__close").should('exist')
+                        cy.getByData("modal--manual__close").type("7507")
+                        // Cerrar ventana modal busqueda por código de barras
+
+                        cy.getByData("modal--manual").click(50, 30).should('not.be.visible')
+
+
+                        // Abrir de nuevo la ventana modal, 
+                        cy.getByData("botonBusquedaNombre").should('be.visible')
+                        cy.getByData("botonBusquedaNombre").click()
+                        cy.getByData("modal--nombre__close").should("be.visible")
+                        // Valores a revisar
+                        cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+                        cy.getByData("modal--nombre__close").should('not.have.value', 'cig');
+                        cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+                        cy.screenshot('Input Reiniciado tras cerrar modal manual click fuera modal', {
+                            capture: 'viewport',            // Define qué parte capturar
+                            disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                            scale: true,                     // Escala la imagen en pantallas con alta resolución
+                            timout: 1000,                     // Espera hasta 5 segundos antes de 
+                            overwrite: true
+                            // capturar
+                        })
+
+
+
                     })
                 })
+
+                describe("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
+                    it("Debería poder Cerrar la ventana modal manual con el botón", () => {
+                        // Cerrar ventana modal busqueda por código de barras
+                        cy.getByData("modal--manual__close").should('exist')
+                        cy.getByData("modal--manual__close").type("7507")
+    
+                        // Cerrar ventana modal busqueda por código de barras
+                        cy.getByData("botonCerrarModalManual").should('exist')
+                        cy.getByData("botonCerrarModalManual").click()
+    
+                        // Abrir de nuevo la ventana modal, 
+                        cy.getByData("botonBusquedaManual").should('be.visible')
+                        cy.getByData("botonBusquedaManual").click()
+                        cy.getByData("modal--manual__close").should("exist")
+                        // Valores a revisar
+                        cy.getByData("modal--manual__close").should('not.have.value', 'coc');
+                        cy.getByData("modal--manual__close").should('not.have.value', '7507');
+                        cy.screenshot('Input vacío en modal manual tras filtrar-cerrar modal manual boton', {
+                            capture: 'viewport',            // Define qué parte capturar
+                            disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                            scale: true,                     // Escala la imagen en pantallas con alta resolución
+                            timout: 1000,                     // Espera hasta 5 segundos antes de 
+                            overwrite: true
+                            // capturar
+                        })
+
+
+                    })
+
+                    it("Debería poder Cerrar la ventana modal manual al dar click fuera de la modal", () => {
+                       // Cerrar ventana modal busqueda por codigo de barras
+                        cy.getByData("modal--manual__close").should('exist')
+                        cy.getByData("modal--manual__close").type("7507")
+                        // Cerrar ventana modal busqueda por código de barras
+
+                        cy.getByData("modal--manual").click(50, 30).should('not.be.visible')
+
+                        // Abrir de nuevo la ventana modal, 
+                        cy.getByData("botonBusquedaManual").should('be.visible')
+                        cy.getByData("botonBusquedaManual").click()
+                        cy.getByData("modal--manual__close").should("exist")
+                        // Valores a revisar
+                        cy.getByData("modal--manual__close").should('not.have.value', 'coc');
+                        cy.getByData("modal--manual__close").should('not.have.value', '7507');
+                        cy.screenshot('Input vacío en modal manual tras filtrar-cerrar modal manual fuera', {
+                            capture: 'viewport',            // Define qué parte capturar
+                            disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                            scale: true,                     // Escala la imagen en pantallas con alta resolución
+                            timout: 1000,                     // Espera hasta 5 segundos antes de 
+                            overwrite: true
+                            // capturar
+                        })
+
+                    })
+
+                })
+                
                 describe("Si se selecciona un producto por pieza", () => {
                     beforeEach(() => {
                         // Abrir ventana modal buscar por codigo de barras y escribir en ella
@@ -386,8 +473,6 @@ describe('Pruebas del carrito de compras', () => {
 
             })
         })
-
-
     })
 
     context('Pruebas de funcionalidad modal nombre', () => {
@@ -407,10 +492,21 @@ describe('Pruebas del carrito de compras', () => {
         })
 
         describe('Pruebas a modal', () => {
-            it("Debería poder Cerrar la ventana modal nombre sin haber escrito en ella", () => {
-                // Cerrar ventana modal busqueda por codigo de barras
-                cy.getByData("botonCerrarModalNombre").should('be.visible')
-                cy.getByData("botonCerrarModalNombre").click()
+
+
+            describe("Debería poder Cerrar la ventana modal nombre sin haber escrito en ella", () => {
+                it("Debería poder Cerrar la ventana modal nombre con el botón", () => {
+                    // Cerrar ventana modal busqueda por codigo de barras
+                    cy.getByData("botonCerrarModalNombre").should('be.visible')
+                    cy.getByData("botonCerrarModalNombre").click()
+
+                })
+
+                it("Debería poder Cerrar la ventana modal nombre al dar click fuera de la modal", () => {
+                    // Cerrar ventana modal busqueda por codigo de barras
+                    cy.getByData("modal--nombre").click(50, 30).should('not.be.visible')
+                })
+
             })
 
             describe("Si se hace una búsqueda por codigo de barras en nombre", () => {
@@ -455,62 +551,133 @@ describe('Pruebas del carrito de compras', () => {
                     })
                 })
 
-                it("Debería poder escribir en el input y cerrar la modal", () => {
-                    cy.getByData("modal--nombre__close").should('be.visible')
-                    cy.getByData("modal--nombre__close").type("cig")
-                    // Cerrar ventana modal busqueda por nombre
-                    cy.getByData("botonCerrarModalNombre").should('be.visible')
-                    cy.getByData("botonCerrarModalNombre").click()
-                })
+                describe("Debería poder escribir en el input y cerrar la modal", () => {
+                    it("Debería poder Cerrar la ventana modal nombre con el botón", () => {
+                        cy.getByData("modal--nombre__close").should('be.visible')
+                        cy.getByData("modal--nombre__close").type("cig")
+                        // Cerrar ventana modal busqueda por nombre
+                        cy.getByData("botonCerrarModalNombre").should('be.visible')
+                        cy.getByData("botonCerrarModalNombre").click()
+                    })
 
-                it("Debe estar vacío el input de la otra modal al cerrar modalManual sin dar click en un producto", () => {
-                    cy.getByData("modal--nombre__close").should('be.visible')
-                    cy.getByData("modal--nombre__close").type("cig")
-
-                    // Cerrar ventana modal busqueda por nombre
-                    cy.getByData("botonCerrarModalNombre").should('be.visible')
-                    cy.getByData("botonCerrarModalNombre").click()
-
-                    // Abrir de nuevo la ventana modal, 
-                    cy.getByData("botonBusquedaNombre").should('be.visible')
-                    cy.getByData("botonBusquedaNombre").click()
-                    cy.getByData("modal--nombre__close").should("be.visible")
-                    // Valores a revisar
-                    cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
-                    cy.getByData("modal--nombre__close").should('not.have.value', '7507');
-                    cy.screenshot('Input Reiniciado tras cerrar modal nombre', {
-                        capture: 'viewport',            // Define qué parte capturar
-                        disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
-                        scale: true,                     // Escala la imagen en pantallas con alta resolución
-                        timout: 1000,                     // Espera hasta 5 segundos antes de 
-                        overwrite: true
-                        // capturar
+                    it("Debería poder Cerrar la ventana modal nombre al dar click fuera de la modal", () => {
+                        cy.getByData("modal--nombre__close").type("cig")
+                        // Cerrar ventana modal busqueda por nombre
+                        cy.getByData("modal--nombre").click(50, 30).should('not.be.visible')
                     })
                 })
 
-                it("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
-                    cy.getByData("modal--nombre__close").should('be.visible')
-                    cy.getByData("modal--nombre__close").type("cig")
 
-                    // Cerrar ventana modal busqueda por nombre
-                    cy.getByData("botonCerrarModalNombre").should('be.visible')
-                    cy.getByData("botonCerrarModalNombre").click()
 
-                    // Abrir de nuevo la ventana modal, 
-                    cy.getByData("botonBusquedaNombre").should('be.visible')
-                    cy.getByData("botonBusquedaNombre").click()
-                    cy.getByData("modal--nombre__close").should("be.visible")
-                    // Valores a revisar
-                    cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
-                    cy.getByData("modal--nombre__close").should('not.have.value', '7507');
-                    cy.screenshot('Input vacío en modal manual tras cerrar modal nombre', {
-                        capture: 'viewport',            // Define qué parte capturar
-                        disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
-                        scale: true,                     // Escala la imagen en pantallas con alta resolución
-                        timout: 1000,                     // Espera hasta 5 segundos antes de 
-                        overwrite: true
-                        // capturar
+                describe("Debe estar vacío el input de la otra modal al cerrar modalManual sin dar click en un producto", () => {
+                    it("Debería poder Cerrar la ventana modal nombre con el botón", () => {
+                        // Cerrar ventana modal busqueda por código de barras
+                        cy.getByData("modal--nombre__close").should('be.visible')
+                        cy.getByData("modal--nombre__close").type("cig")
+
+                        // Cerrar ventana modal busqueda por nombre
+                        cy.getByData("botonCerrarModalNombre").should('be.visible')
+                        cy.getByData("botonCerrarModalNombre").click()
+
+                        // Abrir de nuevo la ventana modal, 
+                        cy.getByData("botonBusquedaNombre").should('be.visible')
+                        cy.getByData("botonBusquedaNombre").click()
+                        cy.getByData("modal--nombre__close").should("be.visible")
+                        // Valores a revisar
+                        cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+                        cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+                        cy.screenshot('Input Reiniciado tras cerrar modal nombre boton', {
+                            capture: 'viewport',            // Define qué parte capturar
+                            disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                            scale: true,                     // Escala la imagen en pantallas con alta resolución
+                            timout: 1000,                     // Espera hasta 5 segundos antes de 
+                            overwrite: true
+                            // capturar
+                        })
                     })
+
+                    it("Debería poder Cerrar la ventana modal nombre al dar click fuera de la modal", () => {
+                        // Cerrar ventana modal busqueda por codigo de barras
+                        cy.getByData("modal--nombre__close").should('be.visible')
+                        cy.getByData("modal--nombre__close").type("cig")
+                        // Cerrar ventana modal busqueda por código de barras
+
+                        cy.getByData("modal--nombre").click(50, 30).should('not.be.visible')
+
+
+                        cy.getByData("botonBusquedaNombre").should('be.visible')
+                        cy.getByData("botonBusquedaNombre").click()
+                        cy.getByData("modal--nombre__close").should("be.visible")
+                        // Valores a revisar
+                        cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+                        cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+                        cy.screenshot('Input Reiniciado tras cerrar modal nombre fuera', {
+                            capture: 'viewport',            // Define qué parte capturar
+                            disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                            scale: true,                     // Escala la imagen en pantallas con alta resolución
+                            timout: 1000,                     // Espera hasta 5 segundos antes de 
+                            overwrite: true
+                            // capturar
+                        })
+
+
+
+                    })
+
+                })
+
+                describe("También el input de esta modal debe  estar vacío  si se cierra la modal sin dar click en un producto", () => {
+                    it("Debería poder Cerrar la ventana modal manual con el botón", () => {
+                        cy.getByData("modal--nombre__close").should('be.visible')
+                        cy.getByData("modal--nombre__close").type("cig")
+
+                        // Cerrar ventana modal busqueda por nombre
+                        cy.getByData("botonCerrarModalNombre").should('be.visible')
+                        cy.getByData("botonCerrarModalNombre").click()
+
+                        // Abrir de nuevo la ventana modal, 
+                        cy.getByData("botonBusquedaNombre").should('be.visible')
+                        cy.getByData("botonBusquedaNombre").click()
+                        cy.getByData("modal--nombre__close").should("be.visible")
+                        // Valores a revisar
+                        cy.getByData("modal--nombre__close").should('not.have.value', 'coc');
+                        cy.getByData("modal--nombre__close").should('not.have.value', '7507');
+                        cy.screenshot('Input vacío en modal nombre tras cerrar modal nombre', {
+                            capture: 'viewport',            // Define qué parte capturar
+                            disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                            scale: true,                     // Escala la imagen en pantallas con alta resolución
+                            timout: 1000,                     // Espera hasta 5 segundos antes de 
+                            overwrite: true
+                            // capturar
+                        })
+                    })
+
+
+                    it("Debería poder Cerrar la ventana modal manual al dar click fuera de la modal", () => {
+                        // Cerrar ventana modal busqueda por codigo de barras
+                        cy.getByData("modal--nombre__close").should('be.visible')
+                        cy.getByData("modal--nombre__close").type("cig")
+                         // Cerrar ventana modal busqueda por código de barras
+                         cy.getByData("modal--nombre").click(50, 30).should('not.be.visible')
+ 
+                         // Abrir de nuevo la ventana modal, 
+                         cy.getByData("botonBusquedaManual").should('be.visible')
+                         cy.getByData("botonBusquedaManual").click()
+                         cy.getByData("modal--manual__close").should("exist")
+                         // Valores a revisar
+                         cy.getByData("modal--manual__close").should('not.have.value', 'coc');
+                         cy.getByData("modal--manual__close").should('not.have.value', '7507');
+                         cy.screenshot('Input vacío en modal manual tras filtrar-cerrar modal manual fuera', {
+                             capture: 'viewport',            // Define qué parte capturar
+                             disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                             scale: true,                     // Escala la imagen en pantallas con alta resolución
+                             timout: 1000,                     // Espera hasta 5 segundos antes de 
+                             overwrite: true
+                             // capturar
+                         })
+ 
+                     })
+ 
                 })
 
                 describe("Si se selecciona un producto por pieza", () => {
@@ -768,6 +935,7 @@ describe('Pruebas del carrito de compras', () => {
 
     })
 
+    
     context('Pruebas funcionalidad lector de código barras', () => {
         beforeEach(() => {
             cy.getByData("documento")

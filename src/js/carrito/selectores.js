@@ -1,8 +1,12 @@
 // Selectores
 // Ventanes modales
 const modalBienvenida = document.querySelector('.modal');
+modalBienvenida.dataset.test = 'modal';
 const btnCerrarBienvenida = document.querySelector('.modal__close');
-const modalManual = document.querySelector('.modal--manual');
+let modalManual = document.querySelector('.modal--manual');
+modalManual.style.cursor = "pointer";
+modalManual.dataset.test = 'modal--manual';
+
 const modalManualContainer = document.querySelector('.modal--manual__container');
 const botonCerrarModalManual = document.querySelector('.modal--manual__img2');
 const inputCodigoManual = document.getElementById("2");
@@ -15,6 +19,9 @@ paginacionManualContainer.classList.add('modal--manual--paginacion');
 
 // Selectores del modal busqueda por nombre del producto
 const modalNombreProducto = document.querySelector('.modal--nombre');
+modalNombreProducto.style.cursor = "pointer";
+modalNombreProducto.dataset.test = 'modal--nombre';
+
 const modalNombreContainer = document.querySelector('.modal--nombre__container');
 const botonCerrarModalProducto = document.querySelector('.modal--nombre__img2');
 const inputNombreProducto = document.getElementById("3");
