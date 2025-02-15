@@ -34,6 +34,7 @@ class PaginasController
     public static function inventarioAPI()
     {
         $inventario = Inventario_completo::join2('productos', 'inventario');
+        
         $categorias = Categorias::all();
         $proveedores = Proveedor::all();
         

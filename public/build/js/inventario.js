@@ -158,8 +158,8 @@ busqueda.parentElement.appendChild(paginadorContainer);
 
 
 const inputNombreBusqueda = document.getElementById('nombre-producto');
-const inputCategoriaBusqueda = document.getElementById('categoria-producto');
-const inputProveedorBusqueda = document.getElementById('proveedor-producto');
+const inputCategoriaBusqueda = document.getElementById('categoriaproducto');
+const inputProveedorBusqueda = document.getElementById('proveedorproducto');
 const inputCodigoBarrasBusqueda = document.getElementById('codigo-barras');
 
 
@@ -259,7 +259,7 @@ function setSlide(index) {
 
 // Función que realiza la búsqueda a partir de los inputs
 function filtrar() {
-    const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras);
+    const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
     if (resultadosFiltrado.length > 0) {
         console.log(resultadosFiltrado);
         mostrarPagina(1, resultadosFiltrado, proveedores);
@@ -298,23 +298,23 @@ function filtrarCodigoBarras(inventario) {
 }
 
 // Busca todas lss categorias que se parezcan al input categoria dentro del inventario
-function filtrarCategoria() {
+function filtrarCategoria(inventario) {
     let { categoria } = terminosBusqueda;
-
     if (categoria) {
-        return inventario.categoria.includes(categoria);
+        return inventario.categoria_id === categoria;
     }
-
     return inventario;
 }
 
 // Busca todos los proveedores que se parezcan al input proveedor dentro del inventario
-function filtrarProveedor() {
+function filtrarProveedor(inventario) {
     let { proveedor } = terminosBusqueda;
 
     if (proveedor) {
-        return inventario.proveedor.includes(proveedor);
+        return inventario.proveedor_id === proveedor;
     }
+    return inventario;
+
 }
 
 function mostrarCards(inventario, proveedores) {
@@ -332,6 +332,9 @@ function mostrarCards(inventario, proveedores) {
         botonesGrid.classList.add('botonesinventario');
 
         let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel } = producto;
+
+        let proveedorDatos = proveedores.find(proveedor => proveedor.id === proveedor_id );
+        let categoriaDatos = categorias.find(categoria => categoria.id === categoria_id);
 
         let ganancia = precio_unitario_venta - precio_compra;
         let porcentajeGanancia = ganancia * 100 / precio_compra;
@@ -353,7 +356,7 @@ function mostrarCards(inventario, proveedores) {
             <div class="inventarionombre">
                 
                 <div>
-                    <h3>Abarrotes</h3>
+                    <h3>${categoriaDatos.nombre}</h3>
                     <p>${cantidad} GRAMOS EN STOCK</p>
                 </div>
             </div>
@@ -363,7 +366,7 @@ function mostrarCards(inventario, proveedores) {
             <div class="inventarionombre">
                 
                 <div>
-                    <h3>Abarrotes</h3>
+                    <h3>${categoriaDatos.nombre}</h3>
                     <p>${cantidad} ARTÍCULOS EN STOCK</p>
                 </div>
             </div>
@@ -371,7 +374,7 @@ function mostrarCards(inventario, proveedores) {
         }
         div.appendChild(contenidoDiv);
         const proveedor = proveedores.find(p => p.id === proveedor_id)
-        const proveedorNombre = nombre;
+        const proveedorNombre = proveedorDatos.nombre;
         gridContenido.innerHTML = `
             <div class="flexdescripcion">
                 <img src="/build/img/descripcion-alternativa.png" alt="Logotipo de descripción" class="imgdescripcion">
@@ -570,56 +573,6 @@ function limpiarHTMLElemento(elemento) {
 }
 
 
-// Eventos
-inputNombreBusqueda.addEventListener('input', (e) => {
-    let { nombre } = terminosBusqueda;
-    nombre = e.target.value;
-    terminosBusqueda.nombre = nombre;
-    console.log(terminosBusqueda);
-    filtrar();
-});
-
-inputCategoriaBusqueda.addEventListener('input', (e) => {
-    let { categoria } = terminosBusqueda;
-    categoria = e.target.value;
-    terminosBusqueda.categoria = categoria;
-    console.log(terminosBusqueda);
-
-    filtrar();
-});
-
-inputCodigoBarrasBusqueda.addEventListener('input', (e) => {
-    let { codigoBarras } = terminosBusqueda;
-    codigoBarras = e.target.value;
-    terminosBusqueda.codigoBarras = codigoBarras;
-    console.log(terminosBusqueda);
-
-    filtrar();
-});
-
-inputProveedorBusqueda.addEventListener('input', (e) => {
-    let { proveedor } = terminosBusqueda;
-    proveedor = e.target.value;
-    terminosBusqueda.proveedor = proveedor;
-    console.log(terminosBusqueda);
-
-    filtrar();
-});
-
-sliderContainer.addEventListener('click', (e) => {
-    if (e.target.textContent === '+ Añadir nuevo Producto') {
-        abrirModalNuevoProducto(e);
-
-    }
-})
-
-
-btnAbrirModalNuevoProductoFijo.addEventListener('click', e => {
-    abrirModalNuevoProducto(e)
-
-});
-
-
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
 function mostrarPagina(pagina, datos = inventario, proveedores) {
     const inicio = (pagina - 1) * registrosPorPagina;
@@ -674,7 +627,7 @@ function generarPaginador(datos = inventario) {
 
     for (let i = 1; i <= totalPaginas; i++) {
         // onclick="cambiarPagina(${i})"
-        paginadorHTML += `<button   ${paginaActual === i ? 'selected' : 'class="numero"'}>${i}</button>`;
+        paginadorHTML += `<button   ${paginaActual === i ? 'class="numero paginadoresBlue"' : 'class="numero"'}>${i}</button>`;
     }
 
     if (paginaActual < totalPaginas) {
@@ -685,28 +638,6 @@ function generarPaginador(datos = inventario) {
     paginadorContainer.innerHTML = paginadorHTML;
 
 }
-
-
-// Leer la página a la que se le da click y asignar paginaActual
-paginadorContainer.addEventListener('click', (e) => {
-    console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
-
-    if (e.target.classList == 'numero') {
-
-        paginaActual = parseInt(e.target.textContent);
-    }
-    if (e.target.classList == 'paginas') {
-        if (e.target.textContent == 'Siguiente') {
-            paginaActual = paginaActual + 1;
-        } else {
-            paginaActual = paginaActual - 1;
-
-        }
-    }
-    let resultados = filtrar()
-    mostrarPagina(paginaActual, resultados, proveedores);
-})
-
 
 function abrirModalNuevoProducto(e) {
     e.preventDefault();
@@ -803,8 +734,6 @@ function cerrarModalEliminarProducto() {
     modalEliminarInventario.classList.remove('modal--inventarioEliminar--show');
 }
 
-
-
 function imprimirParrafosModal(granel, cantidad, resultado) {
 
     const parrafoCantidadActual = document.querySelector('.modal--inventario--actualizarStock__cantidadActual').querySelector('P');
@@ -817,6 +746,81 @@ function imprimirParrafosModal(granel, cantidad, resultado) {
         parrafoCantidadResultado.innerHTML = `${resultado} Artículos en Stock`;
     }
 }
+
+
+
+// Eventos
+inputNombreBusqueda.addEventListener('input', (e) => {
+    let { nombre } = terminosBusqueda;
+    nombre = e.target.value;
+    terminosBusqueda.nombre = nombre;
+    console.log(terminosBusqueda);
+    filtrar();
+});
+
+inputCategoriaBusqueda.addEventListener('change', (e) => {
+    let { categoria } = terminosBusqueda;
+    categoria = e.target.value;
+    terminosBusqueda.categoria = categoria;
+
+    filtrar();
+});
+
+inputCodigoBarrasBusqueda.addEventListener('input', (e) => {
+    let { codigoBarras } = terminosBusqueda;
+    codigoBarras = e.target.value;
+    terminosBusqueda.codigoBarras = codigoBarras;
+    console.log(terminosBusqueda);
+
+    filtrar();
+});
+
+inputProveedorBusqueda.addEventListener('change', (e) => {
+    let { proveedor } = terminosBusqueda;
+    proveedor = e.target.value;
+    terminosBusqueda.proveedor = proveedor;
+    console.log(terminosBusqueda);
+
+    filtrar();
+});
+
+sliderContainer.addEventListener('click', (e) => {
+    if (e.target.textContent === '+ Añadir nuevo Producto') {
+        abrirModalNuevoProducto(e);
+
+    }
+})
+
+
+btnAbrirModalNuevoProductoFijo.addEventListener('click', e => {
+    abrirModalNuevoProducto(e)
+
+});
+
+
+
+// Leer la página a la que se le da click y asignar paginaActual
+paginadorContainer.addEventListener('click', (e) => {
+    console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+    if (e.target.classList == 'numero') {
+
+        paginaActual = parseInt(e.target.textContent);
+    }
+    if (e.target.classList == 'paginas') {
+        if (e.target.textContent == 'Siguiente') {
+            paginaActual = paginaActual + 1;
+        } else {
+            paginaActual = paginaActual - 1;
+
+        }
+    }
+    let resultados = filtrar()
+    mostrarPagina(paginaActual, resultados, proveedores);
+})
+
+
+
 
 
 document.getElementById('nuevoproducto').addEventListener('submit', function (e) {
