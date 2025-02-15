@@ -11,7 +11,7 @@ class ProductoController
 
     public static function movimientoproducto(Router $router){
         $alertas = [];
-        $proveedor = Proveedor::all();
+        $proveedores = Proveedor::all();
         $alertas = Proveedor::getAlertas();
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -22,7 +22,7 @@ class ProductoController
 
         $router->render('paginas/movimientoproducto', [
             'titulo' => $titulo,
-            'proveedor' => $proveedor
+            'proveedores' => $proveedores
         ]);
     }
 }

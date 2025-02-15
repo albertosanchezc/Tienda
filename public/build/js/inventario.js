@@ -262,13 +262,13 @@ function filtrar() {
     const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
     if (resultadosFiltrado.length > 0) {
         console.log(resultadosFiltrado);
-        mostrarPagina(1, resultadosFiltrado, proveedores);
+        mostrarPagina(1, resultadosFiltrado, proveedores, categorias);
 
         generarPaginador(resultadosFiltrado);
         return resultadosFiltrado.flat();
     } else {
         // mostrarPagina(1,resultadosFiltrado);
-        mostrarPagina(1, resultadosFiltrado, proveedores);
+        mostrarPagina(1, resultadosFiltrado, proveedores, categorias);
         generarPaginador(resultadosFiltrado);
 
         return resultadosFiltrado.flat();
@@ -317,7 +317,7 @@ function filtrarProveedor(inventario) {
 
 }
 
-function mostrarCards(inventario, proveedores) {
+function mostrarCards(inventario, proveedores, categorias) {
     console.log(inventario);
     console.log("Producto desde mostrarCards", inventario);
 
@@ -573,7 +573,7 @@ function limpiarHTMLElemento(elemento) {
 
 
 // Función que muestra el paginador con base en la página actual y los datos recibidos 
-function mostrarPagina(pagina, datos = inventario, proveedores) {
+function mostrarPagina(pagina, datos = inventario, proveedores, categorias) {
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     const inventarioPagina = datos.slice(inicio, fin);
@@ -581,7 +581,7 @@ function mostrarPagina(pagina, datos = inventario, proveedores) {
     console.log("Inventario Pagina: ", inventarioPagina);
     paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
     limpiarHTMLElemento(despliegueInventario);
-    mostrarCards(inventarioPagina, proveedores);
+    mostrarCards(inventarioPagina, proveedores, categorias);
     generarPaginador(datos)
     return inventarioPagina;
 }
@@ -815,7 +815,7 @@ paginadorContainer.addEventListener('click', (e) => {
         }
     }
     let resultados = filtrar()
-    mostrarPagina(paginaActual, resultados, proveedores);
+    mostrarPagina(paginaActual, resultados, proveedores, categorias);
 })
 
 
