@@ -57,14 +57,14 @@
                 <div class="proveedor-producto">
                     <label for="proveedorproducto">Proveedor: </label>
                     <select id="proveedorproducto">
-                                <option selected value="">Selecciona un proveedor</option>
-                                <?php foreach ($proveedores as $proveedor) { ?>
-                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
-                                        value="<?php echo s($proveedor->id); ?>">
-                                        <?php echo s($proveedor->nombre); ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
+                        <option selected value="">Selecciona un proveedor</option>
+                        <?php foreach ($proveedores as $proveedor) { ?>
+                            <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                value="<?php echo s($proveedor->id); ?>">
+                                <?php echo s($proveedor->nombre); ?>
+                            </option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div class="tipo-movimiento1">
                     <p>Cantidad en inventario: </p>

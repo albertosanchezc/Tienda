@@ -19,10 +19,10 @@
             <legend>Selecciona Proveedor</legend>
             <div class="caja-filtros1">
                 <label for="nombreproveedor">Proveedor: </label>
-                <select name="proveedor[nombre]" id="nombreproveedor">
-                    <option selected value="">Selecciona un Proveedor</option>
+                <select id="proveedormovimientoprod">
+                    <option selected value="">Selecciona un proveedor</option>
                     <?php foreach ($proveedores as $proveedor) { ?>
-                        <option <?php echo $inventario->$proveedor_id === $proveedor->$id ? 'selected' : ''; ?>
+                        <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
                             value="<?php echo s($proveedor->id); ?>">
                             <?php echo s($proveedor->nombre); ?>
                         </option>
@@ -233,7 +233,7 @@
                         <p>Total Resultante:</p>
                         <p>$ 145.00</p>
                     </div>
-                    <form id="" >
+                    <form id="movimientoProducto" method="POST">
                         <div class="estadoPago">
                             <p>Introduce la cantidad que le pagaste al Proveedor</p>
                             <label for="entradaestadoPago">Total Pagado:</label>
@@ -248,8 +248,13 @@
                                 <p>$ 0</p>
                             </div>
                         </div>
-                    </form>
+
                 </div>
+                <div class="gridSubmit">
+                    <input type="submit" class="boton-movimiento" value="Guardar Cambios en Inventario">
+                </div>
+                </form>
+
             </div>
         </div>
 </section>

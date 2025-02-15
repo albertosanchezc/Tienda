@@ -552,3 +552,32 @@
 
 
 }
+
+.gridSubmit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+
+    .boton-movimiento{
+        border: solid 1px rgb(4, 196, 4);
+        background: linear-gradient(to right, green, rgb(4, 196, 4));
+        color: #fff;
+        padding: 1.4rem;
+        font-weight: bold;
+        border-radius: 1rem;
+        font-size: larger;
+        display: block;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+
+    }
+
+    .boton-movimiento:hover{
+        background: none;
+        background-color: #fff;
+        color: #00a808;
+        padding: 1.8rem;
+        cursor: pointer;
+        
+    }
+}
