@@ -243,7 +243,7 @@
         </div>
         <div class="modalCancelar__titulo">
             <h1>Productos Vendidos</h1>
-            <h3>Visualiza los productos vendidos en este carrito.</h3>
+            <h3>Visualiza los productos vendidos de este carrito.</h3>
         </div>
         <div class="modalCancelar__botonCancelaciones">
             <a href="#">Gestionar Cancelaciones</a>
@@ -305,5 +305,162 @@
             <div class="modalCancelar__total-ticket">
                 <p>Total: $519.32</p>
             </div>
+        </div>
+</section>
+
+<section class="modalCancelar modal">
+    <div class="modalCancelar__contenedor">
+        <div class="modalCancelar__cerrar">
+            <a href="#" class="modalCancelar__refcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalCancelar__imgcerrar">
+            </a>
+        </div>
+        <div class="modalCancelar__titulo">
+            <h1>Productos Vendidos</h1>
+            <h3>Visualiza los productos vendidos de este carrito.</h3>
+        </div>
+        <div class="modalCancelar__botonCancelaciones">
+            <a href="#">Gestionar Cancelaciones</a>
+        </div>
+        <div class="modalCancelar__rectangulo-grande">
+            <div class="modalCancelar__tabla-ticket">
+                <table class="modalCancelar__ticket">
+                    <thead>
+                        <tr>
+                            <th>Cant.</th>
+                            <th>Producto</th>
+                            <th>C.U.</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <!-- Mostrar los resultados -->
+                    <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                    <!-- borrar esto al terminar -->
+                    <tbody>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+
+                    </tbody>
+
+                    <!-- borrar esto al terminar -->
+                    <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                </table>
+            </div>
+            <div class="modalCancelar__total-ticket">
+                <p>Total: $519.32</p>
+            </div>
+        </div>
+</section>
+
+<section class="modalCancelar--productos modalCancelar--productos--show">
+    <div class="modalCancelar--productos__contenedor">
+        <div class="modalCancelar--productos__cerrar">
+            <a href="#" class="modalCancelar--productos__refcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalCancelar--productos__imgcerrar">
+            </a>
+        </div>
+        <div class="modalCancelar--productos__titulo">
+            <h1>Cancelar Ventas</h1>
+            <h3>Elige cancelar productos específicos o todo el carrito.</h3>
+        </div>
+        <div class="modalCancelar--productos__tipo-cancelacion">
+            <label for="tipo-cancelacion">Cancelar: </label>
+            <div class="modalCancelar--productos__switch modalCancelar--productos__swrojo">
+                <input type="radio" id="carr" name="cancelar[carrito]" value="carr" checked>
+                <label for="carr">Todo el Carrito</label>
+                <input type="radio" id="prod" name="cancelar[carrito]" value="prod">
+                <label for="prod">Por Producto</label>
+            </div>
+        </div>
+        <div class="modalCancelar--productos__rectangulo-grande">
+            <div class="modalCancelar--productos__tabla-ticket">
+                <table class="modalCancelar--productos__ticket">
+                    <thead>
+                        <tr>
+                            <th>Cant.</th>
+                            <th>Producto</th>
+                            <th>C.U.</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <!-- Mostrar los resultados -->
+                    <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                    <!-- borrar esto al terminar -->
+                    <tbody>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+
+                    </tbody>
+
+                    <!-- borrar esto al terminar -->
+                    <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                </table>
+            </div>
+            <div class="modalCancelar--productos__total-ticket">
+                <p>Total: $519.32</p>
+            </div>
+        </div>
+        <div class="modalCancelar--productos__botonCancelaciones">
+            <a href="#">Cancelar Toda la Venta</a>
         </div>
 </section>
