@@ -1000,7 +1000,7 @@ body {
 .modal--cantidad,
 .modal--eliminar,
 .modal--eliminarCarrito,
-.modal--pagar, .modal--inventarioEliminar, .modalCategorias--eliminar {
+.modal--pagar, .modal--inventarioEliminar, .modalCategorias--eliminar, .modal--cancelarProducto {
     position: fixed;
     top: 0;
     left: 0;
@@ -1662,7 +1662,7 @@ body {
 }
 
 .modal--eliminar,
-.modal--eliminarCarrito, .modal--inventarioEliminar, .modalCategorias--eliminar {
+.modal--eliminarCarrito, .modal--inventarioEliminar, .modalCategorias--eliminar, .modal--cancelarProducto {
     h2 {
         font-size: 2.2rem;
         margin-top: 4rem;

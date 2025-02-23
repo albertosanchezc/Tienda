@@ -746,7 +746,7 @@ span {
     }
 }
 
-.modal--inventarioEliminar, .modalCategorias--eliminar {
+.modal--inventarioEliminar, .modalCategorias--eliminar .modal--cancelarProducto{
     &__opciones {
         display: flex;
         justify-content: center;

@@ -1,18 +1,20 @@
-.botonesventas{
+.botonesventas {
     display: flex;
     justify-content: center;
-    gap:3rem;
+    gap: 3rem;
     align-items: center;
-    
 
-    .rojoclaro, .rojooscuro{
+
+    .rojoclaro,
+    .rojooscuro {
         border-radius: 1rem;
         font-size: 1.9rem;
         color: #fff;
         padding: 1rem;
         min-width: 25%;
         text-align: center;
-        &:hover{
+
+        &:hover {
             background-color: #fff;
             color: #990000;
             border: 1px solid #990000;
@@ -20,30 +22,39 @@
 
     }
 
-    .rojooscuro{
-        background-color: #660000;
-        
+    .btnseleccionado{
+        background-color: #ffe1e1;
+            color: #990000;
+            border: 1px solid #990000;
     }
 
-    .rojoclaro{
+    .rojooscuro {
+        background-color: #660000;
+
+    }
+
+    .rojoclaro {
         background-color: #990000;
 
-        
+
     }
 
-    
+
 }
 
-.busqueda-filtrosventas, .busqueda-filtroscancelaciones{
-    fieldset{
+.busqueda-filtrosventas,
+.busqueda-filtroscancelaciones {
+    fieldset {
         border: 2px dotted #b30000;
 
     }
 
     legend {
-        color: #b30000;}
+        color: #b30000;
+    }
 
-        .caja-filtrosventas, .caja-filtroscancelaciones{
+    .caja-filtrosventas,
+    .caja-filtroscancelaciones {
         input[type="date"] {
             border-color: #cc0000;
 
@@ -51,17 +62,20 @@
 
         input[type="number"] {
             border-color: #cc0000;
-        
+
         }
-        }
+    }
 }
 
 .tabla-contenido-cancelaciones th,
-.tabla-contenido-cancelaciones td, .tabla-contenido-ventas th,
+.tabla-contenido-cancelaciones td,
+.tabla-contenido-ventas th,
 .tabla-contenido-ventas td {
-    border: 1px solid #ff6565;}
+    border: 1px solid #ff6565;
+}
 
-.tabla-contenido-ventas th, .tabla-contenido-cancelaciones th {
+.tabla-contenido-ventas th,
+.tabla-contenido-cancelaciones th {
     background: linear-gradient(to right, #990000, #cc0000);
     color: white;
     font-weight: bold;
@@ -81,5 +95,68 @@
 
 .tabla-contenido-cancelaciones tbody tr:hover {
     background-color: #F7D9A8;
+}
+
+.caja-filtrosventas {
+    .switch.swrojo input[type="radio"]:checked+label {
+        background-color: #990000;
+    }
+}
+
+.tabla-contenido-ventas td {
+    p {
+        padding: 0;
+        margin: 0;
+        font-size: small;
+    }
+
+    .botonver {
+        text-align: center; 
+    }
+
+    .botonver a {
+        display: ruby;
+        align-items: center;
+
+        text-align: center;
+        padding: 5px 7px;
+        background-color: #bb0000;
+        color: #fff;
+        border-radius: 1rem;
+        border: solid 1px rgb(221, 3, 3);
+        text-decoration: none; 
+        font-weight: bold;
+
+    }
+
+    .botonver a:hover {
+        background-color: #fff;
+        color: #bb0000;
+        padding: 7px 15px;
+
+    }
+}
+
+
+.busqueda-titulo.margin-titulo{
+    margin:0;
+    padding: 0;
+    h1{
+        margin-top: 5rem;
+    }
+
+}
+
+.botonesventas.margin-botonesventas{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.imgbajar.margin-imgbajar{
+    margin-top: 3rem;
+}
+
+.tachado{
+    text-decoration: line-through;
 }
 
