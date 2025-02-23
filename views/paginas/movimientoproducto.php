@@ -18,7 +18,7 @@
         <fieldset>
             <legend>Selecciona Proveedor</legend>
             <div class="caja-filtros1">
-                <label for="nombreproveedor">Proveedor: </label>
+                <label for="proveedormovimientoprod">Proveedor: </label>
                 <select id="proveedormovimientoprod">
                     <option selected value="">Selecciona un proveedor</option>
                     <?php foreach ($proveedores as $proveedor) { ?>
@@ -33,8 +33,7 @@
         <!-- //aqui iriia el boton de descargar excel -->
     </div>
 
-
-    <div class="containerBackground">
+    <div class="containerBackground" id="contenedordecontenido">
         <div class="movimientoContainer">
             <div class="articulosproveedor">
                 <p class="art">Productos del Proveedor Seleccionado</p>
@@ -57,7 +56,7 @@
                                 <td>Coca Cola 550 ml Taparrosca</td>
                                 <td>1452255412</td>
                                 <td>
-                                    <div class=" btnVerVerde"><a href="#" btnVerVerde">Editar</a>
+                                    <div class=" btnVerVerde"><a href="#" btnVerVerde">+Editar Stock</a>
                                     </div>
                                 </td>
                             </tr>
@@ -67,7 +66,7 @@
                                 <td>Coca Cola 550 ml Taparrosca</td>
                                 <td>1452255412</td>
                                 <td>
-                                    <div class=" btnVerVerde"><a href="#" btnVerVerde">Editar</a>
+                                    <div class=" btnVerVerde"><a href="#" btnVerVerde">+ Editar Stock</a>
                                     </div>
                                 </td>
                             </tr>
@@ -75,6 +74,9 @@
                     </table>
                 </div>
                 <!-- //tabla -->
+                <div class="btnaniadirTodas">
+                    <a href="#" class="btnEditarStockTodos">+ Editar Stock de todos los productos</a>
+                </div>
             </div>
             <!-- cards -->
             <div class="articulosmodificar">
@@ -257,4 +259,5 @@
 
             </div>
         </div>
+    </div>
 </section>

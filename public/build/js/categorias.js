@@ -312,21 +312,6 @@
 
             gridcardCategorias.appendChild(cardCategorias);
 
-
-            // input hidden de eliminar
-
-            // const eliminarContainer = document.querySelector('.modalCategorias--eliminar__container');
-            // let inputIdeliminar = document.querySelector('#idcategoriaeliminar');
-            // inputIdeliminar = document.createElement('input');
-            // inputIdeliminar.type = 'hidden';
-            // inputIdeliminar.id = '#idcategoriaeliminar';
-            // inputIdeliminar.name = 'eliminar[id]';
-            // inputIdeliminar.value = id;
-
-            // eliminarContainer.appendChild(inputIdeliminar);
-
-
-
             gridcardCategorias.addEventListener('click', (e) => {
 
                 // Si se selecciona actulizar producto  en algún card

@@ -1,8 +1,7 @@
 <main class="contenedorcaja seccioncaja">
     <div class="busqueda-titulo margin-titulo">
         <h1>Registro de Ventas y Cancelaciones</h1>
-        <h3>Explora el registro completo de las ventas o las cancelaciones, Selecciona la opción de lo que deseas ver en
-            pantalla. <h3>
+        <h3>Explora el registro completo de las ventas o las cancelaciones, Selecciona la opción de lo que deseas ver en pantalla. <h3>
     </div>
     <div class="botonesventas margin-botonesventas">
         <a href="#" class="rojoclaro">Ventas</a>

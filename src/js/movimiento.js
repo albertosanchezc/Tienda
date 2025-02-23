@@ -3,10 +3,14 @@
     document.addEventListener('DOMContentLoaded', function () {
         consultarAPI();
         // if(!empty(proveedor)){
-        limpiarHTMLElemento(containerBackground);
+        contenedorClass1.style.display = "none";
+        contenedorCards.style.display = "none";
+        // limpiarHTMLElemento(containertabla1);
+
         // limpiarHTMLElemento(articulosModificar);
 
         // btnReciente.click();
+        // inicializarSelect();
 
     });
 
@@ -22,17 +26,18 @@
             inventario = resultado.inventario;
             proveedores = resultado.proveedores;
             categorias = resultado.categorias;
-            // console.log(categorias);
-            mostrarCard(inventario);
+            console.log(categorias);
+            // mostrarCard(inventario);
+            // mostrarTabla(inventario, proveedores);
 
-            filtrar();
+            // filtrar();
 
         } catch (e) {
             console.log(e);
         }
     }
 
-    
+
     let inventario = [];
     let categorias = [];
     let proveedores = [];
@@ -42,9 +47,11 @@
     }
 
     const inputProveedor = document.querySelector('#proveedormovimientoprod');
-    const containerBackground = document.querySelector('.tabladeproveedores');
+    const containertabla = document.querySelector('.tabladeproveedores');
+    const containertabla1 = document.querySelector('.tablaverde');
+    const contenedorClass1 = document.querySelector('.containerBackground');
     const gridmodificaciones = document.querySelector('.gridmodificaciones');
-
+    const contenedorCards = document.querySelector('.articulosmodificar');
 
     inputProveedor.addEventListener('change', (e) => {
         let { proveedor } = terminosBusqueda;
@@ -53,6 +60,13 @@
         console.log(terminosBusqueda);
         estado = 1;
         filtrar();
+        if (terminosBusqueda.proveedor) {
+            contenedorClass1.style.display = "block";
+            console.log('Si hay busqueda');
+        } else {
+            contenedorClass1.style.display = "none";
+            console.log("No hay busqueda");
+        }
 
     });
 
@@ -60,16 +74,14 @@
     function mostrarTabla(inventario, proveedores) {
         console.log(inventario);
 
-        if (estado === 1) {
+        const contenedorTabla = document.querySelector('.tabladeproveedores', 'tablaverde');
 
-            const contenedorTabla = document.querySelector('.tabladeproveedores', 'tablaverde');
+        contenedorTabla.innerHTML = '';
+        const tablaDinamica = document.createElement('table');
+        tablaDinamica.classList.add('tabla-proveedores', 'tabla-verde');
 
-            contenedorTabla.innerHTML = '';
-            const tablaDinamica = document.createElement('table');
-            tablaDinamica.classList.add('tabla-proveedores', 'tabla-verde');
-
-            const thead = document.createElement('thead');
-            thead.innerHTML = `
+        const thead = document.createElement('thead');
+        thead.innerHTML = `
                 <tr>
                     <th>Prod. Id</th>
                     <th>Stock</th>
@@ -79,37 +91,57 @@
                 </tr>
             `;
 
-            tablaDinamica.appendChild(thead);
+        tablaDinamica.appendChild(thead);
 
-            // Crea el cuerpo de la tabla
-            const tbody = document.createElement('tbody');
+        // Crea el cuerpo de la tabla
+        const tbody = document.createElement('tbody');
 
 
-            inventario.forEach(producto => {
-                let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel } = producto;
+        inventario.forEach(producto => {
+            let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel } = producto;
 
-                const fila = document.createElement('tr');
-                fila.innerHTML = `
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
                 <td>${id}</td>
                 <td>${cantidad}</td>
                 <td>${nombre} ${descripcion}</td>
                 <td>${codigo_barras}</td>
                 <td>
-                    <div class=" btnVerVerde">
-                        <a href="#" btnVerVerde">Editar Stock</a>
+                    <div class="btnVerVerde">
+                        <a href="#" class="btnEditarStock" data-id="${id}">Editar Stock</a>
                     </div>
                 </td>
 
             `;
-                tbody.appendChild(fila);
+            tbody.appendChild(fila);
 
+        });
 
-            });
+        tablaDinamica.appendChild(tbody);
+        contenedorTabla.appendChild(tablaDinamica);
 
-            tablaDinamica.appendChild(tbody);
-            contenedorTabla.appendChild(tablaDinamica);
+        const articulosProveedor = document.querySelector('.articulosproveedor');
 
-        }
+        articulosProveedor.addEventListener('click', (e) => {
+            console.log(e.target.classList);
+            if (e.target.classList.contains('btnEditarStock')) {
+                const idProducto = e.target.getAttribute('data-id');
+                const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
+
+                if (productoSeleccionado) {
+                    // mostrarCard(inventario, proveedores, categorias);
+                } else {
+                    console.error('Producto no encontrado');
+                }
+            console.log('ID del producto seleccionado:', idProducto);
+
+            }
+
+            if (e.target.classList.contains('btnEditarStockTodos')) {
+                console.log('Contiene btnEditarStock');
+            }
+
+        });
 
     }
 
@@ -224,12 +256,12 @@
                 </div>
         `;
 
-        inventarioGrid.appendChild(parrafoContainer);
-        gridContenido.prepend(div);
-        inventarioGrid.appendChild(gridContenido);
-        inventarioGrid.appendChild(dineroGrid);
-        inventarioGrid.appendChild(botonesGrid);
-        gridmodificaciones.appendChild(inventarioGrid);
+            inventarioGrid.appendChild(parrafoContainer);
+            gridContenido.prepend(div);
+            inventarioGrid.appendChild(gridContenido);
+            inventarioGrid.appendChild(dineroGrid);
+            inventarioGrid.appendChild(botonesGrid);
+            gridmodificaciones.appendChild(inventarioGrid);
 
 
         });
@@ -241,14 +273,16 @@
         const resultadosFiltrado = inventario.filter(filtrarProveedor);
         if (resultadosFiltrado.length > 0) {
             // console.log(resultadosFiltrado);
-            mostrarTabla(resultadosFiltrado);
-            // mostrarPagina(1, resultadosFiltrado);
 
+            mostrarTabla(resultadosFiltrado);
+
+            // mostrarPagina(1, resultadosFiltrado);
             // generarPaginador(resultadosFiltrado);
             return resultadosFiltrado.flat();
         } else {
             // mostrarPagina(1, resultadosFiltrado);
             // generarPaginador(resultadosFiltrado);
+
             mostrarTabla(resultadosFiltrado);
 
             return resultadosFiltrado.flat();
@@ -268,6 +302,7 @@
     function limpiarHTMLElemento(elemento) {
         // Forma lenta
         // contenedorCarrito.innerHTML = '';
+        console.log('listo');
 
         while (elemento.firstChild) {
             elemento.removeChild(elemento.firstChild);

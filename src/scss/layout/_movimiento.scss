@@ -178,7 +178,7 @@
 }
 
 .btnVerVerde {
-    color: #08df13;
+    color: #fff;
     border: 1px solid rgb(4, 196, 4);
     display: flex;
     justify-content: center;
@@ -188,22 +188,24 @@
     font-size: 1.3rem;
     font-weight: 600;
     text-decoration: none;
-    background-color: #fff;
+    background: linear-gradient(to right, #198000, #335ccc);
     width: 100%;
     height: 100%;
 
     a {
-        color: #08df13;
+        color: #fff;
+        text-align: center;
     }
 }
 
 .btnVerVerde:hover {
     text-decoration: none;
-    color: #fff;
-    background-color: rgb(4, 196, 4);
+    color: #00af17;
+    background: none;
+    background-color: #fff;
 
     a {
-        color: #fff
+        color: #00af17;
     }
 }
 
@@ -579,5 +581,26 @@
         padding: 1.8rem;
         cursor: pointer;
         
+    }
+}
+
+.btnaniadirTodas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a{
+        background-color: #00a808;
+        color: #fff;
+        border: solid 1px green;
+        border-radius: 1rem;
+        padding: 3px;
+        font-weight: bold;
+    }
+    a:hover{
+        background-color: #fff;
+        color: #008807;
+        padding: 5px;
+
     }
 }
