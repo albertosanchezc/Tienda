@@ -3,6 +3,10 @@ let inventario = [];
 let proveedores = [];
 let categorias = [];
 
+
+
+
+
 let terminosBusqueda = {
     id: '',
     nombre: '',

@@ -6,7 +6,6 @@
   "scripts": {
     "gulp": "gulp",
     "build": "gulp build"
-
   },
   "author": "Ksoulciones ",
   "license": "ISC",
