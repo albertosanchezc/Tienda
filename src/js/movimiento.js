@@ -40,7 +40,6 @@
     let inventario = [];
     let categorias = [];
     let proveedores = [];
-    let idStock =[];
     let estado = 0;
     let terminosBusqueda = {
         proveedor: ''
@@ -52,6 +51,8 @@
     const contenedorClass1 = document.querySelector('.containerBackground');
     const gridmodificaciones = document.querySelector('.gridmodificaciones');
     const contenedorCards = document.querySelector('.articulosmodificar');
+    const idStock = newSet();
+
 
     inputProveedor.addEventListener('change', (e) => {
         limpiarHTMLElemento(containertabla);
