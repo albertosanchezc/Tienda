@@ -222,7 +222,7 @@
     </div>
 </main>
 <!-- modal seguro que?para cuando presionas el boton de la tabla de ventas por producto -->
-<section class="modal--cancelarProducto modalCancelar--show">
+<section class="modal--cancelarProducto">
     <div class="modal--cancelarProducto__container">
         <h2 class="modal--cancelarProducto__title">¿Seguro que deseas Cancelar esta Venta?</h2>
         <form id="cancelarProducto" method="POST">
