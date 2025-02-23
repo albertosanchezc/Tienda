@@ -262,8 +262,8 @@ function mostrarTabla(ventas) {
                     fila.innerHTML = `
                         <td>${cantidad}</td>
                         <td>${venta.producto} ${venta.producto_descripcion}</td>
-                        <td>$${precioVenta.toFixed(2)}</td>
-                        <td>$${totalVentaProducto.toFixed(2)}</td>
+                        <td>$${precioVenta}</td>
+                        <td>$${totalVentaProducto}</td>
                         
                     `;
                     tbody.appendChild(fila);
@@ -274,7 +274,7 @@ function mostrarTabla(ventas) {
 
                 const contenedorTotal = document.querySelector('.modalCancelar__total-ticket');
                 let p = contenedorTotal.querySelector('P');
-                p.textContent = `Total: $${totalCarrito}`;
+                p.textContent = `Total: $${totalCarrito.toFixed(2)}`;
                 console.log(tablaTicketSelector);
             
             }
