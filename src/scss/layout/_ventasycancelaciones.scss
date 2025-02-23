@@ -22,10 +22,39 @@
 
     }
 
-    .btnseleccionado{
-        background-color: #ffe1e1;
-            color: #990000;
+    .btnSeleccionadoClaro{
+        border-radius: 1rem;
+        font-size: 1.9rem;
+        padding: 1rem;
+        min-width: 25%;
+        color: #990000;
+        border: 1px solid #990000;
+        text-align: center;
+        background-color: #fff;
+
+
+        &:hover {
+            background-color: #990000;
+            color: #fff;
             border: 1px solid #990000;
+        }
+    }
+
+    .btnSeleccionadoOscuro{
+        border-radius: 1rem;
+        font-size: 1.9rem;
+        padding: 1rem;
+        min-width: 25%;
+        color: #660000;
+        border: 1px solid #660000;
+        text-align: center;
+        background-color: #fff;
+
+        &:hover {
+            background-color: #660000;
+            color: #fff;
+            border: 1px solid #660000;
+        }
     }
 
     .rojooscuro {

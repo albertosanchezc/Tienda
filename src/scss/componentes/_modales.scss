@@ -3,7 +3,7 @@
 .modal--inventario,
 .modal--inventario--actualizar,
 .modal--inventario--actualizarStock,
-.modalCategorias--aniadir, .modalCategorias--actualizar {
+.modalCategorias--aniadir, .modalCategorias--actualizar, .modalCancelar {
     position: fixed;
     top: 0;
     left: 0;
@@ -290,7 +290,7 @@
     }
 }
 
-.modalproveedores {
+.modalproveedores, .modalCancelar {
 
     &__telefono,
     &__email,
@@ -1220,3 +1220,4 @@
 
 
 }
+

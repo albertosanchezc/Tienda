@@ -760,3 +760,19 @@ span {
 
     }
 }
+
+.modal--cancelarProducto{
+    &__opciones {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    input {
+        text-align: center;
+        padding: 5px;
+        width: 3.5rem;
+
+    }
+
+}
