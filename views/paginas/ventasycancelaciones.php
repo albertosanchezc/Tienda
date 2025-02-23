@@ -245,8 +245,8 @@
             <h1>Productos Vendidos</h1>
             <h3>Visualiza los productos vendidos en este carrito.</h3>
         </div>
-        <div class="botonCancelaciones">
-            <a href="#">Gestionar Cancelaciones de </a>
+        <div class="modalCancelar__botonCancelaciones">
+            <a href="#">Gestionar Cancelaciones</a>
         </div>
         <div class="modalCancelar__rectangulo-grande">
             <div class="modalCancelar__tabla-ticket">
