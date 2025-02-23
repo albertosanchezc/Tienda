@@ -1,11 +1,10 @@
 import { filtrar, mostrarPagina, primerEstadoCarrito, mostrarAlerta, mostrarProductosModal, mostrarHora, vaciarCarrito, aniadirArticuloAlCarrito, esGranel, segundoEstadoCarrito, mostrarPaginaCarrito, generarPaginador, generarPaginadorCarrito, cerrarModalClickFuera, cerrarModalCantidad, cerrarModalManual, cerrarModalNombre, cerrarModalBienvenida } from "./funciones.js";
 import { paginadorModalManualContainer, paginadorModalNombreContainer, btnCerrarBienvenida, botonCerrarModalManual, botonCerrarModalProducto, btnCerrarModalCantidad, btnCerrarModalGranel, botonVaciarCarrito, contenedorProductos, paginadorCarritoContainer, modalBienvenida, modalManual, modalNombreProducto, modalCantidad, paginacionManualContainer, tbodyTablaModalManual, inputCodigoManual, paginacionNombreContainer, tbodyTablaModalNombre, inputNombreProducto, modalVaciarCarrito, inputModalCantidad, pagarForm, modalGranel, modalEliminarProducto, modalPagar, contenedorBotones } from "./selectores.js";
-
 document.addEventListener('DOMContentLoaded', function () {
 
     consultarAPI();
     document.querySelector('BODY').dataset.test = "documento";
-});;
+});
 
 // let estado = 0;
 let inventario = [];
@@ -64,19 +63,19 @@ botonCerrarModalProducto.addEventListener('click', (e) => {
     // terminosBusqueda.codigoBarras = '';
     // terminosBusqueda.nombre = '';
     // mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'verde');
-    
+
 })
 
 btnCerrarModalCantidad.addEventListener('click', (e) => {
     e.preventDefault();
-    cerrarModalCantidad();    
+    cerrarModalCantidad();
 })
 
 btnCerrarModalGranel.addEventListener('click', () => {
     estadoModales = false;
 
     modalGranel.classList.remove('modal--granel--show');
-    
+
 
 })
 
@@ -84,7 +83,7 @@ botonVaciarCarrito.addEventListener('click', () => {
 
     modalVaciarCarrito.classList.add('modal--eliminarCarrito--show');
     cerrarModalClickFuera(modalVaciarCarrito, 'modal--eliminarCarrito');
-    
+
     modalVaciarCarrito.addEventListener('click', (e) => {
         console.log(e.target.classList);
         if (e.target.classList[0] === 'modal--eliminarCarrito__si') {
@@ -245,7 +244,7 @@ contenedorProductos.addEventListener('click', (e) => {
             console.log("Terminos búsqueda antes de inventario modal", terminosBusqueda);
             console.log("Inventario Desde abrir modal", inventario);
             const resultados = filtrar(inventario);
-            
+
             if (resultados) {
                 // mostrarProductosModalManual(resultados);
                 inventarioPaginado = mostrarPagina(paginaActual, resultados, paginacionManualContainer);
@@ -256,7 +255,7 @@ contenedorProductos.addEventListener('click', (e) => {
                 noResultado(tablaModalManual, parrafoModalManual);
             }
         })
-        
+
     }
 
     // Busqueda por nombre
@@ -290,9 +289,9 @@ contenedorProductos.addEventListener('click', (e) => {
         })
     }
 
-    if(numero || paginas){
+    if (numero || paginas) {
         console.log(e.target.value);
-        segundoEstadoCarrito();        
+        segundoEstadoCarrito();
     }
 
 })
@@ -358,7 +357,7 @@ paginadorCarritoContainer.addEventListener('click', (e) => {
 
     mostrarPaginaCarrito(paginaActualCarrito);
     generarPaginadorCarrito(resultados, paginaActualCarrito);
-    
+
 })
 
 

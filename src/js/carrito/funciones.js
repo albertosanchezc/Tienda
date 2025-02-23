@@ -1,11 +1,12 @@
 import { paginadorModalManualContainer, paginadorModalNombreContainer, paginacionManualContainer, paginacionNombreContainer, hora, contenedorDetalles, contenedorTotales, div1ContenidoProductos, div2ContenidoProductos, div3ContenidoProductos, div4ContenidoProductos, contenedorProductos, div1ContenidoTotales, div2ContenidoTotales, div3ContenidoTotales, div4ContenidoTotales, div5ContenidoProductos, modalPagar, modalEliminarProducto, modalCantidad, inputModalCantidad, tbodyCarrito, tbodyTicket, tablaCarrito, contenedorTablaCarrito, tablaTicket, contenedorTablaTicket, contenedorTotalModalCantidad, btnConfirmarEditarCantidad, botonVaciarCarrito, inputNombreProducto, inputCodigoManual, modalManual, modalNombreProducto, tbodyTablaModalManual, tbodyTablaModalNombre, paginadorCarritoContainer, theadTicket, pagarForm, inputHiddenPagarForm, inputHiddenPagarForm1, modalGranel, inputModalGranel, modalBienvenida, modalVaciarCarrito } from "./selectores.js";
 
-import { paginaActual, paginaActualCarrito, terminosBusqueda, codigo_barras } from "./carrito.js";
+import { paginaActual, paginaActualCarrito, terminosBusqueda } from "./carrito.js";
 
 const registrosPorPagina = 4;
 let articulosCarrito = [];
 let infoProductoCarrito = {};
 let datosInsert = [];
+
 
 
 function filtrar(inventario) {
@@ -678,7 +679,7 @@ function actualizarModalPagar(total) {
 
 }
 
-function cerrarModalBienvenida(){
+function cerrarModalBienvenida() {
     modalBienvenida.classList.remove('modal--show');
     primerEstadoCarrito();
     mostrarAlerta('Escane o realiza una búsqueda para añadir al carrito', 'negro');
@@ -708,12 +709,12 @@ function cerrarModalCantidad(valor) {
 }
 
 function cerrarModalManual(valor) {
-    
+
     inputCodigoManual.value = '';
     modalManual.classList.remove('modal--manual--show');
     terminosBusqueda.codigoBarras = '';
     terminosBusqueda.nombre = '';
-    if(!valor){
+    if (!valor) {
         mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'verde');
     }
 }
@@ -723,10 +724,10 @@ function cerrarModalNombre(valor) {
     modalNombreProducto.classList.remove('modal--nombre--show');
     terminosBusqueda.codigoBarras = '';
     terminosBusqueda.nombre = '';
-    if(!valor){
+    if (!valor) {
         mostrarAlerta('¡No se añadió el artículo, debido a que cerraste la ventana!', 'verde');
     }
-    
+
 }
 
 function aniadirArticuloAlCarrito(seleccionado) {
@@ -1122,11 +1123,12 @@ function modificarCantidadCarrito(articuloModificado) {
 
 }
 
+
 function mostrarDetallesProducto(articuloCarritoAModificar) {
     limpiarHTMLElemento(contenedorDetalles);
 
     console.log("Articulo desde mostrar detalles Producto", articuloCarritoAModificar);
-    const { nombre, descripcion, cantidad, precio_unitario_venta, imagen, granel } = articuloCarritoAModificar;
+    const { nombre, descripcion, cantidad, precio_unitario_venta, imagen, granel, codigo_barras } = articuloCarritoAModificar;
     console.log("Cantidad", articuloCarritoAModificar.cantidad);
 
     let rutaImagen = '';
@@ -1162,6 +1164,7 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
     const div3ContenidoDetalles = document.createElement('DIV');
     div3ContenidoDetalles.classList.add('rectangulo-pequeno-bebe3');
 
+
     if (granel === '0') {
         div3ContenidoDetalles.innerHTML = `
         <div class="rectangulo-pequeno-bebecito31">
@@ -1169,7 +1172,8 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
         </div>
         <div class="rectangulo-pequeno-bebecito32">
             <h3>Código de Barras:</h3>
-            <img loading="lazy" src="build/img/barcode.png" alt="barcode">
+            <svg id="barcode"></svg>
+            
         </div>
         `;
     } else {
@@ -1179,11 +1183,12 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
         </div>
         <div class="rectangulo-pequeno-bebecito32">
             <h3>Código de Barras:</h3>
-            <img loading="lazy" src="build/img/barcode.png" alt="barcode">
+            <svg id="barcode"></svg>
+            
         </div>
         `;
     }
-
+    // <img loading="lazy" src="build/img/barcode.png" alt="barcode">
 
     const div4ContenidoDetalles = document.createElement('DIV');
     div4ContenidoDetalles.classList.add('rectangulo-pequeno-bebe4');
@@ -1202,6 +1207,15 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
     contenedorDetalles.appendChild(div2ContenidoDetalles);
     contenedorDetalles.appendChild(div3ContenidoDetalles);
     contenedorDetalles.appendChild(div4ContenidoDetalles);
+
+    JsBarcode('#barcode', codigo_barras, {
+        format: "CODE128",
+        displayValue: true,
+        fontSize: 16,
+        lineColor: "#000000",
+        width: 1.75,
+        height: 35,
+    });
 
     const contenedorVaciarcarrito = document.querySelector('.icono');
     contenedorVaciarcarrito.appendChild(botonVaciarCarrito);

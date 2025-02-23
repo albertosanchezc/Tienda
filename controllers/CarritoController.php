@@ -17,6 +17,7 @@ class CarritoController
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
 
         $script = '<script src="/build/js/carrito/carrito.js" type="module"></script>
+        <script src="/build/js/JsBarcode.all.min.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $caja = Caja::find(1);
         // Todo el cálculo del carrito_id deberá hacerse después de finalizar la venta
