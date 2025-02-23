@@ -1237,10 +1237,12 @@
         box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
         display: grid;
         grid-template-rows: 4fr 1fr;
-        font-size: 9px;
+        font-size: 12px;
         overflow-x: auto;
         color: #fff;
     }
+
+
 
 
     &__tabla-ticket {
@@ -1276,8 +1278,14 @@
             background-color: rgb(2, 28, 143);
 
         }
+
+        tr.selected {
+            background-color: rgb(225, 248, 255);
+            color: #000;
+        } 
     }
 
+   
     &__total-ticket {
         grid-row: 2;
         border-top: dotted 2px rgb(255, 255, 255);

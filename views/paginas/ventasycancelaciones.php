@@ -221,8 +221,8 @@
         </table>
     </div>
 </main>
-
-<section class="modal--cancelarProducto">
+<!-- modal seguro que?para cuando presionas el boton de la tabla de ventas por producto -->
+<section class="modal--cancelarProducto modalCancelar--show">
     <div class="modal--cancelarProducto__container">
         <h2 class="modal--cancelarProducto__title">¿Seguro que deseas Cancelar esta Venta?</h2>
         <form id="cancelarProducto" method="POST">
@@ -234,7 +234,8 @@
     </div>
 </section>
 
-<section class="modalCancelar modalCancelar--show">
+<!-- modal para cuando presionas el boton de la tabla de ventas por carrito -->
+<section class="modalCancelar">
     <div class="modalCancelar__contenedor">
         <div class="modalCancelar__cerrar">
             <a href="#" class="modalCancelar__refcerrar">
@@ -308,81 +309,8 @@
         </div>
 </section>
 
-<section class="modalCancelar modal">
-    <div class="modalCancelar__contenedor">
-        <div class="modalCancelar__cerrar">
-            <a href="#" class="modalCancelar__refcerrar">
-                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalCancelar__imgcerrar">
-            </a>
-        </div>
-        <div class="modalCancelar__titulo">
-            <h1>Productos Vendidos</h1>
-            <h3>Visualiza los productos vendidos de este carrito.</h3>
-        </div>
-        <div class="modalCancelar__botonCancelaciones">
-            <a href="#">Gestionar Cancelaciones</a>
-        </div>
-        <div class="modalCancelar__rectangulo-grande">
-            <div class="modalCancelar__tabla-ticket">
-                <table class="modalCancelar__ticket">
-                    <thead>
-                        <tr>
-                            <th>Cant.</th>
-                            <th>Producto</th>
-                            <th>C.U.</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <!-- Mostrar los resultados -->
-                    <!-- !
-                            !
-                            !
-                            !
-                            ! -->
-                    <!-- borrar esto al terminar -->
-                    <tbody>
-                        <tr>
-                            <td>2</td>
-                            <td>Coca-Cola 25ml taparrosca</td>
-                            <td>$150.00</td>
-                            <td>$300.00</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Coca-Cola 25ml taparrosca</td>
-                            <td>$150.00</td>
-                            <td>$300.00</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Coca-Cola 25ml taparrosca</td>
-                            <td>$150.00</td>
-                            <td>$300.00</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Coca-Cola 25ml taparrosca</td>
-                            <td>$150.00</td>
-                            <td>$300.00</td>
-                        </tr>
-
-                    </tbody>
-
-                    <!-- borrar esto al terminar -->
-                    <!-- !
-                            !
-                            !
-                            !
-                            ! -->
-                </table>
-            </div>
-            <div class="modalCancelar__total-ticket">
-                <p>Total: $519.32</p>
-            </div>
-        </div>
-</section>
-
-<section class="modalCancelar--productos modalCancelar--productos--show">
+<!-- modal para cuando presionas el boton de cancelar de la modal de ventas por carrito -->
+<section class="modalCancelar--productos">
     <div class="modalCancelar--productos__contenedor">
         <div class="modalCancelar--productos__cerrar">
             <a href="#" class="modalCancelar--productos__refcerrar">
@@ -421,7 +349,7 @@
                             ! -->
                     <!-- borrar esto al terminar -->
                     <tbody>
-                        <tr>
+                        <tr class="selected">
                             <td>2</td>
                             <td>Coca-Cola 25ml taparrosca</td>
                             <td>$150.00</td>
@@ -463,4 +391,30 @@
         <div class="modalCancelar--productos__botonCancelaciones">
             <a href="#">Cancelar Toda la Venta</a>
         </div>
+</section>
+
+<!-- modal seguro que? para cuando presionas el boton de cancelar todo el carrito -->
+<section class="modal--cancelarCarrito">
+    <div class="modal--cancelarCarrito__container">
+        <h2 class="modal--cancelarCarrito__title">¿Seguro que deseas Cancelar toda esta Venta?</h2>
+        <form id="cancelarCarrito" method="POST">
+            <div class="modal--cancelarCarrito__opciones">
+                <input value="Si" type="submit" class="modal--cancelarCarrito__si">
+                <input value="No" class="modal--cancelarCarrito__no">
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- modal seguro que? presionas el boton de cancelar por productos -->
+<section class="modal--cancelarProductos">
+    <div class="modal--cancelarProductos__container">
+        <h2 class="modal--cancelarProductos__title">¿Seguro que deseas Cancelar la Venta de los productos selecionados?</h2>
+        <form id="cancelarProductos" method="POST">
+            <div class="modal--cancelarProductos__opciones">
+                <input value="Si" type="submit" class="modal--cancelarProductos__si">
+                <input value="No" class="modal--cancelarProductos__no">
+            </div>
+        </form>
+    </div>
 </section>

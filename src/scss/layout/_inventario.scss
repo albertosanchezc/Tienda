@@ -746,7 +746,7 @@ span {
     }
 }
 
-.modal--inventarioEliminar, .modalCategorias--eliminar .modal--cancelarProducto{
+.modal--inventarioEliminar, .modalCategorias--eliminar .modal--cancelarProducto, .modal--cancelarProductos, .modal--cancelarCarrito {
     &__opciones {
         display: flex;
         justify-content: center;
@@ -761,14 +761,15 @@ span {
     }
 }
 
-.modal--cancelarProducto{
+.modal--cancelarProducto, .modal--cancelarProductos, .modal--cancelarCarrito  {
     &__opciones {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    
+
     input {
+        margin-top: 1rem;
         text-align: center;
         padding: 5px;
         width: 3.5rem;
