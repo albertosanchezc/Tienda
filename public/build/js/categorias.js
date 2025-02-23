@@ -240,9 +240,6 @@
         filtrar();
     });
 
-
-
-
     function limpiarHTMLElemento(elemento) {
 
         while (elemento.firstChild) {

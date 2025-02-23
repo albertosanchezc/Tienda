@@ -75,7 +75,7 @@
                 </div>
                 <!-- //tabla -->
                 <div class="btnaniadirTodas">
-                    <a href="#" class="btnEditarStockTodos">+ Editar Stock de todos los productos</a>
+                    <a href="#" class="btnEditarStockTodos">+ Editar Stock de todos los Productos de este Proveedor</a>
                 </div>
             </div>
             <!-- cards -->
@@ -84,7 +84,6 @@
                 <div class="gridmodificaciones">
                     <div class="inventariogrid1">
                         <div class="gridcontenido1">
-
                             <div class="inventarionombre">
                                 <img src="/build/img/coca.webp" alt="Logotipo de coca" class="imgcoca">
                                 <div>
