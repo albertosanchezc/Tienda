@@ -44,7 +44,6 @@ class ActiveRecord
         $query .= "')";
         // debuguear($query);
         $resultado = self::$db->query($query);
-
     }
     public function actualizar()
     {
@@ -64,8 +63,6 @@ class ActiveRecord
         // debuguear($query);
 
         $resultado = self::$db->query($query);
-
-
     }
 
     // Eliminar un registro
@@ -136,7 +133,8 @@ class ActiveRecord
     {
         return static::$alertas;
     }
-    public static function setAlerta($tipo, $mensaje){
+    public static function setAlerta($tipo, $mensaje)
+    {
         static::$alertas[$tipo][] = $mensaje;
     }
 
@@ -170,23 +168,56 @@ class ActiveRecord
 
     public static function ALF($columna, $orden)
     {
-        $query = "SELECT * FROM " . static::$tabla . " ORDER BY ". $columna ." ". $orden;
+        $query = "SELECT * FROM " . static::$tabla . " ORDER BY " . $columna . " " . $orden;
         $resultado = self::consultarSQL($query);
 
         return $resultado;
     }
 
 
-    public static function join2($primera, $segunda){
+    public static function join2($primera, $segunda)
+    {
         $query = "SELECT * FROM $primera JOIN $segunda ON " . $primera . ".id = " . $segunda . ".producto_id";
         // debuguear($query);
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
 
+    public static function obtenerVentas()
+    {
+        $query = "SELECT 
+            ventas.id AS id_venta,
+            ventas.producto_id AS producto_id,
+            ventas.cantidad AS cantidad,
+            ventas.carrito_id AS carrito_id,
+            ventas.fecha_venta AS fecha_venta,
+            ventas.hora_venta AS hora_venta,
+            productos.id AS id_producto,
+            productos.nombre AS producto,
+            productos.descripcion AS producto_descripcion,
+            productos.imagen AS imagen_producto,
+            inventario.granel AS granel,
+            inventario.precio_unitario_venta AS precio_venta,
+            inventario.precio_compra AS precio_compra,
+            categorias.nombre AS categoria,
+            categorias.descripcion AS descripcion_categoria,
+            proveedor.nombre AS proveedor,  
+            proveedor.telefono AS telefono_proveedor 
+            FROM ventas
+            INNER JOIN productos ON ventas.producto_id = productos.id
+            INNER JOIN inventario ON inventario.producto_id = productos.id  
+            INNER JOIN categorias ON inventario.categoria_id = categorias.id  
+            INNER JOIN proveedor ON inventario.proveedor_id = proveedor.id;
+        ";
+        // debuguear($query);
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
     //Obtiene la última columna(especificada) de una tabla 
-    public static function lastofTable($tabla, $columna){
-        $query = "SELECT  ". $columna ."  FROM " . static::$tabla . " ORDER BY ". $columna ." DESC LIMIT 1 ";
+    public static function lastofTable($tabla, $columna)
+    {
+        $query = "SELECT  " . $columna . "  FROM " . static::$tabla . " ORDER BY " . $columna . " DESC LIMIT 1 ";
         $resultado = self::consultarSQL($query);
         return array_shift($resultado);
     }
@@ -289,6 +320,4 @@ class ActiveRecord
             }
         }
     }
-
-
 }

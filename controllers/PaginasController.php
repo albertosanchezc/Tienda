@@ -14,6 +14,7 @@ use Model\Platillo;
 use Model\Productos;
 use Model\Proveedor;
 use Model\Ventas;
+use Model\Ventas_Completas;
 use Model\Visitas_proveedor;
 use MVC\Router;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -66,7 +67,7 @@ class PaginasController
     }
 
     public static function ventasAPI(){
-        $ventas = Ventas::ALF('fecha_venta','ASC');
+        $ventas = Ventas_Completas::obtenerVentas();
 
         echo json_encode([
             'ventas' => $ventas

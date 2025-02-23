@@ -19,6 +19,9 @@ const btnCancelaciones = document.querySelector('.rojooscuro');
 
 const contenedorBotones = document.querySelector('.botonesventas');
 const btnCerrarModalCancelar = document.querySelector('.modalCancelar__imgcerrar');
+const btnCerrarModalCancelarProducto = document.querySelector('.modalCancelar--productos__imgcerrar');
+
+
 const imagendown = document.querySelector('.imgdown');
 
 const inputFechaInicial = document.getElementById('fecha1');
@@ -72,6 +75,10 @@ btnCerrarModalCancelar.addEventListener('click', () => {
     document.querySelector('.modalCancelar').classList.remove('modalCancelar--show');
 })
 
+btnCerrarModalCancelarProducto.addEventListener('click', () => {
+    document.querySelector('.modalCancelar--productos').classList.remove('modalCancelar--productos--show');
+})
+
 
 inputFechaInicial.addEventListener('change', (e) => {
     let { fechaI } = terminosBusqueda;
@@ -122,7 +129,7 @@ function filtrarfechaF(ventas) {
     return fechaCaja <= fechaFinal;
 }
 
-function mostrarTabla(ventas){
+function mostrarTabla(ventas) {
     console.log(ventas);
     const contenedorTabla = document.querySelector('.tabladecontenido-ventas');
     contenedorTabla.innerHTML = '';
@@ -142,13 +149,143 @@ function mostrarTabla(ventas){
     `;
     tablaDinamica.appendChild(thead);
 
+    let totalVenta = 0;
+    let tbody = document.createElement('tbody');
 
-    const tbody = document.createElement('tbody');
-    ventas.forEach(venta => {
-        let { id, cantidad, producto_id, hora_venta, fecha_venta, carrito_id } = venta;
-    });
+    const agrupadoPorCarrito = ventas.reduce((acc, item) => {
+        if (!acc[item.carrito_id]) {
+            acc[item.carrito_id] = [];
+        }
+        acc[item.carrito_id].push(item);
+        return acc;
+    }, {});
 
 
+
+
+    console.log(agrupadoPorCarrito);
+    const arrayDeArreglos = Object.values(agrupadoPorCarrito);
+    console.log(arrayDeArreglos);
+
+    arrayDeArreglos.forEach(venta => {
+        totalCantidad = 0;
+        id = 0;
+        fecha = 0;
+        hora = 0;
+        totalVenta = 0;
+        ganancia = 0;
+        venta.map(p => {
+            if (p.granel === '1') {
+                totalCantidad += 1;
+                id = p.carrito_id;
+                fecha = p.fecha_venta;
+                hora_venta = p.hora_venta;
+                totalVenta += (p.cantidad * p.precio_venta) / 1000;
+                ganancia = ganancia + ((p.precio_venta - p.precio_compra) * p.cantidad) / 1000;
+                // porcentajeGanancia = ganancia * 100 / precio_compra;
+            } else {
+                totalCantidad += parseInt(p.cantidad)
+                id = p.carrito_id;
+                fecha = p.fecha_venta;
+                hora = p.hora_venta;
+                totalVenta += p.cantidad * p.precio_venta;
+                ganancia = ganancia + (p.precio_venta - p.precio_compra) * p.cantidad;
+
+            }
+        })
+
+        let fechaHora = new Date(`${fecha}T${hora}`);
+        let opcionesFecha = { day: 'numeric', month: 'long', year: 'numeric' };
+        let fechaFormateada = fechaHora.toLocaleDateString('es-ES', opcionesFecha); // "28 de agosto de 2024"
+        let horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // "23:02:04"
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${id}</td>
+            <td>${fechaFormateada} a las ${horaFormateada}</td>
+            <td>${totalCantidad}</td>
+            <td>$${totalVenta}</td>
+            <td>$${ganancia}</td>
+            <td>
+                <div class="botonver">
+                    <a data-id=${id} href="#">Ver Productos</a>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(fila);
+
+        fila.addEventListener('click', (e) => {
+            if (e.target.parentElement.classList.contains('botonver')) {
+                e.preventDefault();
+                const tablaTicketSelector = document.querySelector('.modalCancelar__tabla-ticket');
+                limpiarHTMLElemento(tablaTicketSelector);
+
+                abrirModalVer();
+
+                let tbody = document.createElement('TBODY');
+
+                id = e.target.getAttribute('data-id');
+
+                const tablaTicket = document.createElement('TABLE');
+                tablaTicket.classList.add('modalCancelar__ticket');
+            
+                const thead = document.createElement('THEAD');
+                thead.innerHTML = `
+                    <tr>
+                        <th>Cant.</th>
+                        <th>Producto</th>
+                        <th>C.U.</th>
+                        <th>Subtotal</th>
+                    </tr>
+                `;
+                let totalCarrito = 0;
+                let cantidad = '';
+                let precioVenta = '';
+
+                let carrito = ventas.filter( venta => venta.carrito_id === id);
+                carrito.forEach(venta => {
+                    let totalVentaProducto = 0;
+
+                    if(venta.granel === '1'){
+                        totalVentaProducto = (venta.precio_venta*venta.cantidad)/1000;
+                        cantidad = `${venta.cantidad} g  `;
+                        precioVenta = `${venta.precio_venta}/kg  `;
+
+                    } else {
+                        totalVentaProducto = venta.precio_venta*venta.cantidad;
+                        cantidad = `${venta.cantidad}`;
+                        precioVenta = `${venta.precio_venta}`;
+                    }
+                    totalCarrito = totalCarrito + totalVentaProducto;
+                    
+
+                    let fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>${cantidad}</td>
+                        <td>${venta.producto} ${venta.producto_descripcion}</td>
+                        <td>$${precioVenta}</td>
+                        <td>$${totalVentaProducto}</td>
+                        
+                    `;
+                    tbody.appendChild(fila);
+                });
+            
+                tablaTicketSelector.appendChild(thead);
+                tablaTicketSelector.appendChild(tbody);
+
+                const contenedorTotal = document.querySelector('.modalCancelar__total-ticket');
+                let p = contenedorTotal.querySelector('P');
+                p.textContent = `Total: $${totalCarrito}`;
+                console.log(tablaTicketSelector);
+            
+            }
+        })
+
+        
+    })
+
+
+
+    tablaDinamica.appendChild(tbody);
 
     contenedorTabla.appendChild(tablaDinamica);
 
@@ -174,6 +311,20 @@ async function consultarAPI() {
 
     } catch (e) {
         console.log(e);
+    }
+}
+
+
+function abrirModalVer() {
+    document.querySelector('.modalCancelar').classList.add('modalCancelar--show');
+}
+
+function limpiarHTMLElemento(elemento) {
+    // Forma lenta
+    // contenedorCarrito.innerHTML = '';
+
+    while (elemento.firstChild) {
+        elemento.removeChild(elemento.firstChild);
     }
 }
 
