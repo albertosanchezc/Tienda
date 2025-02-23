@@ -199,7 +199,7 @@
                     <td class="tachado">$50.00</td>
                     <td>27/09/25 a las 10:58p.m.</td>
                     <td>27</td>
-                    
+
                 </tr>
                 <tr>
                     <td>2</td>
@@ -234,7 +234,7 @@
     </div>
 </section>
 
-<section class="modalCancelar">
+<section class="modalCancelar modalCancelar--show">
     <div class="modalCancelar__contenedor">
         <div class="modalCancelar__cerrar">
             <a href="#" class="modalCancelar__refcerrar">
@@ -242,60 +242,68 @@
             </a>
         </div>
         <div class="modalCancelar__titulo">
-            <h1>Buscar proveedor</h1>
-            <h3>Introduce el nombre del proveedor y visualiza o edita sus datos empresariales.</h3>
+            <h1>Productos Vendidos</h1>
+            <h3>Visualiza los productos vendidos en este carrito.</h3>
         </div>
-        <div class="modalCancelar__filtros">
-            <form id="buscadorProveedor" method="POST">
-                <fieldset>
-                    <legend>Búsqueda</legend>
-                    <div class="modalCancelar__filtrosbox">
-                        <div class="modalCancelar__nombre">
-                            <label for="nombreproveedor">Proveedor: </label>
-                            <input type="text" id="nombreproveedor" name="proveedor[nombre]">
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
+        <div class="botonCancelaciones">
+            <a href="#">Gestionar Cancelaciones de </a>
         </div>
-        <div class="modalCancelar__contactocancelar">
-            <div class="modalCancelar__datosgrid">
-                <!-- Contenido de la primera tarjeta -->
-                <h3>COCA COLA REFRESCO</h3>
-                <p>PROVEEDOR DESTACADO</p>
-                <div class="modalCancelar__flextelefono">
-                    <img src="/build/img/telefono.png" alt="Logotipo de telefono" class="modalCancelar__imgtelefono">
-                    <div class="modalCancelar__telefono">(+52) 44-51-63-74</div>
-                </div>
-                <div class="modalCancelar__flexemail">
-                    <img src="/build/img/email.png" alt="Logotipo de email" class="modalCancelar__imgemail">
-                    <div class="modalCancelar__email">zamudiolopezkarina@gmail.com</div>
-                </div>
-                <div class="modalCancelar__flexreloj">
-                    <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="modalCancelar__imgreloj">
-                    <div class="modalCancelar__ultimoregistro">Últ. Visita: 26/10/2020</div>
-                </div>
-                <a href="#" class="modalCancelar__botonactualizar">Actualizar</a>
-                <a href="#" class="modalCancelar__botoneliminar">Eliminar</a>
+        <div class="modalCancelar__rectangulo-grande">
+            <div class="modalCancelar__tabla-ticket">
+                <table class="modalCancelar__ticket">
+                    <thead>
+                        <tr>
+                            <th>Cant.</th>
+                            <th>Producto</th>
+                            <th>C.U.</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <!-- Mostrar los resultados -->
+                    <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                    <!-- borrar esto al terminar -->
+                    <tbody>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Coca-Cola 25ml taparrosca</td>
+                            <td>$150.00</td>
+                            <td>$300.00</td>
+                        </tr>
+
+                    </tbody>
+
+                    <!-- borrar esto al terminar -->
+                    <!-- !
+                            !
+                            !
+                            !
+                            ! -->
+                </table>
             </div>
-            <div class="modalCancelar__datosgrid1">
-                <!-- Contenido de la segunda tarjeta -->
-                <h3>COCA COLA REFRESCO</h3>
-                <p>PROVEEDOR DESTACADO</p>
-                <div class="modalCancelar__flextelefono">
-                    <img src="/build/img/telefono.png" alt="Logotipo de telefono" class="modalCancelar__imgtelefono">
-                    <div class="modalCancelar__telefono">(+52) 44-51-63-74</div>
-                </div>
-                <div class="modalCancelar__flexemail">
-                    <img src="/build/img/email.png" alt="Logotipo de email" class="modalCancelar__imgemail">
-                    <div class="modalCancelar__email">zamudiolopezkarina@gmail.com</div>
-                </div>
-                <div class="modalCancelar__flexreloj">
-                    <img src="/build/img/reloj.png" alt="Logotipo de reloj" class="modalCancelar__imgreloj">
-                    <div class="modalCancelar__ultimoregistro">Últ. Visita: 26/10/2020</div>
-                </div>
-                <a href="#" class="modalCancelar__botonactualizar">Actualizar Producto</a>
-                <a href="#" class="modalCancelar__botoneliminar">Eliminar</a>
+            <div class="modalCancelar__total-ticket">
+                <p>Total: $519.32</p>
             </div>
         </div>
 </section>
