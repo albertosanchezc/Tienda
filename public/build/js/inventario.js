@@ -64,8 +64,25 @@ btnCerrarModalActualizarStock.addEventListener('click', (e) => {
 
 btnOptionCrear.addEventListener('click', (e) => {
     if (e.target.value === 'optiongranel') {
+        const parrafo = document.createElement('P');
         pKiloCompra.textContent = '(Precio por Kilogramo):';
         pKiloVenta.textContent = '(Precio por Kilogramo):';
+        let inputCodigoBarrasCrear = document.querySelector('#entradacodigo_barras');
+        inputCodigoBarrasCrear.value = generarCodigoAleatorio();
+        const formularioCrear = document.querySelector('#nuevoproducto');
+
+        parrafo.classList.add('exito', 'alerta');
+        parrafo.textContent = 'Se generó un código de barras, puedes modificarlo si lo deseas';
+
+        const parrafoPresente = document.querySelector('.exito');
+        if (!parrafoPresente) {
+            formularioCrear.prepend(parrafo);
+            setTimeout(() => {
+                parrafo.remove();
+            }, 3000);
+
+        }
+
 
     }
     if (e.target.value === 'optionpieza') {
@@ -215,6 +232,18 @@ async function consultarAPI() {
     }
 }
 
+
+function generarCodigoAleatorio() {
+    let caracteres = '0123456789';  // Solo números
+    let codigo = '8';  // El primer carácter siempre será un 8
+    for (let i = 1; i < 13; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    return codigo;
+}
+
+
+
 // Función para mostrar el slide actual y actualizar los puntos
 function showSlide(index) {
     const botonSlider = document.querySelector('.botonslider');
@@ -337,7 +366,7 @@ function mostrarCards(inventario, proveedores, categorias) {
 
         let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel } = producto;
 
-        let proveedorDatos = proveedores.find(proveedor => proveedor.id === proveedor_id );
+        let proveedorDatos = proveedores.find(proveedor => proveedor.id === proveedor_id);
         let categoriaDatos = categorias.find(categoria => categoria.id === categoria_id);
 
         let ganancia = precio_unitario_venta - precio_compra;
@@ -645,20 +674,20 @@ function generarPaginador(datos = inventario) {
 function abrirModalNuevoProducto(e) {
     e.preventDefault();
     modalInventario.classList.add('modal--inventario--show');
-    cerrarModalClickFuera(modalInventario,'modal--inventario');
+    cerrarModalClickFuera(modalInventario, 'modal--inventario');
 }
 
 function abrirModalActualizarProducto(e) {
     e.preventDefault();
     modalActualizarInventario.classList.add('modal--inventario--actualizar--show');
-    cerrarModalClickFuera(modalActualizarInventario,'modal--inventario--actualizar');
+    cerrarModalClickFuera(modalActualizarInventario, 'modal--inventario--actualizar');
 
 }
 function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
     e.preventDefault();
     modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
-    cerrarModalClickFuera(modalActualizarStock,'modal--inventario--actualizarStock');
-    
+    cerrarModalClickFuera(modalActualizarStock, 'modal--inventario--actualizarStock');
+
     // modalActualizarStock.querySelector('switch').querySelector('#optionaniadir').click();
 
     let resultado = cantidad;
@@ -718,7 +747,7 @@ function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
 function abrirModalEliminarProducto(e) {
     e.preventDefault();
     modalEliminarInventario.classList.add('modal--inventarioEliminar--show');
-    cerrarModalClickFuera(modalEliminarInventario,'modal--inventarioEliminar');
+    cerrarModalClickFuera(modalEliminarInventario, 'modal--inventarioEliminar');
 }
 
 function cerrarModalInventarioCrear() {

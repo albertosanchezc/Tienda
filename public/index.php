@@ -11,6 +11,7 @@ use MVC\Router;
 use Controllers\LoginController;
 use Controllers\PaginasController;
 use Controllers\InventarioController;
+use Controllers\VentasYCancelacionesController;
 
 $router = new Router();
 
@@ -57,8 +58,8 @@ $router->get('/categorias', [CategoriasController::class, 'categorias']);
 $router->post('/categorias', [CategoriasController::class, 'categorias']);
 
 
-$router->get('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
-$router->post('/ventasycancelaciones', [PaginasController::class, 'ventasycancelaciones']);
+$router->get('/ventasycancelaciones', [VentasYCancelacionesController::class, 'ventasycancelaciones']);
+$router->post('/ventasycancelaciones', [VentasYCancelacionesController::class, 'ventasycancelaciones']);
 
 $router->get('/caja', [CajaController::class, 'caja']);
 $router->post('/caja', [CajaController::class, 'caja']);

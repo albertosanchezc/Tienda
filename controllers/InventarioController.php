@@ -15,7 +15,9 @@ class InventarioController
 
     public static function inventario(Router $router)
     {
-        $script = '<script src="/build/js/inventario.js"></script>        
+        $script = '<script src="/build/js/inventario.js"></script>
+        <script src="/build/js/JsBarcode.all.min.js"></script>
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
         $alertas = [];
