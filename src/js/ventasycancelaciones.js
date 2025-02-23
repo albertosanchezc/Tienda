@@ -203,8 +203,8 @@ function mostrarTabla(ventas) {
             <td>${id}</td>
             <td>${fechaFormateada} a las ${horaFormateada}</td>
             <td>${totalCantidad}</td>
-            <td>$${totalVenta}</td>
-            <td>$${ganancia}</td>
+            <td>$${totalVenta.toFixed(2)}</td>
+            <td>$${ganancia.toFixed(2)}</td>
             <td>
                 <div class="botonver">
                     <a data-id=${id} href="#">Ver Productos</a>
@@ -262,8 +262,8 @@ function mostrarTabla(ventas) {
                     fila.innerHTML = `
                         <td>${cantidad}</td>
                         <td>${venta.producto} ${venta.producto_descripcion}</td>
-                        <td>$${precioVenta}</td>
-                        <td>$${totalVentaProducto}</td>
+                        <td>$${precioVenta.toFixed(2)}</td>
+                        <td>$${totalVentaProducto.toFixed(2)}</td>
                         
                     `;
                     tbody.appendChild(fila);
