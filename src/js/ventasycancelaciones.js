@@ -4,8 +4,8 @@ const btnVentas = document.querySelector('.rojoclaro');
 const btnCancelaciones = document.querySelector('.rojooscuro');
 
 const contenedorBotones = document.querySelector('.botonesventas');
-
-
+const btnCerrarModalCancelar = document.querySelector('.modalCancelar__imgcerrar');
+const imagendown = document.querySelector('.imgdown');
 
 // Eventos
 contenedorBotones.addEventListener('click', (e) => {
@@ -40,4 +40,16 @@ contenedorBotones.addEventListener('click', (e) => {
 })
 
 
+// Eventos que escucha el click al gif de bajar
+imagendown.addEventListener('click', function (){
+    window.scrollTo({
+        top: 550,
+        behavior: 'smooth'
+    });
+});
 
+
+
+btnCerrarModalCancelar.addEventListener('click', () => {
+    document.querySelector('.modalCancelar').classList.remove('modalCancelar--show'); 
+})
