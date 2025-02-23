@@ -64,6 +64,14 @@ class PaginasController
             'categorias' => $categorias
         ]);
     }
+
+    public static function ventasAPI(){
+        $ventas = Ventas::ALF('fecha_venta','ASC');
+
+        echo json_encode([
+            'ventas' => $ventas
+        ]);
+    }
     
 
     

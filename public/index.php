@@ -46,6 +46,7 @@ $router->get('/inventarios/api/inventarios', [PaginasController::class, 'inventa
 $router->get('/proveedores/api/proveedores', [ProveedoresController::class, 'proveedoresAPI']);
 $router->get('/caja/api/caja', [PaginasController::class, 'cajaAPI']);
 $router->get('/categorias/api/categorias', [PaginasController::class, 'categoriasAPI']);
+$router->get('/ventas/api/ventas', [PaginasController::class, 'ventasAPI']);
 
 
 

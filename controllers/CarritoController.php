@@ -47,6 +47,8 @@ class CarritoController
                     $articulo = Inventario::find($articuloCarrito['id']);
                     $cantidadAnterior = $articulo->cantidad;
                     $cantidadSalida = $articuloCarrito['cantidad'];
+                    $precio_venta = $articulo->precio_unitario_venta;
+                    $precio_compra = $articulo->precio_compra;
                     $cantidadResultante = $cantidadAnterior - $cantidadSalida;
                     if($cantidadResultante <= 0){
                         $articulo->cantidad = 0;
@@ -59,6 +61,9 @@ class CarritoController
                     $ventas->id = null;
                     $ventas->cantidad = $cantidadSalida;
                     $ventas->carrito_id = $carrito_id;
+                    $ventas->precio_venta = $precio_venta;
+                    $ventas->precio_compra = $precio_compra;
+                    
 
                     $inventario->sincronizar($articulo);
                     // debuguear([$articuloCarrito,$ventas,$articulo]);
