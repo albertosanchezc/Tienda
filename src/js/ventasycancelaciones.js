@@ -212,6 +212,7 @@ function mostrarTabla(ventas) {
             </td>
         `;
         tbody.appendChild(fila);
+        const carritoId = id;
 
         fila.addEventListener('click', (e) => {
             if (e.target.parentElement.classList.contains('botonver')) {
@@ -227,7 +228,7 @@ function mostrarTabla(ventas) {
 
                 const tablaTicket = document.createElement('TABLE');
                 tablaTicket.classList.add('modalCancelar__ticket');
-            
+
                 const thead = document.createElement('THEAD');
                 thead.innerHTML = `
                     <tr>
@@ -241,22 +242,22 @@ function mostrarTabla(ventas) {
                 let cantidad = '';
                 let precioVenta = '';
 
-                let carrito = ventas.filter( venta => venta.carrito_id === id);
+                let carrito = ventas.filter(venta => venta.carrito_id === id);
                 carrito.forEach(venta => {
                     let totalVentaProducto = 0;
 
-                    if(venta.granel === '1'){
-                        totalVentaProducto = (venta.precio_venta*venta.cantidad)/1000;
+                    if (venta.granel === '1') {
+                        totalVentaProducto = (venta.precio_venta * venta.cantidad) / 1000;
                         cantidad = `${venta.cantidad} g  `;
                         precioVenta = `${venta.precio_venta}/kg  `;
 
                     } else {
-                        totalVentaProducto = venta.precio_venta*venta.cantidad;
+                        totalVentaProducto = venta.precio_venta * venta.cantidad;
                         cantidad = `${venta.cantidad}`;
                         precioVenta = `${venta.precio_venta}`;
                     }
                     totalCarrito = totalCarrito + totalVentaProducto;
-                    
+
 
                     let fila = document.createElement('tr');
                     fila.innerHTML = `
@@ -268,7 +269,7 @@ function mostrarTabla(ventas) {
                     `;
                     tbody.appendChild(fila);
                 });
-            
+
                 tablaTicketSelector.appendChild(thead);
                 tablaTicketSelector.appendChild(tbody);
 
@@ -276,11 +277,76 @@ function mostrarTabla(ventas) {
                 let p = contenedorTotal.querySelector('P');
                 p.textContent = `Total: $${totalCarrito.toFixed(2)}`;
                 console.log(tablaTicketSelector);
-            
+
+
+                const btnAbrirModalCancelarProductos = document.querySelector('.modalCancelar__botonCancelaciones');
+                btnAbrirModalCancelarProductos.querySelector('A').dataset.id = carritoId;
+                btnAbrirModalCancelarProductos.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (e.target.parentElement.classList.contains('modalCancelar__botonCancelaciones')) {
+                        document.querySelector('.modalCancelar--productos').classList.add('modalCancelar--productos--show');
+
+                        const tablaTicketSelector1 = document.querySelector('.modalCancelar--productos__ticket');
+                        limpiarHTMLElemento(tablaTicketSelector1);
+
+                        id = e.target.getAttribute('data-id');
+                        console.log(carrito);
+                        const tablaModalCancelarProductosTicket = document.createElement('TABLE');
+                        tablaModalCancelarProductosTicket.classList.add('modalCancelar--productos__ticket');
+                        const theadTablaModalCancelarProductosTicket = document.createElement('THEAD');
+                        theadTablaModalCancelarProductosTicket.innerHTML = `
+                            <thead>
+                                <tr>
+                                    <th>Cant.</th>
+                                    <th>Producto</th>
+                                    <th>C.U.</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                        `;
+
+                        const tbodyTablaModalCancelarProductosTicket = document.createElement('TBODY');
+                        carrito.forEach(venta => {
+                            totalVenta = 0;
+                            const { cantidad, producto, producto_descripcion, precio_venta, granel } = venta;
+                            if(granel === '1'){
+                                totalVenta += (cantidad * precio_venta)/1000;
+                            } else {
+                                totalVenta += cantidad * precio_venta;
+                            }
+
+                            const filaTablaModalCancelarProductosTicket = document.createElement('TR');
+                            filaTablaModalCancelarProductosTicket.style.cursor = 'pointer';
+                            filaTablaModalCancelarProductosTicket.innerHTML = `
+                            <tr>
+                                <td>${cantidad}</td>
+                                <td>${producto} ${producto_descripcion}</td>
+                                <td>$${precio_venta}</td>
+                                <td>$${totalVenta.toFixed(2)}</td>
+                            </tr>
+                            `;
+
+                            filaTablaModalCancelarProductosTicket.addEventListener('click', (e) => {
+                                console.log(e.target.parentElement)
+                                e.target.parentElement.classList.add('selected');
+
+                            });
+
+                            tbodyTablaModalCancelarProductosTicket.appendChild(filaTablaModalCancelarProductosTicket);
+                        })
+                        tablaTicketSelector1.appendChild(theadTablaModalCancelarProductosTicket);
+                        tablaTicketSelector1.appendChild(tbodyTablaModalCancelarProductosTicket);
+
+
+
+
+
+                    }
+                })
             }
         })
 
-        
+
     })
 
 
