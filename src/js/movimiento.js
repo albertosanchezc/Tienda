@@ -6,11 +6,6 @@
         contenedorCards.style.display = "none";
         limpiarHTMLElemento(containertabla);
 
-        // limpiarHTMLElemento(articulosModificar);
-
-        // btnReciente.click();
-        // inicializarSelect();
-
     });
 
     async function consultarAPI() {
@@ -26,10 +21,6 @@
             proveedores = resultado.proveedores;
             categorias = resultado.categorias;
             console.log(categorias);
-            // mostrarCard(inventario);
-            // mostrarTabla(inventario, proveedores);
-
-            // filtrar();
 
         } catch (e) {
             console.log(e);
@@ -80,6 +71,7 @@
         const contenedorTabla = document.querySelector('.tabladeproveedores', 'tablaverde');
 
         contenedorTabla.innerHTML = '';
+        idStock.clear();
         const tablaDinamica = document.createElement('table');
         tablaDinamica.classList.add('tabla-proveedores', 'tabla-verde');
 
@@ -128,7 +120,6 @@
 
         articulosProveedor.addEventListener('click', (e) => {
             e.preventDefault();
-
             if (e.target.classList.contains('btnEditarStock')) {
                 contenedorCards.style.display = "grid";
                 const idProducto = e.target.getAttribute('data-id');
@@ -182,8 +173,8 @@
                         if (!idStock.has(idProducto)) {
                             idStock.add(idProducto);
                             fila.classList.add('fila-seleccionada');
-                            // boton.textContent = 'Dejar de Editar';
-                            // boton.classList.add('btnQuitarStock');
+                            boton.textContent = 'Dejar de Editar';
+                            boton.classList.add('btnQuitarStock');
 
                             const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
 
@@ -198,12 +189,16 @@
                     botonTodos.classList.remove('activo');
                     botonTodos.textContent = 'Editar Stock Todos los Productos de éste proveedor';
 
+
                     filas.forEach(fila => {
+                        const boton = fila.querySelector('.btnEditarStock');
+
+                        
                         const idProducto = fila.getAttribute('data-id');
                         idStock.delete(idProducto);
                         fila.classList.remove('fila-seleccionada');
-                        // boton.textContent = 'Editar Stock';
-                        // boton.classList.add('btnQuitarStock');
+                        boton.textContent = 'Editar Stock';
+                        boton.classList.remove('btnQuitarStock');
 
                         const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
                         if (card) {
