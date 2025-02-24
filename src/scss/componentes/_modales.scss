@@ -1283,6 +1283,11 @@
             background-color: rgb(225, 248, 255);
             color: #000;
         } 
+
+        tr.selected:nth-child(even){
+            background-color: rgb(225, 248, 255);
+            color: #000;
+        }
     }
 
    
