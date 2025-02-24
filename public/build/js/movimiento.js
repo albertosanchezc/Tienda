@@ -1,4 +1,23 @@
 (function () {
+    const STATES = {
+        INITIAL: 'INITIAL',
+        PROVIDER_SELECTED: 'PROVIDER_SELECTED',
+        PRODUCTS_ADDED: 'PRODUCTS_ADDED'
+    };
+    
+    let currentState = STATES.INITIAL;
+    let inventario = [];
+    let categorias = [];
+    let proveedores = [];
+    let terminosBusqueda = {
+        proveedor: ''
+    }
+
+    const idStock = new Set();
+    const inputProveedor = document.querySelector('#proveedormovimientoprod');
+    const containertabla = document.querySelector('.gridmodificaciones');
+    const contenedorClass1 = document.querySelector('.containerBackground');
+    const contenedorCards = document.querySelector('.articulosmodificar');
 
     document.addEventListener('DOMContentLoaded', function () {
         consultarAPI();
@@ -20,39 +39,21 @@
             inventario = resultado.inventario;
             proveedores = resultado.proveedores;
             categorias = resultado.categorias;
-            console.log(categorias);
+            // console.log(categorias);
 
         } catch (e) {
             console.log(e);
         }
     }
 
-
-    let inventario = [];
-    let categorias = [];
-    let proveedores = [];
-    let estado = 0;
-    let terminosBusqueda = {
-        proveedor: ''
-    }
-
-    const inputProveedor = document.querySelector('#proveedormovimientoprod');
-    const containertabla = document.querySelector('.gridmodificaciones');
-    const containertabla1 = document.querySelector('.tablaverde');
-    const contenedorClass1 = document.querySelector('.containerBackground');
-    const gridmodificaciones = document.querySelector('.gridmodificaciones');
-    const contenedorCards = document.querySelector('.articulosmodificar');
-    const idStock = new Set();
-
-
     inputProveedor.addEventListener('change', (e) => {
         limpiarHTMLElemento(containertabla);
         contenedorCards.style.display = "none";
-        let { proveedor } = terminosBusqueda;
-        proveedor = e.target.value;
-        terminosBusqueda.proveedor = proveedor;
-        console.log(terminosBusqueda);
-        estado = 1;
+        // const botonTodos = document.addEventListener.classList('.btnEditarStockTodos');
+        // botonTodos.classList.remove('activo');
+        // botonTodos.textContent = 'Editar Stock Todos los Productos de éste proveedor';
+        terminosBusqueda.proveedor = e.target.value;
+        currentState = STATES.PROVIDER_SELECTED;
         filtrar();
         if (terminosBusqueda.proveedor) {
             contenedorClass1.style.display = "block";
@@ -66,9 +67,9 @@
 
 
     function mostrarTabla(inventario, proveedores) {
-        console.log(inventario);
+        // console.log(inventario);
 
-        const contenedorTabla = document.querySelector('.tabladeproveedores', 'tablaverde');
+        const contenedorTabla = document.querySelector('.tabladeproveedores');
 
         contenedorTabla.innerHTML = '';
         idStock.clear();
@@ -98,13 +99,13 @@
             const fila = document.createElement('tr');
             fila.setAttribute('data-id', id);
             fila.innerHTML = `
-                <td>${id}</td>
-                <td>${cantidad}</td>
-                <td>${nombre} ${descripcion}</td>
-                <td>${codigo_barras}</td>
+                <td>${producto.id}</td>
+                <td>${producto.cantidad}</td>
+                <td>${producto.nombre} ${producto.descripcion}</td>
+                <td>${producto.codigo_barras}</td>
                 <td>
                     <div class="btnVerVerde">
-                        <a href="#" class="btnEditarStock" data-id="${id}">Editar Stock</a>
+                        <a href="#" class="btnEditarStock" data-id="${producto.id}">Editar Stock</a>
                     </div>
                 </td>
 
@@ -118,7 +119,11 @@
 
         const articulosProveedor = document.querySelector('.articulosproveedor');
 
-        articulosProveedor.addEventListener('click', (e) => {
+        articulosProveedor.addEventListener('click', tablaEventos);
+
+    }
+
+    function tablaEventos(e){
             e.preventDefault();
             if (e.target.classList.contains('btnEditarStock')) {
                 contenedorCards.style.display = "grid";
@@ -138,9 +143,7 @@
 
                     if (productoSeleccionado) {
                         mostrarCard(productoSeleccionado, proveedores, categorias);
-                    } else {
-                        console.error('Producto no encontrado');
-                    }
+                    } 
                 } else {
                     idStock.delete(idProducto);
                     fila.classList.remove('fila-seleccionada');
@@ -152,13 +155,19 @@
                         card.remove();
                         console.log(`Se eliminó la tarjeta del producto ${idProducto}`);
                     }
+
+                    if (idStock.size > 0) {
+                        currentState = STATES.PRODUCTS_ADDED;
+                    } else if (currentState === STATES.PRODUCTS_ADDED) {
+                        currentState = STATES.PROVIDER_SELECTED;
+                    }
                 }
                 console.log('Productos seleccionados:', Array.from(idStock));
 
             }
 
             if (e.target.classList.contains('btnEditarStockTodos')) {
-
+                contenedorCards.style.display = "grid";
                 const botonTodos = e.target;
                 const filas = document.querySelectorAll('tr[data-id]');
 
@@ -184,6 +193,7 @@
                         }
                     });
 
+                    currentState = STATES.PRODUCTS_ADDED;
 
                 } else {
                     botonTodos.classList.remove('activo');
@@ -205,14 +215,18 @@
                             card.remove();
                         }
                     });
+
+                    if (idStock.size === 0) {
+                        currentState = STATES.PROVIDER_SELECTED;
+                    }
                 }
 
                 console.log('Productos seleccionados:', Array.from(idStock));
             }
 
-        });
+        }
 
-    }
+    
 
     function mostrarCard(producto, proveedores, categorias) {
         console.log("Producto desde mostrarCard:", producto);
@@ -365,10 +379,6 @@
     }
 
     function limpiarHTMLElemento(elemento) {
-        // Forma lenta
-        // contenedorCarrito.innerHTML = '';
-        console.log('listo');
-
         while (elemento.firstChild) {
             elemento.removeChild(elemento.firstChild);
         }
