@@ -140,11 +140,10 @@
                     idStock.add(idProducto);
 
                     fila.classList.add('fila-seleccionada');
-                    boton.textContent = 'Quitar Stock';
+                    boton.textContent = 'Dejar de Editar';
                     boton.classList.add('btnQuitarStock');
 
                     const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
-
 
                     if (productoSeleccionado) {
                         mostrarCard(productoSeleccionado, proveedores, categorias);
@@ -157,8 +156,10 @@
                     boton.textContent = 'Editar Stock';
                     boton.classList.remove('btnQuitarStock');
                     const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
+
                     if (card) {
                         card.remove();
+                        console.log(`Se eliminó la tarjeta del producto ${idProducto}`);
                     }
                 }
                 console.log('Productos seleccionados:', Array.from(idStock));
@@ -166,7 +167,52 @@
             }
 
             if (e.target.classList.contains('btnEditarStockTodos')) {
-                console.log('Contiene btnEditarStock');
+
+                const botonTodos = e.target;
+                const filas = document.querySelectorAll('tr[data-id]');
+
+                if (!botonTodos.classList.contains('activo')) {
+                    botonTodos.classList.add('activo');
+                    botonTodos.textContent = 'Dejar de Editar Todos los productos';
+
+                    filas.forEach(fila => {
+                        const idProducto = fila.getAttribute('data-id');
+                        const boton = fila.querySelector('.btnEditarStock');
+
+                        if (!idStock.has(idProducto)) {
+                            idStock.add(idProducto);
+                            fila.classList.add('fila-seleccionada');
+                            // boton.textContent = 'Dejar de Editar';
+                            // boton.classList.add('btnQuitarStock');
+
+                            const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
+
+                            if (productoSeleccionado) {
+                                mostrarCard(productoSeleccionado, proveedores, categorias);
+                            }
+                        }
+                    });
+
+
+                } else {
+                    botonTodos.classList.remove('activo');
+                    botonTodos.textContent = 'Editar Stock Todos los Productos de éste proveedor';
+
+                    filas.forEach(fila => {
+                        const idProducto = fila.getAttribute('data-id');
+                        idStock.delete(idProducto);
+                        fila.classList.remove('fila-seleccionada');
+                        // boton.textContent = 'Editar Stock';
+                        // boton.classList.add('btnQuitarStock');
+
+                        const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
+                        if (card) {
+                            card.remove();
+                        }
+                    });
+                }
+
+                console.log('Productos seleccionados:', Array.from(idStock));
             }
 
         });
@@ -287,7 +333,7 @@
         inventarioGrid.appendChild(gridContenido);
         inventarioGrid.appendChild(dineroGrid);
         inventarioGrid.appendChild(botonesGrid);
-
+        inventarioGrid.setAttribute('data-id', id);
         // Agrega la tarjeta al contenedor principal
         gridmodificaciones.appendChild(inventarioGrid);
     }
