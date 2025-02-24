@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', function () {
     consultarAPI();
 
@@ -7,12 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 let ventas = [];
 let arregloSeleccionadas = [];
+let carrito = [];
 let terminosBusqueda = {
     id: '',
     fechaI: '',
     fechaF: '',
     tipo: ''
 }
+
 // Selectores
 const btnVentas = document.querySelector('.rojoclaro');
 const btnCancelaciones = document.querySelector('.rojooscuro');
@@ -236,14 +236,45 @@ function escucharBotonesVerProductos() {
     })
 }
 
-function escucharBotonGestionarProductos(){
+function escucharBotonGestionarProductos() {
     // btnGestionarCancelaciones.querySelector('A').dataset.id = carritoId;
     btnGestionarCancelaciones.addEventListener('click', (e) => {
-        if(e.target.parentElement.classList.contains('modalCancelar__botonCancelaciones')){
+        if (e.target.parentElement.classList.contains('modalCancelar__botonCancelaciones')) {
             mostrarModalCancelar();
         }
     })
+}
 
+function escucharFilasModalCancelarProductosTicket(fila){
+    fila.addEventListener('click', (e) => {
+        console.log(e.target.parentElement)
+        e.target.parentElement.classList.toggle('selected');
+        let nombreDescripcion = fila.querySelector('.nombreDescripcion').textContent;
+        if(e.target.parentElement.classList.contains('selected')){
+            // Añadir al arreglo
+            let seleccionadoCompleto = ventas.filter(venta =>
+                nombreDescripcion.includes(`${venta.producto} ${venta.producto_descripcion}`)
+            );
+            console.log(seleccionadoCompleto);
+            arregloSeleccionadas = [...arregloSeleccionadas, seleccionadoCompleto];
+            console.log(arregloSeleccionadas);
+        } else {
+            // Eliminar del arreglo
+            let seleccionadoCompleto = ventas.filter(venta =>
+                nombreDescripcion.includes(`${venta.producto} ${venta.producto_descripcion}`)
+            );
+
+            arregloSeleccionadas = arregloSeleccionadas.reduce((acc, venta) => {
+                if (JSON.stringify(venta) !== JSON.stringify(seleccionadoCompleto)) {
+                    acc.push(venta);
+                }
+                return acc;
+            }, []);
+            console.log(arregloSeleccionadas);
+            
+        }
+
+    });
 }
 
 async function consultarAPI() {
@@ -292,7 +323,7 @@ function mostrarModalVerProductos(idCarrito) {
     let cantidad = '';
     let precioVenta = '';
 
-    let carrito = ventas.filter(venta => venta.carrito_id === id);
+    carrito = ventas.filter(venta => venta.carrito_id === id);
     carrito.forEach(venta => {
         let totalVentaProducto = 0;
 
@@ -332,9 +363,79 @@ function mostrarModalVerProductos(idCarrito) {
 
 }
 
-function mostrarModalCancelar(){
+function mostrarModalCancelar() {
     document.querySelector('.modalCancelar--productos').classList.add('modalCancelar--productos--show');
-    
+
+    const tablaTicketSelector = document.querySelector('.modalCancelar--productos__ticket');
+    limpiarHTMLElemento(tablaTicketSelector);
+    const tablaModalCancelarProductosTicket = document.createElement('TABLE');
+    tablaModalCancelarProductosTicket.classList.add('modalCancelar--productos__ticket');
+    const theadTablaModalCancelarProductosTicket = document.createElement('THEAD');
+    theadTablaModalCancelarProductosTicket.innerHTML = `
+        <thead>
+            <tr>
+                <th>Cant.</th>
+                <th>Producto</th>
+                <th>C.U.</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+    `;
+
+    const tbodyTablaModalCancelarProductosTicket = document.createElement('TBODY');
+
+    console.log(carrito);
+
+    carrito.forEach(venta => {
+        totalVenta = 0;
+        const { cantidad, producto, producto_descripcion, precio_venta, granel } = venta;
+        if (granel === '1') {
+            totalVenta += (cantidad * precio_venta) / 1000;
+        } else {
+            totalVenta += cantidad * precio_venta;
+        }
+
+        let filaTablaModalCancelarProductosTicket = document.createElement('TR');
+        filaTablaModalCancelarProductosTicket.style.cursor = 'pointer';
+        filaTablaModalCancelarProductosTicket.innerHTML = `
+        <tr>
+            <td>${cantidad}</td>
+            <td class="nombreDescripcion">${producto} ${producto_descripcion}</td>
+            <td>$${precio_venta}</td>
+            <td>$${totalVenta.toFixed(2)}</td>
+        </tr>
+        `;
+
+
+        let contenedorBotonesModal = document.querySelector('.modalCancelar--productos__switch');
+        contenedorBotonesModal.addEventListener('click', (e) => {
+            const identificador = e.target.id;
+            switch(identificador){
+                case 'carr':
+                    
+                break;
+
+                case 'prod':
+                    escucharFilasModalCancelarProductosTicket(filaTablaModalCancelarProductosTicket);
+                break;
+                
+                default :
+                
+                break;
+            }
+        })
+
+
+
+        tbodyTablaModalCancelarProductosTicket.appendChild(filaTablaModalCancelarProductosTicket);
+    })
+    tablaTicketSelector.appendChild(theadTablaModalCancelarProductosTicket);
+    tablaTicketSelector.appendChild(tbodyTablaModalCancelarProductosTicket);
+
+
+    console.log(arregloSeleccionadas);
+
+
 }
 
 function limpiarHTMLElemento(elemento) {
