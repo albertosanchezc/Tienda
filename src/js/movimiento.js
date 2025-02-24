@@ -51,7 +51,7 @@
     const contenedorClass1 = document.querySelector('.containerBackground');
     const gridmodificaciones = document.querySelector('.gridmodificaciones');
     const contenedorCards = document.querySelector('.articulosmodificar');
-    const idStock = newSet();
+    const idStock = new Set();
 
 
     inputProveedor.addEventListener('change', (e) => {
@@ -104,6 +104,7 @@
             let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel } = producto;
 
             const fila = document.createElement('tr');
+            fila.setAttribute('data-id', id);
             fila.innerHTML = `
                 <td>${id}</td>
                 <td>${cantidad}</td>
@@ -127,21 +128,40 @@
 
         articulosProveedor.addEventListener('click', (e) => {
             e.preventDefault();
-            // console.log(e.target.classList);
+
             if (e.target.classList.contains('btnEditarStock')) {
                 contenedorCards.style.display = "grid";
-
                 const idProducto = e.target.getAttribute('data-id');
-                const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
-                
+                const fila = document.querySelector(`tr[data-id="${idProducto}"]`);
 
-                if (productoSeleccionado) {
-                    mostrarCard(productoSeleccionado, proveedores, categorias);
+                const boton = e.target;
+
+                if (!idStock.has(idProducto)) {
+                    idStock.add(idProducto);
+
+                    fila.classList.add('fila-seleccionada');
+                    boton.textContent = 'Quitar Stock';
+                    boton.classList.add('btnQuitarStock');
+
+                    const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
+
+
+                    if (productoSeleccionado) {
+                        mostrarCard(productoSeleccionado, proveedores, categorias);
+                    } else {
+                        console.error('Producto no encontrado');
+                    }
                 } else {
-                    console.error('Producto no encontrado');
+                    idStock.delete(idProducto);
+                    fila.classList.remove('fila-seleccionada');
+                    boton.textContent = 'Editar Stock';
+                    boton.classList.remove('btnQuitarStock');
+                    const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
+                    if (card) {
+                        card.remove();
+                    }
                 }
-                console.log('ID del producto seleccionado:', idProducto);
-
+                console.log('Productos seleccionados:', Array.from(idStock));
 
             }
 
@@ -157,29 +177,29 @@
         console.log("Producto desde mostrarCard:", producto);
         console.log("proveedores desde mostrarCard:", proveedores);
 
-    
+
         const gridmodificaciones = document.querySelector('.gridmodificaciones');
-        
+
         let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, cantidad, imagen, granel } = producto;
 
         let proveedorDatos = proveedores.find(proveedor => proveedor.id === proveedor_id);
         // let categoriaDatos = categorias.find(categoria => categoria.id === categoria_id);
-    
+
         // Busca el proveedor correspondiente
         const proveedorNombre = proveedorDatos ? proveedorDatos.nombre : 'Proveedor no disponible';
-    
+
         const ganancia = precio_unitario_venta - precio_compra;
         const porcentajeGanancia = (ganancia * 100) / precio_compra;
 
         const inventarioGrid = document.createElement('DIV');
         inventarioGrid.classList.add('inventariogrid1');
-    
+
         const gridContenido = document.createElement('DIV');
         gridContenido.classList.add('gridcontenido1');
-    
+
         const parrafoContainer = document.createElement('div');
         parrafoContainer.classList.add('inventarionombre');
-    
+
         parrafoContainer.innerHTML = `
             <img src="/imagenes/${imagen}" alt="Img ${nombre}" class="imgcoca">
             <h3>${nombre}</h3>
@@ -187,11 +207,11 @@
 
         const stockContainer = document.createElement('div');
         stockContainer.classList.add('flexstock');
-    
+
         stockContainer.innerHTML = `
             <p>${cantidad} ${granel === '1' ? 'GRAMOS' : 'ARTÍCULOS'} EN STOCK</p>
         `;
-    
+
         gridContenido.innerHTML = `
             <div class="flexdescripcion">
                 <img src="/build/img/descripcion-alternativa.png" alt="Descripción" class="imgdescripcion">
@@ -223,7 +243,7 @@
                 </div>
             </div>
         `;
-    
+
         const dineroGrid = document.createElement('DIV');
         dineroGrid.classList.add('dinerogrid');
         dineroGrid.innerHTML = `
@@ -244,7 +264,7 @@
                 <p class="dineros">$${ganancia.toFixed(2)}</p>
             </div>
         `;
-    
+
         // Crea el contenedor de botones de stock
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonStock');
@@ -260,18 +280,18 @@
                 <p class="ma">+</p>
             </div>
         `;
-    
+
         // Agrega todos los elementos al contenedor principal
         inventarioGrid.appendChild(parrafoContainer);
         inventarioGrid.appendChild(stockContainer);
         inventarioGrid.appendChild(gridContenido);
         inventarioGrid.appendChild(dineroGrid);
         inventarioGrid.appendChild(botonesGrid);
-    
+
         // Agrega la tarjeta al contenedor principal
         gridmodificaciones.appendChild(inventarioGrid);
     }
-    
+
 
     function filtrar() {
         const resultadosFiltrado = inventario.filter(filtrarProveedor);

@@ -619,3 +619,23 @@
 
     }
 }
+
+.btnQuitarStock{
+    background: none;
+    background: linear-gradient(to right, rgb(114, 114, 114), rgb(182, 181, 181));
+    border: solid 1px gray;
+}
+.btnQuitarStock:hover{
+    background: none;
+    background: linear-gradient(to right, rgb(194, 194, 194), rgb(214, 214, 214));
+    color: gray;
+}
+
+.fila-seleccionada{
+    color: rgb(148, 148, 148);
+    background-color: #e4e4e4;
+}
+
+.fila-seleccionada:hover{
+    background-color: #b3b3b3;
+}
