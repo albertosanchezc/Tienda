@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 let ventas = [];
-
+let arregloSeleccionadas = [];
 let terminosBusqueda = {
     id: '',
     fechaI: '',
@@ -21,7 +21,9 @@ const contenedorBotones = document.querySelector('.botonesventas');
 const btnCerrarModalCancelar = document.querySelector('.modalCancelar__imgcerrar');
 const btnCerrarModalCancelarProducto = document.querySelector('.modalCancelar--productos__imgcerrar');
 
-
+const tbodyfilasVentasPorCarrito = document.querySelector('.tabladecontenido-ventas').querySelector('tbody') || '';
+let botonesVer = '';
+let btnGestionarCancelaciones = '';
 const imagendown = document.querySelector('.imgdown');
 
 const inputFechaInicial = document.getElementById('fecha1');
@@ -69,8 +71,6 @@ imagendown.addEventListener('click', function () {
     });
 });
 
-
-
 btnCerrarModalCancelar.addEventListener('click', () => {
     document.querySelector('.modalCancelar').classList.remove('modalCancelar--show');
 })
@@ -95,7 +95,6 @@ inputFechaFinal.addEventListener('change', (e) => {
     console.log(terminosBusqueda);
     filtrar();
 })
-
 
 // Funciones 
 
@@ -212,154 +211,40 @@ function mostrarTabla(ventas) {
             </td>
         `;
         tbody.appendChild(fila);
-        const carritoId = id;
-
-        fila.addEventListener('click', (e) => {
-            if (e.target.parentElement.classList.contains('botonver')) {
-                e.preventDefault();
-                const tablaTicketSelector = document.querySelector('.modalCancelar__tabla-ticket');
-                limpiarHTMLElemento(tablaTicketSelector);
-
-                abrirModalVer();
-
-                let tbody = document.createElement('TBODY');
-
-                id = e.target.getAttribute('data-id');
-
-                const tablaTicket = document.createElement('TABLE');
-                tablaTicket.classList.add('modalCancelar__ticket');
-
-                const thead = document.createElement('THEAD');
-                thead.innerHTML = `
-                    <tr>
-                        <th>Cant.</th>
-                        <th>Producto</th>
-                        <th>C.U.</th>
-                        <th>Subtotal</th>
-                    </tr>
-                `;
-                let totalCarrito = 0;
-                let cantidad = '';
-                let precioVenta = '';
-
-                let carrito = ventas.filter(venta => venta.carrito_id === id);
-                carrito.forEach(venta => {
-                    let totalVentaProducto = 0;
-
-                    if (venta.granel === '1') {
-                        totalVentaProducto = (venta.precio_venta * venta.cantidad) / 1000;
-                        cantidad = `${venta.cantidad} g  `;
-                        precioVenta = `${venta.precio_venta}/kg  `;
-
-                    } else {
-                        totalVentaProducto = venta.precio_venta * venta.cantidad;
-                        cantidad = `${venta.cantidad}`;
-                        precioVenta = `${venta.precio_venta}`;
-                    }
-                    totalCarrito = totalCarrito + totalVentaProducto;
-
-
-                    let fila = document.createElement('tr');
-                    fila.innerHTML = `
-                        <td>${cantidad}</td>
-                        <td>${venta.producto} ${venta.producto_descripcion}</td>
-                        <td>$${precioVenta}</td>
-                        <td>$${totalVentaProducto}</td>
-                        
-                    `;
-                    tbody.appendChild(fila);
-                });
-
-                tablaTicketSelector.appendChild(thead);
-                tablaTicketSelector.appendChild(tbody);
-
-                const contenedorTotal = document.querySelector('.modalCancelar__total-ticket');
-                let p = contenedorTotal.querySelector('P');
-                p.textContent = `Total: $${totalCarrito.toFixed(2)}`;
-                console.log(tablaTicketSelector);
-
-
-                const btnAbrirModalCancelarProductos = document.querySelector('.modalCancelar__botonCancelaciones');
-                btnAbrirModalCancelarProductos.querySelector('A').dataset.id = carritoId;
-                btnAbrirModalCancelarProductos.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (e.target.parentElement.classList.contains('modalCancelar__botonCancelaciones')) {
-                        document.querySelector('.modalCancelar--productos').classList.add('modalCancelar--productos--show');
-
-                        const tablaTicketSelector1 = document.querySelector('.modalCancelar--productos__ticket');
-                        limpiarHTMLElemento(tablaTicketSelector1);
-
-                        id = e.target.getAttribute('data-id');
-                        console.log(carrito);
-                        const tablaModalCancelarProductosTicket = document.createElement('TABLE');
-                        tablaModalCancelarProductosTicket.classList.add('modalCancelar--productos__ticket');
-                        const theadTablaModalCancelarProductosTicket = document.createElement('THEAD');
-                        theadTablaModalCancelarProductosTicket.innerHTML = `
-                            <thead>
-                                <tr>
-                                    <th>Cant.</th>
-                                    <th>Producto</th>
-                                    <th>C.U.</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                        `;
-
-                        const tbodyTablaModalCancelarProductosTicket = document.createElement('TBODY');
-                        carrito.forEach(venta => {
-                            totalVenta = 0;
-                            const { cantidad, producto, producto_descripcion, precio_venta, granel } = venta;
-                            if(granel === '1'){
-                                totalVenta += (cantidad * precio_venta)/1000;
-                            } else {
-                                totalVenta += cantidad * precio_venta;
-                            }
-
-                            const filaTablaModalCancelarProductosTicket = document.createElement('TR');
-                            filaTablaModalCancelarProductosTicket.style.cursor = 'pointer';
-                            filaTablaModalCancelarProductosTicket.innerHTML = `
-                            <tr>
-                                <td>${cantidad}</td>
-                                <td>${producto} ${producto_descripcion}</td>
-                                <td>$${precio_venta}</td>
-                                <td>$${totalVenta.toFixed(2)}</td>
-                            </tr>
-                            `;
-
-                            filaTablaModalCancelarProductosTicket.addEventListener('click', (e) => {
-                                console.log(e.target.parentElement)
-                                e.target.parentElement.classList.add('selected');
-
-                            });
-
-                            tbodyTablaModalCancelarProductosTicket.appendChild(filaTablaModalCancelarProductosTicket);
-                        })
-                        tablaTicketSelector1.appendChild(theadTablaModalCancelarProductosTicket);
-                        tablaTicketSelector1.appendChild(tbodyTablaModalCancelarProductosTicket);
-
-
-
-
-
-                    }
-                })
-            }
-        })
-
-
-    })
-
-
+    });
 
     tablaDinamica.appendChild(tbody);
-
     contenedorTabla.appendChild(tablaDinamica);
+    botonesVer = document.querySelectorAll('.botonver');
+
+    escucharBotonesVerProductos();
 
 
 }
 
+function escucharBotonesVerProductos() {
+    botonesVer.forEach(boton => {
+        boton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log(e.target);
+            abrirModalVer();
+            id = e.target.getAttribute('data-id');
 
+            mostrarModalVerProductos(id);
 
+        })
+    })
+}
+
+function escucharBotonGestionarProductos(){
+    // btnGestionarCancelaciones.querySelector('A').dataset.id = carritoId;
+    btnGestionarCancelaciones.addEventListener('click', (e) => {
+        if(e.target.parentElement.classList.contains('modalCancelar__botonCancelaciones')){
+            mostrarModalCancelar();
+        }
+    })
+
+}
 
 async function consultarAPI() {
     try {
@@ -385,6 +270,73 @@ function abrirModalVer() {
     document.querySelector('.modalCancelar').classList.add('modalCancelar--show');
 }
 
+function mostrarModalVerProductos(idCarrito) {
+    let tbody = document.createElement('TBODY');
+    const tablaTicketSelector = document.querySelector('.modalCancelar__tabla-ticket');
+    limpiarHTMLElemento(tablaTicketSelector);
+
+    const tablaTicket = document.createElement('TABLE');
+    tablaTicket.classList.add('modalCancelar__ticket');
+
+    const thead = document.createElement('THEAD');
+    thead.innerHTML = `
+        <tr>
+            <th>Cant.</th>
+            <th>Producto</th>
+            <th>C.U.</th>
+            <th>Subtotal</th>
+        </tr>
+    `;
+
+    let totalCarrito = 0;
+    let cantidad = '';
+    let precioVenta = '';
+
+    let carrito = ventas.filter(venta => venta.carrito_id === id);
+    carrito.forEach(venta => {
+        let totalVentaProducto = 0;
+
+        if (venta.granel === '1') {
+            totalVentaProducto = (venta.precio_venta * venta.cantidad) / 1000;
+            cantidad = `${venta.cantidad} g  `;
+            precioVenta = `${venta.precio_venta}/kg  `;
+
+        } else {
+            totalVentaProducto = venta.precio_venta * venta.cantidad;
+            cantidad = `${venta.cantidad}`;
+            precioVenta = `${venta.precio_venta}`;
+        }
+        totalCarrito = totalCarrito + totalVentaProducto;
+        let fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${cantidad}</td>
+            <td>${venta.producto} ${venta.producto_descripcion}</td>
+            <td>$${precioVenta}</td>
+            <td>$${totalVentaProducto}</td>
+            
+        `;
+        tbody.appendChild(fila);
+    });
+
+    tablaTicketSelector.appendChild(thead);
+    tablaTicketSelector.appendChild(tbody);
+
+    const contenedorTotal = document.querySelector('.modalCancelar__total-ticket');
+    let p = contenedorTotal.querySelector('P');
+    p.textContent = `Total: $${totalCarrito.toFixed(2)}`;
+    console.log(tablaTicketSelector);
+
+    btnGestionarCancelaciones = document.querySelector('.modalCancelar__botonCancelaciones');
+    escucharBotonGestionarProductos();
+
+
+}
+
+function mostrarModalCancelar(){
+    document.querySelector('.modalCancelar--productos').classList.add('modalCancelar--productos--show');
+    
+}
+
 function limpiarHTMLElemento(elemento) {
     // Forma lenta
     // contenedorCarrito.innerHTML = '';
@@ -393,5 +345,6 @@ function limpiarHTMLElemento(elemento) {
         elemento.removeChild(elemento.firstChild);
     }
 }
+
 
 

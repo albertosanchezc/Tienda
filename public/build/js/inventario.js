@@ -826,7 +826,6 @@ sliderContainer.addEventListener('click', (e) => {
 
 btnAbrirModalNuevoProductoFijo.addEventListener('click', e => {
     abrirModalNuevoProducto(e)
-
 });
 
 
