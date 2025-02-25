@@ -245,37 +245,59 @@ function escucharBotonGestionarProductos() {
     })
 }
 
-function escucharFilasModalCancelarProductosTicket(fila){
-    fila.addEventListener('click', (e) => {
-        console.log(e.target.parentElement)
-        e.target.parentElement.classList.toggle('selected');
-        let nombreDescripcion = fila.querySelector('.nombreDescripcion').textContent;
-        if(e.target.parentElement.classList.contains('selected')){
-            // Añadir al arreglo
-            let seleccionadoCompleto = ventas.filter(venta =>
-                nombreDescripcion.includes(`${venta.producto} ${venta.producto_descripcion}`)
-            );
-            console.log(seleccionadoCompleto);
-            arregloSeleccionadas = [...arregloSeleccionadas, seleccionadoCompleto];
-            console.log(arregloSeleccionadas);
-        } else {
-            // Eliminar del arreglo
-            let seleccionadoCompleto = ventas.filter(venta =>
-                nombreDescripcion.includes(`${venta.producto} ${venta.producto_descripcion}`)
-            );
-
-            arregloSeleccionadas = arregloSeleccionadas.reduce((acc, venta) => {
-                if (JSON.stringify(venta) !== JSON.stringify(seleccionadoCompleto)) {
-                    acc.push(venta);
-                }
-                return acc;
-            }, []);
-            console.log(arregloSeleccionadas);
-            
-        }
-
+function escucharFilasModalCancelarProductosTicket() {
+    const filas = document.querySelector('.modalCancelar--productos__rectangulo-grande').querySelector('.modalCancelar--productos__ticket').querySelectorAll('tr');
+    filas.forEach( fila => {
+        fila.addEventListener('click', (e) => {
+            console.log(e.target.parentElement)
+            e.target.parentElement.classList.toggle('selected');
+            let nombreDescripcion = fila.querySelector('.nombreDescripcion').textContent;
+    
+            modificarArreglo(e.target.parentElement.classList.contains('selected'), nombreDescripcion)
+    
+        });
     });
+
 }
+
+function aniadirAlArreglo(nombreDescripcion) {
+    // Añadir al arreglo
+    let idDelCarrito = carrito[0].carrito_id;
+    let seleccionadoCompleto = carrito.find(venta =>
+        nombreDescripcion.includes(`${venta.producto} ${venta.producto_descripcion}`) &&
+        venta.carrito_id === idDelCarrito
+    );
+    arregloSeleccionadas = [...arregloSeleccionadas, seleccionadoCompleto];
+    console.log(arregloSeleccionadas);
+}
+
+
+function eliminarDelArreglo(nombreDescripcion) {
+    // Eliminar del arreglo
+    let idDelCarrito = carrito[0].carrito_id;
+    let seleccionadoCompleto = carrito.find(venta =>
+        nombreDescripcion.includes(`${venta.producto} ${venta.producto_descripcion}`) &&
+        venta.carrito_id === idDelCarrito
+    );
+    arregloSeleccionadas = [...arregloSeleccionadas.filter(venta => venta !== seleccionadoCompleto)];
+}
+
+// Modifica el arreglo de producto por producto(modal)
+function modificarArreglo(elementoEsSelected, nombreDescripcion) {
+    if (elementoEsSelected) {
+        // Se le añadió selected a la fila, hay que añadirlo al arreglo
+        aniadirAlArreglo(nombreDescripcion);
+
+    } else {
+
+        // Se le quitó selected a la fila, hay que quitarlo del arreglo
+        eliminarDelArreglo(nombreDescripcion)
+    }
+
+    console.log(arregloSeleccionadas);
+}
+
+
 
 async function consultarAPI() {
     try {
@@ -407,35 +429,37 @@ function mostrarModalCancelar() {
         `;
 
 
-        let contenedorBotonesModal = document.querySelector('.modalCancelar--productos__switch');
-        contenedorBotonesModal.addEventListener('click', (e) => {
-            const identificador = e.target.id;
-            switch(identificador){
-                case 'carr':
-                    
-                break;
-
-                case 'prod':
-                    escucharFilasModalCancelarProductosTicket(filaTablaModalCancelarProductosTicket);
-                break;
-                
-                default :
-                
-                break;
-            }
-        })
-
-
 
         tbodyTablaModalCancelarProductosTicket.appendChild(filaTablaModalCancelarProductosTicket);
     })
     tablaTicketSelector.appendChild(theadTablaModalCancelarProductosTicket);
     tablaTicketSelector.appendChild(tbodyTablaModalCancelarProductosTicket);
 
-
+    escucharBotonesModalGestionarProductos();
     console.log(arregloSeleccionadas);
 
 
+}
+
+
+function escucharBotonesModalGestionarProductos(){
+    let contenedorBotonesModal = document.querySelector('.modalCancelar--productos__switch');
+    contenedorBotonesModal.addEventListener('click', (e) => {
+        const identificador = e.target.id;
+        switch (identificador) {
+            case 'carr':
+
+                break;
+
+            case 'prod':
+                escucharFilasModalCancelarProductosTicket();
+                break;
+
+            default:
+
+                break;
+        }
+    })
 }
 
 function limpiarHTMLElemento(elemento) {
