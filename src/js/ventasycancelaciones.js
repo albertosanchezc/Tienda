@@ -18,6 +18,9 @@ const btnVentas = document.querySelector('.rojoclaro');
 const btnCancelaciones = document.querySelector('.rojooscuro');
 
 const contenedorBotones = document.querySelector('.botonesventas');
+contenedorBotones.classList.add('botones_display');
+contenedorBotones.classList.remove('margin-botonesventas');
+
 const btnCerrarModalCancelar = document.querySelector('.modalCancelar__imgcerrar');
 const btnCerrarModalCancelarProducto = document.querySelector('.modalCancelar--productos__imgcerrar');
 
@@ -29,6 +32,11 @@ const imagendown = document.querySelector('.imgdown');
 
 const inputFechaInicial = document.getElementById('fecha1');
 const inputFechaFinal = document.getElementById('fecha2');
+
+
+const busquedaTitulo = document.querySelector('.busqueda-titulo');
+busquedaTitulo.classList.add('titulo_display');
+busquedaTitulo.classList.remove('margin-titulo');
 
 // Selectores ventas
 const imgBajar = document.querySelector('.imgbajar');
@@ -53,27 +61,30 @@ contenedorBotones.addEventListener('click', (e) => {
     console.log(seleccion);
     switch (seleccion[0]) {
         case 'rojoclaro':
+            corregirMargin();
             if (btnCancelaciones.classList.contains('btnSeleccionadoOscuro')) {
                 btnCancelaciones.classList.remove('btnSeleccionadoOscuro');
                 btnCancelaciones.classList.add('rojooscuro')
             }
             imgBajar.style.display = 'flex';
-            if(tituloCancelaciones.style.display !== 'none'){
+            if (tituloCancelaciones.style.display !== 'none') {
                 ocultarCancelaciones();
             }
             mostrarContenidoInicialVentas();
-            mostrarTabla(ventas);
+            mostrarTablaVentasPorCarrito(ventas);
+            escucharBotonesFormularioVentas();
             btnVentas.classList.add('btnSeleccionadoClaro');
             btnVentas.classList.remove('rojoclaro');
             break;
         case 'rojooscuro':
+            corregirMargin();
             if (btnVentas.classList.contains('btnSeleccionadoClaro')) {
                 btnVentas.classList.remove('btnSeleccionadoClaro');
                 btnVentas.classList.add('rojoclaro');
 
             }
             imgBajar.style.display = 'flex';
-            if(tituloVentas.style.display !== 'none'){
+            if (tituloVentas.style.display !== 'none') {
                 ocultarVentas();
             }
             mostrarContenidoInicialCancelaciones();
@@ -130,13 +141,13 @@ function filtrar() {
     console.log(ventas)
     if (terminosBusqueda.fechaI) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaI)
-        mostrarTabla(resultadosFiltrados);
+        mostrarTablaVentasPorCarrito(resultadosFiltrados);
 
     }
 
     if (terminosBusqueda.fechaF) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaF)
-        mostrarTabla(resultadosFiltrados);
+        mostrarTablaVentasPorCarrito(resultadosFiltrados);
 
     }
 
@@ -155,7 +166,7 @@ function filtrarfechaF(ventas) {
     return fechaCaja <= fechaFinal;
 }
 
-function mostrarTabla(ventas) {
+function mostrarTablaVentasPorCarrito(ventas) {
     console.log(ventas);
     const contenedorTabla = document.querySelector('.tabladecontenido-ventas');
     contenedorTabla.innerHTML = '';
@@ -247,6 +258,28 @@ function mostrarTabla(ventas) {
     escucharBotonesVerProductos();
 
 
+}
+
+function mostrarTablaVentasPorProducto(ventas){
+    ocultarTablaVentasPorCarrito();
+}
+
+function escucharBotonesFormularioVentas(){
+    const contenedorBotonesBusquedaVentas = busquedaVentas.querySelector('.switch');
+    contenedorBotonesBusquedaVentas.addEventListener('click', (e) => {
+        if(e.target.value === 'carrito'){
+            // console.log(e.target.value);
+            mostrarTablaVentasPorCarritoSoloTabla();
+            mostrarTablaVentasPorCarrito(ventas);
+        }
+        if(e.target.value === 'producto'){
+            console.log(e.target.value);
+            mostrarTablaVentasPorProductoSoloTabla();
+            mostrarTablaVentasPorProducto(ventas);
+        }
+
+    })
+    
 }
 
 function escucharBotonesVerProductos() {
@@ -364,7 +397,7 @@ function mostrarContenidoInicialVentas() {
     // tablaVentasPorProducto.style.display = 'grid';
 }
 
-function mostrarContenidoInicialCancelaciones(){
+function mostrarContenidoInicialCancelaciones() {
     tituloCancelaciones.style.display = 'block';
     busquedaCancelaciones.style.display = 'flex';
     tablaCancelaciones.style.display = 'grid';
@@ -491,9 +524,30 @@ function mostrarModalCancelar() {
 function ocultarVentas() {
     tituloVentas.style.display = 'none';
     busquedaVentas.style.display = 'none';
-    tablaVentasPorCarrito.style.display = 'none';
+    tablaVentasPorCarrito.style.display = 'none';    
     tablaVentasPorProducto.style.display = 'none';
 }
+
+function ocultarTablaVentasPorCarrito(){
+    tablaVentasPorCarrito.style.display = 'none';    
+}
+
+function ocultarTablaVentasPorProducto(){
+    tablaVentasPorProducto.style.display = 'none';
+    
+}
+
+function mostrarTablaVentasPorCarritoSoloTabla(){
+    tablaVentasPorCarrito.style.display = 'grid';
+    tablaVentasPorProducto.style.display = 'none';
+}
+
+function mostrarTablaVentasPorProductoSoloTabla(){
+    tablaVentasPorProducto.style.display = 'grid';
+    tablaVentasPorCarrito.style.display = 'none';    
+}
+
+
 ocultarVentas();
 
 function ocultarCancelaciones() {
@@ -534,5 +588,14 @@ function limpiarHTMLElemento(elemento) {
     }
 }
 
+
+function corregirMargin(){
+    if (contenedorBotones.classList.contains('botones_display')) {
+        contenedorBotones.classList.remove('botones_display');
+        contenedorBotones.classList.add('margin-botonesventas');
+        busquedaTitulo.classList.remove('titulo_display');
+        busquedaTitulo.classList.add('margin-titulo');
+    }
+}
 
 
