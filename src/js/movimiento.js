@@ -80,18 +80,19 @@
                 const aniadidosParrafo = stockCantidad.querySelector('.Aniadidos');
                 const stockParrafo = stockCantidad.querySelector('.Stock');
                 const botonStock = card.querySelector('.botonStock');
-
-
+                const idEditarProducto = e.target.getAttribute('data-id');
+                const objResultante = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
+                // const stockResultante = 
+                
                 let totalAniadidos = parseInt(aniadidosParrafo.dataset.totalAniadidos || 0);
 
                 if (e.target.classList.value === 'ma' || e.target.classList.value === 'imagenmas') {
-                    console.log('Sumaaaaa');
                     totalAniadidos++;
                     stockParrafo.textContent = `Stock Resultante:`;
+                    console.log(objResultante);
 
                 }
                 else if (e.target.classList.value === 'meno' || e.target.classList.value === 'imagenmenos') {
-                    console.log('restaaaaaaaaaaa');
                     totalAniadidos--;
                 }
 
@@ -247,6 +248,7 @@
                         producto_id: '',
                         cantidad: ''
                     }
+                    const stockProducto = inventario.find(producto => producto.producto_id === idProducto);
 
                     if (!idStock.has(idProducto)) {
                         idStock.add(idProducto);

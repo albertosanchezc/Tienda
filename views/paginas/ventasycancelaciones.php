@@ -42,7 +42,7 @@
         </form>
     </div>
     <!-- Por carrito -->
-    <div class="tabladecontenido-ventas">
+    <div class="tabladecontenido-ventas" id="tablaVentasCarrito">
         <table class="tabla-contenido-ventas">
             <thead>
                 <tr>
@@ -97,7 +97,7 @@
         </table>
     </div>
     <!-- Por Producto -->
-    <div class="tabladecontenido-ventas">
+    <div class="tabladecontenido-ventas" id="tablaVentasProducto">
         <table class="tabla-contenido-ventas">
             <thead>
                 <tr>
@@ -177,7 +177,7 @@
             <!-- //aqui iriia el boton de descargar excel -->
         </form>
     </div>
-    <div class="tabladecontenido-cancelaciones">
+    <div class="tabladecontenido-cancelaciones" id="tablaCancelacionesCarrito">
         <table class="tabla-contenido-cancelaciones">
             <thead>
                 <tr>
