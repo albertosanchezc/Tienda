@@ -9,13 +9,13 @@
     let inventario = [];
     let categorias = [];
     let proveedores = [];
-    // let totalAniadidos = 0;
     let sel1 = '';
     let terminosBusqueda = {
         proveedor: ''
     }
 
     let arrayIdStock = [];
+    let totalRegistrosTabla = 0;
 
 
     const idStock = new Set();
@@ -23,6 +23,7 @@
     const containertabla = document.querySelector('.gridmodificaciones');
     const contenedorClass1 = document.querySelector('.containerBackground');
     const contenedorCards = document.querySelector('.articulosmodificar');
+    const btnAniadirTodos = document.querySelector('.btnEditarStockTodos')
 
     document.addEventListener('DOMContentLoaded', function () {
         consultarAPI();
@@ -110,17 +111,15 @@
                     aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
                     stockParrafo.textContent = `Stock Resultante: ${stockResultante}`;
 
-
-
                 } else if (totalAniadidos < 0) {
                     botonStock.classList.add('btnStockred');
                     botonStock.classList.remove('btnStockgreen');
-                    aniadidosParrafo.textContent = `Retirados: ${totalAniadidos}`;
-                    // const stock
+                    const retiradosPositivo = totalAniadidos * -1;
+                    aniadidosParrafo.textContent = `Retirados: ${retiradosPositivo}`;
                     stockParrafo.textContent = `Stock Resultante: ${stockResultante}`;
 
                     if (stockResultante < 0) {
-                        const stockRes = stockResultante*-1;
+                        const stockRes = stockResultante * -1;
                         stockParrafo.textContent = `Error, añade: ${stockRes}`;
 
                     }
@@ -182,6 +181,9 @@
 
         });
 
+        totalRegistrosTabla = inventario.length;
+        console.log(totalRegistrosTabla);
+
         tablaDinamica.appendChild(tbody);
         contenedorTabla.appendChild(tablaDinamica);
 
@@ -219,7 +221,6 @@
                     mostrarCard(productoSeleccionado, proveedores, categorias);
                     sel1 = document.querySelectorAll('.botonStock');
                     escucharBotonesMasyMenos(sel1);
-
                 }
 
             } else {
@@ -243,7 +244,13 @@
                     currentState = STATES.PROVIDER_SELECTED;
                 }
             }
+            
             console.log('Productos seleccionados:', Array.from(idStock));
+            const totalRegistrosId = idStock.size;
+            if (totalRegistrosTabla === totalRegistrosId) {
+                btnAniadirTodos.classList.add('activo');
+                btnAniadirTodos.textContent = 'Dejar de Editar Todos los productos';
+            }
 
         }
 
