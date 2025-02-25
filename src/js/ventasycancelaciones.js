@@ -24,11 +24,24 @@ const btnCerrarModalCancelarProducto = document.querySelector('.modalCancelar--p
 const tbodyfilasVentasPorCarrito = document.querySelector('.tabladecontenido-ventas').querySelector('tbody') || '';
 let botonesVer = '';
 let btnGestionarCancelaciones = '';
+let btnCancelarTodaVentaModal = '';
 const imagendown = document.querySelector('.imgdown');
 
 const inputFechaInicial = document.getElementById('fecha1');
 const inputFechaFinal = document.getElementById('fecha2');
 
+const imgBajar = document.querySelector('.imgbajar');
+const tituloVentas = document.querySelector('.busqueda-titulo-ventas');
+const busquedaVentas = document.querySelector('.busqueda-filtrosventas');
+const tablaVentasPorCarrito = document.querySelector('.tabladecontenido-ventas');
+const tablaVentasPorProducto = document.querySelector('.tabladecontenido-ventas');
+
+
+imgBajar.style.display = 'none';
+tituloVentas.style.display = 'none';
+busquedaVentas.style.display = 'none';
+tablaVentasPorCarrito.style.display = 'none';
+tablaVentasPorProducto.style.display = 'none';
 
 // Eventos
 contenedorBotones.addEventListener('click', (e) => {
@@ -41,6 +54,8 @@ contenedorBotones.addEventListener('click', (e) => {
                 btnCancelaciones.classList.remove('btnSeleccionadoOscuro');
                 btnCancelaciones.classList.add('rojooscuro')
             }
+            imgBajar.style.display = 'flex';
+            mostrarContenidoInicialVentas();
             btnVentas.classList.add('btnSeleccionadoClaro');
             btnVentas.classList.remove('rojoclaro');
             break;
@@ -50,6 +65,8 @@ contenedorBotones.addEventListener('click', (e) => {
                 btnVentas.classList.add('rojoclaro');
 
             }
+            imgBajar.style.display = 'flex';
+
             btnCancelaciones.classList.add('btnSeleccionadoOscuro');
             btnCancelaciones.classList.remove('rojooscuro');
             break;
@@ -245,16 +262,23 @@ function escucharBotonGestionarProductos() {
     })
 }
 
+function escucharBotonCancelarTodoModal() {
+    btnCancelarTodaVentaModal = document.querySelector('.modalCancelar--productos__botonCancelaciones');
+    btnCancelarTodaVentaModal.addEventListener('click', () => {
+        console.log('Cancelando toda la venta');
+    })
+}
+
 function escucharFilasModalCancelarProductosTicket() {
     const filas = document.querySelector('.modalCancelar--productos__rectangulo-grande').querySelector('.modalCancelar--productos__ticket').querySelectorAll('tr');
-    filas.forEach( fila => {
+    filas.forEach(fila => {
         fila.addEventListener('click', (e) => {
             console.log(e.target.parentElement)
             e.target.parentElement.classList.toggle('selected');
             let nombreDescripcion = fila.querySelector('.nombreDescripcion').textContent;
-    
+
             modificarArreglo(e.target.parentElement.classList.contains('selected'), nombreDescripcion)
-    
+
         });
     });
 
@@ -323,6 +347,12 @@ function abrirModalVer() {
     document.querySelector('.modalCancelar').classList.add('modalCancelar--show');
 }
 
+function mostrarContenidoInicialVentas() {
+    tituloVentas.style.display = 'block';
+    busquedaVentas.style.display = 'flex';
+    tablaVentasPorCarrito.style.display = 'grid';
+    // tablaVentasPorProducto.style.display = 'grid';
+}
 function mostrarModalVerProductos(idCarrito) {
     let tbody = document.createElement('TBODY');
     const tablaTicketSelector = document.querySelector('.modalCancelar__tabla-ticket');
@@ -442,13 +472,15 @@ function mostrarModalCancelar() {
 }
 
 
-function escucharBotonesModalGestionarProductos(){
+function escucharBotonesModalGestionarProductos() {
     let contenedorBotonesModal = document.querySelector('.modalCancelar--productos__switch');
     contenedorBotonesModal.addEventListener('click', (e) => {
         const identificador = e.target.id;
+        const contenedorBotonesModalCarr = contenedorBotonesModal.querySelector('#carr');
+        contenedorBotonesModalCarr.click();
         switch (identificador) {
             case 'carr':
-
+                escucharBotonCancelarTodoModal();
                 break;
 
             case 'prod':
