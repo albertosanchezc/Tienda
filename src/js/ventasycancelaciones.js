@@ -30,18 +30,21 @@ const imagendown = document.querySelector('.imgdown');
 const inputFechaInicial = document.getElementById('fecha1');
 const inputFechaFinal = document.getElementById('fecha2');
 
+// Selectores ventas
 const imgBajar = document.querySelector('.imgbajar');
 const tituloVentas = document.querySelector('.busqueda-titulo-ventas');
 const busquedaVentas = document.querySelector('.busqueda-filtrosventas');
-const tablaVentasPorCarrito = document.querySelector('.tabladecontenido-ventas');
-const tablaVentasPorProducto = document.querySelector('.tabladecontenido-ventas');
+const tablaVentasPorCarrito = document.querySelector('#tablaVentasCarrito');
+const tablaVentasPorProducto = document.querySelector('#tablaVentasProducto');
+
+// Selectores cancelaciones
+const tituloCancelaciones = document.querySelector('.busqueda-titulo-cancelaciones');
+const busquedaCancelaciones = document.querySelector('.busqueda-filtroscancelaciones');
+const tablaCancelaciones = document.querySelector('#tablaCancelacionesCarrito');
 
 
 imgBajar.style.display = 'none';
-tituloVentas.style.display = 'none';
-busquedaVentas.style.display = 'none';
-tablaVentasPorCarrito.style.display = 'none';
-tablaVentasPorProducto.style.display = 'none';
+
 
 // Eventos
 contenedorBotones.addEventListener('click', (e) => {
@@ -55,7 +58,11 @@ contenedorBotones.addEventListener('click', (e) => {
                 btnCancelaciones.classList.add('rojooscuro')
             }
             imgBajar.style.display = 'flex';
+            if(tituloCancelaciones.style.display !== 'none'){
+                ocultarCancelaciones();
+            }
             mostrarContenidoInicialVentas();
+            mostrarTabla(ventas);
             btnVentas.classList.add('btnSeleccionadoClaro');
             btnVentas.classList.remove('rojoclaro');
             break;
@@ -66,7 +73,10 @@ contenedorBotones.addEventListener('click', (e) => {
 
             }
             imgBajar.style.display = 'flex';
-
+            if(tituloVentas.style.display !== 'none'){
+                ocultarVentas();
+            }
+            mostrarContenidoInicialCancelaciones();
             btnCancelaciones.classList.add('btnSeleccionadoOscuro');
             btnCancelaciones.classList.remove('rojooscuro');
             break;
@@ -353,6 +363,13 @@ function mostrarContenidoInicialVentas() {
     tablaVentasPorCarrito.style.display = 'grid';
     // tablaVentasPorProducto.style.display = 'grid';
 }
+
+function mostrarContenidoInicialCancelaciones(){
+    tituloCancelaciones.style.display = 'block';
+    busquedaCancelaciones.style.display = 'flex';
+    tablaCancelaciones.style.display = 'grid';
+}
+
 function mostrarModalVerProductos(idCarrito) {
     let tbody = document.createElement('TBODY');
     const tablaTicketSelector = document.querySelector('.modalCancelar__tabla-ticket');
@@ -471,6 +488,20 @@ function mostrarModalCancelar() {
 
 }
 
+function ocultarVentas() {
+    tituloVentas.style.display = 'none';
+    busquedaVentas.style.display = 'none';
+    tablaVentasPorCarrito.style.display = 'none';
+    tablaVentasPorProducto.style.display = 'none';
+}
+ocultarVentas();
+
+function ocultarCancelaciones() {
+    tituloCancelaciones.style.display = 'none';
+    busquedaCancelaciones.style.display = 'none';
+    tablaCancelaciones.style.display = 'none';
+}
+ocultarCancelaciones();
 
 function escucharBotonesModalGestionarProductos() {
     let contenedorBotonesModal = document.querySelector('.modalCancelar--productos__switch');
