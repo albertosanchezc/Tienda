@@ -4,14 +4,19 @@
         PROVIDER_SELECTED: 'PROVIDER_SELECTED',
         PRODUCTS_ADDED: 'PRODUCTS_ADDED'
     };
-    
+
     let currentState = STATES.INITIAL;
     let inventario = [];
     let categorias = [];
     let proveedores = [];
+    // let totalAniadidos = 0;
+    let sel1 = '';
     let terminosBusqueda = {
         proveedor: ''
     }
+
+    let arrayIdStock = [];
+
 
     const idStock = new Set();
     const inputProveedor = document.querySelector('#proveedormovimientoprod');
@@ -49,9 +54,9 @@
     inputProveedor.addEventListener('change', (e) => {
         limpiarHTMLElemento(containertabla);
         contenedorCards.style.display = "none";
-        // const botonTodos = document.addEventListener.classList('.btnEditarStockTodos');
-        // botonTodos.classList.remove('activo');
-        // botonTodos.textContent = 'Editar Stock Todos los Productos de éste proveedor';
+        const botonTodos = document.querySelector('.btnEditarStockTodos');
+        botonTodos.classList.remove('activo');
+        botonTodos.textContent = 'Editar Stock Todos los Productos de éste proveedor';
         terminosBusqueda.proveedor = e.target.value;
         currentState = STATES.PROVIDER_SELECTED;
         filtrar();
@@ -65,14 +70,62 @@
 
     });
 
+    function escucharBotonesMasyMenos(sel1) {
+        sel1.forEach((s) => {
+            s.addEventListener('click', (e) => {
+                const card = e.target.closest('.inventariogrid1');
+
+                if (!card) return;
+                const stockCantidad = card.querySelector('.stockCantidad');
+                const aniadidosParrafo = stockCantidad.querySelector('.Aniadidos');
+                const stockParrafo = stockCantidad.querySelector('.Stock');
+                const botonStock = card.querySelector('.botonStock');
+
+
+                let totalAniadidos = parseInt(aniadidosParrafo.dataset.totalAniadidos || 0);
+
+                if (e.target.classList.value === 'ma' || e.target.classList.value === 'imagenmas') {
+                    console.log('Sumaaaaa');
+                    totalAniadidos++;
+                    stockParrafo.textContent = `Stock Resultante:`;
+
+                }
+                else if (e.target.classList.value === 'meno' || e.target.classList.value === 'imagenmenos') {
+                    console.log('restaaaaaaaaaaa');
+                    totalAniadidos--;
+                }
+
+                aniadidosParrafo.dataset.totalAniadidos = totalAniadidos;
+
+                if (totalAniadidos > 0) {
+                    botonStock.classList.add('btnStockgreen');
+                    botonStock.classList.remove('btnStockred');
+                    aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
+
+
+                } else if (totalAniadidos < 0) {
+                    botonStock.classList.add('btnStockred');
+                    botonStock.classList.remove('btnStockgreen');
+                    aniadidosParrafo.textContent = `Retirados: ${totalAniadidos}`;
+
+
+                } else if (totalAniadidos == 0) {
+                    botonStock.classList.remove('btnStockred');
+                    botonStock.classList.remove('btnStockgreen');
+                    aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
+
+                }
+            });
+        });
+    }
 
     function mostrarTabla(inventario, proveedores) {
-        // console.log(inventario);
 
         const contenedorTabla = document.querySelector('.tabladeproveedores');
 
         contenedorTabla.innerHTML = '';
         idStock.clear();
+        arrayIdStock = [];
         const tablaDinamica = document.createElement('table');
         tablaDinamica.classList.add('tabla-proveedores', 'tabla-verde');
 
@@ -89,9 +142,7 @@
 
         tablaDinamica.appendChild(thead);
 
-        // Crea el cuerpo de la tabla
         const tbody = document.createElement('tbody');
-
 
         inventario.forEach(producto => {
             let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel } = producto;
@@ -120,119 +171,129 @@
         const articulosProveedor = document.querySelector('.articulosproveedor');
 
         articulosProveedor.addEventListener('click', tablaEventos);
-
     }
 
-    function tablaEventos(e){
-            e.preventDefault();
-            if (e.target.classList.contains('btnEditarStock')) {
-                contenedorCards.style.display = "grid";
-                const idProducto = e.target.getAttribute('data-id');
-                const fila = document.querySelector(`tr[data-id="${idProducto}"]`);
+    function tablaEventos(e) {
+        e.preventDefault();
+        if (e.target.classList.contains('btnEditarStock')) {
+            contenedorCards.style.display = "grid";
+            const idProducto = e.target.getAttribute('data-id');
+            const fila = document.querySelector(`tr[data-id="${idProducto}"]`);
+            const boton = e.target;
+            const stockProducto = inventario.find(producto => producto.producto_id === idProducto);
+            let objetoIdStock = {
+                producto_id: '',
+                cantidad: ''
+            }
 
-                const boton = e.target;
+            if (!idStock.has(idProducto)) {
+                idStock.add(idProducto);
+                objetoIdStock.producto_id = idProducto;
+                objetoIdStock.cantidad = stockProducto.cantidad;
+                arrayIdStock.push(objetoIdStock);
+                // console.log(arrayIdStock);
+                fila.classList.add('fila-seleccionada');
+                boton.textContent = 'Dejar de Editar';
+                boton.classList.add('btnQuitarStock');
 
-                if (!idStock.has(idProducto)) {
-                    idStock.add(idProducto);
+                const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
 
-                    fila.classList.add('fila-seleccionada');
-                    boton.textContent = 'Dejar de Editar';
-                    boton.classList.add('btnQuitarStock');
+                if (productoSeleccionado) {
+                    mostrarCard(productoSeleccionado, proveedores, categorias);
+                    sel1 = document.querySelectorAll('.botonStock');
+                    escucharBotonesMasyMenos(sel1);
 
-                    const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
+                }
 
-                    if (productoSeleccionado) {
-                        mostrarCard(productoSeleccionado, proveedores, categorias);
-                    } 
-                } else {
+            } else {
+                idStock.delete(idProducto);
+                fila.classList.remove('fila-seleccionada');
+                boton.textContent = 'Editar Stock';
+                boton.classList.remove('btnQuitarStock');
+                const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
+
+                if (card) {
+                    card.remove();
+                    console.log(`Se eliminó la tarjeta del producto ${idProducto}`);
+                }
+
+                if (idStock.size > 0) {
+                    currentState = STATES.PRODUCTS_ADDED;
+                } else if (currentState === STATES.PRODUCTS_ADDED) {
+                    currentState = STATES.PROVIDER_SELECTED;
+                }
+            }
+            console.log('Productos seleccionados:', Array.from(idStock));
+
+        }
+
+        if (e.target.classList.contains('btnEditarStockTodos')) {
+            contenedorCards.style.display = "grid";
+            const botonTodos = e.target;
+            const filas = document.querySelectorAll('tr[data-id]');
+
+
+            if (!botonTodos.classList.contains('activo')) {
+                botonTodos.classList.add('activo');
+                botonTodos.textContent = 'Dejar de Editar Todos los productos';
+
+                filas.forEach(fila => {
+                    const idProducto = fila.getAttribute('data-id');
+                    const boton = fila.querySelector('.btnEditarStock');
+                    let objetoIdStock = {
+                        producto_id: '',
+                        cantidad: ''
+                    }
+
+                    if (!idStock.has(idProducto)) {
+                        idStock.add(idProducto);
+                        objetoIdStock.producto_id = idProducto;
+                        objetoIdStock.cantidad = stockProducto.cantidad;
+                        arrayIdStock.push(objetoIdStock);
+                        fila.classList.add('fila-seleccionada');
+                        boton.textContent = 'Dejar de Editar';
+                        boton.classList.add('btnQuitarStock');
+
+                        const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
+
+                        if (productoSeleccionado) {
+                            mostrarCard(productoSeleccionado, proveedores, categorias);
+                            sel1 = document.querySelectorAll('.botonStock');
+
+                        }
+                    }
+                });
+                escucharBotonesMasyMenos(sel1);
+                currentState = STATES.PRODUCTS_ADDED;
+
+            } else {
+                botonTodos.classList.remove('activo');
+                botonTodos.textContent = 'Editar Stock Todos los Productos de éste proveedor';
+
+                filas.forEach(fila => {
+                    const boton = fila.querySelector('.btnEditarStock');
+                    const idProducto = fila.getAttribute('data-id');
                     idStock.delete(idProducto);
                     fila.classList.remove('fila-seleccionada');
                     boton.textContent = 'Editar Stock';
                     boton.classList.remove('btnQuitarStock');
-                    const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
 
+                    const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
                     if (card) {
                         card.remove();
-                        console.log(`Se eliminó la tarjeta del producto ${idProducto}`);
                     }
+                });
 
-                    if (idStock.size > 0) {
-                        currentState = STATES.PRODUCTS_ADDED;
-                    } else if (currentState === STATES.PRODUCTS_ADDED) {
-                        currentState = STATES.PROVIDER_SELECTED;
-                    }
+                if (idStock.size === 0) {
+                    currentState = STATES.PROVIDER_SELECTED;
                 }
-                console.log('Productos seleccionados:', Array.from(idStock));
-
             }
-
-            if (e.target.classList.contains('btnEditarStockTodos')) {
-                contenedorCards.style.display = "grid";
-                const botonTodos = e.target;
-                const filas = document.querySelectorAll('tr[data-id]');
-
-                if (!botonTodos.classList.contains('activo')) {
-                    botonTodos.classList.add('activo');
-                    botonTodos.textContent = 'Dejar de Editar Todos los productos';
-
-                    filas.forEach(fila => {
-                        const idProducto = fila.getAttribute('data-id');
-                        const boton = fila.querySelector('.btnEditarStock');
-
-                        if (!idStock.has(idProducto)) {
-                            idStock.add(idProducto);
-                            fila.classList.add('fila-seleccionada');
-                            boton.textContent = 'Dejar de Editar';
-                            boton.classList.add('btnQuitarStock');
-
-                            const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
-
-                            if (productoSeleccionado) {
-                                mostrarCard(productoSeleccionado, proveedores, categorias);
-                            }
-                        }
-                    });
-
-                    currentState = STATES.PRODUCTS_ADDED;
-
-                } else {
-                    botonTodos.classList.remove('activo');
-                    botonTodos.textContent = 'Editar Stock Todos los Productos de éste proveedor';
-
-
-                    filas.forEach(fila => {
-                        const boton = fila.querySelector('.btnEditarStock');
-
-                        
-                        const idProducto = fila.getAttribute('data-id');
-                        idStock.delete(idProducto);
-                        fila.classList.remove('fila-seleccionada');
-                        boton.textContent = 'Editar Stock';
-                        boton.classList.remove('btnQuitarStock');
-
-                        const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
-                        if (card) {
-                            card.remove();
-                        }
-                    });
-
-                    if (idStock.size === 0) {
-                        currentState = STATES.PROVIDER_SELECTED;
-                    }
-                }
-
-                console.log('Productos seleccionados:', Array.from(idStock));
-            }
-
+            console.log('Productos seleccionados:', Array.from(idStock));
         }
 
-    
+    }
 
     function mostrarCard(producto, proveedores, categorias) {
-        console.log("Producto desde mostrarCard:", producto);
-        console.log("proveedores desde mostrarCard:", proveedores);
-
-
         const gridmodificaciones = document.querySelector('.gridmodificaciones');
 
         let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, cantidad, imagen, granel } = producto;
@@ -240,7 +301,6 @@
         let proveedorDatos = proveedores.find(proveedor => proveedor.id === proveedor_id);
         // let categoriaDatos = categorias.find(categoria => categoria.id === categoria_id);
 
-        // Busca el proveedor correspondiente
         const proveedorNombre = proveedorDatos ? proveedorDatos.nombre : 'Proveedor no disponible';
 
         const ganancia = precio_unitario_venta - precio_compra;
@@ -324,15 +384,15 @@
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonStock');
         botonesGrid.innerHTML = `
-            <div class="imagenmenos">
-                <p class="meno">-</p>
+            <div class="imagenmenos" data-id="${producto.id}">
+                <p class="meno" data-id="${producto.id}">-</p>
             </div>
             <div class="stockCantidad">
                 <p class="Stock">Stock: ${cantidad}</p>
                 <p class="Aniadidos">Añadidos: 0</p>
             </div>
-            <div class="imagenmas">
-                <p class="ma">+</p>
+            <div class="imagenmas" data-id="${producto.id}">
+                <p class="ma" data-id="${producto.id}">+</p>
             </div>
         `;
 
@@ -346,7 +406,6 @@
         // Agrega la tarjeta al contenedor principal
         gridmodificaciones.appendChild(inventarioGrid);
     }
-
 
     function filtrar() {
         const resultadosFiltrado = inventario.filter(filtrarProveedor);
