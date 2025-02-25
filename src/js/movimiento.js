@@ -207,6 +207,9 @@
 
             } else {
                 idStock.delete(idProducto);
+                const objetoEliminar = arrayIdStock.find(producto => producto.producto_id === idProducto);
+                arrayIdStock = [...arrayIdStock.filter(objeto => objeto !== objetoEliminar)];
+                console.log(arrayIdStock);
                 fila.classList.remove('fila-seleccionada');
                 boton.textContent = 'Editar Stock';
                 boton.classList.remove('btnQuitarStock');
@@ -273,11 +276,14 @@
                 filas.forEach(fila => {
                     const boton = fila.querySelector('.btnEditarStock');
                     const idProducto = fila.getAttribute('data-id');
+                    const objetoEliminar = arrayIdStock.find(producto => producto.producto_id === idProducto);
                     idStock.delete(idProducto);
+                    arrayIdStock = [...arrayIdStock.filter(objeto => objeto !== objetoEliminar)];
+                    console.log(arrayIdStock);
                     fila.classList.remove('fila-seleccionada');
                     boton.textContent = 'Editar Stock';
                     boton.classList.remove('btnQuitarStock');
-
+                    
                     const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
                     if (card) {
                         card.remove();
