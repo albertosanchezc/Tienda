@@ -71,6 +71,8 @@
     });
 
     function escucharBotonesMasyMenos(sel1) {
+        let stockResultante = 0;
+
         sel1.forEach((s) => {
             s.addEventListener('click', (e) => {
                 const card = e.target.closest('.inventariogrid1');
@@ -82,18 +84,22 @@
                 const botonStock = card.querySelector('.botonStock');
                 const idEditarProducto = e.target.getAttribute('data-id');
                 const objResultante = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
-                // const stockResultante = 
-                
+                const cantidadStock = objResultante.cantidad;
+
+
                 let totalAniadidos = parseInt(aniadidosParrafo.dataset.totalAniadidos || 0);
 
                 if (e.target.classList.value === 'ma' || e.target.classList.value === 'imagenmas') {
                     totalAniadidos++;
-                    stockParrafo.textContent = `Stock Resultante:`;
-                    console.log(objResultante);
+                    stockResultante = parseInt(totalAniadidos) + parseInt(cantidadStock);
+                    console.log(stockResultante);
 
                 }
                 else if (e.target.classList.value === 'meno' || e.target.classList.value === 'imagenmenos') {
                     totalAniadidos--;
+                    stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                    console.log(stockResultante);
+
                 }
 
                 aniadidosParrafo.dataset.totalAniadidos = totalAniadidos;
@@ -102,18 +108,28 @@
                     botonStock.classList.add('btnStockgreen');
                     botonStock.classList.remove('btnStockred');
                     aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
+                    stockParrafo.textContent = `Stock Resultante: ${stockResultante}`;
+
 
 
                 } else if (totalAniadidos < 0) {
                     botonStock.classList.add('btnStockred');
                     botonStock.classList.remove('btnStockgreen');
                     aniadidosParrafo.textContent = `Retirados: ${totalAniadidos}`;
+                    // const stock
+                    stockParrafo.textContent = `Stock Resultante: ${stockResultante}`;
 
+                    if (stockResultante < 0) {
+                        const stockRes = stockResultante*-1;
+                        stockParrafo.textContent = `Error, añade: ${stockRes}`;
+
+                    }
 
                 } else if (totalAniadidos == 0) {
                     botonStock.classList.remove('btnStockred');
                     botonStock.classList.remove('btnStockgreen');
                     aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
+                    stockParrafo.textContent = `Stock: ${stockResultante}`;
 
                 }
             });
@@ -285,7 +301,7 @@
                     fila.classList.remove('fila-seleccionada');
                     boton.textContent = 'Editar Stock';
                     boton.classList.remove('btnQuitarStock');
-                    
+
                     const card = document.querySelector(`.inventariogrid1[data-id="${idProducto}"]`);
                     if (card) {
                         card.remove();
