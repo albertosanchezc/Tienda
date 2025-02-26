@@ -4,7 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 let ventas = [];
+let inventario = [];
 let arregloSeleccionadas = [];
+let ventasSeleccionadasAgrupadas = [];
+let inventarioActualizado = [];
 let arregloExpandido = [];
 let carrito = [];
 let carritoSeleccionado = [];
@@ -352,6 +355,27 @@ function escucharBotonCancelarProductosSeleccionados(boton) {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
         modalConfirmarCancelarSeleccionados.classList.add('modal--cancelarProductos--show');
+        
+        ventasSeleccionadasAgrupadas = Object.values(
+            arregloSeleccionadas.reduce((acc, venta) => {
+                if (!acc[venta.id_venta]) {
+                    acc[venta.id_venta] = { ...venta, cantidad: parseInt(venta.cantidad) };
+                } else {
+                    acc[venta.id_venta].cantidad += parseInt(venta.cantidad);
+                }
+                return acc;
+            }, {})
+        );
+
+        inventarioActualizado = ventasSeleccionadasAgrupadas.map(venta => {
+            const itemInventario = inventario.find(producto => producto.producto_id === venta.producto_id);
+            return {
+                producto_id: venta.producto_id,
+                cantidad: (itemInventario ? parseInt(itemInventario.cantidad) : 0) + parseInt(venta.cantidad)
+            };
+        });
+        console.log(inventarioActualizado);
+
         escucharBotonesSiNoModalCancelarProductos();
     })
 }
@@ -463,6 +487,7 @@ async function consultarAPI() {
 
 
         ventas = resultado.ventas;
+        inventario = resultado.inventario;
         // imprimirVentas(ventas);
         // filtrar();
 
@@ -661,7 +686,7 @@ function escucharBotonesSiNoModalCancelarTodaLaVenta() {
         }
 
         if (e.target.classList.value === 'modal--cancelarCarrito__si') {
-            console.log('cancelando productos seleccionados...');
+            console.log('cancelando todos los productos...');
         }
 
 
@@ -678,6 +703,8 @@ function escucharBotonesSiNoModalCancelarProductos() {
 
         if (e.target.classList.value === 'modal--cancelarProductos__si') {
             console.log('cancelando productos seleccionados...');
+            console.log(ventasSeleccionadasAgrupadas);
+
         }
 
 
