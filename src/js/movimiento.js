@@ -87,7 +87,7 @@
                 const botonStock = card.querySelector('.botonStock');
                 const idEditarProducto = e.target.getAttribute('data-id');
                 const objResultante = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
-                const objResultanteToPost = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
+                const objResultanteToPost = JSON.parse(JSON.stringify(objResultante));
                 const cantidadStock = objResultante.cantidad;
                 const cantidadStockToPost = objResultanteToPost.cantidad;
                 const valueGranel = inventario.find(producto => producto.producto_id === idEditarProducto);
@@ -102,18 +102,21 @@
                             case 1:
                                 totalAniadidos +=1;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
-                        // objResultante.cantidad = stockResultante;
                                 objResultanteToPost.cantidad = stockResultante;
+                                console.log(objResultante);
                                 console.log(objResultanteToPost);
+
                                 break;
                             case 2:
                                 totalAniadidos += 9;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                                objResultanteToPost.cantidad = stockResultante;
                                 
                                 break;
                             case 3:
                                 totalAniadidos += 90;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                                objResultanteToPost.cantidad = stockResultante;
                     
                                 clickCount = 0;
 
@@ -125,6 +128,7 @@
                     } else {
                         totalAniadidos++;
                         stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                        objResultanteToPost.cantidad = stockResultante;
                     }
                 }
                 else if (e.target.classList.value === 'meno' || e.target.classList.value === 'imagenmenos') {
@@ -134,17 +138,19 @@
                             case 1:
                                 totalAniadidos -= 1;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
-
+                                objResultanteToPost.cantidad = stockResultante;
                                 
                                 break;
                             case 2:
                                 totalAniadidos -= 9;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                                objResultanteToPost.cantidad = stockResultante;
                            
                                 break;
                             case 3:
                                 totalAniadidos -= 90;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                                objResultanteToPost.cantidad = stockResultante;
                                 clickCount = 0;
                                 break;
                             default :
@@ -154,8 +160,7 @@
                     } else {
                         totalAniadidos--;
                         stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
-                        objResultante.cantidad = stockResultante;
-                        // console.log(objResultante);
+                        objResultanteToPost.cantidad = stockResultante;
                     }
                 }
 
@@ -201,7 +206,23 @@
 
                 }
 
+                const index = arrayIdToPost.findIndex(producto => producto.producto_id === idEditarProducto);
+
+                if(index !==-1){
+
+                    arrayIdToPost[index] = {...arrayIdToPost[index], ...objResultanteToPost};
+                } else{
+                    arrayIdToPost.push(objResultanteToPost);
+                }
+
+
+                // console.log('')
+
+                console.log(arrayIdToPost);
                 console.log(arrayIdStock);
+
+                // objResultante.cantidad = stockResultante;
+                // objResultanteToPost.cantidad = stockResultante;
 
 
             });
@@ -284,7 +305,6 @@
                 objetoIdStock.producto_id = idProducto;
                 objetoIdStock.cantidad = stockProducto.cantidad;
                 arrayIdStock.push(objetoIdStock);
-                // console.log(arrayIdStock);
                 fila.classList.add('fila-seleccionada');
                 boton.textContent = 'Dejar de Editar';
                 boton.classList.add('btnQuitarStock');
@@ -301,7 +321,6 @@
                 idStock.delete(idProducto);
                 const objetoEliminar = arrayIdStock.find(producto => producto.producto_id === idProducto);
                 arrayIdStock = [...arrayIdStock.filter(objeto => objeto !== objetoEliminar)];
-                // console.log(arrayIdStock);
                 fila.classList.remove('fila-seleccionada');
                 boton.textContent = 'Editar Stock';
                 boton.classList.remove('btnQuitarStock');
