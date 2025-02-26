@@ -85,9 +85,13 @@
                 const botonStock = card.querySelector('.botonStock');
                 const idEditarProducto = e.target.getAttribute('data-id');
                 const objResultante = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
-                const valorGranel = inventario.find(producto => producto.granel === idEditarProducto);
                 const cantidadStock = objResultante.cantidad;
+                const valueGranel = inventario.find(producto => producto.producto_id === idEditarProducto);
+                const valorGranel = valueGranel.granel;
+                const presionarMas = document.querySelector('.ma');
 
+                let tiempoPresionado;
+                let tiempoInicio;
 
                 let totalAniadidos = parseInt(aniadidosParrafo.dataset.totalAniadidos || 0);
 
@@ -132,6 +136,15 @@
                     stockParrafo.textContent = `Stock: ${stockResultante}`;
 
                 }
+
+                presionarMas.addEventListener('mousedown', (e) => {
+                    tiempoInicio = Date.now(); // Guarda el tiempo de inicio
+            
+                    tiempoPresionado = setTimeout(() => {
+                        console.log('Acción para más de 2 segundos');
+                        div.style.backgroundColor = 'red';
+                    }, 2000); // Acciones si se mantiene por 2 segundos
+                });
             });
         });
     }

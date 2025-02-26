@@ -1,7 +1,8 @@
 <main class="contenedorcaja seccioncaja">
     <div class="busqueda-titulo margin-titulo">
         <h1>Registro de Ventas y Cancelaciones</h1>
-        <h3>Explora el registro completo de las ventas o las cancelaciones, Selecciona la opción de lo que deseas ver en pantalla. <h3>
+        <h3>Explora el registro completo de las ventas o las cancelaciones, Selecciona la opción de lo que deseas ver en
+            pantalla. <h3>
     </div>
     <div class="botonesventas margin-botonesventas">
         <a href="#" class="rojoclaro">Ventas</a>
@@ -387,9 +388,12 @@
                 <p>Total: $519.32</p>
             </div>
         </div>
-        <div class="modalCancelar--productos__botonCancelaciones">
-            <a href="#">Cancelar Toda la Venta</a>
-        </div>
+        <form id="formularioCancelarPorProducto" method="POST">
+            <div class="modalCancelar--productos__botonCancelaciones">
+                <input type="submit" value="Cancelar Toda la Venta"
+                    class="modalCancelar--productos__botonCancelacionesSubmit">
+            </div>
+        </form>
 </section>
 
 <!-- modal seguro que? para cuando presionas el boton de cancelar todo el carrito -->
@@ -408,7 +412,8 @@
 <!-- modal seguro que? presionas el boton de cancelar por productos -->
 <section class="modal--cancelarProductos">
     <div class="modal--cancelarProductos__container">
-        <h2 class="modal--cancelarProductos__title">¿Seguro que deseas Cancelar la Venta de los productos selecionados?</h2>
+        <h2 class="modal--cancelarProductos__title">¿Seguro que deseas Cancelar la Venta de los productos selecionados?
+        </h2>
         <form id="cancelarProductos" method="POST">
             <div class="modal--cancelarProductos__opciones">
                 <input value="Si" type="submit" class="modal--cancelarProductos__si">
