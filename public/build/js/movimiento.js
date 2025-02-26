@@ -15,6 +15,7 @@
     }
 
     let arrayIdStock = [];
+    let arrayIdToPost = [];
     let totalRegistrosTabla = 0;
 
 
@@ -75,6 +76,7 @@
         let stockResultante = 0;
 
         sel1.forEach((s) => {
+            let clickCount = 0;
             s.addEventListener('click', (e) => {
                 const card = e.target.closest('.inventariogrid1');
 
@@ -85,28 +87,81 @@
                 const botonStock = card.querySelector('.botonStock');
                 const idEditarProducto = e.target.getAttribute('data-id');
                 const objResultante = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
+                const objResultanteToPost = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
                 const cantidadStock = objResultante.cantidad;
+                const cantidadStockToPost = objResultanteToPost.cantidad;
                 const valueGranel = inventario.find(producto => producto.producto_id === idEditarProducto);
                 const valorGranel = valueGranel.granel;
-                const presionarMas = document.querySelector('.ma');
-
-                let tiempoPresionado;
-                let tiempoInicio;
 
                 let totalAniadidos = parseInt(aniadidosParrafo.dataset.totalAniadidos || 0);
 
                 if (e.target.classList.value === 'ma' || e.target.classList.value === 'imagenmas') {
-                    totalAniadidos++;
-                    stockResultante = parseInt(totalAniadidos) + parseInt(cantidadStock);
-                    console.log(valorGranel);
+                    if (valorGranel === '1') {
+                        clickCount++;
+                        switch (clickCount) {
+                            case 1:
+                                totalAniadidos +=1;
+                                stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                        // objResultante.cantidad = stockResultante;
+                                objResultanteToPost.cantidad = stockResultante;
+                                console.log(objResultanteToPost);
+                                break;
+                            case 2:
+                                totalAniadidos += 9;
+                                stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                                
+                                break;
+                            case 3:
+                                totalAniadidos += 90;
+                                stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                    
+                                clickCount = 0;
 
+                                break;
+                            default :
+                                break;
+                        }
+
+                    } else {
+                        totalAniadidos++;
+                        stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                    }
                 }
                 else if (e.target.classList.value === 'meno' || e.target.classList.value === 'imagenmenos') {
-                    totalAniadidos--;
-                    stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
-                    console.log(stockResultante);
+                    if (valorGranel === '1') {
+                        clickCount++;
+                        switch (clickCount) {
+                            case 1:
+                                totalAniadidos -= 1;
+                                stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
 
+                                
+                                break;
+                            case 2:
+                                totalAniadidos -= 9;
+                                stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                           
+                                break;
+                            case 3:
+                                totalAniadidos -= 90;
+                                stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                                clickCount = 0;
+                                break;
+                            default :
+                                break;
+                        }
+
+                    } else {
+                        totalAniadidos--;
+                        stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
+                        objResultante.cantidad = stockResultante;
+                        // console.log(objResultante);
+                    }
                 }
+
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 700);
 
                 aniadidosParrafo.dataset.totalAniadidos = totalAniadidos;
 
@@ -114,19 +169,28 @@
                     botonStock.classList.add('btnStockgreen');
                     botonStock.classList.remove('btnStockred');
                     aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
-                    stockParrafo.textContent = `Stock Resultante: ${stockResultante}`;
+
+                    if (valorGranel === '1') {
+                        stockParrafo.textContent = `Resultado: ${stockResultante} g`;
+                    } else {
+                        stockParrafo.textContent = `Stock Resultante: ${stockResultante}`;
+                    }
 
                 } else if (totalAniadidos < 0) {
                     botonStock.classList.add('btnStockred');
                     botonStock.classList.remove('btnStockgreen');
                     const retiradosPositivo = totalAniadidos * -1;
                     aniadidosParrafo.textContent = `Retirados: ${retiradosPositivo}`;
-                    stockParrafo.textContent = `Stock Resultante: ${stockResultante}`;
+
+                    if (valorGranel === '1') {
+                        stockParrafo.textContent = `Resultado: ${stockResultante} g`;
+                    } else {
+                        stockParrafo.textContent = `Stock Resultante: ${stockResultante}`;
+                    }
 
                     if (stockResultante < 0) {
                         const stockRes = stockResultante * -1;
                         stockParrafo.textContent = `Error, añade: ${stockRes}`;
-
                     }
 
                 } else if (totalAniadidos == 0) {
@@ -137,14 +201,9 @@
 
                 }
 
-                presionarMas.addEventListener('mousedown', (e) => {
-                    tiempoInicio = Date.now(); // Guarda el tiempo de inicio
-            
-                    tiempoPresionado = setTimeout(() => {
-                        console.log('Acción para más de 2 segundos');
-                        div.style.backgroundColor = 'red';
-                    }, 2000); // Acciones si se mantiene por 2 segundos
-                });
+                console.log(arrayIdStock);
+
+
             });
         });
     }
@@ -156,6 +215,7 @@
         contenedorTabla.innerHTML = '';
         idStock.clear();
         arrayIdStock = [];
+        arrayIdToPost = [];
         const tablaDinamica = document.createElement('table');
         tablaDinamica.classList.add('tabla-proveedores', 'tabla-verde');
 
@@ -334,6 +394,7 @@
                 }
             }
             console.log('Productos seleccionados:', Array.from(idStock));
+
         }
 
     }
@@ -344,7 +405,6 @@
         let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, cantidad, imagen, granel } = producto;
 
         let proveedorDatos = proveedores.find(proveedor => proveedor.id === proveedor_id);
-        // let categoriaDatos = categorias.find(categoria => categoria.id === categoria_id);
 
         const proveedorNombre = proveedorDatos ? proveedorDatos.nombre : 'Proveedor no disponible';
 
@@ -428,7 +488,22 @@
         // Crea el contenedor de botones de stock
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonStock');
-        botonesGrid.innerHTML = `
+        if (producto.granel === '1') {
+            botonesGrid.innerHTML = `
+            <div class="imagenmenos" data-id="${producto.id}">
+                <p class="meno" data-id="${producto.id}">-</p>
+            </div>
+            <div class="stockCantidad">
+                <p class="Stock">Stock: ${cantidad} g </p>
+                <p class="Aniadidos">Añadidos: 0</p>
+            </div>
+            <div class="imagenmas" data-id="${producto.id}">
+                <p class="ma" data-id="${producto.id}">+</p>
+            </div>
+        `;
+
+        } else {
+            botonesGrid.innerHTML = `
             <div class="imagenmenos" data-id="${producto.id}">
                 <p class="meno" data-id="${producto.id}">-</p>
             </div>
@@ -440,6 +515,8 @@
                 <p class="ma" data-id="${producto.id}">+</p>
             </div>
         `;
+        }
+
 
         // Agrega todos los elementos al contenedor principal
         inventarioGrid.appendChild(parrafoContainer);
