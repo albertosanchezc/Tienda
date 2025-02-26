@@ -11,9 +11,10 @@ let carritoSeleccionado = [];
 let terminosBusqueda = {
     id: '',
     fechaI: '',
-    fechaF: '', 
+    fechaF: '',
     tipo: ''
 }
+let botonCancelarTodaLaVenta = '';
 
 // Selectores
 const btnVentas = document.querySelector('.rojoclaro');
@@ -34,6 +35,22 @@ const imagendown = document.querySelector('.imgdown');
 
 const inputFechaInicial = document.getElementById('fecha1');
 const inputFechaFinal = document.getElementById('fecha2');
+
+document.querySelector('.modalCancelar--productos__botonCancelacionesSubmit').remove();
+
+const contenedorBotonCancelarModal = document.querySelector('.modalCancelar--productos__botonCancelaciones');
+let botonCorregido = document.createElement('A');
+botonCorregido.classList.add('modalCancelar--productos__botonCancelacionesSubmit', 'boton-por-carrito');
+botonCorregido.textContent = 'Cancelar Toda la Venta';
+botonCorregido.href = '#';
+document.querySelector('.modalCancelar--productos__botonCancelaciones').appendChild(botonCorregido)
+
+// Selectores modales confirmar 
+const modalConfirmarCancelarPorCarrito = document.querySelector('.modal--cancelarCarrito');
+const modalConfirmarCancelarSeleccionados = document.querySelector('.modal--cancelarProductos');
+
+const contenedorOpcionesModalCancelarTodaLaVenta = document.querySelector('.modal--cancelarCarrito__opciones');
+const contenedorOpcionesModalCancelarProductos = document.querySelector('.modal--cancelarProductos__opciones');
 
 
 const busquedaTitulo = document.querySelector('.busqueda-titulo');
@@ -111,11 +128,13 @@ imagendown.addEventListener('click', function () {
     });
 });
 
-btnCerrarModalCancelar.addEventListener('click', () => {
+btnCerrarModalCancelar.addEventListener('click', (e) => {
+    e.preventDefault();
     document.querySelector('.modalCancelar').classList.remove('modalCancelar--show');
 })
 
-btnCerrarModalCancelarProducto.addEventListener('click', () => {
+btnCerrarModalCancelarProducto.addEventListener('click', (e) => {
+
     document.querySelector('.modalCancelar--productos').classList.remove('modalCancelar--productos--show');
 })
 
@@ -301,18 +320,42 @@ function escucharBotonesVerProductos() {
 function escucharBotonGestionarProductos() {
     // btnGestionarCancelaciones.querySelector('A').dataset.id = carritoId;
     btnGestionarCancelaciones.addEventListener('click', (e) => {
+
         if (e.target.parentElement.classList.contains('modalCancelar__botonCancelaciones')) {
+            e.preventDefault();
+
             mostrarModalCancelar();
         }
     })
 }
 
-function escucharBotonCancelarTodoModal() {
-    btnCancelarTodaVentaModal = document.querySelector('.modalCancelar--productos__botonCancelaciones');
-    btnCancelarTodaVentaModal.addEventListener('click', () => {
-        console.log('Cancelando toda la venta');
+// function escucharBotonCancelarTodoModal() {
+//     btnCancelarTodaVentaModal = document.querySelector('.modalCancelar--productos__botonCancelaciones');
+//     btnCancelarTodaVentaModal.addEventListener('click', () => {
+//         console.log('Cancelando toda la venta');
+//     })
+// }
+
+function escucharBotonCancelarTodaLaVenta(boton) {
+
+
+    boton.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Estamos en el evento');
+        console.log(modalConfirmarCancelarPorCarrito)
+        modalConfirmarCancelarPorCarrito.classList.add('modal--cancelarCarrito--show');
+        escucharBotonesSiNoModalCancelarTodaLaVenta();
     })
 }
+
+function escucharBotonCancelarProductosSeleccionados(boton) {
+    boton.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalConfirmarCancelarSeleccionados.classList.add('modal--cancelarProductos--show');
+        escucharBotonesSiNoModalCancelarProductos();
+    })
+}
+
 
 function escucharFilasModalCancelarProductosTicket() {
     const filas = document.querySelector('.modalCancelar--productos__rectangulo-grande').querySelector('.modalCancelar--productos__ticket').querySelectorAll('tr');
@@ -369,6 +412,13 @@ function modificarArreglo(elementoEsSelected, nombreDescripcion) {
     console.log(arregloSeleccionadas);
 }
 
+function escucharBotonesConfirmarModalCancelarTodos() {
+
+}
+
+function escucharBotonesConfirmarModalCancelarSeleccionados() {
+
+}
 
 function mostrarTablaExpandida() {
     const datosTabla = expandirArreglo();
@@ -376,7 +426,7 @@ function mostrarTablaExpandida() {
     mostrarModalCancelar(datosTabla);
 }
 
-function mostrarTablaPorCantidad(){
+function mostrarTablaPorCantidad() {
     mostrarModalCancelar();
 }
 
@@ -523,7 +573,8 @@ function mostrarModalCancelar(datos = carrito) {
     const tbodyTablaModalCancelarProductosTicket = document.createElement('TBODY');
 
     console.log(datos);
-    
+    let totalCarrito = 0;
+
 
     datos.forEach(venta => {
         totalVenta = 0;
@@ -533,6 +584,8 @@ function mostrarModalCancelar(datos = carrito) {
         } else {
             totalVenta += cantidad * precio_venta;
         }
+
+        totalCarrito = totalCarrito + totalVenta;
 
         let filaTablaModalCancelarProductosTicket = document.createElement('TR');
         filaTablaModalCancelarProductosTicket.style.cursor = 'pointer';
@@ -551,6 +604,11 @@ function mostrarModalCancelar(datos = carrito) {
     })
     tablaTicketSelector.appendChild(theadTablaModalCancelarProductosTicket);
     tablaTicketSelector.appendChild(tbodyTablaModalCancelarProductosTicket);
+
+    const contenedorTotal = document.querySelector('.modalCancelar--productos__total-ticket');
+    let p = contenedorTotal.querySelector('P');
+    p.textContent = `Total: $${totalCarrito.toFixed(2)}`;
+    console.log(tablaTicketSelector);
 
     escucharBotonesModalGestionarProductos();
 
@@ -583,7 +641,6 @@ function mostrarTablaVentasPorProductoSoloTabla() {
     tablaVentasPorCarrito.style.display = 'none';
 }
 
-
 ocultarVentas();
 
 function ocultarCancelaciones() {
@@ -593,23 +650,78 @@ function ocultarCancelaciones() {
 }
 ocultarCancelaciones();
 
+escucharBotonCancelarTodaLaVenta(botonCorregido);
+
+function escucharBotonesSiNoModalCancelarTodaLaVenta() {
+    modalConfirmarCancelarPorCarrito.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(e.target.classList.value);
+        if (e.target.classList.value === 'modal--cancelarCarrito__no') {
+            modalConfirmarCancelarPorCarrito.classList.remove('modal--cancelarCarrito--show');
+        }
+
+        if (e.target.classList.value === 'modal--cancelarCarrito__si') {
+            console.log('cancelando productos seleccionados...');
+        }
+
+
+    })
+}
+
+function escucharBotonesSiNoModalCancelarProductos() {
+    contenedorOpcionesModalCancelarProductos.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(e.target.classList.value);
+        if (e.target.classList.value === 'modal--cancelarProductos__no') {
+            modalConfirmarCancelarSeleccionados.classList.remove('modal--cancelarProductos--show');
+        }
+
+        if (e.target.classList.value === 'modal--cancelarProductos__si') {
+            console.log('cancelando productos seleccionados...');
+        }
+
+
+    })
+}
+
+
+
 function escucharBotonesModalGestionarProductos() {
     let contenedorBotonesModal = document.querySelector('.modalCancelar--productos__switch');
+
+
     contenedorBotonesModal.addEventListener('click', (e) => {
         const identificador = e.target.id;
+        botonCorregido.classList = [];
+        const botonNuevo = botonCorregido.cloneNode();
+        if (botonCorregido.classList.contains('modalCancelar--productos__botonCancelaciones')) {
+            botonCorregido.click();
+        }
+        botonCorregido.remove();
+        limpiarHTMLElemento(contenedorBotonCancelarModal)
+        contenedorBotonCancelarModal.appendChild(botonNuevo);
         switch (identificador) {
             case 'carr':
                 mostrarTablaPorCantidad();
-                escucharBotonCancelarTodoModal();
+                console.log('diste click');
+                botonNuevo.classList.add('boton-por-carrito');
+                botonNuevo.textContent = 'Cancelar Toda la Venta';
+                escucharBotonCancelarTodaLaVenta(botonNuevo);
+
+
                 break;
 
             case 'prod':
                 mostrarTablaExpandida();
+                botonNuevo.classList.add('boton-por-producto')
+                botonNuevo.textContent = 'Cancelar Ventas Seleccionadas';
                 escucharFilasModalCancelarProductosTicket();
+                escucharBotonCancelarProductosSeleccionados(botonNuevo);
+
+
                 break;
 
             default:
-
                 break;
         }
     })
@@ -623,7 +735,6 @@ function limpiarHTMLElemento(elemento) {
         elemento.removeChild(elemento.firstChild);
     }
 }
-
 
 function corregirMargin() {
     if (contenedorBotones.classList.contains('botones_display')) {
