@@ -332,7 +332,7 @@ function escucharFilasModalCancelarProductosTicket() {
 function aniadirAlArreglo(nombreDescripcion) {
     // Añadir al arreglo
     let idDelCarrito = carrito[0].carrito_id;
-    let seleccionadoCompleto = carrito.find(venta =>
+    let seleccionadoCompleto = arregloExpandido.find(venta =>
         nombreDescripcion.includes(`${venta.producto} ${venta.producto_descripcion}`) &&
         venta.carrito_id === idDelCarrito
     );
@@ -344,11 +344,14 @@ function aniadirAlArreglo(nombreDescripcion) {
 function eliminarDelArreglo(nombreDescripcion) {
     // Eliminar del arreglo
     let idDelCarrito = carrito[0].carrito_id;
-    let seleccionadoCompleto = carrito.find(venta =>
+    let seleccionadoCompleto = arregloExpandido.find(venta =>
         nombreDescripcion.includes(`${venta.producto} ${venta.producto_descripcion}`) &&
         venta.carrito_id === idDelCarrito
     );
-    arregloSeleccionadas = [...arregloSeleccionadas.filter(venta => venta !== seleccionadoCompleto)];
+    const index = arregloSeleccionadas.findIndex(venta => venta === seleccionadoCompleto);
+    if (index !== -1) {
+        arregloSeleccionadas.splice(index, 1);
+    }
 }
 
 // Modifica el arreglo de producto por producto(modal)
@@ -371,6 +374,10 @@ function mostrarTablaExpandida() {
     const datosTabla = expandirArreglo();
 
     mostrarModalCancelar(datosTabla);
+}
+
+function mostrarTablaPorCantidad(){
+    mostrarModalCancelar();
 }
 
 function expandirArreglo() {
@@ -592,12 +599,12 @@ function escucharBotonesModalGestionarProductos() {
         const identificador = e.target.id;
         switch (identificador) {
             case 'carr':
+                mostrarTablaPorCantidad();
                 escucharBotonCancelarTodoModal();
                 break;
 
             case 'prod':
                 mostrarTablaExpandida();
-
                 escucharFilasModalCancelarProductosTicket();
                 break;
 
