@@ -85,6 +85,7 @@
                 const botonStock = card.querySelector('.botonStock');
                 const idEditarProducto = e.target.getAttribute('data-id');
                 const objResultante = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
+                const valorGranel = inventario.find(producto => producto.granel === idEditarProducto);
                 const cantidadStock = objResultante.cantidad;
 
 
@@ -93,7 +94,7 @@
                 if (e.target.classList.value === 'ma' || e.target.classList.value === 'imagenmas') {
                     totalAniadidos++;
                     stockResultante = parseInt(totalAniadidos) + parseInt(cantidadStock);
-                    console.log(stockResultante);
+                    console.log(valorGranel);
 
                 }
                 else if (e.target.classList.value === 'meno' || e.target.classList.value === 'imagenmenos') {
@@ -227,7 +228,7 @@
                 idStock.delete(idProducto);
                 const objetoEliminar = arrayIdStock.find(producto => producto.producto_id === idProducto);
                 arrayIdStock = [...arrayIdStock.filter(objeto => objeto !== objetoEliminar)];
-                console.log(arrayIdStock);
+                // console.log(arrayIdStock);
                 fila.classList.remove('fila-seleccionada');
                 boton.textContent = 'Editar Stock';
                 boton.classList.remove('btnQuitarStock');
@@ -244,7 +245,7 @@
                     currentState = STATES.PROVIDER_SELECTED;
                 }
             }
-            
+
             console.log('Productos seleccionados:', Array.from(idStock));
             const totalRegistrosId = idStock.size;
             if (totalRegistrosTabla === totalRegistrosId) {
