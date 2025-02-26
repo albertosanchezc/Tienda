@@ -5,11 +5,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 let ventas = [];
 let arregloSeleccionadas = [];
+let arregloExpandido = [];
 let carrito = [];
+let carritoSeleccionado = [];
 let terminosBusqueda = {
     id: '',
     fechaI: '',
-    fechaF: '',
+    fechaF: '', 
     tipo: ''
 }
 
@@ -260,26 +262,26 @@ function mostrarTablaVentasPorCarrito(ventas) {
 
 }
 
-function mostrarTablaVentasPorProducto(ventas){
+function mostrarTablaVentasPorProducto(ventas) {
     ocultarTablaVentasPorCarrito();
 }
 
-function escucharBotonesFormularioVentas(){
+function escucharBotonesFormularioVentas() {
     const contenedorBotonesBusquedaVentas = busquedaVentas.querySelector('.switch');
     contenedorBotonesBusquedaVentas.addEventListener('click', (e) => {
-        if(e.target.value === 'carrito'){
+        if (e.target.value === 'carrito') {
             // console.log(e.target.value);
             mostrarTablaVentasPorCarritoSoloTabla();
             mostrarTablaVentasPorCarrito(ventas);
         }
-        if(e.target.value === 'producto'){
+        if (e.target.value === 'producto') {
             console.log(e.target.value);
             mostrarTablaVentasPorProductoSoloTabla();
             mostrarTablaVentasPorProducto(ventas);
         }
 
     })
-    
+
 }
 
 function escucharBotonesVerProductos() {
@@ -362,6 +364,33 @@ function modificarArreglo(elementoEsSelected, nombreDescripcion) {
     }
 
     console.log(arregloSeleccionadas);
+}
+
+
+function mostrarTablaExpandida() {
+    const datosTabla = expandirArreglo();
+
+    mostrarModalCancelar(datosTabla);
+}
+
+function expandirArreglo() {
+    const elementosAExpandir = carrito.filter(venta => {
+        return (venta.cantidad >= 2) && (venta.granel !== '1')
+    })
+
+    const elementosACopiar = carrito.filter(venta => {
+        return (venta.cantidad === '1') || (venta.granel === '1')
+    })
+    console.log(elementosACopiar);
+
+    const elementosTransformados = elementosAExpandir.flatMap(venta =>
+        Array.from({ length: venta.cantidad }, () => ({ ...venta, cantidad: '1' }))
+    );
+
+    arregloExpandido = [...elementosACopiar, ...elementosTransformados];
+
+
+    return (arregloExpandido)
 }
 
 
@@ -465,7 +494,7 @@ function mostrarModalVerProductos(idCarrito) {
 
 }
 
-function mostrarModalCancelar() {
+function mostrarModalCancelar(datos = carrito) {
     document.querySelector('.modalCancelar--productos').classList.add('modalCancelar--productos--show');
 
     const tablaTicketSelector = document.querySelector('.modalCancelar--productos__ticket');
@@ -486,9 +515,10 @@ function mostrarModalCancelar() {
 
     const tbodyTablaModalCancelarProductosTicket = document.createElement('TBODY');
 
-    console.log(carrito);
+    console.log(datos);
+    
 
-    carrito.forEach(venta => {
+    datos.forEach(venta => {
         totalVenta = 0;
         const { cantidad, producto, producto_descripcion, precio_venta, granel } = venta;
         if (granel === '1') {
@@ -516,7 +546,6 @@ function mostrarModalCancelar() {
     tablaTicketSelector.appendChild(tbodyTablaModalCancelarProductosTicket);
 
     escucharBotonesModalGestionarProductos();
-    console.log(arregloSeleccionadas);
 
 
 }
@@ -524,27 +553,27 @@ function mostrarModalCancelar() {
 function ocultarVentas() {
     tituloVentas.style.display = 'none';
     busquedaVentas.style.display = 'none';
-    tablaVentasPorCarrito.style.display = 'none';    
+    tablaVentasPorCarrito.style.display = 'none';
     tablaVentasPorProducto.style.display = 'none';
 }
 
-function ocultarTablaVentasPorCarrito(){
-    tablaVentasPorCarrito.style.display = 'none';    
+function ocultarTablaVentasPorCarrito() {
+    tablaVentasPorCarrito.style.display = 'none';
 }
 
-function ocultarTablaVentasPorProducto(){
+function ocultarTablaVentasPorProducto() {
     tablaVentasPorProducto.style.display = 'none';
-    
+
 }
 
-function mostrarTablaVentasPorCarritoSoloTabla(){
+function mostrarTablaVentasPorCarritoSoloTabla() {
     tablaVentasPorCarrito.style.display = 'grid';
     tablaVentasPorProducto.style.display = 'none';
 }
 
-function mostrarTablaVentasPorProductoSoloTabla(){
+function mostrarTablaVentasPorProductoSoloTabla() {
     tablaVentasPorProducto.style.display = 'grid';
-    tablaVentasPorCarrito.style.display = 'none';    
+    tablaVentasPorCarrito.style.display = 'none';
 }
 
 
@@ -561,14 +590,14 @@ function escucharBotonesModalGestionarProductos() {
     let contenedorBotonesModal = document.querySelector('.modalCancelar--productos__switch');
     contenedorBotonesModal.addEventListener('click', (e) => {
         const identificador = e.target.id;
-        const contenedorBotonesModalCarr = contenedorBotonesModal.querySelector('#carr');
-        contenedorBotonesModalCarr.click();
         switch (identificador) {
             case 'carr':
                 escucharBotonCancelarTodoModal();
                 break;
 
             case 'prod':
+                mostrarTablaExpandida();
+
                 escucharFilasModalCancelarProductosTicket();
                 break;
 
@@ -589,7 +618,7 @@ function limpiarHTMLElemento(elemento) {
 }
 
 
-function corregirMargin(){
+function corregirMargin() {
     if (contenedorBotones.classList.contains('botones_display')) {
         contenedorBotones.classList.remove('botones_display');
         contenedorBotones.classList.add('margin-botonesventas');
@@ -597,5 +626,6 @@ function corregirMargin(){
         busquedaTitulo.classList.add('margin-titulo');
     }
 }
+
 
 
