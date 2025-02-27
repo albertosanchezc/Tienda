@@ -18,13 +18,18 @@
     let arrayIdToPost = [];
     let totalRegistrosTabla = 0;
 
+    let totalFinal = 0;
+
+
 
     const idStock = new Set();
     const inputProveedor = document.querySelector('#proveedormovimientoprod');
     const containertabla = document.querySelector('.gridmodificaciones');
     const contenedorClass1 = document.querySelector('.containerBackground');
     const contenedorCards = document.querySelector('.articulosmodificar');
-    const btnAniadirTodos = document.querySelector('.btnEditarStockTodos')
+    const btnAniadirTodos = document.querySelector('.btnEditarStockTodos');
+    const contenedorTotal = document.querySelector('.totalVisita');
+
 
     document.addEventListener('DOMContentLoaded', function () {
         consultarAPI();
@@ -74,6 +79,7 @@
 
     function escucharBotonesMasyMenos(sel1) {
         let stockResultante = 0;
+        let resultadoAnterior;
 
         sel1.forEach((s) => {
             let clickCount = 0;
@@ -95,12 +101,14 @@
 
                 let totalAniadidos = parseInt(aniadidosParrafo.dataset.totalAniadidos || 0);
 
+                let totalProducto = 0; 
+
                 if (e.target.classList.value === 'ma' || e.target.classList.value === 'imagenmas') {
                     if (valorGranel === '1') {
                         clickCount++;
                         switch (clickCount) {
                             case 1:
-                                totalAniadidos +=1;
+                                totalAniadidos += 1;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
                                 objResultanteToPost.cantidad = stockResultante;
                                 console.log(objResultante);
@@ -111,17 +119,17 @@
                                 totalAniadidos += 9;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
                                 objResultanteToPost.cantidad = stockResultante;
-                                
+
                                 break;
                             case 3:
                                 totalAniadidos += 90;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
                                 objResultanteToPost.cantidad = stockResultante;
-                    
+
                                 clickCount = 0;
 
                                 break;
-                            default :
+                            default:
                                 break;
                         }
 
@@ -139,13 +147,13 @@
                                 totalAniadidos -= 1;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
                                 objResultanteToPost.cantidad = stockResultante;
-                                
+
                                 break;
                             case 2:
                                 totalAniadidos -= 9;
                                 stockResultante = parseInt(cantidadStock) + parseInt(totalAniadidos);
                                 objResultanteToPost.cantidad = stockResultante;
-                           
+
                                 break;
                             case 3:
                                 totalAniadidos -= 90;
@@ -153,7 +161,7 @@
                                 objResultanteToPost.cantidad = stockResultante;
                                 clickCount = 0;
                                 break;
-                            default :
+                            default:
                                 break;
                         }
 
@@ -208,18 +216,63 @@
 
                 const index = arrayIdToPost.findIndex(producto => producto.producto_id === idEditarProducto);
 
-                if(index !==-1){
+                let resultadoInventario = inventario.find(producto => producto.producto_id === idEditarProducto);
+                let resultado =  Number(resultadoInventario.precio_compra);
+                // console.log(resultado);
 
-                    arrayIdToPost[index] = {...arrayIdToPost[index], ...objResultanteToPost};
-                } else{
+                if (index !== -1) {
+                    let objEncontrado = arrayIdToPost.find(producto => producto.producto_id === idEditarProducto);
+                    let cant = objEncontrado ? Number(objEncontrado.cantidad) : 0;
+                    let valorResta =0;
+
+                    if (valorGranel === '1') {
+                        valorResta=(parseInt(totalAniadidos)/1000)*cant;
+                        totalProducto = (resultado / 1000) * parseInt(totalAniadidos);
+                        totalFinal = totalFinal + totalProducto - valorResta;
+                        console.log(totalProducto);
+                        console.log(totalFinal);
+                    }
+                     else {
+                        valorResta=parseInt(totalAniadidos)*cant;
+                        totalProducto = resultado * parseInt(totalAniadidos);
+                        totalFinal = totalFinal + totalProducto-valorResta;
+                        console.log(totalProducto);
+                        console.log(totalFinal);
+
+                    }
+                    arrayIdToPost[index] = { ...arrayIdToPost[index], ...objResultanteToPost };
+                    
+
+                } else {
                     arrayIdToPost.push(objResultanteToPost);
-                }
+                    if (valorGranel === '1') {
+                        totalProducto = (resultado / 1000) * parseInt(totalAniadidos);
+                        totalFinal = totalFinal + totalProducto;
+                        console.log(totalProducto);
+                        console.log(totalFinal);
 
+
+                    } else {
+                        totalProducto = resultado * parseInt(totalAniadidos);
+                        totalFinal = totalFinal + totalProducto;
+                        console.log(totalProducto);
+                        console.log(totalFinal);
+
+
+                    }
+
+                }
 
                 // console.log('')
 
                 console.log(arrayIdToPost);
-                console.log(arrayIdStock);
+
+                // console.log(arrayIdStock);
+                resultadoAnterior = totalProducto;
+                contenedorTotal.innerHTML = `
+                    <p>Total resultante</p>
+                    <p>${totalFinal}</p>
+                `;
 
                 // objResultante.cantidad = stockResultante;
                 // objResultanteToPost.cantidad = stockResultante;
@@ -438,6 +491,12 @@
 
         const parrafoContainer = document.createElement('div');
         parrafoContainer.classList.add('inventarionombre');
+
+        contenedorTotal.innerHTML = `
+            <p>Total Resultante:</p>
+            <p>$ 0.00</p>
+        `;
+
 
         parrafoContainer.innerHTML = `
             <img src="/imagenes/${imagen}" alt="Img ${nombre}" class="imgcoca">
