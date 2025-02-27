@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Model\Caja;
 use Model\Caja_historico;
+use Model\Inventario;
 use Model\Ventas;
 use MVC\Router;
 
@@ -42,7 +43,22 @@ class VentasYCancelacionesController
                 $caja->cantidad_caja = $cajaPost[0]->cantidad_caja;
 
                 $ventaNueva = new Ventas();
+                $inventarioNuevo = new Inventario();
+                // debuguear($inventarioPost);
+                foreach($inventarioPost as $producto){
+                    $id = $producto->producto_id;
+                    // $inventarioNuevo->sincronizar($producto);
+                    $productoCompleto = Inventario::find($id);
+                    $productoCompleto->sincronizar($producto);
 
+                    $inventarioNuevo->sincronizar($productoCompleto);
+                    // debuguear($inventarioNuevo);
+
+
+
+                    $inventarioNuevo->guardar();
+
+                }
 
                 foreach ($ventasPost as $venta) {
                     $id = $venta->id_venta;
@@ -53,23 +69,53 @@ class VentasYCancelacionesController
                     $cantidadAnterior = $ventaCompleta->cantidad;
 
                     $resultado = $cantidadAnterior-$cantidadPost;
-                    $ventaNueva->sincronizar($ventaCompleta);
-
+                    $ventaNueva->sincronizar($venta);
+                    $precio_compra = $ventaCompleta->precio_compra;
                     if($resultado >= 1){
                         // Quedan Ventas de ese producto en ese carrito
+                        $ventaNueva->id = $id;
                         $ventaNueva->cantidad = $resultado;
-                        debuguear($ventaNueva);
+                        $ventaNueva->precio_compra =  $precio_compra;
+                        $ventaNueva->cancelacion = 0;
+                        // debuguear($ventaNueva);
 
-                        // $ventaCompleta->guardar();
+
+
+
+
+                        $ventaNueva->guardar();
                     } else {
-                        // $ventaCompleta->eliminar();
+                        // Cantidad quedó en cero para ese producto por lo que se elimina
+
+
+
+
+                        $ventaCompleta->eliminar();
                     }
+
+                    // Añadir Cancelaciones
+                    $ventaNueva->id = null;
+                    $ventaNueva->cantidad = $venta->cantidad;
+                    $ventaNueva->cancelacion = 1;
+                    $ventaNueva->precio_compra =  $precio_compra;
+
+
+
+
+                    // debuguear($ventaNueva);
+                    $ventaNueva->guardar();
+
                 }
 
 
 
 
                 // Guardar nuevos valores de caja
+
+
+
+
+                $caja->guardar();
                 // debuguear($caja);
             }
         }

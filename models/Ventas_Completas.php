@@ -12,6 +12,7 @@ class Ventas_Completas extends ActiveRecord{
         'carrito_id',
         'fecha_venta',
         'hora_venta',
+        'cancelacion',
         'id_producto',
         'producto',
         'producto_descripcion',
@@ -33,6 +34,7 @@ class Ventas_Completas extends ActiveRecord{
    public $carrito_id;
    public $fecha_venta;
    public $hora_venta;
+   public $cancelacion;
    public $id_producto;
    public $producto;
    public $producto_descripcion;
@@ -53,6 +55,7 @@ class Ventas_Completas extends ActiveRecord{
         $this->carrito_id = $args['carrito_id'] ?? '';
         $this->fecha_venta = $args['fecha_venta'] ?? '';
         $this->hora_venta = $args['hora_venta'] ?? '';
+        $this->cancelacion = $args['cancelacion'] ?? '';
         $this->id_producto = $args['id_producto'] ?? '';
         $this->producto = $args['producto'] ?? '';
         $this->producto_descripcion = $args['producto_descripcion'] ?? '';

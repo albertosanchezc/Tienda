@@ -192,6 +192,7 @@ class ActiveRecord
             ventas.carrito_id AS carrito_id,
             ventas.fecha_venta AS fecha_venta,
             ventas.hora_venta AS hora_venta,
+            ventas.cancelacion as cancelacion,
             productos.id AS id_producto,
             productos.nombre AS producto,
             productos.descripcion AS producto_descripcion,
