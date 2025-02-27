@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 let ventas = [];
 let inventario = [];
+let caja = [];
 let arregloSeleccionadas = [];
 let ventasSeleccionadasAgrupadas = [];
 let inventarioActualizado = [];
@@ -18,6 +19,18 @@ let terminosBusqueda = {
     tipo: ''
 }
 let botonCancelarTodaLaVenta = '';
+const inputHiddenInventarioCancelarSeleccion = document.createElement('INPUT');
+inputHiddenInventarioCancelarSeleccion.type = 'HIDDEN';
+inputHiddenInventarioCancelarSeleccion.name = 'cancelarSeleccion[inventario]';
+
+const inputHiddenCajaCancelarSeleccion = document.createElement('INPUT');
+inputHiddenCajaCancelarSeleccion.type = 'HIDDEN';
+inputHiddenCajaCancelarSeleccion.name = 'cancelarSeleccion[caja]';
+
+const inputHiddenVentasCancelarSeleccion = document.createElement('INPUT');
+inputHiddenVentasCancelarSeleccion.type = 'HIDDEN';
+inputHiddenVentasCancelarSeleccion.name = 'cancelarSeleccion[ventas]';
+
 
 // Selectores
 const btnVentas = document.querySelector('.rojoclaro');
@@ -355,7 +368,7 @@ function escucharBotonCancelarProductosSeleccionados(boton) {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
         modalConfirmarCancelarSeleccionados.classList.add('modal--cancelarProductos--show');
-        
+
         ventasSeleccionadasAgrupadas = Object.values(
             arregloSeleccionadas.reduce((acc, venta) => {
                 if (!acc[venta.id_venta]) {
@@ -488,6 +501,7 @@ async function consultarAPI() {
 
         ventas = resultado.ventas;
         inventario = resultado.inventario;
+        caja = resultado.caja;
         // imprimirVentas(ventas);
         // filtrar();
 
@@ -686,7 +700,7 @@ function escucharBotonesSiNoModalCancelarTodaLaVenta() {
         }
 
         if (e.target.classList.value === 'modal--cancelarCarrito__si') {
-            console.log('cancelando todos los productos...');
+
         }
 
 
@@ -704,6 +718,61 @@ function escucharBotonesSiNoModalCancelarProductos() {
         if (e.target.classList.value === 'modal--cancelarProductos__si') {
             console.log('cancelando productos seleccionados...');
             console.log(ventasSeleccionadasAgrupadas);
+
+            let insert = inventarioActualizado.map(articulo => ({
+                producto_id: articulo.producto_id,
+                cantidad: articulo.cantidad
+            }));
+            let insertJson = JSON.stringify(insert);
+            console.log(insertJson);
+            inputHiddenInventarioCancelarSeleccion.value = insertJson;
+            document.querySelector('.modal--cancelarProductos__opciones').parentElement.appendChild(inputHiddenInventarioCancelarSeleccion);
+
+            ventasSeleccionadasAgrupadas = ventasSeleccionadasAgrupadas.map(venta => ({
+                ...venta,
+                cancelacion: 1
+            }));
+
+            insert = ventasSeleccionadasAgrupadas.map(articulo => ({
+                carrito_id: articulo.carrito_id,
+                producto_id: articulo.producto_id,
+                cantidad: articulo.cantidad,
+                id_venta: articulo.id_venta,
+                cancelacion: articulo.cancelacion,
+                precio_venta: articulo.precio_venta,
+                granel: articulo.granel
+            }));
+
+            insertJson = JSON.stringify(insert);
+            console.log(insertJson);
+            inputHiddenVentasCancelarSeleccion.value = insertJson;
+
+            document.querySelector('.modal--cancelarProductos__opciones').parentElement.appendChild(inputHiddenVentasCancelarSeleccion);
+
+
+
+            let totalPost = ventasSeleccionadasAgrupadas.reduce((total, venta) => {
+                let { granel, cantidad, precio_venta } = venta;
+                return total + (granel === '1' ? (cantidad * parseFloat(precio_venta)) / 1000 : cantidad * parseFloat(precio_venta));
+            }, 0);
+
+            const resultadoCaja = parseFloat(caja.cantidad_caja) - totalPost;
+
+            let cajaActualizada = [{
+                id: 1,
+                cantidad_caja: resultadoCaja
+            }]
+
+            insertJson = JSON.stringify(cajaActualizada);
+            console.log(insertJson);
+            inputHiddenCajaCancelarSeleccion.value = insertJson;
+
+            document.querySelector('.modal--cancelarProductos__opciones').parentElement.appendChild(inputHiddenCajaCancelarSeleccion);
+            
+            setTimeout(() => {
+                document.querySelector('.modal--cancelarProductos__opciones').parentElement.submit();
+    
+            }, 3000);
 
         }
 

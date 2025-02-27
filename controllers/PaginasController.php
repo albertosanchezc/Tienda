@@ -69,11 +69,15 @@ class PaginasController
     public static function ventasAPI(){
         $ventas = Ventas_Completas::obtenerVentas();
         $inventario = Inventario_completo::join2('productos', 'inventario');
+        $caja = Caja::find(1);
+
 
 
         echo json_encode([
             'ventas' => $ventas,
             'inventario' => $inventario,
+            'caja' => $caja,
+            
         ]);
     }
     
