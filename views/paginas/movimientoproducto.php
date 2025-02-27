@@ -229,6 +229,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="chida"></div>
                 <div class="gridTotal">
                     <div class="totalVisita">
                         <p>Total Resultante:</p>
@@ -241,7 +242,7 @@
                             <div class="flexdin">
                                 <p>$</p>
                                 <input type="number" step="0.01" id="entradaestadoPago"
-                                    name="visita_proveedor[total_pagado]" placeholder="12.23" maxlength="30"
+                                    name="visitas_proveedor[total_pagado]" placeholder="12.23" maxlength="30"
                                     value="<?php echo s($vista_proveedor->total_pagado); ?>">
                             </div>
                             <div class="adeudo">

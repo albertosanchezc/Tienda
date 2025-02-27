@@ -19,6 +19,7 @@
     let totalRegistrosTabla = 0;
 
     let totalFinal = 0;
+    let cantidadPagada;
 
 
 
@@ -29,15 +30,21 @@
     const contenedorCards = document.querySelector('.articulosmodificar');
     const btnAniadirTodos = document.querySelector('.btnEditarStockTodos');
     const contenedorTotal = document.querySelector('.totalVisita');
+    const formulario = document.getElementById('movimientoProducto');
+    const inputPagado = document.getElementById('entradaestadoPago');
+
+    const contenedorAlertas = document.querySelector('.chida');
+    const adeudo = document.querySelector('.adeudo');
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-        consultarAPI();
-        contenedorClass1.style.display = "none";
-        contenedorCards.style.display = "none";
-        limpiarHTMLElemento(containertabla);
 
-    });
+        document.addEventListener('DOMContentLoaded', function () {
+            consultarAPI();
+            contenedorClass1.style.display = "none";
+            contenedorCards.style.display = "none";
+            limpiarHTMLElemento(containertabla);
+
+        });
 
     async function consultarAPI() {
         try {
@@ -57,6 +64,62 @@
             console.log(e);
         }
     }
+
+    formulario.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const alertas = contenedorTotal.querySelectorAll('.alerta');
+        alertas.forEach(alerta => alerta.remove());
+        let errores = [];
+        console.log(arrayIdToPost);
+
+        arrayIdToPost.forEach(producto => {
+        if (Number(producto.cantidad)<0) {
+            errores.push('Hay un producto que resulta con stock negativo');
+        }
+        });
+        
+        if (!cantidadPagada) {
+            errores.push('La cantidad pagada es obligatoria');
+        }
+
+        if (errores.length > 0) {
+            errores.forEach(error => {
+                const alerta = document.createElement('div');
+                alerta.className = 'alerta error';
+                alerta.textContent = error;
+                contenedorAlertas.prepend(alerta);
+
+                setTimeout(() => {
+                    alerta.remove();
+                }, 5000);
+            });
+        } else {
+            const alertaExito = document.createElement('div');
+            alertaExito.className = 'alerta exito';
+            alertaExito.textContent = 'Elementos Actulizados con éxito';
+            contenedorAlertas.prepend(alertaExito);
+
+            setTimeout(() => {
+                this.submit();
+
+            }, 3000);
+        }
+
+
+
+    });
+
+    inputPagado.addEventListener('input', (e) => {
+        cantidadPagada = e.target.value;
+        let res = totalFinal - cantidadPagada;
+        adeudo.innerHTML = `
+                    <p>Total Adeudo:</p>
+                    <p>$${res.toFixed(2)}</p>
+                `;
+
+        console.log(totalFinal);
+    });
+
 
     inputProveedor.addEventListener('change', (e) => {
         limpiarHTMLElemento(containertabla);
@@ -79,7 +142,8 @@
 
     function escucharBotonesMasyMenos(sel1) {
         let stockResultante = 0;
-        let resultadoAnterior;
+        totalFinal = 0;
+
 
         sel1.forEach((s) => {
             let clickCount = 0;
@@ -95,13 +159,12 @@
                 const objResultante = arrayIdStock.find(producto => producto.producto_id === idEditarProducto);
                 const objResultanteToPost = JSON.parse(JSON.stringify(objResultante));
                 const cantidadStock = objResultante.cantidad;
-                const cantidadStockToPost = objResultanteToPost.cantidad;
                 const valueGranel = inventario.find(producto => producto.producto_id === idEditarProducto);
                 const valorGranel = valueGranel.granel;
 
                 let totalAniadidos = parseInt(aniadidosParrafo.dataset.totalAniadidos || 0);
 
-                let totalProducto = 0; 
+                let totalProducto = 0;
 
                 if (e.target.classList.value === 'ma' || e.target.classList.value === 'imagenmas') {
                     if (valorGranel === '1') {
@@ -216,74 +279,56 @@
 
                 const index = arrayIdToPost.findIndex(producto => producto.producto_id === idEditarProducto);
 
-                let resultadoInventario = inventario.find(producto => producto.producto_id === idEditarProducto);
-                let resultado =  Number(resultadoInventario.precio_compra);
-                // console.log(resultado);
-
                 if (index !== -1) {
-                    let objEncontrado = arrayIdToPost.find(producto => producto.producto_id === idEditarProducto);
-                    let cant = objEncontrado ? Number(objEncontrado.cantidad) : 0;
-                    let valorResta =0;
-
-                    if (valorGranel === '1') {
-                        valorResta=(parseInt(totalAniadidos)/1000)*cant;
-                        totalProducto = (resultado / 1000) * parseInt(totalAniadidos);
-                        totalFinal = totalFinal + totalProducto - valorResta;
-                        console.log(totalProducto);
-                        console.log(totalFinal);
-                    }
-                     else {
-                        valorResta=parseInt(totalAniadidos)*cant;
-                        totalProducto = resultado * parseInt(totalAniadidos);
-                        totalFinal = totalFinal + totalProducto-valorResta;
-                        console.log(totalProducto);
-                        console.log(totalFinal);
-
-                    }
+                    totalProducto = 0;
                     arrayIdToPost[index] = { ...arrayIdToPost[index], ...objResultanteToPost };
-                    
+
 
                 } else {
                     arrayIdToPost.push(objResultanteToPost);
-                    if (valorGranel === '1') {
-                        totalProducto = (resultado / 1000) * parseInt(totalAniadidos);
-                        totalFinal = totalFinal + totalProducto;
-                        console.log(totalProducto);
-                        console.log(totalFinal);
-
-
-                    } else {
-                        totalProducto = resultado * parseInt(totalAniadidos);
-                        totalFinal = totalFinal + totalProducto;
-                        console.log(totalProducto);
-                        console.log(totalFinal);
-
-
-                    }
 
                 }
 
-                // console.log('')
+                totalFinal = 0;
 
                 console.log(arrayIdToPost);
-
-                // console.log(arrayIdStock);
+                totalFinal = calcularTotal(arrayIdToPost).toFixed(2);;
                 resultadoAnterior = totalProducto;
                 contenedorTotal.innerHTML = `
                     <p>Total resultante</p>
-                    <p>${totalFinal}</p>
+                    <p>$${totalFinal}</p>
                 `;
-
-                // objResultante.cantidad = stockResultante;
-                // objResultanteToPost.cantidad = stockResultante;
-
 
             });
         });
     }
 
-    function mostrarTabla(inventario, proveedores) {
+    function calcularTotal(arrayIdToPost) {
+        let totalTotal = 0
+        arrayIdToPost.forEach(modificado => {
+            let totalP = 0;
+            const arregloCompleto = inventario.find(p => p.producto_id === modificado.producto_id);
 
+            let { cantidad } = modificado;
+            let coreccion = 0;
+
+            coreccion = cantidad - arregloCompleto.cantidad;
+
+            const { granel, precio_compra } = arregloCompleto;
+
+            if (granel === '1') {
+                totalP += (Number(coreccion) * precio_compra) / 1000;
+            } else {
+                totalP += (Number(coreccion) * precio_compra);
+            }
+            totalTotal += totalP;
+
+        })
+        return totalTotal
+
+    }
+
+    function mostrarTabla(inventario, proveedores) {
         const contenedorTabla = document.querySelector('.tabladeproveedores');
 
         contenedorTabla.innerHTML = '';

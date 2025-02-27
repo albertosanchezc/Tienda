@@ -2,8 +2,6 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         consultarAPI();
-        // btnReciente.click();
-
     });
 
     async function consultarAPI() {
