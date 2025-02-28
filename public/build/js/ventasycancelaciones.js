@@ -124,8 +124,10 @@ contenedorBotones.addEventListener('click', (e) => {
                 ocultarVentas();
             }
             mostrarContenidoInicialCancelaciones();
+            mostrarTablaCancelaciones(cancelaciones);
             btnCancelaciones.classList.add('btnSeleccionadoOscuro');
             btnCancelaciones.classList.remove('rojooscuro');
+            
             break;
 
 
@@ -301,11 +303,8 @@ function mostrarTablaVentasPorCarrito(ventas) {
 function mostrarTablaVentasPorProducto(ventas) {
     // ocultarTablaVentasPorCarrito();
     let contenedorTabla = document.querySelector('#tablaVentasProducto');
-    let tabla = contenedorTabla.querySelector('.tabla-contenido-ventas'); 
-    limpiarHTMLElemento(tabla);
-
-    const tablaVentasPorProducto = document.createElement('TABLE');
-    tablaVentasPorProducto.classList.add('tabla-contenido-ventas');
+    let tablaVentasPorProducto = contenedorTabla.querySelector('.tabla-contenido-ventas');
+    tablaVentasPorProducto.innerHTML = '';
 
     const theadTablaVentasPorProductoFueraModal = document.createElement('THEAD');
     theadTablaVentasPorProductoFueraModal.innerHTML = `
@@ -326,11 +325,11 @@ function mostrarTablaVentasPorProducto(ventas) {
     arregloExpandido = expandirArreglo(ventas);
     arregloExpandido.forEach(venta => {
         let totalVenta = 0;
-        const { cantidad, producto, producto_descripcion, precio_venta, granel, producto_id,id_venta, carrito_id, precio_compra } = venta;
+        const { cantidad, producto, producto_descripcion, precio_venta, granel, producto_id, id_venta, carrito_id, precio_compra } = venta;
         ganancia = 0;
         if (granel === '1') {
             totalVenta += (cantidad * precio_venta) / 1000;
-            ganancia = ganancia + ((precio_venta - precio_compra) * cantidad) /1000;
+            ganancia = ganancia + ((precio_venta - precio_compra) * cantidad) / 1000;
         } else {
             totalVenta += cantidad * precio_venta;
             ganancia = ganancia + ((precio_venta - precio_compra) * cantidad);
@@ -368,7 +367,7 @@ function mostrarTablaVentasPorProducto(ventas) {
     tablaVentasPorProducto.appendChild(theadTablaVentasPorProductoFueraModal);
     tablaVentasPorProducto.appendChild(tbodyTablaVentasPorProducto);
 
-    
+
     contenedorTabla.appendChild(tablaVentasPorProducto);
 
     botonesVer = document.querySelectorAll('.botonver');
@@ -377,6 +376,69 @@ function mostrarTablaVentasPorProducto(ventas) {
 
 
 
+
+}
+
+function mostrarTablaCancelaciones(cancelaciones) {
+    let contenedorTabla = document.querySelector('#tablaCancelacionesCarrito');
+    let tablaCancelaciones = contenedorTabla.querySelector('.tabla-contenido-cancelaciones');
+    tablaCancelaciones.innerHTML = '';
+
+    const theadTablaCancelaciones = document.createElement('THEAD');
+    theadTablaCancelaciones.innerHTML = `
+        <tr>
+            <th>Prod Id</th>
+            <th>Nombre y descripción</th>
+            <th>Total</th>
+            <th>Ganancia</th>
+            <th>Fecha y Hora</th>
+            <th>Carrito Id</th>
+        </tr>
+    `;
+
+    const tbodyTablaCancelaciones = document.createElement('TBODY');
+    let totalCarrito = 0;
+
+    arregloExpandido = expandirArreglo(cancelaciones);
+    console.log(cancelaciones);
+    arregloExpandido.forEach(cancelado => {
+        let totalVenta = 0;
+        const { cantidad, producto, producto_descripcion, precio_venta, granel, producto_id, id_venta, carrito_id, precio_compra } = cancelado;
+        ganancia = 0;
+        if (granel === '1') {
+            totalVenta += (cantidad * precio_venta) / 1000;
+            ganancia = ganancia + ((precio_venta - precio_compra) * cantidad) / 1000;
+        } else {
+            totalVenta += cantidad * precio_venta;
+            ganancia = ganancia + ((precio_venta - precio_compra) * cantidad);
+
+        }
+
+        totalCarrito = totalCarrito + totalVenta;
+
+        let fechaHora = new Date(`${cancelado.fecha_venta}T${cancelado.hora_venta}`);
+        let opcionesFecha = { day: 'numeric', month: 'long', year: 'numeric' };
+        let fechaFormateada = fechaHora.toLocaleDateString('es-ES', opcionesFecha); // "28 de agosto de 2024"
+        let horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // "23:02:04"
+
+        let fila = document.createElement('TR');
+        fila.style.cursor = 'pointer';
+        fila.innerHTML = `
+            <td>${producto_id}</td>
+            <td>${producto} ${producto_descripcion}</td>
+            <td class="tachado">$${totalCarrito}</td>
+            <td class="tachado">$${ganancia}</td>
+            <td>${fechaFormateada} a las ${horaFormateada}</td>
+            <td>${carrito_id}</td>
+        `;
+
+        tbodyTablaCancelaciones.appendChild(fila);
+    })
+
+    tablaCancelaciones.appendChild(theadTablaCancelaciones);
+    tablaCancelaciones.appendChild(tbodyTablaCancelaciones);
+
+    contenedorTabla.appendChild(tablaCancelaciones);
 
 }
 
@@ -411,7 +473,7 @@ function escucharBotonesVerProductos() {
     })
 }
 
-function escucharBotonesVerProducto(botonesVer){
+function escucharBotonesVerProducto(botonesVer) {
     botonesVer.forEach(boton => {
         boton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -592,10 +654,12 @@ async function consultarAPI() {
 
 
         ventas = resultado.ventas;
+        cancelaciones = ventas.filter(venta => venta.cancelacion === '1');
+        console.log(cancelaciones);
         ventas = ventas.filter(venta => venta.cancelacion === '0');
+        console.log(ventas);
         inventario = resultado.inventario;
         caja = resultado.caja;
-        cancelaciones = ventas.filter(venta => venta.cancelacion === '1');
         // imprimirVentas(ventas);
         // filtrar();
 
