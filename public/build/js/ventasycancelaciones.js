@@ -50,9 +50,6 @@ let btnGestionarCancelaciones = '';
 let btnCancelarTodaVentaModal = '';
 const imagendown = document.querySelector('.imgdown');
 
-const inputFechaInicial = document.getElementById('fecha1');
-const inputFechaFinal = document.getElementById('fecha2');
-
 document.querySelector('.modalCancelar--productos__botonCancelacionesSubmit').remove();
 
 const contenedorBotonCancelarModal = document.querySelector('.modalCancelar--productos__botonCancelaciones');
@@ -78,6 +75,10 @@ busquedaTitulo.classList.remove('margin-titulo');
 const imgBajar = document.querySelector('.imgbajar');
 const tituloVentas = document.querySelector('.busqueda-titulo-ventas');
 const busquedaVentas = document.querySelector('.busqueda-filtrosventas');
+
+const inputFechaInicialVentas = document.getElementById('fecha1');
+const inputFechaFinalVentas = document.getElementById('fecha2');
+
 const tablaVentasPorCarrito = document.querySelector('#tablaVentasCarrito');
 const tablaVentasPorProducto = document.querySelector('#tablaVentasProducto');
 
@@ -85,6 +86,10 @@ const tablaVentasPorProducto = document.querySelector('#tablaVentasProducto');
 const tituloCancelaciones = document.querySelector('.busqueda-titulo-cancelaciones');
 const busquedaCancelaciones = document.querySelector('.busqueda-filtroscancelaciones');
 const tablaCancelaciones = document.querySelector('#tablaCancelacionesCarrito');
+
+
+const inputFechaInicialCancelaciones = busquedaCancelaciones.querySelector('#fecha1');
+const inputFechaFinalCancelaciones = busquedaCancelaciones.querySelector('#fecha2');
 
 
 imgBajar.style.display = 'none';
@@ -108,7 +113,7 @@ contenedorBotones.addEventListener('click', (e) => {
             }
             mostrarContenidoInicialVentas();
             mostrarTablaVentasPorCarrito(ventas);
-            escucharBotonesFormularioVentas();
+            escucharBotonesFormularioBusquedaVentas();
             btnVentas.classList.add('btnSeleccionadoClaro');
             btnVentas.classList.remove('rojoclaro');
             break;
@@ -125,6 +130,7 @@ contenedorBotones.addEventListener('click', (e) => {
             }
             mostrarContenidoInicialCancelaciones();
             mostrarTablaCancelaciones(cancelaciones);
+            escucharBotonesFormularioBusquedaCancelaciones();
             btnCancelaciones.classList.add('btnSeleccionadoOscuro');
             btnCancelaciones.classList.remove('rojooscuro');
             
@@ -158,7 +164,7 @@ btnCerrarModalCancelarProducto.addEventListener('click', (e) => {
 })
 
 
-inputFechaInicial.addEventListener('change', (e) => {
+inputFechaInicialVentas.addEventListener('change', (e) => {
     let { fechaI } = terminosBusqueda;
     fechaI = e.target.value;
     terminosBusqueda.fechaI = fechaI;
@@ -166,7 +172,7 @@ inputFechaInicial.addEventListener('change', (e) => {
     filtrar();
 })
 
-inputFechaFinal.addEventListener('change', (e) => {
+inputFechaFinalVentas.addEventListener('change', (e) => {
     let { fechaF } = terminosBusqueda;
     fechaF = e.target.value;
     terminosBusqueda.fechaF = fechaF;
@@ -174,20 +180,55 @@ inputFechaFinal.addEventListener('change', (e) => {
     filtrar();
 })
 
+inputFechaInicialCancelaciones.addEventListener('change', (e) => {
+    let { fechaI } = terminosBusqueda;
+    fechaI = e.target.value;
+    terminosBusqueda.fechaI = fechaI;
+    console.log(terminosBusqueda);
+    filtrarCancelaciones();
+})
+
+inputFechaFinalCancelaciones.addEventListener('change', (e) => {
+    let { fechaF } = terminosBusqueda;
+    fechaF = e.target.value;
+    terminosBusqueda.fechaF = fechaF;
+    console.log(terminosBusqueda);
+    filtrarCancelaciones();
+})
+
 // Funciones 
 
-function filtrar() {
-    let resultadosFiltrados = ventas;
-    console.log(ventas)
+function filtrar(datos = ventas) {
+    let resultadosFiltrados = datos;
+    console.log(datos)
     if (terminosBusqueda.fechaI) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaI)
         mostrarTablaVentasPorCarrito(resultadosFiltrados);
-
+        mostrarTablaVentasPorProducto(resultadosFiltrados);
     }
 
     if (terminosBusqueda.fechaF) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaF)
         mostrarTablaVentasPorCarrito(resultadosFiltrados);
+        mostrarTablaVentasPorProducto(resultadosFiltrados);
+
+    }
+
+    return resultadosFiltrados;
+}
+
+function filtrarCancelaciones(datos = cancelaciones) {
+    let resultadosFiltrados = datos;
+    console.log(datos)
+    if (terminosBusqueda.fechaI) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaI)
+        mostrarTablaCancelaciones(resultadosFiltrados);
+
+    }
+
+    if (terminosBusqueda.fechaF) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaF)
+        mostrarTablaCancelaciones(resultadosFiltrados);
 
     }
 
@@ -236,9 +277,6 @@ function mostrarTablaVentasPorCarrito(ventas) {
         acc[item.carrito_id].push(item);
         return acc;
     }, {});
-
-
-
 
     console.log(agrupadoPorCarrito);
     const arrayDeArreglos = Object.values(agrupadoPorCarrito);
@@ -389,7 +427,8 @@ function mostrarTablaCancelaciones(cancelaciones) {
         <tr>
             <th>Prod Id</th>
             <th>Nombre y descripción</th>
-            <th>Total</th>
+            <th>Precio de Venta</th>
+            <th>Precio de Compra</th>
             <th>Ganancia</th>
             <th>Fecha y Hora</th>
             <th>Carrito Id</th>
@@ -409,12 +448,12 @@ function mostrarTablaCancelaciones(cancelaciones) {
             totalVenta += (cantidad * precio_venta) / 1000;
             ganancia = ganancia + ((precio_venta - precio_compra) * cantidad) / 1000;
         } else {
-            totalVenta += cantidad * precio_venta;
-            ganancia = ganancia + ((precio_venta - precio_compra) * cantidad);
+            totalVenta += 1 * precio_venta;
+            ganancia = ganancia + ((precio_venta - precio_compra) * 1);
 
         }
 
-        totalCarrito = totalCarrito + totalVenta;
+        totalCarrito = totalVenta;
 
         let fechaHora = new Date(`${cancelado.fecha_venta}T${cancelado.hora_venta}`);
         let opcionesFecha = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -426,7 +465,8 @@ function mostrarTablaCancelaciones(cancelaciones) {
         fila.innerHTML = `
             <td>${producto_id}</td>
             <td>${producto} ${producto_descripcion}</td>
-            <td class="tachado">$${totalCarrito}</td>
+            <td class="tachado">$${precio_venta}</td>
+            <td class="tachado">$${precio_compra}</td>
             <td class="tachado">$${ganancia}</td>
             <td>${fechaFormateada} a las ${horaFormateada}</td>
             <td>${carrito_id}</td>
@@ -442,7 +482,22 @@ function mostrarTablaCancelaciones(cancelaciones) {
 
 }
 
-function escucharBotonesFormularioVentas() {
+function escucharBotonesFormularioBusquedaCancelaciones(){
+    const contenedorBotonesBusquedaCancelaciones = busquedaCancelaciones.querySelector('#buscador');
+
+    contenedorBotonesBusquedaCancelaciones.addEventListener('change', (e) => {
+        console.log(e.target.id);
+        if(e.target.id === 'fecha1'){
+            
+        }
+
+        if(e.target.id === 'fecha2'){
+            
+        }
+    })
+}
+
+function escucharBotonesFormularioBusquedaVentas() {
     const contenedorBotonesBusquedaVentas = busquedaVentas.querySelector('.switch');
     contenedorBotonesBusquedaVentas.addEventListener('click', (e) => {
         if (e.target.value === 'carrito') {
