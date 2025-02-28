@@ -69,19 +69,39 @@
         e.preventDefault();
         const alertas = contenedorTotal.querySelectorAll('.alerta');
 
-        const inputHiddenVisita = document.createElement('INPUT');
-        inputHiddenVisita.type = 'HIDDEN';
-        inputHiddenVisita.name = 'movimiento[visitas_proveedor]';
-
-        const inputHiddenVisitaProducto = document.createElement('INPUT');
-        inputHiddenVisitaProducto.type = 'HIDDEN';
-        inputHiddenVisitaProducto.name = 'movimiento[visita_producto]';
-
-        const inputHiddenVisitaInventario = document.createElement('INPUT');
-        inputHiddenVisitaInventario.type = 'HIDDEN';
-        inputHiddenVisitaInventario.name = 'movimiento[inventario]';
+        const inputHiddenVisita = crearInputHidden('movimiento[visitas_proveedor]');
+        const inputHiddenVisitaProducto = crearInputHidden('movimiento[visita_producto]');
+        const inputHiddenVisitaInventario = crearInputHidden('movimiento[inventario]');
 
         //insertar en tabla de visitas_proveedor
+
+        let arregloPost1 = inventario
+            .filter(producto =>
+                arrayIdToPost.some(item => item.producto_id === producto.producto_id)
+            )
+            .map(producto => {
+                let item = arrayIdToPost.find(item => item.producto_id === producto.producto_id);
+                return {
+                    ...producto,
+                    cantidad: producto.granel === '1' ? 1 : item.cantidad
+                };
+            });
+
+        const cantidadArticulos = arregloPost1.reduce((acumulador, articulo) => acumulador + articulo.cantidad, 0);
+
+        let insertVisitasProveedor = {
+            proveedor_id: arrayIdToPost[0].proveedor_id,
+            cantidad: cantidadArticulos,
+            total_visita: totalFinal,
+            total_pagado: cantidadPagada,
+            total_adeudo: (totalFinal - cantidadPagada).toFixed(2)
+
+        }
+
+        inputHiddenVisita.value = JSON.stringify(insertVisitasProveedor);
+        formulario.appendChild(inputHiddenVisita);
+
+        // insertar en tabla de visita_producto
 
         let arregloPost = inventario
             .filter(producto =>
@@ -95,67 +115,23 @@
                 };
             });
 
-        const cantidadArticulos = arregloPost.reduce((acumulador, articulo) => acumulador + articulo.cantidad, 0);
-
-        let insert = {
-            proveedor_id: arrayIdToPost[0].proveedor_id,
-            // visita_id: articulo.visita_id,
-            cantidad: cantidadArticulos,
-            total_visita: totalFinal,
-            total_pagado: cantidadPagada,
-            total_adeudo: (totalFinal - cantidadPagada).toFixed(2)
-
-        }
-
-        let insertJson = JSON.stringify(insert);
-        console.log(insertJson);
-        inputHiddenVisita.value = insertJson;
-        formulario.appendChild(inputHiddenVisita);
-
-        // insertar en tabla de visita_producto
-
-        arregloPost = inventario
-            .filter(producto =>
-                arrayIdToPost.some(item => item.producto_id === producto.producto_id)
-            )
-            .map(producto => {
-                let item = arrayIdToPost.find(item => item.producto_id === producto.producto_id);
-                return {
-                    ...producto,
-                    cantidad: item.cantidad
-                };
-            });
-
-            console.log(arregloPost);
-
-
-        let cantidadArticulos1 = arregloPost.reduce((acumulador, articulo) => acumulador + articulo.cantidad, 0);
-
-        insert = arregloPost.map(articulo => ({
-            proveedor_id: articulo.proveedor_id,
-            // visita_id: articulo.visita_id,
-            cantidad: cantidadArticulos1
-            
-
+        let insertVisitaProducto = arregloPost.map(articulo => ({
+            producto_id: articulo.producto_id,
+            cantidad: articulo.cantidad
         }));
 
-        insertJson = JSON.stringify(insert);
-        console.log(insertJson);
-        inputHiddenVisita.value = insertJson;
-        formulario.appendChild(inputHiddenVisita);
+        inputHiddenVisitaProducto.value = JSON.stringify(insertVisitaProducto);
+        formulario.appendChild(inputHiddenVisitaProducto);
 
+        // insertar en tabla de inventario
 
+        let insertInventario = arregloPost.map(articulo => ({
+            producto_id: articulo.producto_id,
+            cantidad: articulo.cantidad
+        }));
 
-
-
-
-
-
-
-
-
-
-
+        inputHiddenVisitaInventario.value = JSON.stringify(insertInventario);
+        formulario.appendChild(inputHiddenVisitaInventario);
 
         alertas.forEach(alerta => alerta.remove());
         let errores = [];
@@ -193,9 +169,6 @@
 
             }, 3000);
         }
-
-
-
     });
 
     inputPagado.addEventListener('input', (e) => {
@@ -775,6 +748,13 @@
         while (elemento.firstChild) {
             elemento.removeChild(elemento.firstChild);
         }
+    }
+
+    function crearInputHidden(name) {
+        const input = document.createElement('INPUT');
+        input.type = 'HIDDEN';
+        input.name = name;
+        return input;
     }
 
 }())
