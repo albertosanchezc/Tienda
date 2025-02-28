@@ -38,13 +38,13 @@
 
 
 
-        document.addEventListener('DOMContentLoaded', function () {
-            consultarAPI();
-            contenedorClass1.style.display = "none";
-            contenedorCards.style.display = "none";
-            limpiarHTMLElemento(containertabla);
+    document.addEventListener('DOMContentLoaded', function () {
+        consultarAPI();
+        contenedorClass1.style.display = "none";
+        contenedorCards.style.display = "none";
+        limpiarHTMLElemento(containertabla);
 
-        });
+    });
 
     async function consultarAPI() {
         try {
@@ -68,16 +68,105 @@
     formulario.addEventListener('submit', function (e) {
         e.preventDefault();
         const alertas = contenedorTotal.querySelectorAll('.alerta');
+
+        const inputHiddenVisita = document.createElement('INPUT');
+        inputHiddenVisita.type = 'HIDDEN';
+        inputHiddenVisita.name = 'movimiento[visitas_proveedor]';
+
+        const inputHiddenVisitaProducto = document.createElement('INPUT');
+        inputHiddenVisitaProducto.type = 'HIDDEN';
+        inputHiddenVisitaProducto.name = 'movimiento[visita_producto]';
+
+        const inputHiddenVisitaInventario = document.createElement('INPUT');
+        inputHiddenVisitaInventario.type = 'HIDDEN';
+        inputHiddenVisitaInventario.name = 'movimiento[inventario]';
+
+        //insertar en tabla de visitas_proveedor
+
+        let arregloPost = inventario
+            .filter(producto =>
+                arrayIdToPost.some(item => item.producto_id === producto.producto_id)
+            )
+            .map(producto => {
+                let item = arrayIdToPost.find(item => item.producto_id === producto.producto_id);
+                return {
+                    ...producto,
+                    cantidad: item.cantidad
+                };
+            });
+
+        const cantidadArticulos = arregloPost.reduce((acumulador, articulo) => acumulador + articulo.cantidad, 0);
+
+        let insert = {
+            proveedor_id: arrayIdToPost[0].proveedor_id,
+            // visita_id: articulo.visita_id,
+            cantidad: cantidadArticulos,
+            total_visita: totalFinal,
+            total_pagado: cantidadPagada,
+            total_adeudo: (totalFinal - cantidadPagada).toFixed(2)
+
+        }
+
+        let insertJson = JSON.stringify(insert);
+        console.log(insertJson);
+        inputHiddenVisita.value = insertJson;
+        formulario.appendChild(inputHiddenVisita);
+
+        // insertar en tabla de visita_producto
+
+        arregloPost = inventario
+            .filter(producto =>
+                arrayIdToPost.some(item => item.producto_id === producto.producto_id)
+            )
+            .map(producto => {
+                let item = arrayIdToPost.find(item => item.producto_id === producto.producto_id);
+                return {
+                    ...producto,
+                    cantidad: item.cantidad
+                };
+            });
+
+            console.log(arregloPost);
+
+
+        let cantidadArticulos1 = arregloPost.reduce((acumulador, articulo) => acumulador + articulo.cantidad, 0);
+
+        insert = arregloPost.map(articulo => ({
+            proveedor_id: articulo.proveedor_id,
+            // visita_id: articulo.visita_id,
+            cantidad: cantidadArticulos1
+            
+
+        }));
+
+        insertJson = JSON.stringify(insert);
+        console.log(insertJson);
+        inputHiddenVisita.value = insertJson;
+        formulario.appendChild(inputHiddenVisita);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         alertas.forEach(alerta => alerta.remove());
         let errores = [];
         console.log(arrayIdToPost);
 
         arrayIdToPost.forEach(producto => {
-        if (Number(producto.cantidad)<0) {
-            errores.push('Hay un producto que resulta con stock negativo');
-        }
+            if (Number(producto.cantidad) < 0) {
+                errores.push('Hay un producto que resulta con stock negativo');
+            }
         });
-        
+
         if (!cantidadPagada) {
             errores.push('La cantidad pagada es obligatoria');
         }

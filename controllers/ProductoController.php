@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Model\Categorias;
 use Model\Proveedor;
+use Model\Visitas_proveedor;
 use MVC\Router;
 
 class ProductoController
@@ -15,9 +16,13 @@ class ProductoController
         $alertas = [];
         $proveedores = Proveedor::all();
         $alertas = Proveedor::getAlertas();
+        $visita_previa = Visitas_proveedor::lastofTable('visitas_proveedor','visita_id');
+        $visita_id = $visita_previa->visita_id;
+        $visita_id++;
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
         debuguear($_POST);
+        // $visitas
         }
 
         $titulo = 'Movimientoproducto';
