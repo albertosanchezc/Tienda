@@ -90,7 +90,7 @@
         const cantidadArticulos = arregloPost1.reduce((acumulador, articulo) => acumulador + articulo.cantidad, 0);
 
         let insertVisitasProveedor = {
-            proveedor_id: arrayIdToPost[0].proveedor_id,
+            proveedor_id: arregloPost1[0].proveedor_id,
             cantidad: cantidadArticulos,
             total_visita: totalFinal,
             total_pagado: cantidadPagada,
@@ -98,6 +98,7 @@
 
         }
 
+        console.log(arregloPost1[0].proveedor_id);
         inputHiddenVisita.value = JSON.stringify(insertVisitasProveedor);
         formulario.appendChild(inputHiddenVisita);
 
