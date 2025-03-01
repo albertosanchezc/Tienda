@@ -20,6 +20,7 @@ let terminosBusqueda = {
     tipo: ''
 }
 let botonCancelarTodaLaVenta = '';
+// Inputs hidden de modal cancelar seleccion (por carrito)
 const inputHiddenInventarioCancelarSeleccion = document.createElement('INPUT');
 inputHiddenInventarioCancelarSeleccion.type = 'HIDDEN';
 inputHiddenInventarioCancelarSeleccion.name = 'cancelarSeleccion[inventario]';
@@ -31,6 +32,34 @@ inputHiddenCajaCancelarSeleccion.name = 'cancelarSeleccion[caja]';
 const inputHiddenVentasCancelarSeleccion = document.createElement('INPUT');
 inputHiddenVentasCancelarSeleccion.type = 'HIDDEN';
 inputHiddenVentasCancelarSeleccion.name = 'cancelarSeleccion[ventas]';
+
+// Inputs hidden de modal cancelar todas (por carrito)
+const inputHiddenInventarioCancelarTodaLaVenta = document.createElement('INPUT');
+inputHiddenInventarioCancelarTodaLaVenta.type = 'HIDDEN';
+inputHiddenInventarioCancelarTodaLaVenta.name = 'cancelarTodaLaVenta[inventario]';
+
+const inputHiddenCajaCancelarTodaLaVenta = document.createElement('INPUT');
+inputHiddenCajaCancelarTodaLaVenta.type = 'HIDDEN';
+inputHiddenCajaCancelarTodaLaVenta.name = 'cancelarTodaLaVenta[caja]';
+
+const inputHiddenVentasCancelarTodaLaVenta = document.createElement('INPUT');
+inputHiddenVentasCancelarTodaLaVenta.type = 'HIDDEN';
+inputHiddenVentasCancelarTodaLaVenta.name = 'cancelarTodaLaVenta[ventas]';
+
+
+// Inputs hidden de cancelar producto (por producto)
+const inputHiddenInventarioCancelarProducto = document.createElement('INPUT');
+inputHiddenInventarioCancelarProducto.type = 'HIDDEN';
+inputHiddenInventarioCancelarProducto.name = 'cancelarProducto[inventario]';
+
+const inputHiddenCajaCancelarProducto = document.createElement('INPUT');
+inputHiddenCajaCancelarProducto.type = 'HIDDEN';
+inputHiddenCajaCancelarProducto.name = 'cancelarProducto[caja]';
+
+const inputHiddenVentasCancelarProducto = document.createElement('INPUT');
+inputHiddenVentasCancelarProducto.type = 'HIDDEN';
+inputHiddenVentasCancelarProducto.name = 'cancelarProducto[ventas]';
+
 
 
 // Selectores
@@ -133,7 +162,7 @@ contenedorBotones.addEventListener('click', (e) => {
             escucharBotonesFormularioBusquedaCancelaciones();
             btnCancelaciones.classList.add('btnSeleccionadoOscuro');
             btnCancelaciones.classList.remove('rojooscuro');
-            
+
             break;
 
 
@@ -389,9 +418,9 @@ function mostrarTablaVentasPorProducto(ventas) {
             <td>${producto_id}</td>
             <td>${producto} ${producto_descripcion}</td>
             <td>$${totalVenta.toFixed(2)}</td>
-            <td>$${ganancia}</td>
+            <td>$${ganancia.toFixed(2)}</td>
             <td>${fechaFormateada} a las ${horaFormateada}</td>
-            <td>${carrito_id}</td>
+            <td id="carrito_id">${carrito_id}</td>
             <td>
                 <div class="botonver">
                     <a data-id="${producto_id}" href="#">Cancelar Venta</a>
@@ -467,7 +496,7 @@ function mostrarTablaCancelaciones(cancelaciones) {
             <td>${producto} ${producto_descripcion}</td>
             <td class="tachado">$${precio_venta}</td>
             <td class="tachado">$${precio_compra}</td>
-            <td class="tachado">$${ganancia}</td>
+            <td class="tachado">$${ganancia.toFixed(2)}</td>
             <td>${fechaFormateada} a las ${horaFormateada}</td>
             <td>${carrito_id}</td>
         `;
@@ -482,17 +511,17 @@ function mostrarTablaCancelaciones(cancelaciones) {
 
 }
 
-function escucharBotonesFormularioBusquedaCancelaciones(){
+function escucharBotonesFormularioBusquedaCancelaciones() {
     const contenedorBotonesBusquedaCancelaciones = busquedaCancelaciones.querySelector('#buscador');
 
     contenedorBotonesBusquedaCancelaciones.addEventListener('change', (e) => {
         console.log(e.target.id);
-        if(e.target.id === 'fecha1'){
-            
+        if (e.target.id === 'fecha1') {
+
         }
 
-        if(e.target.id === 'fecha2'){
-            
+        if (e.target.id === 'fecha2') {
+
         }
     })
 }
@@ -533,10 +562,23 @@ function escucharBotonesVerProducto(botonesVer) {
         boton.addEventListener('click', (e) => {
             e.preventDefault();
             console.log(e.target);
-            abrirModalConfirmarCancelarProducto();
+            const identificador = {
+                id: '',
+                carrito_id: ''
+            }
+            id = e.target.closest('TR');
+            const carrito_id = id.querySelector('#carrito_id').textContent;
+
             id = e.target.getAttribute('data-id');
 
-            mostrarModalConfirmarVerProductos(id);
+            identificador.id = id;
+            identificador.carrito_id = carrito_id;
+
+
+
+
+            abrirModalConfirmarCancelarProducto(identificador);
+
 
         })
     })
@@ -569,7 +611,28 @@ function escucharBotonCancelarTodaLaVenta(boton) {
         console.log('Estamos en el evento');
         console.log(modalConfirmarCancelarPorCarrito)
         modalConfirmarCancelarPorCarrito.classList.add('modal--cancelarCarrito--show');
+
+        ventasSeleccionadasAgrupadas = Object.values(
+            carrito.reduce((acc, venta) => {
+                if (!acc[venta.id_venta]) {
+                    acc[venta.id_venta] = { ...venta, cantidad: parseInt(venta.cantidad) };
+                } else {
+                    acc[venta.id_venta].cantidad += parseInt(venta.cantidad);
+                }
+                return acc;
+            }, {})
+        );
+
+        inventarioActualizado = ventasSeleccionadasAgrupadas.map(venta => {
+            const itemInventario = inventario.find(producto => producto.producto_id === venta.producto_id);
+            return {
+                producto_id: venta.producto_id,
+                cantidad: (itemInventario ? parseInt(itemInventario.cantidad) : 0) + parseInt(venta.cantidad)
+            };
+        });
+
         escucharBotonesSiNoModalCancelarTodaLaVenta();
+
     })
 }
 
@@ -728,8 +791,11 @@ function abrirModalVer() {
     document.querySelector('.modalCancelar').classList.add('modalCancelar--show');
 }
 
-function abrirModalConfirmarCancelarProducto() {
+function abrirModalConfirmarCancelarProducto(id) {
     document.querySelector('.modal--cancelarProducto').classList.add('modal--cancelarProducto--show');
+
+    escucharBotonesConfirmarModalCancelarProductoSeleccionado(id);
+
 }
 
 function mostrarContenidoInicialVentas() {
@@ -917,6 +983,69 @@ function escucharBotonesSiNoModalCancelarTodaLaVenta() {
         }
 
         if (e.target.classList.value === 'modal--cancelarCarrito__si') {
+            console.log('cancelando productos seleccionados...');
+            console.log(carrito);
+            // inventarioActualizado
+
+            let insert = inventarioActualizado.map(articulo => ({
+                producto_id: articulo.producto_id,
+                cantidad: articulo.cantidad
+            }));
+
+            let insertJson = JSON.stringify(insert);
+            console.log(insertJson);
+            inputHiddenInventarioCancelarTodaLaVenta.value = insertJson;
+
+            document.querySelector('.modal--cancelarCarrito__opciones').parentElement.appendChild(inputHiddenInventarioCancelarTodaLaVenta);
+
+            ventasSeleccionadasAgrupadas = ventasSeleccionadasAgrupadas.map(venta => ({
+                ...venta,
+                cancelacion: 1
+            }));
+
+            insert = ventasSeleccionadasAgrupadas.map(articulo => ({
+                carrito_id: articulo.carrito_id,
+                producto_id: articulo.producto_id,
+                cantidad: articulo.cantidad,
+                id_venta: articulo.id_venta,
+                cancelacion: articulo.cancelacion,
+                precio_venta: articulo.precio_venta,
+                granel: articulo.granel
+            }));
+
+            insertJson = JSON.stringify(insert);
+            console.log(insertJson);
+            inputHiddenVentasCancelarTodaLaVenta.value = insertJson;
+
+            insertJson = JSON.stringify(insert);
+            console.log(insertJson);
+            inputHiddenVentasCancelarTodaLaVenta.value = insertJson;
+
+            document.querySelector('.modal--cancelarCarrito__opciones').parentElement.appendChild(inputHiddenVentasCancelarTodaLaVenta);
+
+            let totalPost = ventasSeleccionadasAgrupadas.reduce((total, venta) => {
+                let { granel, cantidad, precio_venta } = venta;
+                return total + (granel === '1' ? (cantidad * parseFloat(precio_venta)) / 1000 : cantidad * parseFloat(precio_venta));
+            }, 0);
+
+            const resultadoCaja = parseFloat(caja.cantidad_caja) - totalPost;
+
+            let cajaActualizada = [{
+                id: 1,
+                cantidad_caja: resultadoCaja
+            }]
+
+            insertJson = JSON.stringify(cajaActualizada);
+            console.log(insertJson);
+            inputHiddenCajaCancelarTodaLaVenta.value = insertJson;
+
+            document.querySelector('.modal--cancelarCarrito__opciones').parentElement.appendChild(inputHiddenCajaCancelarTodaLaVenta);
+
+
+            setTimeout(() => {
+                document.querySelector('.modal--cancelarCarrito__opciones').parentElement.submit();
+
+            }, 3000);
 
         }
 
@@ -997,6 +1126,94 @@ function escucharBotonesSiNoModalCancelarProductos() {
     })
 }
 
+function escucharBotonesConfirmarModalCancelarProductoSeleccionado(identificador) {
+    const { id, carrito_id } = identificador;
+
+    const contenedorModal = document.querySelector('.modal--cancelarProducto__container');
+
+
+    contenedorModal.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (e.target.value === 'Si') {
+
+            console.log(identificador)
+
+            const inventarioAnterior = inventario.find(p => p.producto_id === id); 
+            const ventaAnterior = ventas.find(p => p.producto_id === id && p.carrito_id === carrito_id)
+            // const ventaAnterior = 
+            console.log(inventarioAnterior)
+            // Aquí se podría revisar si es por caducidad, merma o que show
+            let articuloActualizadoInv = inventarioAnterior;
+            articuloActualizadoInv.cantidad = parseInt(inventarioAnterior.cantidad) +1;
+            
+            const objetoInsert = {
+                producto_id: articuloActualizadoInv.producto_id,
+                cantidad:  articuloActualizadoInv.cantidad
+            }
+
+            console.log(articuloActualizadoInv);
+            let insert = objetoInsert
+
+            let insertJson = JSON.stringify(insert);
+            console.log(insertJson);
+            inputHiddenInventarioCancelarProducto.value = insertJson;
+            document.querySelector('.modal--cancelarProducto__opciones').parentElement.appendChild(inputHiddenInventarioCancelarProducto);
+
+            console.log(ventaAnterior);
+
+            let ventaActualizada = ventaAnterior;
+            ventaActualizada.cancelacion = 1;
+            ventaActualizada.cantidad = Number(ventaAnterior.cantidad) -1;
+            
+            console.log(ventaActualizada);
+
+            const objetoInsertVentas = {
+                carrito_id: ventaActualizada.carrito_id,
+                producto_id: ventaActualizada.producto_id,
+                hora_venta: ventaActualizada.hora_venta,
+                fecha_venta: ventaActualizada.fecha_venta,
+                precio_compra: ventaActualizada.precio_compra,
+                precio_venta: ventaActualizada.precio_venta,
+                id_venta: ventaActualizada.id_venta
+            }
+
+            insert = objetoInsertVentas;
+
+            insertJson = JSON.stringify(insert);
+            console.log(insertJson);
+            inputHiddenVentasCancelarProducto.value = insertJson;
+            document.querySelector('.modal--cancelarProducto__opciones').parentElement.appendChild(inputHiddenVentasCancelarProducto);
+
+            console.log(caja);
+            let cajaAnterior = caja;
+            cajaAnterior.cantidad_caja = caja.cantidad_caja - objetoInsertVentas.precio_venta;
+
+            console.log(cajaAnterior);
+
+            insert = cajaAnterior;
+
+            insertJson = JSON.stringify(insert);
+            console.log(insertJson);
+            inputHiddenCajaCancelarProducto.value = insertJson;
+            document.querySelector('.modal--cancelarProducto__opciones').parentElement.appendChild(inputHiddenCajaCancelarProducto);
+
+            setTimeout(() => {
+                document.querySelector('.modal--cancelarProducto__opciones').parentElement.submit();
+
+            }, 3000);
+
+
+        }
+
+        if (e.target.value === 'No') {
+            document.querySelector('.modal--cancelarProducto').classList.remove('modal--cancelarProducto--show');
+
+        }
+
+
+
+    });
+}
 
 
 function escucharBotonesModalGestionarProductos() {
