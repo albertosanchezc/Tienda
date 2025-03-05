@@ -228,6 +228,8 @@
                             </div>
                         </div>
                     </div>
+                    <div class="paginador-1 pag">
+        </div>
                 </div>
                 <div class="chida"></div>
                 <div class="gridTotal">

@@ -146,7 +146,6 @@
     .botonver a {
         display: ruby;
         align-items: center;
-
         text-align: center;
         padding: 5px 7px;
         background-color: #bb0000;
@@ -161,7 +160,6 @@
     .botonver a:hover {
         background-color: #fff;
         color: #bb0000;
-        padding: 7px 15px;
 
     }
 }
@@ -189,9 +187,9 @@
     text-decoration: line-through;
 }
 
-busqueda-titulo.titulo_display{
-    margin-top: 20rem;
-}
+// .busqueda-titulo.titulo_display{
+//     margin-top: 20rem;
+// }
 
 .botonesventas.botones_display{
     margin-bottom: 20rem;

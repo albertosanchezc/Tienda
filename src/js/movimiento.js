@@ -14,6 +14,8 @@
         proveedor: ''
     }
 
+    let bandera =0;
+
     let arrayIdStock = [];
     let arrayIdToPost = [];
     let totalRegistrosTabla = 0;
@@ -21,7 +23,8 @@
     let totalFinal = 0;
     let cantidadPagada;
 
-
+    let registrosPorPagina = 2;
+    let paginaActual = 1;
 
     const idStock = new Set();
     const inputProveedor = document.querySelector('#proveedormovimientoprod');
@@ -32,10 +35,9 @@
     const contenedorTotal = document.querySelector('.totalVisita');
     const formulario = document.getElementById('movimientoProducto');
     const inputPagado = document.getElementById('entradaestadoPago');
-
     const contenedorAlertas = document.querySelector('.chida');
     const adeudo = document.querySelector('.adeudo');
-
+    const paginadorContainer = document.querySelector('.paginador-1');
 
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -68,7 +70,6 @@
     formulario.addEventListener('submit', function (e) {
         e.preventDefault();
         const alertas = contenedorTotal.querySelectorAll('.alerta');
-
         const inputHiddenVisita = crearInputHidden('movimiento[visitas_proveedor]');
         const inputHiddenVisitaProducto = crearInputHidden('movimiento[visita_producto]');
         const inputHiddenVisitaInventario = crearInputHidden('movimiento[inventario]');
@@ -185,6 +186,8 @@
 
 
     inputProveedor.addEventListener('change', (e) => {
+        arrayIdToPost = []
+        arrayIdStock = []
         limpiarHTMLElemento(containertabla);
         contenedorCards.style.display = "none";
         const botonTodos = document.querySelector('.btnEditarStockTodos');
@@ -201,6 +204,25 @@
             console.log("No hay busqueda");
         }
 
+    });
+
+    paginadorContainer.addEventListener('click', (e) => {
+        console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+        if (e.target.classList == 'numero') {
+
+            paginaActual = parseInt(e.target.textContent);
+        }
+        if (e.target.classList == 'paginas') {
+            if (e.target.textContent == 'Siguiente') {
+                paginaActual = paginaActual + 1;
+            } else {
+                paginaActual = paginaActual - 1;
+
+            }
+        }
+        let resultados = filtrar();
+        mostrarPagina(paginaActual, resultados);
     });
 
     function escucharBotonesMasyMenos(sel1) {
@@ -305,6 +327,7 @@
                 aniadidosParrafo.dataset.totalAniadidos = totalAniadidos;
 
                 if (totalAniadidos > 0) {
+                    bandera =0;
                     botonStock.classList.add('btnStockgreen');
                     botonStock.classList.remove('btnStockred');
                     aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
@@ -316,6 +339,7 @@
                     }
 
                 } else if (totalAniadidos < 0) {
+                    bandera =0;
                     botonStock.classList.add('btnStockred');
                     botonStock.classList.remove('btnStockgreen');
                     const retiradosPositivo = totalAniadidos * -1;
@@ -337,6 +361,7 @@
                     botonStock.classList.remove('btnStockgreen');
                     aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
                     stockParrafo.textContent = `Stock: ${stockResultante}`;
+                    bandera =1;
 
                 }
 
@@ -355,12 +380,19 @@
                 totalFinal = 0;
 
                 console.log(arrayIdToPost);
+                console.log(arrayIdStock);
+
                 totalFinal = calcularTotal(arrayIdToPost).toFixed(2);;
                 resultadoAnterior = totalProducto;
                 contenedorTotal.innerHTML = `
                     <p>Total resultante</p>
                     <p>$${totalFinal}</p>
                 `;
+
+                if(bandera === 1){
+                    const objetoEliminar = arrayIdToPost.find(producto => producto.producto_id === idEditarProducto);
+                    arrayIdToPost = [...arrayIdToPost.filter(objeto => objeto !== objetoEliminar)];
+                }
 
             });
         });
@@ -438,7 +470,7 @@
         });
 
         totalRegistrosTabla = inventario.length;
-        console.log(totalRegistrosTabla);
+        // console.log(totalRegistrosTabla);
 
         tablaDinamica.appendChild(tbody);
         contenedorTabla.appendChild(tablaDinamica);
@@ -474,6 +506,7 @@
 
                 if (productoSeleccionado) {
                     mostrarCard(productoSeleccionado, proveedores, categorias);
+                    
                     sel1 = document.querySelectorAll('.botonStock');
                     escucharBotonesMasyMenos(sel1);
                 }
@@ -482,6 +515,8 @@
                 idStock.delete(idProducto);
                 const objetoEliminar = arrayIdStock.find(producto => producto.producto_id === idProducto);
                 arrayIdStock = [...arrayIdStock.filter(objeto => objeto !== objetoEliminar)];
+                const objetoEliminar1 = arrayIdToPost.find(producto => producto.producto_id === idProducto);
+                arrayIdToPost = [...arrayIdToPost.filter(objeto => objeto !== objetoEliminar1)];
                 fila.classList.remove('fila-seleccionada');
                 boton.textContent = 'Editar Stock';
                 boton.classList.remove('btnQuitarStock');
@@ -489,7 +524,6 @@
 
                 if (card) {
                     card.remove();
-                    console.log(`Se eliminó la tarjeta del producto ${idProducto}`);
                 }
 
                 if (idStock.size > 0) {
@@ -499,7 +533,6 @@
                 }
             }
 
-            console.log('Productos seleccionados:', Array.from(idStock));
             const totalRegistrosId = idStock.size;
             if (totalRegistrosTabla === totalRegistrosId) {
                 btnAniadirTodos.classList.add('activo');
@@ -541,6 +574,7 @@
                         if (productoSeleccionado) {
                             mostrarCard(productoSeleccionado, proveedores, categorias);
                             sel1 = document.querySelectorAll('.botonStock');
+                            
 
                         }
                     }
@@ -549,8 +583,10 @@
                 currentState = STATES.PRODUCTS_ADDED;
 
             } else {
+                arrayIdToPost = []
+                arrayIdStock = []
                 botonTodos.classList.remove('activo');
-                botonTodos.textContent = 'Editar Stock Todos los Productos de éste proveedor';
+                botonTodos.textContent = 'Editar Stock de Todos los Productos de éste proveedor';
 
                 filas.forEach(fila => {
                     const boton = fila.querySelector('.btnEditarStock');
@@ -558,7 +594,7 @@
                     const objetoEliminar = arrayIdStock.find(producto => producto.producto_id === idProducto);
                     idStock.delete(idProducto);
                     arrayIdStock = [...arrayIdStock.filter(objeto => objeto !== objetoEliminar)];
-                    console.log(arrayIdStock);
+                    // console.log(arrayIdStock);
                     fila.classList.remove('fila-seleccionada');
                     boton.textContent = 'Editar Stock';
                     boton.classList.remove('btnQuitarStock');
@@ -573,7 +609,7 @@
                     currentState = STATES.PROVIDER_SELECTED;
                 }
             }
-            console.log('Productos seleccionados:', Array.from(idStock));
+            // console.log('Productos seleccionados:', Array.from(idStock));
 
         }
 
@@ -756,6 +792,56 @@
         input.type = 'HIDDEN';
         input.name = name;
         return input;
+    }
+
+    function mostrarPagina(pagina, datos = categorias) {
+        const inicio = (pagina - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const inventarioPagina = datos.slice(inicio, fin);
+
+        console.log("Inventario Pagina", inventarioPagina);
+        paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+    
+        mostrarCard(productoSeleccionado, proveedores, categorias);
+        generarPaginador(datos);
+
+
+        return inventarioPagina;
+    }
+
+    function generarPaginador(datos = categorias) {
+        const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+        console.log("Total de páginas desde generar Paginador", totalPaginas);
+        let paginadorHTML = '';
+
+        // Calcular el rango de páginas a mostrar
+        let inicio = Math.max(1, paginaActual - 4);
+        let fin = Math.min(totalPaginas, paginaActual + 4);
+
+        // Ajustar el rango si estamos cerca de los extremos
+        if (paginaActual <= 4) {
+            fin = Math.min(9, totalPaginas);
+        } else if (paginaActual >= totalPaginas - 4) {
+            inicio = Math.max(totalPaginas - 8, 1);
+        }
+
+        // Botón "Anterior"
+        if (paginaActual > 1) {
+            //  onclick="cambiarPagina(${paginaActual - 1})"
+            paginadorHTML += `<button class="paginas">Anterior</button>`;
+        }
+
+        for (let i = inicio; i <= fin; i++) {
+            // onclick="cambiarPagina(${i})"
+            paginadorHTML += `<button   ${paginaActual === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
+        }
+
+        if (paginaActual < totalPaginas) {
+            // onclick="cambiarPagina(${paginaActual + 1})"
+            paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+        }
+
+        paginadorContainer.innerHTML = paginadorHTML;
     }
 
 }())
