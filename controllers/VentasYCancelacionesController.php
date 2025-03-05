@@ -282,6 +282,10 @@ class VentasYCancelacionesController
                     $venta->eliminar();
                     // Añadir ese articulo al inventario(consultar con moshi)
 
+                    $inventarioActualizado = new Inventario(get_object_vars($productoInv));
+                    $inventarioActualizado->guardar();
+                    $caja->guardar();
+
                 }
             }
         }
