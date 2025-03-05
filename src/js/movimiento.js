@@ -231,7 +231,6 @@
         let stockResultante = 0;
         totalFinal = 0;
 
-
         sel1.forEach((s) => {
             let clickCount = 0;
             s.addEventListener('click', (e) => {
@@ -512,12 +511,6 @@
                     escucharBotonesMasyMenos(sel1);
                 }
 
-                productosPaginador = Array.from(idStock).map(id => inventario.find(producto => producto.producto_id == id))
-                mostrarPagina(1, productosPaginador);
-                generarPaginador(productosPaginador);
-                console.log(productosPaginador);
-
-
             } else {
                 idStock.delete(idProducto);
                 const objetoEliminar = arrayIdStock.find(producto => producto.producto_id === idProducto);
@@ -538,11 +531,6 @@
                 } else if (currentState === STATES.PRODUCTS_ADDED) {
                     currentState = STATES.PROVIDER_SELECTED;
                 }
-
-                productosPaginador = Array.from(idStock).map(id => inventario.find(producto => producto.producto_id == id))
-                mostrarPagina(1, productosPaginador);
-                generarPaginador(productosPaginador);
-                console.log(productosPaginador);
             }
 
             const totalRegistrosId = idStock.size;
@@ -588,10 +576,6 @@
                             sel1 = document.querySelectorAll('.botonStock');
                         }
 
-                        productosPaginador = Array.from(idStock).map(id => inventario.find(producto => producto.producto_id == id))
-                        mostrarPagina(1, productosPaginador);
-                        generarPaginador(productosPaginador);
-                        console.log(productosPaginador);
                     }
                 });
                 escucharBotonesMasyMenos(sel1);
@@ -619,11 +603,6 @@
                         card.remove();
                     }
                 });
-
-                productosPaginador = Array.from(idStock).map(id => inventario.find(producto => producto.producto_id == id))
-                mostrarPagina(1, productosPaginador);
-                generarPaginador(productosPaginador);
-                console.log(productosPaginador);
 
                 if (idStock.size === 0) {
                     currentState = STATES.PROVIDER_SELECTED;
@@ -774,19 +753,10 @@
     function filtrar() {
         const resultadosFiltrado = inventario.filter(filtrarProveedor);
         if (resultadosFiltrado.length > 0) {
-            // console.log(resultadosFiltrado);
-
             mostrarTabla(resultadosFiltrado, proveedores);
-
-            // mostrarPagina(1, resultadosFiltrado);
-            // generarPaginador(resultadosFiltrado);
             return resultadosFiltrado.flat();
         } else {
-            // mostrarPagina(1, resultadosFiltrado);
-            // generarPaginador(resultadosFiltrado);
-
             mostrarTabla(resultadosFiltrado, proveedores);
-
             return resultadosFiltrado.flat();
         }
     }
@@ -812,53 +782,6 @@
         input.type = 'HIDDEN';
         input.name = name;
         return input;
-    }
-
-    function mostrarPagina(pagina, datos = categorias) {
-        const inicio = (pagina - 1) * registrosPorPagina;
-        const fin = inicio + registrosPorPagina;
-        const inventarioPagina = datos.slice(inicio, fin);
-        console.log("Inventario Pagina", inventarioPagina);
-        paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
-
-        // mostrarCard(productoSeleccionado, proveedores, categorias);
-        generarPaginador(datos);
-        return inventarioPagina;
-    }
-
-    function generarPaginador(datos = categorias) {
-        const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
-        console.log("Total de páginas desde generar Paginador", totalPaginas);
-        let paginadorHTML = '';
-
-        // Calcular el rango de páginas a mostrar
-        let inicio = Math.max(1, paginaActual - 4);
-        let fin = Math.min(totalPaginas, paginaActual + 4);
-
-        // Ajustar el rango si estamos cerca de los extremos
-        if (paginaActual <= 4) {
-            fin = Math.min(9, totalPaginas);
-        } else if (paginaActual >= totalPaginas - 4) {
-            inicio = Math.max(totalPaginas - 8, 1);
-        }
-
-        // Botón "Anterior"
-        if (paginaActual > 1) {
-            //  onclick="cambiarPagina(${paginaActual - 1})"
-            paginadorHTML += `<button class="paginas">Anterior</button>`;
-        }
-
-        for (let i = inicio; i <= fin; i++) {
-            // onclick="cambiarPagina(${i})"
-            paginadorHTML += `<button   ${paginaActual === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
-        }
-
-        if (paginaActual < totalPaginas) {
-            // onclick="cambiarPagina(${paginaActual + 1})"
-            paginadorHTML += `<button class="paginas" >Siguiente</button>`;
-        }
-
-        paginadorContainer.innerHTML = paginadorHTML;
     }
 
 }())
