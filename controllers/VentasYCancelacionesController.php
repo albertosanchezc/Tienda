@@ -208,24 +208,22 @@ class VentasYCancelacionesController
 
                     $cantidadAnteriorVentas = $valorVentaAntesActualizar[0]->cantidad;
 
-                    if($cantidadAnteriorVentas >= 2){
+                    if ($cantidadAnteriorVentas >= 2) {
                         // Cantidad Mayor a 1 debemos actualizar la venta
                         $venta = new Ventas(get_object_vars($valorVentaAntesActualizar[0]));
-                        $venta->cantidad --;
+                        $venta->cantidad--;
 
                         // Estamos listos para guardar la venta 
                         $venta->guardar();
-
-                    } else{
+                    } else {
                         // Cantidad = 1 debemos eliminar la venta
                         $venta = new Ventas(get_object_vars($valorVentaAntesActualizar[0]));
-                        
+
                         // Estamos listos para eliminar la venta
                         $venta->eliminar();
-                        
                     }
 
-                    if(empty($existeCancelacion)){
+                    if (empty($existeCancelacion)) {
                         // Debemos crear la cancelación
                         $cancelacion = new Ventas(get_object_vars($ventasPost));
                         $cancelacion->cantidad = 1;
@@ -234,12 +232,12 @@ class VentasYCancelacionesController
                         // debuguear($cancelacion);
                         // Estamos listos para guardar la cancelacion
 
-                    } else{
+                    } else {
                         // Debemos actualizar la cancelación
                         $cantidadAnteriorCancelacion = $existeCancelacion[0]->cantidad;
 
                         $cancelacion = new Ventas(get_object_vars($ventasPost));
-                        $cancelacion->cantidad = $cantidadAnteriorCancelacion+1;
+                        $cancelacion->cantidad = $cantidadAnteriorCancelacion + 1;
                         $cancelacion->cancelacion = 1;
                         $cancelacion->id = $existeCancelacion[0]->id;
 
@@ -262,15 +260,26 @@ class VentasYCancelacionesController
                     // ]);
 
 
-                    
+
                     // Añadir ese articulo al inventario
-                    $productoInv->cantidad++;
+                    // $productoInv->cantidad++;
                     $inventarioActualizado = new Inventario(get_object_vars($productoInv));
-                    debuguear($inventarioActualizado);
+                    $inventarioActualizado->guardar();
+                    $caja->guardar();
+                    // debuguear($inventarioActualizado);
 
                 } else {
                     // Debemos Eliminar todos los gramos de ese producto
+                    $cancelacion = new Ventas(get_object_vars($ventasPost));
+                    $cancelacion->cantidad = 1;
+                    $cancelacion->cancelacion = 1;
+                    $cancelacion->cantidad = $valorVentaAntesActualizar[0]->cantidad;
+                    $cancelacion->guardar();
 
+                    $venta = new Ventas(get_object_vars($valorVentaAntesActualizar[0]));
+
+                    // Estamos listos para eliminar la venta
+                    $venta->eliminar();
                     // Añadir ese articulo al inventario(consultar con moshi)
 
                 }
