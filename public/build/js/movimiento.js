@@ -14,11 +14,12 @@
         proveedor: ''
     }
 
-    let bandera =0;
+    let bandera = 0;
+    let totalRegistrosTabla = 0;
 
     let arrayIdStock = [];
     let arrayIdToPost = [];
-    let totalRegistrosTabla = 0;
+    let productosPaginador = [];
 
     let totalFinal = 0;
     let cantidadPagada;
@@ -38,6 +39,7 @@
     const contenedorAlertas = document.querySelector('.chida');
     const adeudo = document.querySelector('.adeudo');
     const paginadorContainer = document.querySelector('.paginador-1');
+
 
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -327,7 +329,7 @@
                 aniadidosParrafo.dataset.totalAniadidos = totalAniadidos;
 
                 if (totalAniadidos > 0) {
-                    bandera =0;
+                    bandera = 0;
                     botonStock.classList.add('btnStockgreen');
                     botonStock.classList.remove('btnStockred');
                     aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
@@ -339,7 +341,7 @@
                     }
 
                 } else if (totalAniadidos < 0) {
-                    bandera =0;
+                    bandera = 0;
                     botonStock.classList.add('btnStockred');
                     botonStock.classList.remove('btnStockgreen');
                     const retiradosPositivo = totalAniadidos * -1;
@@ -361,7 +363,7 @@
                     botonStock.classList.remove('btnStockgreen');
                     aniadidosParrafo.textContent = `Añadidos: ${totalAniadidos}`;
                     stockParrafo.textContent = `Stock: ${stockResultante}`;
-                    bandera =1;
+                    bandera = 1;
 
                 }
 
@@ -389,7 +391,7 @@
                     <p>$${totalFinal}</p>
                 `;
 
-                if(bandera === 1){
+                if (bandera === 1) {
                     const objetoEliminar = arrayIdToPost.find(producto => producto.producto_id === idEditarProducto);
                     arrayIdToPost = [...arrayIdToPost.filter(objeto => objeto !== objetoEliminar)];
                 }
@@ -506,10 +508,15 @@
 
                 if (productoSeleccionado) {
                     mostrarCard(productoSeleccionado, proveedores, categorias);
-                    
                     sel1 = document.querySelectorAll('.botonStock');
                     escucharBotonesMasyMenos(sel1);
                 }
+
+                productosPaginador = Array.from(idStock).map(id => inventario.find(producto => producto.producto_id == id))
+                mostrarPagina(1, productosPaginador);
+                generarPaginador(productosPaginador);
+                console.log(productosPaginador);
+
 
             } else {
                 idStock.delete(idProducto);
@@ -531,6 +538,11 @@
                 } else if (currentState === STATES.PRODUCTS_ADDED) {
                     currentState = STATES.PROVIDER_SELECTED;
                 }
+
+                productosPaginador = Array.from(idStock).map(id => inventario.find(producto => producto.producto_id == id))
+                mostrarPagina(1, productosPaginador);
+                generarPaginador(productosPaginador);
+                console.log(productosPaginador);
             }
 
             const totalRegistrosId = idStock.size;
@@ -574,9 +586,12 @@
                         if (productoSeleccionado) {
                             mostrarCard(productoSeleccionado, proveedores, categorias);
                             sel1 = document.querySelectorAll('.botonStock');
-                            
-
                         }
+
+                        productosPaginador = Array.from(idStock).map(id => inventario.find(producto => producto.producto_id == id))
+                        mostrarPagina(1, productosPaginador);
+                        generarPaginador(productosPaginador);
+                        console.log(productosPaginador);
                     }
                 });
                 escucharBotonesMasyMenos(sel1);
@@ -604,6 +619,11 @@
                         card.remove();
                     }
                 });
+
+                productosPaginador = Array.from(idStock).map(id => inventario.find(producto => producto.producto_id == id))
+                mostrarPagina(1, productosPaginador);
+                generarPaginador(productosPaginador);
+                console.log(productosPaginador);
 
                 if (idStock.size === 0) {
                     currentState = STATES.PROVIDER_SELECTED;
@@ -798,14 +818,11 @@
         const inicio = (pagina - 1) * registrosPorPagina;
         const fin = inicio + registrosPorPagina;
         const inventarioPagina = datos.slice(inicio, fin);
-
         console.log("Inventario Pagina", inventarioPagina);
         paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
-    
-        mostrarCard(productoSeleccionado, proveedores, categorias);
+
+        // mostrarCard(productoSeleccionado, proveedores, categorias);
         generarPaginador(datos);
-
-
         return inventarioPagina;
     }
 
