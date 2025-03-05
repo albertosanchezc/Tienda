@@ -70,6 +70,7 @@ class ActiveRecord
     {
         // Eliminar la propiedad
         $query = "DELETE FROM " . static::$tabla . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        // debuguear($query);
         $resultado = self::$db->query($query);
 
         if ($resultado) {
@@ -269,6 +270,15 @@ class ActiveRecord
         // debuguear($query);
         $resultado = self::consultarSQL($query);
 
+
+        return $resultado;
+    }
+
+    public static function where3Params($col1, $valor1, $col2, $valor2, $col3, $valor3)
+    {
+        $query = " SELECT * FROM " . static::$tabla . " WHERE " . "($col1, $col2, $col3 ) =" . "('$valor1', '$valor2', '$valor3')";
+        // debuguear($query);
+        $resultado = self::consultarSQL($query);
 
         return $resultado;
     }
