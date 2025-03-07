@@ -2,6 +2,8 @@ let lengthProveedor = 0;
 let lengthEmail = 0;
 let estaFijado = false;
 let currentIndex = 0;
+let registrosPorPagina = 4;
+let paginaActual = 1;
 let terminosBusqueda = {
   fecha: '',
   nombre: '',
@@ -10,7 +12,6 @@ let terminosBusqueda = {
 let proveedores = [];
 let visitas_proveedor = [];
 let visita_producto = [];
-
 
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
 const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores--aniadir__refcerrar');
@@ -24,6 +25,10 @@ const imagendown = document.querySelector('.imgdownsmall');
 const telefonoProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputTelefono');
 const emailProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputEmail');
 const nombreProv = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputNombre');
+const inputNombreBusqueda = document.getElementById('bnombre');
+const inputFecha = document.getElementById('fecha1');
+const inputRadioSaldo = document.querySelector('.tipo-movimiento1');
+const paginadorContainer = document.querySelector('.paginador-M');
 const texts = [
   "Busca proveedores fácilmente y gestiona su información de forma rápida, precisa y completamente organizada.",
   "Registra nuevos proveedores y organiza toda la información necesaria para mantener un control eficiente.",
@@ -50,7 +55,9 @@ async function consultarAPI() {
     visita_producto = resultado.visita_producto;
     // filtrar();
     // mostrarProveedores(proveedores);
-    mostrartabla(visitas_proveedor, proveedores);
+    // mostrartabla(visitas_proveedor, proveedores);
+    mostrarPagina(1, visitas_proveedor, proveedores);
+    generarPaginador(visitas_proveedor, proveedores);
 
   } catch (e) {
     console.log(e);
@@ -69,7 +76,6 @@ nombreProv.addEventListener('input', e => {
   lengthnombre = e.target.value.length;
 })
 
-///Formato de número en el formulario
 phoneInput.addEventListener("input", function (e) {
   let input = phoneInput.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
 
@@ -108,21 +114,34 @@ inputFecha.addEventListener('change', (e) => {
   fecha = e.target.value;
   terminosBusqueda.fecha = fecha;
   console.log(terminosBusqueda);
-  filtrarcaja();
-})
+  filtrar();
+});
 
-// Evento que escucha el botón de abrir buscar proveedores
+inputNombreBusqueda.addEventListener('change', (e) => {
+  let { nombre } = terminosBusqueda;
+  nombre = e.target.value;
+  terminosBusqueda.nombre = nombre;
+  console.log(terminosBusqueda);
+  filtrar();
+});
+
+inputRadioSaldo.addEventListener('click', (e) => {
+  let { saldo } = terminosBusqueda;
+  saldo = e.target.value;
+  terminosBusqueda.saldo = saldo;
+  console.log(terminosBusqueda);
+  filtrar();
+});
+
 btnAbrirBuscarProveedores.addEventListener('click', () => {
   modalProveedores.classList.add('modalproveedores--show');
   mostrarProveedores(proveedores);
-})
+});
 
 btnAbrirNuevoProveedor.addEventListener('click', () => {
   modalNuevoProveedor.classList.add('modalproveedores--aniadir--show');
-})
+});
 
-
-// Evento que escucha el cerrar de la ventana modal buscar proveedores
 botonCerrarModal.addEventListener('click', () => {
   modalProveedores.classList.remove('modalproveedores--show');
 });
@@ -165,6 +184,25 @@ imagendown.addEventListener('click', function () {
     top: 960, // Altura a la que deseas desplazarte
     behavior: 'smooth' // Desplazamiento suave
   });
+});
+
+paginadorContainer.addEventListener('click', (e) => {
+  console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+  if (e.target.classList == 'numero') {
+
+    paginaActual = parseInt(e.target.textContent);
+  }
+  if (e.target.classList == 'paginas') {
+    if (e.target.textContent == 'Siguiente') {
+      paginaActual = paginaActual + 1;
+    } else {
+      paginaActual = paginaActual - 1;
+
+    }
+  }
+  let resultados = filtrar()
+  mostrarPagina(paginaActual, resultados);
 });
 
 document.getElementById('aniadirProveedor').addEventListener('submit', function (e) {
@@ -354,7 +392,7 @@ function mostrarProveedores(proveedores) {
   });
 }
 
-function mostrartabla(visitas_proveedor,proveedores) {
+function mostrartabla(visitas_proveedor, proveedores) {
   console.log(visitas_proveedor);
   const contenedorTabla = document.querySelector('.tabladeproveedores');
 
@@ -389,7 +427,7 @@ function mostrartabla(visitas_proveedor,proveedores) {
 
     const fila = document.createElement('tr');
     fila.innerHTML = `
-                <td>${id}</td>
+                <td>${visita_id}</td>
                 <td>${nombreProveedor.nombre}</td>
                 <td>${fechaFormateada} a las ${horaFormateada}</td>
                 <td>${cantidad_aniadido}/${cantidad_retirado}</td>
@@ -418,40 +456,101 @@ function limpiarHTMLElemento(elemento) {
 
 function filtrar() {
   let resultadosFiltrados = visitas_proveedor;
-  // Aplicar filtro de fecha inicial si existe
   if (terminosBusqueda.fecha) {
-      resultadosFiltrados = resultadosFiltrados.filter(filtrarfecha);
-
-      // mostrarPagina(1, resultadosFiltrados);
-      mostrartabla(resultadosPagina);
-
-      // generarPaginador(resultadosFiltrados);
+    resultadosFiltrados = resultadosFiltrados.filter(filtrarFecha);
   }
   if (terminosBusqueda.nombre) {
-      resultadosFiltrados = resultadosFiltrados.filter(filtrarNombre);
-
-      mostrarPagina(1, resultadosFiltrados);
-      // mostrartabla(resultadosPagina);
-      generarPaginador(resultadosFiltrados);
+    resultadosFiltrados = resultadosFiltrados.filter(filtrarNombre);
   }
-
-  if (terminosBusqueda.orden) {
-      resultadosFiltrados = resultadosFiltrados.sort(filtrarSaldo);
-
-      mostrarPagina(1, resultadosFiltrados);
-      // mostrartabla(resultadosPagina);
-      generarPaginador(resultadosFiltrados);
+  if (terminosBusqueda.saldo) {
+    resultadosFiltrados = resultadosFiltrados.filter(filtrarSaldo);
   }
-
-
-  // Mostrar resultados en consola
+  // mostrartabla(resultadosFiltrados, proveedores);
+  mostrarPagina(1, resultadosFiltrados, proveedores);
+  generarPaginador(resultadosFiltrados, proveedores);
   console.log(resultadosFiltrados);
   return resultadosFiltrados;
+}
 
+function filtrarFecha(visitas_proveedor) {
+  const fechaSeleccionada = new Date(terminosBusqueda.fecha);
+  const fechaVisita = new Date(visitas_proveedor.fecha);
+  if (terminosBusqueda.fecha) {
+    return fechaSeleccionada.toDateString() === fechaVisita.toDateString();
+  }
+  return visitas_proveedor;
 
 }
 
-function filtrarfecha(terminosBusqueda) {
-  const fechaR = new Date(terminosBusqueda.fecha);
-  return fechaR;
+function filtrarNombre(visitas_proveedor) {
+  let { nombre } = terminosBusqueda;
+  if (nombre) {
+    return visitas_proveedor.proveedor_id === nombre;
+  }
+  return visitas_proveedor;
+}
+
+function filtrarSaldo(visitas_proveedor) {
+  let { saldo } = terminosBusqueda;
+  const totalAdeudo = parseFloat(visitas_proveedor.total_adeudo);
+
+  if (saldo === "adeudo") {
+    return totalAdeudo !== 0;
+  } else if (saldo === "Liquidado") {
+    return totalAdeudo === 0;
+  }
+  return true;
+}
+
+function mostrarPagina(pagina, datos = visitas_proveedor) {
+  const inicio = (pagina - 1) * registrosPorPagina;
+  const fin = inicio + registrosPorPagina;
+  const inventarioPagina = datos.slice(inicio, fin);
+
+  console.log("Inventario Pagina", inventarioPagina);
+  paginadorContainer.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+  // Revisar cómo pasar el elemento a limpiar
+  // limpiarHTMLElemento(despliegueInventario)
+  // limpiarHTMLElemento(contenedorTabla);
+  mostrartabla(inventarioPagina, proveedores);
+  generarPaginador(datos);
+
+
+  return inventarioPagina;
+}
+
+function generarPaginador(datos = visitas_proveedor) {
+  const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+  console.log("Total de páginas desde generar Paginador", totalPaginas);
+  let paginadorHTML = '';
+
+  let inicio = Math.max(1, paginaActual - 4);
+  let fin = Math.min(totalPaginas, paginaActual + 4);
+
+  if (paginaActual <= 4) {
+    fin = Math.min(9, totalPaginas);
+  } else if (paginaActual >= totalPaginas - 4) {
+    inicio = Math.max(totalPaginas - 8, 1);
+  }
+
+  if (paginaActual > 1) {
+    paginadorHTML += `<button class="paginas">Anterior</button>`;
+  }
+
+  for (let i = inicio; i <= fin; i++) {
+    paginadorHTML += `<button   ${paginaActual === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
+  }
+
+  if (paginaActual < totalPaginas) {
+    paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+  }
+
+  paginadorContainer.innerHTML = paginadorHTML;
+}
+
+function crearInputHidden(name) {
+  const input = document.createElement('INPUT');
+  input.type = 'HIDDEN';
+  input.name = name;
+  return input;
 }

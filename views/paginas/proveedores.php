@@ -54,16 +54,24 @@
                     <fieldset>
                         <legend>Búsqueda</legend>
                         <div class="caja-filtros1">
+                            <div class="fecha2">
+                                <label for="bnombre">Nombre Proveedor: </label>
+                                <select class="selectSpecial" id="bnombre">
+                                    <option selected value="">Selecciona un proveedor</option>
+                                    <?php foreach ($proveedores as $proveedor) { ?>
+                                        <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                            value="<?php echo s($proveedor->id); ?>">
+                                            <?php echo s($proveedor->nombre); ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
                             <div class="fecha1">
                                 <label for="fecha1">Fecha de visita: </label>
                                 <input type="date" id="fecha1" name="caja[fecha1]">
                             </div>
-                            <div class="fecha2">
-                                <label for="bnombre">Nombre Proveedor: </label>
-                                <input type="text" id="bnombre" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
-                            </div>
                             <div class="tipo-movimiento1">
-                                <p>Saldo: </p>
+                                <label for="tipo-movimiento1">Saldo: </label>
                                 <div class="switch">
                                     <input type="radio" id="liquidado" name="caja[orden]" value="Liquidado" checked>
                                     <label for="liquidado">Liquidado</label>
@@ -131,6 +139,9 @@
                         </tr>
                     </tbody>
                 </table>
+
+            </div>
+            <div class="paginador-M paginadorM">
             </div>
         </div>
     </section>

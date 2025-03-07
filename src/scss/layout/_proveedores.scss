@@ -210,6 +210,8 @@
     .caja-filtros1 {
         width: 100%;
 
+        
+
         label {
             font-weight: bold;
             margin-bottom: 5px;
@@ -289,7 +291,21 @@
             background-color: #F9E7F2;
         }
 
+
+
     }
+}
+
+
+.selectSpecial {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border-color: #B02997;
+    border-radius: 1rem;
+    height: 43px;
+    margin-bottom: 1rem;
+
 }
 
 .tabladeproveedores {

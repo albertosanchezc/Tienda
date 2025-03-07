@@ -1795,7 +1795,7 @@ body {
 
 }
 
-.paginador-R {
+.paginador-R, .paginador-M {
     margin-top: 1rem;
     display: flex;
     flex-direction: row;
@@ -2093,4 +2093,40 @@ body {
 
         }
     }
+}
+
+
+.paginador-M, .paginadorM{
+    grid-column: 2/3;
+
+    .numero {
+        background-color: rgb(139, 0, 139);
+        border-color: rgb(139, 0, 139);
+
+        &:hover {
+            color: rgb(139, 0, 139);
+            border-color: rgb(139, 0, 139);
+        }
+    }
+
+    .paginas {
+        background-color: rgb(139, 0, 139);
+        border-color: rgb(139, 0, 139);
+
+        &:hover {
+            color: rgb(139, 0, 139);
+            border-color: rgb(139, 0, 139);
+        }
+    }
+
+    .button.selected {
+        color: rgb(139, 0, 139);
+        border-color: rgb(139, 0, 139);
+    }
+
+    .numeroPActual{
+        color: rgb(139, 0, 139);
+        border-color: rgb(139, 0, 139);
+        background-color: #fff;
+    } 
 }
