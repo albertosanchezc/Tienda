@@ -95,41 +95,41 @@ class PaginasController
 
 
 
-    public static function proveedores(Router $router)
-    {
-        $script = '<script src="/build/js/proveedores.js"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />';
-        $alertas = [];
+//     public static function proveedores(Router $router)
+//     {
+//         $script = '<script src="/build/js/proveedores.js"></script>
+//         <link rel="preconnect" href="https://fonts.googleapis.com" />';
+//         $alertas = [];
 
-        $proveedores = Proveedor::all();
-        $titulo = 'Proveedores';
-        $resultado = $_GET['resultado'] ?? null;
-        $alertas = Proveedor::getErrores();
-        // debuguear($resultado);
+//         $proveedores = Proveedor::all();
+//         $titulo = 'Proveedores';
+//         $resultado = $_GET['resultado'] ?? null;
+//         $alertas = Proveedor::getErrores();
+//         // debuguear($resultado);
 
-        if($_SERVER['REQUEST_METHOD']==="POST"){
+//         if($_SERVER['REQUEST_METHOD']==="POST"){
             
-            $proveedores = new Proveedor();
-            $alertas = Proveedor::getErrores();
-            $args = $_POST['proveedores'];
-            $proveedores->sincronizar($args);
-            $alertas = $proveedores->validar();
-// debuguear($alertas);
-            if(empty($alertas)){
-                $proveedores->guardar();
-                header('Location: /proveedores?resultado=2');
-            }
-        }
+//             $proveedores = new Proveedor();
+//             $alertas = Proveedor::getErrores();
+//             $args = $_POST['proveedores'];
+//             $proveedores->sincronizar($args);
+//             $alertas = $proveedores->validar();
+// // debuguear($alertas);
+//             if(empty($alertas)){
+//                 $proveedores->guardar();
+//                 header('Location: /proveedores?resultado=2');
+//             }
+//         }
 
-        // debuguear($proveedores);
-        $router->render('paginas/proveedores', [
-            'script' => $script,
-            'titulo' => $titulo,
-            'proveedores' => $proveedores,
-            'resultado' => $resultado,
-            'alertas'=> $alertas
-        ]);
-    }
+//         // debuguear($proveedores);
+//         $router->render('paginas/proveedores', [
+//             'script' => $script,
+//             'titulo' => $titulo,
+//             'proveedores' => $proveedores,
+//             'resultado' => $resultado,
+//             'alertas'=> $alertas
+//         ]);
+//     }
 
     public static function propiedades(Router $router)
     {

@@ -23,7 +23,7 @@
                     <a href="#" class="p2boton1">+ Añadir Nuevo Proveedor</a>
                 </div>
                 <div class="presentacion2boton2">
-                    <a href="/proveedores/visitaproveedor" class="p2boton2">Movimiento de Producto</a>
+                    <a href="/movimientoproducto" class="p2boton2">Movimiento de Producto</a>
                 </div>
             </div>
         </div>
@@ -81,8 +81,10 @@
                 <table class="tabla-proveedores">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Nombre</th>
                             <th>Fecha y Hora</th>
+                            <th>Prod. +/-</th>
                             <th>Total pagado</th>
                             <th>Adeudo</th>
                             <th>Productos comprados</th>
@@ -91,8 +93,10 @@
                     <!-- Mostrar los resultados -->
                     <tbody>
                         <tr>
+                            <td>1</td>
                             <td>Coca-cola</td>
                             <td>27/09/25 10:58p.m.</td>
+                            <td>5/3</td>
                             <td>$15063.00</td>
                             <td>$1500.00</td>
                             <td>
@@ -101,8 +105,10 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>2</td>
                             <td>Coca-cola</td>
                             <td>27/09/25 10:58p.m.</td>
+                            <td>5/3</td>
                             <td>$15063.00</td>
                             <td>$1500.00</td>
                             <td>
@@ -111,8 +117,10 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>3</td>
                             <td>Coca-cola</td>
                             <td>27/09/25 10:58p.m.</td>
+                            <td>5/3</td>
                             <td>$15063.00</td>
                             <td>$1500.00</td>
                             <td>

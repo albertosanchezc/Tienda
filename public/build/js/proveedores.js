@@ -1,61 +1,53 @@
-document.addEventListener("DOMContentLoaded", () => {
-  consultarAPI();
-  showText(currentIndex); // Muestra el primer texto
-  setInterval(nextSlide, 5000); // Cambia cada 7 segundos
-});
+let lengthProveedor = 0;
+let lengthEmail = 0;
+let estaFijado = false;
+let currentIndex = 0;
+let proveedores = [];
+let visitas_proveedor = [];
+let visita_producto = [];
 
 
-// Botones
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
 const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores--aniadir__refcerrar');
-
-
-// Modales
 const modalProveedores = document.querySelector('.modalproveedores');
 const modalNuevoProveedor = document.querySelector('.modalproveedores--aniadir');
 const phoneInput = document.getElementById("phone");
-
 const btnAbrirBuscarProveedores = document.querySelector('.p2boton');
 const btnAbrirNuevoProveedor = document.querySelector('.p2boton1');
 const fijarBtn = document.querySelector('.btnmorado');
 const imagendown = document.querySelector('.imgdownsmall');
-
 const telefonoProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputTelefono');
-
 const emailProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputEmail');
 const nombreProv = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputNombre');
-
-
-
-let lengthProveedor = 0;
-let lengthEmail = 0;
-let estaFijado = false;
-
 const texts = [
   "Busca proveedores fácilmente y gestiona su información de forma rápida, precisa y completamente organizada.",
   "Registra nuevos proveedores y organiza toda la información necesaria para mantener un control eficiente.",
   "Crea visitas de proveedores de manera sencilla y gestiona productos de forma masiva con total facilidad."
 ];
 
-let currentIndex = 0;
-let proveedores = [];
+document.addEventListener("DOMContentLoaded", () => {
+  consultarAPI();
+  showText(currentIndex); // Muestra el primer texto
+  setInterval(nextSlide, 5000); // Cambia cada 7 segundos
+});
 
 async function consultarAPI() {
   try {
-      const server = window.location.host;
+    const server = window.location.host;
 
-      const url = `http://${server}/proveedores/api/proveedores`;
-      const respuesta = await fetch(url);
-      const resultado = await respuesta.json();
+    const url = `http://${server}/proveedores/api/proveedores`;
+    const respuesta = await fetch(url);
+    const resultado = await respuesta.json();
 
 
-      proveedores = resultado.proveedores;
-      // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
-      // filtrar();
-      // mostrarProveedores(proveedores);
+    proveedores = resultado.proveedores;
+    visitas_proveedor = resultado.visitas_proveedor;
+    visita_producto = resultado.visita_producto;
+    // filtrar();
+    // mostrarProveedores(proveedores);
 
   } catch (e) {
-      console.log(e);
+    console.log(e);
   }
 }
 
@@ -127,37 +119,37 @@ botonCerrarModalNuevoProveedor.addEventListener('click', () => {
 
 fijarBtn.addEventListener('click', function () {
   if (!estaFijado) {
-      // 1) Ir a la altura deseada (ej. 500px)
-      window.scrollTo({
-          top: 960,      // Ajusta a la altura que requieras
-          behavior: 'smooth'
-      });
+    // 1) Ir a la altura deseada (ej. 500px)
+    window.scrollTo({
+      top: 960,      // Ajusta a la altura que requieras
+      behavior: 'smooth'
+    });
 
-      // 2) Bloquea el scroll del body
-      document.body.style.overflow = 'hidden';
+    // 2) Bloquea el scroll del body
+    document.body.style.overflow = 'hidden';
 
-      // Cambia el texto del botón
-      limpiarHTMLElemento(fijarBtn);
-      fijarBtn.innerHTML = `
+    // Cambia el texto del botón
+    limpiarHTMLElemento(fijarBtn);
+    fijarBtn.innerHTML = `
           <p>Desfijar</p>
           <img src="/build/img/fix.svg" alt="Logotipo de bajar">
         `;
-      estaFijado = true;
+    estaFijado = true;
   } else {
-      document.body.style.overflow = '';
-      limpiarHTMLElemento(fijarBtn);
-      fijarBtn.innerHTML = `
+    document.body.style.overflow = '';
+    limpiarHTMLElemento(fijarBtn);
+    fijarBtn.innerHTML = `
           <p>Fijar</p>
           <img src="/build/img/fix.svg" alt="Logotipo de bajar">
         `;
-      estaFijado = false;
+    estaFijado = false;
   }
 });
 
 imagendown.addEventListener('click', function () {
   window.scrollTo({
-      top: 960, // Altura a la que deseas desplazarte
-      behavior: 'smooth' // Desplazamiento suave
+    top: 960, // Altura a la que deseas desplazarte
+    behavior: 'smooth' // Desplazamiento suave
   });
 });
 
@@ -169,7 +161,7 @@ document.getElementById('aniadirProveedor').addEventListener('submit', function 
   const nombreProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputNombre').value;
   const emailProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputEmail').value;
 
-  if (!nombreProveedor || lengthnombre<=4) {
+  if (!nombreProveedor || lengthnombre <= 4) {
     errores.push('El nombre del proveedor es obligatorio y debe ser mayor a 4 caracteres');
 
   }
@@ -263,96 +255,141 @@ function mostrarProveedores(proveedores) {
 
   // Recorrer cada proveedor y crear su tarjeta
   proveedores.forEach(proveedor => {
-      // Crear el contenedor de la tarjeta
-      const datosGrid = document.createElement('DIV');
-      datosGrid.classList.add('modalproveedores__datosgrid');
+    // Crear el contenedor de la tarjeta
+    const datosGrid = document.createElement('DIV');
+    datosGrid.classList.add('modalproveedores__datosgrid');
 
-      // Crear el título (nombre del proveedor)
-      const titulo = document.createElement('H3');
-      titulo.textContent = proveedor.nombre;
+    // Crear el título (nombre del proveedor)
+    const titulo = document.createElement('H3');
+    titulo.textContent = proveedor.nombre;
 
-      // Crear el subtítulo (proveedor destacado)
-      const subtitulo = document.createElement('P');
-      subtitulo.textContent = 'PROVEEDOR DESTACADO';
+    // Crear el subtítulo (proveedor destacado)
+    const subtitulo = document.createElement('P');
+    subtitulo.textContent = 'PROVEEDOR DESTACADO';
 
-      // Crear el contenedor del teléfono
-      const flexTelefono = document.createElement('DIV');
-      flexTelefono.classList.add('modalproveedores__flextelefono');
+    // Crear el contenedor del teléfono
+    const flexTelefono = document.createElement('DIV');
+    flexTelefono.classList.add('modalproveedores__flextelefono');
 
-      const imgTelefono = document.createElement('IMG');
-      imgTelefono.src = '/build/img/telefono.png';
-      imgTelefono.alt = 'Logotipo de teléfono';
-      imgTelefono.classList.add('modalproveedores__imgtelefono');
+    const imgTelefono = document.createElement('IMG');
+    imgTelefono.src = '/build/img/telefono.png';
+    imgTelefono.alt = 'Logotipo de teléfono';
+    imgTelefono.classList.add('modalproveedores__imgtelefono');
 
-      const telefono = document.createElement('DIV');
-      telefono.classList.add('modalproveedores__telefono');
-      telefono.textContent = proveedor.telefono;
+    const telefono = document.createElement('DIV');
+    telefono.classList.add('modalproveedores__telefono');
+    telefono.textContent = proveedor.telefono;
 
-      flexTelefono.appendChild(imgTelefono);
-      flexTelefono.appendChild(telefono);
+    flexTelefono.appendChild(imgTelefono);
+    flexTelefono.appendChild(telefono);
 
-      // Crear el contenedor del email
-      const flexEmail = document.createElement('DIV');
-      flexEmail.classList.add('modalproveedores__flexemail');
+    // Crear el contenedor del email
+    const flexEmail = document.createElement('DIV');
+    flexEmail.classList.add('modalproveedores__flexemail');
 
-      const imgEmail = document.createElement('IMG');
-      imgEmail.src = '/build/img/email.png';
-      imgEmail.alt = 'Logotipo de email';
-      imgEmail.classList.add('modalproveedores__imgemail');
+    const imgEmail = document.createElement('IMG');
+    imgEmail.src = '/build/img/email.png';
+    imgEmail.alt = 'Logotipo de email';
+    imgEmail.classList.add('modalproveedores__imgemail');
 
-      const email = document.createElement('DIV');
-      email.classList.add('modalproveedores__email');
-      email.textContent = proveedor.email;
+    const email = document.createElement('DIV');
+    email.classList.add('modalproveedores__email');
+    email.textContent = proveedor.email;
 
-      flexEmail.appendChild(imgEmail);
-      flexEmail.appendChild(email);
+    flexEmail.appendChild(imgEmail);
+    flexEmail.appendChild(email);
 
-      // Crear el contenedor de la última visita
-      const flexReloj = document.createElement('DIV');
-      flexReloj.classList.add('modalproveedores__flexreloj');
+    // Crear el contenedor de la última visita
+    const flexReloj = document.createElement('DIV');
+    flexReloj.classList.add('modalproveedores__flexreloj');
 
-      const imgReloj = document.createElement('IMG');
-      imgReloj.src = '/build/img/reloj.png';
-      imgReloj.alt = 'Logotipo de reloj';
-      imgReloj.classList.add('modalproveedores__imgreloj');
+    const imgReloj = document.createElement('IMG');
+    imgReloj.src = '/build/img/reloj.png';
+    imgReloj.alt = 'Logotipo de reloj';
+    imgReloj.classList.add('modalproveedores__imgreloj');
 
-      const ultimaVisita = document.createElement('DIV');
-      ultimaVisita.classList.add('modalproveedores__ultimoregistro');
-      ultimaVisita.textContent = `Últ. Visita: ${proveedor.ultimaVisita}`;
+    const ultimaVisita = document.createElement('DIV');
+    ultimaVisita.classList.add('modalproveedores__ultimoregistro');
+    ultimaVisita.textContent = `Últ. Visita: ${proveedor.ultimaVisita}`;
 
-      flexReloj.appendChild(imgReloj);
-      flexReloj.appendChild(ultimaVisita);
+    flexReloj.appendChild(imgReloj);
+    flexReloj.appendChild(ultimaVisita);
 
-      // Crear los botones de actualizar y eliminar
-      const botonActualizar = document.createElement('A');
-      botonActualizar.href = '#';
-      botonActualizar.classList.add('modalproveedores__botonactualizar');
-      botonActualizar.textContent = 'Actualizar';
+    // Crear los botones de actualizar y eliminar
+    const botonActualizar = document.createElement('A');
+    botonActualizar.href = '#';
+    botonActualizar.classList.add('modalproveedores__botonactualizar');
+    botonActualizar.textContent = 'Actualizar';
 
-      const botonEliminar = document.createElement('A');
-      botonEliminar.href = '#';
-      botonEliminar.classList.add('modalproveedores__botoneliminar');
-      botonEliminar.textContent = 'Eliminar';
+    const botonEliminar = document.createElement('A');
+    botonEliminar.href = '#';
+    botonEliminar.classList.add('modalproveedores__botoneliminar');
+    botonEliminar.textContent = 'Eliminar';
 
-      // Agregar todos los elementos al contenedor de la tarjeta
-      datosGrid.appendChild(titulo);
-      datosGrid.appendChild(subtitulo);
-      datosGrid.appendChild(flexTelefono);
-      datosGrid.appendChild(flexEmail);
-      datosGrid.appendChild(flexReloj);
-      datosGrid.appendChild(botonActualizar);
-      datosGrid.appendChild(botonEliminar);
+    // Agregar todos los elementos al contenedor de la tarjeta
+    datosGrid.appendChild(titulo);
+    datosGrid.appendChild(subtitulo);
+    datosGrid.appendChild(flexTelefono);
+    datosGrid.appendChild(flexEmail);
+    datosGrid.appendChild(flexReloj);
+    datosGrid.appendChild(botonActualizar);
+    datosGrid.appendChild(botonEliminar);
 
-      // Agregar la tarjeta al contenedor principal
-      contenedorProveedores.appendChild(datosGrid);
+    // Agregar la tarjeta al contenedor principal
+    contenedorProveedores.appendChild(datosGrid);
   });
 }
 
+function mostrartabla(visitas_proveedor) {
+  console.log(visitas_proveedor);
+  const contenedorTabla = document.querySelector('.tabladeproveedores');
+
+  contenedorTabla.innerHTML = '';
+  const tablaDinamica = document.createElement('table');
+  tablaDinamica.classList.add('tabla-proveedores');
+
+  const thead = document.createElement('thead');
+  thead.innerHTML = `
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Fecha y Hora</th>
+        <th>Prod. +/-</th>
+        <th>Total pagado</th>
+        <th>Adeudo</th>
+        <th>Productos comprados</th>
+      </tr>
+          `;
+  tablaDinamica.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+
+  visitas_proveedor.forEach(visita_proveedor => {
+    const { id, proveedor_id, hora, fecha, visita_id, cantidad_retirado, cantidad_aniadido, total_visita, total_pagado, tota_adeudo } = visita_proveedor;
+
+    let fechaHora = new Date(`${fecha}T${hora}`);
+    let opcionesFecha = { day: 'numeric', month: 'long', year: 'numeric' };
+    let fechaFormateada = fechaHora.toLocaleDateString('es-ES', opcionesFecha); // "28 de agosto de 2024"
+    let horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // "23:02:04"
+
+    const fila = document.createElement('tr');
+    fila.innerHTML = `
+                <td>${id}</td>
+                <td>${tipoMovimiento}</td>
+                <td>${fechaFormateada} a las ${horaFormateada}</td>
+                <td>${cantidad_retirado}/</td>
+            `;
+    tbody.appendChild(fila);
+
+  });
+
+
+  contenedorCards.appendChild(gridcardCategorias);
+}
+
 function limpiarHTMLElemento(elemento) {
-  // Forma lenta
-  // contenedorCarrito.innerHTML = '';
 
   while (elemento.firstChild) {
-      elemento.removeChild(elemento.firstChild);
+    elemento.removeChild(elemento.firstChild);
   }
 }

@@ -1,15 +1,6 @@
 <section class="contenedorcaja seccioncaja">
-    <div class="busqueda-titulo">
-        <div class="imgfix">
-            <div class="espaciador"></div>
-            <h1 class="titCentrado">Movimiento de Producto</h1>
-            <div class="fx">
-                <div class="btnfijar btnverde">
-                    <p>Fijar</p>
-                    <img src="/build/img/fix.svg" alt="Logotipo de fijar">
-                </div>
-            </div>
-        </div>
+    <div class="busqueda-titulo adcmov">
+            <h1>Movimiento de Producto</h1>
     </div>
     <h3 class="busqueda-tituloh3">Registra la entrada o salida de productos por proveedor, lo que generará una visita de
         éste. Primero escoge el proveedor, luego los productos que deseas editar en Stock.</h3>

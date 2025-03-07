@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Proveedor;
+use Model\Visita_Producto;
 use Model\Visitas_proveedor;
 use MVC\Router;
 
@@ -46,11 +47,14 @@ class ProveedoresController
     }
     public static function proveedoresAPI(){
         $proveedores = Proveedor::all();
-        $visitas_proveedores = Visitas_proveedor::all();
+        $visitas_proveedor = Visitas_proveedor::all();
+        $visita_producto = Visita_Producto::all();
+
 
         echo json_encode([
             'proveedores' => $proveedores,
-            'visitas_proveedores' => $visitas_proveedores
+            'visitas_proveedor' => $visitas_proveedor,
+            'visita_producto' => $visita_producto
         ]);
     }
 }
