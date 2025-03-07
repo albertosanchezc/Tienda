@@ -435,7 +435,7 @@ function mostrartabla(visitas_proveedor, proveedores) {
                 <td>$${total_adeudo}</td>
                 <td>
                   <div class="verproductos">
-                    <a href="#" class="botonverproductos">Ver productos</a>
+                    <a href="#" class="botonverproductos" data-id="${id}">Ver productos</a>
                   </div>
                 </td>
             `;
@@ -445,6 +445,8 @@ function mostrartabla(visitas_proveedor, proveedores) {
 
   tablaDinamica.appendChild(tbody);
   contenedorTabla.appendChild(tablaDinamica);
+
+  contenedorTabla.addEventListener('click', tablaEventos);
 }
 
 function limpiarHTMLElemento(elemento) {
@@ -553,4 +555,13 @@ function crearInputHidden(name) {
   input.type = 'HIDDEN';
   input.name = name;
   return input;
+}
+
+function tablaEventos(e) {
+  e.preventDefault();
+  console.log(e.target.classList);
+  if (e.target.classList.contains('botonverproductos')) {
+    const idVisita = e.target.getAttribute('data-id');
+    console.log(idVisita);
+  }
 }
