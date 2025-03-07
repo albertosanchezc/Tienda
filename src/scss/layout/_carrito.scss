@@ -2099,6 +2099,17 @@ body {
 .paginador-M, .paginadorM{
     grid-column: 2/3;
 
+    @media (min-width: #{$telefono-1}) {
+        grid-column: 1/3;  
+    }
+    
+    @media (min-width: #{$tablet}) {
+        grid-column: 1/3; 
+    }
+    @media (min-width: #{$laptop-1}) {
+        grid-column: 2/3;
+    }
+
     .numero {
         background-color: rgb(139, 0, 139);
         border-color: rgb(139, 0, 139);

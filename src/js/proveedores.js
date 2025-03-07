@@ -12,6 +12,7 @@ let terminosBusqueda = {
 let proveedores = [];
 let visitas_proveedor = [];
 let visita_producto = [];
+let productos = [];
 
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
 const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores--aniadir__refcerrar');
@@ -51,10 +52,10 @@ async function consultarAPI() {
     const respuesta = await fetch(url);
     const resultado = await respuesta.json();
 
-
     proveedores = resultado.proveedores;
     visitas_proveedor = resultado.visitas_proveedor;
     visita_producto = resultado.visita_producto;
+    productos = resultado.productos;
     // filtrar();
     // mostrarProveedores(proveedores);
     // mostrartabla(visitas_proveedor, proveedores);
@@ -152,7 +153,8 @@ botonCerrarModalNuevoProveedor.addEventListener('click', () => {
   modalNuevoProveedor.classList.remove('modalproveedores--aniadir--show');
 });
 
-botonCerrarModalVerProductos.addEventListener('click', () => {
+botonCerrarModalVerProductos.addEventListener('click', (e) => {
+  e.preventDefault();
   modalVerProductos.classList.remove('modalproveedores--verProductos--show');
 });
 
@@ -571,20 +573,78 @@ function tablaEventos(e) {
     const idVisita = e.target.getAttribute('data-id');
     const tituloVer = document.querySelector('.modalproveedores--verProductos__titulo');
     const objVisita = visitas_proveedor.find(visita => visita.visita_id === idVisita);
-    const objProveedor = proveedores.find(proveedor => proveedor.visita_id === objVisita.proveedor_id);
-    // const arrayProducto = visita_producto.filter(visitaP => visitaP.visita_id === objVisita.proveedor_id);
-
-
-
+    const objProveedor = proveedores.find(proveedor => proveedor.id === objVisita.proveedor_id);
+    const arrayProducto = visita_producto.filter(visitaP => visitaP.visita_id === objVisita.visita_id);
+    let fecha = objVisita.fecha;
+    let hora = objVisita.hora;
+    let fechaHora = new Date(`${fecha}T${hora}`);
+    let opcionesFecha = { day: 'numeric', month: 'long', year: 'numeric' };
+    let fechaFormateada = fechaHora.toLocaleDateString('es-ES', opcionesFecha); // "28 de agosto de 2024"
+    let horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // "23:02:04"
+    const contenedorTablaProductos = document.querySelector('.modalproveedores--verProductos__tabladeproveedores');
 
     tituloVer.innerHTML = `
       <h1>Resumen de Visita</h1>
-      <h3>Reñaaaaaaaaasume de Entrada y Salida de Producto de Coca-Cola el 26 de diciembre del 2024 a las 10:50.</h3>
+      <h3>Resumen de Entrada y Salida de Producto ${objProveedor.nombre} el ${fechaFormateada} a las ${horaFormateada}.</h3>
+      <p>${objProveedor.nombre}</p>
     `;
+
+    contenedorTablaProductos.innerHTML = '';
+
+    const tablaDinamicaProductos = document.createElement('table');
+    tablaDinamicaProductos.classList.add('modalproveedores--verProductos__tabla-proveedores');
+
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+      <tr>
+        <th>Visita Id</th>
+        <th>Prod Id</th>
+        <th>Nombre</th>
+        <th>Movimiento</th>
+        <th>$ Compra</th>
+        <th>$ Venta</th>
+      </tr>
+      `;
+
+    tablaDinamicaProductos.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
+    arrayProducto.forEach(visita => {
+      let { id, producto_id, visita_id, cantidad } = visita;
+      let cantidadModificada = Number(cantidad);
+      let textoCantidad;
+      let claseCantidad;
+
+      if (cantidadModificada >= 0) {
+        textoCantidad = `${cantidadModificada} añadidos`;
+        claseCantidad = "modalproveedores--verProductos__tdverde";
+      } else if (cantidadModificada < 0) {
+        textoCantidad = `${Math.abs(cantidadModificada)} retirados`;
+        claseCantidad = "modalproveedores--verProductos__tdrojo";
+      } else {
+        textoCantidad = "0";
+        claseCantidad = "";
+      }
+
+      const fila = document.createElement('tr');
+      fila.innerHTML = `
+                <td>${visita_id}</td>
+                <td>${producto_id}</td>
+                <td>Nombre</td>
+                <td class="${claseCantidad}">${textoCantidad}</td>
+                <td>$total</td>
+                <td>$total</td>
+            `;
+      tbody.appendChild(fila);
+    });
+
+    tablaDinamicaProductos.appendChild(tbody);
+    contenedorTablaProductos.appendChild(tablaDinamicaProductos);
+
     console.log(idVisita);
     console.log(objVisita);
-    // console.log(objProveedor);
-
-
+    console.log(objProveedor);
+    console.log(arrayProducto);
   }
 }

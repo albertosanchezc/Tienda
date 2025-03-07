@@ -424,3 +424,97 @@
         }
     }
 }
+
+.modalproveedores--verProductos{
+    &__tabladeproveedores {
+        width: 100%;
+        overflow-x: auto;
+        margin: 25px 0 20px 0;
+
+    }
+
+    &__tabla-proveedores {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: auto;
+        font-size: small;
+    }
+    
+    &__tabla-proveedores th,
+    &__tabla-proveedores td {
+        border: 1px solid #8D28A7;
+        padding: 5px;
+        text-align: left;
+
+    }
+    
+    &__tabla-proveedores th {
+        background: linear-gradient(to right, #8D28A7, #B02997);
+        color: white;
+        font-weight: bold;
+    }
+    
+    &__tabla-proveedores tbody tr:nth-child(even) {
+        background-color: #FCF3F8;
+    }
+    
+    &__tabla-proveedores tbody tr:hover {
+        background-color: #F9E7F2;
+    }
+    
+    &__tabladeproveedores::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    &__tabladeproveedores::-webkit-scrollbar-thumb {
+        background-color: #c76b90;
+        border-radius: 10px;
+    }
+
+    &__totales{
+        margin: 1rem;
+        padding: 0 1rem;
+        width: 100%;
+
+
+        p{
+            padding: 0;
+            margin: 0;
+            font-size: medium;
+            font-weight: bold;
+            text-align: right;
+        }
+    }
+
+    &__totalPagado, &__totalAdeudo{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+
+    &__titulo{
+        p{
+            text-align: center;
+            font-size: medium;
+            margin-top: 1rem;
+            margin-bottom: 0;
+            padding: 0;
+        }
+    }
+
+    &__tdverde{
+        color: rgb(6, 104, 23);
+    }
+    &__tdrojo{
+        color: rgb(124, 4, 4);
+    }
+
+}
+
+.h3bold{
+    font-weight: bold;
+}
+
+
+

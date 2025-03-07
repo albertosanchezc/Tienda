@@ -257,15 +257,66 @@
         </div>
 </section>
 
-<section class="modalproveedores--verProductos modalproveedores--verProductos--show">
+<section class="modalproveedores--verProductos">
     <div class="modalproveedores--verProductos__contenedor">
         <div class="modalproveedores--verProductos__cerrar">
             <a href="#" class="modalproveedores--verProductos__refcerrar">
-                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalproveedores--verProductos__imgcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar"
+                    class="modalproveedores--verProductos__imgcerrar">
             </a>
         </div>
         <div class="modalproveedores--verProductos__titulo">
             <h1>Resumen de Visita</h1>
             <h3>Resume de Entrada y Salida de Producto de Coca-Cola el 26 de diciembre del 2024 a las 10:50.</h3>
+        </div>
+
+        <div class="modalproveedores--verProductos__tabladeproveedores">
+            <table class="modalproveedores--verProductos__tabla-proveedores">
+                <thead>
+                    <tr>
+                        <th>Visita Id</th>
+                        <th>Prod Id</th>
+                        <th>Nombre</th>
+                        <th>Movimiento</th>
+                        <th>$ Compra</th>
+                        <th>$ Venta</th>
+                    </tr>
+                </thead>
+                <!-- Mostrar los resultados -->
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>Coca-cola</td>
+                        <td>10 Retirados</td>
+                        <td>$15063.00</td>
+                        <td>$1500.00</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>Coca-cola</td>
+                        <td>10 Retirados</td>
+                        <td>$15063.00</td>
+                        <td>$1500.00</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>Coca-cola</td>
+                        <td>10 Retirados</td>
+                        <td>$15063.00</td>
+                        <td>$1500.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modalproveedores--verProductos__totales">
+            <div class="modalproveedores--verProductos__totalPagado">
+                <p>Total Pagado a Herdez: $1509.36</p>
+            </div>
+            <div class="modalproveedores--verProductos__totalAdeudo">
+                <p>Total Adeudo a Herdez: $19.36</p>
+            </div>
         </div>
 </section>
