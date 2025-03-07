@@ -377,7 +377,7 @@ function mostrartabla(visitas_proveedor) {
                 <td>${id}</td>
                 <td>${tipoMovimiento}</td>
                 <td>${fechaFormateada} a las ${horaFormateada}</td>
-                <td>${cantidad_retirado}/</td>
+                <td>${cantidad_retirado}/${cantidad_aniadido}</td>
             `;
     tbody.appendChild(fila);
 

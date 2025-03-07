@@ -1795,6 +1795,79 @@ body {
 
 }
 
+.paginador-R {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+    justify-content: center;
+
+    .numero {
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1px 6px;
+        margin: 0 5px;
+        background-color: red;
+        border-color: red;
+        font-weight: bold;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border-radius: 3px;
+
+
+        &:hover {
+            cursor: pointer;
+            background-color: #fff;
+            color: red;
+            border-color: red;
+        }
+
+    }
+
+    .paginadoresRojo {
+        background: none;
+        background-color: #fff;
+        border: solid 1px red;
+        color: red;
+        font-weight: bold;
+    }
+
+    .paginas {
+        padding: 2px;
+        margin: 0 1rem;
+        display: inline-block;
+        font-weight: bold;
+
+        max-height: 2rem;
+        background-color: red;
+        border-color: red;
+        color: #fff;
+        border-radius: 3px;
+
+
+        &:hover {
+            cursor: pointer;
+            background-color: #fff;
+            color: red;
+            border-color: red;
+        }
+
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    .button.selected {
+        background-color: #fff;
+        color: red;
+        border-color: red;
+    }
+
+}
+
 
 
 .paginador-1,
