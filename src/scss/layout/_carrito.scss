@@ -1809,8 +1809,8 @@ body {
         align-items: center;
         padding: 1px 6px;
         margin: 0 5px;
-        background-color: red;
-        border-color: red;
+        background-color: darkred;
+        border-color: darkred;
         font-weight: bold;
         box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
         color: #fff;
@@ -1820,8 +1820,8 @@ body {
         &:hover {
             cursor: pointer;
             background-color: #fff;
-            color: red;
-            border-color: red;
+            color: darkred;
+            border-color: darkred;
         }
 
     }
@@ -1829,8 +1829,8 @@ body {
     .paginadoresRojo {
         background: none;
         background-color: #fff;
-        border: solid 1px red;
-        color: red;
+        border: solid 1px darkred;
+        color: darkred;
         font-weight: bold;
     }
 
@@ -1841,8 +1841,8 @@ body {
         font-weight: bold;
 
         max-height: 2rem;
-        background-color: red;
-        border-color: red;
+        background-color: darkred;
+        border-color: darkred;
         color: #fff;
         border-radius: 3px;
 
@@ -1850,8 +1850,8 @@ body {
         &:hover {
             cursor: pointer;
             background-color: #fff;
-            color: red;
-            border-color: red;
+            color: darkred;
+            border-color: darkred;
         }
 
     }
@@ -1862,8 +1862,8 @@ body {
 
     .button.selected {
         background-color: #fff;
-        color: red;
-        border-color: red;
+        color: darkred;
+        border-color: darkred;
     }
 
 }
