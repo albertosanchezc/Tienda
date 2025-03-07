@@ -7,6 +7,10 @@ let ventas = [];
 let cancelaciones = [];
 let inventario = [];
 let caja = [];
+
+let registrosPorPaginaCancelaciones = 2;
+let paginaActualCancelaciones = 1;
+
 let arregloSeleccionadas = [];
 let ventasSeleccionadasAgrupadas = [];
 let inventarioActualizado = [];
@@ -61,6 +65,12 @@ const inputHiddenVentasCancelarProducto = document.createElement('INPUT');
 inputHiddenVentasCancelarProducto.type = 'HIDDEN';
 inputHiddenVentasCancelarProducto.name = 'cancelarProducto[ventas]';
 
+
+const paginadorCarritoContainer = document.createElement('DIV');
+paginadorCarritoContainer.classList.add('paginador');
+
+const paginadorCancelacionesContainer = document.createElement('DIV');
+paginadorCancelacionesContainer.classList.add('paginador-R');
 
 
 // Selectores
@@ -142,7 +152,7 @@ contenedorBotones.addEventListener('click', (e) => {
                 ocultarCancelaciones();
             }
             mostrarContenidoInicialVentas();
-            mostrarPaginaPorCarrito(1,agrupadoPorCarrito)
+            // mostrarPaginaPorCarrito(1,agrupadoPorCarrito)
             mostrarTablaVentasPorCarrito(ventas);
             
             escucharBotonesFormularioBusquedaVentas();
@@ -161,7 +171,9 @@ contenedorBotones.addEventListener('click', (e) => {
                 ocultarVentas();
             }
             mostrarContenidoInicialCancelaciones();
-            mostrarTablaCancelaciones(cancelaciones);
+            mostrarPaginaCancelaciones(1,cancelaciones);
+            // mostrarTablaCancelaciones(resultadosFiltrados);
+            generarPaginadorCancelaciones(cancelaciones);
             escucharBotonesFormularioBusquedaCancelaciones();
             btnCancelaciones.classList.add('btnSeleccionadoOscuro');
             btnCancelaciones.classList.remove('rojooscuro');
@@ -254,13 +266,16 @@ function filtrarCancelaciones(datos = cancelaciones) {
     console.log(datos)
     if (terminosBusqueda.fechaI) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaI)
-        mostrarTablaCancelaciones(resultadosFiltrados);
-
+        mostrarPaginaCancelaciones(1,resultadosFiltrados);
+        // mostrarTablaCancelaciones(resultadosFiltrados);
+        generarPaginadorCancelaciones(resultadosFiltrados);
     }
 
     if (terminosBusqueda.fechaF) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaF)
-        mostrarTablaCancelaciones(resultadosFiltrados);
+        mostrarPaginaCancelaciones(1,resultadosFiltrados);
+        // mostrarTablaCancelaciones(resultadosFiltrados);
+        generarPaginadorCancelaciones(resultadosFiltrados);
 
     }
 
@@ -364,8 +379,7 @@ function mostrarTablaVentasPorCarrito(ventas) {
     tablaDinamica.appendChild(tbody);
     contenedorTabla.appendChild(tablaDinamica);
     botonesVer = document.querySelectorAll('.botonver');
-    const paginadorCarritoContainer = document.createElement('DIV');
-    paginadorCarritoContainer.classList.add('paginador');
+
 
     contenedorTabla.after(paginadorCarritoContainer);
 
@@ -516,6 +530,7 @@ function mostrarTablaCancelaciones(cancelaciones) {
     tablaCancelaciones.appendChild(tbodyTablaCancelaciones);
 
     contenedorTabla.appendChild(tablaCancelaciones);
+    contenedorTabla.after(paginadorCancelacionesContainer);
 
 }
 
@@ -1284,26 +1299,82 @@ function corregirMargin() {
 }
 
 
-function mostrarPaginaPorCarrito(pagina, datos = agrupadoPorCarrito) {
-    const registrosPorPagina = 2; 
+// function mostrarPaginaPorCarrito(pagina, datos = agrupadoPorCarrito) {
+//     const registrosPorPagina = 2; 
+//     const inicio = (pagina - 1) * registrosPorPagina;
+//     const fin = inicio + registrosPorPagina;
+//     const datosPagina = datos.slice(inicio, fin);
+
+
+//     console.log("Inventario Pagina", datosPagina);
+//     paginadorContainer.innerHTML = datosPagina.map(item => `<p>${item}</p>`).join("");
+//     // Revisar cómo pasar el elemento a limpiar
+//     // limpiarHTMLElemento(despliegueInventario)
+//     // limpiarHTMLElemento(contenedorTabla);
+//     mostrarTablaVentasPorCarrito(datosPagina);
+//     generarPaginador(datos);
+
+
+//     return datosPagina;
+// }
+
+// function generarPaginadorPorCarrito(datos = agrupadoPorCarrito) {
+//     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+//     console.log("Total de páginas desde generar Paginador", totalPaginas);
+//     let paginadorHTML = '';
+
+//     // Calcular el rango de páginas a mostrar
+//     let inicio = Math.max(1, paginaActual - 4);
+//     let fin = Math.min(totalPaginas, paginaActual + 4);
+
+//     // Ajustar el rango si estamos cerca de los extremos
+//     if (paginaActual <= 4) {
+//         fin = Math.min(9, totalPaginas);
+//     } else if (paginaActual >= totalPaginas - 4) {
+//         inicio = Math.max(totalPaginas - 8, 1);
+//     }
+
+//     // Botón "Anterior"
+//     if (paginaActual > 1) {
+//         //  onclick="cambiarPagina(${paginaActual - 1})"
+//         paginadorHTML += `<button class="paginas">Anterior</button>`;
+//     }
+
+//     for (let i = inicio; i <= fin; i++) {
+//         // onclick="cambiarPagina(${i})"
+//         paginadorHTML += `<button   ${paginaActual === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
+//     }
+
+//     if (paginaActual < totalPaginas) {
+//         // onclick="cambiarPagina(${paginaActual + 1})"
+//         paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+//     }
+
+//     paginadorContainer.innerHTML = paginadorHTML;
+// }
+
+
+
+function mostrarPaginaCancelaciones(pagina, datos = cancelaciones, registrosPorPagina = registrosPorPaginaCancelaciones) {
+
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     const datosPagina = datos.slice(inicio, fin);
 
 
     console.log("Inventario Pagina", datosPagina);
-    paginadorContainer.innerHTML = datosPagina.map(item => `<p>${item}</p>`).join("");
+    paginadorCancelacionesContainer.innerHTML = datosPagina.map(item => `<p>${item}</p>`).join("");
     // Revisar cómo pasar el elemento a limpiar
     // limpiarHTMLElemento(despliegueInventario)
     // limpiarHTMLElemento(contenedorTabla);
-    mostrarTablaVentasPorCarrito(datosPagina);
-    generarPaginador(datos);
+    mostrarTablaCancelaciones(datosPagina);
+    generarPaginadorCancelaciones(datos);
 
 
     return datosPagina;
 }
 
-function generarPaginadorPorCarrito(datos = agrupadoPorCarrito) {
+function generarPaginadorCancelaciones(datos = cancelaciones, registrosPorPagina = registrosPorPaginaCancelaciones,paginaActual = paginaActualCancelaciones) {
     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
     console.log("Total de páginas desde generar Paginador", totalPaginas);
     let paginadorHTML = '';
@@ -1327,7 +1398,7 @@ function generarPaginadorPorCarrito(datos = agrupadoPorCarrito) {
 
     for (let i = inicio; i <= fin; i++) {
         // onclick="cambiarPagina(${i})"
-        paginadorHTML += `<button   ${paginaActual === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
+        paginadorHTML += `<button   ${paginaActual === i ? 'class="numero paginadoresRojo"' : 'class="numero"'}>${i}</button>`;
     }
 
     if (paginaActual < totalPaginas) {
@@ -1335,8 +1406,30 @@ function generarPaginadorPorCarrito(datos = agrupadoPorCarrito) {
         paginadorHTML += `<button class="paginas" >Siguiente</button>`;
     }
 
-    paginadorContainer.innerHTML = paginadorHTML;
+    paginadorCancelacionesContainer.innerHTML = paginadorHTML;
 }
+
+paginadorCancelacionesContainer.addEventListener('click', (e) => {
+    console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+    if (e.target.classList == 'numero') {
+
+        paginaActualCancelaciones = parseInt(e.target.textContent);
+    }
+    if (e.target.classList == 'paginas') {
+        if (e.target.textContent == 'Siguiente') {
+            paginaActualCancelaciones = paginaActualCancelaciones + 1;
+        } else {
+            paginaActualCancelaciones = paginaActualCancelaciones - 1;
+
+        }
+    }
+    let resultados = filtrarCancelaciones()
+    mostrarPaginaCancelaciones(paginaActualCancelaciones, resultados);
+})
+
+
+
 
 
 
