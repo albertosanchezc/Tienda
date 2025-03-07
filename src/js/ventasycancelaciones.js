@@ -8,11 +8,14 @@ let cancelaciones = [];
 let inventario = [];
 let caja = [];
 
-let registrosPorPaginaCancelaciones = 2;
+let registrosPorPaginaCancelaciones = 5;
 let paginaActualCancelaciones = 1;
 
-let registrosPorPaginaVentasPorProducto = 2;
+let registrosPorPaginaVentasPorProducto = 5;
 let paginaActualVentasPorProducto = 1;
+
+let registrosPorPaginaVentasPorCarrito = 5;
+let paginaActualVentasPorCarrito = 1;
 
 let arregloSeleccionadas = [];
 let ventasSeleccionadasAgrupadas = [];
@@ -68,12 +71,11 @@ const inputHiddenVentasCancelarProducto = document.createElement('INPUT');
 inputHiddenVentasCancelarProducto.type = 'HIDDEN';
 inputHiddenVentasCancelarProducto.name = 'cancelarProducto[ventas]';
 
-
-const paginadorCarritoContainer = document.createElement('DIV');
-paginadorCarritoContainer.classList.add('paginador');
-
 const paginadorVentasPorProductoContainer = document.createElement('DIV');
 paginadorVentasPorProductoContainer.classList.add('paginador-R');
+
+const paginadorVentasPorCarritoContainer = document.createElement('DIV');
+paginadorVentasPorCarritoContainer.classList.add('paginador-R');
 
 
 const paginadorCancelacionesContainer = document.createElement('DIV');
@@ -160,7 +162,9 @@ contenedorBotones.addEventListener('click', (e) => {
             }
             mostrarContenidoInicialVentas();
             // mostrarPaginaPorCarrito(1,agrupadoPorCarrito)
-            mostrarTablaVentasPorCarrito(ventas);
+            mostrarPaginaVentasPorCarrito(1)
+            // mostrarTablaVentasPorCarrito();
+            generarPaginadorVentasPorCarrito()
             
             escucharBotonesFormularioBusquedaVentas();
             btnVentas.classList.add('btnSeleccionadoClaro');
@@ -254,7 +258,12 @@ function filtrar(datos = ventas) {
     console.log(datos)
     if (terminosBusqueda.fechaI) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaI)
-        mostrarTablaVentasPorCarrito(resultadosFiltrados);
+        
+        
+        mostrarPaginaVentasPorCarrito(1,agruparPorCarrito(resultadosFiltrados),registrosPorPaginaVentasPorCarrito);
+        // mostrarTablaVentasPorCarrito(resultadosFiltrados);
+        generarPaginadorVentasPorCarrito(agruparPorCarrito(resultadosFiltrados),registrosPorPaginaVentasPorCarrito);
+
         arregloExpandido = expandirArreglo(resultadosFiltrados);
         mostrarPaginaVentasPorProducto(1,arregloExpandido);
         // mostrarTablaVentasPorProducto(resultadosFiltrados);
@@ -264,7 +273,11 @@ function filtrar(datos = ventas) {
 
     if (terminosBusqueda.fechaF) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaF)
-        mostrarTablaVentasPorCarrito(resultadosFiltrados);
+        mostrarPaginaVentasPorCarrito(1,agruparPorCarrito(resultadosFiltrados),registrosPorPaginaVentasPorCarrito);
+        // mostrarTablaVentasPorCarrito(resultadosFiltrados);
+        generarPaginadorVentasPorCarrito(agruparPorCarrito(resultadosFiltrados),registrosPorPaginaVentasPorCarrito);
+        
+
         arregloExpandido = expandirArreglo(resultadosFiltrados);
         mostrarPaginaVentasPorProducto(1,arregloExpandido);
         // mostrarTablaVentasPorProducto(resultadosFiltrados);
@@ -308,8 +321,8 @@ function filtrarfechaF(ventas) {
     return fechaCaja <= fechaFinal;
 }
 
-function mostrarTablaVentasPorCarrito(ventas) {
-    console.log(ventas);
+function mostrarTablaVentasPorCarrito(datos = agrupadoPorCarrito) {
+    console.log(datos);
     const contenedorTabla = document.querySelector('.tabladecontenido-ventas');
     contenedorTabla.innerHTML = '';
     const tablaDinamica = document.createElement('table');
@@ -331,19 +344,8 @@ function mostrarTablaVentasPorCarrito(ventas) {
     let totalVenta = 0;
     let tbody = document.createElement('tbody');
 
-    agrupadoPorCarrito = ventas.reduce((acc, item) => {
-        if (!acc[item.carrito_id]) {
-            acc[item.carrito_id] = [];
-        }
-        acc[item.carrito_id].push(item);
-        return acc;
-    }, {});
 
-    console.log(agrupadoPorCarrito);
-    const arrayDeArreglos = Object.values(agrupadoPorCarrito);
-    console.log(arrayDeArreglos);
-
-    arrayDeArreglos.forEach(venta => {
+    datos.forEach(venta => {
         totalCantidad = 0;
         id = 0;
         fecha = 0;
@@ -395,7 +397,9 @@ function mostrarTablaVentasPorCarrito(ventas) {
     botonesVer = document.querySelectorAll('.botonver');
 
 
-    contenedorTabla.after(paginadorCarritoContainer);
+    contenedorTabla.after(paginadorVentasPorCarritoContainer);
+    limpiarHTMLElemento(paginadorCancelacionesContainer);
+    limpiarHTMLElemento(paginadorVentasPorProductoContainer);
 
 
     escucharBotonesVerProductos();
@@ -473,6 +477,8 @@ function mostrarTablaVentasPorProducto(ventas) {
     contenedorTabla.appendChild(tablaVentasPorProducto);
     contenedorTabla.after(paginadorVentasPorProductoContainer);
     limpiarHTMLElemento(paginadorCancelacionesContainer);
+    limpiarHTMLElemento(paginadorVentasPorCarritoContainer);
+
 
 
     botonesVer = document.querySelectorAll('.botonver');
@@ -548,6 +554,7 @@ function mostrarTablaCancelaciones(cancelaciones) {
     contenedorTabla.appendChild(tablaCancelaciones);
     contenedorTabla.after(paginadorCancelacionesContainer);
     limpiarHTMLElemento(paginadorVentasPorProductoContainer);
+    limpiarHTMLElemento(paginadorVentasPorCarritoContainer);
 
 
 
@@ -574,7 +581,9 @@ function escucharBotonesFormularioBusquedaVentas() {
         if (e.target.value === 'carrito') {
             // console.log(e.target.value);
             mostrarTablaVentasPorCarritoSoloTabla();
-            mostrarTablaVentasPorCarrito(ventas);
+
+            
+            mostrarTablaVentasPorCarrito(agrupadoPorCarrito);
         }
         if (e.target.value === 'producto') {
             console.log(e.target.value);
@@ -800,8 +809,24 @@ function expandirArreglo(datos = carrito) {
 
     arregloExpandido = [...elementosACopiar, ...elementosTransformados];
 
+    arregloExpandido.sort((a, b) => a.carrito_id - b.carrito_id);
 
     return (arregloExpandido)
+}
+
+function agruparPorCarrito(){
+    agrupadoPorCarrito = ventas.reduce((acc, item) => {
+        if (!acc[item.carrito_id]) {
+            acc[item.carrito_id] = [];
+        }
+        acc[item.carrito_id].push(item);
+        return acc;
+    }, {});
+
+    console.log(agrupadoPorCarrito);
+    const arrayDeArreglos = Object.values(agrupadoPorCarrito);
+    console.log(arrayDeArreglos);
+    return arrayDeArreglos;
 }
 
 
@@ -823,6 +848,8 @@ async function consultarAPI() {
         console.log(ventas);
         inventario = resultado.inventario;
         caja = resultado.caja;
+        agrupadoPorCarrito = agruparPorCarrito(ventas);
+        
         // imprimirVentas(ventas);
         // filtrar();
 
@@ -1321,62 +1348,6 @@ function corregirMargin() {
 }
 
 
-// function mostrarPaginaPorCarrito(pagina, datos = agrupadoPorCarrito) {
-//     const registrosPorPagina = 2; 
-//     const inicio = (pagina - 1) * registrosPorPagina;
-//     const fin = inicio + registrosPorPagina;
-//     const datosPagina = datos.slice(inicio, fin);
-
-
-//     console.log("Inventario Pagina", datosPagina);
-//     paginadorContainer.innerHTML = datosPagina.map(item => `<p>${item}</p>`).join("");
-//     // Revisar cómo pasar el elemento a limpiar
-//     // limpiarHTMLElemento(despliegueInventario)
-//     // limpiarHTMLElemento(contenedorTabla);
-//     mostrarTablaVentasPorCarrito(datosPagina);
-//     generarPaginador(datos);
-
-
-//     return datosPagina;
-// }
-
-// function generarPaginadorPorCarrito(datos = agrupadoPorCarrito) {
-//     const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
-//     console.log("Total de páginas desde generar Paginador", totalPaginas);
-//     let paginadorHTML = '';
-
-//     // Calcular el rango de páginas a mostrar
-//     let inicio = Math.max(1, paginaActual - 4);
-//     let fin = Math.min(totalPaginas, paginaActual + 4);
-
-//     // Ajustar el rango si estamos cerca de los extremos
-//     if (paginaActual <= 4) {
-//         fin = Math.min(9, totalPaginas);
-//     } else if (paginaActual >= totalPaginas - 4) {
-//         inicio = Math.max(totalPaginas - 8, 1);
-//     }
-
-//     // Botón "Anterior"
-//     if (paginaActual > 1) {
-//         //  onclick="cambiarPagina(${paginaActual - 1})"
-//         paginadorHTML += `<button class="paginas">Anterior</button>`;
-//     }
-
-//     for (let i = inicio; i <= fin; i++) {
-//         // onclick="cambiarPagina(${i})"
-//         paginadorHTML += `<button   ${paginaActual === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
-//     }
-
-//     if (paginaActual < totalPaginas) {
-//         // onclick="cambiarPagina(${paginaActual + 1})"
-//         paginadorHTML += `<button class="paginas" >Siguiente</button>`;
-//     }
-
-//     paginadorContainer.innerHTML = paginadorHTML;
-// }
-
-
-
 function mostrarPaginaCancelaciones(pagina, datos = cancelaciones, registrosPorPagina = registrosPorPaginaCancelaciones) {
 
     const inicio = (pagina - 1) * registrosPorPagina;
@@ -1526,12 +1497,76 @@ paginadorVentasPorProductoContainer.addEventListener('click', (e) => {
 })
 
 
+function mostrarPaginaVentasPorCarrito(pagina, datos = agrupadoPorCarrito, registrosPorPagina = registrosPorPaginaVentasPorCarrito) {
+
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = inicio + registrosPorPagina;
+    const datosPagina = datos.slice(inicio, fin);
 
 
+    console.log("Inventario Pagina", datosPagina);
+    paginadorVentasPorCarritoContainer.innerHTML = datosPagina.map(item => `<p>${item}</p>`).join("");
+    // Revisar cómo pasar el elemento a limpiar
+    // limpiarHTMLElemento(despliegueInventario)
+    // limpiarHTMLElemento(contenedorTabla);
+    mostrarTablaVentasPorCarrito(datosPagina);
+    generarPaginadorVentasPorCarrito(datos);
 
 
+    return datosPagina;
+}
 
+function generarPaginadorVentasPorCarrito(datos = agrupadoPorCarrito, registrosPorPagina = registrosPorPaginaVentasPorCarrito,paginaActual = paginaActualVentasPorCarrito) {
+    const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+    console.log("Total de páginas desde generar Paginador", totalPaginas);
+    let paginadorHTML = '';
 
+    // Calcular el rango de páginas a mostrar
+    let inicio = Math.max(1, paginaActual - 4);
+    let fin = Math.min(totalPaginas, paginaActual + 4);
 
+    // Ajustar el rango si estamos cerca de los extremos
+    if (paginaActual <= 4) {
+        fin = Math.min(9, totalPaginas);
+    } else if (paginaActual >= totalPaginas - 4) {
+        inicio = Math.max(totalPaginas - 8, 1);
+    }
 
+    // Botón "Anterior"
+    if (paginaActual > 1) {
+        //  onclick="cambiarPagina(${paginaActual - 1})"
+        paginadorHTML += `<button class="paginas">Anterior</button>`;
+    }
 
+    for (let i = inicio; i <= fin; i++) {
+        // onclick="cambiarPagina(${i})"
+        paginadorHTML += `<button   ${paginaActual === i ? 'class="numero paginadoresRojo"' : 'class="numero"'}>${i}</button>`;
+    }
+
+    if (paginaActual < totalPaginas) {
+        // onclick="cambiarPagina(${paginaActual + 1})"
+        paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+    }
+
+    paginadorVentasPorCarritoContainer.innerHTML = paginadorHTML;
+}
+
+paginadorVentasPorCarritoContainer.addEventListener('click', (e) => {
+    console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+    if (e.target.classList == 'numero') {
+
+        paginaActualVentasPorCarrito = parseInt(e.target.textContent);
+    }
+    if (e.target.classList == 'paginas') {
+        if (e.target.textContent == 'Siguiente') {
+            paginaActualVentasPorCarrito = paginaActualVentasPorCarrito + 1;
+        } else {
+            paginaActualVentasPorCarrito = paginaActualVentasPorCarrito - 1;
+
+        }
+    }
+    let resultados = filtrar()
+    agrupadoPorCarrito = agruparPorCarrito(resultados);
+    mostrarPaginaVentasPorCarrito(paginaActualVentasPorCarrito, agrupadoPorCarrito);
+})
