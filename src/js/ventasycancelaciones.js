@@ -11,6 +11,9 @@ let caja = [];
 let registrosPorPaginaCancelaciones = 2;
 let paginaActualCancelaciones = 1;
 
+let registrosPorPaginaVentasPorProducto = 2;
+let paginaActualVentasPorProducto = 1;
+
 let arregloSeleccionadas = [];
 let ventasSeleccionadasAgrupadas = [];
 let inventarioActualizado = [];
@@ -68,6 +71,10 @@ inputHiddenVentasCancelarProducto.name = 'cancelarProducto[ventas]';
 
 const paginadorCarritoContainer = document.createElement('DIV');
 paginadorCarritoContainer.classList.add('paginador');
+
+const paginadorVentasPorProductoContainer = document.createElement('DIV');
+paginadorVentasPorProductoContainer.classList.add('paginador-R');
+
 
 const paginadorCancelacionesContainer = document.createElement('DIV');
 paginadorCancelacionesContainer.classList.add('paginador-R');
@@ -248,13 +255,20 @@ function filtrar(datos = ventas) {
     if (terminosBusqueda.fechaI) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaI)
         mostrarTablaVentasPorCarrito(resultadosFiltrados);
-        mostrarTablaVentasPorProducto(resultadosFiltrados);
+        arregloExpandido = expandirArreglo(resultadosFiltrados);
+        mostrarPaginaVentasPorProducto(1,arregloExpandido);
+        // mostrarTablaVentasPorProducto(resultadosFiltrados);
+        generarPaginadorVentasPorProducto(arregloExpandido);
+
     }
 
     if (terminosBusqueda.fechaF) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaF)
         mostrarTablaVentasPorCarrito(resultadosFiltrados);
-        mostrarTablaVentasPorProducto(resultadosFiltrados);
+        arregloExpandido = expandirArreglo(resultadosFiltrados);
+        mostrarPaginaVentasPorProducto(1,arregloExpandido);
+        // mostrarTablaVentasPorProducto(resultadosFiltrados);
+        generarPaginadorVentasPorProducto(arregloExpandido);
 
     }
 
@@ -411,8 +425,7 @@ function mostrarTablaVentasPorProducto(ventas) {
     const tbodyTablaVentasPorProducto = document.createElement('TBODY');
     let totalCarrito = 0;
 
-    arregloExpandido = expandirArreglo(ventas);
-    arregloExpandido.forEach(venta => {
+    ventas.forEach(venta => {
         let totalVenta = 0;
         const { cantidad, producto, producto_descripcion, precio_venta, granel, producto_id, id_venta, carrito_id, precio_compra } = venta;
         ganancia = 0;
@@ -458,6 +471,9 @@ function mostrarTablaVentasPorProducto(ventas) {
 
 
     contenedorTabla.appendChild(tablaVentasPorProducto);
+    contenedorTabla.after(paginadorVentasPorProductoContainer);
+    limpiarHTMLElemento(paginadorCancelacionesContainer);
+
 
     botonesVer = document.querySelectorAll('.botonver');
 
@@ -531,6 +547,9 @@ function mostrarTablaCancelaciones(cancelaciones) {
 
     contenedorTabla.appendChild(tablaCancelaciones);
     contenedorTabla.after(paginadorCancelacionesContainer);
+    limpiarHTMLElemento(paginadorVentasPorProductoContainer);
+
+
 
 }
 
@@ -560,7 +579,10 @@ function escucharBotonesFormularioBusquedaVentas() {
         if (e.target.value === 'producto') {
             console.log(e.target.value);
             mostrarTablaVentasPorProductoSoloTabla();
-            mostrarTablaVentasPorProducto(ventas);
+            arregloExpandido = expandirArreglo(ventas)
+            mostrarPaginaVentasPorProducto(1,arregloExpandido);
+            // mostrarTablaVentasPorProducto(ventas);
+            generarPaginadorVentasPorProducto(arregloExpandido);
         }
 
     })
@@ -1427,6 +1449,84 @@ paginadorCancelacionesContainer.addEventListener('click', (e) => {
     let resultados = filtrarCancelaciones()
     mostrarPaginaCancelaciones(paginaActualCancelaciones, resultados);
 })
+
+
+function mostrarPaginaVentasPorProducto(pagina, datos = ventas, registrosPorPagina = registrosPorPaginaVentasPorProducto) {
+
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = inicio + registrosPorPagina;
+    const datosPagina = datos.slice(inicio, fin);
+
+
+    console.log("Inventario Pagina", datosPagina);
+    paginadorVentasPorProductoContainer.innerHTML = datosPagina.map(item => `<p>${item}</p>`).join("");
+    // Revisar cómo pasar el elemento a limpiar
+    // limpiarHTMLElemento(despliegueInventario)
+    // limpiarHTMLElemento(contenedorTabla);
+    mostrarTablaVentasPorProducto(datosPagina);
+    generarPaginadorVentasPorProducto(datos);
+
+
+    return datosPagina;
+}
+
+function generarPaginadorVentasPorProducto(datos = ventas, registrosPorPagina = registrosPorPaginaVentasPorProducto,paginaActual = paginaActualVentasPorProducto) {
+    const totalPaginas = Math.ceil(datos.length / registrosPorPagina);
+    console.log("Total de páginas desde generar Paginador", totalPaginas);
+    let paginadorHTML = '';
+
+    // Calcular el rango de páginas a mostrar
+    let inicio = Math.max(1, paginaActual - 4);
+    let fin = Math.min(totalPaginas, paginaActual + 4);
+
+    // Ajustar el rango si estamos cerca de los extremos
+    if (paginaActual <= 4) {
+        fin = Math.min(9, totalPaginas);
+    } else if (paginaActual >= totalPaginas - 4) {
+        inicio = Math.max(totalPaginas - 8, 1);
+    }
+
+    // Botón "Anterior"
+    if (paginaActual > 1) {
+        //  onclick="cambiarPagina(${paginaActual - 1})"
+        paginadorHTML += `<button class="paginas">Anterior</button>`;
+    }
+
+    for (let i = inicio; i <= fin; i++) {
+        // onclick="cambiarPagina(${i})"
+        paginadorHTML += `<button   ${paginaActual === i ? 'class="numero paginadoresRojo"' : 'class="numero"'}>${i}</button>`;
+    }
+
+    if (paginaActual < totalPaginas) {
+        // onclick="cambiarPagina(${paginaActual + 1})"
+        paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+    }
+
+    paginadorVentasPorProductoContainer.innerHTML = paginadorHTML;
+}
+
+paginadorVentasPorProductoContainer.addEventListener('click', (e) => {
+    console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+    if (e.target.classList == 'numero') {
+
+        paginaActualVentasPorProducto = parseInt(e.target.textContent);
+    }
+    if (e.target.classList == 'paginas') {
+        if (e.target.textContent == 'Siguiente') {
+            paginaActualVentasPorProducto = paginaActualVentasPorProducto + 1;
+        } else {
+            paginaActualVentasPorProducto = paginaActualVentasPorProducto - 1;
+
+        }
+    }
+    let resultados = filtrar()
+    arregloExpandido = expandirArreglo(resultados);
+    mostrarPaginaVentasPorProducto(paginaActualVentasPorProducto, arregloExpandido);
+})
+
+
+
 
 
 
