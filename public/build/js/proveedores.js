@@ -2,6 +2,11 @@ let lengthProveedor = 0;
 let lengthEmail = 0;
 let estaFijado = false;
 let currentIndex = 0;
+let terminosBusqueda = {
+  fecha: '',
+  nombre: '',
+  saldo: '',
+}
 let proveedores = [];
 let visitas_proveedor = [];
 let visita_producto = [];
@@ -45,6 +50,7 @@ async function consultarAPI() {
     visita_producto = resultado.visita_producto;
     // filtrar();
     // mostrarProveedores(proveedores);
+    mostrartabla(visitas_proveedor, proveedores);
 
   } catch (e) {
     console.log(e);
@@ -96,6 +102,14 @@ phoneInput.addEventListener("focus", function () {
     phoneInput.value = "+52 ";
   }
 });
+
+inputFecha.addEventListener('change', (e) => {
+  let { fecha } = terminosBusqueda;
+  fecha = e.target.value;
+  terminosBusqueda.fecha = fecha;
+  console.log(terminosBusqueda);
+  filtrarcaja();
+})
 
 // Evento que escucha el botón de abrir buscar proveedores
 btnAbrirBuscarProveedores.addEventListener('click', () => {
@@ -340,7 +354,7 @@ function mostrarProveedores(proveedores) {
   });
 }
 
-function mostrartabla(visitas_proveedor) {
+function mostrartabla(visitas_proveedor,proveedores) {
   console.log(visitas_proveedor);
   const contenedorTabla = document.querySelector('.tabladeproveedores');
 
@@ -365,26 +379,34 @@ function mostrartabla(visitas_proveedor) {
   const tbody = document.createElement('tbody');
 
   visitas_proveedor.forEach(visita_proveedor => {
-    const { id, proveedor_id, hora, fecha, visita_id, cantidad_retirado, cantidad_aniadido, total_visita, total_pagado, tota_adeudo } = visita_proveedor;
+    const { id, proveedor_id, hora, fecha, visita_id, cantidad_retirado, cantidad_aniadido, total_visita, total_pagado, total_adeudo } = visita_proveedor;
 
     let fechaHora = new Date(`${fecha}T${hora}`);
     let opcionesFecha = { day: 'numeric', month: 'long', year: 'numeric' };
     let fechaFormateada = fechaHora.toLocaleDateString('es-ES', opcionesFecha); // "28 de agosto de 2024"
     let horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // "23:02:04"
+    let nombreProveedor = proveedores.find(proveedor => proveedor.id === proveedor_id);
 
     const fila = document.createElement('tr');
     fila.innerHTML = `
                 <td>${id}</td>
-                <td>${tipoMovimiento}</td>
+                <td>${nombreProveedor.nombre}</td>
                 <td>${fechaFormateada} a las ${horaFormateada}</td>
-                <td>${cantidad_retirado}/${cantidad_aniadido}</td>
+                <td>${cantidad_aniadido}/${cantidad_retirado}</td>
+                <td>$${total_visita}</td>
+                <td>$${total_adeudo}</td>
+                <td>
+                  <div class="verproductos">
+                    <a href="#" class="botonverproductos">Ver productos</a>
+                  </div>
+                </td>
             `;
     tbody.appendChild(fila);
 
   });
 
-
-  contenedorCards.appendChild(gridcardCategorias);
+  tablaDinamica.appendChild(tbody);
+  contenedorTabla.appendChild(tablaDinamica);
 }
 
 function limpiarHTMLElemento(elemento) {
@@ -392,4 +414,44 @@ function limpiarHTMLElemento(elemento) {
   while (elemento.firstChild) {
     elemento.removeChild(elemento.firstChild);
   }
+}
+
+function filtrar() {
+  let resultadosFiltrados = visitas_proveedor;
+  // Aplicar filtro de fecha inicial si existe
+  if (terminosBusqueda.fecha) {
+      resultadosFiltrados = resultadosFiltrados.filter(filtrarfecha);
+
+      // mostrarPagina(1, resultadosFiltrados);
+      mostrartabla(resultadosPagina);
+
+      // generarPaginador(resultadosFiltrados);
+  }
+  if (terminosBusqueda.nombre) {
+      resultadosFiltrados = resultadosFiltrados.filter(filtrarNombre);
+
+      mostrarPagina(1, resultadosFiltrados);
+      // mostrartabla(resultadosPagina);
+      generarPaginador(resultadosFiltrados);
+  }
+
+  if (terminosBusqueda.orden) {
+      resultadosFiltrados = resultadosFiltrados.sort(filtrarSaldo);
+
+      mostrarPagina(1, resultadosFiltrados);
+      // mostrartabla(resultadosPagina);
+      generarPaginador(resultadosFiltrados);
+  }
+
+
+  // Mostrar resultados en consola
+  console.log(resultadosFiltrados);
+  return resultadosFiltrados;
+
+
+}
+
+function filtrarfecha(terminosBusqueda) {
+  const fechaR = new Date(terminosBusqueda.fecha);
+  return fechaR;
 }

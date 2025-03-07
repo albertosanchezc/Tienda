@@ -339,14 +339,15 @@
 }
 
 .verproductos .botonverproductos {
+    padding: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #8D28A7;
+    color: #fff;
     font-size: 1.3rem;
     font-weight: 600;
     text-decoration: none;
-    background-color: #fff;
+    background-color: #8D28A7;
     width: 100%;
     height: 100%;
     border: 1px solid #8D28A7;
@@ -356,8 +357,8 @@
 
 .verproductos .botonverproductos:hover {
     text-decoration: none;
-    color: #fff;
-    background-color: #8D28A7;
+    color: #8D28A7;
+    background-color: #fff;
 }
 
 

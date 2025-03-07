@@ -59,7 +59,7 @@
                                 <input type="date" id="fecha1" name="caja[fecha1]">
                             </div>
                             <div class="fecha2">
-                                <label for="bnombre">Nombre: </label>
+                                <label for="bnombre">Nombre Proveedor: </label>
                                 <input type="text" id="bnombre" name="caja[fecha2]" placeholder="Ejemplo: Coca-cola">
                             </div>
                             <div class="tipo-movimiento1">
