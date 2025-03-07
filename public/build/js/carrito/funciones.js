@@ -1075,8 +1075,10 @@ function actualizarCantidad(articulo) {
 
     inputModalCantidad.addEventListener('keydown', (e) => {
         console.log(e.key);
+        
         if (e.key === 'Enter') {
             btnConfirmarEditarCantidad.click();
+            inputModalCantidad.blur();
         }
     })
 
