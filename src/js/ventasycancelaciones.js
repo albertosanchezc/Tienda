@@ -142,6 +142,7 @@ contenedorBotones.addEventListener('click', (e) => {
                 ocultarCancelaciones();
             }
             mostrarContenidoInicialVentas();
+            mostrarPaginaPorCarrito(1,agrupadoPorCarrito)
             mostrarTablaVentasPorCarrito(ventas);
             
             escucharBotonesFormularioBusquedaVentas();
@@ -363,6 +364,11 @@ function mostrarTablaVentasPorCarrito(ventas) {
     tablaDinamica.appendChild(tbody);
     contenedorTabla.appendChild(tablaDinamica);
     botonesVer = document.querySelectorAll('.botonver');
+    const paginadorCarritoContainer = document.createElement('DIV');
+    paginadorCarritoContainer.classList.add('paginador');
+
+    contenedorTabla.after(paginadorCarritoContainer);
+
 
     escucharBotonesVerProductos();
 
@@ -1279,6 +1285,7 @@ function corregirMargin() {
 
 
 function mostrarPaginaPorCarrito(pagina, datos = agrupadoPorCarrito) {
+    const registrosPorPagina = 2; 
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     const datosPagina = datos.slice(inicio, fin);

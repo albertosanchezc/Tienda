@@ -3,6 +3,17 @@
 const modalBienvenida = document.querySelector('.modal');
 modalBienvenida.dataset.test = 'modal';
 const btnCerrarBienvenida = document.querySelector('.modal__close');
+btnCerrarBienvenida.style.display = 'none';
+const parrafoModalBienvenida = document.querySelector('.modal__paragraph');
+parrafoModalBienvenida.textContent = 'Da click fuera de esta ventana para iniciar la venta';
+
+
+
+
+
+
+
+
 let modalManual = document.querySelector('.modal--manual');
 modalManual.style.cursor = "pointer";
 modalManual.dataset.test = 'modal--manual';
