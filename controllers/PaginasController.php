@@ -38,12 +38,15 @@ class PaginasController
         
         $categorias = Categorias::all();
         $proveedores = Proveedor::all();
+        $ventas = Ventas::all();
         
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
             'inventario' => $inventario,
             'categorias' => $categorias,
-            'proveedores' => $proveedores
+            'proveedores' => $proveedores,
+            'ventas' => $ventas
+            
         ]);
     }
 

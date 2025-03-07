@@ -2,9 +2,7 @@
 let inventario = [];
 let proveedores = [];
 let categorias = [];
-
-
-
+let ventas = [];
 
 
 let terminosBusqueda = {
@@ -13,7 +11,9 @@ let terminosBusqueda = {
     codigoBarras: '',
     categoria: '',
     proveedor: '',
+    estadoStock: ''
 }
+
 const registrosPorPagina = 6;
 let paginaActual = 1;
 
@@ -44,6 +44,7 @@ const pKiloVentaActualizar = modalActualizarInventario.querySelector('.kiloventa
 const contenedorModalActualizarCantidad = document.querySelector('.modal--inventario--actualizarStock__cantidadActual');
 const parrafoModalActualizarCantidad = contenedorModalActualizarCantidad.querySelector('P');
 
+const contenedorBotonesSwitch = document.querySelector('.switch');
 
 btnCerrarModal.addEventListener('click', (e) => {
     e.preventDefault();
@@ -60,6 +61,45 @@ btnCerrarModalActualizarStock.addEventListener('click', (e) => {
     cerrarModalInventarioActualizarStock();
 });
 
+contenedorBotonesSwitch.addEventListener('click', (e) => {
+    console.log(e.target.id);
+    switch (e.target.id) {
+        case 'cantidadnula':
+            // Botón de agotado
+            terminosBusqueda.estadoStock = 'agotado';
+            resultados = filtrarEstadoStock();
+            mostrarPagina(1,resultados,proveedores,categorias)
+            generarPaginador(resultados)
+
+            break;
+
+        case 'cantidadsuficiente':
+            // Botón de suficiente
+            terminosBusqueda.estadoStock = 'suficiente';
+            filtrar();
+            break;
+
+        case 'cantidadbaja':
+            // Botón de por agotarse
+            terminosBusqueda.estadoStock = 'pocos';
+            filtrar();
+
+            break;
+
+        case 'cantidadexceso':
+            // Botón de en exceso
+            terminosBusqueda.estadoStock = 'demasiados';
+            filtrar();
+
+            break;
+
+
+
+        default:
+
+            break;
+    }
+})
 
 
 btnOptionCrear.addEventListener('click', (e) => {
@@ -223,6 +263,9 @@ async function consultarAPI() {
         inventario = resultado.inventario;
         proveedores = resultado.proveedores;
         categorias = resultado.categorias;
+        ventas = resultado.ventas;
+        ventas = ventas.filter(venta => venta.cancelacion === '0');
+
         // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
         filtrar()
         // mostrarCards(inventario);
@@ -240,6 +283,17 @@ function generarCodigoAleatorio() {
         codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
     }
     return codigo;
+}
+
+function obtenerRangoUltimos7Dias() {
+    const hoy = new Date();
+    hoy.setHours(23, 59, 59, 999); // Fin del día actual
+
+    const hace7Dias = new Date();
+    hace7Dias.setDate(hoy.getDate() - 7);
+    hace7Dias.setHours(0, 0, 0, 0); // Inicio del día hace 7 días
+
+    return { hace7Dias, hoy };
 }
 
 
@@ -292,7 +346,7 @@ function setSlide(index) {
 
 // Función que realiza la búsqueda a partir de los inputs
 function filtrar() {
-    const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
+    const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor).filter(filtrarEstadoStock);
     if (resultadosFiltrado.length > 0) {
         console.log(resultadosFiltrado);
         mostrarPagina(1, resultadosFiltrado, proveedores, categorias);
@@ -347,6 +401,27 @@ function filtrarProveedor(inventario) {
         return inventario.proveedor_id === proveedor;
     }
     return inventario;
+
+}
+function filtrarEstadoStock(){
+    let {estadoStock} = terminosBusqueda;
+    console.log(ventas);
+    console.log(inventario)
+    console.log(estadoStock);
+
+    // let resultado = [];
+    if(estadoStock === 'agotado'){
+        resultado = inventario.filter(p => p.cantidad === '0');
+    } else if(estadoStock === ''){
+        resultado = inventario;
+    }
+
+    
+    
+    return resultado;
+
+    
+
 
 }
 
