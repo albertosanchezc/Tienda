@@ -4,8 +4,7 @@ describe('Pruebas del carrito de compras', () => {
         cy.visit('http://localhost:3004/carrito')
 
         // Captura de la página completa
-        cy.getByData("modal__close")
-        cy.getByData("modal__close").click()
+        cy.getByData("documento").click(50, 30)
         cy.getByData("botonBusquedaManual").should('be.visible')
         cy.getByData("botonBusquedaNombre").should('be.visible')
         cy.getByData("botonPagar").should('be.visible')
@@ -79,7 +78,7 @@ describe('Pruebas del carrito de compras', () => {
                     cy.getByData("modal--manual__close").should('have.value', '75078843')
 
                     cy.getByData("nombreProductoTbodyModalManual").contains('Cigarros Shots Classics')
-                    cy.getByData("descripcionProductoTbodyModalManual").contains('20')
+                    cy.getByData("descripcionProductoTbodyModalManual").contains('25')
                     cy.getByData("precioUnitarioVentaProductoTbodyModalManual").contains('$50.48')
                     cy.getByData("imagenProductoTbodyModalManual").should('not.have.text', '4')
                     cy.screenshot('Cigarros busqueda manual', {
@@ -233,7 +232,7 @@ describe('Pruebas del carrito de compras', () => {
                         cy.getByData("modal--manual__close").should('be.visible')
                         cy.getByData("modal--manual__close").type("7507")
                         cy.getByData("descripcionProductoTbodyModalManual").should('be.visible')
-                        cy.getByData("descripcionProductoTbodyModalManual").contains('20').click()
+                        cy.getByData("descripcionProductoTbodyModalManual").contains('25').click()
                     })
                     it("Se debe mostrar en el carrito", () => {
                         cy.getByData("idCarrito").should('exist')
@@ -255,7 +254,7 @@ describe('Pruebas del carrito de compras', () => {
                         cy.getByData("idCarrito").contains('39')
                         cy.getByData("cantidadCarrito").contains('1')
                         cy.getByData("nombreCarrito").contains('Cigarros Shots Classics')
-                        cy.getByData("descripcionCarrito").contains('20')
+                        cy.getByData("descripcionCarrito").contains('25')
                         cy.getByData("codigoBarrasCarrito").contains('75078843')
                         cy.getByData("imgCarrito").should('exist')
 
@@ -270,7 +269,7 @@ describe('Pruebas del carrito de compras', () => {
                         const precio = 50.48;
                         const cantidad = 1;
                         const nombre = 'Cigarros Shots Classics';
-                        const descripcion = '20'
+                        const descripcion = '25'
                         const total = (precio * cantidad);
 
                         cy.getByData("nombreDetallesProducto").contains(`${nombre}`)
@@ -294,13 +293,13 @@ describe('Pruebas del carrito de compras', () => {
                         it("Debe incrementar la cantidad", () => {
                             cy.getByData("modal--manual__close").type("7507")
                             cy.getByData("descripcionProductoTbodyModalManual").should('be.visible')
-                            cy.getByData("descripcionProductoTbodyModalManual").contains('20').click()
+                            cy.getByData("descripcionProductoTbodyModalManual").contains('25').click()
 
                             cy.getByData("Cantidadtotal").contains('100.96')
                             cy.getByData("numeroArticulos").contains('2')
 
                             cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
-                            cy.getByData("descripcionDetallesProducto").contains('20')
+                            cy.getByData("descripcionDetallesProducto").contains('25')
                             cy.getByData("cantidadDetallesProducto").contains('Cantidad: 2')
                             cy.getByData("precioVentaDetallesProducto").contains('50.48')
                             cy.getByData("totalDetallesProducto").contains('100.96')
@@ -531,14 +530,14 @@ describe('Pruebas del carrito de compras', () => {
                     cy.getByData("modal--nombre__close").should('be.visible')
                     cy.getByData("modal--nombre__close").type("cig")
 
-                    cy.getByData("descripcionProductoTbodyModalNombre").contains('20')
+                    cy.getByData("descripcionProductoTbodyModalNombre").contains('25')
 
                     cy.getByData("modal--nombre__close").should('not.have.value', '75078843')
                     cy.getByData("modal--nombre__close").should('have.value', 'cig')
 
 
                     cy.getByData("nombreProductoTbodyModalManual").contains('Cigarros Shots Classics')
-                    cy.getByData("descripcionProductoTbodyModalManual").contains('20')
+                    cy.getByData("descripcionProductoTbodyModalManual").contains('25')
                     cy.getByData("precioUnitarioVentaProductoTbodyModalManual").contains('$50.48')
                     cy.getByData("imagenProductoTbodyModalManual").should('not.have.text', '4')
                     cy.screenshot('Cigarros busqueda nombre', {
@@ -686,7 +685,7 @@ describe('Pruebas del carrito de compras', () => {
                         cy.getByData("modal--nombre__close").should('be.visible')
                         cy.getByData("modal--nombre__close").type("cig")
                         cy.getByData("descripcionProductoTbodyModalNombre").should('be.visible')
-                        cy.getByData("descripcionProductoTbodyModalNombre").contains('20').click()
+                        cy.getByData("descripcionProductoTbodyModalNombre").contains('25').click()
                     })
 
                     it("Se debe mostrar en el carrito", () => {
@@ -709,7 +708,7 @@ describe('Pruebas del carrito de compras', () => {
                         cy.getByData("idCarrito").contains('39')
                         cy.getByData("cantidadCarrito").contains('1')
                         cy.getByData("nombreCarrito").contains('Cigarros Shots Classics')
-                        cy.getByData("descripcionCarrito").contains('20')
+                        cy.getByData("descripcionCarrito").contains('25')
                         cy.getByData("codigoBarrasCarrito").contains('75078843')
                         cy.getByData("imgCarrito").should('be.visible')
                         cy.screenshot('Debe tener los valores correctos con modal nombre', {
@@ -724,7 +723,7 @@ describe('Pruebas del carrito de compras', () => {
                         const precio = 50.48;
                         const cantidad = 1;
                         const nombre = 'Cigarros Shots Classics';
-                        const descripcion = '20'
+                        const descripcion = '25'
                         const total = (precio * cantidad);
 
                         cy.getByData("nombreDetallesProducto").contains(`${nombre}`)
@@ -747,13 +746,13 @@ describe('Pruebas del carrito de compras', () => {
                         it("Debe incrementar la cantidad", () => {
                             cy.getByData("modal--nombre__close").type("cig")
                             cy.getByData("descripcionProductoTbodyModalNombre").should('be.visible')
-                            cy.getByData("descripcionProductoTbodyModalNombre").contains('20').click()
+                            cy.getByData("descripcionProductoTbodyModalNombre").contains('25').click()
 
                             cy.getByData("Cantidadtotal").contains('100.96')
                             cy.getByData("numeroArticulos").contains('2')
 
                             cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
-                            cy.getByData("descripcionDetallesProducto").contains('20')
+                            cy.getByData("descripcionDetallesProducto").contains('25')
                             cy.getByData("cantidadDetallesProducto").contains('Cantidad: 2')
                             cy.getByData("precioVentaDetallesProducto").contains('50.48')
                             cy.getByData("totalDetallesProducto").contains('100.96')
@@ -956,7 +955,7 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("totalDetallesProducto").should('be.visible')
 
             cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
-            cy.getByData("descripcionDetallesProducto").contains('20')
+            cy.getByData("descripcionDetallesProducto").contains('25')
             cy.getByData("cantidadDetallesProducto").contains('Cantidad: 1')
             cy.getByData("precioVentaDetallesProducto").contains('50.48')
             cy.getByData("totalDetallesProducto").contains('50.48')
@@ -967,7 +966,7 @@ describe('Pruebas del carrito de compras', () => {
 
             describe("Si se escanea un producto que no está registrado", () => {
                 it("No debe arrojar resultados", () => {
-                    cy.getByData("documento").type('549878205')
+                    cy.getByData("documento").type('549878255')
                     cy.document().trigger("keydown", { key: "Enter", keyCode: 13, which: 13 })
                     cy.screenshot('No resultados lector código', {
                         capture: 'viewport',            // Define qué parte capturar
@@ -987,7 +986,7 @@ describe('Pruebas del carrito de compras', () => {
                     cy.getByData("idCarrito").contains('39')
                     cy.getByData("cantidadCarrito").contains('2')
                     cy.getByData("nombreCarrito").contains('Cigarros Shots Classics')
-                    cy.getByData("descripcionCarrito").contains('20')
+                    cy.getByData("descripcionCarrito").contains('25')
                     cy.getByData("codigoBarrasCarrito").contains('75078843')
                     cy.getByData("imgCarrito").should('exist')
 
@@ -996,7 +995,7 @@ describe('Pruebas del carrito de compras', () => {
                     cy.getByData("numeroArticulos").contains('2')
 
                     cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
-                    cy.getByData("descripcionDetallesProducto").contains('20')
+                    cy.getByData("descripcionDetallesProducto").contains('25')
                     cy.getByData("cantidadDetallesProducto").contains('Cantidad: 2')
                     cy.getByData("precioVentaDetallesProducto").contains('50.48')
                     cy.getByData("totalDetallesProducto").contains('100.96')
@@ -1187,13 +1186,13 @@ describe('Pruebas del carrito de compras', () => {
         cy.getByData("botonBusquedaManual").click()
         cy.getByData("modal--manual__close").should('exist')
         cy.getByData("modal--manual__close").type("7507")
-        cy.getByData("descripcionProductoTbodyModalManual").contains('20').click()
+        cy.getByData("descripcionProductoTbodyModalManual").contains('25').click()
         // Abrir ventana modal buscar por nombre y escribir en ella
         cy.getByData("botonBusquedaNombre").click()
         cy.getByData("modal--nombre__close").should('exist')
         cy.getByData("modal--nombre__close").type("cig")
         cy.getByData('descripcionProductoTbodyModalNombre')
-        cy.getByData("descripcionProductoTbodyModalNombre").contains('20').click()
+        cy.getByData("descripcionProductoTbodyModalNombre").contains('25').click()
     })
 
 })
