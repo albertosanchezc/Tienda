@@ -15,8 +15,10 @@ let visita_producto = [];
 
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
 const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores--aniadir__refcerrar');
+const botonCerrarModalVerProductos = document.querySelector('.modalproveedores--verProductos__refcerrar');
 const modalProveedores = document.querySelector('.modalproveedores');
 const modalNuevoProveedor = document.querySelector('.modalproveedores--aniadir');
+const modalVerProductos = document.querySelector('.modalproveedores--verProductos');
 const phoneInput = document.getElementById("phone");
 const btnAbrirBuscarProveedores = document.querySelector('.p2boton');
 const btnAbrirNuevoProveedor = document.querySelector('.p2boton1');
@@ -147,8 +149,12 @@ botonCerrarModal.addEventListener('click', () => {
 });
 
 botonCerrarModalNuevoProveedor.addEventListener('click', () => {
-  modalNuevoProveedor.classList.remove('modalproveedores--aniadir--show')
-})
+  modalNuevoProveedor.classList.remove('modalproveedores--aniadir--show');
+});
+
+botonCerrarModalVerProductos.addEventListener('click', () => {
+  modalVerProductos.classList.remove('modalproveedores--verProductos--show');
+});
 
 fijarBtn.addEventListener('click', function () {
   if (!estaFijado) {
@@ -435,7 +441,7 @@ function mostrartabla(visitas_proveedor, proveedores) {
                 <td>$${total_adeudo}</td>
                 <td>
                   <div class="verproductos">
-                    <a href="#" class="botonverproductos" data-id="${id}">Ver productos</a>
+                    <a href="#" class="botonverproductos" data-id="${visita_id}">Ver productos</a>
                   </div>
                 </td>
             `;
@@ -561,7 +567,24 @@ function tablaEventos(e) {
   e.preventDefault();
   console.log(e.target.classList);
   if (e.target.classList.contains('botonverproductos')) {
+    modalVerProductos.classList.add('modalproveedores--verProductos--show');
     const idVisita = e.target.getAttribute('data-id');
+    const tituloVer = document.querySelector('.modalproveedores--verProductos__titulo');
+    const objVisita = visitas_proveedor.find(visita => visita.visita_id === idVisita);
+    const objProveedor = proveedores.find(proveedor => proveedor.visita_id === objVisita.proveedor_id);
+    // const arrayProducto = visita_producto.filter(visitaP => visitaP.visita_id === objVisita.proveedor_id);
+
+
+
+
+    tituloVer.innerHTML = `
+      <h1>Resumen de Visita</h1>
+      <h3>Reñaaaaaaaaasume de Entrada y Salida de Producto de Coca-Cola el 26 de diciembre del 2024 a las 10:50.</h3>
+    `;
     console.log(idVisita);
+    console.log(objVisita);
+    // console.log(objProveedor);
+
+
   }
 }

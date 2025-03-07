@@ -28,7 +28,6 @@
             </div>
         </div>
     </div>
-
     <div class="imgbajar">
         <img src="/build/img/bajarProveedores.gif" alt="Logotipo de bajar" class="imgdown imgdownsmall">
     </div>
@@ -255,5 +254,18 @@
                 <input value="Crear Proveedor" type="submit" class="modalproveedores--aniadir__botonaniadir">
             </form>
 
+        </div>
+</section>
+
+<section class="modalproveedores--verProductos modalproveedores--verProductos--show">
+    <div class="modalproveedores--verProductos__contenedor">
+        <div class="modalproveedores--verProductos__cerrar">
+            <a href="#" class="modalproveedores--verProductos__refcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalproveedores--verProductos__imgcerrar">
+            </a>
+        </div>
+        <div class="modalproveedores--verProductos__titulo">
+            <h1>Resumen de Visita</h1>
+            <h3>Resume de Entrada y Salida de Producto de Coca-Cola el 26 de diciembre del 2024 a las 10:50.</h3>
         </div>
 </section>
