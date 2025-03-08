@@ -4,6 +4,10 @@ let proveedores = [];
 let categorias = [];
 let ventas = [];
 
+let agotados = [];
+let porAgotarse = [];
+let suficientes = [];
+let enExceso = [];
 
 let terminosBusqueda = {
     id: '',
@@ -63,42 +67,26 @@ btnCerrarModalActualizarStock.addEventListener('click', (e) => {
 
 contenedorBotonesSwitch.addEventListener('click', (e) => {
     console.log(e.target.id);
-    switch (e.target.id) {
-        case 'cantidadnula':
-            // Botón de agotado
-            terminosBusqueda.estadoStock = 'agotado';
-            resultados = filtrarEstadoStock();
-            mostrarPagina(1,resultados,proveedores,categorias)
-            generarPaginador(resultados)
-
-            break;
-
-        case 'cantidadsuficiente':
-            // Botón de suficiente
-            terminosBusqueda.estadoStock = 'suficiente';
-            filtrar();
-            break;
-
-        case 'cantidadbaja':
-            // Botón de por agotarse
-            terminosBusqueda.estadoStock = 'pocos';
-            filtrar();
-
-            break;
-
-        case 'cantidadexceso':
-            // Botón de en exceso
-            terminosBusqueda.estadoStock = 'demasiados';
-            filtrar();
-
-            break;
-
-
-
-        default:
-
-            break;
+    let { estadoStock } = terminosBusqueda;
+    if (e.target.id === 'cantidadnula') {
+        estadoStock = 'agotado';
     }
+
+    else if (e.target.id === 'cantidadsuficiente') {
+        estadoStock = 'suficiente';
+    }
+
+    else if (e.target.id === 'cantidadbaja') {
+        estadoStock = 'pocos';
+    }
+
+    else if (e.target.id === 'cantidadexceso') {
+        estadoStock = 'demasiados';
+    }
+
+    terminosBusqueda.estadoStock = estadoStock;
+    filtrar();
+
 })
 
 
@@ -264,10 +252,11 @@ async function consultarAPI() {
         proveedores = resultado.proveedores;
         categorias = resultado.categorias;
         ventas = resultado.ventas;
-        ventas = ventas.filter(venta => venta.cancelacion === '0');
+        ventas = ventas.filter(venta => venta.cancelacion === '0');        
 
         // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
         filtrar()
+        LlenarClasificaciones();
         // mostrarCards(inventario);
 
     } catch (e) {
@@ -346,20 +335,39 @@ function setSlide(index) {
 
 // Función que realiza la búsqueda a partir de los inputs
 function filtrar() {
-    const resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor).filter(filtrarEstadoStock);
-    if (resultadosFiltrado.length > 0) {
-        console.log(resultadosFiltrado);
-        mostrarPagina(1, resultadosFiltrado, proveedores, categorias);
+    let resultadosFiltrado = [];
+    if(terminosBusqueda.estadoStock){
+        console.log(`Buscando por estado ${terminosBusqueda.estadoStock}`);
+        switch (terminosBusqueda.estadoStock){
+            case 'agotado':
+                resultadosFiltrado = agotados.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
+            break;
 
-        generarPaginador(resultadosFiltrado);
-        return resultadosFiltrado.flat();
-    } else {
-        // mostrarPagina(1,resultadosFiltrado);
-        mostrarPagina(1, resultadosFiltrado, proveedores, categorias);
-        generarPaginador(resultadosFiltrado);
+            case 'pocos':
+                resultadosFiltrado = porAgotarse.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
+            break;
 
-        return resultadosFiltrado.flat();
+            case 'suficiente':
+                resultadosFiltrado = suficientes.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
+            break;
+
+            case 'demasiados':
+                resultadosFiltrado = enExceso.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
+            break;
+
+        }
+
+    } else{
+        resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
+        console.log('No se está buscando por estado');
+        
     }
+    console.log(resultadosFiltrado)
+    mostrarPagina(1, resultadosFiltrado, proveedores, categorias);
+    generarPaginador(resultadosFiltrado);
+
+    return resultadosFiltrado;
+    // return resultadosFiltrado.flat();
 }
 
 // Busca todos los nombres que se parezcan al input nombre dentro del inventario
@@ -403,25 +411,173 @@ function filtrarProveedor(inventario) {
     return inventario;
 
 }
-function filtrarEstadoStock(){
-    let {estadoStock} = terminosBusqueda;
-    console.log(ventas);
-    console.log(inventario)
-    console.log(estadoStock);
 
-    // let resultado = [];
-    if(estadoStock === 'agotado'){
-        resultado = inventario.filter(p => p.cantidad === '0');
-    } else if(estadoStock === ''){
-        resultado = inventario;
+function obtenerRangoUltimos7Dias() {
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    const hace7Dias = new Date(hoy);
+    hace7Dias.setDate(hoy.getDate() - 7);
+
+    // Convertimos las fechas a formato "YYYY-MM-DD"
+    return {
+        hace7Dias: hace7Dias.toISOString().split('T')[0],
+        hoy: hoy.toISOString().split('T')[0]
+    };
+}
+
+function calcularPromedioDiario(ventas) {
+    const ventasPorProducto = {};
+
+    console.log("Ventas recibidas:", ventas.length); // Ver cuántos registros realmente hay
+
+    ventas.forEach(({ producto_id, cantidad }) => {
+        console.log(`Producto ${producto_id} - Cantidad: ${cantidad}`);
+
+        if (!ventasPorProducto[producto_id]) {
+            ventasPorProducto[producto_id] = 0;
+        }
+        ventasPorProducto[producto_id] += Number(cantidad);
+    });
+
+    console.log("Ventas por producto antes de dividir:", ventasPorProducto);
+
+    // Dividimos entre 7 días para obtener la demanda diaria promedio
+    for (let producto in ventasPorProducto) {
+        ventasPorProducto[producto] /= 2;
+        ventasPorProducto[producto] = Math.ceil(ventasPorProducto[producto]);
     }
 
-    
-    
-    return resultado;
+    console.log("Ventas por producto después de dividir:", ventasPorProducto);
 
-    
+    return ventasPorProducto;
+}
 
+function clasificarStock() {
+    const { hace7Dias, hoy } = obtenerRangoUltimos7Dias();
+
+    console.log(ventas);
+    console.log(inventario)
+
+    const ventasUltimos7Dias = ventas.filter(venta =>
+        venta.fecha_venta >= hace7Dias && venta.fecha_venta <= hoy
+    );
+
+    const promedioDiario = calcularPromedioDiario(ventasUltimos7Dias);
+    console.log("Ventas últimos 7 días:", ventasUltimos7Dias);
+    console.log("Promedio diario:", promedioDiario);
+
+
+    let clasificacion = {};
+
+    inventario.forEach(producto => {
+        const cantidad = producto.cantidad;
+        const producto_id = producto.producto_id;
+
+        let demandaDiaria = Number(promedioDiario[producto_id]) || 0;
+
+        if (cantidad === '0') {
+            clasificacion[producto_id] = "agotado";
+        } else if (cantidad >= 1 && cantidad <= demandaDiaria * 2) {
+            clasificacion[producto_id] = "por agotarse";
+        } else if (cantidad >= demandaDiaria * 2 && cantidad <= demandaDiaria * 5) {
+            clasificacion[producto_id] = "suficiente";
+        } else {
+            clasificacion[producto_id] = "exceso";
+        }
+    })
+
+    console.log(clasificacion);
+
+    const resultado = Object.entries(clasificacion).map(([id, cantidad]) => ({
+        id: id,
+        estado: cantidad
+    }));
+
+    console.log(resultado)
+    const agotadosIncompleto = resultado.filter(p => p.estado === 'agotado');
+    console.log(agotadosIncompleto);
+
+    const porAgotarseIncompleto = resultado.filter(p => p.estado === 'por agotarse');
+    console.log(porAgotarseIncompleto);
+
+    const suficienteIncompleto = resultado.filter(p => p.estado === 'suficiente');
+    console.log(suficienteIncompleto);
+
+    const excesoIncompleto = resultado.filter(p => p.estado === 'exceso');
+
+
+    agotados = agotadosIncompleto.map(item => {
+        const datosInventario = inventario.find(i => i.producto_id === item.id);
+
+        return {
+            ...item, // Mantiene id y estado
+            ...datosInventario // Agrega los datos del inventario (nombre, stock, etc.)
+        };
+    });
+
+    porAgotarse = porAgotarseIncompleto.map(item => {
+        const datosInventario = inventario.find(i => i.producto_id === item.id);
+
+        return {
+            ...item, // Mantiene id y estado
+            ...datosInventario // Agrega los datos del inventario (nombre, stock, etc.)
+        };
+    });
+
+    suficientes = suficienteIncompleto.map(item => {
+        const datosInventario = inventario.find(i => i.producto_id === item.id);
+
+        return {
+            ...item, // Mantiene id y estado
+            ...datosInventario // Agrega los datos del inventario (nombre, stock, etc.)
+        };
+    });
+
+    enExceso = excesoIncompleto.map(item => {
+        const datosInventario = inventario.find(i => i.producto_id === item.id);
+
+        return {
+            ...item, // Mantiene id y estado
+            ...datosInventario // Agrega los datos del inventario (nombre, stock, etc.)
+        };
+    });
+
+    console.log(agotados)
+    console.log(porAgotarse)
+    console.log(suficientes)
+    console.log(enExceso)
+
+}
+function LlenarClasificaciones(){
+    clasificarStock();
+}
+
+
+
+function filtrarEstadoStock() {
+
+    let { estadoStock } = terminosBusqueda;
+    if (estadoStock === 'agotado') {
+        let { cantidad } = inventario;
+        cantidad = Number(cantidad);
+        return agotados;
+    }
+    else if (estadoStock === '') {
+        return inventario;
+    }
+    else if (estadoStock === 'suficiente') {
+        return suficientes;
+    }
+    else if (estadoStock === 'pocos') {
+        return porAgotarse;
+    }
+    else if (estadoStock === 'demasiados') {
+        return enExceso;
+    }
+
+
+    // return inventario;
 
 }
 
