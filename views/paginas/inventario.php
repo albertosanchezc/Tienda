@@ -68,21 +68,31 @@
                 </div>
                 <div class="tipo-movimiento1">
                     <p>Cantidad en inventario: </p>
-                    <div class="switch">
-                        <div class="p2">
-                            <input type="radio" id="cantidadnula" name="caja[tipo_movimiento]" value="cantidadnula"
-                                checked>
+                    <div class="switchInventario labelsDisplay">
+                        <div class="botonAgotado">
+                            <input type="radio" id="cantidadnula" name="caja[tipo_movimiento]" value="cantidadnula">
                             <label for="cantidadnula">Agotado</label>
-                            <input type="radio" id="cantidadbaja" name="caja[tipo_movimiento]" value="cantidadbaja">
-                            <label for="cantidadbaja">Por Agotarse</label>
                         </div>
-                        <div class="s2">
-                            <input type="radio" id="cantidadsuficiente" name="caja[tipo_movimiento]"
-                                value="cantidadsuficiente">
-                            <label for="cantidadsuficiente">Suficiente</label>
+                        <div class="botonVerTodos">
+                            <input type="radio" id="cantidadtodos" name="caja[tipo_movimiento]" value="cantidadtodos"
+                                checked>
+                            <label for="cantidadtodos">Ver Todos</label>
+                        </div>
+                        <div class="botonExceso">
                             <input type="radio" id="cantidadexceso" name="caja[tipo_movimiento]"
                                 value="Exceso de Cantidad">
                             <label for="cantidadexceso">En Exceso</label>
+                        </div>
+                    </div>
+                    <div class="switchSegundaFila">
+                        <div class="botonPorAgotarse">
+                            <input type="radio" id="cantidadbaja" name="caja[tipo_movimiento]" value="cantidadbaja">
+                            <label for="cantidadbaja">Por Agotarse</label>
+                        </div>
+                        <div class="botonSuficiente">
+                            <input type="radio" id="cantidadsuficiente" name="caja[tipo_movimiento]"
+                                value="cantidadsuficiente">
+                            <label for="cantidadsuficiente">Suficiente</label>
                         </div>
                     </div>
                 </div>

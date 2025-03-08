@@ -746,7 +746,10 @@ span {
     }
 }
 
-.modal--inventarioEliminar, .modalCategorias--eliminar .modal--cancelarProducto, .modal--cancelarProductos, .modal--cancelarCarrito {
+.modal--inventarioEliminar,
+.modalCategorias--eliminar .modal--cancelarProducto,
+.modal--cancelarProductos,
+.modal--cancelarCarrito {
     &__opciones {
         display: flex;
         justify-content: center;
@@ -761,7 +764,9 @@ span {
     }
 }
 
-.modal--cancelarProducto, .modal--cancelarProductos, .modal--cancelarCarrito  {
+.modal--cancelarProducto,
+.modal--cancelarProductos,
+.modal--cancelarCarrito {
     &__opciones {
         display: flex;
         justify-content: center;
@@ -776,4 +781,179 @@ span {
 
     }
 
+}
+
+.switchInventario {
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 2rem;
+    width: 100%;
+    margin-bottom: 0;
+
+
+
+    .botonAgotado {
+        grid-column: 1/2;
+        width: 100%;
+
+    }
+
+    .botonVerTodos {
+        grid-column: 2/3;
+        width: 100%;
+
+    }
+
+    .botonExceso {
+        grid-column: 3/4;
+    }
+
+    input[type="radio"] {
+        display: none;
+        height: 4rem;
+
+    }
+
+    label {
+        width: 100%;
+        padding: 14px 10px;
+        background-color: #ddd;
+        border-radius: 20px;
+        cursor: pointer;
+        user-select: none;
+        text-align: center;
+        font-size: 13px;
+        font-weight: bold;
+        display: inline;
+    }
+
+    .botonVerTodos {
+        label:hover {
+            background-color: #1100ab;
+            color: #fff;
+
+        }
+    }
+
+    .botonAgotado {
+        label:hover {
+            background-color: #980000;
+            color: #fff;
+
+        }
+    }
+
+    .botonExceso {
+        label:hover {
+            background-color: #236900;
+            color: #fff;
+
+        }
+    }
+
+    input[type="radio"]:checked+label {
+        background-color: blue;
+        color: white;
+    }
+
+    input:hover {
+        color: $negro;
+        background-color: #F9E7F2;
+    }
+}
+
+// .switchInventario.labelsDisplay{
+//     label{
+//         display: ruby-text;
+//     }
+// }
+
+
+
+
+
+.switchSegundaFila {
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    width: 100%;
+    margin-top: 0;
+
+
+    .botonPorAgotarse {
+        grid-column: 1/2;
+        width: 100%;
+
+    }
+
+    .botonPorAgotarse {
+        label:hover {
+            background-color: #C20000;
+            color: #fff;
+
+        }
+    }
+
+    .botonSufuciente {
+        grid-column: 2/3;
+        width: 100%;
+
+    }
+    .botonSuficiente {
+        label:hover {
+            background-color: #309100;
+            color: #fff;
+
+        }
+    }
+
+    input[type="radio"] {
+        display: none;
+        height: 3.2rem;
+
+    }
+
+    label {
+        width: 100%;
+        padding: 14px 14px;
+        background-color: #ddd;
+        border-radius: 20px;
+        cursor: pointer;
+        user-select: none;
+        text-align: center;
+        font-size: 13px;
+        font-weight: bold;
+        display: inline;
+    }
+
+
+
+    input[type="radio"]:checked+label {
+        background-color: blue;
+        color: white;
+    }
+
+    input:hover {
+        color: $negro;
+        background-color: #F9E7F2;
+    }
+}
+
+.switchInventario,
+.switchSegundaFila {
+    @include telefono-1 {
+        gap: 3px;
+    }
+
+    @include tablet {
+        gap: 4px;
+    }
+
+    @include laptop-1 {
+        gap: 15px;
+        margin-bottom: 1rem;
+    }
 }
