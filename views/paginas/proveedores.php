@@ -336,7 +336,7 @@
 </section>
 
 <!-- modal de seguro que deseas eliminar a aets eproveedor -->
-<section class="modal--proveedoresEliminar modal--proveedoresEliminar--show">
+<section class="modal--proveedoresEliminar">
     <div class="modal--proveedoresEliminar__container">
         <h2 class="modal--proveedoresEliminar__title">¿Seguro que deseas eliminar del registro este Proveedor --nombre?</h2>
         <form id="eliminarProveedor" method="POST">
