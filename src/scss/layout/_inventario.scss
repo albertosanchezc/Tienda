@@ -749,7 +749,7 @@ span {
 .modal--inventarioEliminar,
 .modalCategorias--eliminar .modal--cancelarProducto,
 .modal--cancelarProductos,
-.modal--cancelarCarrito {
+.modal--cancelarCarrito, .modal--proveedoresEliminar {
     &__opciones {
         display: flex;
         justify-content: center;

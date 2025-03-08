@@ -267,6 +267,7 @@
         </div>
 </section>
 
+<!-- modal de ver productos de la visita -->
 <section class="modalproveedores--verProductos">
     <div class="modalproveedores--verProductos__contenedor">
         <div class="modalproveedores--verProductos__cerrar">
@@ -332,4 +333,17 @@
                 <p>Total Adeudo a Herdez: $19.36</p>
             </div>
         </div>
+</section>
+
+<!-- modal de seguro que deseas eliminar a aets eproveedor -->
+<section class="modal--proveedoresEliminar modal--proveedoresEliminar--show">
+    <div class="modal--proveedoresEliminar__container">
+        <h2 class="modal--proveedoresEliminar__title">¿Seguro que deseas eliminar del registro este Proveedor --nombre?</h2>
+        <form id="eliminarProveedor" method="POST">
+            <div class="modal--proveedoresEliminar__opciones">
+                <input value="Si" type="submit" class="modal--proveedoresEliminar__si">
+                <input value="No" class="modal--proveedoresEliminar__no">
+            </div>
+        </form>
+    </div>
 </section>

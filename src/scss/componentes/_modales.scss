@@ -416,15 +416,17 @@
         width: 100%;
         font-size: small;
         text-decoration: none;
-        color: #B02997;
+        color: #f9f9f9;
         border: solid 1px #B02997;
         font-weight: bold;
-        background-color: #f9f9f9;
+        background: linear-gradient(to right, #790563, #fa33be);
         border-radius: 5px;
+        cursor: pointer;
         transition: background-color 0.3s ease;
     }
 
     &__botonaniadir:hover {
+        background: none;
         background-color: darkgreen;
         color: #fff;
         border-color: darkgreen;

@@ -1000,7 +1000,7 @@ body {
 .modal--cantidad,
 .modal--eliminar,
 .modal--eliminarCarrito,
-.modal--pagar, .modal--inventarioEliminar, .modalCategorias--eliminar, .modal--cancelarProducto, .modal--cancelarCarrito, .modal--cancelarProductos
+.modal--pagar, .modal--inventarioEliminar, .modalCategorias--eliminar, .modal--cancelarProducto, .modal--cancelarCarrito, .modal--cancelarProductos, .modal--proveedoresEliminar
 {
     position: fixed;
     top: 0;
@@ -1663,7 +1663,7 @@ body {
 }
 
 .modal--eliminar,
-.modal--eliminarCarrito, .modal--inventarioEliminar, .modalCategorias--eliminar, .modal--cancelarProducto, .modal--cancelarCarrito, .modal--cancelarProductos {
+.modal--eliminarCarrito, .modal--inventarioEliminar, .modalCategorias--eliminar, .modal--cancelarProducto, .modal--cancelarCarrito, .modal--cancelarProductos, .modal--proveedoresEliminar {
     h2 {
         font-size: 2.2rem;
         margin-top: 4rem;
