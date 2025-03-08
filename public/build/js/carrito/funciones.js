@@ -563,6 +563,14 @@ function actualizarModalGranel(articuloCarritoAModificar) {
 
     })
 
+    inputModalGranel.addEventListener('keydown', (e) => {
+        console.log(e.key);
+        if (e.key === 'Enter') {
+            btnAniadirArticuloGranel.click();
+        }
+    })
+
+
 
     btnAniadirArticuloGranel.addEventListener('click', (e) => {
         e.preventDefault();

@@ -185,7 +185,7 @@ document.addEventListener('keydown', (e) => {
 
         if (resultado.length > 1) {
             mostrarAlerta('Debes insertar el código completo', 'rojo');
-        } else if (resultado.length === 0) {
+        } else if (resultado.length === 0 && terminosBusqueda.codigoBarras.length !== 0) {
             mostrarAlerta('No se encontró el artículo', 'rojo');
         } else if (resultado.length === 1) {
             mostrarAlerta(`Producto Escaneado: ${resultado[0].nombre}`, 'verde');
