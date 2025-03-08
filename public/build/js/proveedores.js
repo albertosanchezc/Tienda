@@ -4,15 +4,21 @@ let estaFijado = false;
 let currentIndex = 0;
 let registrosPorPagina = 4;
 let paginaActual = 1;
+let registrosPorPaginaModal = 2;
+let paginaActualModal = 1;
 let terminosBusqueda = {
   fecha: '',
   nombre: '',
   saldo: '',
 }
+let terminosBusquedaM = {
+  nombre: ''
+}
 let proveedores = [];
 let visitas_proveedor = [];
 let visita_producto = [];
 let productos = [];
+let inventario = [];
 
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
 const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores--aniadir__refcerrar');
@@ -29,9 +35,15 @@ const telefonoProveedor = modalNuevoProveedor.querySelector('.modalproveedores--
 const emailProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputEmail');
 const nombreProv = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputNombre');
 const inputNombreBusqueda = document.getElementById('bnombre');
+const inputNombreProveedorModal = document.getElementById('nombreProveedor');
 const inputFecha = document.getElementById('fecha1');
 const inputRadioSaldo = document.querySelector('.tipo-movimiento1');
 const paginadorContainer = document.querySelector('.paginador-M');
+const paginadorContainerModal = document.querySelector('.paginador-ModalM');
+const totalPagadoModal = document.querySelector('.modalproveedores--verProductos__totalPagado');
+const totalAdeudoModal = document.querySelector('.modalproveedores--verProductos__totalAdeudo');
+const totalAdeudoModal1 = document.querySelector('.modalproveedores--verProductos__totalAdeudo1');
+
 const texts = [
   "Busca proveedores fácilmente y gestiona su información de forma rápida, precisa y completamente organizada.",
   "Registra nuevos proveedores y organiza toda la información necesaria para mantener un control eficiente.",
@@ -56,6 +68,7 @@ async function consultarAPI() {
     visitas_proveedor = resultado.visitas_proveedor;
     visita_producto = resultado.visita_producto;
     productos = resultado.productos;
+    inventario = resultado.inventario;
     // filtrar();
     // mostrarProveedores(proveedores);
     // mostrartabla(visitas_proveedor, proveedores);
@@ -128,6 +141,14 @@ inputNombreBusqueda.addEventListener('change', (e) => {
   filtrar();
 });
 
+inputNombreProveedorModal.addEventListener('change', (e) => {
+  let { nombre } = terminosBusquedaM;
+  nombre = e.target.value;
+  terminosBusquedaM.nombre = nombre;
+  console.log(terminosBusquedaM);
+  filtrarProveedorModal();
+});
+
 inputRadioSaldo.addEventListener('click', (e) => {
   let { saldo } = terminosBusqueda;
   saldo = e.target.value;
@@ -138,7 +159,9 @@ inputRadioSaldo.addEventListener('click', (e) => {
 
 btnAbrirBuscarProveedores.addEventListener('click', () => {
   modalProveedores.classList.add('modalproveedores--show');
-  mostrarProveedores(proveedores);
+  // mostrarProveedores(proveedores);
+  mostrarPaginaModal(1, proveedores);
+  generarPaginador(proveedores);
 });
 
 btnAbrirNuevoProveedor.addEventListener('click', () => {
@@ -211,6 +234,25 @@ paginadorContainer.addEventListener('click', (e) => {
   }
   let resultados = filtrar()
   mostrarPagina(paginaActual, resultados);
+});
+
+paginadorContainerModal.addEventListener('click', (e) => {
+  console.log(`Página seleccionada ${e.target.textContent} \n Clase seleccionada ${e.target.classList}`);
+
+  if (e.target.classList == 'numero') {
+
+    paginaActualModal = parseInt(e.target.textContent);
+  }
+  if (e.target.classList == 'paginas') {
+    if (e.target.textContent == 'Siguiente') {
+      paginaActualModal = paginaActualModal + 1;
+    } else {
+      paginaActualModal = paginaActualModal - 1;
+
+    }
+  }
+  let resultados = filtrarProveedorModal()
+  mostrarPaginaModal(paginaActualModal, resultados);
 });
 
 document.getElementById('aniadirProveedor').addEventListener('submit', function (e) {
@@ -482,6 +524,26 @@ function filtrar() {
   return resultadosFiltrados;
 }
 
+function filtrarProveedorModal() {
+  let resultadosFiltrados = proveedores;
+  if (terminosBusquedaM.nombre) {
+    resultadosFiltrados = resultadosFiltrados.filter(filtrarNombreProveedor);
+  }
+  // mostrarProveedores(resultadosFiltrados);
+  mostrarPaginaModal(1, resultadosFiltrados);
+  generarPaginador(resultadosFiltrados);
+  console.log(resultadosFiltrados);
+  return resultadosFiltrados;
+}
+
+function filtrarNombreProveedor(proveedores) {
+  let { nombre } = terminosBusquedaM;
+  if (nombre) {
+    return proveedores.id === nombre;
+  }
+  return proveedores;
+}
+
 function filtrarFecha(visitas_proveedor) {
   const fechaSeleccionada = new Date(terminosBusqueda.fecha);
   const fechaVisita = new Date(visitas_proveedor.fecha);
@@ -558,6 +620,52 @@ function generarPaginador(datos = visitas_proveedor) {
   paginadorContainer.innerHTML = paginadorHTML;
 }
 
+function mostrarPaginaModal(pagina, datos = proveedores) {
+  const inicio = (pagina - 1) * registrosPorPaginaModal;
+  const fin = inicio + registrosPorPaginaModal;
+  const inventarioPagina = datos.slice(inicio, fin);
+
+  console.log("Inventario Pagina", inventarioPagina);
+  paginadorContainerModal.innerHTML = inventarioPagina.map(item => `<p>${item}</p>`).join("");
+  // Revisar cómo pasar el elemento a limpiar
+  // limpiarHTMLElemento(despliegueInventario)
+  // limpiarHTMLElemento(contenedorTabla);
+  mostrarProveedores(inventarioPagina, proveedores);
+  generarPaginadorModal(datos);
+
+
+  return inventarioPagina;
+}
+
+function generarPaginadorModal(datos = proveedores) {
+  const totalPaginas = Math.ceil(datos.length / registrosPorPaginaModal);
+  console.log("Total de páginas desde generar Paginador", totalPaginas);
+  let paginadorHTML = '';
+
+  let inicio = Math.max(1, paginaActualModal - 4);
+  let fin = Math.min(totalPaginas, paginaActualModal + 4);
+
+  if (paginaActualModal <= 4) {
+    fin = Math.min(9, totalPaginas);
+  } else if (paginaActualModal >= totalPaginas - 4) {
+    inicio = Math.max(totalPaginas - 8, 1);
+  }
+
+  if (paginaActualModal > 1) {
+    paginadorHTML += `<button class="paginas">Anterior</button>`;
+  }
+
+  for (let i = inicio; i <= fin; i++) {
+    paginadorHTML += `<button   ${paginaActualModal === i ? 'class="numero numeroPActual"' : 'class="numero"'}>${i}</button>`;
+  }
+
+  if (paginaActualModal < totalPaginas) {
+    paginadorHTML += `<button class="paginas" >Siguiente</button>`;
+  }
+
+  paginadorContainerModal.innerHTML = paginadorHTML;
+}
+
 function crearInputHidden(name) {
   const input = document.createElement('INPUT');
   input.type = 'HIDDEN';
@@ -627,14 +735,17 @@ function tablaEventos(e) {
         claseCantidad = "";
       }
 
+      let objProducto = productos.find(producto => producto.id === producto_id);
+      let objInventario = inventario.find(producto => producto.producto_id === producto_id);
+
       const fila = document.createElement('tr');
       fila.innerHTML = `
                 <td>${visita_id}</td>
                 <td>${producto_id}</td>
-                <td>Nombre</td>
+                <td>${objProducto.nombre} ${objProducto.descripcion}</td>
                 <td class="${claseCantidad}">${textoCantidad}</td>
-                <td>$total</td>
-                <td>$total</td>
+                <td>$${objInventario.precio_compra}</td>
+                <td>$${objInventario.precio_unitario_venta}</td>
             `;
       tbody.appendChild(fila);
     });
@@ -642,9 +753,16 @@ function tablaEventos(e) {
     tablaDinamicaProductos.appendChild(tbody);
     contenedorTablaProductos.appendChild(tablaDinamicaProductos);
 
-    console.log(idVisita);
-    console.log(objVisita);
-    console.log(objProveedor);
-    console.log(arrayProducto);
+    totalPagadoModal.innerHTML = `
+      <p>Total Visita de ${objProveedor.nombre}: $${objVisita.total_visita}</p>
+    `;
+
+    totalAdeudoModal.innerHTML = `
+      <p>Total Pagado: $${objVisita.total_pagado}</p>
+    `;
+
+    totalAdeudoModal1.innerHTML = `
+      <p>Total Adeudo: $${objVisita.total_adeudo}</p>
+    `;
   }
 }

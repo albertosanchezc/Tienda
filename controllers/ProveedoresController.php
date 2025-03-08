@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Model\Inventario;
+use Model\Productos;
 use Model\Proveedor;
 use Model\Visita_Producto;
 use Model\Visitas_proveedor;
@@ -49,12 +51,17 @@ class ProveedoresController
         $proveedores = Proveedor::all();
         $visitas_proveedor = Visitas_proveedor::all();
         $visita_producto = Visita_Producto::all();
+        $productos = Productos::all();
+        $inventario = Inventario::all();
+
 
 
         echo json_encode([
             'proveedores' => $proveedores,
             'visitas_proveedor' => $visitas_proveedor,
-            'visita_producto' => $visita_producto
+            'visita_producto' => $visita_producto,
+            'productos' => $productos,
+            'inventario' => $inventario
         ]);
     }
 }

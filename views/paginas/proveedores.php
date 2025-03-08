@@ -159,13 +159,21 @@
             <h3>Introduce el nombre del proveedor y visualiza o edita sus datos empresariales.</h3>
         </div>
         <div class="modalproveedores__filtros">
-            <form id="buscadorProveedor" method="POST">
+            <form id="buscadorProveedor">
                 <fieldset>
                     <legend>Búsqueda</legend>
                     <div class="modalproveedores__filtrosbox">
                         <div class="modalproveedores__nombre">
-                            <label for="nombreproveedor">Proveedor: </label>
-                            <input type="text" id="nombreproveedor" name="proveedor[nombre]">
+                            <label for="nombreProveedor">Nombre Proveedor: </label>
+                            <select class="selectSpecial" id="nombreProveedor">
+                                <option selected value="">Selecciona un proveedor</option>
+                                <?php foreach ($proveedores as $proveedor) { ?>
+                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($proveedor->id); ?>">
+                                        <?php echo s($proveedor->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
                 </fieldset>
@@ -210,6 +218,8 @@
                 <a href="#" class="modalproveedores__botonactualizar">Actualizar Producto</a>
                 <a href="#" class="modalproveedores__botoneliminar">Eliminar</a>
             </div>
+        </div>
+        <div class="paginador-ModalM gridPaginador">
         </div>
 </section>
 
@@ -316,6 +326,9 @@
                 <p>Total Pagado a Herdez: $1509.36</p>
             </div>
             <div class="modalproveedores--verProductos__totalAdeudo">
+                <p>Total Adeudo a Herdez: $19.36</p>
+            </div>
+            <div class="modalproveedores--verProductos__totalAdeudo1">
                 <p>Total Adeudo a Herdez: $19.36</p>
             </div>
         </div>

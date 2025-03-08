@@ -1795,7 +1795,7 @@ body {
 
 }
 
-.paginador-R, .paginador-M {
+.paginador-R, .paginador-M, .paginador-ModalM {
     margin-top: 1rem;
     display: flex;
     flex-direction: row;
@@ -2096,7 +2096,7 @@ body {
 }
 
 
-.paginador-M, .paginadorM{
+.paginador-M, .paginadorM, .paginador-ModalM{
     grid-column: 2/3;
 
     @media (min-width: #{$telefono-1}) {
@@ -2140,4 +2140,10 @@ body {
         border-color: rgb(139, 0, 139);
         background-color: #fff;
     } 
+}
+
+.paginador-ModalM.gridPaginador{
+    grid-column: 1/2;
+
+
 }
