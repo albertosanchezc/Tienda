@@ -48,7 +48,7 @@ const pKiloVentaActualizar = modalActualizarInventario.querySelector('.kiloventa
 const contenedorModalActualizarCantidad = document.querySelector('.modal--inventario--actualizarStock__cantidadActual');
 const parrafoModalActualizarCantidad = contenedorModalActualizarCantidad.querySelector('P');
 
-const contenedorBotonesSwitch = document.querySelector('.switch');
+const contenedorBotonesSwitch = document.querySelector('.tipo-movimiento1');
 
 btnCerrarModal.addEventListener('click', (e) => {
     e.preventDefault();
@@ -83,6 +83,11 @@ contenedorBotonesSwitch.addEventListener('click', (e) => {
     else if (e.target.id === 'cantidadexceso') {
         estadoStock = 'demasiados';
     }
+
+    else if (e.target.id === 'cantidadtodos') {
+        estadoStock = '';
+    }
+    
 
     terminosBusqueda.estadoStock = estadoStock;
     filtrar();
