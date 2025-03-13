@@ -36,8 +36,8 @@ class PaginasController
     {
         $inventario = Inventario_completo::join2('productos', 'inventario');
         
-        $categorias = Categorias::all();
-        $proveedores = Proveedor::all();
+        $categorias = Categorias::ALF('nombre','ASC');
+        $proveedores = Proveedor::ALF('nombre','ASC');
         $ventas = Ventas::all();
         
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');

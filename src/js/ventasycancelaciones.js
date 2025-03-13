@@ -583,7 +583,9 @@ function escucharBotonesFormularioBusquedaVentas() {
             mostrarTablaVentasPorCarritoSoloTabla();
 
             
-            mostrarTablaVentasPorCarrito(agrupadoPorCarrito);
+            // mostrarTablaVentasPorCarrito(agrupadoPorCarrito);
+            mostrarPaginaVentasPorCarrito(1,agrupadoPorCarrito,5);
+            generarPaginadorVentasPorCarrito(agrupadoPorCarrito);
         }
         if (e.target.value === 'producto') {
             console.log(e.target.value);

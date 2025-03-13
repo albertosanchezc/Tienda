@@ -17,7 +17,7 @@ class ProductoController
         $script = '<script src="/build/js/movimiento.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $alertas = [];
-        $proveedores = Proveedor::all();
+        $proveedores = Proveedor::ALF('nombre','ASC');
         $alertas = Proveedor::getAlertas();
         $visita_previa = Visitas_proveedor::lastofTable('visitas_proveedor', 'visita_id');
         $visita_id = $visita_previa->visita_id;

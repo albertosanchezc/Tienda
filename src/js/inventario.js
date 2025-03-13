@@ -223,7 +223,7 @@ const slides = [
         titulo: "Movimiento de producto",
         parrafo: "Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
         enlace: "#",
-        enlaceTexto: "Entrada de producto"
+        enlaceTexto: "Movimiento de producto"
     },
     {
         titulo: "Ver Categorías",

@@ -19,7 +19,7 @@ class ProveedoresController
         $titulo = 'Proveedores';
         $alertas = [];
 
-        $proveedores = Proveedor::all();
+        $proveedores = Proveedor::ALF('nombre','ASC');
         $resultado = $_GET['resultado'] ?? null;
         $alertas = Proveedor::getAlertas();
         // debuguear($resultado);

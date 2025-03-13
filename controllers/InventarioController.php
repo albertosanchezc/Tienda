@@ -23,8 +23,8 @@ class InventarioController
         $alertas = [];
 
         $producto = new Productos;
-        $categorias = Categorias::all();
-        $proveedores = Proveedor::all();
+        $categorias = Categorias::ALF('nombre','ASC');
+        $proveedores = Proveedor::ALF('nombre','ASC');
         $inventario = Inventario::all();
         $alertas = Productos::getAlertas();
 
