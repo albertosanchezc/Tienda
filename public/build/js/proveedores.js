@@ -279,7 +279,7 @@ modalEliminar.addEventListener('click', (e) => {
     modalEliminar.classList.remove('modalproveedores--eliminar--show');
   } else if (e.target.classList.contains('modalproveedores--eliminar__si')) {
     // console.log('eliminando');
-    document.getElementById('').submit();
+    document.getElementById('eliminarProveedores').submit();
   }
 });
 
