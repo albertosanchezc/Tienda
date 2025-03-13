@@ -438,13 +438,79 @@ function mostrarProveedores(proveedores) {
   const contenedorProveedores = document.querySelector('.modalproveedores__contactoproveedores');
   contenedorProveedores.innerHTML = '';
 
+  const totalVisitasPorProveedor = {};
+
+
+  visitas_proveedor.forEach((visita) =>{
+    const proveedorId = visita.proveedor_id;
+    if (!totalVisitasPorProveedor[proveedorId]) {
+      totalVisitasPorProveedor[proveedorId] = 0;
+    }
+    totalVisitasPorProveedor[proveedorId]++;
+  });
+
+  console.log(totalVisitasPorProveedor);
+
+
+  const totalVisitasJuntosConProveedores = proveedores.map((proveedor) => ({
+    id: proveedor.id,
+    nombre: proveedor.nombre,
+    visitas: totalVisitasPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
+  }));
+
+  console.log(totalVisitasJuntosConProveedores[0]);
+
+
+  totalVisitasJuntosConProveedores.sort((a, b) => b.visitas_proveedor - a.visitas_proveedor);
+
+
+  const rankingFrecuencia = totalVisitasJuntosConProveedores.map((proveedor, index) => ({
+    id: proveedor.id,
+    nombre: proveedor.nombre,
+    visitas: proveedor.visitas,
+    lugar: index + 1, // index + 1 porque los rankings comienzan en 1
+  }));
+
+  console.log(rankingFrecuencia);
+  
+
+
   proveedores.forEach(proveedor => {
+
+    let visitasProveedor = visitas_proveedor.filter(visita_proveedor => visita_proveedor.proveedor_id === proveedor.id);
+    let visitaMasReciente;
+
+    if (visitasProveedor.length === 0) {
+      console.log("No hay visitas para este proveedor.");
+      visitaMasReciente = 'Sin Visitas'
+    } else {
+
+      visitaMasReciente = visitasProveedor.reduce((masReciente, visita) => {
+        // Convertir las fechas a objetos Date para compararlas
+        let fechaVisita = new Date(visita.fecha);
+        let fechaMasReciente = new Date(masReciente.fecha);
+
+        return fechaVisita > fechaMasReciente ? visita : masReciente;
+
+      }, visitasProveedor[0]);
+
+
+      visitaMasReciente = visitaMasReciente.fecha;
+
+    }
     const datosGrid = document.createElement('DIV');
     datosGrid.classList.add('modalproveedores__datosgrid');
     const titulo = document.createElement('H3');
     titulo.textContent = proveedor.nombre;
-    const subtitulo = document.createElement('P');
-    subtitulo.textContent = 'PROVEEDOR DESTACADO';
+    const subtitulo1 = document.createElement('P');
+    subtitulo1.classList.add('modalproveedores__pFrecuente', 'rankingVerde');
+    subtitulo1.innerHTML = '&#9733; &#9733; &#9733; &#9733; &#9733; 9/10 MÁS FRECUENTE';
+    const subtitulo2 = document.createElement('P');
+    subtitulo2.classList.add('modalproveedores__pVentas', 'rankingNaranja');
+    subtitulo2.innerHTML = '&#9733; &#9733; &#9733; 9/10 CON MÁS VENTAS';
+    const subtitulo3 = document.createElement('P');
+    subtitulo3.classList.add('modalproveedores__pGanancia','rankingRojo');
+    subtitulo3.innerHTML = '&#9733; 9/10 CON MÁS GANANCIA';
     const flexTelefono = document.createElement('DIV');
     flexTelefono.classList.add('modalproveedores__flextelefono');
     const imgTelefono = document.createElement('IMG');
@@ -483,30 +549,6 @@ function mostrarProveedores(proveedores) {
     imgReloj.alt = 'Logotipo de reloj';
     imgReloj.classList.add('modalproveedores__imgreloj');
 
-    let visitasProveedor = visitas_proveedor.filter(visita_proveedor => visita_proveedor.proveedor_id === proveedor.id);
-    let visitaMasReciente;
-
-    if (visitasProveedor.length === 0) {
-      console.log("No hay visitas para este proveedor.");
-      visitaMasReciente = 'Sin Visitas'
-    } else {
-
-      visitaMasReciente = visitasProveedor.reduce((masReciente, visita) => {
-        // Convertir las fechas a objetos Date para compararlas
-        let fechaVisita = new Date(visita.fecha);
-        let fechaMasReciente = new Date(masReciente.fecha);
-
-        return fechaVisita > fechaMasReciente ? visita : masReciente;
-
-      }, visitasProveedor[0]);
-
-
-      visitaMasReciente = visitaMasReciente.fecha;
-
-    }
-
-
-
     const ultimaVisita = document.createElement('DIV');
     ultimaVisita.classList.add('modalproveedores__ultimoregistro');
     ultimaVisita.textContent = `Últ. Visita: ${visitaMasReciente}`;
@@ -527,7 +569,10 @@ function mostrarProveedores(proveedores) {
     botonEliminar.textContent = 'Eliminar';
 
     datosGrid.appendChild(titulo);
-    datosGrid.appendChild(subtitulo);
+    // datosGrid.appendChild(subtitulo);
+    datosGrid.appendChild(subtitulo1);
+    datosGrid.appendChild(subtitulo2);
+    datosGrid.appendChild(subtitulo3);
     datosGrid.appendChild(flexTelefono);
     datosGrid.appendChild(flexEmail);
     datosGrid.appendChild(flexReloj);

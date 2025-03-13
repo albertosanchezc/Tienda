@@ -156,7 +156,7 @@
         </div>
         <div class="modalproveedores__titulo">
             <h1>Buscar proveedor</h1>
-            <h3>Introduce el nombre del proveedor y visualiza o edita sus datos empresariales.</h3>
+            <h3>Introduce el nombre del proveedor y visualiza o edita sus datos.</h3>
         </div>
         <div class="modalproveedores__filtros">
             <form id="buscadorProveedor">
