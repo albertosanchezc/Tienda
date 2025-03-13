@@ -395,7 +395,7 @@
 <section class="modalproveedores--eliminar">
     <div class="modalproveedores--eliminar__container">
         <h2 class="modalproveedores--eliminar__title">¿Seguro que deseas Eliminar Este Proveedor Definitivamente?</h2>
-        <form idproveedores="eliminar" method="POST">
+        <form id="eliminarProveedores" method="POST">
             <div class="modalproveedores--eliminar__opciones">
                 <input value="Si" type="submit" class="modalproveedores--eliminar__si">
                 <input value="No" class="modalproveedores--eliminar__no">

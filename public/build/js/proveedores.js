@@ -371,14 +371,14 @@ document.getElementById('actualizarProveedor').addEventListener('submit', functi
 
   } else {
     if (telefonoLength === 0) {
-      mostrarAlerta('Proveedor Guardado sin Teléfono', 'exito', modalActualizar, '#actualizarProveedor');
+      mostrarAlerta('Proveedor Actualizado sin Teléfono', 'exito', modalActualizar, '#actualizarProveedor');
     }
 
     if (!emailProveedor) {
-      mostrarAlerta('Proveedor Guardado sin Email', 'exito', modalActualizar, '#actualizarProveedor');
+      mostrarAlerta('Proveedor Actualizado sin Email', 'exito', modalActualizar, '#actualizarProveedor');
     }
 
-    mostrarAlerta('Proveedor Creado con éxito', 'exito', modalActualizar, '#actualizarProveedor');
+    mostrarAlerta('Proveedor Actualizado con éxito', 'exito', modalActualizar, '#actualizarProveedor');
 
     setTimeout(() => {
       this.submit();
