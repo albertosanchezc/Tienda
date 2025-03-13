@@ -749,7 +749,7 @@ span {
 .modal--inventarioEliminar,
 .modalCategorias--eliminar .modal--cancelarProducto,
 .modal--cancelarProductos,
-.modal--cancelarCarrito, .modal--proveedoresEliminar {
+.modal--cancelarCarrito, .modal--proveedoresEliminar, .modalproveedores--eliminar {
     &__opciones {
         display: flex;
         justify-content: center;
@@ -766,7 +766,7 @@ span {
 
 .modal--cancelarProducto,
 .modal--cancelarProductos,
-.modal--cancelarCarrito {
+.modal--cancelarCarrito, .modalproveedores--eliminar {
     &__opciones {
         display: flex;
         justify-content: center;

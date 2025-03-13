@@ -237,7 +237,7 @@
                 información.</h3>
         </div>
         <div class="modalproveedores--aniadir__entradas">
-            <form id="aniadirProveedor"" method=" POST">
+            <form id="aniadirProveedor" method="POST">
                 <fieldset>
                     <legend>+Anadir Proveedor</legend>
                     <div class="modalproveedores--aniadir__entradasbox">
@@ -343,6 +343,62 @@
             <div class="modal--proveedoresEliminar__opciones">
                 <input value="Si" type="submit" class="modal--proveedoresEliminar__si">
                 <input value="No" class="modal--proveedoresEliminar__no">
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- modal de actualizar proveedor -->
+<section class="modalproveedores--actualizar">
+    <div class="modalproveedores--actualizar__contenedor">
+        <div class="modalproveedores--actualizar__cerrar">
+            <a href="#" class="modalproveedores--actualizar__refcerrar">
+                <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modalproveedores--actualizar__imgcerrar">
+            </a>
+        </div>
+        <div class="modalproveedores--actualizar__titulo">
+            <h1>Actualiza este Proveedor</h1>
+            <h3>Actualiza el formulario con los datos empresariales del proveedor que deseas cambiar. Incluye toda la información.</h3>
+        </div>
+        <div class="modalproveedores--actualizar__entradas">
+            <form id="actualizarProveedor" method="POST">
+                <fieldset>
+                    <legend>+Actualizar Proveedor</legend>
+                    <div class="modalproveedores--actualizar__entradasbox">
+                        <div class="modalproveedores--actualizar__nombre">
+                            <label for="entradanombre">Nombre: </label>
+                            <input class="modalproveedores--actualizar__inputNombre" type="text" id="entradanombre"
+                                name="proveedoresActualizar[nombre]" placeholder="Coca - Cola"
+                                value="<?php echo s($proveedores->nombre); ?>" required>
+                        </div>
+                        <div class="modalproveedores--actualizar__telefono">
+                            <label for="phone">Teléfono: </label>
+                            <input class="modalproveedores--actualizar__inputTelefono" type="tel" id="phone"
+                                name="proveedoresActualizar[telefono]" placeholder="+52 (415) 456 7890" maxlength="19"
+                                value="<?php echo s($proveedores->telefono); ?>">
+                        </div>
+                        <div class="modalproveedores--actualizar__email">
+                            <label for="entradaemail">Email: </label>
+                            <input class="modalproveedores--actualizar__inputEmail" type="email" id="entradaemail"
+                                name="proveedoresActualizar[email]" placeholder="correo@correo.com"
+                                value="<?php echo s($proveedores->email); ?>">
+                        </div>
+                    </div>
+                </fieldset>
+                <input value="Actualizar Proveedor" type="submit" class="modalproveedores--actualizar__botonaniadir">
+            </form>
+
+        </div>
+</section>
+
+<!-- modal de eliminar proveedor -->
+<section class="modalproveedores--eliminar">
+    <div class="modalproveedores--eliminar__container">
+        <h2 class="modalproveedores--eliminar__title">¿Seguro que deseas Eliminar Este Proveedor Definitivamente?</h2>
+        <form idproveedores="eliminar" method="POST">
+            <div class="modalproveedores--eliminar__opciones">
+                <input value="Si" type="submit" class="modalproveedores--eliminar__si">
+                <input value="No" class="modalproveedores--eliminar__no">
             </div>
         </form>
     </div>

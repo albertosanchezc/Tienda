@@ -40,8 +40,6 @@
     const adeudo = document.querySelector('.adeudo');
     const paginadorContainer = document.querySelector('.paginador-1');
 
-
-
     document.addEventListener('DOMContentLoaded', function () {
         consultarAPI();
         contenedorClass1.style.display = "none";

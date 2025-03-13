@@ -43,6 +43,16 @@ const paginadorContainerModal = document.querySelector('.paginador-ModalM');
 const totalPagadoModal = document.querySelector('.modalproveedores--verProductos__totalPagado');
 const totalAdeudoModal = document.querySelector('.modalproveedores--verProductos__totalAdeudo');
 const totalAdeudoModal1 = document.querySelector('.modalproveedores--verProductos__totalAdeudo1');
+const modalActualizar = document.querySelector('.modalproveedores--actualizar');
+const modalEliminar = document.querySelector('.modalproveedores--eliminar');
+const btnCerrarModalActualizar = document.querySelector('.modalproveedores--actualizar__refcerrar');
+const btnCerrarModalEliminarNo = document.querySelector('.modalproveedores--eliminar__no');
+const inputNombreActualizar = document.querySelector('.modalproveedores--actualizar__inputNombre');
+const inputTelefonoActualizar = document.querySelector('.modalproveedores--actualizar__inputTelefono');
+const inputEmailActualizar = document.querySelector('.modalproveedores--actualizar__inputEmail');
+
+
+
 
 const texts = [
   "Busca proveedores fácilmente y gestiona su información de forma rápida, precisa y completamente organizada.",
@@ -255,6 +265,19 @@ paginadorContainerModal.addEventListener('click', (e) => {
   mostrarPaginaModal(paginaActualModal, resultados);
 });
 
+btnCerrarModalActualizar.addEventListener('click', (e) => {
+  modalActualizar.classList.remove('modalproveedores--actualizar--show');
+});
+
+modalEliminar.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (e.target.classList.contains('modalproveedores--eliminar__no')) {
+    modalEliminar.classList.remove('modalproveedores--eliminar--show');
+  } else if (e.target.classList.contains('modalproveedores--eliminar__si')) {
+    console.log('eliminando');
+  }
+});
+
 document.getElementById('aniadirProveedor').addEventListener('submit', function (e) {
   e.preventDefault();
   const alertas = modalNuevoProveedor.querySelectorAll('.alerta');
@@ -308,6 +331,63 @@ document.getElementById('aniadirProveedor').addEventListener('submit', function 
 
 });
 
+document.getElementById('actualizarProveedor').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const alertas = modalActualizar.querySelectorAll('.alerta');
+  alertas.forEach(alerta => alerta.remove());
+  let errores = [];
+  const nombreProveedor = modalActualizar.querySelector('.modalproveedores--actualizar__inputNombre').value;
+  const emailProveedor = modalActualizar.querySelector('.modalproveedores--actualizar__inputEmail').value;
+  const telefonoProveedor = modalActualizar.querySelector('.modalproveedores--actualizar__inputTelefono').value;
+  let nombreLength = nombreProveedor.length;
+  let telefonoLength = telefonoProveedor.length;
+  let emailLength = emailProveedor.length;
+
+  if (!nombreProveedor || nombreLength <= 4) {
+    errores.push('El nombre del proveedor es obligatorio y debe ser mayor a 4 caracteres');
+
+  }
+
+  if (telefonoLength !== 19 && telefonoLength !== 0 && telefonoLength !== 3) {
+    errores.push('El teléfono debe estar vacío o tener los 10  caracteres');
+
+  }
+
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailValidado = regex.test(emailProveedor);
+  if (!emailValidado && emailLength !== 0) {
+    errores.push('El email debe estar vacío o tener la estructura de un correo');
+  }
+
+  if (errores.length > 0) {
+    errores.forEach(error => {
+      const alerta = mostrarAlerta(error, 'error', modalActualizar, '#actualizarProveedor');
+
+      setTimeout(() => {
+        alerta.remove();
+      }, 5000);
+
+    });
+
+  } else {
+    if (telefonoLength === 0) {
+      mostrarAlerta('Proveedor Guardado sin Teléfono', 'exito', modalActualizar, '#actualizarProveedor');
+    }
+
+    if (!emailProveedor) {
+      mostrarAlerta('Proveedor Guardado sin Email', 'exito', modalActualizar, '#actualizarProveedor');
+    }
+
+    mostrarAlerta('Proveedor Creado con éxito', 'exito', modalActualizar, '#actualizarProveedor');
+
+    setTimeout(() => {
+      this.submit();
+
+    }, 3000);
+  }
+
+});
+
 function mostrarAlerta(mensaje, tipo, contenedorGeneral, contenedorEspecifico) {
   const alerta = document.createElement('div');
   alerta.className = `alerta ${tipo}`;
@@ -348,31 +428,18 @@ function nextSlide() {
 
 function mostrarProveedores(proveedores) {
   console.log(proveedores);
-
-  // Contenedor principal donde se insertarán las tarjetas
   const contenedorProveedores = document.querySelector('.modalproveedores__contactoproveedores');
-
-  // Limpiar el contenedor antes de insertar nuevos elementos (opcional)
   contenedorProveedores.innerHTML = '';
 
-  // Recorrer cada proveedor y crear su tarjeta
   proveedores.forEach(proveedor => {
-    // Crear el contenedor de la tarjeta
     const datosGrid = document.createElement('DIV');
     datosGrid.classList.add('modalproveedores__datosgrid');
-
-    // Crear el título (nombre del proveedor)
     const titulo = document.createElement('H3');
     titulo.textContent = proveedor.nombre;
-
-    // Crear el subtítulo (proveedor destacado)
     const subtitulo = document.createElement('P');
     subtitulo.textContent = 'PROVEEDOR DESTACADO';
-
-    // Crear el contenedor del teléfono
     const flexTelefono = document.createElement('DIV');
     flexTelefono.classList.add('modalproveedores__flextelefono');
-
     const imgTelefono = document.createElement('IMG');
     imgTelefono.src = '/build/img/telefono.png';
     imgTelefono.alt = 'Logotipo de teléfono';
@@ -385,7 +452,6 @@ function mostrarProveedores(proveedores) {
     flexTelefono.appendChild(imgTelefono);
     flexTelefono.appendChild(telefono);
 
-    // Crear el contenedor del email
     const flexEmail = document.createElement('DIV');
     flexEmail.classList.add('modalproveedores__flexemail');
 
@@ -417,18 +483,18 @@ function mostrarProveedores(proveedores) {
     flexReloj.appendChild(imgReloj);
     flexReloj.appendChild(ultimaVisita);
 
-    // Crear los botones de actualizar y eliminar
     const botonActualizar = document.createElement('A');
     botonActualizar.href = '#';
     botonActualizar.classList.add('modalproveedores__botonactualizar');
+    botonActualizar.dataset.id = proveedor.id;
     botonActualizar.textContent = 'Actualizar';
 
     const botonEliminar = document.createElement('A');
     botonEliminar.href = '#';
     botonEliminar.classList.add('modalproveedores__botoneliminar');
+    botonEliminar.dataset.id = proveedor.id;
     botonEliminar.textContent = 'Eliminar';
 
-    // Agregar todos los elementos al contenedor de la tarjeta
     datosGrid.appendChild(titulo);
     datosGrid.appendChild(subtitulo);
     datosGrid.appendChild(flexTelefono);
@@ -439,7 +505,15 @@ function mostrarProveedores(proveedores) {
 
     // Agregar la tarjeta al contenedor principal
     contenedorProveedores.appendChild(datosGrid);
+
+
+
   });
+
+  const editarCardProveedor = document.querySelector('.modalproveedores__contactoproveedores');
+
+  editarCardProveedor.addEventListener('click', proveedoresEventos);
+
 }
 
 function mostrartabla(visitas_proveedor, proveedores) {
@@ -764,5 +838,21 @@ function tablaEventos(e) {
     totalAdeudoModal1.innerHTML = `
       <p>Total Adeudo: $${objVisita.total_adeudo}</p>
     `;
+  }
+}
+
+function proveedoresEventos(e) {
+  e.preventDefault();
+  console.log(e.target.classList);
+  const idProveedor = e.target.getAttribute('data-id');
+  if (e.target.classList.contains('modalproveedores__botonactualizar')) {
+    let objetoProveedor = proveedores.find(proveedor => proveedor.id === idProveedor);
+    inputNombreActualizar.value = objetoProveedor.nombre;
+    inputTelefonoActualizar.value = objetoProveedor.telefono;
+    inputEmailActualizar.value = objetoProveedor.email;
+    modalActualizar.classList.add('modalproveedores--actualizar--show');
+
+  } else if (e.target.classList.contains('modalproveedores__botoneliminar')) {
+    modalEliminar.classList.add('modalproveedores--eliminar--show');
   }
 }
