@@ -273,13 +273,15 @@ btnCerrarModalActualizar.addEventListener('click', (e) => {
 modalEliminar.addEventListener('click', (e) => {
   e.preventDefault();
 
-
-
   if (e.target.classList.contains('modalproveedores--eliminar__no')) {
     modalEliminar.classList.remove('modalproveedores--eliminar--show');
   } else if (e.target.classList.contains('modalproveedores--eliminar__si')) {
-    // console.log('eliminando');
-    document.getElementById('eliminarProveedores').submit();
+    mostrarAlerta('Proveedor Eliminado con Éxito', 'exito', modalEliminar, '#eliminarProveedores');
+
+    setTimeout(() => {
+      document.getElementById('eliminarProveedores').submit();
+
+    }, 2000);
   }
 });
 
@@ -388,7 +390,7 @@ document.getElementById('actualizarProveedor').addEventListener('submit', functi
     setTimeout(() => {
       this.submit();
 
-    }, 3000);
+    }, 2000);
   }
 
 });
@@ -481,9 +483,33 @@ function mostrarProveedores(proveedores) {
     imgReloj.alt = 'Logotipo de reloj';
     imgReloj.classList.add('modalproveedores__imgreloj');
 
+    let visitasProveedor = visitas_proveedor.filter(visita_proveedor => visita_proveedor.proveedor_id === proveedor.id);
+    let visitaMasReciente;
+
+    if (visitasProveedor.length === 0) {
+      console.log("No hay visitas para este proveedor.");
+      visitaMasReciente = 'Sin Visitas'
+    } else {
+
+      visitaMasReciente = visitasProveedor.reduce((masReciente, visita) => {
+        // Convertir las fechas a objetos Date para compararlas
+        let fechaVisita = new Date(visita.fecha);
+        let fechaMasReciente = new Date(masReciente.fecha);
+
+        return fechaVisita > fechaMasReciente ? visita : masReciente;
+
+      }, visitasProveedor[0]);
+
+
+      visitaMasReciente = visitaMasReciente.fecha;
+
+    }
+
+
+
     const ultimaVisita = document.createElement('DIV');
     ultimaVisita.classList.add('modalproveedores__ultimoregistro');
-    ultimaVisita.textContent = `Últ. Visita: ${proveedor.ultimaVisita}`;
+    ultimaVisita.textContent = `Últ. Visita: ${visitaMasReciente}`;
 
     flexReloj.appendChild(imgReloj);
     flexReloj.appendChild(ultimaVisita);

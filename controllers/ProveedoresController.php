@@ -48,6 +48,7 @@ class ProveedoresController
                 $proveedores = Proveedor::find($argsEliminarProveedor['id']);
                 $proveedores->eliminar();
             }
+            header('Location: /proveedores');
         }
 
         // debuguear($proveedores);
