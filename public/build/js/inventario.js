@@ -87,7 +87,7 @@ contenedorBotonesSwitch.addEventListener('click', (e) => {
     else if (e.target.id === 'cantidadtodos') {
         estadoStock = '';
     }
-    
+
 
     terminosBusqueda.estadoStock = estadoStock;
     filtrar();
@@ -257,7 +257,7 @@ async function consultarAPI() {
         proveedores = resultado.proveedores;
         categorias = resultado.categorias;
         ventas = resultado.ventas;
-        ventas = ventas.filter(venta => venta.cancelacion === '0');        
+        ventas = ventas.filter(venta => venta.cancelacion === '0');
 
         // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
         filtrar()
@@ -341,31 +341,31 @@ function setSlide(index) {
 // Función que realiza la búsqueda a partir de los inputs
 function filtrar() {
     let resultadosFiltrado = [];
-    if(terminosBusqueda.estadoStock){
+    if (terminosBusqueda.estadoStock) {
         console.log(`Buscando por estado ${terminosBusqueda.estadoStock}`);
-        switch (terminosBusqueda.estadoStock){
+        switch (terminosBusqueda.estadoStock) {
             case 'agotado':
                 resultadosFiltrado = agotados.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
-            break;
+                break;
 
             case 'pocos':
                 resultadosFiltrado = porAgotarse.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
-            break;
+                break;
 
             case 'suficiente':
                 resultadosFiltrado = suficientes.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
-            break;
+                break;
 
             case 'demasiados':
                 resultadosFiltrado = enExceso.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
-            break;
+                break;
 
         }
 
-    } else{
+    } else {
         resultadosFiltrado = inventario.filter(filtrarNombre).filter(filtrarCodigoBarras).filter(filtrarCategoria).filter(filtrarProveedor);
         console.log('No se está buscando por estado');
-        
+
     }
     console.log(resultadosFiltrado)
     mostrarPagina(1, resultadosFiltrado, proveedores, categorias);
@@ -554,7 +554,7 @@ function clasificarStock() {
     console.log(enExceso)
 
 }
-function LlenarClasificaciones(){
+function LlenarClasificaciones() {
     clasificarStock();
 }
 
@@ -696,14 +696,31 @@ function mostrarCards(inventario, proveedores, categorias) {
 
         botonesGrid.innerHTML = `
 
-        <div class="primerafila">
-            <a href="#" class="botonactualizarstock">Actualizar Stock</a>
+        <div class="primerafila" style="gap:1rem;">
+            <a href="#" id="crearVariante" class="botonactualizarstock">Actualizar Stock</a>
+            <a href="#" class="botonactualizarstock crearVariante">Crear Variante</a>
         </div>
         <div class="segundafila">
             <a href="#" class="botonactualizar">Actualizar Producto</a>
             <a href="#" class="botoneliminar">Eliminar</a>
         </div>
 
+        <style>
+            .crearVariante {
+                background-color: #0093ff;
+                color: white;
+                padding: 10px;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+
+            .crearVariante:hover {
+                background-color: #f9f9f9;
+                color: #0093ff;
+            }
+
+            /* Puedes agregar más estilos de hover para otros botones aquí */
+        </style>
         `;
         inventarioGrid.appendChild(parrafoContainer);
         gridContenido.prepend(div);
@@ -713,8 +730,10 @@ function mostrarCards(inventario, proveedores, categorias) {
         despliegueInventario.appendChild(inventarioGrid);
 
 
+
         inventarioGrid.addEventListener('click', (e) => {
             // Si se selecciona actulizar producto  en algún card
+            e.preventDefault();
             console.log(e.target.classList);
             if (e.target.classList == 'botonactualizar') {
                 abrirModalActualizarProducto(e);
@@ -776,7 +795,7 @@ function mostrarCards(inventario, proveedores, categorias) {
 
 
             }
-            if (e.target.classList == 'botonactualizarstock') {
+            if (e.target.classList == 'botonactualizarstock' && !e.target.classList.contains('crearVariante')) {
                 console.log(granel);
                 const h3ModalAS = document.querySelector('.modal--inventario--actualizarStock__titulo').querySelector('H3');
                 h3ModalAS.innerHTML = `Actualiza la cantidad en Stock de ${nombre}`;
@@ -824,6 +843,53 @@ function mostrarCards(inventario, proveedores, categorias) {
                     }
                 })
 
+
+            }
+            if (e.target.classList.contains('crearVariante')) {
+                console.log('Es crear variante')
+                abrirModalNuevoProducto(e);
+                const h1Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H1');
+                h1Modal.innerHTML = 'Crear Variante de Producto';
+                const h3Modal = document.querySelector('.modal--inventario__contenedor').querySelector('H3');
+                h3Modal.innerHTML = `Edita los datos de la variante de ${nombre}`;
+
+                // const cardActualizar = e.target.
+                const inputNombre = document.querySelector('.modal--inventario__contenedor').querySelector('#nombreproductoentrada');
+
+                const inputDescripcion = document.querySelector('.modal--inventario__contenedor').querySelector('#descripcioninv');
+
+                const inputCodigo = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacodigo_barras');
+
+                const inputCategoria = document.querySelector('.modal--inventario__contenedor').querySelector('#entradacategoria');
+
+                const inputProveedor = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaproveedor');
+
+
+                if (granel === '1') {
+                    const inputGranel = modalInventario.querySelector('#optiongranel');
+                    inputGranel.click()
+                } else {
+                    const inputPieza = modalInventario.querySelector('#optionpieza');
+                    inputPieza.click()
+                }
+
+
+                const inputPrecioCompra = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_compra');
+
+                const inputPrecioVenta = document.querySelector('.modal--inventario__contenedor').querySelector('#entradaprecio_unitario_venta');
+
+
+                inputNombre.value = `${nombre}`;
+                inputDescripcion.value = `${descripcion}`;
+                inputCodigo.value = ``;
+                inputCategoria.value = `${categoria_id}`;
+                inputProveedor.value = `${proveedor_id}`;
+                inputPrecioCompra.value = `${precio_compra}`;
+                inputPrecioVenta.value = `${precio_unitario_venta}`;
+
+
+                const vistaPreviaImagen = modalInventario.querySelector('#vistaPreviaImagen');
+                vistaPreviaImagen.src = `/imagenes/${imagen}`;
 
             }
 

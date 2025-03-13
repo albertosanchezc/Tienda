@@ -367,6 +367,16 @@ pagarForm.addEventListener('submit', function (e) {
     alertas.forEach(alerta => alerta.remove());
 
     let errores = [];
+    let cambio = document.querySelector('.modal--pagar__title').textContent;
+
+    const match = cambio.match(/\$(\d+(\.\d+)?)/);
+    
+
+    
+
+
+
+
 
     const pagado = document.querySelector('.modal--pagar__close').value.trim();
     if (!pagado) {
@@ -375,6 +385,10 @@ pagarForm.addEventListener('submit', function (e) {
     if (pagado <= 0) {
         errores.push('La cantidad con la que se paga debe ser mayor a cero');
     }
+    if (pagado < match[1]) {
+        errores.push('La cantidad con la que se paga no puede ser menor al total');
+    }
+
     // Mostrar errores
     if (errores.length > 0) {
         errores.forEach(error => {
@@ -389,13 +403,13 @@ pagarForm.addEventListener('submit', function (e) {
 
         const alertaExito = document.createElement('div');
         alertaExito.className = 'alerta exito';
-        alertaExito.textContent = 'Creado con éxito';
+        alertaExito.textContent = 'Pagado con éxito';
         pagarForm.prepend(alertaExito);
 
         setTimeout(() => {
             this.submit();
 
-        }, 3000);
+        }, 2000);
     }
 });
 
