@@ -25,16 +25,22 @@ class ProveedoresController
         // debuguear($resultado);
 
         if($_SERVER['REQUEST_METHOD']==="POST"){
+            debuguear($_POST);
             
             $proveedores = new Proveedor();
             $alertas = Proveedor::getAlertas();
             $argsAniadirProveedor = $_POST['aniadirProveedor'];
-            // debuguear($_POST);
+            $argsActualizarProveedor = $_POST['proveedoresActualizar'];
+
             $metodoAniadir = !empty($argsAniadirProveedor);
+            $metodoActualizar = !empty($argsActualizarProveedor);
 
             if($metodoAniadir){
                 $proveedores->sincronizar($argsAniadirProveedor);
                 $proveedores->guardar();
+            } elseif($metodoActualizar){
+                $proveedores->sincronizar($argsActualizarProveedor);
+                $proveedores->guardar();                
             }
         }
 
