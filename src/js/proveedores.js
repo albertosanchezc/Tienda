@@ -50,6 +50,7 @@ const btnCerrarModalEliminarNo = document.querySelector('.modalproveedores--elim
 const inputNombreActualizar = document.querySelector('.modalproveedores--actualizar__inputNombre');
 const inputTelefonoActualizar = document.querySelector('.modalproveedores--actualizar__inputTelefono');
 const inputEmailActualizar = document.querySelector('.modalproveedores--actualizar__inputEmail');
+const inputIdActualizar = document.createElement('input');
 
 
 
@@ -271,10 +272,14 @@ btnCerrarModalActualizar.addEventListener('click', (e) => {
 
 modalEliminar.addEventListener('click', (e) => {
   e.preventDefault();
+
+
+
   if (e.target.classList.contains('modalproveedores--eliminar__no')) {
     modalEliminar.classList.remove('modalproveedores--eliminar--show');
   } else if (e.target.classList.contains('modalproveedores--eliminar__si')) {
-    console.log('eliminando');
+    // console.log('eliminando');
+    document.getElementById('eliminarProveedores').submit();
   }
 });
 
@@ -850,9 +855,22 @@ function proveedoresEventos(e) {
     inputNombreActualizar.value = objetoProveedor.nombre;
     inputTelefonoActualizar.value = objetoProveedor.telefono;
     inputEmailActualizar.value = objetoProveedor.email;
+    inputIdActualizar.name = 'proveedoresActualizar[id]';
+    inputIdActualizar.type = 'hidden';
+    inputIdActualizar.value = idProveedor;
+
+
+    inputEmailActualizar.after(inputIdActualizar);
+
+
     modalActualizar.classList.add('modalproveedores--actualizar--show');
 
   } else if (e.target.classList.contains('modalproveedores__botoneliminar')) {
     modalEliminar.classList.add('modalproveedores--eliminar--show');
+    inputIdActualizar.name = 'proveedoresEliminar[id]';
+    inputIdActualizar.type = 'hidden';
+    inputIdActualizar.value = idProveedor;
+
+    document.querySelector('.modalproveedores--eliminar__si').after(inputIdActualizar);
   }
 }
