@@ -21,10 +21,11 @@ let productos = [];
 let inventario = [];
 let ventas = [];
 let totalVisitasPorProveedor = {};
-let totalVentasPorProveedor ={};
+let totalVentasPorProveedor = {};
+let totalGananciaPorProveedor = {};
 let rankingFrecuencia = {};
 let rankingVentas = {};
-
+let rankingGanancia = {};
 
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
 const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores--aniadir__refcerrar');
@@ -84,6 +85,7 @@ async function consultarAPI() {
     productos = resultado.productos;
     inventario = resultado.inventario;
     ventas = resultado.ventas;
+    ventas = ventas.filter(venta => venta.cancelacion === '0');
     // filtrar();
     // mostrarProveedores(proveedores);
     // mostrartabla(visitas_proveedor, proveedores);
@@ -198,18 +200,32 @@ btnAbrirBuscarProveedores.addEventListener('click', () => {
     if (fechaVentas >= inicioRango && fechaVentas <= finRango) {
       const proveedorIdV = venta.proveedor_id;
       const precioVenta = parseFloat(venta.precio_venta);
+      const precioCompra = parseFloat(venta.precio_compra);
       const cantidad = parseInt(venta.cantidad, 10);
       const costoTotalVenta = precioVenta * cantidad;
+      let costoTotalGanancia = 0;
+
+      if (venta.granel === '0') {
+        costoTotalGanancia = (precioVenta - precioCompra) * cantidad;
+      } else {
+        costoTotalGanancia = ((precioVenta - precioCompra) * cantidad) / 1000;
+      }
 
       if (!totalVentasPorProveedor[proveedorIdV]) {
         totalVentasPorProveedor[proveedorIdV] = 0;
       }
       totalVentasPorProveedor[proveedorIdV] += costoTotalVenta;
+
+      if (!totalGananciaPorProveedor[proveedorIdV]) {
+        totalGananciaPorProveedor[proveedorIdV] = 0;
+      }
+      totalGananciaPorProveedor[proveedorIdV] += costoTotalGanancia;
     }
   });
 
   console.log(totalVisitasPorProveedor);
   console.log(totalVentasPorProveedor);
+  console.log(totalGananciaPorProveedor);
 
 
   const totalVisitasJuntosConProveedores = proveedores.map((proveedor) => ({
@@ -224,30 +240,50 @@ btnAbrirBuscarProveedores.addEventListener('click', () => {
     ventas: totalVentasPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
   }));
 
+  const totalGananciaJuntosConProveedores = proveedores.map((proveedor) => ({
+    id: proveedor.id,
+    nombre: proveedor.nombre,
+    ganancia: totalGananciaPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
+  }));
+
   console.log(totalVisitasJuntosConProveedores);
   console.log(totalVentasJuntosConProveedores);
+  console.log(totalGananciaJuntosConProveedores);
+
 
   totalVisitasJuntosConProveedores.sort((a, b) => b.visitas - a.visitas);
   totalVentasJuntosConProveedores.sort((a, b) => b.ventas - a.ventas);
+  totalGananciaJuntosConProveedores.sort((a, b) => b.ganancia - a.ganancia);
 
-  const maxVisitas = totalVisitasJuntosConProveedores[0].visitas; 
+
+  const maxVisitas = totalVisitasJuntosConProveedores[0].visitas;
   const minVisitas = totalVisitasJuntosConProveedores[totalVisitasJuntosConProveedores.length - 1].visitas;
 
-  const maxVentas = totalVentasJuntosConProveedores[0].ventas; 
+  const maxVentas = totalVentasJuntosConProveedores[0].ventas;
   const minVentas = totalVentasJuntosConProveedores[totalVentasJuntosConProveedores.length - 1].ventas;
+
+  const maxGanancia = totalGananciaJuntosConProveedores[0].ganancia;
+  const minGanancia = totalGananciaJuntosConProveedores[totalGananciaJuntosConProveedores.length - 1].ganancia;
 
   const normalizarLugar = (visitas) => {
     if (maxVisitas === minVisitas) {
-      return 1; 
+      return 1;
     }
     return Math.floor(((maxVisitas - visitas) / (maxVisitas - minVisitas)) * 9) + 1;
   };
 
   const normalizarLugarVentas = (ventas) => {
     if (maxVentas === minVentas) {
-      return 1; 
+      return 1;
     }
     return Math.floor(((maxVentas - ventas) / (maxVentas - minVentas)) * 9) + 1;
+  };
+
+  const normalizarLugarGanancia = (ganancia) => {
+    if (maxGanancia === minGanancia) {
+      return 1;
+    }
+    return Math.floor(((maxGanancia - ganancia) / (maxGanancia - minGanancia)) * 9) + 1;
   };
 
   rankingFrecuencia = totalVisitasJuntosConProveedores.map((proveedor) => ({
@@ -264,9 +300,16 @@ btnAbrirBuscarProveedores.addEventListener('click', () => {
     lugar: normalizarLugarVentas(proveedor.ventas), // Lugar normalizado del 1 al 10
   }));
 
+  rankingGanancia = totalGananciaJuntosConProveedores.map((proveedor) => ({
+    id: proveedor.id,
+    nombre: proveedor.nombre,
+    ganancia: proveedor.ganancia,
+    lugar: normalizarLugarGanancia(proveedor.ganancia), // Lugar normalizado del 1 al 10
+  }));
+
   console.log(rankingFrecuencia);
   console.log(rankingVentas);
-
+  console.log(rankingGanancia);
 
   // mostrarProveedores(proveedores);
   mostrarPaginaModal(1, proveedores);
@@ -543,40 +586,57 @@ function mostrarProveedores(proveedores) {
 
     let proveedorRanking = rankingFrecuencia.find(ranking => ranking.id === proveedor.id);
     let proveedorRankingVentas = rankingVentas.find(ventas => ventas.id === proveedor.id);
-
+    let proveedorRankingGanancia = rankingGanancia.find(ganancia => ganancia.id === proveedor.id);
 
     let numeroRanking = Number(proveedorRanking.lugar);
     let numeroRankingVentas = Number(proveedorRankingVentas.lugar);
+    let numeroRankingGanancia = Number(proveedorRankingGanancia.lugar);
     let textoRanking = '';
     let claseRanking = '';
     let textoRankingVentas = '';
     let claseRankingVentas = '';
+    let textoRankingGanancia = '';
+    let claseRankingGanancia = '';
 
-    if (numeroRanking===10 || numeroRanking===9 || numeroRanking===8){
+    if (numeroRanking === 10 || numeroRanking === 9 || numeroRanking === 8) {
       textoRanking = `&#9733; ${numeroRanking}/10° MÁS FRECUENTE`;
       claseRanking = 'rankingRojo';
 
-    } else if (numeroRanking===7 || numeroRanking===6 || numeroRanking===5 || numeroRanking===4){
+    } else if (numeroRanking === 7 || numeroRanking === 6 || numeroRanking === 5 || numeroRanking === 4) {
       textoRanking = `&#9733; &#9733; &#9733; ${numeroRanking}/10° MÁS FRECUENTE`;
       claseRanking = 'rankingNaranja';
 
-    } else if (numeroRanking===3 || numeroRanking===2 || numeroRanking===1){
+    } else if (numeroRanking === 3 || numeroRanking === 2 || numeroRanking === 1) {
       textoRanking = `&#9733; &#9733; &#9733; &#9733; &#9733; ${numeroRanking}/10° MÁS FRECUENTE`;
       claseRanking = 'rankingVerde';
 
     }
 
-    if (numeroRankingVentas===10 || numeroRankingVentas===9 || numeroRankingVentas===8){
+    if (numeroRankingVentas === 10 || numeroRankingVentas === 9 || numeroRankingVentas === 8) {
       textoRankingVentas = `&#9733; ${numeroRankingVentas}/10° CON MÁS VENTAS`;
       claseRankingVentas = 'rankingRojo';
 
-    } else if (numeroRankingVentas===7 || numeroRankingVentas===6 || numeroRankingVentas===5 || numeroRankingVentas===4){
+    } else if (numeroRankingVentas === 7 || numeroRankingVentas === 6 || numeroRankingVentas === 5 || numeroRankingVentas === 4) {
       textoRankingVentas = `&#9733; &#9733; &#9733; ${numeroRankingVentas}/10° CON MÁS VENTAS`;
       claseRankingVentas = 'rankingNaranja';
 
-    } else if (numeroRankingVentas===3 || numeroRankingVentas===2 || numeroRankingVentas===1){
+    } else if (numeroRankingVentas === 3 || numeroRankingVentas === 2 || numeroRankingVentas === 1) {
       textoRankingVentas = `&#9733; &#9733; &#9733; &#9733; &#9733; ${numeroRankingVentas}/10° CON MÁS VENTAS`;
       claseRankingVentas = 'rankingVerde';
+
+    }
+
+    if (numeroRankingGanancia === 10 || numeroRankingGanancia === 9 || numeroRankingGanancia === 8) {
+      textoRankingGanancia = `&#9733; ${numeroRankingGanancia}/10° CON MÁS GANANCIA`;
+      claseRankingGanancia = 'rankingRojo';
+
+    } else if (numeroRankingGanancia === 7 || numeroRankingGanancia === 6 || numeroRankingGanancia === 5 || numeroRankingGanancia === 4) {
+      textoRankingGanancia = `&#9733; &#9733; &#9733; ${numeroRankingGanancia}/10° CON MÁS GANANCIA`;
+      claseRankingGanancia = 'rankingNaranja';
+
+    } else if (numeroRankingGanancia === 3 || numeroRankingGanancia === 2 || numeroRankingGanancia === 1) {
+      textoRankingGanancia = `&#9733; &#9733; &#9733; &#9733; &#9733; ${numeroRankingGanancia}/10° MÁS GANANCIA`;
+      claseRankingGanancia = 'rankingVerde';
 
     }
 
@@ -608,10 +668,10 @@ function mostrarProveedores(proveedores) {
     subtitulo1.innerHTML = `${textoRanking}`;
     const subtitulo2 = document.createElement('P');
     subtitulo2.classList.add('modalproveedores__pVentas', claseRankingVentas);
-    subtitulo2.innerHTML =  `${textoRankingVentas}`;
+    subtitulo2.innerHTML = `${textoRankingVentas}`;
     const subtitulo3 = document.createElement('P');
-    subtitulo3.classList.add('modalproveedores__pGanancia', 'rankingRojo');
-    subtitulo3.innerHTML = '&#9733; 9/10° CON MÁS GANANCIA';
+    subtitulo3.classList.add('modalproveedores__pGanancia', claseRankingGanancia);
+    subtitulo3.innerHTML = `${textoRankingGanancia}`;
     const flexTelefono = document.createElement('DIV');
     flexTelefono.classList.add('modalproveedores__flextelefono');
     const imgTelefono = document.createElement('IMG');
@@ -663,10 +723,13 @@ function mostrarProveedores(proveedores) {
     ultimaVisita.textContent = `Últ. Visita: ${visitaMasReciente}`;
 
     let totalVisitasProveedorActual = proveedorRanking.visitas;
+    let totalVentasProveedorActual = proveedorRankingVentas.ventas;
+    let totalGananciaProveedorActual = proveedorRankingGanancia.ganancia;
+
 
     const medallas = document.createElement('DIV');
     medallas.classList.add('modalproveedores__ultimoregistro', 'modalproveedores__ultimoregistrovisita');
-    medallas.textContent = `ESTA SEMANA: ${totalVisitasProveedorActual} VISITAS/ $160 EN VENTAS/ $160 DE GANANCIA `;
+    medallas.textContent = `ESTA SEMANA: ${totalVisitasProveedorActual} VISITAS/ $${totalVentasProveedorActual} EN VENTAS/ $${totalGananciaProveedorActual} DE GANANCIA `;
 
     flexReloj.appendChild(imgReloj);
     flexReloj.appendChild(ultimaVisita);
