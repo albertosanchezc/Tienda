@@ -192,17 +192,19 @@ btnAbrirBuscarProveedores.addEventListener('click', () => {
   });
 
   ventas.forEach((venta) => {
-    const fechaVentas = new Date(venta.fecha);
+    const fechaVentas = new Date(venta.fecha_venta);
     if (fechaVentas >= inicioRango && fechaVentas <= finRango) {
       const proveedorIdV = venta.proveedor_id;
-      if (!totalVisitasPorProveedor[proveedorId]) {
-        totalVisitasPorProveedor[proveedorId] = 0;
+      if (!totalVentasPorProveedor[proveedorIdV]) {
+        totalVentasPorProveedor[proveedorIdV] = 0;
       }
-      totalVisitasPorProveedor[proveedorId]++;
+      totalVentasPorProveedor[proveedorIdV]++;
     }
   });
 
   console.log(totalVisitasPorProveedor);
+  console.log(totalVentasPorProveedor);
+
 
   const totalVisitasJuntosConProveedores = proveedores.map((proveedor) => ({
     id: proveedor.id,
@@ -210,7 +212,14 @@ btnAbrirBuscarProveedores.addEventListener('click', () => {
     visitas: totalVisitasPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
   }));
 
+  const totalVentasJuntosConProveedores = proveedores.map((proveedor) => ({
+    id: proveedor.id,
+    nombre: proveedor.nombre,
+    visitas: totalVisitasPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
+  }));
+
   console.log(totalVisitasJuntosConProveedores);
+  console.log(totalVentasJuntosConProveedores);
 
   totalVisitasJuntosConProveedores.sort((a, b) => b.visitas - a.visitas);
 
