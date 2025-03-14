@@ -388,6 +388,12 @@ pagarForm.addEventListener('submit', function (e) {
     if (pagado < match[1]) {
         errores.push('La cantidad con la que se paga no puede ser menor al total');
     }
+    console.log(pagado)
+    const pagadoCorregido = `${pagado}.00`;
+    const pagadoCorregido1 = `${pagado}0`;
+    if(pagado == match[1] || pagadoCorregido == match[1] || pagadoCorregido1 == match[1]){
+        errores = [];
+    }
 
     // Mostrar errores
     if (errores.length > 0) {

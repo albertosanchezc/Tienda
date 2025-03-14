@@ -215,7 +215,7 @@ btnAbrirBuscarProveedores.addEventListener('click', () => {
   const totalVentasJuntosConProveedores = proveedores.map((proveedor) => ({
     id: proveedor.id,
     nombre: proveedor.nombre,
-    visitas: totalVisitasPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
+    ventas: totalVisitasPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
   }));
 
   console.log(totalVisitasJuntosConProveedores);

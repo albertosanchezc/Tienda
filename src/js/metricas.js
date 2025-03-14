@@ -61,6 +61,22 @@ function procesarDatos(datos, labelKey, dataKey) {
 let chartId = {};
 
 
+function calcularTotales(ventasAgrupadas) {
+    return ventasAgrupadas.map(grupo => {
+        const producto_id = grupo[0].producto_id; // Tomamos el ID del primer elemento del grupo
+        const producto_completo = grupo[0].producto_completo; // Nombre del producto
+
+        // Sumamos la cantidad total de ese producto
+        const totalCantidad = grupo.reduce((sum, item) => sum + item.cantidad, 0);
+
+        return {
+            producto_id,
+            producto_completo,
+            totalCantidad
+        };
+    });
+}
+
 
 
 function crearGrafica1() {
@@ -105,26 +121,16 @@ function generateRandomColors(array) {
 
 
 function agruparPorProducto(ventas) {
-    return ventas.reduce((agrupado, venta) => {
-        const { producto_id, producto_completo, cantidad } = venta;
-
-        if (!agrupado[producto_id]) {
-            agrupado[producto_id] = {
-                producto_id,
-                producto_completo,
-                total_cantidad: 0,
-                ventas: []
-            };
+    const agrupadoPorProducto = ventas.reduce((acc, item) => {
+        if (!acc[item.producto_id]) {
+            acc[item.producto_id] = [];
         }
-
-        // Sumar la cantidad total
-        agrupado[producto_id].total_cantidad += cantidad;
-
-        // Agregar la venta al grupo
-        agrupado[producto_id].ventas.push(venta);
-
-        return agrupado;
+        acc[item.producto_id].push(item);
+        return acc;
     }, {});
+
+    // Convertimos el objeto en un array de arreglos
+    return Object.values(agrupadoPorProducto);
 }
 
 // Función para crear gráficos
