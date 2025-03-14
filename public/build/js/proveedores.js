@@ -723,13 +723,13 @@ function mostrarProveedores(proveedores) {
     ultimaVisita.textContent = `Últ. Visita: ${visitaMasReciente}`;
 
     let totalVisitasProveedorActual = proveedorRanking.visitas;
-    let totalVentasProveedorActual = proveedorRankingVentas.ventas;
-    let totalGananciaProveedorActual = proveedorRankingGanancia.ganancia;
+    let totalVentasProveedorActual = Number(proveedorRankingVentas.ventas).toFixed(2);
+    let totalGananciaProveedorActual = Number(proveedorRankingGanancia.ganancia).toFixed(2);
 
 
     const medallas = document.createElement('DIV');
     medallas.classList.add('modalproveedores__ultimoregistro', 'modalproveedores__ultimoregistrovisita');
-    medallas.textContent = `ESTA SEMANA: ${totalVisitasProveedorActual.tofixed(2)} VISITAS/ $${totalVentasProveedorActual.tofixed(2)} EN VENTAS/ $${totalGananciaProveedorActual.tofixed(2)} DE GANANCIA `;
+    medallas.textContent = `ESTA SEMANA: ${totalVisitasProveedorActual} VISITAS/ $${totalVentasProveedorActual} EN VENTAS/ $${totalGananciaProveedorActual} DE GANANCIA `;
 
     flexReloj.appendChild(imgReloj);
     flexReloj.appendChild(ultimaVisita);
