@@ -38,8 +38,23 @@
     <div class="estadisticas">
         <!-- Gráficas -->
         <div>
-            <p>Tus Productos Se Pidieron En Estas Cantidades</p>
+            <p>Top n de Productos Vendidos</p>
             <canvas id="myChart1" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart2" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Ganancias Por Productos Vendidos</p>
+            <canvas id="myChart3" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart4" width="400" height="400"></canvas>
         </div>
 
     </div>

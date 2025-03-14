@@ -1,6 +1,9 @@
 
 
 const ctx1 = document.getElementById('myChart1').getContext('2d');
+const ctx2 = document.getElementById('myChart2').getContext('2d');
+const ctx3 = document.getElementById('myChart3').getContext('2d');
+
 
 let ventas = [];
 let ventasGranel = [];
@@ -42,6 +45,7 @@ async function consultarAPI() {
         inventario = datos.inventario;
         cajas_historicos = datos.cajas_historicos;
         crearGrafica1();
+        crearGrafica2();
 
         console.log(inventario)
 
@@ -64,10 +68,10 @@ let chartId = {};
 function calcularTotales(ventasAgrupadas) {
     return ventasAgrupadas.map(grupo => {
         const producto_id = grupo[0].producto_id; // Tomamos el ID del primer elemento del grupo
-        const producto_completo = grupo[0].producto_completo; // Nombre del producto
+        const producto_completo = grupo[0].producto; // Nombre del producto
 
         // Sumamos la cantidad total de ese producto
-        const totalCantidad = grupo.reduce((sum, item) => sum + item.cantidad, 0);
+        const totalCantidad = grupo.reduce((sum, item) => sum + parseInt(item.cantidad), 0);
 
         return {
             producto_id,
@@ -92,20 +96,60 @@ function crearGrafica1() {
     let datos = agruparPorProducto(datosFiltrados);
 
     console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20(totales);
+    const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx1, 'line', etiquetas, valores, 'Cantidad de Ventas por Producto', backgroundColors1);
 
-    const { etiquetas, valores } = procesarDatos(datos, 'producto', 'cantidad')
-    // datosFiltrados.forEach(item => {
-    //     const nombrePlatillo = item.nombre_platillo;
-    //     if (!productos1[nombrePlatillo]) {
-    //         platillos1[nombrePlatillo] = 0;
-    //     }
-    //     platillos1[nombrePlatillo] += parseInt(item.total_cantidad, 10);
-    // });
 
+}
+
+function crearGrafica2() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventasGranel;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20(totales);
+    const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
 
-    console.log(backgroundColors1);
-    createChart(ctx1, 'bar', etiquetas, valores, 'Total de Ventas por Producto', backgroundColors1);
+    createChart(ctx2, 'bar', etiquetas, valores, 'Ventas por gramos', backgroundColors1);
+
+
+}
+
+function crearGrafica3() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventas;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20(totales);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx3, 'line', etiquetas, valores, 'Cantidad de Ventas por Producto', backgroundColors1);
 
 
 }
@@ -119,6 +163,12 @@ function generateRandomColors(array) {
     });
 }
 
+
+function obtenerTop20(totales) {
+    return totales
+        .sort((a, b) => b.totalCantidad - a.totalCantidad) // Ordenar de mayor a menor
+        .slice(0, 50); // Tomar los primeros 20 elementos
+}
 
 function agruparPorProducto(ventas) {
     const agrupadoPorProducto = ventas.reduce((acc, item) => {
