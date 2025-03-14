@@ -19,6 +19,8 @@ let visitas_proveedor = [];
 let visita_producto = [];
 let productos = [];
 let inventario = [];
+let totalVisitasPorProveedor = {};
+let rankingFrecuencia = {};
 
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
 const botonCerrarModalNuevoProveedor = document.querySelector('.modalproveedores--aniadir__refcerrar');
@@ -170,6 +172,35 @@ inputRadioSaldo.addEventListener('click', (e) => {
 
 btnAbrirBuscarProveedores.addEventListener('click', () => {
   modalProveedores.classList.add('modalproveedores--show');
+
+  visitas_proveedor.forEach((visita) =>{
+    const proveedorId = visita.proveedor_id;
+    if (!totalVisitasPorProveedor[proveedorId]) {
+      totalVisitasPorProveedor[proveedorId] = 0;
+    }
+    totalVisitasPorProveedor[proveedorId]++;
+  });
+
+  console.log(totalVisitasPorProveedor);
+
+  const totalVisitasJuntosConProveedores = proveedores.map((proveedor) => ({
+    id: proveedor.id,
+    nombre: proveedor.nombre,
+    visitas: totalVisitasPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
+  }));
+
+  console.log(totalVisitasJuntosConProveedores);
+
+  totalVisitasJuntosConProveedores.sort((a, b) => b.visitas - a.visitas);
+
+   rankingFrecuencia = totalVisitasJuntosConProveedores.map((proveedor, index) => ({
+    id: proveedor.id,
+    nombre: proveedor.nombre,
+    visitas: proveedor.visitas,
+    lugar: index + 1, // index + 1 porque los rankings comienzan en 1
+  }));
+
+  console.log(rankingFrecuencia);
   // mostrarProveedores(proveedores);
   mostrarPaginaModal(1, proveedores);
   generarPaginador(proveedores);
@@ -437,43 +468,6 @@ function mostrarProveedores(proveedores) {
   console.log(proveedores);
   const contenedorProveedores = document.querySelector('.modalproveedores__contactoproveedores');
   contenedorProveedores.innerHTML = '';
-
-  const totalVisitasPorProveedor = {};
-
-
-  visitas_proveedor.forEach((visita) =>{
-    const proveedorId = visita.proveedor_id;
-    if (!totalVisitasPorProveedor[proveedorId]) {
-      totalVisitasPorProveedor[proveedorId] = 0;
-    }
-    totalVisitasPorProveedor[proveedorId]++;
-  });
-
-  console.log(totalVisitasPorProveedor);
-
-
-  const totalVisitasJuntosConProveedores = proveedores.map((proveedor) => ({
-    id: proveedor.id,
-    nombre: proveedor.nombre,
-    visitas: totalVisitasPorProveedor[proveedor.id] || 0, // Si no hay visitas, se asigna 0
-  }));
-
-  console.log(totalVisitasJuntosConProveedores[0]);
-
-
-  totalVisitasJuntosConProveedores.sort((a, b) => b.visitas_proveedor - a.visitas_proveedor);
-
-
-  const rankingFrecuencia = totalVisitasJuntosConProveedores.map((proveedor, index) => ({
-    id: proveedor.id,
-    nombre: proveedor.nombre,
-    visitas: proveedor.visitas,
-    lugar: index + 1, // index + 1 porque los rankings comienzan en 1
-  }));
-
-  console.log(rankingFrecuencia);
-  
-
 
   proveedores.forEach(proveedor => {
 
