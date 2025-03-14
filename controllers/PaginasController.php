@@ -35,24 +35,25 @@ class PaginasController
     public static function inventarioAPI()
     {
         $inventario = Inventario_completo::join2('productos', 'inventario');
-        
-        $categorias = Categorias::ALF('nombre','ASC');
-        $proveedores = Proveedor::ALF('nombre','ASC');
+
+        $categorias = Categorias::ALF('nombre', 'ASC');
+        $proveedores = Proveedor::ALF('nombre', 'ASC');
         $ventas = Ventas::all();
-        
+
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
             'inventario' => $inventario,
             'categorias' => $categorias,
             'proveedores' => $proveedores,
             'ventas' => $ventas
-            
+
         ]);
     }
 
-    
 
-    public static function cajaAPI(){
+
+    public static function cajaAPI()
+    {
         $caja = Caja::find(1);
         $cajas_historicos = Caja_historico::all();
         echo json_encode([
@@ -61,15 +62,17 @@ class PaginasController
         ]);
     }
 
-    public static function categoriasAPI(){
-        $categorias = Categorias::ALF('nombre','ASC');
+    public static function categoriasAPI()
+    {
+        $categorias = Categorias::ALF('nombre', 'ASC');
 
         echo json_encode([
             'categorias' => $categorias
         ]);
     }
 
-    public static function ventasAPI(){
+    public static function ventasAPI()
+    {
         $ventas = Ventas_Completas::obtenerVentas();
         $inventario = Inventario_completo::join2('productos', 'inventario');
         $caja = Caja::find(1);
@@ -80,59 +83,77 @@ class PaginasController
             'ventas' => $ventas,
             'inventario' => $inventario,
             'caja' => $caja,
-            
+
         ]);
     }
-    
 
-    
-   
+    public static function metricasAPI()
+    {
+        $ventas = Ventas_Completas::obtenerVentasConcat();
+        $inventario = Inventario_completo::join2('productos', 'inventario');
+        $cajas_historicos = Caja_historico::all();
+
+        echo json_encode([
+            'ventas' => $ventas,
+            'inventario' => $inventario,
+            'cajas_historicos' => $cajas_historicos
+
+        ]);
+    }
+
+
+
     public static function metricas(Router $router)
     {
         $titulo = 'Métricas';
 
-        $router->render('estadisticas/ver',[
-            'titulo' => $titulo
+        $script = '<script src="/build/js/metricas.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />';
+
+        $router->render('estadisticas/ver', [
+            'titulo' => $titulo,
+            'script' => $script
+
         ]);
     }
 
 
 
-//     public static function proveedores(Router $router)
-//     {
-//         $script = '<script src="/build/js/proveedores.js"></script>
-//         <link rel="preconnect" href="https://fonts.googleapis.com" />';
-//         $alertas = [];
+    //     public static function proveedores(Router $router)
+    //     {
+    //         $script = '<script src="/build/js/proveedores.js"></script>
+    //         <link rel="preconnect" href="https://fonts.googleapis.com" />';
+    //         $alertas = [];
 
-//         $proveedores = Proveedor::all();
-//         $titulo = 'Proveedores';
-//         $resultado = $_GET['resultado'] ?? null;
-//         $alertas = Proveedor::getErrores();
-//         // debuguear($resultado);
+    //         $proveedores = Proveedor::all();
+    //         $titulo = 'Proveedores';
+    //         $resultado = $_GET['resultado'] ?? null;
+    //         $alertas = Proveedor::getErrores();
+    //         // debuguear($resultado);
 
-//         if($_SERVER['REQUEST_METHOD']==="POST"){
-            
-//             $proveedores = new Proveedor();
-//             $alertas = Proveedor::getErrores();
-//             $args = $_POST['proveedores'];
-//             $proveedores->sincronizar($args);
-//             $alertas = $proveedores->validar();
-// // debuguear($alertas);
-//             if(empty($alertas)){
-//                 $proveedores->guardar();
-//                 header('Location: /proveedores?resultado=2');
-//             }
-//         }
+    //         if($_SERVER['REQUEST_METHOD']==="POST"){
 
-//         // debuguear($proveedores);
-//         $router->render('paginas/proveedores', [
-//             'script' => $script,
-//             'titulo' => $titulo,
-//             'proveedores' => $proveedores,
-//             'resultado' => $resultado,
-//             'alertas'=> $alertas
-//         ]);
-//     }
+    //             $proveedores = new Proveedor();
+    //             $alertas = Proveedor::getErrores();
+    //             $args = $_POST['proveedores'];
+    //             $proveedores->sincronizar($args);
+    //             $alertas = $proveedores->validar();
+    // // debuguear($alertas);
+    //             if(empty($alertas)){
+    //                 $proveedores->guardar();
+    //                 header('Location: /proveedores?resultado=2');
+    //             }
+    //         }
+
+    //         // debuguear($proveedores);
+    //         $router->render('paginas/proveedores', [
+    //             'script' => $script,
+    //             'titulo' => $titulo,
+    //             'proveedores' => $proveedores,
+    //             'resultado' => $resultado,
+    //             'alertas'=> $alertas
+    //         ]);
+    //     }
 
     public static function propiedades(Router $router)
     {
@@ -250,7 +271,7 @@ class PaginasController
         $titulo = '(404) Page Not Found';
 
         $router->render('paginas/error', [
-        'titulo' => $titulo
+            'titulo' => $titulo
         ]);
     }
 }

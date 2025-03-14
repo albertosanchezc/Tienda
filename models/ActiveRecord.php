@@ -203,6 +203,7 @@ class ActiveRecord
             inventario.precio_compra AS precio_compra,
             categorias.nombre AS categoria,
             categorias.descripcion AS descripcion_categoria,
+            proveedor.id AS proveedor_id,  
             proveedor.nombre AS proveedor,  
             proveedor.telefono AS telefono_proveedor 
             FROM ventas
@@ -215,6 +216,37 @@ class ActiveRecord
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
+    public static function obtenerVentasConcat()
+    {
+        $query = "SELECT 
+            ventas.id AS id_venta,
+            ventas.producto_id AS producto_id,
+            ventas.cantidad AS cantidad,
+            ventas.carrito_id AS carrito_id,
+            ventas.fecha_venta AS fecha_venta,
+            ventas.hora_venta AS hora_venta,
+            ventas.cancelacion as cancelacion,
+            productos.id AS id_producto,
+            CONCAT(productos.nombre, ' - ', productos.descripcion) AS producto,
+            productos.imagen AS imagen_producto,
+            inventario.granel AS granel,
+            inventario.precio_unitario_venta AS precio_venta,
+            inventario.precio_compra AS precio_compra,
+            categorias.nombre AS categoria,
+            categorias.descripcion AS descripcion_categoria,
+            proveedor.nombre AS proveedor,  
+            proveedor.telefono AS telefono_proveedor 
+        FROM ventas
+        INNER JOIN productos ON ventas.producto_id = productos.id
+        INNER JOIN inventario ON inventario.producto_id = productos.id  
+        INNER JOIN categorias ON inventario.categoria_id = categorias.id  
+        INNER JOIN proveedor ON inventario.proveedor_id = proveedor.id;
+        ";
+    
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+    
 
     //Obtiene la última columna(especificada) de una tabla 
     public static function lastofTable($tabla, $columna)

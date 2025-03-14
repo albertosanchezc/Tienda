@@ -38,89 +38,12 @@
     <div class="estadisticas">
         <!-- Gráficas -->
         <div>
-            <p>Tus Platillos Se Pidieron En Estas Cantidades</p>
+            <p>Tus Productos Se Pidieron En Estas Cantidades</p>
             <canvas id="myChart1" width="400" height="400"></canvas>
-        </div>
-
-        <!-- Tarjetas de estadísticas -->
-        <div>
-            <p>Máximos y Mínimos</p>
-            <div class="metricas">
-                <div id="card-maximos" class="card">
-                    <h2>Estos platillos fueron los más pedidos</h2>
-                    <!-- Aquí se agregarán los platillos más pedidos -->
-                </div>
-                <div id="card-minimos" class="card">
-                    <h2>Estos platillos fueron los menos pedidos</h2>
-                    <!-- Aquí se agregarán los platillos menos pedidos -->
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <p>Cantidad de mesas que pidieron los platillos</p>
-            <canvas id="myChart2" width="400" height="400"></canvas>
-        </div>
-
-        <div>
-            <p>Variedad de Mesas que Pidieron</p>
-            <div class="metricas">
-                <div id="card-mas-mesas" class="card">
-                    <h2>Estos platillos se pidieron en más mesas</h2>
-                    <!-- Aquí se agregarán los platillos con más mesas -->
-                </div>
-                <div id="card-menos-mesas" class="card">
-                    <h2>Estos platillos se pidieron en menos mesas</h2>
-                    <!-- Aquí se agregarán los platillos con menos mesas -->
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <p>Total de ventas por platillo</p>
-            <canvas id="myChart3" width="400" height="400"></canvas>
-        </div>
-
-        <div>
-            <p>Métricas a considerar</p>
-            <div class="metricas">
-                <div id="card-metricas" class="card">
-                    <h2>Total de Ventas</h2>
-                    <p id="totalVentas">$0</p>
-                    <h2>Promedio de Consumo por Mesa</h2>
-                    <p id="promedio">$0</p>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <p>Patrón Semanal de Ventas</p>
-            <canvas id="myChart4" width="400" height="400"></canvas>
-        </div>
-
-        <div>
-            <p>Concurrencia de las Mesas</p>
-            <canvas id="myChart5" width="400" height="400"></canvas>
-        </div>
-
-        <div>
-            <p>Ventas Totales por Fecha</p>
-            <canvas id="myChart6" width="400" height="400"></canvas>
-        </div>
-
-        <div>
-            <p>Ventas Totales por Hora</p>
-            <canvas id="myChart7" width="400" height="400"></canvas>
-        </div>
-
-        <div>
-            <p>Ventas Totales por Categoría</p>
-            <canvas id="myChart8" width="400" height="400"></canvas>
         </div>
 
     </div>
 
-    <script src="path/to/tu/script.js"></script>
 </body>
 
 </html>
