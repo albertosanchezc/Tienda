@@ -729,7 +729,7 @@ function mostrarProveedores(proveedores) {
 
     const medallas = document.createElement('DIV');
     medallas.classList.add('modalproveedores__ultimoregistro', 'modalproveedores__ultimoregistrovisita');
-    medallas.textContent = `ESTA SEMANA: ${totalVisitasProveedorActual} VISITAS/ $${totalVentasProveedorActual} EN VENTAS/ $${totalGananciaProveedorActual} DE GANANCIA `;
+    medallas.textContent = `ESTA SEMANA: ${totalVisitasProveedorActual.tofixed(2)} VISITAS/ $${totalVentasProveedorActual.tofixed(2)} EN VENTAS/ $${totalGananciaProveedorActual.tofixed(2)} DE GANANCIA `;
 
     flexReloj.appendChild(imgReloj);
     flexReloj.appendChild(ultimaVisita);
