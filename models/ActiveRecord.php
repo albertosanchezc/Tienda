@@ -178,7 +178,7 @@ class ActiveRecord
 
     public static function join2($primera, $segunda)
     {
-        $query = "SELECT * FROM $primera JOIN $segunda ON " . $primera . ".id = " . $segunda . ".producto_id";
+        $query = "SELECT * FROM $primera JOIN $segunda ON " . $primera . ".id = " . $segunda . ".producto_id ORDER BY " . $primera . ".nombre ASC" ;
         // debuguear($query);
         $resultado = self::consultarSQL($query);
         return $resultado;

@@ -91,7 +91,7 @@ class PaginasController
     {
         $titulo = 'Métricas';
 
-        $router->render('paginas/metricas',[
+        $router->render('estadisticas/ver',[
             'titulo' => $titulo
         ]);
     }
