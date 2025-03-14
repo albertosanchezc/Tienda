@@ -19,7 +19,9 @@ let visitas_proveedor = [];
 let visita_producto = [];
 let productos = [];
 let inventario = [];
+let ventas = [];
 let totalVisitasPorProveedor = {};
+let totalVentasPorProveedor ={};
 let rankingFrecuencia = {};
 
 const botonCerrarModal = document.querySelector('.modalproveedores__refcerrar');
@@ -54,9 +56,6 @@ const inputTelefonoActualizar = document.querySelector('.modalproveedores--actua
 const inputEmailActualizar = document.querySelector('.modalproveedores--actualizar__inputEmail');
 const inputIdActualizar = document.createElement('input');
 
-
-
-
 const texts = [
   "Busca proveedores fácilmente y gestiona su información de forma rápida, precisa y completamente organizada.",
   "Registra nuevos proveedores y organiza toda la información necesaria para mantener un control eficiente.",
@@ -82,6 +81,7 @@ async function consultarAPI() {
     visita_producto = resultado.visita_producto;
     productos = resultado.productos;
     inventario = resultado.inventario;
+    ventas = resultado.ventas;
     // filtrar();
     // mostrarProveedores(proveedores);
     // mostrartabla(visitas_proveedor, proveedores);
@@ -173,12 +173,33 @@ inputRadioSaldo.addEventListener('click', (e) => {
 btnAbrirBuscarProveedores.addEventListener('click', () => {
   modalProveedores.classList.add('modalproveedores--show');
 
-  visitas_proveedor.forEach((visita) =>{
-    const proveedorId = visita.proveedor_id;
-    if (!totalVisitasPorProveedor[proveedorId]) {
-      totalVisitasPorProveedor[proveedorId] = 0;
+  const ahora = new Date();
+  const inicioRango = new Date(ahora);
+  inicioRango.setHours(0, 0, 0, 0);
+  inicioRango.setDate(ahora.getDate() - 7);
+  const finRango = new Date(ahora);
+  finRango.setHours(23, 59, 59, 999);
+
+  visitas_proveedor.forEach((visita) => {
+    const fechaVisita = new Date(visita.fecha);
+    if (fechaVisita >= inicioRango && fechaVisita <= finRango) {
+      const proveedorId = visita.proveedor_id;
+      if (!totalVisitasPorProveedor[proveedorId]) {
+        totalVisitasPorProveedor[proveedorId] = 0;
+      }
+      totalVisitasPorProveedor[proveedorId]++;
     }
-    totalVisitasPorProveedor[proveedorId]++;
+  });
+
+  ventas.forEach((venta) => {
+    const fechaVentas = new Date(venta.fecha);
+    if (fechaVentas >= inicioRango && fechaVentas <= finRango) {
+      const proveedorIdV = venta.proveedor_id;
+      if (!totalVisitasPorProveedor[proveedorId]) {
+        totalVisitasPorProveedor[proveedorId] = 0;
+      }
+      totalVisitasPorProveedor[proveedorId]++;
+    }
   });
 
   console.log(totalVisitasPorProveedor);
@@ -193,14 +214,25 @@ btnAbrirBuscarProveedores.addEventListener('click', () => {
 
   totalVisitasJuntosConProveedores.sort((a, b) => b.visitas - a.visitas);
 
-   rankingFrecuencia = totalVisitasJuntosConProveedores.map((proveedor, index) => ({
+  const maxVisitas = totalVisitasJuntosConProveedores[0].visitas; 
+  const minVisitas = totalVisitasJuntosConProveedores[totalVisitasJuntosConProveedores.length - 1].visitas;
+
+  const normalizarLugar = (visitas) => {
+    if (maxVisitas === minVisitas) {
+      return 1; 
+    }
+    return Math.floor(((maxVisitas - visitas) / (maxVisitas - minVisitas)) * 9) + 1;
+  };
+
+  rankingFrecuencia = totalVisitasJuntosConProveedores.map((proveedor) => ({
     id: proveedor.id,
     nombre: proveedor.nombre,
     visitas: proveedor.visitas,
-    lugar: index + 1, // index + 1 porque los rankings comienzan en 1
+    lugar: normalizarLugar(proveedor.visitas), // Lugar normalizado del 1 al 10
   }));
 
   console.log(rankingFrecuencia);
+
   // mostrarProveedores(proveedores);
   mostrarPaginaModal(1, proveedores);
   generarPaginador(proveedores);
@@ -474,6 +506,27 @@ function mostrarProveedores(proveedores) {
     let visitasProveedor = visitas_proveedor.filter(visita_proveedor => visita_proveedor.proveedor_id === proveedor.id);
     let visitaMasReciente;
 
+    let proveedorRanking = rankingFrecuencia.find(ranking => ranking.id === proveedor.id);
+
+    let numeroRanking = Number(proveedorRanking.lugar);
+    let textoRanking = '';
+    let claseRanking = '';
+
+    if (numeroRanking===10 || numeroRanking===9 || numeroRanking===8){
+      textoRanking = `&#9733; ${numeroRanking}/10° MÁS FRECUENTE`;
+      claseRanking = 'rankingRojo';
+
+    } else if (numeroRanking===7 || numeroRanking===6 || numeroRanking===5 || numeroRanking===4){
+      textoRanking = `&#9733; &#9733; &#9733; ${numeroRanking}/10° MÁS FRECUENTE`;
+      claseRanking = 'rankingNaranja';
+
+    } else if (numeroRanking===3 || numeroRanking===2 || numeroRanking===1){
+      textoRanking = `&#9733; &#9733; &#9733; &#9733; &#9733; ${numeroRanking}/10° MÁS FRECUENTE`;
+      claseRanking = 'rankingVerde';
+
+    }
+
+
     if (visitasProveedor.length === 0) {
       console.log("No hay visitas para este proveedor.");
       visitaMasReciente = 'Sin Visitas'
@@ -497,14 +550,14 @@ function mostrarProveedores(proveedores) {
     const titulo = document.createElement('H3');
     titulo.textContent = proveedor.nombre;
     const subtitulo1 = document.createElement('P');
-    subtitulo1.classList.add('modalproveedores__pFrecuente', 'rankingVerde');
-    subtitulo1.innerHTML = '&#9733; &#9733; &#9733; &#9733; &#9733; 9/10 MÁS FRECUENTE';
+    subtitulo1.classList.add('modalproveedores__pFrecuente', claseRanking);
+    subtitulo1.innerHTML = `${textoRanking}`;
     const subtitulo2 = document.createElement('P');
     subtitulo2.classList.add('modalproveedores__pVentas', 'rankingNaranja');
-    subtitulo2.innerHTML = '&#9733; &#9733; &#9733; 9/10 CON MÁS VENTAS';
+    subtitulo2.innerHTML = '&#9733; &#9733; &#9733; 9/10° CON MÁS VENTAS';
     const subtitulo3 = document.createElement('P');
-    subtitulo3.classList.add('modalproveedores__pGanancia','rankingRojo');
-    subtitulo3.innerHTML = '&#9733; 9/10 CON MÁS GANANCIA';
+    subtitulo3.classList.add('modalproveedores__pGanancia', 'rankingRojo');
+    subtitulo3.innerHTML = '&#9733; 9/10° CON MÁS GANANCIA';
     const flexTelefono = document.createElement('DIV');
     flexTelefono.classList.add('modalproveedores__flextelefono');
     const imgTelefono = document.createElement('IMG');
@@ -538,17 +591,33 @@ function mostrarProveedores(proveedores) {
     const flexReloj = document.createElement('DIV');
     flexReloj.classList.add('modalproveedores__flexreloj');
 
+    const flexMedallas = document.createElement('DIV');
+    flexMedallas.classList.add('modalproveedores__flexmedallas');
+
     const imgReloj = document.createElement('IMG');
     imgReloj.src = '/build/img/reloj.png';
     imgReloj.alt = 'Logotipo de reloj';
     imgReloj.classList.add('modalproveedores__imgreloj');
 
+    const imgMedalla = document.createElement('IMG');
+    imgMedalla.src = '/build/img/bronce.png';
+    imgMedalla.alt = 'Logotipo de medalla';
+    imgMedalla.classList.add('modalproveedores__imgMedalla');
+
     const ultimaVisita = document.createElement('DIV');
     ultimaVisita.classList.add('modalproveedores__ultimoregistro');
     ultimaVisita.textContent = `Últ. Visita: ${visitaMasReciente}`;
 
+    let totalVisitasProveedorActual = proveedorRanking.visitas;
+
+    const medallas = document.createElement('DIV');
+    medallas.classList.add('modalproveedores__ultimoregistro', 'modalproveedores__ultimoregistrovisita');
+    medallas.textContent = `ESTA SEMANA: ${totalVisitasProveedorActual} VISITAS/ $160 EN VENTAS/ $160 DE GANANCIA `;
+
     flexReloj.appendChild(imgReloj);
     flexReloj.appendChild(ultimaVisita);
+    flexMedallas.appendChild(imgMedalla);
+    flexMedallas.appendChild(medallas);
 
     const botonActualizar = document.createElement('A');
     botonActualizar.href = '#';
@@ -570,6 +639,7 @@ function mostrarProveedores(proveedores) {
     datosGrid.appendChild(flexTelefono);
     datosGrid.appendChild(flexEmail);
     datosGrid.appendChild(flexReloj);
+    datosGrid.appendChild(flexMedallas);
     datosGrid.appendChild(botonActualizar);
     datosGrid.appendChild(botonEliminar);
 

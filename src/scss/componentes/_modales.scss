@@ -34,7 +34,7 @@
         margin: auto;
         width: 90%;
         max-width: 520px;
-        max-height: 90%;
+        max-height: 95%;
         background-color: #fff;
         border-radius: 10px;
         display: grid;
@@ -235,9 +235,14 @@
 
     &__imgtelefono,
     &__imgemail,
-    &__imgreloj {
+    &__imgreloj{
         width: 12px;
         height: 12px;
+    }
+
+    &__imgMedalla{
+        width: 23px;
+        height: 23px;
     }
 
 
@@ -289,11 +294,18 @@
 
     &__flextelefono,
     &__flexemail,
-    &__flexreloj {
+    &__flexreloj  {
         display: flex;
         align-items: center;
         gap: 8px;
         margin: 0;
+    }
+
+    &__flexmedallas{
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+        gap: 0;
     }
 }
 
@@ -309,6 +321,14 @@
         font-size: 1rem;
         color: #555;
     }
+
+}
+
+.modalproveedores__ultimoregistro.modalproveedores__ultimoregistrovisita{
+    color: purple;
+    font-weight: bold;
+    
+
 }
 
 .modalproveedores--actualizar,
@@ -1420,6 +1440,7 @@
 
     p.modalproveedores__pGanancia {
         margin-top: 0;
+        margin-bottom: 4px;
     }
 
     p.rankingVerde {
@@ -1439,8 +1460,6 @@
     &__titulo {
         h1 {
             font-size: larger;
-            font-weight:normal;
-
         }
 
         h3 {

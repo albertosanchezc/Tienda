@@ -5,13 +5,14 @@ namespace Controllers;
 use Model\Inventario;
 use Model\Productos;
 use Model\Proveedor;
+use Model\Ventas;
+use Model\Ventas_Completas;
 use Model\Visita_Producto;
 use Model\Visitas_proveedor;
 use MVC\Router;
 
 class ProveedoresController
 {
-
     public static function proveedores(Router $router)
     {
         $script = '<script src="/build/js/proveedores.js"></script>
@@ -66,6 +67,7 @@ class ProveedoresController
         $visita_producto = Visita_Producto::all();
         $productos = Productos::all();
         $inventario = Inventario::all();
+        $ventas = Ventas_Completas::obtenerVentas();
 
 
 
@@ -74,7 +76,8 @@ class ProveedoresController
             'visitas_proveedor' => $visitas_proveedor,
             'visita_producto' => $visita_producto,
             'productos' => $productos,
-            'inventario' => $inventario
+            'inventario' => $inventario,
+            'ventas' => $ventas
         ]);
     }
 }
