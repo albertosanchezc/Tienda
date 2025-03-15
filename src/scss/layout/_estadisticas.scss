@@ -234,7 +234,33 @@
 }
 
 .filtrosVentas{
-    margin-bottom: 3rem;
+    margin: 2rem auto;
+    width: 50%;
+
+    
+    @include telefono-1 {
+        width: 70%;
+    }
+
+    @include tablet {
+        width: 40%;
+    }
+
+    @include laptop-1 {
+        width: 30%;
+    }
+
+    fieldset {
+        border: 2px dotted #8868C2;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    legend {
+        color: #8868C2;
+        font-weight: bold;
+        padding: 0 10px;
+    }
 }
 
 .flexFiltrosVentas{
@@ -245,14 +271,55 @@
 
     .fechaInicio{
         grid-column: 1/2;
-        
-        
     }
 
     .fechaFin{
-        grid-column: 2/3;
-        
-        
+        grid-column: 2/3;     
+    }
+
+    input[type="date"] {
+        width: 90%;
+        margin: 0 auto;
+        padding: 5px;
+        font-size: 16px;
+        border-color: #8868C2;
+        border-radius: 1rem;
+        height: 43px;
+        cursor: pointer;
+    }
+
+    label{
+        font-weight: bold;
+    }
+}
+
+.botonesExportarVentas{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: right;
+    flex-direction: row;
+    gap: 5px;
+
+    a{
+        padding: 5px;
+        background-color: #8868C2;
+        border: solid 1px #8868C2;
+        color: #fff;
+        border-radius: 1rem;
+        font-weight: bold;
+
+    }
+
+    a:hover{
+        background-color: #fff;
+        color:#7c3674;
+
+    }
+
+    .moradoOsc{
+        background-color: #685094;
+        border: solid 1px #685094;
+
     }
 }
 

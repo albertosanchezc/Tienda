@@ -16,9 +16,7 @@
     <div class="contenedorcaja seccioncaja">
         <div class="busqueda-titulo margin-titulo">
             <h1>Métricas</h1>
-            <h3>Esta sección ofrece un resumen visual de las ventas, con gráficos interactivos que muestran el
-                rendimiento por fecha y categoría. Incluye totales actualizados, como el monto de ventas y la cantidad
-                de productos vendidos.<h3>
+            <h3>Esta sección ofrece un resumen visual del estado del negocio, con gráficos interactivos que muestran el rendimiento por fecha y categoría. Selecciona un periodo de tiempo y una categoria para visualizar los datos importantes, incluso gráficamente.<h3>
         </div>
         <div class="botonesGenerales">
             <div class="botonGeneralInventario">
@@ -56,7 +54,7 @@
         <div class="filtrosVentas">
             <form id="formularioVentas">
                 <fieldset>
-                    <legend>Búsqueda por Fecha</legend>
+                    <legend>Resultados por Fecha</legend>
                     <div class="flexFiltrosVentas">
                         <div class="fechaInicio">
                             <label for="fechaInicioVentas">Fecha de Inicio:</label>
@@ -66,6 +64,10 @@
                             <label for="fechaFinVentas">Fecha Final:</label>
                             <input type="date" id="fechaFinVentas" name="fechasVentas[fin]">
                         </div>
+                    </div>
+                    <div class="botonesExportarVentas">
+                        <a href="#" class="moradoOsc">Exportar Excel</a>
+                        <a href="#" class="moradoClaro">Exportar PDF</a>
                     </div>
                 </fieldset>
             </form>
