@@ -13,6 +13,51 @@
 </head>
 
 <body>
+    <div class="contenedorcaja seccioncaja">
+        <div class="busqueda-titulo margin-titulo">
+            <h1>Métricas</h1>
+            <h3>Esta sección ofrece un resumen visual de las ventas, con gráficos interactivos que muestran el
+                rendimiento por fecha y categoría. Incluye totales actualizados, como el monto de ventas y la cantidad
+                de productos vendidos.<h3>
+        </div>
+        <div class="botonesGenerales">
+            <div class="botonGeneralInventario">
+                <a href="#">Inventario</a>
+            </div>
+            <div class="botonGeneralCaja">
+                <a href="#">Caja</a>
+            </div>
+            <div class="botonGeneralVentas">
+                <a href="#">Ventas</a>
+            </div>
+            <div class="botonGeneralCancelaciones">
+                <a href="#">Cancelaciones</a>
+            </div>
+            <div class="botonGeneralProveedores">
+                <a href="#">Proveedores</a>
+            </div>
+            <div class="botonGeneralCategorias">
+                <a href="#">Categorias</a>
+            </div>
+        </div>
+    </div>
+    <div class="contenedorInventario">
+        <div class="tituloIndividual">
+            <h3>Inventario</h3>
+        </div>
+        <div class="imagen-contacto">
+            <h1>Hola</h1>
+        </div>
+    </div>
+    <div class="contenedorVentas">
+    <div class="tituloIndividual">
+            <h3>Ventas</h3>
+        </div>
+        <div class="imagen-contactoVentas">
+            <h1>Hola</h1>
+        </div>
+    </div>
+
     <div class="acciones">
         <a href="/admin" class="boton boton-verde">Volver</a>
         <a href="/estadisticas/ayuda" class="boton boton-amarillo">¿Para que me sirven estos datos?</a>
@@ -57,8 +102,8 @@
             <canvas id="myChart4" width="400" height="400"></canvas>
         </div>
 
-    </div>
 
 </body>
+</div>
 
 </html>

@@ -1,3 +1,40 @@
+.no-webp .imagen-contacto{
+    background-image: url('../img/supermarket.jpg');
+}
+
+.webp .imagen-contacto{
+    background-image: url('../img/supermarket.webp');
+    
+}
+
+.imagen-contacto{
+    background-position: center center;
+    background-size: cover;
+    padding: 10rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.no-webp .imagen-contactoVentas{
+    background-image: url('../img/supermarket.jpg');
+}
+
+.webp .imagen-contactoVentas{
+    background-image: url('../img/supermarket.webp');
+    
+}
+
+.imagen-contactoVentas{
+    background-position: center center;
+    background-size: cover;
+    padding: 10rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
 .estadisticas {
     display: grid;
 
@@ -19,17 +56,19 @@
 .ayudas {
     display: grid;
 
-    @include telefono{
-        grid-template-columns: repeat(1,1fr);
+    @include telefono {
+        grid-template-columns: repeat(1, 1fr);
     }
-    @include tablet{
-        grid-template-columns: repeat(2,1fr);
+
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
-    
+
     }
 
     .ayuda-estadisticas {
         margin: 0rem 2rem;
+
         ul {
             list-style: none;
             color: $blanco;
@@ -64,3 +103,133 @@
         }
     }
 }
+
+.botonesGenerales {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.botonGeneralInventario,
+.botonGeneralCaja,
+.botonGeneralVentas,
+.botonGeneralCancelaciones,
+.botonGeneralProveedores,
+.botonGeneralCategorias {
+    flex: 1;
+    text-align: center;
+    background: linear-gradient(to bottom, #007bff 0%, #007bff 100%);
+    border-radius: 5px;
+    margin: 0 5px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    cursor: pointer;
+    transition: background 0.7s ease; 
+
+    a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+}
+
+.botonGeneralInventario:hover,
+.botonGeneralCaja:hover,
+.botonGeneralVentas:hover,
+.botonGeneralCancelaciones:hover,
+.botonGeneralProveedores:hover,
+.botonGeneralCategorias:hover {
+    background: linear-gradient(to bottom, #fff 50%, #007bff 100%);
+
+    a {
+        color: blue;
+    }
+}
+
+.botonGeneralInventario{
+    background: linear-gradient(to bottom, #557DCE 0%, #557DCE 100%);
+    border: solid 1px #557DCE;
+}
+
+.botonGeneralInventario:hover{
+    background: linear-gradient(to bottom, #fff 50%, #557DCE 100%);
+    border: none;
+
+    a{
+        color: #4261a0;
+    }
+}
+
+.botonGeneralCaja{
+    background: linear-gradient(to bottom, #7073CA 0%, #7073CA 100%);
+    border: solid 1px #7073CA;
+}
+
+.botonGeneralCaja:hover{
+    background: linear-gradient(to bottom, #fff 50%, #7073CA 100%);
+    border: none;
+
+    a{
+        color: #5b5ea3;
+    }
+}
+
+.botonGeneralVentas{
+    background: linear-gradient(to bottom, #8868C2 0%, #8868C2 100%);
+    border: solid 1px #8868C2;
+}
+
+.botonGeneralVentas:hover{
+    background: linear-gradient(to bottom, #fff 50%, #8868C2 100%);
+    border: none;
+
+    a{
+        color: #5e4886;
+    }
+}
+
+.botonGeneralCancelaciones{
+    background: linear-gradient(to bottom, #9D5BB5 0%, #9D5BB5 100%);
+    border: solid 1px #9D5BB5;
+}
+
+.botonGeneralCancelaciones:hover{
+    background: linear-gradient(to bottom, #fff 50%, #9D5BB5 100%);
+    border: none;
+
+    a{
+        color: #6d3f7e;
+    }
+}
+
+.botonGeneralProveedores{
+    background: linear-gradient(to bottom, #AF4CA4 0%, #AF4CA4 100%);
+    border: solid 1px #AF4CA4;
+}
+
+.botonGeneralProveedores:hover{
+    background: linear-gradient(to bottom, #fff 50%, #AF4CA4 100%);
+    border: none;
+
+    a{
+        color: #7c3674;
+    }
+}
+
+.botonGeneralCategorias{
+    background: linear-gradient(to bottom, #BD3B8F 0%, #BD3B8F 100%);
+    border: solid 1px #BD3B8F;
+}
+
+.botonGeneralCategorias:hover{
+    background: linear-gradient(to bottom, #fff 50%, #BD3B8F 100%);
+    border: none;
+
+    a{
+        color: #a0337a;
+    }
+}
+
