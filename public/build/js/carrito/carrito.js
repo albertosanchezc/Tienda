@@ -378,7 +378,7 @@ pagarForm.addEventListener('submit', function (e) {
 
 
 
-    const pagado = document.querySelector('.modal--pagar__close').value.trim();
+    const pagado = Number(document.querySelector('.modal--pagar__close').value.trim());
     if (!pagado) {
         errores.push('La cantidad con la que se paga es Obligatoria');
     }
@@ -391,12 +391,12 @@ pagarForm.addEventListener('submit', function (e) {
     console.log(pagado)
     const pagadoCorregido = `${pagado}.00`;
     const pagadoCorregido1 = `${pagado}0`;
-    if(pagado == match[1] || pagadoCorregido == match[1] || pagadoCorregido1 == match[1]){
+    if(pagado >= match[1] || pagadoCorregido >= match[1] || pagadoCorregido1 >= match[1]){
         errores = [];
     }
 
     // Mostrar errores
-    if (errores.length > 0) {
+    if (errores.length >= 1) {
         errores.forEach(error => {
             const alerta = document.createElement('div');
             alerta.className = 'alerta error';

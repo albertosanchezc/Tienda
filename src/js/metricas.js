@@ -4,8 +4,20 @@ const ctx1 = document.getElementById('myChart1').getContext('2d');
 const ctx2 = document.getElementById('myChart2').getContext('2d');
 const ctx3 = document.getElementById('myChart3').getContext('2d');
 const ctx4 = document.getElementById('myChart4').getContext('2d');
-const parrafo = document.querySelector('#myChart4').parentElement.querySelector('P');
-parrafo.textContent= 'Ventas Por Productos Vendidos'
+const ctx5 = document.getElementById('myChart5').getContext('2d');
+
+const parrafoChart1 = document.querySelector('#myChart1').parentElement.querySelector('P');
+parrafoChart1.textContent= 'Top n de Productos Más Vendidos';
+
+
+const parrafoChart4 = document.querySelector('#myChart4').parentElement.querySelector('P');
+parrafoChart4.textContent= 'Ventas Por Productos Vendidos';
+
+const parrafoChart5 = document.querySelector('#myChart5').parentElement.querySelector('P');
+parrafoChart5.textContent= 'Top n de Productos Menos Vendidos';
+
+
+
 
 
 let ventas = [];
@@ -51,6 +63,7 @@ async function consultarAPI() {
         crearGrafica2();
         crearGrafica3();
         crearGrafica4();
+        crearGrafica5();
 
         console.log(inventario)
 
@@ -88,6 +101,7 @@ function calcularTotales(ventasAgrupadas) {
 
 
 
+// Productos más vendidos
 function crearGrafica1() {
     // Filtrar por fechaaa
     let datosFiltrados = ventas;
@@ -203,6 +217,32 @@ function crearGrafica4() {
     
     
 }
+
+// Productos menos vendidos
+function crearGrafica5() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventas;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20Menos(totales);
+    const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx5, 'line', etiquetas, valores, 'Cantidad de Ventas por Producto', backgroundColors1);
+
+
+}
+
+
 function calcularGanancias(listaDeVentas) {
     return Object.values(
         listaDeVentas.flat().reduce((productosAgrupados, venta) => {
@@ -259,12 +299,20 @@ function generateRandomColors(array) {
     });
 }
 
-
+// Ordena por totalCantidad mayor
 function obtenerTop20(totales) {
     return totales
         .sort((a, b) => b.totalCantidad - a.totalCantidad) // Ordenar de mayor a menor
-        .slice(0, 50); // Tomar los primeros 20 elementos
+        .slice(0, 20); // Tomar los primeros 20 elementos
 }
+
+// Ordena por totalCantidad menor
+function obtenerTop20Menos(totales) {
+    return totales
+        .sort((a, b) => a.totalCantidad - b.totalCantidad) // Ordenar de menor a mayor
+        .slice(0, 20); // Tomar los primeros 20 elementos
+}
+
 
 function ordenarPorGananciaMayor(productos) {
     return productos.sort((a, b) => b.ganancia_total - a.ganancia_total);
