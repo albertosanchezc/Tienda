@@ -18,11 +18,11 @@
 }
 
 .no-webp .imagen-contactoVentas{
-    background-image: url('../img/supermarket.jpg');
+    background-image: url('../img/graficasVentas.png');
 }
 
 .webp .imagen-contactoVentas{
-    background-image: url('../img/supermarket.webp');
+    background-image: url('../img/graficasVentas.webp');
     
 }
 
@@ -232,4 +232,28 @@
         color: #a0337a;
     }
 }
+
+.filtrosVentas{
+    margin-bottom: 3rem;
+}
+
+.flexFiltrosVentas{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    
+    justify-content: center;
+
+    .fechaInicio{
+        grid-column: 1/2;
+        
+        
+    }
+
+    .fechaFin{
+        grid-column: 2/3;
+        
+        
+    }
+}
+
 

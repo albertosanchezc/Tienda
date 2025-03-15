@@ -50,8 +50,25 @@
         </div>
     </div>
     <div class="contenedorVentas">
-    <div class="tituloIndividual">
+        <div class="tituloIndividual">
             <h3>Ventas</h3>
+        </div>
+        <div class="filtrosVentas">
+            <form id="formularioVentas">
+                <fieldset>
+                    <legend>Búsqueda por Fecha</legend>
+                    <div class="flexFiltrosVentas">
+                        <div class="fechaInicio">
+                            <label for="fechaInicioVentas">Fecha de Inicio:</label>
+                            <input type="date" id="fechaInicioVentas" name="fechasVentas[inicio]">
+                        </div>
+                        <div class="fechaFin">
+                            <label for="fechaFinVentas">Fecha Final:</label>
+                            <input type="date" id="fechaFinVentas" name="fechasVentas[fin]">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
         <div class="imagen-contactoVentas">
             <h1>Hola</h1>
@@ -100,6 +117,21 @@
         <div>
             <p>Cantidad de Productos Vendidos A Granel</p>
             <canvas id="myChart4" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart5" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart6" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart7" width="400" height="400"></canvas>
         </div>
 
 
