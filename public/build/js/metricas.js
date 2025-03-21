@@ -1,11 +1,11 @@
-
-
 const ctx1 = document.getElementById('myChart1').getContext('2d');
 const ctx2 = document.getElementById('myChart2').getContext('2d');
 const ctx3 = document.getElementById('myChart3').getContext('2d');
 const ctx4 = document.getElementById('myChart4').getContext('2d');
 const ctx5 = document.getElementById('myChart5').getContext('2d');
 const ctx6 = document.getElementById('myChart6').getContext('2d');
+const ctx7 = document.getElementById('myChart7').getContext('2d');
+
 
 
 const parrafoChart1 = document.querySelector('#myChart1').parentElement.querySelector('P');
@@ -28,7 +28,12 @@ const parrafoChart5 = document.querySelector('#myChart5').parentElement.querySel
 parrafoChart5.textContent= 'Ganancias Por Productos Más Vendidos';
 
 const parrafoChart6 = document.querySelector('#myChart6').parentElement.querySelector('P');
-parrafoChart6.textContent= 'Gramos Vendidos por Producto a Granel';
+parrafoChart6.textContent= 'Ventas Por Productos Menos Vendidos';
+
+const parrafoChart7 = document.querySelector('#myChart7').parentElement.querySelector('P');
+parrafoChart7.textContent= 'Gramos Vendidos por Producto a Granel';
+
+
 
 
 
@@ -169,9 +174,10 @@ function crearGraficasVentas(){
     crearGrafica4();
     crearGrafica5();
     crearGrafica6();
+    crearGrafica7();
 }
 
-// Totales (Ganancias y Ventas)
+// Ganancias Contra Ventas
 function crearGrafica1() {
     // Filtrar por fechaaa
     let datosFiltrados1 = ventas;
@@ -201,7 +207,7 @@ function crearGrafica1() {
 
 }
 
-// Top n de productos más vendidos
+// Top n de Productos Más Vendidos
 function crearGrafica2() {
     // Filtrar por fechaaa
     let datosFiltrados = ventas;
@@ -320,10 +326,44 @@ function crearGrafica5() {
     
 }
 
-
-
-// Ganancias por productos vendidos
+// Ventas Por Productos Menos Vendidos
 function crearGrafica6() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventas;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20Menos(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = ventas.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGanancias(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMayor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_bruta');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    
+
+    createChart(ctx6, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+    
+    
+}
+
+// Gramos Vendidos por Producto a Granel
+function crearGrafica7() {
     // Filtrar por fechaaa
     let datosFiltrados = ventasGranel;
 
@@ -342,12 +382,47 @@ function crearGrafica6() {
     const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
 
-    createChart(ctx6, 'bar', etiquetas, valores, 'Ventas por gramos', backgroundColors1);
+    createChart(ctx7, 'bar', etiquetas, valores, 'Ventas por gramos', backgroundColors1);
 
 
 }
 
 
+// Ventas Por Productos Menos Vendidos
+function crearGrafica7() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventas;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = ventas.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGanancias(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMayor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_bruta');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    
+
+    createChart(ctx7, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+    
+    
+}
 
 
 function calcularGanancias(listaDeVentas) {
