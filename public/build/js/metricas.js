@@ -61,7 +61,7 @@ const parrafoChart10 = document.querySelector('#myChart10').parentElement.queryS
 parrafoChart10.textContent = 'Ventas Por Productos A Granel Más Vendidos';
 
 const parrafoChart11 = document.querySelector('#myChart11').parentElement.querySelector('P');
-parrafoChart11.textContent = 'Ventas Por Productos A Granel Menos Vendidos';
+parrafoChart11.textContent = 'Ganancias Por Productos A Granel Más Vendidos';
 
 
 
