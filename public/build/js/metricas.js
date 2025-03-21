@@ -263,6 +263,11 @@ function crearGraficasVentas() {
     crearGrafica8();
     crearGrafica9();
     crearGrafica10();
+    crearGrafica11();
+    crearGrafica12();
+    crearGrafica13();
+
+
 
 
 
@@ -572,13 +577,13 @@ function crearGrafica10() {
 
     console.log(datos);
     const totales = calcularTotales(datos);
-    // console.log(totales);
+    console.log(totales);
     datos = obtenerTop20(totales);
     console.log(datos);
     // const datosPrueba = datos.find(v => v.producto_id ===)
-    const prueba = ventas.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    const prueba = ventasGranel.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
     let prueba1 = agruparPorProducto(prueba);
-    const datos1 = calcularGanancias(prueba1);
+    const datos1 = calcularGananciasGranel(prueba1);
     console.log(datos1);
     const datos2 = ordenarPorGananciaMayor(datos1);
     console.log(datos2);
@@ -593,6 +598,113 @@ function crearGrafica10() {
 
 }
 
+// Ganancias Por Productos Más Vendidos
+function crearGrafica11() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventasGranel;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    console.log(totales);
+    datos = obtenerTop20(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = ventasGranel.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGananciasGranel(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMayor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx11, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+
+
+}
+
+// Ventas Por Productos Menos Vendidos
+function crearGrafica12() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventasGranel;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    console.log(totales);
+    datos = obtenerTop20Menos(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = ventasGranel.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGananciasGranel(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMenor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_bruta');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx12, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+
+
+}
+
+// Ganancias Por Productos Más Vendidos
+function crearGrafica13() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventasGranel;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    console.log(totales);
+    datos = obtenerTop20Menos(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = ventasGranel.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGananciasGranel(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMenor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx13, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+
+
+}
 
 
 
@@ -612,6 +724,49 @@ function calcularGanancias(listaDeVentas) {
 
             // Calcular la ganancia bruta (precio de venta * cantidad)
             const gananciaBruta = precioVenta * cantidadVendida;
+
+            // Si no existe el producto, lo inicializamos
+            if (!productosAgrupados[producto_id]) {
+                productosAgrupados[producto_id] = {
+                    producto_id,
+                    producto, // Agregamos el nombre del producto
+                    ganancia_total: 0,
+                    ganancia_bruta: 0, // Nueva propiedad para la ganancia bruta
+                    precio_compra,
+                    precio_venta,
+                };
+            }
+
+            // Sumar la ganancia total
+            productosAgrupados[producto_id].ganancia_total += gananciaPorVenta;
+
+            // Sumar la ganancia bruta
+            productosAgrupados[producto_id].ganancia_bruta += gananciaBruta;
+
+            // Redondear a dos decimales
+            productosAgrupados[producto_id].ganancia_total = parseFloat(productosAgrupados[producto_id].ganancia_total.toFixed(2));
+            productosAgrupados[producto_id].ganancia_bruta = parseFloat(productosAgrupados[producto_id].ganancia_bruta.toFixed(2));
+
+            return productosAgrupados;
+        }, {})
+    );
+}
+
+function calcularGananciasGranel(listaDeVentas) {
+    return Object.values(
+        listaDeVentas.flat().reduce((productosAgrupados, venta) => {
+            const { producto_id, producto, precio_venta, precio_compra, cantidad } = venta;
+
+            // Convertimos valores a número
+            const precioVenta = Number(precio_venta);
+            const precioCompra = Number(precio_compra);
+            const cantidadVendida = Number(cantidad);
+
+            // Calcular la ganancia por venta (precio de venta - precio de compra) * cantidad
+            const gananciaPorVenta = ((precioVenta - precioCompra) * cantidadVendida)/1000;
+
+            // Calcular la ganancia bruta (precio de venta * cantidad)
+            const gananciaBruta = (precioVenta * cantidadVendida)/1000;
 
             // Si no existe el producto, lo inicializamos
             if (!productosAgrupados[producto_id]) {
@@ -670,6 +825,10 @@ function obtenerTop20Menos(totales) {
 
 function ordenarPorGananciaMayor(productos) {
     return productos.sort((a, b) => b.ganancia_total - a.ganancia_total);
+}
+
+function ordenarPorGananciaMenor(productos) {
+    return productos.sort((a, b) => a.ganancia_total - b.ganancia_total);
 }
 
 
