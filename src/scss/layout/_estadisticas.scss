@@ -558,6 +558,7 @@
         grid-row: 2/3;
         display: flex;
         justify-content: center;
+        align-items: center;
         flex-direction: column;
 
         @include telefono-1 {
@@ -614,7 +615,6 @@
 }
 
 .graficaGananciasVentas {
-
     margin: 1rem auto;
     width: 60%;
 
@@ -629,4 +629,16 @@
     @include laptop-1 {
         width: 35%;
     }
+}
+
+.flextitulo-icono{
+    display: flex;
+    flex-direction: row;
+    align-items: center;  
+}
+
+.imgayuda{
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 0.5rem;
 }
