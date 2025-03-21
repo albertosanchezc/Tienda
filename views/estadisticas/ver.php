@@ -134,14 +134,14 @@
                     <p>Cantidad de Productos Vendidos A Granel</p>
                     <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
-                <canvas id="myChart2" width="400" height="400"></canvas>
+                <canvas id="myChart16" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Ganancias Por Productos Vendidos</p>
                     <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
-                <canvas id="myChart3" width="400" height="400"></canvas>
+                <canvas id="myChart17" width="400" height="400"></canvas>
             </div>
         </div>
     </div>
