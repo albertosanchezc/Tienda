@@ -337,7 +337,6 @@
 .tituloIndividual {
 
     margin: 0 6rem;
-    // font-weight: light;
 
     @include telefono-1 {
         margin: 0 6rem;
@@ -358,12 +357,6 @@
 
     }
 }
-
-// .busqueda-titulo.margin-titulo.bolderr{
-//     h3{
-//         font-weight: normal;
-//     }
-// }
 
 .contenedorTotalesVentas {
     display: grid;
@@ -641,4 +634,8 @@
     width: 2.5rem;
     height: 2.5rem;
     margin-left: 0.5rem;
+    cursor: pointer;
+}
+.imgayuda:hover{
+    filter: brightness(0.6);
 }
