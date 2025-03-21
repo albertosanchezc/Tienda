@@ -106,11 +106,30 @@
 
 .botonesGenerales {
     margin-top: 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     width: 100%;
+
+    @include telefono-1 {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 1rem;
+
+    }
+
+    @include tablet {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: 1fr;
+        gap: 0;
+
+    }
+
+    @include laptop-1 {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: 1fr;
+        gap: 0;
+
+    }
 }
 
 .botonGeneralInventario,
@@ -157,6 +176,7 @@
 .botonGeneralInventario:hover {
     background: linear-gradient(to bottom, #fff 50%, #557DCE 100%);
     border: none;
+    transform: translateY(-5px);
 
     a {
         color: #4261a0;
@@ -171,6 +191,7 @@
 .botonGeneralCaja:hover {
     background: linear-gradient(to bottom, #fff 50%, #7073CA 100%);
     border: none;
+    transform: translateY(-5px);
 
     a {
         color: #5b5ea3;
@@ -185,6 +206,7 @@
 .botonGeneralVentas:hover {
     background: linear-gradient(to bottom, #fff 50%, #8868C2 100%);
     border: none;
+    transform: translateY(-5px);
 
     a {
         color: #5e4886;
@@ -199,6 +221,7 @@
 .botonGeneralCancelaciones:hover {
     background: linear-gradient(to bottom, #fff 50%, #9D5BB5 100%);
     border: none;
+    transform: translateY(-5px);
 
     a {
         color: #6d3f7e;
@@ -213,6 +236,7 @@
 .botonGeneralProveedores:hover {
     background: linear-gradient(to bottom, #fff 50%, #AF4CA4 100%);
     border: none;
+    transform: translateY(-5px);
 
     a {
         color: #7c3674;
@@ -227,6 +251,7 @@
 .botonGeneralCategorias:hover {
     background: linear-gradient(to bottom, #fff 50%, #BD3B8F 100%);
     border: none;
+    transform: translateY(-5px);
 
     a {
         color: #a0337a;
@@ -624,18 +649,19 @@
     }
 }
 
-.flextitulo-icono{
+.flextitulo-icono {
     display: flex;
     flex-direction: row;
-    align-items: center;  
+    align-items: center;
 }
 
-.imgayuda{
+.imgayuda {
     width: 2.5rem;
     height: 2.5rem;
     margin-left: 0.5rem;
     cursor: pointer;
 }
-.imgayuda:hover{
+
+.imgayuda:hover {
     filter: brightness(0.6);
 }

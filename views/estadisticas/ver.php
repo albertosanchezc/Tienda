@@ -43,6 +43,7 @@
     <div class="contenedorInventario">
         <div class="tituloIndividual">
             <h3>Inventario</h3>
+            <p>Inicialmente se mostrará el historial completo del Inventario. Al elegir un período, los totales y gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click y la descarga incluirá la información correspondiente al período aplicado.</p>
         </div>
         <div class="imagen-contacto">
             <h1>Hola</h1>
@@ -153,119 +154,119 @@
                 </div>
             </div>
         </div>
+        <div class="contenedorcaja seccioncaja">
+            <div class="graficaGananciasVentas">
+                <div class="flextitulo-icono">
+                    <p>Top n de Productos Vendidos</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart1" width="400" height="400"></canvas>
+            </div>
+        </div>
+
+        <div class="estadisticas">
+            <!-- Gráficas -->
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart2" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Ganancias Por Productos Vendidos</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart3" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Ganancias Por Productos Vendidos</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart4" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart5" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart6" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart7" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart8" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart9" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart10" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart11" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart12" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart13" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart14" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart15" width="400" height="400"></canvas>
+            </div>
+        </div>
     </div>
 
-    <div class="contenedorcaja seccioncaja">
-        <div class="graficaGananciasVentas">
-            <div class="flextitulo-icono">
-                <p>Top n de Productos Vendidos</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart1" width="400" height="400"></canvas>
-        </div>
-    </div>
-
-    <div class="estadisticas">
-        <!-- Gráficas -->
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart2" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Ganancias Por Productos Vendidos</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart3" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Ganancias Por Productos Vendidos</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart4" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart5" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart6" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart7" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart8" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart9" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart10" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart11" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart12" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart13" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart14" width="400" height="400"></canvas>
-        </div>
-        <div>
-            <div class="flextitulo-icono">
-                <p>Cantidad de Productos Vendidos A Granel</p>
-                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-            </div>
-            <canvas id="myChart15" width="400" height="400"></canvas>
-        </div>
-    </div>
 
     <div class="contenedorcaja seccioncaja">
         <div class="botonesGenerales">
