@@ -154,12 +154,14 @@
 
     </div>
 
+    <div>
+        <p>Top n de Productos Vendidos</p>
+        <canvas id="myChart1" width="400" height="400"></canvas>
+    </div>
+
+
     <div class="estadisticas">
         <!-- Gráficas -->
-        <div>
-            <p>Top n de Productos Vendidos</p>
-            <canvas id="myChart1" width="400" height="400"></canvas>
-        </div>
 
         <div>
             <p>Cantidad de Productos Vendidos A Granel</p>
@@ -191,6 +193,30 @@
             <canvas id="myChart7" width="400" height="400"></canvas>
         </div>
 
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart8" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart9" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart10" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart11" width="400" height="400"></canvas>
+        </div>
+
+        <div>
+            <p>Cantidad de Productos Vendidos A Granel</p>
+            <canvas id="myChart12" width="400" height="400"></canvas>
+        </div>
 
 </body>
 </div>
