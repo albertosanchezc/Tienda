@@ -183,12 +183,32 @@
     }
 }
 
+.botonGeneralInventarioHover{
+    background: linear-gradient(to bottom, #fff 50%, #557DCE 100%);
+    border: none;
+    transform: translateY(-5px);
+
+    a {
+        color: #4261a0;
+    }
+}
+
 .botonGeneralCaja {
     background: linear-gradient(to bottom, #7073CA 0%, #7073CA 100%);
     border: solid 1px #7073CA;
 }
 
 .botonGeneralCaja:hover {
+    background: linear-gradient(to bottom, #fff 50%, #7073CA 100%);
+    border: none;
+    transform: translateY(-5px);
+
+    a {
+        color: #5b5ea3;
+    }
+}
+
+.botonGeneralCajaHover {
     background: linear-gradient(to bottom, #fff 50%, #7073CA 100%);
     border: none;
     transform: translateY(-5px);
@@ -213,12 +233,32 @@
     }
 }
 
+.botonGeneralVentasHover {
+    background: linear-gradient(to bottom, #fff 50%, #8868C2 100%);
+    border: none;
+    transform: translateY(-5px);
+
+    a {
+        color: #5e4886;
+    }
+}
+
 .botonGeneralCancelaciones {
     background: linear-gradient(to bottom, #9D5BB5 0%, #9D5BB5 100%);
     border: solid 1px #9D5BB5;
 }
 
 .botonGeneralCancelaciones:hover {
+    background: linear-gradient(to bottom, #fff 50%, #9D5BB5 100%);
+    border: none;
+    transform: translateY(-5px);
+
+    a {
+        color: #6d3f7e;
+    }
+}
+
+.botonGeneralCancelacionesHover {
     background: linear-gradient(to bottom, #fff 50%, #9D5BB5 100%);
     border: none;
     transform: translateY(-5px);
@@ -243,12 +283,32 @@
     }
 }
 
+.botonGeneralProveedoresHover {
+    background: linear-gradient(to bottom, #fff 50%, #AF4CA4 100%);
+    border: none;
+    transform: translateY(-5px);
+
+    a {
+        color: #7c3674;
+    }
+}
+
 .botonGeneralCategorias {
     background: linear-gradient(to bottom, #BD3B8F 0%, #BD3B8F 100%);
     border: solid 1px #BD3B8F;
 }
 
 .botonGeneralCategorias:hover {
+    background: linear-gradient(to bottom, #fff 50%, #BD3B8F 100%);
+    border: none;
+    transform: translateY(-5px);
+
+    a {
+        color: #a0337a;
+    }
+}
+
+.botonGeneralCategoriasHover {
     background: linear-gradient(to bottom, #fff 50%, #BD3B8F 100%);
     border: none;
     transform: translateY(-5px);
