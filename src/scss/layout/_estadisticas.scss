@@ -500,6 +500,7 @@
     .gridTotalVentasCantidad {
         grid-column: 1/2;
         grid-row: 2/3;
+        padding-top: 2rem;
 
         @include telefono-1 {
             grid-column: 1/2;
@@ -514,6 +515,38 @@
         @include laptop-1 {
             grid-column: 1/2;
             grid-row: 2/3;
+        }
+
+        .cantidadTotal{
+            p{
+                text-align: center;
+                color: #fff;
+                font-size: medium;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        .cantidadTotalGrande, .cantidadTotalChico1{
+            p{
+                text-align: center;
+                color: #fff;
+                font-size: medium;
+                font-weight: bold;
+                background-color: rgba(136, 104, 194, 0.5);
+                padding: 5px;
+                font-size: larger;
+                border-radius: 1rem;
+            }
+            h3{
+                text-align: center;
+                color: #fff;
+                font-size: medium;
+                font-weight: bold;
+                padding: 0;
+                margin: 0;
+            }
         }
     }
 
@@ -536,4 +569,26 @@
             grid-row: 2/3;
         }
     }
+}
+.gridCantidades{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: 1fr;
+    gap: 2rem;
+    
+
+    .cantidadTotalGrande{
+        grid-column: 1/2;
+        grid-row: 1/2;
+        
+        
+    }
+
+    .cantidadTotalChico1{
+        grid-column: 2/3;
+        grid-row: 1/2;
+        
+        
+    }
+    
 }

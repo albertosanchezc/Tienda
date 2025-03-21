@@ -133,17 +133,18 @@
                     </div>
                 </div>
                 <div class="gridTotalVentasCantidad">
-                    <div class="totalGrande">
-                        <h3>CANTIDAD TOTAL ($):</h3>
-                        <p>45</p>
+                    <div class="cantidadTotal">
+                        <p>CANTIDAD TOTAL:</p>
                     </div>
-                    <div class="totalChico1">
-                        <h3>Total Ganancia $(Productos de venta unitaria):</h3>
-                        <p>$1333006.98</p>
-                    </div>
-                    <div class="totalChico2">
-                        <h3>Total Ganancia $(Productos de venta a Granel):</h3>
-                        <p>$1003336.98</p>
+                    <div class="gridCantidades">
+                        <div class="cantidadTotalGrande" id="cantidadTotalUnitario">
+                            <h3>Cantidad Total Vendida #(Venta Unitaria):</h3>
+                            <p>45 piezas</p>
+                        </div>
+                        <div class="cantidadTotalChico1" id="cantidadTotalGranel">
+                            <h3>Cantidad Total Vendida #(Venta a Granel):</h3>
+                            <p>5.9 Kg</p>
+                        </div>
                     </div>
                 </div>
                 <div class="gridTotalVentasPromedio">
