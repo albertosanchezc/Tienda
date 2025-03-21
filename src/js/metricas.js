@@ -18,6 +18,8 @@ const selectortotalDeTotales = document.querySelector('#ventasTotalDinero').quer
 const selectortotalDeGanancias = document.querySelector('#gananciaTotalDinero').querySelector('P');
 const selectortotalProductos = document.querySelector('#cantidadTotalUnitario').querySelector('P');
 const selectortotalKilos = document.querySelector('#cantidadTotalGranel').querySelector('P');
+const selectorPromedioConsumoClientes = document.querySelector('.gridTotalVentasPromedio').querySelector('P');
+
 
 
 
@@ -74,6 +76,7 @@ let cancelacionesGranel = [];
 let inventario = [];
 let granel = [];
 let cajas_historicos = [];
+let ventasCompletas = [];
 
 const hoy = new Date();
 const dia = String(hoy.getDate()).padStart(2, '0');
@@ -103,6 +106,7 @@ async function consultarAPI() {
         cancelaciones = ventas.filter(venta => venta.cancelacion === '1' && venta.granel === '0');
         ventasGranel = ventas.filter(venta => venta.cancelacion === '0' && venta.granel === '1');
         ventas = ventas.filter(venta => venta.cancelacion === '0' && venta.granel === '0');
+        ventasCompletas = [...ventas, ...ventasGranel];
 
         inventario = datos.inventario;
         cajas_historicos = datos.cajas_historicos;
@@ -140,6 +144,38 @@ function calcularTotales(ventasAgrupadas) {
             totalCantidad
         };
     });
+}
+
+// Función para calcular el promedio de consumo por cliente
+function calcularPromedioConsumo(ventas) {
+    const carritoTotales = {};
+
+    // Agrupar ventas por carrito_id y calcular el total considerando granel
+    ventas.forEach((venta) => {
+        const carritoId = venta.carrito_id;
+        let totalVenta = 0;
+
+        // Si el producto es granel, dividir entre 1000 para obtener el precio por kg
+        if (venta.granel === "1") {
+            totalVenta = (parseFloat(venta.precio_venta) * parseInt(venta.cantidad)) / 1000;
+        } else {
+            totalVenta = parseFloat(venta.precio_venta) * parseInt(venta.cantidad);
+        }
+
+        // Sumar total por carrito_id
+        if (!carritoTotales[carritoId]) {
+            carritoTotales[carritoId] = 0;
+        }
+        carritoTotales[carritoId] += totalVenta;
+    });
+
+    // Calcular promedio de consumo
+    const totalClientes = Object.keys(carritoTotales).length;
+    const totalConsumo = Object.values(carritoTotales).reduce((acc, val) => acc + val, 0);
+
+    const promedioConsumo = totalClientes > 0 ? totalConsumo / totalClientes : 0;
+
+    return promedioConsumo.toFixed(2);
 }
 
 // Calcula el total a partir de un arreglo de productos (vendidos por producto)
@@ -230,8 +266,11 @@ function crearGrafica1() {
     const totalVentasGranel = calcularTotalVentasGranel(datosFiltrados2);
     selectortotalVentasGranel.textContent = `$${totalVentasGranel}`;
 
-    const totalKilosVendidos = ((calcularTotalProductos(ventasGranel))/1000).toFixed(2);
+    const totalKilosVendidos = ((calcularTotalProductos(ventasGranel)) / 1000).toFixed(2);
     selectortotalKilos.textContent = `${totalKilosVendidos} Kg`;
+
+    const promedio = calcularPromedioConsumo(ventasCompletas);
+    selectorPromedioConsumoClientes.textContent = `$${promedio}`;
 
     const totalGanancias = calcularTotalGanancias(datosFiltrados1);
     selectortotalGananciasUnitarias.textContent = `$${totalGanancias}`;
