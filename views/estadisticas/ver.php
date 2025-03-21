@@ -182,14 +182,17 @@
             <canvas id="myChart3" width="400" height="400"></canvas>
         </div>
         <div>
-        <div class="flextitulo-icono">
+            <div class="flextitulo-icono">
                 <p>Ganancias Por Productos Vendidos</p>
                 <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
             </div>
             <canvas id="myChart4" width="400" height="400"></canvas>
         </div>
         <div>
-            <p>Cantidad de Productos Vendidos A Granel</p>
+            <div class="flextitulo-icono">
+                <p>Cantidad de Productos Vendidos A Granel</p>
+                <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+            </div>
             <canvas id="myChart5" width="400" height="400"></canvas>
         </div>
         <div>
