@@ -155,9 +155,11 @@
         </div>
     </div>
 
-    <div>
-        <p>Top n de Productos Vendidos</p>
-        <canvas id="myChart1" width="400" height="400"></canvas>
+    <div class="contenedorcaja seccioncaja">
+        <div class="graficaGananciasVentas">
+            <p>Top n de Productos Vendidos</p>
+            <canvas id="myChart1" width="400" height="400"></canvas>
+        </div>
     </div>
 
     <div class="estadisticas">
