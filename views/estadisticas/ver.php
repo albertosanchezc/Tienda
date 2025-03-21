@@ -127,23 +127,80 @@
                 </div>
             </div>
         </div>
-
         <div class="estadisticas">
             <div>
                 <div class="flextitulo-icono">
-                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <p>Top 20 Productos con más Stock</p>
                     <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart16" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
-                    <p>Ganancias Por Productos Vendidos</p>
+                    <p>Top 20 Productos con menos Stock</p>
                     <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart17" width="400" height="400"></canvas>
             </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Productos a Granel con más Stock</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart18" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Productos a Granel con menos Stock</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart19" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Productos registrados con más ganancia</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart20" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Productos registrados con menos ganancia</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart21" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Productos registrados con Stock en exceso (ver ayuda)</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart22" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Productos registrados con Stock por agotarse (ver ayuda)</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart23" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Productos registrados con Stock Suficiente (ver ayuda)</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart24" width="400" height="400"></canvas>
+            </div>
         </div>
+    </div>
+    <div class="contenedorCaja">
+        <div class="tituloIndividual">
+            <h3>Caja</h3>
+            <p>Inicialmente se mostrará el historial completo de la Caja. Al elegir un período, los totales y
+                gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
+                y la descarga incluirá la información correspondiente al período aplicado.</p>
+        </div>
+        
     </div>
     <div class="contenedorVentas">
         <div class="tituloIndividual">
@@ -359,6 +416,20 @@
                     <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart15" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart25" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart26" width="400" height="400"></canvas>
             </div>
         </div>
     </div>
