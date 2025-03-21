@@ -16,45 +16,50 @@ const selectortotalVentasGranel = document.querySelector('#ventasTotalDineroGran
 const selectortotalGananciasGranel = document.querySelector('#gananciaTotalDineroGranel').querySelector('P');
 const selectortotalDeTotales = document.querySelector('#ventasTotalDinero').querySelector('P');
 const selectortotalDeGanancias = document.querySelector('#gananciaTotalDinero').querySelector('P');
+const selectortotalProductos = document.querySelector('#cantidadTotalUnitario').querySelector('P');
+const selectortotalKilos = document.querySelector('#cantidadTotalGranel').querySelector('P');
+
+
+
 
 const maximoElementos = 20;
 
 const parrafoChart1 = document.querySelector('#myChart1').parentElement.querySelector('P');
-parrafoChart1.textContent= 'Ganancias Contra Ventas';
+parrafoChart1.textContent = 'Ganancias Contra Ventas';
 
 const parrafoChart2 = document.querySelector('#myChart2').parentElement.querySelector('P');
-parrafoChart2.textContent= 'Top n de Productos Más Vendidos';
+parrafoChart2.textContent = 'Top n de Productos Más Vendidos';
 
 // const parrafoChart3 = document.querySelector('#myChart3').parentElement.querySelector('P');
 // parrafoChart3.textContent= 'Gramos de Productos Vendidos A Granel';
 
 const parrafoChart3 = document.querySelector('#myChart3').parentElement.querySelector('P');
-parrafoChart3.textContent= 'Top n de Productos Menos Vendidos';
+parrafoChart3.textContent = 'Top n de Productos Menos Vendidos';
 
 const parrafoChart4 = document.querySelector('#myChart4').parentElement.querySelector('P');
-parrafoChart4.textContent= 'Ventas Por Productos Más Vendidos';
+parrafoChart4.textContent = 'Ventas Por Productos Más Vendidos';
 
 
 const parrafoChart5 = document.querySelector('#myChart5').parentElement.querySelector('P');
-parrafoChart5.textContent= 'Ganancias Por Productos Más Vendidos';
+parrafoChart5.textContent = 'Ganancias Por Productos Más Vendidos';
 
 const parrafoChart6 = document.querySelector('#myChart6').parentElement.querySelector('P');
-parrafoChart6.textContent= 'Ventas Por Productos Menos Vendidos';
+parrafoChart6.textContent = 'Ventas Por Productos Menos Vendidos';
 
 const parrafoChart7 = document.querySelector('#myChart7').parentElement.querySelector('P');
-parrafoChart7.textContent= 'Ganancias Por Productos Menos Vendidos';
+parrafoChart7.textContent = 'Ganancias Por Productos Menos Vendidos';
 
 const parrafoChart8 = document.querySelector('#myChart8').parentElement.querySelector('P');
-parrafoChart8.textContent= 'Top n Productos a Granel más vendidos Por Gramos';
+parrafoChart8.textContent = 'Top n Productos a Granel más vendidos Por Gramos';
 
 const parrafoChart9 = document.querySelector('#myChart9').parentElement.querySelector('P');
-parrafoChart9.textContent= 'Top n Productos a Granel Menos vendidos Por Gramos';
+parrafoChart9.textContent = 'Top n Productos a Granel Menos vendidos Por Gramos';
 
 const parrafoChart10 = document.querySelector('#myChart10').parentElement.querySelector('P');
-parrafoChart10.textContent= 'Ventas Por Productos A Granel Más Vendidos';
+parrafoChart10.textContent = 'Ventas Por Productos A Granel Más Vendidos';
 
 const parrafoChart11 = document.querySelector('#myChart11').parentElement.querySelector('P');
-parrafoChart11.textContent= 'Ventas Por Productos A Granel Menos Vendidos';
+parrafoChart11.textContent = 'Ventas Por Productos A Granel Menos Vendidos';
 
 
 
@@ -148,12 +153,16 @@ function calcularTotalVentas(ventas) {
     return total.toFixed(2); // Redondea a 2 decimales
 }
 
+function calcularTotalProductos(ventas) {
+    return ventas.reduce((total, venta) => total + parseInt(venta.cantidad), 0);
+}
+
 // Calcula el total a partir de un arreglo de productos (vendidos por producto)
 function calcularTotalVentasGranel(ventas) {
     const total = ventas.reduce((acc, item) => {
         const cantidad = parseFloat(item.cantidad);
         const precio = parseFloat(item.precio_venta);
-        return acc + (cantidad * precio)/1000;
+        return acc + (cantidad * precio) / 1000;
     }, 0);
 
     return total.toFixed(2); // Redondea a 2 decimales
@@ -182,7 +191,7 @@ function calcularTotalGananciasGranel(ventas) {
         const precioCompra = parseFloat(item.precio_compra);
 
         // Calcula la ganancia por producto
-        const gananciaPorProducto = (cantidad * (precioVenta - precioCompra))/1000;
+        const gananciaPorProducto = (cantidad * (precioVenta - precioCompra)) / 1000;
         return acc + gananciaPorProducto;
     }, 0);
 
@@ -190,7 +199,7 @@ function calcularTotalGananciasGranel(ventas) {
 }
 
 
-function crearGraficasVentas(){
+function crearGraficasVentas() {
     crearGrafica1();
     crearGrafica2();
     crearGrafica3();
@@ -214,16 +223,21 @@ function crearGrafica1() {
 
     const totalVentas = calcularTotalVentas(datosFiltrados1);
     selectortotalVentasUnitarias.textContent = `$${totalVentas}`;
-    
+
+    const totalProductosVendidos = calcularTotalProductos(ventas);
+    selectortotalProductos.textContent = `${totalProductosVendidos} Productos`
+
     const totalVentasGranel = calcularTotalVentasGranel(datosFiltrados2);
     selectortotalVentasGranel.textContent = `$${totalVentasGranel}`;
 
-    
-    const totalGanancias = calcularTotalGanancias(datosFiltrados1);   
+    const totalKilosVendidos = ((calcularTotalProductos(ventasGranel))/1000).toFixed(2);
+    selectortotalKilos.textContent = `${totalKilosVendidos} Kg`;
+
+    const totalGanancias = calcularTotalGanancias(datosFiltrados1);
     selectortotalGananciasUnitarias.textContent = `$${totalGanancias}`;
 
-    
-    const totalGananciasGranel = calcularTotalGananciasGranel(datosFiltrados2);    
+
+    const totalGananciasGranel = calcularTotalGananciasGranel(datosFiltrados2);
     selectortotalGananciasGranel.textContent = `$${totalGananciasGranel}`;
 
     const totalDeTotales = Number(totalVentas) + Number(totalVentasGranel);
@@ -231,10 +245,10 @@ function crearGrafica1() {
 
     const totalDeGanancias = Number(totalGanancias) + Number(totalGananciasGranel);
     selectortotalDeGanancias.textContent = `$${totalDeGanancias.toFixed(2)}`;
-    
-    const labels = ['Total Ganancias (Granel)','Total Ganancias (Pieza)', 'Total Ventas (Granel)', 'Total Ventas (Pieza)'];
 
-    const datos = [totalGananciasGranel,totalGanancias,totalVentasGranel,totalVentas];
+    const labels = ['Total Ganancias (Granel)', 'Total Ganancias (Pieza)', 'Total Ventas (Granel)', 'Total Ventas (Pieza)'];
+
+    const datos = [totalGananciasGranel, totalGanancias, totalVentasGranel, totalVentas];
 
 
     //////////
@@ -322,12 +336,12 @@ function crearGrafica4() {
     const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_bruta');
 
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
-    
+
 
     createChart(ctx4, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
 
-    
-    
+
+
 }
 
 // Ganancias Por Productos Más Vendidos
@@ -358,11 +372,11 @@ function crearGrafica5() {
     const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_total');
 
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
-    
+
     createChart(ctx5, 'bar', etiquetas, valores, 'Ganancias por Producto en $', backgroundColors1);
 
-    
-    
+
+
 }
 
 // Ventas Por Productos Más Vendidos
@@ -393,12 +407,12 @@ function crearGrafica6() {
     const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_bruta');
 
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
-    
+
 
     createChart(ctx6, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
 
-    
-    
+
+
 }
 
 // Ganancias Por Productos Más Vendidos
@@ -429,7 +443,7 @@ function crearGrafica7() {
     const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_total');
 
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
-    
+
     createChart(ctx7, 'bar', etiquetas, valores, 'Ganancias por Producto en $', backgroundColors1);
 
 }
