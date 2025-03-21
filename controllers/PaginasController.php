@@ -110,9 +110,14 @@ class PaginasController
         $script = '<script src="/build/js/metricas.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
+        $categorias = Categorias::ALF('nombre','ASC');
+        $proveedores = Proveedor::ALF('nombre','ASC');
+
         $router->render('estadisticas/ver', [
             'titulo' => $titulo,
-            'script' => $script
+            'script' => $script,
+            'categorias' => $categorias,
+            'proveedores' => $proveedores
 
         ]);
     }

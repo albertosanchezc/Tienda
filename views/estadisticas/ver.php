@@ -51,10 +51,9 @@
     <div class="contenedorVentas">
         <div class="tituloIndividual">
             <h3>Ventas</h3>
-            <p>En esta sección encontrarás la información clave sobre las ventas. Al seleccionar un período específico,
-                los totales y las gráficas se actualizarán automáticamente. Además, puedes exportar los datos de las
-                Ventas en formato Excel o PDF con un solo clic, y la descarga incluirá la información correspondiente al
-                período aplicado.</p>
+            <p>Inicialmente se mostrará el historial completo de las Ventas. Al elegir un período, los totales y
+                gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
+                y la descarga incluirá la información correspondiente al período aplicado.</p>
         </div>
         <div class="filtrosVentas">
             <form id="formularioVentas">
@@ -70,6 +69,32 @@
                             <input type="date" id="fechaFinVentas" name="fechasVentas[fin]">
                         </div>
                     </div>
+                    <div class="flexFiltrosVentas">
+                        <div class="fechaInicio">
+                            <label for="proveedorFiltro">Proveedor:</label>
+                            <select id="proveedorFiltro">
+                                <option selected value="">Selecciona un proveedor</option>
+                                <?php foreach ($proveedores as $proveedor) { ?>
+                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($proveedor->id); ?>">
+                                        <?php echo s($proveedor->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="fechaFin">
+                            <label for="categoriaFiltro">Categoría:</label>
+                            <select id="categoriaFiltro">
+                                <option selected value="">Selecciona una Categoría</option>
+                                <?php foreach ($categorias as $categoria) { ?>
+                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($categoria->id); ?>">
+                                        <?php echo s($categoria->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
                     <div class="botonesExportarVentas">
                         <a href="#" class="moradoOsc">Exportar Excel</a>
                         <a href="#" class="moradoClaro">Exportar PDF</a>
@@ -80,15 +105,27 @@
         <div class="imagen-contactoVentas">
             <div class="contenedorTotalesVentas">
                 <div class="gridTotalVentasDinero">
+                    <div class="totalGrande">
+                        <h3>Total Ventas($):</h3>
+                        <p>$13336.98</p>
+                    </div>
+                    <div class="totalChico1">
+                        <h3>Total Ventas $(Productos de venta unitaria):</h3>
+                        <p>$13336.98</p>
+                    </div>
+                    <div class="totalChico2">
+                        <h3>Total Ventas $(Productos de venta a Granel):</h3>
+                        <p>$13336.98</p>
+                    </div>
+                </div>
+                <div class="gridTotalVentasGanancia">
+                    <h3>Total Ganancia ($)</h3>
+                    <p>$13.</p>
+                </div>
+                <div class="gridTotalVentasCantidad">
                     <h1>Hola</h1>
                 </div>
-                <div class="gridTotalVentasDinero">
-                    <h1>Hola</h1>
-                </div>
-                <div class="gridTotalVentasDinero">
-                    <h1>Hola</h1>
-                </div>
-                <div class="gridTotalVentasDinero">
+                <div class="gridTotalVentasPromedio">
                     <h1>Hola</h1>
                 </div>
             </div>
