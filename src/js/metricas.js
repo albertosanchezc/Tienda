@@ -5,16 +5,27 @@ const ctx2 = document.getElementById('myChart2').getContext('2d');
 const ctx3 = document.getElementById('myChart3').getContext('2d');
 const ctx4 = document.getElementById('myChart4').getContext('2d');
 const ctx5 = document.getElementById('myChart5').getContext('2d');
+const ctx6 = document.getElementById('myChart6').getContext('2d');
+
 
 const parrafoChart1 = document.querySelector('#myChart1').parentElement.querySelector('P');
 parrafoChart1.textContent= 'Top n de Productos Más Vendidos';
 
+// const parrafoChart2 = document.querySelector('#myChart2').parentElement.querySelector('P');
+// parrafoChart2.textContent= 'Gramos de Productos Vendidos A Granel';
+
+const parrafoChart3 = document.querySelector('#myChart3').parentElement.querySelector('P');
+parrafoChart3.textContent= 'Ganancias Por Productos Más Vendidos';
 
 const parrafoChart4 = document.querySelector('#myChart4').parentElement.querySelector('P');
-parrafoChart4.textContent= 'Ventas Por Productos Vendidos';
+parrafoChart4.textContent= 'Ventas Por Productos Más Vendidos';
 
 const parrafoChart5 = document.querySelector('#myChart5').parentElement.querySelector('P');
 parrafoChart5.textContent= 'Top n de Productos Menos Vendidos';
+
+const parrafoChart6 = document.querySelector('#myChart6').parentElement.querySelector('P');
+parrafoChart6.textContent= 'Ganancias Contra Ventas';
+
 
 
 
@@ -64,6 +75,7 @@ async function consultarAPI() {
         crearGrafica3();
         crearGrafica4();
         crearGrafica5();
+        crearGrafica6();
 
         console.log(inventario)
 
@@ -82,7 +94,7 @@ function procesarDatos(datos, labelKey, dataKey) {
 }
 let chartId = {};
 
-
+// Función que  obtiene los totales para cada producto 
 function calcularTotales(ventasAgrupadas) {
     return ventasAgrupadas.map(grupo => {
         const producto_id = grupo[0].producto_id; // Tomamos el ID del primer elemento del grupo
@@ -97,6 +109,58 @@ function calcularTotales(ventasAgrupadas) {
             totalCantidad
         };
     });
+}
+
+// Calcula el total a partir de un arreglo de productos (vendidos por producto)
+function calcularTotalVentas(ventas) {
+    const total = ventas.reduce((acc, item) => {
+        const cantidad = parseFloat(item.cantidad);
+        const precio = parseFloat(item.precio_venta);
+        return acc + (cantidad * precio);
+    }, 0);
+
+    return total.toFixed(2); // Redondea a 2 decimales
+}
+
+// Calcula el total a partir de un arreglo de productos (vendidos por producto)
+function calcularTotalVentasGranel(ventas) {
+    const total = ventas.reduce((acc, item) => {
+        const cantidad = parseFloat(item.cantidad);
+        const precio = parseFloat(item.precio_venta);
+        return acc + (cantidad * precio)/1000;
+    }, 0);
+
+    return total.toFixed(2); // Redondea a 2 decimales
+}
+
+// Calcula el total de ganancias a partir de un arreglo de productos (vendidos por producto)
+function calcularTotalGanancias(ventas) {
+    const totalGanancias = ventas.reduce((acc, item) => {
+        const cantidad = parseFloat(item.cantidad);
+        const precioVenta = parseFloat(item.precio_venta);
+        const precioCompra = parseFloat(item.precio_compra);
+
+        // Calcula la ganancia por producto
+        const gananciaPorProducto = cantidad * (precioVenta - precioCompra);
+        return acc + gananciaPorProducto;
+    }, 0);
+
+    return totalGanancias.toFixed(2); // Redondea a 2 decimales
+}
+
+// Calcula el total de ganancias a partir de un arreglo de productos (vendidos por granel)
+function calcularTotalGananciasGranel(ventas) {
+    const totalGanancias = ventas.reduce((acc, item) => {
+        const cantidad = parseFloat(item.cantidad);
+        const precioVenta = parseFloat(item.precio_venta);
+        const precioCompra = parseFloat(item.precio_compra);
+
+        // Calcula la ganancia por producto
+        const gananciaPorProducto = (cantidad * (precioVenta - precioCompra))/1000;
+        return acc + gananciaPorProducto;
+    }, 0);
+
+    return totalGanancias.toFixed(2); // Redondea a 2 decimales
 }
 
 
@@ -177,7 +241,7 @@ function crearGrafica3() {
 
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
     
-    createChart(ctx3, 'bar', etiquetas, valores, 'Ganancias por Producto', backgroundColors1);
+    createChart(ctx3, 'bar', etiquetas, valores, 'Ganancias por Producto en $', backgroundColors1);
 
     
     
@@ -238,6 +302,36 @@ function crearGrafica5() {
     const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
     createChart(ctx5, 'line', etiquetas, valores, 'Cantidad de Ventas por Producto', backgroundColors1);
+
+
+}
+
+// Totales (Ganancias y Ventas)
+function crearGrafica6() {
+    // Filtrar por fechaaa
+    let datosFiltrados1 = ventas;
+    let datosFiltrados2 = ventasGranel;
+
+
+
+
+    const totalVentas = calcularTotalVentas(datosFiltrados1);
+    const totalVentasGranel = calcularTotalVentasGranel(datosFiltrados2);
+    const totalGanancias = calcularTotalGanancias(datosFiltrados1);   
+    const totalGananciasGranel = calcularTotalGananciasGranel(datosFiltrados2);    
+
+
+
+    const labels = ['Total Ganancias (Granel)','Total Ganancias (Pieza)', 'Total Ventas (Granel)', 'Total Ventas (Pieza)'];
+
+    const datos = [totalGananciasGranel,totalGanancias,totalVentasGranel,totalVentas];
+
+
+    //////////
+    // let datos = agruparPorProducto(datosFiltrados);
+
+    const backgroundColors1 = generateRandomColors(datos);
+    createChart(ctx6, 'bar', labels, datos, 'Ganancias VS Ventas en $', backgroundColors1);
 
 
 }
