@@ -14,9 +14,10 @@
 
 <body>
     <div class="contenedorcaja seccioncaja">
-        <div class="busqueda-titulo margin-titulo">
+        <div class="busqueda-titulo margin-titulo bolderr">
             <h1>Métricas</h1>
-            <h3>Esta sección ofrece un resumen visual del estado del negocio, con gráficos interactivos que muestran el rendimiento por fecha y categoría. Selecciona un periodo de tiempo y una categoria para visualizar los datos importantes, incluso gráficamente.<h3>
+            <h3>Esta sección es un resumen visual del estado del negocio, con gráficos interactivos que muestran el
+                rendimiento por fecha y categoría. Selecciona una categoria y el periodo para visualizar los datos.<h3>
         </div>
         <div class="botonesGenerales">
             <div class="botonGeneralInventario">
@@ -50,6 +51,10 @@
     <div class="contenedorVentas">
         <div class="tituloIndividual">
             <h3>Ventas</h3>
+            <p>En esta sección encontrarás la información clave sobre las ventas. Al seleccionar un período específico,
+                los totales y las gráficas se actualizarán automáticamente. Además, puedes exportar los datos de las
+                Ventas en formato Excel o PDF con un solo clic, y la descarga incluirá la información correspondiente al
+                período aplicado.</p>
         </div>
         <div class="filtrosVentas">
             <form id="formularioVentas">
@@ -73,7 +78,20 @@
             </form>
         </div>
         <div class="imagen-contactoVentas">
-            <h1>Hola</h1>
+            <div class="contenedorTotalesVentas">
+                <div class="gridTotalVentasDinero">
+                    <h1>Hola</h1>
+                </div>
+                <div class="gridTotalVentasDinero">
+                    <h1>Hola</h1>
+                </div>
+                <div class="gridTotalVentasDinero">
+                    <h1>Hola</h1>
+                </div>
+                <div class="gridTotalVentasDinero">
+                    <h1>Hola</h1>
+                </div>
+            </div>
         </div>
     </div>
 
