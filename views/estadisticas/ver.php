@@ -148,7 +148,8 @@
                     </div>
                 </div>
                 <div class="gridTotalVentasPromedio">
-                    <h1>Hola</h1>
+                    <h3>Promedio de consumo por cliente ($):</h3>
+                    <p>$1000.00</p>
                 </div>
             </div>
         </div>

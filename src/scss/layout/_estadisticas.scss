@@ -553,6 +553,9 @@
     .gridTotalVentasPromedio {
         grid-column: 2/3;
         grid-row: 2/3;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
 
         @include telefono-1 {
             grid-column: 1/2;
@@ -568,6 +571,23 @@
             grid-column: 2/3;
             grid-row: 2/3;
         }
+
+        p,h3{
+            text-align: center;
+            color: #fff;
+        }
+
+        h3{
+            font-size: large;
+            font-weight: bold;
+            padding: 0;
+            margin: 0;
+        }
+        p{
+            margin: 0;
+            padding: 0;
+           font-size: 6rem; 
+        }
     }
 }
 .gridCantidades{
@@ -575,20 +595,14 @@
     grid-template-columns: repeat(2,1fr);
     grid-template-rows: 1fr;
     gap: 2rem;
-    
 
     .cantidadTotalGrande{
         grid-column: 1/2;
         grid-row: 1/2;
-        
-        
     }
 
     .cantidadTotalChico1{
         grid-column: 2/3;
-        grid-row: 1/2;
-        
-        
-    }
-    
+        grid-row: 1/2;  
+    } 
 }
