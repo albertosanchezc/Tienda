@@ -16,7 +16,10 @@ const ctx15 = document.getElementById('myChart15').getContext('2d');
 
 
 
+const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
 
+const contenedorVentas = document.querySelector('.contenedorVentas');  
+contenedorVentas.style.display = 'none';
 
 const selectortotalVentasUnitarias = document.querySelector('#ventasTotalDineroUnitario').querySelector('P');
 const selectortotalGananciasUnitarias = document.querySelector('#gananciaTotalDineroUnitario').querySelector('P');
@@ -710,16 +713,26 @@ function createChart(ctx, type, labels, data, label, backgroundColors) {
     });
 }
 
+// Eventos
+btnAbrirVentas.addEventListener('click',() => {
+    if(contenedorVentas.style.display === 'none'){
+        contenedorVentas.style.display = 'block';
+    } else{
+        contenedorVentas.style.display = 'none';
+    }
+
+});
 
 
-const inicio = document.getElementById('fecha_inicio');
+const inicio = document.getElementById('fecha_inicio') ?? '';
 inicio.addEventListener('change', (e) => {
     datosBusqueda.inicio = e.target.value;
     fetchDataAndCreateCharts(datosBusqueda); // Actualizar gráficos al cambiar la fecha
 });
 
-const fin = document.getElementById('fecha_fin');
+const fin = document.getElementById('fecha_fin') ?? '';
 fin.addEventListener('change', (e) => {
     datosBusqueda.fin = e.target.value;
     fetchDataAndCreateCharts(datosBusqueda); // Actualizar gráficos al cambiar la fecha
 });
+
