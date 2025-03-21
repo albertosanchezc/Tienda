@@ -43,10 +43,106 @@
     <div class="contenedorInventario">
         <div class="tituloIndividual">
             <h3>Inventario</h3>
-            <p>Inicialmente se mostrará el historial completo del Inventario. Al elegir un período, los totales y gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click y la descarga incluirá la información correspondiente al período aplicado.</p>
+            <p>Inicialmente se mostrará el historial completo del Inventario. Al elegir un período, los totales y
+                gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
+                y la descarga incluirá la información correspondiente al período aplicado.</p>
+        </div>
+        <div class="filtrosVentas filtrosInventario">
+            <form id="formularioInventario">
+                <fieldset>
+                    <legend>Filtrar Resultados</legend>
+                    <div class="flexFiltrosVentas flexFiltrosInventario">
+                        <div class="fechaInicio">
+                            <label for="fechaInicioVentas">Fecha de Inicio:</label>
+                            <input type="date" id="fechaInicioVentas" name="fechasVentas[inicio]">
+                        </div>
+                        <div class="fechaFin">
+                            <label for="fechaFinVentas">Fecha Final:</label>
+                            <input type="date" id="fechaFinVentas" name="fechasVentas[fin]">
+                        </div>
+                    </div>
+                    <div class="flexFiltrosVentas flexFiltrosInventario">
+                        <div class="fechaInicio">
+                            <label for="proveedorFiltro">Proveedor:</label>
+                            <select id="proveedorFiltro">
+                                <option selected value="">Selecciona un proveedor</option>
+                                <?php foreach ($proveedores as $proveedor) { ?>
+                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($proveedor->id); ?>">
+                                        <?php echo s($proveedor->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="fechaFin">
+                            <label for="categoriaFiltro">Categoría:</label>
+                            <select id="categoriaFiltro">
+                                <option selected value="">Selecciona una Categoría</option>
+                                <?php foreach ($categorias as $categoria) { ?>
+                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($categoria->id); ?>">
+                                        <?php echo s($categoria->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="botonesExportarVentas botonesExportarInventario">
+                        <a href="#" class="moradoOsc">Exportar Excel</a>
+                        <a href="#" class="moradoClaro">Exportar PDF</a>
+                    </div>
+                </fieldset>
+            </form>
         </div>
         <div class="imagen-contacto">
-            <h1>Hola</h1>
+            <div class="contenedorTotalesInventario">
+                <div class="gridIzquierdoTotalesInventario">
+                    <div class="inventarioCantidadTotal">
+                        <p>TOTAL PRODUCTOS:</p>
+                    </div>
+                    <div class="gridCantidadesInventario">
+                        <div class="cantidadTotalProductosInventarioUnitario" id="totalCantidadUnitarioInventario">
+                            <h3>Cantidad Total de Productos en Stock #(Venta Unitaria):</h3>
+                            <p>45 piezas</p>
+                        </div>
+                        <div class="cantidadTotalProductosInventarioUnitario1" id="totalCantidadGranelInventario">
+                            <h3>Cantidad Total de Productos en Stock #(Venta a Granel):</h3>
+                            <p>5.9 Kg</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gridDerechoTotalesInventario">
+                    <div class="totalGrandeInventario" id="TotalDineroInventario">
+                        <h3>TOTAL EN INVENTARIO ($):</h3>
+                        <p>$13300036.98</p>
+                    </div>
+                    <div class="totalChico1Inventario" id="TotalDineroInventarioUnitario">
+                        <h3>Total en Stock $(Productos de venta unitaria):</h3>
+                        <p>$1333006.98</p>
+                    </div>
+                    <div class="totalChico2Inventario" id="TotalDineroInventarioGranel">
+                        <h3>Total en Stock $(Productos de venta a Granel):</h3>
+                        <p>$1003336.98</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="estadisticas">
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart2" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Ganancias Por Productos Vendidos</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart3" width="400" height="400"></canvas>
+            </div>
         </div>
     </div>
     <div class="contenedorVentas">
