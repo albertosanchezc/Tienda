@@ -274,7 +274,7 @@ function crearGraficasVentas() {
     crearGrafica12();
     crearGrafica13();
     crearGrafica14();
-
+    crearGrafica15();
 
 }
 
@@ -711,7 +711,7 @@ function crearGrafica13() {
 
 }
 
-// Ganancias Por Productos Más Vendidos
+// Patrón Semanal de Ventas 
 function crearGrafica14() {
     // Filtrar por fechaaa
     let datosFiltrados = ventasCompletas;
@@ -731,6 +731,31 @@ function crearGrafica14() {
 
 
     createChart(ctx14, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Total del Día en $', backgroundColors1);
+
+
+
+}
+
+// Patrón de ventas por hora
+function crearGrafica15() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventasCompletas;
+
+
+
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+    const resultado = obtenerPatronVentasPorMediaHora(datosFiltrados);
+
+    // const { etiquetas, valores } = procesarDatos(patronVentas, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
+
+
+    createChart(ctx15, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Totales Por Hora $', backgroundColors1);
 
 
 
@@ -762,6 +787,43 @@ function obtenerPatronVentas(ventas) {
     return {
         etiquetas: diasSemana,
         valores: ventasPorDia,
+    };
+}
+
+
+// Función para determinar el patrón de ventas por hora
+function obtenerPatronVentasPorMediaHora(ventas) {
+    const ventasPorMediaHora = Array(48).fill(0); // 48 intervalos de 30 minutos en 24 horas
+
+    ventas.forEach((venta) => {
+        const [hora, minuto] = venta.hora_venta.split(":").map(Number);
+        const intervalo = hora * 2 + (minuto >= 30 ? 1 : 0); // Convierte hora:minuto en intervalo de 30 minutos
+
+        let totalVenta = 0;
+        if (venta.granel === "1") {
+            // Si es granel, dividir entre 1000 para obtener el precio por kg
+            totalVenta = (parseFloat(venta.precio_venta) * parseInt(venta.cantidad)) / 1000;
+        } else {
+            totalVenta = parseFloat(venta.precio_venta) * parseInt(venta.cantidad);
+        }
+
+        // Sumar el total de venta al intervalo correspondiente
+        ventasPorMediaHora[intervalo] += totalVenta;
+    });
+
+    // Generar etiquetas para intervalos de 30 minutos
+    const etiquetas = Array.from({ length: 48 }, (_, i) => {
+        const hora = Math.floor(i / 2)
+            .toString()
+            .padStart(2, "0");
+        const minutos = i % 2 === 0 ? "00" : "30";
+        return `${hora}:${minutos}`;
+    });
+
+    // Retornar etiquetas (intervalos de 30 min) y valores (total de ventas por intervalo)
+    return {
+        etiquetas: etiquetas,
+        valores: ventasPorMediaHora,
     };
 }
 
