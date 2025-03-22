@@ -549,7 +549,7 @@
                         <h3>TOTAL VENTAS ($):</h3>
                         <p>$13300036.98</p>
                     </div>
-                    <div class="totalChico1" id="cancelacionesTotalDineroUnitario">
+                    <div class="totalChico1 totalChico1Cancelaciones" id="cancelacionesTotalDineroUnitario">
                         <h3>Total Ventas $(Productos de venta unitaria):</h3>
                         <p>$1333006.98</p>
                     </div>
