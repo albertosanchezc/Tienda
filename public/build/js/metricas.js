@@ -13,6 +13,8 @@ const ctx12 = document.getElementById('myChart12').getContext('2d');
 const ctx13 = document.getElementById('myChart13').getContext('2d');
 const ctx14 = document.getElementById('myChart14').getContext('2d');
 const ctx15 = document.getElementById('myChart15').getContext('2d');
+const ctx25 = document.getElementById('myChart25').getContext('2d');
+const ctx26 = document.getElementById('myChart26').getContext('2d');
 
 
 
@@ -43,15 +45,11 @@ parrafoChart1.textContent = 'Ganancias Contra Ventas';
 const parrafoChart2 = document.querySelector('#myChart2').parentElement.querySelector('P');
 parrafoChart2.textContent = 'Top n de Productos Más Vendidos';
 
-// const parrafoChart3 = document.querySelector('#myChart3').parentElement.querySelector('P');
-// parrafoChart3.textContent= 'Gramos de Productos Vendidos A Granel';
-
 const parrafoChart3 = document.querySelector('#myChart3').parentElement.querySelector('P');
 parrafoChart3.textContent = 'Top n de Productos Menos Vendidos';
 
 const parrafoChart4 = document.querySelector('#myChart4').parentElement.querySelector('P');
 parrafoChart4.textContent = 'Ventas Por Productos Más Vendidos';
-
 
 const parrafoChart5 = document.querySelector('#myChart5').parentElement.querySelector('P');
 parrafoChart5.textContent = 'Ganancias Por Productos Más Vendidos';
@@ -80,12 +78,20 @@ parrafoChart12.textContent = 'Ventas Por Productos A Granel Menos Vendidos';
 const parrafoChart13 = document.querySelector('#myChart13').parentElement.querySelector('P');
 parrafoChart13.textContent = 'Ganancias Por Productos A Granel Menos Vendidos';
 
-
 const parrafoChart14 = document.querySelector('#myChart14').parentElement.querySelector('P');
-parrafoChart14.textContent = 'Patron Semanal de Ventas';
+parrafoChart14.textContent = 'Top n de Proveedores Con Más Ventas';
 
 const parrafoChart15 = document.querySelector('#myChart15').parentElement.querySelector('P');
-parrafoChart15.textContent = 'Ventas Totales por Hora';
+parrafoChart15.textContent = 'Top n de Categorías con Más Ventas';
+
+
+const parrafoChart25 = document.querySelector('#myChart25').parentElement.querySelector('P');
+parrafoChart25.textContent = 'Patron Semanal de Ventas';
+
+const parrafoChart26 = document.querySelector('#myChart26').parentElement.querySelector('P');
+parrafoChart26.textContent = 'Ventas Totales por Hora';
+
+
 
 
 
@@ -158,6 +164,7 @@ function calcularTotales(ventasAgrupadas) {
     return ventasAgrupadas.map(grupo => {
         const producto_id = grupo[0].producto_id; // Tomamos el ID del primer elemento del grupo
         const producto_completo = grupo[0].producto; // Nombre del producto
+        const proveedor = grupo[0].proveedor;
 
         // Sumamos la cantidad total de ese producto
         const totalCantidad = grupo.reduce((sum, item) => sum + parseInt(item.cantidad), 0);
@@ -165,7 +172,8 @@ function calcularTotales(ventasAgrupadas) {
         return {
             producto_id,
             producto_completo,
-            totalCantidad
+            totalCantidad,
+            proveedor,
         };
     });
 }
@@ -259,6 +267,80 @@ function calcularTotalGananciasGranel(ventas) {
 }
 
 
+function obtenerVentasPorProveedor(ventas) {
+    const ventasPorProveedor = {}; // Objeto para acumular ventas por proveedor
+
+    ventas.forEach((venta) => {
+        const proveedor = venta.proveedor || "Desconocido"; // Si no tiene proveedor, asigna "Desconocido"
+
+        let totalVenta = 0;
+        if (venta.granel === "1") {
+            // Si es granel, dividir entre 1000 para obtener el precio por kg
+            totalVenta = (parseFloat(venta.precio_venta) * parseInt(venta.cantidad)) / 1000;
+        } else {
+            totalVenta = parseFloat(venta.precio_venta) * parseInt(venta.cantidad);
+        }
+
+        // Sumar el total de venta al proveedor correspondiente
+        if (!ventasPorProveedor[proveedor]) {
+            ventasPorProveedor[proveedor] = 0;
+        }
+        ventasPorProveedor[proveedor] += totalVenta;
+    });
+
+    // Convertir el objeto en un arreglo de etiquetas y valores
+    const proveedoresOrdenados = Object.entries(ventasPorProveedor)
+        .sort((a, b) => b[1] - a[1]) // Ordenar por ventas descendente
+        .slice(0, 20); // Tomar solo los primeros 20 proveedores
+
+    // Separar etiquetas y valores
+    const etiquetas = proveedoresOrdenados.map((item) => item[0]);
+    const valores = proveedoresOrdenados.map((item) => item[1]);
+
+    // Retornar etiquetas (proveedores) y valores (total de ventas por proveedor)
+    return {
+        etiquetas,
+        valores,
+    };
+}
+
+function obtenerVentasPorCategoria(ventas) {
+    const ventasPorCategoria = {}; // Objeto para acumular ventas por categoría
+
+    ventas.forEach((venta) => {
+        const categoria = venta.categoria || "Sin categoría"; // Si no tiene categoría, asigna "Sin categoría"
+
+        let totalVenta = 0;
+        if (venta.granel === "1") {
+            // Si es granel, dividir entre 1000 para obtener el precio por kg
+            totalVenta = (parseFloat(venta.precio_venta) * parseInt(venta.cantidad)) / 1000;
+        } else {
+            totalVenta = parseFloat(venta.precio_venta) * parseInt(venta.cantidad);
+        }
+
+        // Sumar el total de venta a la categoría correspondiente
+        if (!ventasPorCategoria[categoria]) {
+            ventasPorCategoria[categoria] = 0;
+        }
+        ventasPorCategoria[categoria] += totalVenta;
+    });
+
+    // Convertir el objeto en un arreglo de etiquetas y valores
+    const categoriasOrdenadas = Object.entries(ventasPorCategoria)
+        .sort((a, b) => b[1] - a[1]) // Ordenar por ventas descendente
+        .slice(0, 20); // Tomar solo las primeras 20 categorías
+
+    // Separar etiquetas y valores
+    const etiquetas = categoriasOrdenadas.map((item) => item[0]);
+    const valores = categoriasOrdenadas.map((item) => item[1]);
+
+    // Retornar etiquetas (categorías) y valores (total de ventas por categoría)
+    return {
+        etiquetas,
+        valores,
+    };
+}
+
 function crearGraficasVentas() {
     crearGrafica1();
     crearGrafica2();
@@ -275,6 +357,10 @@ function crearGraficasVentas() {
     crearGrafica13();
     crearGrafica14();
     crearGrafica15();
+    crearGrafica25();
+    crearGrafica26();
+
+
 
 }
 
@@ -711,8 +797,61 @@ function crearGrafica13() {
 
 }
 
-// Patrón Semanal de Ventas 
+// Top n Proveedores con más ventas
 function crearGrafica14() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventasCompletas;
+
+
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+    const resultado = obtenerVentasPorProveedor(datosFiltrados);
+    // obtenerTop20(resultado);
+    // console.log(resultado);
+
+    // const { etiquetas, valores } = procesarDatos(patronVentas, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
+
+
+    createChart(ctx14, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Por Proveedor en $', backgroundColors1);
+
+
+
+}
+
+// Top n Categorías con más ventas
+function crearGrafica15() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventasCompletas;
+
+
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+    const resultado = obtenerVentasPorCategoria(datosFiltrados);
+    // obtenerTop20(resultado);
+    // console.log(resultado);
+
+    // const { etiquetas, valores } = procesarDatos(patronVentas, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
+
+
+    createChart(ctx15, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Por Categoría en $', backgroundColors1);
+
+
+
+}
+
+
+// Patrón Semanal de Ventas 
+function crearGrafica25() {
     // Filtrar por fechaaa
     let datosFiltrados = ventasCompletas;
 
@@ -730,14 +869,14 @@ function crearGrafica14() {
     const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
 
 
-    createChart(ctx14, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Total del Día en $', backgroundColors1);
+    createChart(ctx25, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Total del Día en $', backgroundColors1);
 
 
 
 }
 
 // Patrón de ventas por hora
-function crearGrafica15() {
+function crearGrafica26() {
     // Filtrar por fechaaa
     let datosFiltrados = ventasCompletas;
 
@@ -755,7 +894,7 @@ function crearGrafica15() {
     const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
 
 
-    createChart(ctx15, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Totales Por Hora $', backgroundColors1);
+    createChart(ctx26, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Totales Por Hora $', backgroundColors1);
 
 
 
