@@ -200,7 +200,47 @@
                 gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
                 y la descarga incluirá la información correspondiente al período aplicado.</p>
         </div>
-        
+        <div class="filtrosVentas filtrosCaja">
+            <form id="formularioInventario">
+                <fieldset>
+                    <legend>Filtrar Resultados</legend>
+                    <div class="flexFiltrosVentas flexFiltrosCaja">
+                        <div class="fechaInicio">
+                            <label for="fechaInicioVentas">Fecha de Inicio:</label>
+                            <input type="date" id="fechaInicioVentas" name="fechasVentas[inicio]">
+                        </div>
+                        <div class="fechaFin">
+                            <label for="fechaFinVentas">Fecha Final:</label>
+                            <input type="date" id="fechaFinVentas" name="fechasVentas[fin]">
+                        </div>
+                    </div>
+                    <div class="botonesExportarVentas botonesExportarCaja">
+                        <a href="#" class="moradoOsc">Exportar Excel</a>
+                        <a href="#" class="moradoClaro">Exportar PDF</a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="imagen-contactoCaja">
+            <div class="contenedorTotalesCaja">
+                <div class="contenedorAbonos" id="totalCantidadAbonos">
+                    <h3>TOTAL ABONOS (#):</h3>
+                    <p>156</p>
+                </div>
+                <div class="contenedorRetiros" id="totalCantidadRetiros">
+                    <h3>TOTAL RETIROS (#):</h3>
+                    <p>156</p>
+                </div>
+                <div class="contenedorAbonosDinero contenedorAbonosDineroNuevo" id="totalDinerosAbonos">
+                    <h3>TOTAL ABONOS ($):</h3>
+                    <p>$5632156.33</p>
+                </div>
+                <div class="contenedorRetirosDineros contenedorRetirosDinerosNuevo" id="totalDinerosRetiros">
+                    <h3>TOTAL RETIROS ($):</h3>
+                    <p>$5632156.33</p>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="contenedorVentas">
         <div class="tituloIndividual">
