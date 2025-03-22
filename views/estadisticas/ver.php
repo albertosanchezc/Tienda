@@ -54,17 +54,17 @@
                     <div class="flexFiltrosVentas flexFiltrosInventario">
                         <div class="fechaInicio">
                             <label for="fechaInicioVentas">Fecha de Inicio:</label>
-                            <input type="date" id="fechaInicioVentas" name="fechasVentas[inicio]">
+                            <input type="date" id="fechaInicioInventario" name="fechasInventario[inicio]">
                         </div>
                         <div class="fechaFin">
-                            <label for="fechaFinVentas">Fecha Final:</label>
-                            <input type="date" id="fechaFinVentas" name="fechasVentas[fin]">
+                            <label for="fechaFinInventario">Fecha Final:</label>
+                            <input type="date" id="fechaFinInventario" name="fechasInventario[fin]">
                         </div>
                     </div>
                     <div class="flexFiltrosVentas flexFiltrosInventario">
                         <div class="fechaInicio">
-                            <label for="proveedorFiltro">Proveedor:</label>
-                            <select id="proveedorFiltro">
+                            <label for="proveedorFiltroInventario">Proveedor:</label>
+                            <select id="proveedorFiltroInventario">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
                                     <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
@@ -75,8 +75,8 @@
                             </select>
                         </div>
                         <div class="fechaFin">
-                            <label for="categoriaFiltro">Categoría:</label>
-                            <select id="categoriaFiltro">
+                            <label for="categoriaFiltroInventario">Categoría:</label>
+                            <select id="categoriaFiltroInventario">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
                                     <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
@@ -201,17 +201,17 @@
                 y la descarga incluirá la información correspondiente al período aplicado.</p>
         </div>
         <div class="filtrosVentas filtrosCaja">
-            <form id="formularioInventario">
+            <form id="formularioCaja">
                 <fieldset>
                     <legend>Filtrar Resultados</legend>
                     <div class="flexFiltrosVentas flexFiltrosCaja">
                         <div class="fechaInicio">
-                            <label for="fechaInicioVentas">Fecha de Inicio:</label>
-                            <input type="date" id="fechaInicioVentas" name="fechasVentas[inicio]">
+                            <label for="fechaInicioInventario">Fecha de Inicio:</label>
+                            <input type="date" id="fechaInicioInventario" name="fechasInventario[inicio]">
                         </div>
                         <div class="fechaFin">
-                            <label for="fechaFinVentas">Fecha Final:</label>
-                            <input type="date" id="fechaFinVentas" name="fechasVentas[fin]">
+                            <label for="fechaFinInventario">Fecha Final:</label>
+                            <input type="date" id="fechaFinInventario" name="fechasInventario[fin]">
                         </div>
                     </div>
                     <div class="botonesExportarVentas botonesExportarCaja">
@@ -239,6 +239,22 @@
                     <h3>TOTAL RETIROS ($):</h3>
                     <p>$5632156.33</p>
                 </div>
+            </div>
+        </div>
+        <div class="estadisticas">
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Retiros y abonos</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart27" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Total en Caja</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart28" width="400" height="400"></canvas>
             </div>
         </div>
     </div>
@@ -356,7 +372,6 @@
                 <canvas id="myChart1" width="400" height="400"></canvas>
             </div>
         </div>
-
         <div class="estadisticas">
             <!-- Gráficas -->
             <div>
@@ -473,8 +488,112 @@
             </div>
         </div>
     </div>
-
-
+    <div class="contenedorCancelaciones">
+        <div class="tituloIndividual">
+            <h3>Cancelaciones</h3>
+            <p>Inicialmente se mostrará el historial completo de las Cancelaciones. Al elegir un período, los totales y
+                gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
+                y la descarga incluirá la información correspondiente al período aplicado.</p>
+        </div>
+        <div class="filtrosVentas filtrosCancelaciones">
+            <form id="formularioCancelaciones">
+                <fieldset>
+                    <legend>Resultados por Fecha</legend>
+                    <div class="flexFiltrosVentas">
+                        <div class="fechaInicio">
+                            <label for="fechaInicioCancelaciones">Fecha de Inicio:</label>
+                            <input type="date" id="fechaInicioCancelaciones" name="fechasCancelaciones[inicio]">
+                        </div>
+                        <div class="fechaFin">
+                            <label for="fechaFinCancelaciones">Fecha Final:</label>
+                            <input type="date" id="fechaFinCancelaciones" name="fechasCancelaciones[fin]">
+                        </div>
+                    </div>
+                    <div class="flexFiltrosVentas">
+                        <div class="fechaInicio">
+                            <label for="proveedorFiltroCancelaciones">Proveedor:</label>
+                            <select id="proveedorFiltroCancelaciones">
+                                <option selected value="">Selecciona un proveedor</option>
+                                <?php foreach ($proveedores as $proveedor) { ?>
+                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($proveedor->id); ?>">
+                                        <?php echo s($proveedor->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="fechaFin">
+                            <label for="categoriaFiltroCancelaciones">Categoría:</label>
+                            <select id="categoriaFiltroCancelaciones">
+                                <option selected value="">Selecciona una Categoría</option>
+                                <?php foreach ($categorias as $categoria) { ?>
+                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($categoria->id); ?>">
+                                        <?php echo s($categoria->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="botonesExportarVentas botonesExportarCancelaciones">
+                        <a href="#" class="moradoOsc">Exportar Excel</a>
+                        <a href="#" class="moradoClaro">Exportar PDF</a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="imagen-contactoCancelaciones">
+            <div class="contenedorTotalesVentas">
+                <div class="gridTotalVentasDinero">
+                    <div class="totalGrande" id="cancelacionesTotalDinero">
+                        <h3>TOTAL VENTAS ($):</h3>
+                        <p>$13300036.98</p>
+                    </div>
+                    <div class="totalChico1" id="cancelacionesTotalDineroUnitario">
+                        <h3>Total Ventas $(Productos de venta unitaria):</h3>
+                        <p>$1333006.98</p>
+                    </div>
+                    <div class="totalChico2" id="cancelacionesTotalDineroGranel">
+                        <h3>Total Ventas $(Productos de venta a Granel):</h3>
+                        <p>$1003336.98</p>
+                    </div>
+                </div>
+                <div class="gridTotalVentasGanancia">
+                    <div class="totalGrande" id="gananciaTotalDineroCancelaciones">
+                        <h3>TOTAL GANANCIA ($):</h3>
+                        <p>$13300036.98</p>
+                    </div>
+                    <div class="totalChico1" id="gananciaTotalDineroUnitarioCancelaciones">
+                        <h3>Total Ganancia $(Productos de venta unitaria):</h3>
+                        <p>$1333006.98</p>
+                    </div>
+                    <div class="totalChico2" id="gananciaTotalDineroGranelCancelaciones">
+                        <h3>Total Ganancia $(Productos de venta a Granel):</h3>
+                        <p>$1003336.98</p>
+                    </div>
+                </div>
+                <div class="gridTotalVentasCantidad">
+                    <div class="cantidadTotal">
+                        <p>CANTIDAD TOTAL:</p>
+                    </div>
+                    <div class="gridCantidades">
+                        <div class="cantidadTotalGrande" id="cantidadTotalUnitarioCancelaciones">
+                            <h3>Cantidad Total Vendida #(Venta Unitaria):</h3>
+                            <p>45 piezas</p>
+                        </div>
+                        <div class="cantidadTotalChico1" id="cantidadTotalGranelCancelaciones">
+                            <h3>Cantidad Total Vendida #(Venta a Granel):</h3>
+                            <p>5.9 Kg</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gridTotalVentasPromedio" id="gridTotalVentasPromedioCancelaciones">
+                    <h3>Promedio de consumo por cliente ($):</h3>
+                    <p>$1000.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="contenedorcaja seccioncaja">
         <div class="botonesGenerales">
             <div class="botonGeneralInventario">

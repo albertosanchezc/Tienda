@@ -53,6 +53,24 @@
 
 }
 
+.no-webp .imagen-contactoCancelaciones {
+    background-image: url('../img/graficasCancelaciones1.jpg');
+}
+
+.webp .imagen-contactoCancelaciones {
+    background-image: url('../img/graficasCancelaciones1.jpg');
+
+}
+
+.imagen-contactoCancelaciones {
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
 .estadisticas {
     display: grid;
 
@@ -757,14 +775,23 @@
     }
 }
 
-.filtrosVentas,
-.filtrosCaja {
+.filtrosVentas.filtrosCaja {
     fieldset {
         border: 2px dotted #7073CA;
     }
 
     legend {
         color: #7073CA;
+    }
+}
+
+.filtrosVentas.filtrosCancelaciones{
+    fieldset {
+        border: 2px dotted #9D5BB5;
+    }
+
+    legend {
+        color: #9D5BB5;
     }
 }
 
@@ -785,6 +812,13 @@
 .flexFiltrosVentas.flexFiltrosCaja {
     input[type="date"] {
         border-color: #7073CA;
+
+    }
+}
+
+.flexFiltrosVentas.flexFiltrosCancelaciones {
+    input[type="date"] {
+        border-color: #9D5BB5;
 
     }
 }
@@ -818,6 +852,22 @@
     .moradoOsc {
         background-color: #3a568d;
         border: solid 1px #3a568d;
+    }
+}
+
+.botonesExportarVentas.botonesExportarCancelaciones {
+    a {
+        background-color: #9D5BB5;
+        border: solid 1px #9D5BB5;
+    }
+
+    a:hover {
+        color: #9D5BB5;
+    }
+
+    .moradoOsc {
+        background-color: #744386;
+        border: solid 1px #744386;
     }
 }
 
