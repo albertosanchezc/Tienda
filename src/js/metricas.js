@@ -17,8 +17,17 @@ const ctx25 = document.getElementById('myChart25').getContext('2d');
 const ctx26 = document.getElementById('myChart26').getContext('2d');
 
 
-
+const btnAbrirInventario = document.querySelector('.botonGeneralInventario');
 const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
+const btnAbrirCaja = document.querySelector('.botonGeneralCaja');
+
+
+const contenedorInventario = document.querySelector('.contenedorInventario');
+contenedorInventario.style.display = 'none';
+
+const contenedorCaja = document.querySelector('.contenedorCaja');
+contenedorCaja.style.display = 'none';
+
 
 const contenedorVentas = document.querySelector('.contenedorVentas');
 contenedorVentas.style.display = 'none';
@@ -1138,6 +1147,27 @@ btnAbrirVentas.addEventListener('click', () => {
     }
 
 });
+
+btnAbrirInventario.addEventListener('click', () => {
+    if (contenedorInventario.style.display === 'none') {
+        contenedorInventario.style.display = 'block';
+    } else {
+        contenedorInventario.style.display = 'none';
+    }
+
+});
+
+btnAbrirCaja.addEventListener('click', () => {
+    if (contenedorCaja.style.display === 'none') {
+        contenedorCaja.style.display = 'block';
+    } else {
+        contenedorCaja.style.display = 'none';
+    }
+
+});
+
+
+
 
 
 const inicio = document.getElementById('fecha_inicio') ?? '';
