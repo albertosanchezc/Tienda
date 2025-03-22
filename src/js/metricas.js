@@ -18,7 +18,7 @@ const ctx15 = document.getElementById('myChart15').getContext('2d');
 
 const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
 
-const contenedorVentas = document.querySelector('.contenedorVentas');  
+const contenedorVentas = document.querySelector('.contenedorVentas');
 contenedorVentas.style.display = 'none';
 
 const selectortotalVentasUnitarias = document.querySelector('#ventasTotalDineroUnitario').querySelector('P');
@@ -79,6 +79,13 @@ parrafoChart12.textContent = 'Ventas Por Productos A Granel Menos Vendidos';
 
 const parrafoChart13 = document.querySelector('#myChart13').parentElement.querySelector('P');
 parrafoChart13.textContent = 'Ganancias Por Productos A Granel Menos Vendidos';
+
+
+const parrafoChart14 = document.querySelector('#myChart14').parentElement.querySelector('P');
+parrafoChart14.textContent = 'Patron Semanal de Ventas';
+
+const parrafoChart15 = document.querySelector('#myChart15').parentElement.querySelector('P');
+parrafoChart15.textContent = 'Ventas Totales por Hora';
 
 
 
@@ -266,9 +273,7 @@ function crearGraficasVentas() {
     crearGrafica11();
     crearGrafica12();
     crearGrafica13();
-
-
-
+    crearGrafica14();
 
 
 }
@@ -706,8 +711,59 @@ function crearGrafica13() {
 
 }
 
+// Ganancias Por Productos Más Vendidos
+function crearGrafica14() {
+    // Filtrar por fechaaa
+    let datosFiltrados = ventasCompletas;
 
 
+
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+    const resultado = obtenerPatronVentas(datosFiltrados);
+
+    // const { etiquetas, valores } = procesarDatos(patronVentas, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
+
+
+    createChart(ctx14, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Total del Día en $', backgroundColors1);
+
+
+
+}
+
+
+// Función para determinar el patrón de ventas semanal
+function obtenerPatronVentas(ventas) {
+    const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+    const ventasPorDia = Array(7).fill(0); // Inicializa ventas en 0 para cada día
+
+    ventas.forEach((venta) => {
+        const fechaVenta = new Date(venta.fecha_venta);
+        const diaSemana = fechaVenta.getDay(); // Obtener índice del día
+
+        let totalVenta = 0;
+        if (venta.granel === "1") {
+            // Si es granel, dividir entre 1000 para obtener el precio por kg
+            totalVenta = (parseFloat(venta.precio_venta) * parseInt(venta.cantidad)) / 1000;
+        } else {
+            totalVenta = parseFloat(venta.precio_venta) * parseInt(venta.cantidad);
+        }
+
+        // Sumar al total del día correspondiente
+        ventasPorDia[diaSemana] += totalVenta;
+    });
+
+    // Retornar etiquetas (días) y valores (total de ventas por día)
+    return {
+        etiquetas: diasSemana,
+        valores: ventasPorDia,
+    };
+}
 
 function calcularGanancias(listaDeVentas) {
     return Object.values(
@@ -763,10 +819,10 @@ function calcularGananciasGranel(listaDeVentas) {
             const cantidadVendida = Number(cantidad);
 
             // Calcular la ganancia por venta (precio de venta - precio de compra) * cantidad
-            const gananciaPorVenta = ((precioVenta - precioCompra) * cantidadVendida)/1000;
+            const gananciaPorVenta = ((precioVenta - precioCompra) * cantidadVendida) / 1000;
 
             // Calcular la ganancia bruta (precio de venta * cantidad)
-            const gananciaBruta = (precioVenta * cantidadVendida)/1000;
+            const gananciaBruta = (precioVenta * cantidadVendida) / 1000;
 
             // Si no existe el producto, lo inicializamos
             if (!productosAgrupados[producto_id]) {
@@ -873,10 +929,10 @@ function createChart(ctx, type, labels, data, label, backgroundColors) {
 }
 
 // Eventos
-btnAbrirVentas.addEventListener('click',() => {
-    if(contenedorVentas.style.display === 'none'){
+btnAbrirVentas.addEventListener('click', () => {
+    if (contenedorVentas.style.display === 'none') {
         contenedorVentas.style.display = 'block';
-    } else{
+    } else {
         contenedorVentas.style.display = 'none';
     }
 
