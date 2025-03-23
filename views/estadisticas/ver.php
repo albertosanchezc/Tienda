@@ -546,54 +546,231 @@
             <div class="contenedorTotalesVentas">
                 <div class="gridTotalVentasDinero">
                     <div class="totalGrande" id="cancelacionesTotalDinero">
-                        <h3>TOTAL VENTAS ($):</h3>
+                        <h3>TOTAL CANCELACIONES ($):</h3>
                         <p>$13300036.98</p>
                     </div>
                     <div class="totalChico1 totalChico1Cancelaciones" id="cancelacionesTotalDineroUnitario">
-                        <h3>Total Ventas $(Productos de venta unitaria):</h3>
+                        <h3>Total Cancelaciones $(Productos de venta unitaria):</h3>
                         <p>$1333006.98</p>
                     </div>
-                    <div class="totalChico2" id="cancelacionesTotalDineroGranel">
-                        <h3>Total Ventas $(Productos de venta a Granel):</h3>
+                    <div class="totalChico2 totalChico2Cancelaciones" id="cancelacionesTotalDineroGranel">
+                        <h3>Total Cancelaciones $(Productos de venta a Granel):</h3>
                         <p>$1003336.98</p>
                     </div>
                 </div>
                 <div class="gridTotalVentasGanancia">
                     <div class="totalGrande" id="gananciaTotalDineroCancelaciones">
-                        <h3>TOTAL GANANCIA ($):</h3>
+                        <h3>TOTAL CANCELACIONES ($):</h3>
                         <p>$13300036.98</p>
                     </div>
-                    <div class="totalChico1" id="gananciaTotalDineroUnitarioCancelaciones">
-                        <h3>Total Ganancia $(Productos de venta unitaria):</h3>
+                    <div class="totalChico1 totalChico1Cancelaciones" id="gananciaTotalDineroUnitarioCancelaciones">
+                        <h3>Supuesta Total Ganancia Cancelaciones $(Productos de venta unitaria):</h3>
                         <p>$1333006.98</p>
                     </div>
-                    <div class="totalChico2" id="gananciaTotalDineroGranelCancelaciones">
-                        <h3>Total Ganancia $(Productos de venta a Granel):</h3>
+                    <div class="totalChico2 totalChico2Cancelaciones" id="gananciaTotalDineroGranelCancelaciones">
+                        <h3>Supuesta Total Ganancia Cancelaciones $(Productos de venta a Granel):</h3>
                         <p>$1003336.98</p>
                     </div>
                 </div>
                 <div class="gridTotalVentasCantidad">
                     <div class="cantidadTotal">
-                        <p>CANTIDAD TOTAL:</p>
+                        <p>CANTIDAD TOTAL CANCELACIONES:</p>
                     </div>
                     <div class="gridCantidades">
-                        <div class="cantidadTotalGrande" id="cantidadTotalUnitarioCancelaciones">
-                            <h3>Cantidad Total Vendida #(Venta Unitaria):</h3>
+                        <div class="cantidadTotalGrande cantidadTotalGrandeCancelaciones"
+                            id="cantidadTotalUnitarioCancelaciones">
+                            <h3>Cantidad Total Cancelaciones #(Venta Unitaria):</h3>
                             <p>45 piezas</p>
                         </div>
-                        <div class="cantidadTotalChico1" id="cantidadTotalGranelCancelaciones">
-                            <h3>Cantidad Total Vendida #(Venta a Granel):</h3>
+                        <div class="cantidadTotalChico1 cantidadTotalChico1Cancelaciones"
+                            id="cantidadTotalGranelCancelaciones">
+                            <h3>Cantidad Total Cancelaciones #(Venta a Granel):</h3>
                             <p>5.9 Kg</p>
                         </div>
                     </div>
                 </div>
                 <div class="gridTotalVentasPromedio" id="gridTotalVentasPromedioCancelaciones">
-                    <h3>Promedio de consumo por cliente ($):</h3>
+                    <h3>Promedio de cancelaciones por cliente ($):</h3>
                     <p>$1000.00</p>
                 </div>
             </div>
         </div>
+        <div class="estadisticas">
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart29" width="400" height="400"></canvas>
+            </div>
+        </div>
     </div>
+    <div class="contenedorProveedores">
+        <div class="tituloIndividual">
+            <h3>Proveedores</h3>
+            <p>Inicialmente se mostrará el historial completo de las Proveedores. Al elegir un período, los totales y
+                gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
+                y la descarga incluirá la información correspondiente al período aplicado.</p>
+        </div>
+        <div class="filtrosVentas filtrosProveedores">
+            <form id="formularioProveedores">
+                <fieldset>
+                    <legend>Resultados por Fecha</legend>
+                    <div class="flexFiltrosVentas">
+                        <div class="fechaInicio">
+                            <label for="fechaInicioProveedores">Fecha de Inicio:</label>
+                            <input type="date" id="fechaInicioProveedores" name="fechasProveedores[inicio]">
+                        </div>
+                        <div class="fechaFin">
+                            <label for="fechaFinProveedores">Fecha Final:</label>
+                            <input type="date" id="fechaFinProveedores" name="fechasProveedores[fin]">
+                        </div>
+                    </div>
+                    <div class="flexFiltrosVentas">
+                        <div class="fechaInicio">
+                            <label for="proveedorFiltroProveedores">Proveedor:</label>
+                            <select id="proveedorFiltroProveedores">
+                                <option selected value="">Selecciona un proveedor</option>
+                                <?php foreach ($proveedores as $proveedor) { ?>
+                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($proveedor->id); ?>">
+                                        <?php echo s($proveedor->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="fechaFin">
+                            <label for="categoriaFiltroProveedores">Categoría:</label>
+                            <select id="categoriaFiltroProveedores">
+                                <option selected value="">Selecciona una Categoría</option>
+                                <?php foreach ($categorias as $categoria) { ?>
+                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($categoria->id); ?>">
+                                        <?php echo s($categoria->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="botonesExportarVentas botonesExportarProveedores">
+                        <a href="#" class="moradoOsc">Exportar Excel</a>
+                        <a href="#" class="moradoClaro">Exportar PDF</a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="imagen-contactoProveedores">
+            <div class="gridTotalesProveedores">
+                <div class="gridTotaleProveedor1">
+                    <h3>Cantidad Promedio de Productos Comprados por Visita # (Venta Unitaria)</h3>
+                    <p>3</p>
+                    <h3>Cantidad Promedio de Productos Comprados por Visita # (Venta a Granel)</h3>
+                    <p>3</p>
+                </div>
+                <div class="gridTotaleProveedor2">
+                <h3>Total Promedio de Productos Comprados por Visita $ (Precio de Compra)</h3>
+                <p>3</p>
+                </div>
+                <div class="gridTotaleProveedor3">
+                    <p>Hola</p>
+                </div>
+                <div class="gridTotaleProveedor4">
+                    <p>Hola</p>
+                </div>
+                <div class="gridTotaleProveedor5">
+                    <p>Hola</p>
+                </div>
+                <div class="gridTotaleProveedor6">
+                    <p>Hola</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="contenedorcaja seccioncaja">
         <div class="botonesGenerales">
             <div class="botonGeneralInventario">

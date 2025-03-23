@@ -54,15 +54,33 @@
 }
 
 .no-webp .imagen-contactoCancelaciones {
-    background-image: url('../img/graficasCancelaciones1.jpg');
+    background-image: url('../img/graficasCancelaciones2.jpg');
 }
 
 .webp .imagen-contactoCancelaciones {
-    background-image: url('../img/graficasCancelaciones1.jpg');
+    background-image: url('../img/graficasCancelaciones2.jpg');
 
 }
 
 .imagen-contactoCancelaciones {
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.no-webp .imagen-contactoProveedores {
+    background-image: url('../img/graficasProveedores.jpg');
+}
+
+.webp .imagen-contactoProveedores {
+    background-image: url('../img/graficasProveedores.jpg');
+
+}
+
+.imagen-contactoProveedores {
     background-position: center center;
     background-size: cover;
     display: flex;
@@ -784,13 +802,23 @@
     }
 }
 
-.filtrosVentas.filtrosCancelaciones{
+.filtrosVentas.filtrosCancelaciones {
     fieldset {
         border: 2px dotted #9D5BB5;
     }
 
     legend {
         color: #9D5BB5;
+    }
+}
+
+.filtrosVentas.filtrosProveedores {
+    fieldset {
+        border: 2px dotted #AF4CA4;
+    }
+
+    legend {
+        color: #AF4CA4;
     }
 }
 
@@ -822,6 +850,13 @@
     }
 }
 
+.flexFiltrosVentas.flexFiltrosProveedores {
+    input[type="date"] {
+        border-color: #AF4CA4;
+
+    }
+}
+
 .botonesExportarVentas.botonesExportarInventario {
     a {
         background-color: #557DCE;
@@ -830,6 +865,7 @@
 
     a:hover {
         color: #354f81;
+        background-color: #fff;
     }
 
     .moradoOsc {
@@ -846,6 +882,8 @@
 
     a:hover {
         color: #354f81;
+        background-color: #fff;
+
     }
 
     .moradoOsc {
@@ -862,11 +900,31 @@
 
     a:hover {
         color: #9D5BB5;
+        background-color: #fff;
+
     }
 
     .moradoOsc {
         background-color: #744386;
         border: solid 1px #744386;
+    }
+}
+
+.botonesExportarVentas.botonesExportarProveedores {
+    a {
+        background-color: #AF4CA4;
+        border: solid 1px #AF4CA4;
+    }
+
+    a:hover {
+        color: #AF4CA4;
+        background-color: #fff;
+
+    }
+
+    .moradoOsc {
+        background-color: #8d3d84;
+        border: solid 1px #8d3d84;
     }
 }
 
@@ -1108,9 +1166,52 @@
     }
 }
 
-.totalChico1.totalChico1Cancelaciones {
-    p {
-        background-color: rgba(2, 2, 2, 0.5);
+.contenedorCancelaciones {
+    .totalChico1.totalChico1Cancelaciones {
+        p {
+            background-color: rgba(2, 2, 2, 0.5);
+        }
+
+    }
+
+    .totalChico2.totalChico2Cancelaciones {
+
+        p {
+            background-color: rgba(2, 2, 2, 0.5);
+
+        }
+    }
+
+    .cantidadTotalGrande.cantidadTotalGrandeCancelaciones,
+    .cantidadTotalChico1.cantidadTotalChico1Cancelaciones {
+        p {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    }
+
+}
+
+.gridTotalesProveedores {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+
+    @include telefono-1 {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+    }
+
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+
+    @include laptop-1 {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
     }
 
 }
