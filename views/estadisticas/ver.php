@@ -692,7 +692,7 @@
     <div class="contenedorProveedores">
         <div class="tituloIndividual">
             <h3>Proveedores</h3>
-            <p>Inicialmente se mostrará el historial completo de las Proveedores. Al elegir un período, los totales y
+            <p>Inicialmente se mostrará el historial completo de los Proveedores. Al elegir un período, los totales y
                 gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
                 y la descarga incluirá la información correspondiente al período aplicado.</p>
         </div>
@@ -810,7 +810,15 @@
             </div>
         </div>
     </div>
-
+    <div class="contenedorCategorias">
+        <div class="tituloIndividual">
+            <h3>Categorías</h3>
+            <p>Inicialmente se mostrará el historial completo de las Proveedores. Al elegir un período, los totales y
+                gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
+                y la descarga incluirá la información correspondiente al período aplicado.</p>
+        </div>
+        
+    </div>
     <div class="contenedorcaja seccioncaja">
         <div class="botonesGenerales">
             <div class="botonGeneralInventario">
