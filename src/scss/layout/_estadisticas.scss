@@ -1197,7 +1197,8 @@
     align-items: center;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 2rem;
+    margin: 4rem 2rem;
 
     @include telefono-1 {
         grid-template-columns: 1fr;
@@ -1212,6 +1213,53 @@
     @include laptop-1 {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, 1fr);
+    }
+
+    h3,p{
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+    font-weight: bold;
+        text-align: center;
+
+    }
+
+    h3{
+    font-size: medium;
+    text-transform: uppercase;
+    }
+
+    
+    .gridTotaleProveedor1{
+        display: grid;
+        grid-template-rows: repeat(2,1fr);
+        gap: 1rem;
+        p{
+            font-size: 2.5rem;
+        }
+
+        .flexCantidadPromedio, .flexCantidadPromedioGranel{
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(20, 18, 20, 0.5);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    .gridTotaleProveedor2, .gridTotaleProveedor3, .gridTotaleProveedor4, .gridTotaleProveedor5, .gridTotaleProveedor6{
+
+        p{
+            font-size: 4rem;
+           
+        }
+        background-color: rgba(31, 30, 31, 0.5);
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+        
     }
 
 }

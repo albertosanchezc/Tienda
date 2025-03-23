@@ -746,27 +746,67 @@
         <div class="imagen-contactoProveedores">
             <div class="gridTotalesProveedores">
                 <div class="gridTotaleProveedor1">
-                    <h3>Cantidad Promedio de Productos Comprados por Visita # (Venta Unitaria)</h3>
-                    <p>3</p>
-                    <h3>Cantidad Promedio de Productos Comprados por Visita # (Venta a Granel)</h3>
-                    <p>3</p>
+                    <div class="flexCantidadPromedio">
+                        <h3>Promedio Productos Comprados por Visita # (Venta Unitaria)</h3>
+                        <p>3</p>
+                    </div>
+                    <div class="flexCantidadPromedioGranel">
+                        <h3>Promedio Productos Comprados por Visita # (Venta a Granel)</h3>
+                        <p>3</p>
+                    </div>
                 </div>
                 <div class="gridTotaleProveedor2">
-                <h3>Total Promedio de Productos Comprados por Visita $ (Precio de Compra)</h3>
-                <p>3</p>
+                    <h3>Promedio Productos Comprados por Visita $ (Precio de Compra)</h3>
+                    <p>$454533412.54</p>
                 </div>
                 <div class="gridTotaleProveedor3">
-                    <p>Hola</p>
+                    <h3>Total de Productos en Inventario $ (Precio de Compra)</h3>
+                    <p>$45445212.12</p>
                 </div>
                 <div class="gridTotaleProveedor4">
-                    <p>Hola</p>
+                    <h3>Cantidad de Productos en Inventario (#)</h3>
+                    <p>3</p>
                 </div>
                 <div class="gridTotaleProveedor5">
-                    <p>Hola</p>
+                    <h3>Total pagado a Proveedor ($)</h3>
+                    <p>$545225421.21</p>
                 </div>
                 <div class="gridTotaleProveedor6">
-                    <p>Hola</p>
+                    <h3>Total adeudo a Proveedor ($)</h3>
+                    <p>$4545456743.64</p>
                 </div>
+            </div>
+        </div>
+        <div class="estadisticas">
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Proveedores más comprados por los clientes
+                    </p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart30" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Proveedores menos comprados por los clientes
+                    </p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart31" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Proveedores con más ganancia en sus productos</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart32" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Proveedores con más ganancia en sus productos</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart33" width="400" height="400"></canvas>
             </div>
         </div>
     </div>
