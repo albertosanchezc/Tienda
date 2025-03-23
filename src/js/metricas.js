@@ -1,3 +1,4 @@
+// Gráficas de ventas
 const ctx1 = document.getElementById('myChart1').getContext('2d');
 const ctx2 = document.getElementById('myChart2').getContext('2d');
 const ctx3 = document.getElementById('myChart3').getContext('2d');
@@ -16,6 +17,12 @@ const ctx15 = document.getElementById('myChart15').getContext('2d');
 const ctx25 = document.getElementById('myChart25').getContext('2d');
 const ctx26 = document.getElementById('myChart26').getContext('2d');
 
+// Gráficas de Inventario
+const ctx16 = document.getElementById('myChart16').getContext('2d');
+
+
+
+
 
 const btnAbrirInventario = document.querySelector('.botonGeneralInventario');
 const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
@@ -25,6 +32,8 @@ const btnAbrirCaja = document.querySelector('.botonGeneralCaja');
 
 const contenedorInventario = document.querySelector('.contenedorInventario');
 contenedorInventario.style.display = 'none';
+const filtrosInventario = contenedorInventario.querySelector('#formularioInventario');
+
 
 const contenedorCaja = document.querySelector('.contenedorCaja');
 contenedorCaja.style.display = 'none';
@@ -41,10 +50,25 @@ let terminosBusquedaVentas = {
     categoria: ''
 }
 
+let terminosBusquedaInventario = {
+    fechaI: '',
+    fechaF: '',
+    proveedor: '',
+    categoria: ''
+}
+
+// Inputs de los filtros de Inventario
 const inputFechaInicioVentas = filtrosVentas.querySelector('#fechaInicioVentas')
 const inputFechaFinalVentas = filtrosVentas.querySelector('#fechaFinVentas')
 const inputProveedorVentas = filtrosVentas.querySelector('#proveedorFiltro')
 const inputCategoriaVentas = filtrosVentas.querySelector('#categoriaFiltro')
+
+// Inputs de los filtros de Ventas
+
+const inputFechaInicioInventario = filtrosInventario.querySelector('#fechaInicioInventario');
+const inputFechaFinalInventario = filtrosInventario.querySelector('#fechaFinInventario');
+const inputProveedorInventario = filtrosInventario.querySelector('#proveedorFiltroInventario');
+const inputCategoriaInventario = filtrosInventario.querySelector('#categoriaFiltroInventario');
 
 
 
@@ -72,10 +96,10 @@ const parrafoChart1 = document.querySelector('#myChart1').parentElement.querySel
 parrafoChart1.textContent = 'Ganancias Contra Ventas';
 
 const parrafoChart2 = document.querySelector('#myChart2').parentElement.querySelector('P');
-parrafoChart2.textContent = 'Top n de Productos Más Vendidos';
+parrafoChart2.textContent = 'Top 20 de Productos Más Vendidos';
 
 const parrafoChart3 = document.querySelector('#myChart3').parentElement.querySelector('P');
-parrafoChart3.textContent = 'Top n de Productos Menos Vendidos';
+parrafoChart3.textContent = 'Top 20 de Productos Menos Vendidos';
 
 const parrafoChart4 = document.querySelector('#myChart4').parentElement.querySelector('P');
 parrafoChart4.textContent = 'Ventas Por Productos Más Vendidos';
@@ -90,10 +114,10 @@ const parrafoChart7 = document.querySelector('#myChart7').parentElement.querySel
 parrafoChart7.textContent = 'Ganancias Por Productos Menos Vendidos';
 
 const parrafoChart8 = document.querySelector('#myChart8').parentElement.querySelector('P');
-parrafoChart8.textContent = 'Top n Productos a Granel más vendidos Por Gramos';
+parrafoChart8.textContent = 'Top 20 Productos a Granel más vendidos Por Gramos';
 
 const parrafoChart9 = document.querySelector('#myChart9').parentElement.querySelector('P');
-parrafoChart9.textContent = 'Top n Productos a Granel Menos vendidos Por Gramos';
+parrafoChart9.textContent = 'Top 20 Productos a Granel Menos vendidos Por Gramos';
 
 const parrafoChart10 = document.querySelector('#myChart10').parentElement.querySelector('P');
 parrafoChart10.textContent = 'Ventas Por Productos A Granel Más Vendidos';
@@ -108,10 +132,10 @@ const parrafoChart13 = document.querySelector('#myChart13').parentElement.queryS
 parrafoChart13.textContent = 'Ganancias Por Productos A Granel Menos Vendidos';
 
 const parrafoChart14 = document.querySelector('#myChart14').parentElement.querySelector('P');
-parrafoChart14.textContent = 'Top n de Proveedores Con Más Ventas';
+parrafoChart14.textContent = 'Top 20 de Proveedores Con Más Ventas';
 
 const parrafoChart15 = document.querySelector('#myChart15').parentElement.querySelector('P');
-parrafoChart15.textContent = 'Top n de Categorías con Más Ventas';
+parrafoChart15.textContent = 'Top 20 de Categorías con Más Ventas';
 
 
 const parrafoChart25 = document.querySelector('#myChart25').parentElement.querySelector('P');
@@ -142,10 +166,7 @@ const dia = String(hoy.getDate()).padStart(2, '0');
 const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // Enero es 0
 const año = hoy.getFullYear();
 const actual = `${año}-${mes}-${dia}`; // Formato YYYY-MM-DD
-const datosBusqueda = {
-    inicio: '',
-    fin: actual
-};
+
 
 document.addEventListener('DOMContentLoaded', function () {
     consultarAPI();
@@ -170,7 +191,7 @@ async function consultarAPI() {
         inventario = datos.inventario;
         cajas_historicos = datos.cajas_historicos;
         crearGraficasVentas(ventasCompletas);
-
+        crearGraficasInventario(inventario);
         console.log(inventario)
 
     } catch (error) {
@@ -184,6 +205,13 @@ function procesarDatos(datos, labelKey, dataKey) {
     return {
         etiquetas: datos.map(item => item[labelKey]), // Extrae los labels
         valores: datos.map(item => item[dataKey]) // Extrae los datos
+    };
+}
+
+function procesarDatosInventario(datos, labelKey1, labelKey2, dataKey) {
+    return {
+        etiquetas: datos.map(item => `${item[labelKey1]} - ${item[labelKey2]}`), // Concatena ambos labels
+        valores: datos.map(item => item[dataKey]) // Mantiene los valores iguales
     };
 }
 let chartId = {};
@@ -393,13 +421,41 @@ function crearGraficasVentas(datos) {
 
 }
 
+function crearGraficasInventario(datos) {
+    crearGrafica16(datos);
+}
+
+// Top 20 Productos con más Stock
+function crearGrafica16(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.cancelacion === '0' && producto.granel === '0') ?? inventario;
+
+    // Ordenar productos por cantidad descendente
+    const productosOrdenados = datosFiltrados1
+        .map(producto => ({
+            ...producto,
+            cantidad: parseInt(producto.cantidad, 10) // Convertir cantidad a número
+        }))
+        .sort((a, b) => b.cantidad - a.cantidad) // Ordenar de mayor a menor
+
+    // Obtener los 20 productos con más stock
+    const top20Productos = productosOrdenados.slice(0, 20);
+    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre','descripcion', 'totalCantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx16, 'bar', etiquetas, valores, 'Cantidad de Ventas por Producto', backgroundColors1);
+
+
+
+}
+
+
+
 // Ganancias Contra Ventas
 function crearGrafica1(ventasCompletas) {
     // Filtrar por fechaaa
 
     let datosFiltrados1 = ventasCompletas.filter(venta => venta.cancelacion === '0' && venta.granel === '0') ?? ventas;
     let datosFiltrados2 = ventasCompletas.filter(venta => venta.cancelacion === '0' && venta.granel === '1') ?? ventasGranel;
-    
+
 
 
 
@@ -446,7 +502,7 @@ function crearGrafica1(ventasCompletas) {
 
 }
 
-// Top n de Productos Más Vendidos
+// Top 20 de Productos Más Vendidos
 function crearGrafica2(datosAGraficar) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '0' && venta.granel === '0') ?? ventas;
@@ -470,7 +526,7 @@ function crearGrafica2(datosAGraficar) {
 
 }
 
-// Top n de Productos Menos Vendidos
+// Top 20 de Productos Menos Vendidos
 function crearGrafica3(datosAGraficar) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '0' && venta.granel === '0') ?? ventas;
@@ -633,7 +689,7 @@ function crearGrafica7(datosAGraficar) {
 
 }
 
-// Top n Productos a Granel más vendidos Por Gramos
+// Top 20 Productos a Granel más vendidos Por Gramos
 function crearGrafica8(datosAGraficar) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '0' && venta.granel === '1') ?? ventasGranel;
@@ -658,7 +714,7 @@ function crearGrafica8(datosAGraficar) {
 
 }
 
-// Top n Productos a Granel más vendidos Por Gramos
+// Top 20 Productos a Granel más vendidos Por Gramos
 function crearGrafica9(datosAGraficar) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '0' && venta.granel === '1') ?? ventasGranel;
@@ -827,7 +883,7 @@ function crearGrafica13(datosAGraficar) {
 
 }
 
-// Top n Proveedores con más ventas
+// Top 20 Proveedores con más ventas
 function crearGrafica14(datosAGraficar) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar;
@@ -853,7 +909,7 @@ function crearGrafica14(datosAGraficar) {
 
 }
 
-// Top n Categorías con más ventas
+// Top 20 Categorías con más ventas
 function crearGrafica15(datosAGraficar) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar;
@@ -865,6 +921,8 @@ function crearGrafica15(datosAGraficar) {
     //////////
     // Ejecutar función y mostrar resultado
     const resultado = obtenerVentasPorCategoria(datosFiltrados);
+    console.log(resultado);
+    
     // obtenerTop20(resultado);
     // console.log(resultado);
 
@@ -1160,6 +1218,20 @@ function createChart(ctx, type, labels, data, label, backgroundColors) {
 }
 
 // Eventos
+
+// Eventos de los filtros de inventario
+inputFechaInicioInventario.addEventListener('change', (e) => {
+    let { fechaI } = terminosBusquedaInventario;
+
+    fechaI = e.target.value;
+    terminosBusquedaInventario.fechaI = fechaI;
+    console.log(terminosBusquedaInventario);
+
+    filtrarInventario();
+})
+
+// Eventos de los filtros de ventas
+
 inputFechaInicioVentas.addEventListener('change', (e) => {
     let { fechaI } = terminosBusquedaVentas;
 
@@ -1216,42 +1288,58 @@ function filtrarVentas() {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaIVentas);
         console.log(resultadosFiltrados);
 
-        // mostrarPagina(1, resultadosFiltrados);
-        // mostrartabla(resultadosPagina);
-
-        // generarPaginador(resultadosFiltrados);
     }
 
     if (terminosBusquedaVentas.fechaF) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaFVentas);
         console.log(resultadosFiltrados);
 
-        // mostrarPagina(1, resultadosFiltrados);
-        // mostrartabla(resultadosPagina);
-
-        // generarPaginador(resultadosFiltrados);
     }
 
     if (terminosBusquedaVentas.proveedor) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarProveedorVentas);
         console.log(resultadosFiltrados);
 
-        // mostrarPagina(1, resultadosFiltrados);
-        // mostrartabla(resultadosPagina);
-
-        // generarPaginador(resultadosFiltrados);
     }
 
     if (terminosBusquedaVentas.categoria) {
         resultadosFiltrados = resultadosFiltrados.filter(filtrarCategoriaVentas);
         console.log(resultadosFiltrados);
 
-        // mostrarPagina(1, resultadosFiltrados);
-        // mostrartabla(resultadosPagina);
-
-        // generarPaginador(resultadosFiltrados);
     }
     crearGraficasVentas(resultadosFiltrados);
+
+    return resultadosFiltrados;
+
+
+
+}
+
+function filtrarInventario() {
+    let resultadosFiltrados = inventario;
+    // Aplicar filtro de fecha inicial si existe
+    if (terminosBusquedaInventario.fechaI) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaIInventario);
+        console.log(resultadosFiltrados);
+    }
+
+    if (terminosBusquedaInventario.fechaF) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaFInventario);
+        console.log(resultadosFiltrados);
+    }
+
+    if (terminosBusquedaInventario.proveedor) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarProveedorInventario);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaInventario.categoria) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarCategoriaInventario);
+        console.log(resultadosFiltrados);
+
+    }
+    crearGraficasInventario(resultadosFiltrados);
 
     return resultadosFiltrados;
 
@@ -1279,7 +1367,7 @@ function filtrarProveedorVentas(ventasCompletas) {
 
 
     if (proveedor) {
-        return ventasCompletas.proveedor === proveedor ;
+        return ventasCompletas.proveedor === proveedor;
     }
 
     return ventasCompletas;
