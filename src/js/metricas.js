@@ -25,10 +25,14 @@ const ctx16 = document.getElementById('myChart16').getContext('2d');
 
 
 const btnAbrirInventario = document.querySelector('.botonGeneralInventario');
-const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
-
-
 const btnAbrirCaja = document.querySelector('.botonGeneralCaja');
+const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
+const btnAbrirCancelaciones = document.querySelector('.botonGeneralCancelaciones');
+const btnAbrirProveedores = document.querySelector('.botonGeneralProveedores');
+
+
+
+
 
 const contenedorInventario = document.querySelector('.contenedorInventario');
 contenedorInventario.style.display = 'none';
@@ -42,6 +46,19 @@ contenedorCaja.style.display = 'none';
 const contenedorVentas = document.querySelector('.contenedorVentas');
 contenedorVentas.style.display = 'none';
 const filtrosVentas = contenedorVentas.querySelector('#formularioVentas');
+
+
+const contenedorCancelaciones = document.querySelector('.contenedorCancelaciones');
+contenedorCancelaciones.style.display = 'none';
+
+
+const contenedorProveedores = document.querySelector('.contenedorProveedores');
+contenedorProveedores.style.display = 'none';
+
+
+
+
+
 
 let terminosBusquedaVentas = {
     fechaI: '',
@@ -1419,6 +1436,32 @@ btnAbrirVentas.addEventListener('click', (e) => {
     } else {
         contenedorVentas.style.display = 'none';
         btnAbrirVentas.classList.remove('botonGeneralVentasHover');
+
+    }
+
+});
+
+btnAbrirCancelaciones.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (contenedorCancelaciones.style.display === 'none') {
+        btnAbrirCancelaciones.classList.add('botonGeneralCancelacionesHover');
+        contenedorCancelaciones.style.display = 'block';
+    } else {
+        contenedorCancelaciones.style.display = 'none';
+        btnAbrirCancelaciones.classList.remove('botonGeneralCancelacionesHover');
+
+    }
+
+});
+
+btnAbrirProveedores.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (contenedorProveedores.style.display === 'none') {
+        btnAbrirProveedores.classList.add('botonGeneralProveedoresHover');
+        contenedorProveedores.style.display = 'block';
+    } else {
+        contenedorProveedores.style.display = 'none';
+        btnAbrirProveedores.classList.remove('botonGeneralProveedoresHover');
 
     }
 
