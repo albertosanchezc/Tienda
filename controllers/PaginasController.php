@@ -92,11 +92,14 @@ class PaginasController
         $ventas = Ventas_Completas::obtenerVentasConcat();
         $inventario = Inventario_completo::join2('productos', 'inventario');
         $cajas_historicos = Caja_historico::all();
+        $proveedores = Proveedor::all();
 
         echo json_encode([
             'ventas' => $ventas,
             'inventario' => $inventario,
-            'cajas_historicos' => $cajas_historicos
+            'cajas_historicos' => $cajas_historicos,
+            'proveedores' => $proveedores
+
 
         ]);
     }

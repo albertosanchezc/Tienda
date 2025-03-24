@@ -246,6 +246,8 @@ class ActiveRecord
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
+
+    
     
 
     //Obtiene la última columna(especificada) de una tabla 
