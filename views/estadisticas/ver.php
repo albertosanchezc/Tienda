@@ -746,32 +746,32 @@
         <div class="imagen-contactoProveedores">
             <div class="gridTotalesProveedores">
                 <div class="gridTotaleProveedor1">
-                    <div class="flexCantidadPromedio">
+                    <div class="flexCantidadPromedio" id="promedioProductosCompradosProveedores">
                         <h3>Promedio Productos Comprados por Visita # (Venta Unitaria)</h3>
                         <p>3</p>
                     </div>
-                    <div class="flexCantidadPromedioGranel">
-                        <h3>Promedio Productos Comprados por Visita # (Venta a Granel)</h3>
+                    <div class="flexCantidadPromedioGranel" id="promedioProductosCompradosNumeroProveedores">
+                        <h3>Promedio Productos Comprados por Visita # (Venta a Granel):</h3>
                         <p>3</p>
                     </div>
                 </div>
-                <div class="gridTotaleProveedor2">
-                    <h3>Promedio Productos Comprados por Visita $ (Precio de Compra)</h3>
+                <div class="gridTotaleProveedor2" id="promedioProductosCompradosVisitaProveedores">
+                    <h3>Promedio Productos Comprados por Visita $ (Precio de Compra):</h3>
                     <p>$454533412.54</p>
                 </div>
-                <div class="gridTotaleProveedor3">
-                    <h3>Total de Productos en Inventario $ (Precio de Compra)</h3>
+                <div class="gridTotaleProveedor3" id="totalProductosInventarioDinerosProveedores">
+                    <h3>Total de Productos en Inventario $ (Precio de Compra):</h3>
                     <p>$45445212.12</p>
                 </div>
-                <div class="gridTotaleProveedor4">
+                <div class="gridTotaleProveedor4" id="totalProductosInventarioProveedores">
                     <h3>Cantidad de Productos en Inventario (#)</h3>
                     <p>3</p>
                 </div>
-                <div class="gridTotaleProveedor5">
+                <div class="gridTotaleProveedor5" id="totalPagadoProveedores">
                     <h3>Total pagado a Proveedor ($)</h3>
                     <p>$545225421.21</p>
                 </div>
-                <div class="gridTotaleProveedor6">
+                <div class="gridTotaleProveedor6" id="totalAdeudoProveedores">
                     <h3>Total adeudo a Proveedor ($)</h3>
                     <p>$4545456743.64</p>
                 </div>
@@ -813,11 +813,115 @@
     <div class="contenedorCategorias">
         <div class="tituloIndividual">
             <h3>Categorías</h3>
-            <p>Inicialmente se mostrará el historial completo de las Proveedores. Al elegir un período, los totales y
+            <p>Inicialmente se mostrará el historial completo de las Categorias. Al elegir un período, los totales y
                 gráficas se actualizarán automáticamente. También puedes exportar los datos en Excel o PDF con un click
                 y la descarga incluirá la información correspondiente al período aplicado.</p>
         </div>
-        
+        <div class="filtrosVentas filtrosCategorias">
+            <form id="formularioCategorias">
+                <fieldset>
+                    <legend>Resultados dinámicos</legend>
+                    <div class="flexFiltrosVentas flexFiltrosCategorias">
+                        <div class="fechaInicio">
+                            <label for="fechaInicioCategorias">Fecha de Inicio:</label>
+                            <input type="date" id="fechaInicioCategorias" name="fechasCategorias[inicio]">
+                        </div>
+                        <div class="fechaFin">
+                            <label for="fechaFinCategorias">Fecha Final:</label>
+                            <input type="date" id="fechaFinCategorias" name="fechasCategorias[fin]">
+                        </div>
+                    </div>
+                    <div class="flexFiltrosVentas flexFiltrosCategorias">
+                        <div class="fechaInicio">
+                            <label for="proveedorFiltroCategorias">Proveedor:</label>
+                            <select id="proveedorFiltroCategorias">
+                                <option selected value="">Selecciona un proveedor</option>
+                                <?php foreach ($proveedores as $proveedor) { ?>
+                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($proveedor->id); ?>">
+                                        <?php echo s($proveedor->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="fechaFin">
+                            <label for="categoriaFiltroCategorias">Categoría:</label>
+                            <select id="categoriaFiltroCategorias">
+                                <option selected value="">Selecciona una Categoría</option>
+                                <?php foreach ($categorias as $categoria) { ?>
+                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                        value="<?php echo s($categoria->id); ?>">
+                                        <?php echo s($categoria->nombre); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="botonesExportarVentas botonesExportarCategorias">
+                        <a href="#" class="moradoOsc">Exportar Excel</a>
+                        <a href="#" class="moradoClaro">Exportar PDF</a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="imagen-contactoCategorias">
+            <div class="gridContenidoImagenCategorias">
+                <div class="contenidoImagenCategorias1" id="totalNumeroCategorias">
+                    <h3>Total de Categorías (#):</h3>
+                    <p>600</p>
+                </div>
+                <div class="contenidoImagenCategorias2" id="masVendidaCategorias">
+                    <h3>Categoría más Vendida</h3>
+                    <p>Cremeria</p>
+                </div>
+                <div class="contenidoImagenCategorias3" id="menosVendidaCategorias">
+                    <h3>Categoría menos Vendida</h3>
+                    <p>Cremeria</p>
+                </div>
+                <div class="contenidoImagenCategorias4" id="masGananciaCategorias">
+                    <h3>Categoría con más Ganancias</h3>
+                    <p>Cremeria</p>
+                </div>
+                <div class="contenidoImagenCategorias5" id="menosGananciaCategorias">
+                    <h3>Categoría con menos Ganancias</h3>
+                    <p>Cremeria</p>
+                </div>
+            </div>
+        </div>
+        <div class="estadisticas">
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Categorías más Vendidas.
+                    </p>
+                    <img src="/build/img/ayudaCategorias.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart31" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Categorías menos Vendidas
+                    </p>
+                    <img src="/build/img/ayudaCategorias.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart32" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Categorías con más Ganancias
+                    </p>
+                    <img src="/build/img/ayudaCategorias.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart33" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Categorías con menos Ganancias
+                    </p>
+                    <img src="/build/img/ayudaCategorias.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart34" width="400" height="400"></canvas>
+            </div>
+        </div>
     </div>
     <div class="contenedorcaja seccioncaja">
         <div class="botonesGenerales">
