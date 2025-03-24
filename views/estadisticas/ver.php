@@ -172,6 +172,20 @@
             </div>
             <div>
                 <div class="flextitulo-icono">
+                    <p>Top 20 Productos registrados a Granel con mas ganancia</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart35" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                <p>Top 20 Productos registrados a Granel con menos ganancia</p>
+                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart36" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
                     <p>Top 20 Productos registrados con Stock en exceso (ver ayuda)</p>
                     <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
