@@ -20,6 +20,13 @@ const ctx26 = document.getElementById('myChart26').getContext('2d');
 // Gráficas de Inventario
 const ctx16 = document.getElementById('myChart16').getContext('2d');
 const ctx17 = document.getElementById('myChart17').getContext('2d');
+const ctx18 = document.getElementById('myChart18').getContext('2d');
+const ctx19 = document.getElementById('myChart19').getContext('2d');
+const ctx20 = document.getElementById('myChart20').getContext('2d');
+const ctx21 = document.getElementById('myChart21').getContext('2d');
+const ctx22 = document.getElementById('myChart22').getContext('2d');
+const ctx23 = document.getElementById('myChart23').getContext('2d');
+const ctx24 = document.getElementById('myChart24').getContext('2d');
 
 
 
@@ -467,6 +474,11 @@ function crearGraficasVentas(datos) {
 
 function crearGraficasInventario(datos) {
     crearGrafica16(datos);
+    crearGrafica17(datos);
+    crearGrafica18(datos);
+    crearGrafica19(datos);
+
+
 }
 
 // Top 20 Productos con más Stock
@@ -510,11 +522,12 @@ function crearGrafica16(datosAGraficar) {
 
     const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'cantidad')
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
-    createChart(ctx16, 'bar', etiquetas, valores, 'Cantidad de Productos en Stock', backgroundColors1);
+    createChart(ctx16, 'bar', etiquetas, valores, 'Cantidad de Piezas en Stock', backgroundColors1);
 
 
 
 }
+
 // Top 20 Productos con menos Stock
 function crearGrafica17(datosAGraficar) {
     let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '0' && producto.cantidad !== '0') ?? inventario;
@@ -537,7 +550,85 @@ function crearGrafica17(datosAGraficar) {
 
     const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'cantidad')
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
-    createChart(ctx17, 'bar', etiquetas, valores, 'Cantidad de Productos en Stock', backgroundColors1);
+    createChart(ctx17, 'bar', etiquetas, valores, 'Cantidad de Piezas en Stock', backgroundColors1);
+
+
+
+}
+
+// Top 20 Productos A Granel con más Stock
+function crearGrafica18(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '1' && producto.cantidad !== '0') ?? inventario;
+
+
+    // Ordenar productos por cantidad descendente
+    const productosOrdenados = datosFiltrados1
+        .map(producto => ({
+            ...producto,
+            cantidad: parseInt(producto.cantidad, 10) // Convertir cantidad a número
+        }))
+        .sort((a, b) => b.cantidad - a.cantidad) // Ordenar de mayor a menor
+
+    // Obtener los 20 productos con más stock
+    const top20Productos = productosOrdenados.slice(0, 20);
+    console.log(top20Productos);
+
+    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'cantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx18, 'bar', etiquetas, valores, 'Cantidad de Gramos en Stock', backgroundColors1);
+
+}
+
+// Top 20 Productos A Granel con menos Stock
+function crearGrafica19(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '1' && producto.cantidad !== '0') ?? inventario;
+
+
+
+
+    // Ordenar productos por cantidad descendente
+    const productosOrdenados = datosFiltrados1
+        .map(producto => ({
+            ...producto,
+            cantidad: parseInt(producto.cantidad, 10) // Convertir cantidad a número
+        }))
+        .sort((a, b) => a.cantidad - b.cantidad) // Ordenar de mayor a menor
+
+    // Obtener los 20 productos con más stock
+    const top20Productos = productosOrdenados.slice(0, 20);
+    console.log(top20Productos);
+
+    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'cantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx19, 'bar', etiquetas, valores, 'Cantidad de Gramos en Stock', backgroundColors1);
+
+
+
+}
+
+
+// Top 20 Productos A Granel con menos Stock
+function crearGrafica20(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '1' && producto.cantidad !== '0') ?? inventario;
+
+
+
+
+    // Ordenar productos por cantidad descendente
+    const productosOrdenados = datosFiltrados1
+        .map(producto => ({
+            ...producto,
+            cantidad: parseInt(producto.cantidad, 10) // Convertir cantidad a número
+        }))
+        .sort((a, b) => a.cantidad - b.cantidad) // Ordenar de mayor a menor
+
+    // Obtener los 20 productos con más stock
+    const top20Productos = productosOrdenados.slice(0, 20);
+    console.log(top20Productos);
+
+    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'cantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx19, 'bar', etiquetas, valores, 'Cantidad de Gramos en Stock', backgroundColors1);
 
 
 
