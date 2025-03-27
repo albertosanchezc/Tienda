@@ -356,16 +356,28 @@
                         <label for="optioneliminar">Eliminar de Stock</label>
                     </div>
                 </div>
+                <div class="divSelectMotivo">
+                    <label for="motivoSelect">Motivo de retiro:</label>
+                    <select id="motivoSelect">
+                        <option selected value="">Selecciona un Motivo</option>
+                        <option value="1">Ajuste de Inventario</option>
+                        <option value="2">Caducado/Vencido</option>
+                        <option value="3">Dañado/Defectuoso</option>
+                        <option value="4">Devolución al proveedor</option>
+                        <option value="5">Retiro Temporal</option>
+                        <option value="6">Robo</option>
+                        <option value="7">Trasferencia a otra sucursal</option>
+                        <option value="8">Uso Interno</option>
+                        <option value="9">Otro motivo</option>
+                    </select>
+                </div>
                 <fieldset>
-                    <legend>+Actualizar Stock</legend>
-
+                    <legend class="legend-retiro">+Actualizar Stock</legend>
                     <div class="modal--inventario--actualizarStock__entradasbox">
-
                         <div class="modal--inventario--actualizarStock__nombre">
                             <label for="cantidadStock"> Cantidad a Agregar: </label>
-                            <input type="number" id="cantidadStock" name="inventarioActualizarStock[cantidad]" min="0"
+                            <input type="number" id="cantidadStock" name="inventarioActualizarStock[cantidad]"
                                 placeholder="Ej. 10" value="<?php echo s($inventario->cantidad); ?>">
-
                         </div>
                     </div>
                 </fieldset>

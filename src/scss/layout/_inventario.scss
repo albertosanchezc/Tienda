@@ -957,3 +957,26 @@ span {
         margin-bottom: 1rem;
     }
 }
+
+.divSelectMotivo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    label{
+        text-align: center;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    select{
+        border: solid 1px darkred;
+        height: 35px;
+        border-radius: 1rem;
+        cursor: pointer;
+    }
+
+    select:hover{
+        background-color: #f5f2f2;
+    }
+}
