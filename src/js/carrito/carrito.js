@@ -367,11 +367,12 @@ pagarForm.addEventListener('submit', function (e) {
     alertas.forEach(alerta => alerta.remove());
 
     let errores = [];
-    let cambio = document.querySelector('.modal--pagar__title').textContent;
+    let total = document.querySelector('.modal--pagar__title').textContent;
+    let cambio = document.querySelector('.modal--pagar__cambio').textContent;
 
     const match = cambio.match(/\$(\d+(\.\d+)?)/);
     
-
+    const totalNumero = total .match(/\$(\d+(\.\d+)?)/);
     
 
 
@@ -379,6 +380,10 @@ pagarForm.addEventListener('submit', function (e) {
 
 
     const pagado = Number(document.querySelector('.modal--pagar__close').value.trim());
+    const falta = (Number(totalNumero[1])) - pagado;
+
+    let selectorFaltan = document.querySelector('.modal--pagar__cambio').querySelector('SPAN').textContent.includes('Faltan');
+    
     if (!pagado) {
         errores.push('La cantidad con la que se paga es Obligatoria');
     }
@@ -388,12 +393,31 @@ pagarForm.addEventListener('submit', function (e) {
     if (pagado < match[1]) {
         errores.push('La cantidad con la que se paga no puede ser menor al total');
     }
+    // Si falta es positivo eso significa que no se ha pagado el total
+    if(falta !==0 && !(falta <=0)) {
+        errores.push('La cantidad con la que se paga no puede ser menor al total');
+    } 
+
+    // Si falta es negativo eso significa que se tiene que dar cambio
+    if(falta !==0 && !(falta <=0)) {
+        errores.push('La cantidad con la que se paga no puede ser menor al total');
+    } 
+    // Si falta es igual a cero significa que se pagó exacto el total
+    
+
+
     console.log(pagado)
-    const pagadoCorregido = `${pagado}.00`;
-    const pagadoCorregido1 = `${pagado}0`;
-    if(pagado >= match[1] || pagadoCorregido >= match[1] || pagadoCorregido1 >= match[1]){
-        errores = [];
-    }
+    // if(Number(pagado) >= Number(match[1]) || Number(pagadoCorregido) >= Number(match[1]) || Number(pagadoCorregido1) >= Number(match[1])){
+    //     errores = [];
+    // }
+    console.log(`
+            Pagado : ${pagado}
+            Total : ${Number(totalNumero[1])}
+            ! Incluye Faltan: ${document.querySelector('.modal--pagar__cambio').querySelector('SPAN').textContent.includes('Faltan')}
+            Falta: ${falta}
+        `);
+        
+
 
     // Mostrar errores
     if (errores.length >= 1) {
@@ -413,7 +437,7 @@ pagarForm.addEventListener('submit', function (e) {
         pagarForm.prepend(alertaExito);
 
         setTimeout(() => {
-            this.submit();
+            // this.submit();
 
         }, 2000);
     }

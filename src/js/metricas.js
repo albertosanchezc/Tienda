@@ -24,6 +24,8 @@ const ctx18 = document.getElementById('myChart18').getContext('2d');
 const ctx19 = document.getElementById('myChart19').getContext('2d');
 const ctx20 = document.getElementById('myChart20').getContext('2d');
 const ctx21 = document.getElementById('myChart21').getContext('2d');
+const ctx35 = document.getElementById('myChart35').getContext('2d');
+const ctx36 = document.getElementById('myChart36').getContext('2d');
 const ctx22 = document.getElementById('myChart22').getContext('2d');
 const ctx23 = document.getElementById('myChart23').getContext('2d');
 const ctx24 = document.getElementById('myChart24').getContext('2d');
@@ -174,11 +176,11 @@ const parrafoChart26 = document.querySelector('#myChart26').parentElement.queryS
 parrafoChart26.textContent = 'Ventas Totales por Hora';
 
 
+const parrafoChart35 = document.querySelector('#myChart35').parentElement.querySelector('P');
+parrafoChart35.textContent = 'Top 20 Productos a Granel con mas ganancia';
 
-
-
-
-
+const parrafoChart36 = document.querySelector('#myChart36').parentElement.querySelector('P');
+parrafoChart36.textContent = 'Top 20 Productos a Granel con menos ganancia';
 
 
 let ventas = [];
@@ -297,11 +299,11 @@ function calcularPromedioConsumo(ventas) {
 }
 
 // Inventario
-function calcularTotalStocks(inventario){
+function calcularTotalStocks(inventario) {
     return inventario.reduce((total, item) => total + parseInt(item.cantidad, 10), 0);
 }
 
-function calcularTotalGramosStock(inventario){
+function calcularTotalGramosStock(inventario) {
     return inventario.reduce((total, item) => total + parseInt(item.cantidad, 10), 0);
 }
 
@@ -331,6 +333,67 @@ function calcularTotalVentas(ventas) {
 
 function calcularTotalProductos(ventas) {
     return ventas.reduce((total, venta) => total + parseInt(venta.cantidad), 0);
+}
+
+function clasificarStock(productos, ventas, tipoClasificacion = "todos") {
+    return productos
+        .map(producto => {
+            // Filtrar ventas de los últimos 7 días del producto
+            const ventasProducto = ventas
+                .filter(venta => venta.producto_id === producto.id && esUltimos7Dias(venta.fecha_venta))
+                .reduce((total, venta) => total + parseInt(venta.cantidad, 10), 0);
+
+            // Calcular valores
+            const stockActual = parseInt(producto.cantidad, 10);
+            const umbral = ventasProducto ;
+            let clasificacion = "";
+
+            // Determinar la clasificación
+            if (stockActual === 0) {
+                clasificacion = "agotados";
+            } else if (stockActual >= umbral * 2 && stockActual <= umbral * 5) {
+                clasificacion = "suficientes";  // Este rango ahora debería estar correctamente delimitado
+            } else if (stockActual < umbral * 2 && stockActual >= 1) {
+                clasificacion = "por agotarse";  // Aquí está el rango para "por agotarse"
+            } else {
+                clasificacion = "exceso";
+
+            }
+            // Validar si el tipo solicitado coincide o si se quieren todos
+            if (tipoClasificacion === "todos" || tipoClasificacion === clasificacion) {
+                if(producto.granel === '0'){
+                    return {
+                        nombre: producto.nombre,
+                        descripcion: producto.descripcion,
+                        stock_actual: stockActual,
+                        ventas_ultimos_7_dias: ventasProducto,
+                        clasificacion: clasificacion,
+                        granel: producto.granel
+                    };
+                } else{
+                    return {
+                        nombre: `${producto.nombre} kg`,
+                        descripcion: producto.descripcion,
+                        stock_actual: stockActual/1000,
+                        ventas_ultimos_7_dias: ventasProducto,
+                        clasificacion: clasificacion,
+                        granel: producto.granel
+                    };
+                }
+
+
+            }
+            return null;
+        })
+        .filter(item => item !== null); // Eliminar resultados nulos si no coinciden
+}
+
+// Función para verificar si la fecha es dentro de los últimos 7 días
+function esUltimos7Dias(fecha) {
+    const fechaVenta = new Date(fecha);
+    const hoy = new Date();
+    const diferenciaDias = (hoy - fechaVenta) / (1000 * 60 * 60 * 24);
+    return diferenciaDias <= 7;
 }
 
 // Calcula el total a partir de un arreglo de productos (vendidos por producto)
@@ -477,6 +540,13 @@ function crearGraficasInventario(datos) {
     crearGrafica17(datos);
     crearGrafica18(datos);
     crearGrafica19(datos);
+    crearGrafica20(datos);
+    crearGrafica21(datos);
+    crearGrafica35(datos);
+    crearGrafica36(datos);
+    crearGrafica22(datos);
+    crearGrafica23(datos);
+    crearGrafica24(datos);
 
 
 }
@@ -490,7 +560,7 @@ function crearGrafica16(datosAGraficar) {
     const totalStockUnitario = calcularTotalStocks(datosFiltrados1);
     selectorTotalStock.textContent = `${totalStockUnitario} Productos`;
 
-    const totalStockGranel = (calcularTotalStocks(datosFiltrados2)/1000);
+    const totalStockGranel = (calcularTotalStocks(datosFiltrados2) / 1000);
     selectorTotalGramosStock.textContent = `${totalStockGranel} Kg`;
 
     const totalDineroUnitario = calcularTotalDineroInventario(datosFiltrados1);
@@ -530,9 +600,9 @@ function crearGrafica16(datosAGraficar) {
 
 // Top 20 Productos con menos Stock
 function crearGrafica17(datosAGraficar) {
-    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '0' && producto.cantidad !== '0') ?? inventario;
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '0') ?? inventario;
 
-    let datosFiltrados2 = datosAGraficar.filter(producto => producto.granel === '1' && producto.cantidad !== '0') ?? inventario;
+    // let datosFiltrados2 = datosAGraficar.filter(producto => producto.granel === '1' && producto.cantidad !== '0') ?? inventario;
 
 
 
@@ -581,7 +651,7 @@ function crearGrafica18(datosAGraficar) {
 
 // Top 20 Productos A Granel con menos Stock
 function crearGrafica19(datosAGraficar) {
-    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '1' && producto.cantidad !== '0') ?? inventario;
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '1') ?? inventario;
 
 
 
@@ -607,32 +677,182 @@ function crearGrafica19(datosAGraficar) {
 }
 
 
-// Top 20 Productos A Granel con menos Stock
+// Top 20 Productos de venta unitaria con más Stock
 function crearGrafica20(datosAGraficar) {
-    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '1' && producto.cantidad !== '0') ?? inventario;
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '0') ?? inventario;
 
 
 
 
     // Ordenar productos por cantidad descendente
-    const productosOrdenados = datosFiltrados1
-        .map(producto => ({
-            ...producto,
-            cantidad: parseInt(producto.cantidad, 10) // Convertir cantidad a número
-        }))
-        .sort((a, b) => a.cantidad - b.cantidad) // Ordenar de mayor a menor
+    // Calcula la ganancia para cada producto
+    const productosConGanancia = datosFiltrados1.map(item => ({
+        ...item,
+        ganancia: parseFloat(item.precio_unitario_venta) - parseFloat(item.precio_compra)
+    }));
+
+    // Ordenar los productos por ganancia de mayor a menor
+    productosConGanancia.sort((a, b) => b.ganancia - a.ganancia);
 
     // Obtener los 20 productos con más stock
-    const top20Productos = productosOrdenados.slice(0, 20);
+    const top20Productos = productosConGanancia.slice(0, 20);
     console.log(top20Productos);
 
-    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'cantidad')
+    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'ganancia')
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
-    createChart(ctx19, 'bar', etiquetas, valores, 'Cantidad de Gramos en Stock', backgroundColors1);
+    createChart(ctx20, 'bar', etiquetas, valores, 'Ganancia por pieza en $', backgroundColors1);
 
 
 
 }
+
+// Top 20 Productos de venta unitaria con más Stock
+function crearGrafica21(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '0') ?? inventario;
+
+
+
+
+    // Ordenar productos por cantidad descendente
+    // Calcula la ganancia para cada producto
+    const productosConGanancia = datosFiltrados1.map(item => ({
+        ...item,
+        ganancia: parseFloat(item.precio_unitario_venta) - parseFloat(item.precio_compra)
+    }));
+
+    // Ordenar los productos por ganancia de mayor a menor
+    productosConGanancia.sort((a, b) => a.ganancia - b.ganancia);
+
+    // Obtener los 20 productos con más stock
+    const top20Productos = productosConGanancia.slice(0, 20);
+    console.log(top20Productos);
+
+    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'ganancia')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx21, 'bar', etiquetas, valores, 'Ganancia por pieza en $', backgroundColors1);
+
+
+
+}
+
+// Top 20 Productos de venta a granel con más Stock
+function crearGrafica35(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '1') ?? inventario;
+
+
+
+
+    // Ordenar productos por cantidad descendente
+    // Calcula la ganancia para cada producto
+    const productosConGanancia = datosFiltrados1.map(item => ({
+        ...item,
+        ganancia: parseFloat(item.precio_unitario_venta) - parseFloat(item.precio_compra)
+    }));
+
+    // Ordenar los productos por ganancia de mayor a menor
+    productosConGanancia.sort((a, b) => b.ganancia - a.ganancia);
+
+    // Obtener los 20 productos con más stock
+    const top20Productos = productosConGanancia.slice(0, 20);
+    console.log(top20Productos);
+
+    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'ganancia')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx35, 'bar', etiquetas, valores, 'Ganancia por kg en $', backgroundColors1);
+
+
+
+}
+
+// Top 20 Productos de venta a granel con más Stock
+function crearGrafica36(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.granel === '1') ?? inventario;
+
+
+
+
+    // Ordenar productos por cantidad descendente
+    // Calcula la ganancia para cada producto
+    const productosConGanancia = datosFiltrados1.map(item => ({
+        ...item,
+        ganancia: parseFloat(item.precio_unitario_venta) - parseFloat(item.precio_compra)
+    }));
+
+    // Ordenar los productos por ganancia de mayor a menor
+    productosConGanancia.sort((a, b) => a.ganancia - b.ganancia);
+
+    // Obtener los 20 productos con más stock
+    const top20Productos = productosConGanancia.slice(0, 20);
+    console.log(top20Productos);
+
+    const { etiquetas, valores } = procesarDatosInventario(top20Productos, 'nombre', 'descripcion', 'ganancia')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx36, 'bar', etiquetas, valores, 'Ganancia por kg en $', backgroundColors1);
+
+
+
+}
+
+// Top 20 Productos en exceso
+function crearGrafica22(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar ?? inventario;
+    let enExceso = clasificarStock(datosFiltrados1, ventas, "exceso");
+    const topProductos = enExceso
+        .sort((a, b) => b.stock_actual - a.stock_actual)
+        .slice(0, 20);
+
+
+    const { etiquetas, valores } = procesarDatosInventario(topProductos, 'nombre', 'descripcion', 'stock_actual')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx22, 'bar', etiquetas, valores, 'Cantidad de artículos', backgroundColors1);
+
+
+
+}
+
+
+// Top 20 Productos por agotarse
+function crearGrafica23(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar ?? inventario;
+    let porAgotarse = clasificarStock(datosFiltrados1, ventas, "por agotarse");
+    const topProductos = porAgotarse
+        .sort((a, b) => a.stock_actual - b.stock_actual)
+        .slice(0, 20);
+    console.log(porAgotarse);
+
+
+    const { etiquetas, valores } = procesarDatosInventario(topProductos, 'nombre', 'descripcion', 'stock_actual')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx23, 'bar', etiquetas, valores, 'Cantidad de artículos', backgroundColors1);
+
+
+
+}
+
+// Top 20 Productos suficientes
+function crearGrafica24(datosAGraficar) {
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.cantidad !== '0') ?? inventario;
+    let suficientes = clasificarStock(datosFiltrados1, ventas, "suficientes");
+    console.log(suficientes);
+
+
+    const topProductos = suficientes
+        .sort((a, b) => a.stock_actual - b.stock_actual)
+        .slice(0, 20);
+    console.log(suficientes);
+
+
+    const { etiquetas, valores } = procesarDatosInventario(topProductos, 'nombre', 'descripcion', 'stock_actual')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx24, 'bar', etiquetas, valores, 'Cantidad de artículos', backgroundColors1);
+
+
+
+}
+
+
+
+
 
 
 // Ganancias Contra Ventas

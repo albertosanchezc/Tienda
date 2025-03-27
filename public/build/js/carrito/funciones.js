@@ -656,12 +656,21 @@ function actualizarModalPagar(total) {
                     <span>Cambio: </span>
                     $${cambio}
                 `;
+            } else if(cambio == 0) {
+                h2ModalPagarCambio.innerHTML = `
+                <span>Cambio: </span>
+                $0
+                
+                <span>Registrando: </span>
+                $${pagado}
+
+            `;
             } else {
                 h2ModalPagarCambio.innerHTML = `
                     <span>Faltan: </span>
                     $${cambio * -1}
                 `;
-            }
+            } 
         }
         else {
             h2ModalPagarCambio.innerHTML = `
