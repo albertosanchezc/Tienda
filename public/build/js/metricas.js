@@ -40,6 +40,8 @@ const btnAbrirCaja = document.querySelector('.botonGeneralCaja');
 const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
 const btnAbrirCancelaciones = document.querySelector('.botonGeneralCancelaciones');
 const btnAbrirProveedores = document.querySelector('.botonGeneralProveedores');
+const btnAbrirCategorias = document.querySelector('.botonGeneralCategorias');
+
 
 
 
@@ -52,6 +54,7 @@ const filtrosInventario = contenedorInventario.querySelector('#formularioInventa
 
 const contenedorCaja = document.querySelector('.contenedorCaja');
 contenedorCaja.style.display = 'none';
+const filtrosCaja = contenedorCaja.querySelector('#formularioCaja');
 
 
 const contenedorVentas = document.querySelector('.contenedorVentas');
@@ -66,6 +69,8 @@ contenedorCancelaciones.style.display = 'none';
 const contenedorProveedores = document.querySelector('.contenedorProveedores');
 contenedorProveedores.style.display = 'none';
 
+const contenedorCategorias = document.querySelector('.contenedorCategorias');
+contenedorCategorias.style.display = 'none';
 
 
 
@@ -76,6 +81,10 @@ let terminosBusquedaInventario = {
     categoria: ''
 }
 
+let terminosBusquedaCaja = {
+    fechaI: '',
+    fechaF: ''
+}
 
 let terminosBusquedaVentas = {
     fechaI: '',
@@ -91,6 +100,9 @@ const inputFechaFinalInventario = filtrosInventario.querySelector('#fechaFinInve
 const inputProveedorInventario = filtrosInventario.querySelector('#proveedorFiltroInventario');
 const inputCategoriaInventario = filtrosInventario.querySelector('#categoriaFiltroInventario');
 
+// Inputs de los filtros de Caja
+const inputFechaInicioCaja = filtrosCaja.querySelector('#fechaInicioInventario');
+const inputFechaFinalCaja = filtrosCaja.querySelector('#fechaFinInventario');
 
 // Inputs de los filtros de Ventas
 const inputFechaInicioVentas = filtrosVentas.querySelector('#fechaInicioVentas');
@@ -219,10 +231,13 @@ async function consultarAPI() {
         ventas = ventas.filter(venta => venta.cancelacion === '0' && venta.granel === '0');
         ventasCompletas = [...ventas, ...ventasGranel];
 
+        cajas_historicos = datos.cajas_historicos;
+
         inventario = datos.inventario;
         cajas_historicos = datos.cajas_historicos;
-        crearGraficasVentas(ventasCompletas);
         crearGraficasInventario(inventario);
+        crearGraficasCaja(cajas_historicos);
+        crearGraficasVentas(ventasCompletas);
         console.log(inventario)
 
     } catch (error) {
@@ -345,7 +360,7 @@ function clasificarStock(productos, ventas, tipoClasificacion = "todos") {
 
             // Calcular valores
             const stockActual = parseInt(producto.cantidad, 10);
-            const umbral = ventasProducto ;
+            const umbral = ventasProducto;
             let clasificacion = "";
 
             // Determinar la clasificación
@@ -361,7 +376,7 @@ function clasificarStock(productos, ventas, tipoClasificacion = "todos") {
             }
             // Validar si el tipo solicitado coincide o si se quieren todos
             if (tipoClasificacion === "todos" || tipoClasificacion === clasificacion) {
-                if(producto.granel === '0'){
+                if (producto.granel === '0') {
                     return {
                         nombre: producto.nombre,
                         descripcion: producto.descripcion,
@@ -370,11 +385,11 @@ function clasificarStock(productos, ventas, tipoClasificacion = "todos") {
                         clasificacion: clasificacion,
                         granel: producto.granel
                     };
-                } else{
+                } else {
                     return {
                         nombre: `${producto.nombre} kg`,
                         descripcion: producto.descripcion,
-                        stock_actual: stockActual/1000,
+                        stock_actual: stockActual / 1000,
                         ventas_ultimos_7_dias: ventasProducto,
                         clasificacion: clasificacion,
                         granel: producto.granel
@@ -549,6 +564,11 @@ function crearGraficasInventario(datos) {
     crearGrafica24(datos);
 
 
+}
+
+function crearGraficasCaja(datos){
+    console.log('Creando Gráficas de la Caja');
+    
 }
 
 // Top 20 Productos con más Stock
@@ -1661,11 +1681,13 @@ inputCategoriaInventario.addEventListener('change', (e) => {
     categoria = e.target.value;
     terminosBusquedaInventario.categoria = categoria;
 
-
     console.log(terminosBusquedaInventario);
 
     filtrarInventario();
 })
+
+
+
 
 // Inventario
 
@@ -1738,6 +1760,57 @@ function filtrarCategoriaInventario(inventario) {
 
     return inventario;
 }
+
+// Eventos de los filtros de Caja
+inputFechaInicioCaja.addEventListener('change', (e) => {
+    let { fechaI } = terminosBusquedaCaja;
+
+    fechaI = e.target.value;
+    terminosBusquedaCaja.fechaI = fechaI;
+    console.log(terminosBusquedaCaja);
+
+    filtrarCaja();
+})
+
+inputFechaFinalCaja.addEventListener('change', (e) => {
+    let { fechaF } = terminosBusquedaCaja;
+    fechaF = e.target.value;
+    terminosBusquedaCaja.fechaF = fechaF;
+    console.log(terminosBusquedaCaja);
+    filtrarCaja();
+});
+
+function filtrarCaja(){
+    let resultadosFiltrados = cajas_historicos;
+    // Aplicar filtro de fecha inicial si existe
+    if (terminosBusquedaCaja.fechaI) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaICaja);
+        console.log(resultadosFiltrados);
+    }
+
+    if (terminosBusquedaCaja.fechaF) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaFCaja);
+        console.log(resultadosFiltrados);
+    }
+
+    crearGraficasCaja(resultadosFiltrados);
+
+    return resultadosFiltrados;    
+}
+
+function filtrarfechaICaja(cajas_historicos) {
+    const fechaCaja = new Date(cajas_historicos.fecha);
+    const fechaInicial = new Date(terminosBusquedaCaja.fechaI);
+    return fechaCaja >= fechaInicial;
+}
+
+// Función para filtrar por fecha final
+function filtrarfechaFCaja(cajas_historicos) {
+    const fechaCaja = new Date(cajas_historicos.fecha);
+    const fechaFinal = new Date(terminosBusquedaCaja.fechaF);
+    return fechaCaja <= fechaFinal;
+}
+
 // Eventos de los filtros de ventas
 
 inputFechaInicioVentas.addEventListener('change', (e) => {
@@ -1927,15 +2000,13 @@ btnAbrirProveedores.addEventListener('click', (e) => {
 });
 
 
-// const inicio = document.getElementById('fecha_inicio') ?? '';
-// inicio.addEventListener('change', (e) => {
-//     datosBusqueda.inicio = e.target.value;
-//     fetchDataAndCreateCharts(datosBusqueda); // Actualizar gráficos al cambiar la fecha
-// });
-
-// const fin = document.getElementById('fecha_fin') ?? '';
-// fin.addEventListener('change', (e) => {
-//     datosBusqueda.fin = e.target.value;
-//     fetchDataAndCreateCharts(datosBusqueda); // Actualizar gráficos al cambiar la fecha
-// });
-
+btnAbrirCategorias.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (contenedorCategorias.style.display === 'none') {
+        btnAbrirCategorias.classList.add('botonGeneralCategoriasHover');
+        contenedorCategorias.style.display = 'block';
+    } else {
+        contenedorCategorias.style.display = 'none';
+        btnAbrirCategorias.classList.remove('botonGeneralCategoriasHover');
+    }
+});
