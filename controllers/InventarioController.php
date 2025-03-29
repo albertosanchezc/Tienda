@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Model\Visita_Producto;
+use Model\Visitas_proveedor;
 use MVC\Router;
 use Model\Inventario_completo;
 use Model\Productos;
@@ -140,11 +142,29 @@ class InventarioController
                 // debuguear($productoActualizar);
                 $productoActualizar->guardar();
             } elseif ($metodoActualizarStock) { // El método fue actualizar Stock
+
+    
                 $id = $argsActualizarStock['id'];
                 $productoActualizarStock = Inventario::find($id);
+                $cantidadAnterior = $productoActualizarStock->cantidad;  
                 $productoActualizarStock->cantidad = $argsActualizarStock['cantidad'];
                 // debuguear($productoActualizarStock);
                 $productoActualizarStock->guardar();
+                $cantidadNueva = $argsActualizarStock['cantidad'];
+                if($cantidadNueva>=$cantidadAnterior){
+                    $cantidadAniadida = $cantidadAnterior-$cantidadNueva;
+                } else {
+                    $cantidadAniadida = $cantidadNueva -$cantidadAnterior;
+                }
+                $productoVisita = new Visita_Producto();
+                $productoVisita->id = null;
+                $productoVisita->cantidad = $cantidadAniadida;
+                $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'id');
+                $productoVisita->producto_id = $id;
+
+
+
+
             } elseif ($metodoEliminarStock){// El método fue eliminar Stock
                 $id = $argsEliminarStock['id'];
                 $productoEliminarStock = Productos::find($id);

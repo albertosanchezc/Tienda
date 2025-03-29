@@ -8,6 +8,7 @@ let agotados = [];
 let porAgotarse = [];
 let suficientes = [];
 let enExceso = [];
+let resultadoActualizarStock = 0;
 
 let terminosBusqueda = {
     id: '',
@@ -500,12 +501,34 @@ document.getElementById('actualizarStock').addEventListener('submit', function (
     alertas.forEach(alerta => alerta.remove());
     let errores = [];
 
-    const cantidad = modalActualizarStock.querySelector('#cantidadStock').value;
+    let cantidad = modalActualizarStock.querySelector('#cantidadStock').value;
+    let valorSelectMotivo = modalActualizarStock.querySelector('#motivoSelect').value;
+    let resultadoInputHiddenCantidad = modalActualizarStock.querySelector('#cantidadInventarioentrada').value;
+    let resultadoInputHiddenEliminar = modalActualizarStock.querySelector('#motivoEliminarInput').value;
+
+    console.log(cantidad);
+    console.log(valorSelectMotivo);
+    console.log(resultadoInputHiddenCantidad);
+    console.log(resultadoInputHiddenEliminar);
+
+
     if (!cantidad) {
         errores.push('La cantidad es obligatoria');
     }
     if (cantidad < 0) {
-        errores.push('La cantidad debe ser mayor a 0');
+        errores.push('La cantidad que se retire o añada debe ser mayor a 0');
+    }
+
+    if (resultadoInputHiddenEliminar === 'retirar') {
+        if (valorSelectMotivo === '') {
+            errores.push('El motivo de retiro es obligatorio');
+
+        }
+
+    }
+
+    if (resultadoInputHiddenCantidad < 0) {
+        errores.push('La Cantidad Resultante debe ser mayor a 0');
     }
 
     // Mostrar errores
@@ -515,6 +538,11 @@ document.getElementById('actualizarStock').addEventListener('submit', function (
             alerta.className = 'alerta error';
             alerta.textContent = error;
             modalActualizarStock.querySelector('.modal--inventario--actualizarStock__entradas').prepend(alerta);
+
+            setTimeout(() => {
+                alerta.remove();
+            }, 3000);
+
         });
     } else {
         const alertaExito = document.createElement('div');
@@ -1063,14 +1091,16 @@ function mostrarCards(inventario, proveedores, categorias) {
                 divId.innerHTML = `
                 <input type="hidden" id="idInventarioentrada" name="inventarioActualizarStock[id]"  value="${producto_id}">
                 <input type="hidden" id="cantidadInventarioentrada" name="inventarioActualizarStock[cantidad]" value="">
+                <input type="hidden" id="motivoEliminarInput" name="inventarioActualizarStock[motivo]" value="">
 
                 `;
                 const formularioStock = modalActualizarStock.querySelector('#actualizarStock');
                 formularioStock.appendChild(divId);
 
                 const inputHidden = document.querySelector('#cantidadInventarioentrada');
+                const inputHiddenEliminar = document.querySelector('#motivoEliminarInput');
 
-                abrirModalActualizarStock(inputHidden, e, cantidad, granel);
+                abrirModalActualizarStock(inputHidden, inputHiddenEliminar, e, cantidad, granel);
 
 
 
@@ -1238,7 +1268,7 @@ function abrirModalActualizarProducto(e) {
     cerrarModalClickFuera(modalActualizarInventario, 'modal--inventario--actualizar');
 
 }
-function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
+function abrirModalActualizarStock(inputHidden, inputHiddenEliminar, e, cantidad, granel) {
     e.preventDefault();
     modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
     cerrarModalClickFuera(modalActualizarStock, 'modal--inventario--actualizarStock');
@@ -1246,6 +1276,8 @@ function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
 
     let resultado = cantidad;
     const inputModalActualizarStock = modalActualizarStock.querySelector('#cantidadStock');
+    inputModalActualizarStock.value = '';
+
 
     imprimirParrafosModal(granel, cantidad, resultado);
     inputModalActualizarStock.addEventListener('input', (e) => {
@@ -1257,6 +1289,7 @@ function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
 
         imprimirParrafosModal(granel, cantidad, resultado);
         inputHidden.value = resultado;
+        inputHiddenEliminar.value = 'aniadir';
     });
 
     const switchContainer = modalActualizarStock.querySelector('.switch');
@@ -1265,28 +1298,27 @@ function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
 
         if (e.target.id === 'optionaniadir') {
             contenedorSelectMotivo.style.display = 'none';
+            resultado = cantidad;
             labelRetiro.textContent = 'Cantidad a Agregar:';
             legendRetiro.textContent = '+ Añadir a Stock';
             inputModalActualizarStock.value = '';
             console.log(granel);
             imprimirParrafosModal(granel, cantidad, resultado);
             inputModalActualizarStock.addEventListener('input', (e) => {
-                // if (granel === '0') {
-                    if (e.target.value !== '') {
-                        resultado = parseFloat(cantidad) + parseFloat(e.target.value);
-                    } else {
-                        resultado = cantidad;
-                    }
-                    imprimirParrafosModal(granel, cantidad, resultado);
-                    inputHidden.value = resultado;
-
-                // } else if (granel === '1') {
-                //     console.log('granel');
-                // }
+                if (e.target.value !== '') {
+                    resultado = parseFloat(cantidad) + parseFloat(e.target.value);
+                } else {
+                    resultado = cantidad;
+                }
+                imprimirParrafosModal(granel, cantidad, resultado);
+                inputHidden.value = resultado;
+                inputHiddenEliminar.value = 'aniadir';
             });
         }
         if (e.target.id === 'optioneliminar') {
             contenedorSelectMotivo.style.display = 'flex';
+            resultado = cantidad;
+
             inputModalActualizarStock.value = '';
             labelRetiro.textContent = 'Cantidad a Retirar:';
             legendRetiro.textContent = '- Retiro de Stock';
@@ -1300,6 +1332,7 @@ function abrirModalActualizarStock(inputHidden, e, cantidad, granel) {
 
                 imprimirParrafosModal(granel, cantidad, resultado);
                 inputHidden.value = resultado;
+                inputHiddenEliminar.value = 'retirar';
             });
         }
     });

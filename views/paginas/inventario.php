@@ -358,7 +358,7 @@
                 </div>
                 <div class="divSelectMotivo">
                     <label for="motivoSelect">Motivo de retiro:</label>
-                    <select id="motivoSelect">
+                    <select id="motivoSelect" name ="inventarioActualizarStock[motivo_id]">
                         <option selected value="">Selecciona un Motivo</option>
                         <option value="1">Ajuste de Inventario</option>
                         <option value="2">Caducado/Vencido</option>
