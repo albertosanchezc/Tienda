@@ -30,6 +30,12 @@ const ctx22 = document.getElementById('myChart22').getContext('2d');
 const ctx23 = document.getElementById('myChart23').getContext('2d');
 const ctx24 = document.getElementById('myChart24').getContext('2d');
 
+// Gráficas de Caja
+const ctx27 = document.getElementById('myChart27').getContext('2d');
+const ctx28 = document.getElementById('myChart28').getContext('2d');
+
+
+
 
 
 
@@ -116,6 +122,13 @@ const selectorTotalGramosStock = document.querySelector('#totalCantidadGranelInv
 const selectorTotalDineroStock = document.querySelector('#TotalDineroInventarioUnitario').querySelector('P');
 const selectorTotalDineroGramos = document.querySelector('#TotalDineroInventarioGranel').querySelector('P');
 const selectorTotaldeTotalesDineroStock = document.querySelector('#TotalDineroInventario').querySelector('P');
+
+
+// Selectores Caja 
+const selectorTotalNumeroAbonosCaja = document.querySelector('#totalCantidadAbonos').querySelector('P');
+const selectorTotalNumeroRetirosCaja = document.querySelector('#totalCantidadRetiros').querySelector('P');
+const selectorTotalAbonosCaja = document.querySelector('#totalDinerosAbonos').querySelector('P');
+const selectorTotalRetirosCaja = document.querySelector('#totalDinerosRetiros').querySelector('P');
 
 
 // Selectores Ventas
@@ -260,6 +273,13 @@ function procesarDatosInventario(datos, labelKey1, labelKey2, dataKey) {
         valores: datos.map(item => item[dataKey]) // Mantiene los valores iguales
     };
 }
+
+function procesarDatosCaja(datos, labelKey1, labelKey2, dataKey) {
+    return {
+        etiquetas: datos.map(item => `${item[labelKey1]} - ${item[labelKey2]}`), // Concatena ambos labels
+        valores: datos.map(item => item[dataKey]) // Mantiene los valores iguales
+    };
+}
 let chartId = {};
 
 // Función que  obtiene los totales para cada producto 
@@ -332,6 +352,15 @@ function calcularTotalDineroInventario(inventario) {
 
         return total + subtotal;
     }, 0);
+}
+
+function calcularTotalCaja(cajas_historicos) {
+    // Sumar todas las cantidades
+    const total = cajas_historicos.reduce((sum, item) => {
+        return sum + parseFloat(item.cantidad);
+    }, 0);
+
+    return total.toFixed(2);
 }
 
 // Ventas
@@ -566,9 +595,10 @@ function crearGraficasInventario(datos) {
 
 }
 
-function crearGraficasCaja(datos){
-    console.log('Creando Gráficas de la Caja');
-    
+function crearGraficasCaja(datos) {
+    crearGrafica27(datos);
+    crearGrafica28(datos);
+
 }
 
 // Top 20 Productos con más Stock
@@ -871,7 +901,43 @@ function crearGrafica24(datosAGraficar) {
 }
 
 
+// Gráficas Caja
+// Total de abonos vs Total Retiros
+function crearGrafica27(datosAGraficar) {
+    // retiros
+    let datosFiltrados1 = datosAGraficar.filter(producto => producto.retiro_abono !== '0') ?? cajas_historicos;
+    // abonos
+    let datosFiltrados2 = datosAGraficar.filter(producto => producto.retiro_abono !== '1') ?? cajas_historicos;
 
+    const totalRetiros = calcularTotalCaja(datosFiltrados1);
+
+    const totalAbonos = calcularTotalCaja(datosFiltrados2);
+    selectorTotalNumeroAbonosCaja.textContent = `${datosFiltrados2.length}`;
+    selectorTotalNumeroRetirosCaja.textContent = `${datosFiltrados1.length}`;
+    selectorTotalAbonosCaja.textContent = `$${totalAbonos}`;
+    selectorTotalRetirosCaja.textContent = `$${totalRetiros}`;
+
+
+    const etiquetas = ['Total de Retiros', 'Total de Abonos'];
+    const valores = [totalRetiros,totalAbonos]; 
+
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx27, 'bar', etiquetas, valores, 'Total en $', backgroundColors1);
+}
+
+function crearGrafica28(datosAGraficar) {
+    // retiros
+    const datosFiltrados1 = obtenerUltimosElementos(datosAGraficar)
+    const { etiquetas, valores } = procesarDatosCaja(datosFiltrados1, 'fecha', 'hora', 'saldo_caja');
+
+
+    
+
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx28, 'line', etiquetas, valores, 'Total en $', backgroundColors1);
+}
 
 
 
@@ -1586,6 +1652,11 @@ function obtenerTop20(totales) {
         .slice(0, maximoElementos); // Tomar los primeros 20 elementos
 }
 
+function obtenerUltimosElementos(array, cantidad = 30) {
+    // Obtener los últimos 'cantidad' elementos del array
+    return array.slice(-cantidad);
+  }
+
 // Ordena por totalCantidad menor
 function obtenerTop20Menos(totales) {
     return totales
@@ -1780,7 +1851,7 @@ inputFechaFinalCaja.addEventListener('change', (e) => {
     filtrarCaja();
 });
 
-function filtrarCaja(){
+function filtrarCaja() {
     let resultadosFiltrados = cajas_historicos;
     // Aplicar filtro de fecha inicial si existe
     if (terminosBusquedaCaja.fechaI) {
@@ -1795,7 +1866,7 @@ function filtrarCaja(){
 
     crearGraficasCaja(resultadosFiltrados);
 
-    return resultadosFiltrados;    
+    return resultadosFiltrados;
 }
 
 function filtrarfechaICaja(cajas_historicos) {
