@@ -359,16 +359,13 @@
                 <div class="divSelectMotivo">
                     <label for="motivoSelect">Motivo de retiro:</label>
                     <select id="motivoSelect" name ="inventarioActualizarStock[motivo_id]">
-                        <option selected value="">Selecciona un Motivo</option>
-                        <option value="1">Ajuste de Inventario</option>
-                        <option value="2">Caducado/Vencido</option>
-                        <option value="3">Dañado/Defectuoso</option>
-                        <option value="4">Devolución al proveedor</option>
-                        <option value="5">Retiro Temporal</option>
-                        <option value="6">Robo</option>
-                        <option value="7">Trasferencia a otra sucursal</option>
-                        <option value="8">Uso Interno</option>
-                        <option value="9">Otro motivo</option>
+                    <option selected value="">Selecciona un Motivo</option>
+                    <?php foreach ($motivos as $motivo) { ?>
+                        <option <?php echo $visita_producto->motivo_id === $motivo->id ? 'selected' : ''; ?>
+                            value="<?php echo s($motivo->id); ?>">
+                            <?php echo s($motivo->motivo); ?>
+                        </option>
+                    <?php } ?>
                     </select>
                 </div>
                 <fieldset>

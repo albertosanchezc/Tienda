@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Motivos;
 use Model\Visita_Producto;
 use Model\Visitas_proveedor;
 use MVC\Router;
@@ -27,12 +28,13 @@ class InventarioController
         $producto = new Productos;
         $categorias = Categorias::ALF('nombre','ASC');
         $proveedores = Proveedor::ALF('nombre','ASC');
+        $motivos = Motivos::ALF('motivo','ASC');
         $inventario = Inventario::all();
         $alertas = Productos::getAlertas();
 
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            // debuguear($_POST);
+            debuguear($_POST);
             $alertas = Productos::getAlertas();
             $argsCrear = $_POST['inventarioCrear'];
             $argsActualizar = $_POST['inventarioActualizar'];
@@ -193,7 +195,8 @@ class InventarioController
             'proveedores' => $proveedores,
             'inventario_nuevo' => $inventario_nuevo,
             'alertas' => $alertas,
-            'producto' => $producto
+            'producto' => $producto,
+            'motivos' => $motivos
 
 
 
