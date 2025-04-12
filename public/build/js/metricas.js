@@ -108,6 +108,13 @@ let terminosBusquedaVentas = {
     categoria: ''
 }
 
+let terminosBusquedaCancelaciones = {
+    fechaI: '',
+    fechaF: '',
+    proveedor: '',
+    categoria: ''
+}
+
 
 // Inputs de los filtros de Inventario
 const inputFechaInicioInventario = filtrosInventario.querySelector('#fechaInicioInventario');
@@ -124,6 +131,12 @@ const inputFechaInicioVentas = filtrosVentas.querySelector('#fechaInicioVentas')
 const inputFechaFinalVentas = filtrosVentas.querySelector('#fechaFinVentas');
 const inputProveedorVentas = filtrosVentas.querySelector('#proveedorFiltro');
 const inputCategoriaVentas = filtrosVentas.querySelector('#categoriaFiltro');
+
+// Inputs de los filtros de Cancelaciones
+const inputFechaInicioCancelaciones = filtrosCancelaciones.querySelector('#fechaInicioCancelaciones');
+const inputFechaFinalCancelaciones = filtrosCancelaciones.querySelector('#fechaFinCancelaciones');
+const inputProveedorCancelaciones = filtrosCancelaciones.querySelector('#proveedorFiltroCancelaciones');
+const inputCategoriaCancelaciones = filtrosCancelaciones.querySelector('#categoriaFiltroCancelaciones');
 
 // Selectores Inventario
 const selectorTotalStock = document.querySelector('#totalCantidadUnitarioInventario').querySelector('P');
@@ -267,10 +280,10 @@ const parrafoChart45 = document.querySelector('#myChart45').parentElement.queryS
 parrafoChart45.textContent = 'Productos A Granel Con Menos Cancelaciones ($)';
 
 const parrafoChart46 = document.querySelector('#myChart46').parentElement.querySelector('P');
-parrafoChart46.textContent = 'Top 20 de Proveedores Con Más Ventas ($)';
+parrafoChart46.textContent = 'Top 20 de Proveedores Con Más Cancelaciones ($)';
 
 const parrafoChart47 = document.querySelector('#myChart47').parentElement.querySelector('P');
-parrafoChart47.textContent = 'Top 20 de Categorías con Más Ventas ($)';
+parrafoChart47.textContent = 'Top 20 de Categorías con Más Cancelaciones ($)';
 
 let ventas = [];
 let ventasGranel = [];
@@ -2468,6 +2481,97 @@ inputCategoriaVentas.addEventListener('change', (e) => {
     filtrarVentas();
 })
 
+// Eventos de los filtros de cancelaciones
+inputFechaInicioCancelaciones.addEventListener('change', (e) => {
+    let { fechaI } = terminosBusquedaCancelaciones;
+
+    fechaI = e.target.value;
+    terminosBusquedaCancelaciones.fechaI = fechaI;
+    console.log(terminosBusquedaCancelaciones);
+
+    filtrarCancelaciones();
+});
+
+inputFechaFinalCancelaciones.addEventListener('change', (e) => {
+    let { fechaF } = terminosBusquedaCancelaciones;
+    fechaF = e.target.value;
+    terminosBusquedaCancelaciones.fechaF = fechaF;
+    console.log(terminosBusquedaCancelaciones);
+    filtrarCancelaciones();
+});
+
+inputProveedorCancelaciones.addEventListener('change', (e) => {
+    let { proveedor } = terminosBusquedaCancelaciones;
+
+    proveedor = e.target.options[e.target.selectedIndex].text;
+    if (proveedor !== 'Selecciona un proveedor') {
+        terminosBusquedaCancelaciones.proveedor = proveedor;
+    } else {
+        terminosBusquedaCancelaciones.proveedor = '';
+    }
+
+    console.log(terminosBusquedaCancelaciones);
+
+    filtrarCancelaciones();
+})
+
+inputCategoriaCancelaciones.addEventListener('change', (e) => {
+    let { categoria } = terminosBusquedaCancelaciones;
+
+    categoria = e.target.options[e.target.selectedIndex].text;
+    if (categoria !== 'Selecciona una Categoría') {
+        terminosBusquedaCancelaciones.categoria = categoria;
+    } else {
+        terminosBusquedaCancelaciones.categoria = '';
+
+    }
+
+    console.log(terminosBusquedaCancelaciones);
+
+    filtrarCancelaciones();
+})
+
+// Función para filtrar por fecha inicial 
+function filtrarfechaICancelaciones(cancelacionesCompletas) {
+    const fechaVenta = new Date(cancelacionesCompletas.fecha_venta);
+    const fechaInicial = new Date(terminosBusquedaCancelaciones.fechaI);
+    return fechaVenta >= fechaInicial;
+}
+
+// Función para filtrar por fecha final
+function filtrarfechaFCancelaciones(cancelacionesCompletas) {
+    const fechaVenta = new Date(cancelacionesCompletas.fecha_venta);
+    const fechaFinal = new Date(terminosBusquedaCancelaciones.fechaF);
+    return fechaVenta <= fechaFinal;
+}
+
+// Función para filtrar por proveedor
+function filtrarProveedorCancelaciones(cancelacionesCompletas) {
+    const { proveedor } = terminosBusquedaCancelaciones;
+
+
+    if (proveedor) {
+        return cancelacionesCompletas.proveedor === proveedor;
+    }
+
+    return cancelacionesCompletas;
+}
+
+// Función para filtrar por categoría
+function filtrarCategoriaCancelaciones(cancelacionesCompletas) {
+    const { categoria } = terminosBusquedaCancelaciones;
+
+    if (categoria) {
+        return cancelacionesCompletas.categoria.includes(categoria);
+    }
+
+    return cancelacionesCompletas;
+}
+
+
+
+
+
 function filtrarVentas() {
     let resultadosFiltrados = ventasCompletas;
     // Aplicar filtro de fecha inicial si existe
@@ -2495,6 +2599,40 @@ function filtrarVentas() {
 
     }
     crearGraficasVentas(resultadosFiltrados);
+
+    return resultadosFiltrados;
+
+
+
+}
+
+function filtrarCancelaciones() {
+    let resultadosFiltrados = cancelacionesCompletas;
+    // Aplicar filtro de fecha inicial si existe
+    if (terminosBusquedaCancelaciones.fechaI) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaICancelaciones);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaCancelaciones.fechaF) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaFCancelaciones);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaCancelaciones.proveedor) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarProveedorCancelaciones);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaCancelaciones.categoria) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarCategoriaCancelaciones);
+        console.log(resultadosFiltrados);
+
+    }
+    crearGraficasCancelaciones(resultadosFiltrados);
 
     return resultadosFiltrados;
 

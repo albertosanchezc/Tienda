@@ -48,6 +48,8 @@ class VentasYCancelacionesController
                 $caja->cantidad_caja = $cajaPost[0]->cantidad_caja;
 
                 $ventaNueva = new Ventas();
+                $fecha_venta = $ventaNueva->fecha_venta;
+
                 $inventarioNuevo = new Inventario();
                 // debuguear($inventarioPost);
                 foreach ($inventarioPost as $producto) {
@@ -81,6 +83,7 @@ class VentasYCancelacionesController
                         $ventaNueva->cantidad = $resultado;
                         $ventaNueva->precio_compra =  $precio_compra;
                         $ventaNueva->cancelacion = 0;
+                        $ventaNueva->fecha_venta = $fecha_venta;
                         // debuguear($ventaNueva);
 
                         $ventaNueva->guardar();
@@ -95,6 +98,7 @@ class VentasYCancelacionesController
                     $ventaNueva->cantidad = $venta->cantidad;
                     $ventaNueva->cancelacion = 1;
                     $ventaNueva->precio_compra =  $precio_compra;
+                    $ventaNueva->fecha_venta = $fecha_venta;
 
                     // debuguear($ventaNueva);
                     $ventaNueva->guardar();
@@ -114,6 +118,7 @@ class VentasYCancelacionesController
 
                 $ventaNueva = new Ventas();
                 $inventarioNuevo = new Inventario();
+                $fecha_venta = $ventaNueva->fecha_venta;
                 // debuguear($inventarioPost);
                 foreach ($inventarioPost as $producto) {
                     $id = $producto->producto_id;
@@ -146,6 +151,8 @@ class VentasYCancelacionesController
                         $ventaNueva->cantidad = $resultado;
                         $ventaNueva->precio_compra =  $precio_compra;
                         $ventaNueva->cancelacion = 0;
+                        $ventaNueva->fecha_venta = $fecha_venta;
+
                         // debuguear($ventaNueva);
 
                         $ventaNueva->guardar();
@@ -160,6 +167,7 @@ class VentasYCancelacionesController
                     $ventaNueva->cantidad = $venta->cantidad;
                     $ventaNueva->cancelacion = 1;
                     $ventaNueva->precio_compra =  $precio_compra;
+                    $ventaNueva->fecha_venta = $fecha_venta;
 
 
 
@@ -189,6 +197,7 @@ class VentasYCancelacionesController
                 // Estamos listos para guardar la caja
                 $ventaNueva = new Ventas(get_object_vars($ventasPost));
                 // debuguear($ventaNueva);
+                $fecha_venta = $ventaNueva->fecha_venta;
 
                 $productoInv = Inventario::find($producto_id);
 
@@ -274,6 +283,7 @@ class VentasYCancelacionesController
                     $cancelacion->cantidad = 1;
                     $cancelacion->cancelacion = 1;
                     $cancelacion->cantidad = $valorVentaAntesActualizar[0]->cantidad;
+                    $cancelacion->fecha_venta = $fecha_venta;
                     $cancelacion->guardar();
 
                     $venta = new Ventas(get_object_vars($valorVentaAntesActualizar[0]));
@@ -285,7 +295,6 @@ class VentasYCancelacionesController
                     $inventarioActualizado = new Inventario(get_object_vars($productoInv));
                     $inventarioActualizado->guardar();
                     $caja->guardar();
-
                 }
             }
         }
