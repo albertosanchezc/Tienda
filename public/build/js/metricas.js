@@ -159,6 +159,30 @@ const selectorcancelacionesTotalDineroUnitario = document.querySelector('#cancel
 
 const selectorcancelacionesTotalDineroGranel = document.querySelector('#cancelacionesTotalDineroGranel').querySelector('P');
 
+const selectorgananciaTotalDineroUnitarioCancelaciones = document.querySelector('#gananciaTotalDineroUnitarioCancelaciones').querySelector('P');
+
+const selectorgananciaTotalDineroGranelCancelaciones = document.querySelector('#gananciaTotalDineroGranelCancelaciones').querySelector('P');
+
+const selectorgananciaTotalDineroCancelaciones = document.querySelector('#gananciaTotalDineroCancelaciones').querySelector('P');
+
+
+const selectorgridTotalVentasPromedioCancelaciones = document.querySelector('#gridTotalVentasPromedioCancelaciones').querySelector('P');
+
+const selectorcantidadTotalUnitarioCancelaciones = document.querySelector('#cantidadTotalUnitarioCancelaciones').querySelector('P');
+
+const selectorcantidadTotalGranelCancelaciones = document.querySelector('#cantidadTotalGranelCancelaciones').querySelector('P');
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -971,7 +995,7 @@ function crearGrafica27(datosAGraficar) {
 
 
     const etiquetas = ['Total de Retiros', 'Total de Abonos'];
-    const valores = [totalRetiros,totalAbonos]; 
+    const valores = [totalRetiros, totalAbonos];
 
 
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
@@ -984,7 +1008,7 @@ function crearGrafica28(datosAGraficar) {
     const { etiquetas, valores } = procesarDatosCaja(datosFiltrados1, 'fecha', 'hora', 'saldo_caja');
 
 
-    
+
 
 
     const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
@@ -1016,7 +1040,9 @@ function crearGrafica1(ventasCompletas) {
     const totalKilosVendidos = ((calcularTotalProductos(datosFiltrados2)) / 1000).toFixed(2);
     selectortotalKilos.textContent = `${totalKilosVendidos} Kg`;
 
-    const promedio = calcularPromedioConsumo(ventasCompletas);
+    const ventasC = [...datosFiltrados1, datosFiltrados2];
+
+    const promedio = calcularPromedioConsumo(ventasC);
     selectorPromedioConsumoClientes.textContent = `$${promedio}`;
 
     const totalGanancias = calcularTotalGanancias(datosFiltrados1);
@@ -1553,14 +1579,28 @@ function crearGrafica29(datosAGraficar) {
 
     selectortotalCancelacionesGanancia.parentElement.querySelector('H3').textContent = 'TOTAL SUPUESTA GANANCIA DE LAS CANCELACIONES ($):';
 
-
-
     selectortotalCancelacionesUnitarias.textContent = `$${totalDeTotalesVentas}`;
 
 
+    const totalGanancias = calcularTotalGanancias(datosFiltrados1);
+    selectorgananciaTotalDineroUnitarioCancelaciones.textContent = `$${totalGanancias}`;
 
+    const totalGananciasGranel = calcularTotalGananciasGranel(datosFiltrados2);
+    selectorgananciaTotalDineroGranelCancelaciones.textContent = `$${totalGananciasGranel}`;
 
+    const totalDeTotalesGanancias = Number(totalGanancias) + Number(totalGananciasGranel);
+    selectorgananciaTotalDineroCancelaciones.textContent = `$${totalDeTotalesGanancias.toFixed(2)}`;
 
+    const totalKilosVendidos = ((calcularTotalProductos(datosFiltrados2)) / 1000).toFixed(2);
+    selectorcantidadTotalGranelCancelaciones.textContent = `${totalKilosVendidos} Kg`;
+
+    const totalProductosVendidos = calcularTotalProductos(datosFiltrados1);
+    selectorcantidadTotalUnitarioCancelaciones.textContent = `${totalProductosVendidos} Productos`
+
+    const ventasC = [...datosFiltrados1, ...datosFiltrados2];
+
+    const promedio = calcularPromedioConsumo(ventasC);
+    selectorgridTotalVentasPromedioCancelaciones.textContent = `$${promedio}`;
 
     //////////
     let datos = agruparPorProducto(datosFiltrados1);
@@ -1619,7 +1659,7 @@ function crearGrafica38(datosAGraficar) {
 
     let prueba1 = agruparPorProducto(prueba);
     console.log(prueba1);
-    
+
     const datos1 = calcularGanancias(prueba1);
     console.log(datos1);
     const datos2 = ordenarPorGananciaMayor(datos1);
@@ -1845,7 +1885,7 @@ function obtenerTop20(totales) {
 function obtenerUltimosElementos(array, cantidad = 30) {
     // Obtener los últimos 'cantidad' elementos del array
     return array.slice(-cantidad);
-  }
+}
 
 // Ordena por totalCantidad menor
 function obtenerTop20Menos(totales) {
