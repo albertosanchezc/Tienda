@@ -34,6 +34,12 @@ const ctx24 = document.getElementById('myChart24').getContext('2d');
 const ctx27 = document.getElementById('myChart27').getContext('2d');
 const ctx28 = document.getElementById('myChart28').getContext('2d');
 
+// Gráficas de Cancelaciones
+const ctx29 = document.getElementById('myChart29').getContext('2d');
+const ctx37 = document.getElementById('myChart37').getContext('2d');
+const ctx38 = document.getElementById('myChart38').getContext('2d');
+const ctx39 = document.getElementById('myChart39').getContext('2d');
+
 
 
 
@@ -70,6 +76,7 @@ const filtrosVentas = contenedorVentas.querySelector('#formularioVentas');
 
 const contenedorCancelaciones = document.querySelector('.contenedorCancelaciones');
 contenedorCancelaciones.style.display = 'none';
+const filtrosCancelaciones = contenedorCancelaciones.querySelector('#formularioCancelaciones');
 
 
 const contenedorProveedores = document.querySelector('.contenedorProveedores');
@@ -143,6 +150,23 @@ const selectortotalKilos = document.querySelector('#cantidadTotalGranel').queryS
 const selectorPromedioConsumoClientes = document.querySelector('.gridTotalVentasPromedio').querySelector('P');
 
 
+// Selectores Cancelaciones 
+const selectortotalCancelacionesUnitarias = document.querySelector('#cancelacionesTotalDinero').querySelector('P');
+
+const selectortotalCancelacionesGanancia = document.querySelector('#gananciaTotalDineroCancelaciones').querySelector('P');
+
+const selectorcancelacionesTotalDineroUnitario = document.querySelector('#cancelacionesTotalDineroUnitario').querySelector('P');
+
+const selectorcancelacionesTotalDineroGranel = document.querySelector('#cancelacionesTotalDineroGranel').querySelector('P');
+
+
+
+
+
+
+
+
+
 
 
 
@@ -158,10 +182,10 @@ const parrafoChart3 = document.querySelector('#myChart3').parentElement.querySel
 parrafoChart3.textContent = 'Top 20 de Productos Menos Vendidos';
 
 const parrafoChart4 = document.querySelector('#myChart4').parentElement.querySelector('P');
-parrafoChart4.textContent = 'Ventas Por Productos Más Vendidos';
+parrafoChart4.textContent = 'Productos con Mayor Volumen de Ventas en $';
 
 const parrafoChart5 = document.querySelector('#myChart5').parentElement.querySelector('P');
-parrafoChart5.textContent = 'Ganancias Por Productos Más Vendidos';
+parrafoChart5.textContent = 'Ganancias Totales por Producto con Mayor Rentabilidad';
 
 const parrafoChart6 = document.querySelector('#myChart6').parentElement.querySelector('P');
 parrafoChart6.textContent = 'Ventas Por Productos Menos Vendidos';
@@ -207,11 +231,25 @@ parrafoChart35.textContent = 'Top 20 Productos a Granel con mas ganancia';
 const parrafoChart36 = document.querySelector('#myChart36').parentElement.querySelector('P');
 parrafoChart36.textContent = 'Top 20 Productos a Granel con menos ganancia';
 
+const parrafoChart29 = document.querySelector('#myChart29').parentElement.querySelector('P');
+parrafoChart29.textContent = 'Top 20 de Productos Con Más Cancelaciones';
+
+const parrafoChart37 = document.querySelector('#myChart37').parentElement.querySelector('P');
+parrafoChart37.textContent = 'Top 20 de Productos Con Menos Cancelaciones';
+
+const parrafoChart38 = document.querySelector('#myChart38').parentElement.querySelector('P');
+parrafoChart38.textContent = 'Productos con Mayor Volumen de Devoluciones en $';
+
+const parrafoChart39 = document.querySelector('#myChart39').parentElement.querySelector('P');
+parrafoChart39.textContent = 'Productos con Mayor Volumen de Cancelaciones en $';
+
+
 
 let ventas = [];
 let ventasGranel = [];
 let cancelaciones = [];
 let cancelacionesGranel = [];
+let cancelacionesCompletas = [];
 let inventario = [];
 let granel = [];
 let cajas_historicos = [];
@@ -243,7 +281,7 @@ async function consultarAPI() {
         ventasGranel = ventas.filter(venta => venta.cancelacion === '0' && venta.granel === '1');
         ventas = ventas.filter(venta => venta.cancelacion === '0' && venta.granel === '0');
         ventasCompletas = [...ventas, ...ventasGranel];
-
+        cancelacionesCompletas = [...cancelaciones, ...cancelacionesGranel];
         cajas_historicos = datos.cajas_historicos;
 
         inventario = datos.inventario;
@@ -251,7 +289,9 @@ async function consultarAPI() {
         crearGraficasInventario(inventario);
         crearGraficasCaja(cajas_historicos);
         crearGraficasVentas(ventasCompletas);
-        console.log(inventario)
+        crearGraficasCancelaciones(cancelacionesCompletas);
+
+        console.log(cancelacionesCompletas);
 
     } catch (error) {
         console.error('Error al obtener los datos:', error);
@@ -556,6 +596,30 @@ function obtenerVentasPorCategoria(ventas) {
     };
 }
 
+
+
+function crearGraficasInventario(datos) {
+    crearGrafica16(datos);
+    crearGrafica17(datos);
+    crearGrafica18(datos);
+    crearGrafica19(datos);
+    crearGrafica20(datos);
+    crearGrafica21(datos);
+    crearGrafica35(datos);
+    crearGrafica36(datos);
+    crearGrafica22(datos);
+    crearGrafica23(datos);
+    crearGrafica24(datos);
+
+
+}
+
+function crearGraficasCaja(datos) {
+    crearGrafica27(datos);
+    crearGrafica28(datos);
+
+}
+
 function crearGraficasVentas(datos) {
     crearGrafica1(datos);
     crearGrafica2(datos);
@@ -579,25 +643,13 @@ function crearGraficasVentas(datos) {
 
 }
 
-function crearGraficasInventario(datos) {
-    crearGrafica16(datos);
-    crearGrafica17(datos);
-    crearGrafica18(datos);
-    crearGrafica19(datos);
-    crearGrafica20(datos);
-    crearGrafica21(datos);
-    crearGrafica35(datos);
-    crearGrafica36(datos);
-    crearGrafica22(datos);
-    crearGrafica23(datos);
-    crearGrafica24(datos);
+function crearGraficasCancelaciones(datos) {
+    crearGrafica29(datos);
+    crearGrafica37(datos);
+    crearGrafica38(datos);
+    crearGrafica39(datos);
 
 
-}
-
-function crearGraficasCaja(datos) {
-    crearGrafica27(datos);
-    crearGrafica28(datos);
 
 }
 
@@ -1429,7 +1481,6 @@ function crearGrafica15(datosAGraficar) {
 
 }
 
-
 // Patrón Semanal de Ventas 
 function crearGrafica25(datosAGraficar) {
     // Filtrar por fechaaa
@@ -1479,6 +1530,145 @@ function crearGrafica26(datosAGraficar) {
 
 
 }
+
+// Top 20 de Productos Con Más Cancelaciones
+function crearGrafica29(datosAGraficar) {
+
+    // Filtrar por fechaaa
+    let datosFiltrados1 = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '0') ?? cancelaciones;
+    let datosFiltrados2 = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '1') ?? cancelaciones;
+
+
+    const totalCancelacionesUnitario = calcularTotalVentas(datosFiltrados1);
+
+    const totalCancelacionesGranel = calcularTotalVentasGranel(datosFiltrados2);
+
+
+    selectorcancelacionesTotalDineroUnitario.textContent = `$${totalCancelacionesUnitario}`;
+
+    const totalDeTotalesVentas = (parseFloat(totalCancelacionesUnitario) + parseFloat(totalCancelacionesGranel)).toFixed(2);
+
+    selectorcancelacionesTotalDineroGranel.textContent = `$${totalCancelacionesGranel}`;
+
+
+    selectortotalCancelacionesGanancia.parentElement.querySelector('H3').textContent = 'TOTAL SUPUESTA GANANCIA DE LAS CANCELACIONES ($):';
+
+
+
+    selectortotalCancelacionesUnitarias.textContent = `$${totalDeTotalesVentas}`;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados1);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20(totales);
+    const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx29, 'bar', etiquetas, valores, 'Cantidad de Ventas por Producto', backgroundColors1);
+
+
+}
+
+// Top 20 de Productos Con Menos Cancelaciones
+function crearGrafica37(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '0') ?? cancelaciones;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20Menos(totales);
+    const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+    createChart(ctx37, 'bar', etiquetas, valores, 'Cantidad de Ventas por Producto', backgroundColors1);
+
+
+}
+
+// Cancelaciones Por Productos Más Cancelados
+function crearGrafica38(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '0') ?? cancelaciones;
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = cancelaciones.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    console.log(prueba);
+
+    let prueba1 = agruparPorProducto(prueba);
+    console.log(prueba1);
+    
+    const datos1 = calcularGanancias(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMayor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_bruta');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx38, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+
+
+}
+
+function crearGrafica39(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '0') ?? cancelaciones;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = cancelaciones.filter(v => datos.some(p1 => p1.producto_id === v.producto_id))
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGanancias(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMayor(datos1)
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+    createChart(ctx39, 'bar', etiquetas, valores, 'Ganancias por Producto en $', backgroundColors1);
+
+
+
+}
+
 
 
 // Función para determinar el patrón de ventas semanal
