@@ -696,10 +696,18 @@
             </div>
             <div>
                 <div class="flextitulo-icono">
-                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <p>Patrón Semanal de Ventas ($)</p>
                     <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart48" width="400" height="400"></canvas>
+            </div>
+
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Ventas Totales por Hora</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart49" width="400" height="400"></canvas>
             </div>
         </div>
     </div>

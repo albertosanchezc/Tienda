@@ -39,10 +39,16 @@ const ctx29 = document.getElementById('myChart29').getContext('2d');
 const ctx37 = document.getElementById('myChart37').getContext('2d');
 const ctx38 = document.getElementById('myChart38').getContext('2d');
 const ctx39 = document.getElementById('myChart39').getContext('2d');
-
-
-
-
+const ctx40 = document.getElementById('myChart40').getContext('2d');
+const ctx41 = document.getElementById('myChart41').getContext('2d');
+const ctx42 = document.getElementById('myChart42').getContext('2d');
+const ctx43 = document.getElementById('myChart43').getContext('2d');
+const ctx44 = document.getElementById('myChart44').getContext('2d');
+const ctx45 = document.getElementById('myChart45').getContext('2d');
+const ctx46 = document.getElementById('myChart46').getContext('2d');
+const ctx47 = document.getElementById('myChart47').getContext('2d');
+const ctx48 = document.getElementById('myChart48').getContext('2d');
+const ctx49 = document.getElementById('myChart49').getContext('2d');
 
 
 
@@ -53,10 +59,6 @@ const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
 const btnAbrirCancelaciones = document.querySelector('.botonGeneralCancelaciones');
 const btnAbrirProveedores = document.querySelector('.botonGeneralProveedores');
 const btnAbrirCategorias = document.querySelector('.botonGeneralCategorias');
-
-
-
-
 
 
 const contenedorInventario = document.querySelector('.contenedorInventario');
@@ -173,27 +175,6 @@ const selectorcantidadTotalUnitarioCancelaciones = document.querySelector('#cant
 const selectorcantidadTotalGranelCancelaciones = document.querySelector('#cantidadTotalGranelCancelaciones').querySelector('P');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const maximoElementos = 20;
 
 const parrafoChart1 = document.querySelector('#myChart1').parentElement.querySelector('P');
@@ -212,10 +193,10 @@ const parrafoChart5 = document.querySelector('#myChart5').parentElement.querySel
 parrafoChart5.textContent = 'Ganancias Totales por Producto con Mayor Rentabilidad';
 
 const parrafoChart6 = document.querySelector('#myChart6').parentElement.querySelector('P');
-parrafoChart6.textContent = 'Ventas Por Productos Menos Vendidos';
+parrafoChart6.textContent = 'Productos con Menor Volumen de Ventas en $';
 
 const parrafoChart7 = document.querySelector('#myChart7').parentElement.querySelector('P');
-parrafoChart7.textContent = 'Ganancias Por Productos Menos Vendidos';
+parrafoChart7.textContent = 'Ganancias Totales por Producto con Menor Rentabilidad';
 
 const parrafoChart8 = document.querySelector('#myChart8').parentElement.querySelector('P');
 parrafoChart8.textContent = 'Top 20 Productos a Granel más vendidos Por Gramos';
@@ -267,7 +248,29 @@ parrafoChart38.textContent = 'Productos con Mayor Volumen de Devoluciones en $';
 const parrafoChart39 = document.querySelector('#myChart39').parentElement.querySelector('P');
 parrafoChart39.textContent = 'Productos con Mayor Volumen de Cancelaciones en $';
 
+const parrafoChart40 = document.querySelector('#myChart40').parentElement.querySelector('P');
+parrafoChart40.textContent = 'Productos con Menor Volumen de Devoluciones en $';
 
+const parrafoChart41 = document.querySelector('#myChart41').parentElement.querySelector('P');
+parrafoChart41.textContent = 'Productos con Menor Volumen de Cancelaciones en $';
+
+const parrafoChart42 = document.querySelector('#myChart42').parentElement.querySelector('P');
+parrafoChart42.textContent = 'Top 20 Productos a Granel Con  Más Cancelaciones (kg)';
+
+const parrafoChart43 = document.querySelector('#myChart43').parentElement.querySelector('P');
+parrafoChart43.textContent = 'Top 20 Productos a Granel Con Menos Cancelaciones (kg)';
+
+const parrafoChart44 = document.querySelector('#myChart44').parentElement.querySelector('P');
+parrafoChart44.textContent = 'Productos A Granel Con Más Cancelaciones ($)';
+
+const parrafoChart45 = document.querySelector('#myChart45').parentElement.querySelector('P');
+parrafoChart45.textContent = 'Productos A Granel Con Menos Cancelaciones ($)';
+
+const parrafoChart46 = document.querySelector('#myChart46').parentElement.querySelector('P');
+parrafoChart46.textContent = 'Top 20 de Proveedores Con Más Ventas ($)';
+
+const parrafoChart47 = document.querySelector('#myChart47').parentElement.querySelector('P');
+parrafoChart47.textContent = 'Top 20 de Categorías con Más Ventas ($)';
 
 let ventas = [];
 let ventasGranel = [];
@@ -672,6 +675,18 @@ function crearGraficasCancelaciones(datos) {
     crearGrafica37(datos);
     crearGrafica38(datos);
     crearGrafica39(datos);
+    crearGrafica40(datos);
+    crearGrafica41(datos);
+    crearGrafica42(datos);
+    crearGrafica43(datos);
+    crearGrafica44(datos);
+    crearGrafica45(datos);
+    crearGrafica46(datos);
+    crearGrafica47(datos);
+    crearGrafica48(datos);
+    crearGrafica49(datos);
+
+
 
 
 
@@ -1708,6 +1723,296 @@ function crearGrafica39(datosAGraficar) {
 
 
 }
+
+function crearGrafica40(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '0') ?? cancelaciones;
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20Menos(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = cancelaciones.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    console.log(prueba);
+
+    let prueba1 = agruparPorProducto(prueba);
+    console.log(prueba1);
+
+    const datos1 = calcularGanancias(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMenor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_bruta');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx40, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+
+
+}
+
+function crearGrafica41(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '0') ?? cancelaciones;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20Menos(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = cancelaciones.filter(v => datos.some(p1 => p1.producto_id === v.producto_id))
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGanancias(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMenor(datos1)
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+    createChart(ctx41, 'bar', etiquetas, valores, 'Ganancias por Producto en $', backgroundColors1);
+
+
+
+}
+
+
+// Top 20 Productos a Granel más vendidos Por Gramos
+function crearGrafica42(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '1') ?? cancelacionesGranel;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20(totales);
+    const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+    createChart(ctx42, 'bar', etiquetas, valores, 'Ventas por gramos', backgroundColors1);
+
+
+}
+
+function crearGrafica43(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '1') ?? cancelacionesGranel;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    // console.log(totales);
+    datos = obtenerTop20Menos(totales);
+    const { etiquetas, valores } = procesarDatos(datos, 'producto_completo', 'totalCantidad')
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+    createChart(ctx43, 'bar', etiquetas, valores, 'Ventas por gramos', backgroundColors1);
+
+
+}
+
+
+function crearGrafica44(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '1') ?? ventasGranel;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    console.log(totales);
+    datos = obtenerTop20(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = cancelacionesGranel.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGananciasGranel(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMayor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_bruta');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx44, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+
+
+}
+
+function crearGrafica45(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(venta => venta.cancelacion === '1' && venta.granel === '1') ?? ventasGranel;
+
+
+
+
+
+
+    //////////
+    let datos = agruparPorProducto(datosFiltrados);
+
+    console.log(datos);
+    const totales = calcularTotales(datos);
+    console.log(totales);
+    datos = obtenerTop20(totales);
+    console.log(datos);
+    // const datosPrueba = datos.find(v => v.producto_id ===)
+    const prueba = cancelacionesGranel.filter(v => datos.some(p1 => p1.producto_id === v.producto_id));
+    let prueba1 = agruparPorProducto(prueba);
+    const datos1 = calcularGananciasGranel(prueba1);
+    console.log(datos1);
+    const datos2 = ordenarPorGananciaMayor(datos1);
+    console.log(datos2);
+    const { etiquetas, valores } = procesarDatos(datos2, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx45, 'bar', etiquetas, valores, 'Ventas por Producto en $', backgroundColors1);
+
+
+
+}
+
+// Top 20 Proveedores con más ventas
+function crearGrafica46(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar;
+
+
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+    const resultado = obtenerVentasPorProveedor(datosFiltrados);
+    // obtenerTop20(resultado);
+    // console.log(resultado);
+
+    // const { etiquetas, valores } = procesarDatos(patronVentas, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
+
+
+    createChart(ctx46, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Por Proveedor en $', backgroundColors1);
+
+
+
+}
+
+// Top 20 Categorías con más ventas
+function crearGrafica47(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar;
+
+
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+    const resultado = obtenerVentasPorCategoria(datosFiltrados);
+    console.log(resultado);
+
+    // obtenerTop20(resultado);
+    // console.log(resultado);
+
+    // const { etiquetas, valores } = procesarDatos(patronVentas, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
+
+
+    createChart(ctx47, 'bar', resultado.etiquetas, resultado.valores, 'Ventas Por Categoría en $', backgroundColors1);
+
+
+
+}
+
+// Patrón Semanal de Ventas 
+function crearGrafica48(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar;
+
+
+
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+    const resultado = obtenerPatronVentas(datosFiltrados);
+
+    // const { etiquetas, valores } = procesarDatos(patronVentas, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
+
+
+    createChart(ctx48, 'bar', resultado.etiquetas, resultado.valores, 'Total Cancelaciones del Día en $', backgroundColors1);
+}
+
+function crearGrafica49(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar;
+
+
+
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+    const resultado = obtenerPatronVentasPorMediaHora(datosFiltrados);
+
+    // const { etiquetas, valores } = procesarDatos(patronVentas, 'producto', 'ganancia_total');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(resultado.etiquetas));
+
+
+    createChart(ctx49, 'bar', resultado.etiquetas, resultado.valores, 'Totales Cancelaciones Por Hora $', backgroundColors1);
+
+
+
+}
+
 
 
 
