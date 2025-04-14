@@ -237,6 +237,9 @@ class VentasYCancelacionesController
                         $cancelacion = new Ventas(get_object_vars($ventasPost));
                         $cancelacion->cantidad = 1;
                         $cancelacion->cancelacion = 1;
+                        $cancelacionConFechaNueva = new Ventas();
+                        $fecha_venta = $cancelacionConFechaNueva->fecha_venta;
+                        $cancelacion->fecha_venta = $fecha_venta;
 
                         // debuguear($cancelacion);
                         // Estamos listos para guardar la cancelacion
@@ -249,6 +252,9 @@ class VentasYCancelacionesController
                         $cancelacion->cantidad = $cantidadAnteriorCancelacion + 1;
                         $cancelacion->cancelacion = 1;
                         $cancelacion->id = $existeCancelacion[0]->id;
+                        $cancelacionConFechaNueva = new Ventas();
+                        $fecha_venta = $cancelacionConFechaNueva->fecha_venta;
+                        $cancelacion->fecha_venta = $fecha_venta;
 
                         // Estamos listos para actualizar la cancelacion
 
@@ -276,13 +282,15 @@ class VentasYCancelacionesController
                     $inventarioActualizado->guardar();
                     $caja->guardar();
                     // debuguear($inventarioActualizado);
-
+///////////////////
                 } else {
                     // Debemos Eliminar todos los gramos de ese producto
                     $cancelacion = new Ventas(get_object_vars($ventasPost));
+                    $cancelacionConFechaNueva = new Ventas();
                     $cancelacion->cantidad = 1;
                     $cancelacion->cancelacion = 1;
                     $cancelacion->cantidad = $valorVentaAntesActualizar[0]->cantidad;
+                    $fecha_venta = $cancelacionConFechaNueva->fecha_venta;
                     $cancelacion->fecha_venta = $fecha_venta;
                     $cancelacion->guardar();
 
