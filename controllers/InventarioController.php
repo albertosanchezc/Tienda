@@ -34,7 +34,7 @@ class InventarioController
 
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            debuguear($_POST);
+            // debuguear($_POST);
             $alertas = Productos::getAlertas();
             $argsCrear = $_POST['inventarioCrear'];
             $argsActualizar = $_POST['inventarioActualizar'];
@@ -145,13 +145,20 @@ class InventarioController
                 $productoActualizar->guardar();
             } elseif ($metodoActualizarStock) { // El método fue actualizar Stock
 
-    
+    // debuguear($metodoActualizarStock);
                 $id = $argsActualizarStock['id'];
                 $productoActualizarStock = Inventario::find($id);
-                $cantidadAnterior = $productoActualizarStock->cantidad;  
+                $cantidadAnterior = $productoActualizarStock->cantidad; 
+                $proveedorId = $productoActualizarStock->proveedor_id; 
                 $productoActualizarStock->cantidad = $argsActualizarStock['cantidad'];
                 // debuguear($productoActualizarStock);
                 $productoActualizarStock->guardar();
+                $visitaProveedorActualizarStock = new Visitas_Proveedor();
+                $visitaProveedorActualizarStock->id = null;
+                $visitaProveedorActualizarStock->proveedor_id = $proveedorId;
+                $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'id');
+                $visitaProveedorActualizarStock->visita_id = $visitaPrevia+1; 
+                debuguear($visitaProveedorActualizarStock);
                 $cantidadNueva = $argsActualizarStock['cantidad'];
                 if($cantidadNueva>=$cantidadAnterior){
                     $cantidadAniadida = $cantidadAnterior-$cantidadNueva;
@@ -161,7 +168,7 @@ class InventarioController
                 $productoVisita = new Visita_Producto();
                 $productoVisita->id = null;
                 $productoVisita->cantidad = $cantidadAniadida;
-                $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'id');
+                // $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'id');
                 $productoVisita->producto_id = $id;
 
 

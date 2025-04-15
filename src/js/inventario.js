@@ -1273,11 +1273,22 @@ function abrirModalActualizarStock(inputHidden, inputHiddenEliminar, e, cantidad
     modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
     cerrarModalClickFuera(modalActualizarStock, 'modal--inventario--actualizarStock');
     contenedorSelectMotivo.style.display = 'none';
+    const switchContainer = modalActualizarStock.querySelector('.switch');
+    // switchContainer.id = 'optionaniadir';
 
     let resultado = cantidad;
     const inputModalActualizarStock = modalActualizarStock.querySelector('#cantidadStock');
     inputModalActualizarStock.value = '';
 
+
+    // contenedorSelectMotivo.style.display = 'none';
+    // resultado = cantidad;
+    // labelRetiro.textContent = 'Cantidad a Agregar:';
+    // legendRetiro.textContent = '+ Añadir a Stock';
+    const opcionAniadir = switchContainer.querySelector('#optionaniadir');
+    opcionAniadir.click();
+
+    // opcionAniadir.checked = true;
 
     imprimirParrafosModal(granel, cantidad, resultado);
     inputModalActualizarStock.addEventListener('input', (e) => {
@@ -1292,7 +1303,7 @@ function abrirModalActualizarStock(inputHidden, inputHiddenEliminar, e, cantidad
         inputHiddenEliminar.value = 'aniadir';
     });
 
-    const switchContainer = modalActualizarStock.querySelector('.switch');
+
     switchContainer.addEventListener('click', (e) => {
         console.log(e.target.id);
 
