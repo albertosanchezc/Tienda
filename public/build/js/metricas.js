@@ -1,3 +1,5 @@
+
+
 // Gráficas de ventas
 const ctx1 = document.getElementById('myChart1').getContext('2d');
 const ctx2 = document.getElementById('myChart2').getContext('2d');
@@ -95,9 +97,13 @@ const filtrosCancelaciones = contenedorCancelaciones.querySelector('#formularioC
 
 const contenedorProveedores = document.querySelector('.contenedorProveedores');
 contenedorProveedores.style.display = 'none';
+const filtrosProveedores = contenedorProveedores.querySelector('#formularioProveedores');
+
 
 const contenedorCategorias = document.querySelector('.contenedorCategorias');
 contenedorCategorias.style.display = 'none';
+const filtrosCategorias = contenedorCategorias.querySelector('#formularioCategorias');
+
 
 
 
@@ -127,6 +133,20 @@ let terminosBusquedaCancelaciones = {
     categoria: ''
 }
 
+let terminosBusquedaProveedores = {
+    fechaI: '',
+    fechaF: '',
+    proveedor: '',
+    categoria: ''
+}
+
+let terminosBusquedaCategorias = {
+    fechaI: '',
+    fechaF: '',
+    proveedor: '',
+    categoria: ''
+}
+
 
 // Inputs de los filtros de Inventario
 const inputFechaInicioInventario = filtrosInventario.querySelector('#fechaInicioInventario');
@@ -149,6 +169,15 @@ const inputFechaInicioCancelaciones = filtrosCancelaciones.querySelector('#fecha
 const inputFechaFinalCancelaciones = filtrosCancelaciones.querySelector('#fechaFinCancelaciones');
 const inputProveedorCancelaciones = filtrosCancelaciones.querySelector('#proveedorFiltroCancelaciones');
 const inputCategoriaCancelaciones = filtrosCancelaciones.querySelector('#categoriaFiltroCancelaciones');
+
+// Inputs de los Proveedores
+
+// Inputs de las Categorías
+const inputFechaInicioCategorias = filtrosCategorias.querySelector('#fechaInicioCategorias');
+const inputFechaFinalCategorias = filtrosCategorias.querySelector('#fechaFinCategorias');
+const inputProveedorCategorias = filtrosCategorias.querySelector('#proveedorFiltroCategorias');
+const inputCategoriaCategorias = filtrosCategorias.querySelector('#categoriaFiltroCategorias');
+
 
 // Selectores Inventario
 const selectorTotalStock = document.querySelector('#totalCantidadUnitarioInventario').querySelector('P');
@@ -3142,6 +3171,56 @@ inputCategoriaCancelaciones.addEventListener('change', (e) => {
     filtrarCancelaciones();
 })
 
+// Eventos de los filtros de categorías 
+inputFechaInicioCategorias.addEventListener('change', (e) => {
+    let { fechaI } = terminosBusquedaCategorias;
+
+    fechaI = e.target.value;
+    terminosBusquedaCategorias.fechaI = fechaI;
+    console.log(terminosBusquedaCategorias);
+
+    filtrarCategorias();
+});
+
+inputFechaFinalCategorias.addEventListener('change', (e) => {
+    let { fechaF } = terminosBusquedaCategorias;
+    fechaF = e.target.value;
+    terminosBusquedaCategorias.fechaF = fechaF;
+    console.log(terminosBusquedaCategorias);
+    filtrarCategorias();
+});
+
+inputProveedorCategorias.addEventListener('change', (e) => {
+    let { proveedor } = terminosBusquedaCategorias;
+
+    proveedor = e.target.options[e.target.selectedIndex].text;
+    if (proveedor !== 'Selecciona un proveedor') {
+        terminosBusquedaCategorias.proveedor = proveedor;
+    } else {
+        terminosBusquedaCategorias.proveedor = '';
+    }
+
+    console.log(terminosBusquedaCategorias);
+
+    filtrarCategorias();
+});
+
+inputCategoriaCategorias.addEventListener('change', (e) => {
+    let { categoria } = terminosBusquedaCategorias;
+
+    categoria = e.target.options[e.target.selectedIndex].text;
+    if (categoria !== 'Selecciona una Categoría') {
+        terminosBusquedaCategorias.categoria = categoria;
+    } else {
+        terminosBusquedaCategorias.categoria = '';
+
+    }
+
+    console.log(terminosBusquedaCategorias);
+
+    filtrarCategorias();
+});
+
 // Función para filtrar por fecha inicial 
 function filtrarfechaICancelaciones(cancelacionesCompletas) {
     const fechaVenta = new Date(cancelacionesCompletas.fecha_venta);
@@ -3180,6 +3259,13 @@ function filtrarCategoriaCancelaciones(cancelacionesCompletas) {
 }
 
 
+// Funciones de Filtrado para categorias
+// Función para filtrar por fecha inicial 
+function filtrarfechaICategorias(cancelacionesCompletas) {
+    const fechaVenta = new Date(cancelacionesCompletas.fecha_venta);
+    const fechaInicial = new Date(terminosBusquedaCancelaciones.fechaI);
+    return fechaVenta >= fechaInicial;
+}
 
 
 
@@ -3249,6 +3335,41 @@ function filtrarCancelaciones() {
 
 
 
+}
+
+// function filtrarProveedores(){
+
+// }
+
+function filtrarCategorias() {
+    let resultadosFiltrados = ventasCompletas;
+    // Aplicar filtro de fecha inicial si existe
+    if (terminosBusquedaCategorias.fechaI) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaICategorias);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaCategorias.fechaF) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaFCategorias);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaCategorias.proveedor) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarProveedorCategorias);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaCategorias.categoria) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarCategoriaCategorias);
+        console.log(resultadosFiltrados);
+
+    }
+    crearGraficasCategorias(resultadosFiltrados);
+
+    return resultadosFiltrados;
 }
 
 // Función para filtrar por fecha inicial 
