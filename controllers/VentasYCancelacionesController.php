@@ -282,7 +282,6 @@ class VentasYCancelacionesController
                     $inventarioActualizado->guardar();
                     $caja->guardar();
                     // debuguear($inventarioActualizado);
-///////////////////
                 } else {
                     // Debemos Eliminar todos los gramos de ese producto
                     $cancelacion = new Ventas(get_object_vars($ventasPost));

@@ -814,13 +814,6 @@
                     </p>
                     <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
-                <canvas id="myChart49" width="400" height="400"></canvas>
-            </div>
-            <div>
-                <div class="flextitulo-icono">
-                    <p>Top 20 Proveedores con más ganancia en sus productos</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
-                </div>
                 <canvas id="myChart50" width="400" height="400"></canvas>
             </div>
             <div>
@@ -829,6 +822,13 @@
                     <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart51" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <div class="flextitulo-icono">
+                    <p>Top 20 Proveedores con más ganancia en sus productos</p>
+                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                </div>
+                <canvas id="myChart52" width="400" height="400"></canvas>
             </div>
         </div>
     </div>
