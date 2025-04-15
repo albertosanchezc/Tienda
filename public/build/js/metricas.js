@@ -196,6 +196,20 @@ const selectorcantidadTotalGranelCancelaciones = document.querySelector('#cantid
 
 
 // Selectores Proveedores
+const selectorpromedioProductosCompradosProveedores = document.querySelector('#promedioProductosCompradosProveedores').querySelector('P');
+
+const selectorpromedioProductosCompradosNumeroProveedores = document.querySelector('#promedioProductosCompradosNumeroProveedores').querySelector('P');
+
+const selectortotalProductosInventarioDinerosProveedores = document.querySelector('#totalProductosInventarioDinerosProveedores').querySelector('P');
+
+const selectortotalPagadoProveedores = document.querySelector('#totalPagadoProveedores').querySelector('P');
+
+
+const selectorpromedioProductosCompradosVisitaProveedores = document.querySelector('#promedioProductosCompradosVisitaProveedores').querySelector('P');
+
+const selectortotalProductosInventarioProveedores = document.querySelector('#totalProductosInventarioProveedores').querySelector('P');
+
+const selectortotalAdeudoProveedores = document.querySelector('#totalAdeudoProveedores').querySelector('P');
 
 
 const maximoElementos = 20;
@@ -308,6 +322,8 @@ let inventario = [];
 let granel = [];
 let cajas_historicos = [];
 let ventasCompletas = [];
+let visitas_proveedor = [];
+
 
 const hoy = new Date();
 const dia = String(hoy.getDate()).padStart(2, '0');
@@ -330,6 +346,7 @@ async function consultarAPI() {
         const respuesta = await fetch(url);
         const datos = await respuesta.json();
         ventas = datos.ventas;
+        visitas_proveedor = datos.visitas_proveedor;
         cancelacionesGranel = ventas.filter(venta => venta.cancelacion === '1' && venta.granel === '1');
         cancelaciones = ventas.filter(venta => venta.cancelacion === '1' && venta.granel === '0');
         ventasGranel = ventas.filter(venta => venta.cancelacion === '0' && venta.granel === '1');
@@ -2042,7 +2059,29 @@ function crearGrafica30(datosAGraficar) {
     let datosFiltrados = datosAGraficar ?? ventasCompletas;
 
 
+    const promedios = calcularPromediosPorVisita(visitas_proveedor, inventario);
+    selectorpromedioProductosCompradosProveedores.textContent = `${promedios.promedioUnitaria.toFixed(2)}`;
 
+    selectorpromedioProductosCompradosNumeroProveedores.textContent = `${promedios.promedioGranel.toFixed(2)}`;
+
+    const totalInventarioNumero = obtenerCantidadTotalInventario(inventario);
+    selectortotalProductosInventarioProveedores.textContent = `${totalInventarioNumero}`;
+
+    // de Visitas
+    const totalInventarioCompra = calcularValorInventario(inventario);
+    selectortotalProductosInventarioDinerosProveedores.textContent = `$${totalInventarioCompra.toFixed(2)}`;
+
+
+    const totalPagado = calcularTotalPagadoProveedores(inventario);
+    selectortotalPagadoProveedores.textContent = `$${totalPagado}`;
+
+
+    const $promedioPesosVisita = promedioCompraPorVisitaPesos(visitas_proveedor);
+    selectorpromedioProductosCompradosVisitaProveedores.textContent = `$${$promedioPesosVisita}`;
+
+    const {totalPagadoProveedor, totalAdeudo} = calcularTotalesPagadoYAdeudo(visitas_proveedor);
+    selectortotalPagadoProveedores.textContent = `$${totalPagadoProveedor}`;
+    selectortotalAdeudoProveedores.textContent = `$${totalAdeudo}`;
 
 
 
@@ -2050,8 +2089,8 @@ function crearGrafica30(datosAGraficar) {
     // Ejecutar función y mostrar resultado
     const resultado = agruparVentasPorProveedor(datosFiltrados);
     const top20PorCantidad = resultado
-    .sort((a, b) => b.cantidadVendida - a.cantidadVendida)
-    .slice(0, 20);
+        .sort((a, b) => b.cantidadVendida - a.cantidadVendida)
+        .slice(0, 20);
 
     const { etiquetas, valores } = procesarDatos(top20PorCantidad, 'proveedor', 'cantidadVendida');
 
@@ -2077,8 +2116,8 @@ function crearGrafica50(datosAGraficar) {
     // Ejecutar función y mostrar resultado
     const resultado = agruparVentasPorProveedor(datosFiltrados);
     const top20PorCantidad = resultado
-    .sort((a, b) => a.cantidadVendida - b.cantidadVendida)
-    .slice(0, 20);
+        .sort((a, b) => a.cantidadVendida - b.cantidadVendida)
+        .slice(0, 20);
 
     const { etiquetas, valores } = procesarDatos(top20PorCantidad, 'proveedor', 'cantidadVendida');
 
@@ -2104,8 +2143,8 @@ function crearGrafica51(datosAGraficar) {
     // Ejecutar función y mostrar resultado
     const resultado = agruparVentasPorProveedor(datosFiltrados);
     const top20PorCantidad = resultado
-    .sort((a, b) => b.totalPesos - a.totalPesos)
-    .slice(0, 20);
+        .sort((a, b) => b.totalPesos - a.totalPesos)
+        .slice(0, 20);
 
     const { etiquetas, valores } = procesarDatos(top20PorCantidad, 'proveedor', 'totalPesos');
 
@@ -2131,8 +2170,8 @@ function crearGrafica52(datosAGraficar) {
     // Ejecutar función y mostrar resultado
     const resultado = agruparVentasPorProveedor(datosFiltrados);
     const top20PorCantidad = resultado
-    .sort((a, b) => b.gananciaTotal - a.gananciaTotal)
-    .slice(0, 20);
+        .sort((a, b) => b.gananciaTotal - a.gananciaTotal)
+        .slice(0, 20);
 
     const { etiquetas, valores } = procesarDatos(top20PorCantidad, 'proveedor', 'gananciaTotal');
 
@@ -2389,6 +2428,146 @@ function agruparVentasPorProveedor(ventas) {
     });
 
     return Object.values(agrupado);
+}
+
+function calcularPromediosPorVisita(visitasProveedor, inventario) {
+    let totalVisitasUnitario = 0;
+    let productosUnitarios = 0;
+
+    let totalVisitasGranel = 0;
+    let productosGranel = 0;
+
+    visitasProveedor.forEach(visita => {
+        const proveedorId = visita.proveedor_id;
+        const cantidadAniadido = parseFloat(visita.cantidad_aniadido);
+        if (isNaN(cantidadAniadido)) return;
+
+        // Buscar si este proveedor tiene productos de tipo granel o no
+        const productosDelProveedor = inventario.filter(p => p.proveedor_id === proveedorId);
+
+        const hayGranel = productosDelProveedor.some(p => p.granel === "1");
+        const hayUnitario = productosDelProveedor.some(p => p.granel === "0");
+
+        // Si tiene ambos tipos, podrías distribuir el valor; aquí tomamos decisiones simples
+        if (hayGranel && !hayUnitario) {
+            totalVisitasGranel++;
+            productosGranel += 1; // Cada visita = 1 compra de granel
+        } else if (hayUnitario && !hayGranel) {
+            totalVisitasUnitario++;
+            productosUnitarios += cantidadAniadido;
+        } else {
+            // Si tiene ambos tipos, asumimos mitad para cada uno (esto puedes ajustar)
+            totalVisitasGranel++;
+            productosGranel += 1;
+
+            totalVisitasUnitario++;
+            productosUnitarios += cantidadAniadido / 2;
+        }
+    });
+
+    return {
+        promedioUnitaria:
+            totalVisitasUnitario === 0
+                ? 0
+                : productosUnitarios / totalVisitasUnitario,
+
+        promedioGranel:
+            totalVisitasGranel === 0
+                ? 0
+                : productosGranel / totalVisitasGranel,
+    };
+}
+
+
+function obtenerCantidadTotalInventario(inventario) {
+    return inventario.reduce((total, item) => {
+        if (item.granel === "1") {
+            return total + 1; // Contamos solo 1 por cada entrada granel
+        } else {
+            const cantidad = parseFloat(item.cantidad);
+            return total + (isNaN(cantidad) ? 0 : cantidad);
+        }
+    }, 0);
+}
+
+function promedioCompraPorVisitaPesos(visitas) {
+    if (!visitas || visitas.length === 0) return 0;
+
+    let totalPagado = 0;
+    let totalVisitas = 0;
+
+    visitas.forEach(visita => {
+        const pagado = parseFloat(visita.total_pagado);
+        if (!isNaN(pagado)) {
+            totalPagado += pagado;
+            totalVisitas++;
+        }
+    });
+
+    return totalVisitas > 0 ? (totalPagado / totalVisitas) : 0;
+}
+
+
+function calcularTotalesPagadoYAdeudo(visitas) {
+    let totalPagadoProveedor = 0;
+    let totalAdeudo = 0;
+
+    visitas.forEach(visita => {
+        const pagado = parseFloat(visita.total_pagado);
+        const adeudo = parseFloat(visita.total_adeudo);
+
+        if (!isNaN(pagado)) totalPagadoProveedor += pagado;
+        if (!isNaN(adeudo)) totalAdeudo += adeudo;
+    });
+
+    return {
+        totalPagadoProveedor,
+        totalAdeudo
+    };
+}
+
+
+function calcularValorInventario(inventario) {
+    let total = 0;
+
+    inventario.forEach(item => {
+        const cantidad = parseFloat(item.cantidad);
+        const precioCompra = parseFloat(item.precio_compra);
+        const esGranel = String(item.granel) === "1";
+
+        if (isNaN(cantidad) || isNaN(precioCompra)) return;
+
+        if (esGranel) {
+            // En granel, asumimos que la cantidad está en gramos, y el precio es por kilo
+            total += (cantidad * precioCompra) / 1000;
+        } else {
+            total += cantidad * precioCompra;
+        }
+    });
+
+    return total;
+}
+
+
+function calcularTotalPagadoProveedores(inventario) {
+    let total = 0;
+
+    inventario.forEach(item => {
+        const cantidad = parseFloat(item.cantidad);
+        const precioCompra = parseFloat(item.precio_compra);
+        const esGranel = String(item.granel) === "1";
+
+        if (isNaN(cantidad) || isNaN(precioCompra)) return;
+
+        if (esGranel) {
+            // Si es granel, asumimos que la cantidad está en gramos y el precio es por kilo
+            total += (cantidad * precioCompra) / 1000;
+        } else {
+            total += cantidad * precioCompra;
+        }
+    });
+
+    return total;
 }
 
 

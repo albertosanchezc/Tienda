@@ -93,14 +93,14 @@ class PaginasController
         $inventario = Inventario_completo::join2('productos', 'inventario');
         $cajas_historicos = Caja_historico::all();
         $proveedores = Proveedor::all();
+        $visitas_proveedor = Visitas_proveedor::all();
 
         echo json_encode([
             'ventas' => $ventas,
             'inventario' => $inventario,
             'cajas_historicos' => $cajas_historicos,
-            'proveedores' => $proveedores
-
-
+            'proveedores' => $proveedores,
+            'visitas_proveedor' => $visitas_proveedor
         ]);
     }
 
