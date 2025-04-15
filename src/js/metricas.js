@@ -195,6 +195,9 @@ const selectorcantidadTotalUnitarioCancelaciones = document.querySelector('#cant
 const selectorcantidadTotalGranelCancelaciones = document.querySelector('#cantidadTotalGranelCancelaciones').querySelector('P');
 
 
+// Selectores Proveedores
+
+
 const maximoElementos = 20;
 
 const parrafoChart1 = document.querySelector('#myChart1').parentElement.querySelector('P');
