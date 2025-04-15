@@ -380,7 +380,7 @@
         <div class="contenedorcaja seccioncaja">
             <div class="graficaGananciasVentas">
                 <div class="flextitulo-icono">
-                    <p>Top n de Productos Vendidos</p>
+                    <p>Ganancias Contra Ventas</p>
                     <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart1" width="400" height="400"></canvas>
@@ -390,21 +390,21 @@
             <!-- Gráficas -->
             <div>
                 <div class="flextitulo-icono">
-                    <p>Cantidad de Productos Vendidos A Granel</p>
+                    <p>Top 20 de Productos Más Vendidos</p>
                     <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart2" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
-                    <p>Ganancias Por Productos Vendidos</p>
+                    <p>Top 20 de Productos Menos Vendidos</p>
                     <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart3" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
-                    <p>Ganancias Por Productos Vendidos</p>
+                    <p>Productos con Mayor Volumen de Ventas en $</p>
                     <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart4" width="400" height="400"></canvas>

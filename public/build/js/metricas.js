@@ -56,6 +56,11 @@ const ctx50 = document.getElementById('myChart50').getContext('2d');
 const ctx51 = document.getElementById('myChart51').getContext('2d');
 const ctx52 = document.getElementById('myChart52').getContext('2d');
 
+// Gráficas de Categorías
+const ctx31 = document.getElementById('myChart31').getContext('2d');
+const ctx32 = document.getElementById('myChart32').getContext('2d');
+const ctx33 = document.getElementById('myChart33').getContext('2d');
+const ctx34 = document.getElementById('myChart34').getContext('2d');
 
 
 
@@ -362,6 +367,8 @@ async function consultarAPI() {
         crearGraficasVentas(ventasCompletas);
         crearGraficasCancelaciones(cancelacionesCompletas);
         crearGraficasProveedores(ventasCompletas);
+        crearGraficasCategorias(ventasCompletas);
+
         console.log(cancelacionesCompletas);
 
     } catch (error) {
@@ -440,6 +447,47 @@ function calcularPromedioConsumo(ventas) {
     const totalConsumo = Object.values(carritoTotales).reduce((acc, val) => acc + val, 0);
 
     const promedioConsumo = totalClientes > 0 ? totalConsumo / totalClientes : 0;
+
+    return promedioConsumo.toFixed(2);
+}
+
+// Función para el promedio de consumo de Ventas
+function calcularPromedioConsumoVentas(ventas) {
+    // Inicializar un objeto para almacenar los totales de consumo por cliente
+    let consumosPorCliente = {};
+
+    // Recorrer todas las ventas
+    ventas.forEach(venta => {
+        // Calcular el consumo de la venta según la condición de "granel"
+        let consumo = 0;
+        if (venta.granel === "0") {
+            // Si no es granel, el consumo es cantidad * precio_venta
+            consumo = parseFloat(venta.cantidad) * parseFloat(venta.precio_venta);
+        } else if (venta.granel === "1") {
+            // Si es granel, el consumo es (cantidad * precio_venta) / 1000
+            consumo = (parseFloat(venta.cantidad) * parseFloat(venta.precio_venta)) / 1000;
+        }
+
+        // Si el carrito_id no existe, inicializamos el objeto con el carrito_id
+        if (!consumosPorCliente[venta.carrito_id]) {
+            consumosPorCliente[venta.carrito_id] = 0;
+        }
+
+        // Acumulamos el consumo para este carrito_id
+        consumosPorCliente[venta.carrito_id] += consumo;
+    });
+
+    // Ahora sumamos todos los consumos y contamos el número de clientes (carrito_id únicos)
+    let totalConsumo = 0;
+    let totalClientes = 0;
+
+    for (let carrito_id in consumosPorCliente) {
+        totalConsumo += consumosPorCliente[carrito_id];
+        totalClientes += 1;
+    }
+
+    // Calculamos el promedio de consumo por cliente
+    let promedioConsumo = totalConsumo / totalClientes;
 
     return promedioConsumo.toFixed(2);
 }
@@ -730,6 +778,13 @@ function crearGraficasProveedores(datos) {
     crearGrafica50(datos);
     crearGrafica51(datos);
     crearGrafica52(datos);
+}
+
+function crearGraficasCategorias(datos) {
+    crearGrafica31(datos);
+    crearGrafica32(datos);
+    crearGrafica33(datos);
+    crearGrafica34(datos);
 }
 
 // Top 20 Productos con más Stock
@@ -1097,8 +1152,9 @@ function crearGrafica1(ventasCompletas) {
 
     const ventasC = [...datosFiltrados1, datosFiltrados2];
 
-    const promedio = calcularPromedioConsumo(ventasC);
-    selectorPromedioConsumoClientes.textContent = `$${promedio}`;
+    const promedios = calcularPromedioConsumoVentas(ventasC);
+    selectorPromedioConsumoClientes.textContent = `$${promedios}`;
+    console.log(promedios);
 
     const totalGanancias = calcularTotalGanancias(datosFiltrados1);
     selectortotalGananciasUnitarias.textContent = `$${totalGanancias}`;
@@ -2058,7 +2114,6 @@ function crearGrafica30(datosAGraficar) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar ?? ventasCompletas;
 
-
     const promedios = calcularPromediosPorVisita(visitas_proveedor, inventario);
     selectorpromedioProductosCompradosProveedores.textContent = `${promedios.promedioUnitaria.toFixed(2)}`;
 
@@ -2079,7 +2134,7 @@ function crearGrafica30(datosAGraficar) {
     const $promedioPesosVisita = promedioCompraPorVisitaPesos(visitas_proveedor);
     selectorpromedioProductosCompradosVisitaProveedores.textContent = `$${$promedioPesosVisita}`;
 
-    const {totalPagadoProveedor, totalAdeudo} = calcularTotalesPagadoYAdeudo(visitas_proveedor);
+    const { totalPagadoProveedor, totalAdeudo } = calcularTotalesPagadoYAdeudo(visitas_proveedor);
     selectortotalPagadoProveedores.textContent = `$${totalPagadoProveedor}`;
     selectortotalAdeudoProveedores.textContent = `$${totalAdeudo}`;
 
@@ -2179,6 +2234,103 @@ function crearGrafica52(datosAGraficar) {
 
 
     createChart(ctx52, 'bar', etiquetas, valores, 'Ganancia Total ($)', backgroundColors1);
+
+
+
+}
+
+
+function crearGrafica31(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(v => v.cancelacion !== '1') ?? ventasCompletas;
+
+
+    let top20Categorias = obtenerTop20CategoriasMasVendidas(datosFiltrados);
+    console.log(top20Categorias);
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+
+    const { etiquetas, valores } = procesarDatos(top20Categorias, 'categoria', 'cantidadVendida');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx31, 'bar', etiquetas, valores, 'Productos Vendidos (#)', backgroundColors1);
+
+
+
+}
+
+function crearGrafica32(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(v => v.cancelacion !== '1') ?? ventasCompletas;
+
+
+    let top20Categorias = obtenerTop20CategoriasMenosVendidas(datosFiltrados);
+    console.log(top20Categorias);
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+
+    const { etiquetas, valores } = procesarDatos(top20Categorias, 'categoria', 'cantidadVendida');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx32, 'bar', etiquetas, valores, 'Productos Vendidos (#)', backgroundColors1);
+
+
+
+}
+
+function crearGrafica33(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(v => v.cancelacion !== '1') ?? ventasCompletas;
+
+
+    let top20Categorias = obtenerTop20CategoriasConMasGanancias(datosFiltrados);
+    console.log(top20Categorias);
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+
+    const { etiquetas, valores } = procesarDatos(top20Categorias, 'categoria', 'gananciaTotal');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx33, 'bar', etiquetas, valores, 'Ganancia Total ($)', backgroundColors1);
+
+
+
+}
+
+function crearGrafica34(datosAGraficar) {
+    // Filtrar por fechaaa
+    let datosFiltrados = datosAGraficar.filter(v => v.cancelacion !== '1') ?? ventasCompletas;
+
+
+    let top20Categorias = obtenerTop20CategoriasConMenosGanancias(datosFiltrados);
+    console.log(top20Categorias);
+
+
+
+    //////////
+    // Ejecutar función y mostrar resultado
+
+    const { etiquetas, valores } = procesarDatos(top20Categorias, 'categoria', 'gananciaTotal');
+
+    const backgroundColors1 = generateRandomColors(Object.keys(etiquetas));
+
+
+    createChart(ctx34, 'bar', etiquetas, valores, 'Ganancia Total ($)', backgroundColors1);
 
 
 
@@ -2428,6 +2580,128 @@ function agruparVentasPorProveedor(ventas) {
     });
 
     return Object.values(agrupado);
+}
+
+function obtenerTop20CategoriasMasVendidas(ventas) {
+    let ventasPorCategoria = {};
+
+    ventas.forEach(venta => {
+        const categoria = venta.categoria;
+        const esGranel = venta.granel === "1";
+        const cantidad = esGranel ? 1 : parseFloat(venta.cantidad);
+
+        if (!ventasPorCategoria[categoria]) {
+            ventasPorCategoria[categoria] = 0;
+        }
+
+        ventasPorCategoria[categoria] += cantidad;
+    });
+
+    const top20Categorias = Object.entries(ventasPorCategoria)
+        .map(([categoria, cantidadVendida]) => ({
+            categoria,
+            cantidadVendida
+        }))
+        .sort((a, b) => b.cantidadVendida - a.cantidadVendida)
+        .slice(0, 20);
+
+    return top20Categorias;
+}
+
+function obtenerTop20CategoriasMenosVendidas(ventas) {
+    let ventasPorCategoria = {};
+
+    ventas.forEach(venta => {
+        const categoria = venta.categoria;
+        const esGranel = venta.granel === "1";
+        const cantidad = esGranel ? 1 : parseFloat(venta.cantidad);
+
+        if (!ventasPorCategoria[categoria]) {
+            ventasPorCategoria[categoria] = 0;
+        }
+
+        ventasPorCategoria[categoria] += cantidad;
+    });
+
+    const top20Categorias = Object.entries(ventasPorCategoria)
+        .map(([categoria, cantidadVendida]) => ({
+            categoria,
+            cantidadVendida
+        }))
+        .sort((a, b) => a.cantidadVendida - b.cantidadVendida)
+        .slice(0, 20);
+
+    return top20Categorias;
+}
+
+function obtenerTop20CategoriasConMasGanancias(ventas) {
+    const gananciasPorCategoria = {};
+
+    ventas.forEach(venta => {
+        const categoria = venta.categoria;
+        const esGranel = venta.granel === "1";
+        const cantidad = parseFloat(venta.cantidad);
+        const precioVenta = parseFloat(venta.precio_venta);
+        const precioCompra = parseFloat(venta.precio_compra);
+        const gananciaUnit = precioVenta - precioCompra;
+
+        // Si es granel, se divide entre 1000
+        const ganancia = esGranel
+            ? (gananciaUnit * cantidad) / 1000
+            : gananciaUnit * cantidad;
+
+        // Acumulamos la ganancia por categoría
+        if (!gananciasPorCategoria[categoria]) {
+            gananciasPorCategoria[categoria] = 0;
+        }
+        gananciasPorCategoria[categoria] += ganancia;
+    });
+
+    // Ordenamos y sacamos el top 20
+    const top20 = Object.entries(gananciasPorCategoria)
+        .map(([categoria, gananciaTotal]) => ({
+            categoria,
+            gananciaTotal: parseFloat(gananciaTotal.toFixed(2))
+        }))
+        .sort((a, b) => b.gananciaTotal - a.gananciaTotal)
+        .slice(0, 20);
+
+    return top20;
+}
+
+function obtenerTop20CategoriasConMenosGanancias(ventas) {
+    const gananciasPorCategoria = {};
+
+    ventas.forEach(venta => {
+        const categoria = venta.categoria;
+        const esGranel = venta.granel === "1";
+        const cantidad = parseFloat(venta.cantidad);
+        const precioVenta = parseFloat(venta.precio_venta);
+        const precioCompra = parseFloat(venta.precio_compra);
+        const gananciaUnit = precioVenta - precioCompra;
+
+        // Si es granel, se divide entre 1000
+        const ganancia = esGranel
+            ? (gananciaUnit * cantidad) / 1000
+            : gananciaUnit * cantidad;
+
+        // Acumulamos la ganancia por categoría
+        if (!gananciasPorCategoria[categoria]) {
+            gananciasPorCategoria[categoria] = 0;
+        }
+        gananciasPorCategoria[categoria] += ganancia;
+    });
+
+    // Ordenamos y sacamos el top 20
+    const top20 = Object.entries(gananciasPorCategoria)
+        .map(([categoria, gananciaTotal]) => ({
+            categoria,
+            gananciaTotal: parseFloat(gananciaTotal.toFixed(2))
+        }))
+        .sort((a, b) => a.gananciaTotal - b.gananciaTotal)
+        .slice(0, 20);
+
+    return top20;
 }
 
 function calcularPromediosPorVisita(visitasProveedor, inventario) {
@@ -3020,6 +3294,7 @@ btnAbrirInventario.addEventListener('click', (e) => {
     if (contenedorInventario.style.display === 'none') {
         btnAbrirInventario.classList.add('botonGeneralInventarioHover');
         contenedorInventario.style.display = 'block';
+        crearGraficasInventario(inventario);
 
     } else {
         contenedorInventario.style.display = 'none';
@@ -3046,6 +3321,7 @@ btnAbrirVentas.addEventListener('click', (e) => {
     if (contenedorVentas.style.display === 'none') {
         btnAbrirVentas.classList.add('botonGeneralVentasHover');
         contenedorVentas.style.display = 'block';
+        crearGraficasVentas(ventasCompletas);
     } else {
         contenedorVentas.style.display = 'none';
         btnAbrirVentas.classList.remove('botonGeneralVentasHover');
@@ -3059,6 +3335,7 @@ btnAbrirCancelaciones.addEventListener('click', (e) => {
     if (contenedorCancelaciones.style.display === 'none') {
         btnAbrirCancelaciones.classList.add('botonGeneralCancelacionesHover');
         contenedorCancelaciones.style.display = 'block';
+        crearGraficasCancelaciones(cancelacionesCompletas);
     } else {
         contenedorCancelaciones.style.display = 'none';
         btnAbrirCancelaciones.classList.remove('botonGeneralCancelacionesHover');
@@ -3072,6 +3349,7 @@ btnAbrirProveedores.addEventListener('click', (e) => {
     if (contenedorProveedores.style.display === 'none') {
         btnAbrirProveedores.classList.add('botonGeneralProveedoresHover');
         contenedorProveedores.style.display = 'block';
+        crearGraficasProveedores(ventasCompletas);
     } else {
         contenedorProveedores.style.display = 'none';
         btnAbrirProveedores.classList.remove('botonGeneralProveedoresHover');
