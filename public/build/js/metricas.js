@@ -2291,7 +2291,7 @@ function crearGrafica52(datosAGraficar) {
 function crearGrafica31(datosAGraficar, datos1) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar.filter(v => v.cancelacion !== '1') ?? ventasCompletas;
-
+    
 
     let top20Categorias = obtenerTop20CategoriasMasVendidas(datosFiltrados);
     console.log(top20Categorias);
@@ -2302,6 +2302,11 @@ function crearGrafica31(datosAGraficar, datos1) {
 
 
     const resultado = analizarCategorias(datosFiltrados);
+    if(resultado.categoriaMasVendida === null) resultado.categoriaMasVendida = 'Sin Ventas';
+    if(resultado.categoriaMenosVendida === null) resultado.categoriaMenosVendida = 'Sin Ventas';
+    if(resultado.categoriaMasGanancias === null) resultado.categoriaMasGanancias = 'Sin Ganancias';
+    if(resultado.categoriaMenosGanancias === null) resultado.categoriaMenosGanancias = 'Sin Ganancias';
+    
 
     selectormasVendidaCategorias.textContent = `${resultado.categoriaMasVendida}`;
     selectormenosVendidaCategorias.textContent = `${resultado.categoriaMenosVendida}`;
@@ -3366,6 +3371,26 @@ function filtrarfechaFCategorias(ventasCompletas) {
     return fechaVenta <= fechaFinal;
 }
 
+function filtrarProveedorCategorias(ventasCompletas) {
+    const { proveedor } = terminosBusquedaCategorias;
+
+    if (proveedor) {
+        return ventasCompletas.proveedor === proveedor;
+    }
+
+    return ventasCompletas;
+}
+
+function filtrarCategoriaCategorias(ventasCompletas) {
+    const { categoria } = terminosBusquedaCategorias;
+
+    if (categoria) {
+        return ventasCompletas.categoria === categoria;
+    }
+
+    return ventasCompletas;
+}
+
 
 
 
@@ -3467,7 +3492,7 @@ function filtrarCategorias() {
         console.log(resultadosFiltrados);
 
     }
-    crearGraficasCategorias(resultadosFiltrados);
+    crearGraficasCategorias(resultadosFiltrados,categoriasCompletas);
 
     return resultadosFiltrados;
 }
