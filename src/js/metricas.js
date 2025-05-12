@@ -245,6 +245,22 @@ const selectortotalProductosInventarioProveedores = document.querySelector('#tot
 
 const selectortotalAdeudoProveedores = document.querySelector('#totalAdeudoProveedores').querySelector('P');
 
+// Selectores Categorias
+const selectorTotalCategorias = document.querySelector('#totalNumeroCategorias').querySelector('P');
+
+const selectormasVendidaCategorias = document.querySelector('#masVendidaCategorias').querySelector('P');
+
+const selectormenosVendidaCategorias = document.querySelector('#menosVendidaCategorias').querySelector('P');
+
+const selectormasGananciaCategorias = document.querySelector('#masGananciaCategorias').querySelector('P');
+
+const selectormenosGananciaCategorias = document.querySelector('#menosGananciaCategorias').querySelector('P');
+
+
+
+
+
+
 
 const maximoElementos = 20;
 
@@ -357,6 +373,7 @@ let granel = [];
 let cajas_historicos = [];
 let ventasCompletas = [];
 let visitas_proveedor = [];
+let categoriasCompletas = [];
 
 
 const hoy = new Date();
@@ -388,6 +405,8 @@ async function consultarAPI() {
         ventasCompletas = [...ventas, ...ventasGranel];
         cancelacionesCompletas = [...cancelaciones, ...cancelacionesGranel];
         cajas_historicos = datos.cajas_historicos;
+        categoriasCompletas = datos.categorias;
+
 
         inventario = datos.inventario;
         cajas_historicos = datos.cajas_historicos;
@@ -396,7 +415,7 @@ async function consultarAPI() {
         crearGraficasVentas(ventasCompletas);
         crearGraficasCancelaciones(cancelacionesCompletas);
         crearGraficasProveedores(ventasCompletas);
-        crearGraficasCategorias(ventasCompletas);
+        crearGraficasCategorias(ventasCompletas, categoriasCompletas);
 
         console.log(cancelacionesCompletas);
 
@@ -809,8 +828,8 @@ function crearGraficasProveedores(datos) {
     crearGrafica52(datos);
 }
 
-function crearGraficasCategorias(datos) {
-    crearGrafica31(datos);
+function crearGraficasCategorias(datos, datos1) {
+    crearGrafica31(datos, datos1);
     crearGrafica32(datos);
     crearGrafica33(datos);
     crearGrafica34(datos);
@@ -2269,7 +2288,7 @@ function crearGrafica52(datosAGraficar) {
 }
 
 
-function crearGrafica31(datosAGraficar) {
+function crearGrafica31(datosAGraficar, datos1) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar.filter(v => v.cancelacion !== '1') ?? ventasCompletas;
 
@@ -2277,8 +2296,20 @@ function crearGrafica31(datosAGraficar) {
     let top20Categorias = obtenerTop20CategoriasMasVendidas(datosFiltrados);
     console.log(top20Categorias);
 
+    console.log(datos1)
+    const totalCategorias = contarCategorias(categoriasCompletas);
+    selectorTotalCategorias.textContent = `${totalCategorias}`;
 
 
+    const resultado = analizarCategorias(datosFiltrados);
+
+    selectormasVendidaCategorias.textContent = `${resultado.categoriaMasVendida}`;
+    selectormenosVendidaCategorias.textContent = `${resultado.categoriaMenosVendida}`;
+    selectormasGananciaCategorias.textContent = `${resultado.categoriaMasGanancias}`;
+    selectormenosGananciaCategorias.textContent = `${resultado.categoriaMenosGanancias}`;
+
+
+    console.log(resultado);
     //////////
     // Ejecutar función y mostrar resultado
 
@@ -2873,6 +2904,68 @@ function calcularTotalPagadoProveedores(inventario) {
     return total;
 }
 
+function contarCategorias(categoriasCompletas) {
+    return categoriasCompletas.length;
+}
+
+function analizarCategorias(ventas) {
+  const resumen = {};
+
+  ventas.forEach(v => {
+    const cat = v.categoria;
+    const granel = v.granel === "1";
+    const cantidad = parseFloat(v.cantidad);
+    const precioVenta = parseFloat(v.precio_venta);
+    const precioCompra = parseFloat(v.precio_compra);
+    const gananciaUnit = precioVenta - precioCompra;
+
+    const cantidadVendida = granel ? 1 : cantidad;
+    const gananciaTotal = granel
+      ? gananciaUnit * (cantidad / 1000)  // en kg
+      : gananciaUnit * cantidad;
+
+    if (!resumen[cat]) {
+      resumen[cat] = {
+        cantidadVendida: 0,
+        gananciaTotal: 0
+      };
+    }
+
+    resumen[cat].cantidadVendida += cantidadVendida;
+    resumen[cat].gananciaTotal += gananciaTotal;
+  });
+
+  let masVendida = null;
+  let menosVendida = null;
+  let masGanancia = null;
+  let menosGanancia = null;
+
+  for (const cat in resumen) {
+    if (
+      !masVendida || resumen[cat].cantidadVendida > resumen[masVendida].cantidadVendida
+    ) masVendida = cat;
+
+    if (
+      !menosVendida || resumen[cat].cantidadVendida < resumen[menosVendida].cantidadVendida
+    ) menosVendida = cat;
+
+    if (
+      !masGanancia || resumen[cat].gananciaTotal > resumen[masGanancia].gananciaTotal
+    ) masGanancia = cat;
+
+    if (
+      !menosGanancia || resumen[cat].gananciaTotal < resumen[menosGanancia].gananciaTotal
+    ) menosGanancia = cat;
+  }
+
+  return {
+    categoriaMasVendida: masVendida,
+    categoriaMenosVendida: menosVendida,
+    categoriaMasGanancias: masGanancia,
+    categoriaMenosGanancias: menosGanancia
+  };
+}
+
 
 
 // Función para crear gráficos
@@ -3261,11 +3354,18 @@ function filtrarCategoriaCancelaciones(cancelacionesCompletas) {
 
 // Funciones de Filtrado para categorias
 // Función para filtrar por fecha inicial 
-function filtrarfechaICategorias(cancelacionesCompletas) {
-    const fechaVenta = new Date(cancelacionesCompletas.fecha_venta);
-    const fechaInicial = new Date(terminosBusquedaCancelaciones.fechaI);
+function filtrarfechaICategorias(ventasCompletas) {
+    const fechaVenta = new Date(ventasCompletas.fecha_venta);
+    const fechaInicial = new Date(terminosBusquedaCategorias.fechaI);
     return fechaVenta >= fechaInicial;
 }
+
+function filtrarfechaFCategorias(ventasCompletas) {
+    const fechaVenta = new Date(ventasCompletas.fecha_venta);
+    const fechaFinal = new Date(terminosBusquedaCategorias.fechaF);
+    return fechaVenta <= fechaFinal;
+}
+
 
 
 

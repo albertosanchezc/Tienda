@@ -94,13 +94,15 @@ class PaginasController
         $cajas_historicos = Caja_historico::all();
         $proveedores = Proveedor::all();
         $visitas_proveedor = Visitas_proveedor::all();
+        $categorias = Categorias::ALF('nombre', 'ASC');
 
         echo json_encode([
             'ventas' => $ventas,
             'inventario' => $inventario,
             'cajas_historicos' => $cajas_historicos,
             'proveedores' => $proveedores,
-            'visitas_proveedor' => $visitas_proveedor
+            'visitas_proveedor' => $visitas_proveedor,
+            'categorias' => $categorias
         ]);
     }
 

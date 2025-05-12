@@ -437,7 +437,7 @@ pagarForm.addEventListener('submit', function (e) {
         pagarForm.prepend(alertaExito);
 
         setTimeout(() => {
-            // this.submit();
+            this.submit();
 
         }, 2000);
     }
