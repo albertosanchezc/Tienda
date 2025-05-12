@@ -187,8 +187,12 @@ function generarPaginadorCarrito(datos = articulosCarrito, paginaActualCarrito =
 }
 
 
+    const totalTicket = document.createElement('DIV');
 
 function mostrarTicket() {
+    let totalTotales = 0;
+
+
     articulosCarrito.forEach(articulo => {
         const { id, cantidad, nombre, precio_unitario_venta, granel } = articulo;
         let total = 0
@@ -197,6 +201,7 @@ function mostrarTicket() {
         } else {
             total = ((precio_unitario_venta * cantidad) / 1000).toFixed(2);
         }
+        totalTotales = (Number(totalTotales) + Number(total)).toFixed(2);
         const rowTicket = document.createElement('tr');
 
         rowTicket.innerHTML = `
@@ -209,7 +214,12 @@ function mostrarTicket() {
 
         tbodyTicket.appendChild(rowTicket);
 
+
     });
+
+    totalTicket.classList.add('total-ticket');
+    totalTicket.innerHTML = `<p>Total: $${totalTotales}</p>`;
+    tbodyTicket.parentElement.parentElement.after(totalTicket);
 
 }
 
@@ -656,7 +666,7 @@ function actualizarModalPagar(total) {
                     <span>Cambio: </span>
                     $${cambio}
                 `;
-            } else if(cambio == 0) {
+            } else if (cambio == 0) {
                 h2ModalPagarCambio.innerHTML = `
                 <span>Cambio: </span>
                 $0
@@ -670,7 +680,7 @@ function actualizarModalPagar(total) {
                     <span>Faltan: </span>
                     $${cambio * -1}
                 `;
-            } 
+            }
         }
         else {
             h2ModalPagarCambio.innerHTML = `
