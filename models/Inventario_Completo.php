@@ -18,7 +18,8 @@ class Inventario_completo extends ActiveRecord{
         'fecha_compra',
         'proveedor_id',
         'imagen',
-        'granel'
+        'granel',
+        'fecha_modificacion'
     ];
 
     public $id;
@@ -34,6 +35,8 @@ class Inventario_completo extends ActiveRecord{
     public $proveedor_id;
     public $imagen;
     public $granel;
+    public $fecha_modificacion;
+
     
 
 
@@ -52,7 +55,7 @@ class Inventario_completo extends ActiveRecord{
         $this->proveedor_id = $args['proveedor_id'] ?? '';
         $this->imagen = $args['imagen'] ?? '';
         $this->granel = $args['granel'] ?? '';
-
+        $this->fecha_modificacion = $args['fecha_modificacion'] ?? '';
     }
 }
 

@@ -377,7 +377,7 @@ describe('Pruebas del carrito de compras', () => {
                             })
 
                             it("Debe abrir la modal de granel y tener los valores correctos", () => {
-                                const precio = 30;
+                                const precio = 20;
                                 const cantidad = 100;
                                 const nombre = 'Jamón';
                                 const descripcion = 'Fud'
@@ -392,7 +392,7 @@ describe('Pruebas del carrito de compras', () => {
                             })
                             describe("Si se edita la cantidad", () => {
                                 beforeEach(() => {
-                                    const precio = 30;
+                                    const precio = 20;
                                     const cantidad = 100;
                                     const nombre = 'Jamón';
                                     const descripcion = 'Fud'
@@ -407,7 +407,7 @@ describe('Pruebas del carrito de compras', () => {
                                 })
 
                                 it("Debe actualizarse la modal", () => {
-                                    const precio = 30;
+                                    const precio = 20;
                                     const cantidad = 100;
                                     const nombre = 'Jamón';
                                     const descripcion = 'Fud'
@@ -434,7 +434,7 @@ describe('Pruebas del carrito de compras', () => {
 
                                     it("Debe actualizarse el carrito", () => {
 
-                                        const precio = 30;
+                                        const precio = 20;
                                         const cantidad = 100;
                                         const nombre = 'Jamón';
                                         const descripcion = 'Fud'
@@ -449,7 +449,7 @@ describe('Pruebas del carrito de compras', () => {
                                     })
 
                                     it("Deben actualizarse los detalles Producto", () => {
-                                        const precio = 30;
+                                        const precio = 20;
                                         const cantidad = 100;
                                         const nombre = 'Jamón';
                                         const descripcion = 'Fud'
@@ -830,7 +830,7 @@ describe('Pruebas del carrito de compras', () => {
                             })
 
                             it("Debe abrir la modal de granel y tener los valores correctos", () => {
-                                const precio = 30;
+                                const precio = 200;
                                 const cantidad = 100;
                                 const nombre = 'Jamón';
                                 const descripcion = 'Fud'
@@ -846,7 +846,7 @@ describe('Pruebas del carrito de compras', () => {
 
                             describe("Si se edita la cantidad", () => {
                                 beforeEach(() => {
-                                    const precio = 30;
+                                    const precio = 200;
                                     const cantidad = 100;
                                     const nombre = 'Jamón';
                                     const descripcion = 'Fud'
@@ -861,7 +861,7 @@ describe('Pruebas del carrito de compras', () => {
                                 })
 
                                 it("Debe actualizarse la modal", () => {
-                                    const precio = 30;
+                                    const precio = 200;
                                     const cantidad = 100;
                                     const nombre = 'Jamón';
                                     const descripcion = 'Fud'
@@ -888,7 +888,7 @@ describe('Pruebas del carrito de compras', () => {
 
                                     it("Debe actualizarse el carrito", () => {
 
-                                        const precio = 30;
+                                        const precio = 200;
                                         const cantidad = 100;
                                         const nombre = 'Jamón';
                                         const descripcion = 'Fud'
@@ -904,7 +904,7 @@ describe('Pruebas del carrito de compras', () => {
                                     })
 
                                     it("Deben actualizarse los detalles Producto", () => {
-                                        const precio = 30;
+                                        const precio = 200;
                                         const cantidad = 100;
                                         const nombre = 'Jamón';
                                         const descripcion = 'Fud'
@@ -1072,7 +1072,7 @@ describe('Pruebas del carrito de compras', () => {
                 })
 
                 it("Debe Abrir la modal de granel y tener los valores correctos", () => {
-                    const precio = 30;
+                    const precio = 200;
                     const cantidad = 100;
                     const nombre = 'Jamón';
                     const descripcion = 'Fud'
@@ -1088,7 +1088,7 @@ describe('Pruebas del carrito de compras', () => {
 
                 describe("Si se edita la cantidad", () => {
                     beforeEach(() => {
-                        const precio = 30;
+                        const precio = 200;
                         const cantidad = 100;
                         const nombre = 'Jamón';
                         const descripcion = 'Fud'
@@ -1103,7 +1103,7 @@ describe('Pruebas del carrito de compras', () => {
                     })
 
                     it("Debe actualizarse la modal", () => {
-                        const precio = 30;
+                        const precio = 200;
                         const cantidad = 100;
                         const nombre = 'Jamón';
                         const descripcion = 'Fud'
@@ -1130,7 +1130,7 @@ describe('Pruebas del carrito de compras', () => {
 
                         it("Debe actualizarse el carrito", () => {
 
-                            const precio = 30;
+                            const precio = 200;
                             const cantidad = 100;
                             const nombre = 'Jamón';
                             const descripcion = 'Fud'
@@ -1147,7 +1147,7 @@ describe('Pruebas del carrito de compras', () => {
 
                         it("Deben actualizarse los detalles Producto", () => {
 
-                            const precio = 30;
+                            const precio = 200;
                             const cantidad = 100;
                             const nombre = 'Jamón';
                             const descripcion = 'Fud'
