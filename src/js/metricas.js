@@ -171,6 +171,11 @@ const inputProveedorCancelaciones = filtrosCancelaciones.querySelector('#proveed
 const inputCategoriaCancelaciones = filtrosCancelaciones.querySelector('#categoriaFiltroCancelaciones');
 
 // Inputs de los Proveedores
+const inputFechaInicioProveedores = filtrosProveedores.querySelector('#fechaInicioProveedores');
+const inputFechaFinalProveedores = filtrosProveedores.querySelector('#fechaFinProveedores');
+const inputProveedorProveedores = filtrosProveedores.querySelector('#proveedorFiltroProveedores');
+const inputCategoriaProveedores = filtrosProveedores.querySelector('#categoriaFiltroProveedores');
+
 
 // Inputs de las Categorías
 const inputFechaInicioCategorias = filtrosCategorias.querySelector('#fechaInicioCategorias');
@@ -2161,28 +2166,29 @@ function crearGrafica49(datosAGraficar) {
 function crearGrafica30(datosAGraficar) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar ?? ventasCompletas;
-
-    const promedios = calcularPromediosPorVisita(visitas_proveedor, inventario);
+    let datosInventarioFiltrados = filtrarInventarioProveedores() ?? inventario;
+    let datosVisitasProveedorFiltrados = filtrarVisitasProveedorProveedores() ?? visitas_proveedor;
+    const promedios = calcularPromediosPorVisita(datosVisitasProveedorFiltrados, datosInventarioFiltrados);
     selectorpromedioProductosCompradosProveedores.textContent = `${promedios.promedioUnitaria.toFixed(2)}`;
 
     selectorpromedioProductosCompradosNumeroProveedores.textContent = `${promedios.promedioGranel.toFixed(2)}`;
 
-    const totalInventarioNumero = obtenerCantidadTotalInventario(inventario);
+    const totalInventarioNumero = obtenerCantidadTotalInventario(datosInventarioFiltrados);
     selectortotalProductosInventarioProveedores.textContent = `${totalInventarioNumero}`;
 
     // de Visitas
-    const totalInventarioCompra = calcularValorInventario(inventario);
+    const totalInventarioCompra = calcularValorInventario(datosInventarioFiltrados);
     selectortotalProductosInventarioDinerosProveedores.textContent = `$${totalInventarioCompra.toFixed(2)}`;
 
 
-    const totalPagado = calcularTotalPagadoProveedores(inventario);
+    const totalPagado = calcularTotalPagadoProveedores(datosInventarioFiltrados);
     selectortotalPagadoProveedores.textContent = `$${totalPagado}`;
 
 
-    const $promedioPesosVisita = promedioCompraPorVisitaPesos(visitas_proveedor);
+    const $promedioPesosVisita = promedioCompraPorVisitaPesos(datosVisitasProveedorFiltrados);
     selectorpromedioProductosCompradosVisitaProveedores.textContent = `$${$promedioPesosVisita}`;
 
-    const { totalPagadoProveedor, totalAdeudo } = calcularTotalesPagadoYAdeudo(visitas_proveedor);
+    const { totalPagadoProveedor, totalAdeudo } = calcularTotalesPagadoYAdeudo(datosVisitasProveedorFiltrados);
     selectortotalPagadoProveedores.textContent = `$${totalPagadoProveedor}`;
     selectortotalAdeudoProveedores.textContent = `$${totalAdeudo}`;
 
@@ -2291,7 +2297,7 @@ function crearGrafica52(datosAGraficar) {
 function crearGrafica31(datosAGraficar, datos1) {
     // Filtrar por fechaaa
     let datosFiltrados = datosAGraficar.filter(v => v.cancelacion !== '1') ?? ventasCompletas;
-    
+
 
     let top20Categorias = obtenerTop20CategoriasMasVendidas(datosFiltrados);
     console.log(top20Categorias);
@@ -2302,11 +2308,11 @@ function crearGrafica31(datosAGraficar, datos1) {
 
 
     const resultado = analizarCategorias(datosFiltrados);
-    if(resultado.categoriaMasVendida === null) resultado.categoriaMasVendida = 'Sin Ventas';
-    if(resultado.categoriaMenosVendida === null) resultado.categoriaMenosVendida = 'Sin Ventas';
-    if(resultado.categoriaMasGanancias === null) resultado.categoriaMasGanancias = 'Sin Ganancias';
-    if(resultado.categoriaMenosGanancias === null) resultado.categoriaMenosGanancias = 'Sin Ganancias';
-    
+    if (resultado.categoriaMasVendida === null) resultado.categoriaMasVendida = 'Sin Ventas';
+    if (resultado.categoriaMenosVendida === null) resultado.categoriaMenosVendida = 'Sin Ventas';
+    if (resultado.categoriaMasGanancias === null) resultado.categoriaMasGanancias = 'Sin Ganancias';
+    if (resultado.categoriaMenosGanancias === null) resultado.categoriaMenosGanancias = 'Sin Ganancias';
+
 
     selectormasVendidaCategorias.textContent = `${resultado.categoriaMasVendida}`;
     selectormenosVendidaCategorias.textContent = `${resultado.categoriaMenosVendida}`;
@@ -2914,61 +2920,61 @@ function contarCategorias(categoriasCompletas) {
 }
 
 function analizarCategorias(ventas) {
-  const resumen = {};
+    const resumen = {};
 
-  ventas.forEach(v => {
-    const cat = v.categoria;
-    const granel = v.granel === "1";
-    const cantidad = parseFloat(v.cantidad);
-    const precioVenta = parseFloat(v.precio_venta);
-    const precioCompra = parseFloat(v.precio_compra);
-    const gananciaUnit = precioVenta - precioCompra;
+    ventas.forEach(v => {
+        const cat = v.categoria;
+        const granel = v.granel === "1";
+        const cantidad = parseFloat(v.cantidad);
+        const precioVenta = parseFloat(v.precio_venta);
+        const precioCompra = parseFloat(v.precio_compra);
+        const gananciaUnit = precioVenta - precioCompra;
 
-    const cantidadVendida = granel ? 1 : cantidad;
-    const gananciaTotal = granel
-      ? gananciaUnit * (cantidad / 1000)  // en kg
-      : gananciaUnit * cantidad;
+        const cantidadVendida = granel ? 1 : cantidad;
+        const gananciaTotal = granel
+            ? gananciaUnit * (cantidad / 1000)  // en kg
+            : gananciaUnit * cantidad;
 
-    if (!resumen[cat]) {
-      resumen[cat] = {
-        cantidadVendida: 0,
-        gananciaTotal: 0
-      };
+        if (!resumen[cat]) {
+            resumen[cat] = {
+                cantidadVendida: 0,
+                gananciaTotal: 0
+            };
+        }
+
+        resumen[cat].cantidadVendida += cantidadVendida;
+        resumen[cat].gananciaTotal += gananciaTotal;
+    });
+
+    let masVendida = null;
+    let menosVendida = null;
+    let masGanancia = null;
+    let menosGanancia = null;
+
+    for (const cat in resumen) {
+        if (
+            !masVendida || resumen[cat].cantidadVendida > resumen[masVendida].cantidadVendida
+        ) masVendida = cat;
+
+        if (
+            !menosVendida || resumen[cat].cantidadVendida < resumen[menosVendida].cantidadVendida
+        ) menosVendida = cat;
+
+        if (
+            !masGanancia || resumen[cat].gananciaTotal > resumen[masGanancia].gananciaTotal
+        ) masGanancia = cat;
+
+        if (
+            !menosGanancia || resumen[cat].gananciaTotal < resumen[menosGanancia].gananciaTotal
+        ) menosGanancia = cat;
     }
 
-    resumen[cat].cantidadVendida += cantidadVendida;
-    resumen[cat].gananciaTotal += gananciaTotal;
-  });
-
-  let masVendida = null;
-  let menosVendida = null;
-  let masGanancia = null;
-  let menosGanancia = null;
-
-  for (const cat in resumen) {
-    if (
-      !masVendida || resumen[cat].cantidadVendida > resumen[masVendida].cantidadVendida
-    ) masVendida = cat;
-
-    if (
-      !menosVendida || resumen[cat].cantidadVendida < resumen[menosVendida].cantidadVendida
-    ) menosVendida = cat;
-
-    if (
-      !masGanancia || resumen[cat].gananciaTotal > resumen[masGanancia].gananciaTotal
-    ) masGanancia = cat;
-
-    if (
-      !menosGanancia || resumen[cat].gananciaTotal < resumen[menosGanancia].gananciaTotal
-    ) menosGanancia = cat;
-  }
-
-  return {
-    categoriaMasVendida: masVendida,
-    categoriaMenosVendida: menosVendida,
-    categoriaMasGanancias: masGanancia,
-    categoriaMenosGanancias: menosGanancia
-  };
+    return {
+        categoriaMasVendida: masVendida,
+        categoriaMenosVendida: menosVendida,
+        categoriaMasGanancias: masGanancia,
+        categoriaMenosGanancias: menosGanancia
+    };
 }
 
 
@@ -3269,6 +3275,64 @@ inputCategoriaCancelaciones.addEventListener('change', (e) => {
     filtrarCancelaciones();
 })
 
+// Eventos de los filtros de Proveedores 
+inputFechaInicioProveedores.addEventListener('change', (e) => {
+    let { fechaI } = terminosBusquedaProveedores;
+
+    fechaI = e.target.value;
+    terminosBusquedaProveedores.fechaI = fechaI;
+    console.log(terminosBusquedaProveedores);
+
+    filtrarProveedores();
+    filtrarInventarioProveedores();
+    filtrarVisitasProveedorProveedores();
+});
+
+inputFechaFinalProveedores.addEventListener('change', (e) => {
+    let { fechaF } = terminosBusquedaProveedores;
+    fechaF = e.target.value;
+    terminosBusquedaProveedores.fechaF = fechaF;
+    console.log(terminosBusquedaProveedores);
+    filtrarProveedores();
+    filtrarInventarioProveedores();
+    filtrarVisitasProveedorProveedores();
+});
+
+inputProveedorProveedores.addEventListener('change', (e) => {
+    let { proveedor } = terminosBusquedaProveedores;
+
+    proveedor = e.target.options[e.target.selectedIndex].text;
+    if (proveedor !== 'Selecciona un proveedor') {
+        terminosBusquedaProveedores.proveedor = proveedor;
+    } else {
+        terminosBusquedaProveedores.proveedor = '';
+    }
+
+    console.log(terminosBusquedaProveedores);
+
+    filtrarProveedores();
+    filtrarInventarioProveedores();
+    filtrarVisitasProveedorProveedores();
+});
+
+inputCategoriaProveedores.addEventListener('change', (e) => {
+    let { categoria } = terminosBusquedaProveedores;
+
+    categoria = e.target.options[e.target.selectedIndex].text;
+    if (categoria !== 'Selecciona una Categoría') {
+        terminosBusquedaProveedores.categoria = categoria;
+    } else {
+        terminosBusquedaProveedores.categoria = '';
+
+    }
+
+    console.log(terminosBusquedaProveedores);
+
+    filtrarProveedores();
+    filtrarInventarioProveedores();
+    filtrarVisitasProveedorProveedores();
+});
+
 // Eventos de los filtros de categorías 
 inputFechaInicioCategorias.addEventListener('change', (e) => {
     let { fechaI } = terminosBusquedaCategorias;
@@ -3354,6 +3418,104 @@ function filtrarCategoriaCancelaciones(cancelacionesCompletas) {
     }
 
     return cancelacionesCompletas;
+}
+
+// Funciones de Filtrado para proveedores
+// Función para filtrar por fecha inicial
+function filtrarfechaIProveedores(ventasCompletas) {
+    const fechaVenta = new Date(ventasCompletas.fecha_venta);
+    const fechaInicial = new Date(terminosBusquedaProveedores.fechaI);
+    return fechaVenta >= fechaInicial;
+}
+
+function filtrarfechaIInventarioProveedores(inventario) {
+    const fechaVenta = new Date(inventario.fecha_compra);
+    const fechaInicial = new Date(terminosBusquedaProveedores.fechaI);
+    return fechaVenta >= fechaInicial;
+}
+
+function filtrarfechaIVisitasProveedorProveedores(visitas_proveedor) {
+    const fechaVenta = new Date(visitas_proveedor.fecha);
+    const fechaInicial = new Date(terminosBusquedaProveedores.fechaI);
+    return fechaVenta >= fechaInicial;
+}
+
+function filtrarfechaFProveedores(ventasCompletas) {
+    const fechaVenta = new Date(ventasCompletas.fecha_venta);
+    const fechaFinal = new Date(terminosBusquedaProveedores.fechaF);
+    return fechaVenta <= fechaFinal;
+}
+
+function filtrarfechaFInventarioProveedores(inventario) {
+    const fechaVenta = new Date(inventario.fecha_compra);
+    const fechaFinal = new Date(terminosBusquedaProveedores.fechaF);
+    return fechaVenta <= fechaFinal;
+}
+
+function filtrarfechaFVisitasProveedorProveedores(visitas_proveedor) {
+    const fechaVenta = new Date(visitas_proveedor.fecha);
+    const fechaFinal = new Date(terminosBusquedaProveedores.fechaF);
+    return fechaVenta <= fechaFinal;
+}
+
+function filtrarProveedorProveedores(ventasCompletas) {
+    const { proveedor } = terminosBusquedaProveedores;
+
+    if (proveedor) {
+        return ventasCompletas.proveedor === proveedor;
+    }
+
+    return ventasCompletas;
+}
+
+function filtrarProveedorInventarioProveedores(inventario) {
+    const { proveedor } = terminosBusquedaProveedores;
+
+    if (proveedor) {
+        return inventario.proveedor === proveedor;
+    }
+
+    return inventario;
+}
+
+function filtrarProveedorVisitasProveedorProveedores(visitas_proveedor) {
+    const { proveedor } = terminosBusquedaProveedores;
+
+    if (proveedor) {
+        return visitas_proveedor.proveedor === proveedor;
+    }
+
+    return visitas_proveedor;
+}
+
+function filtrarCategoriaProveedores(ventasCompletas) {
+    const { categoria } = terminosBusquedaProveedores;
+
+    if (categoria) {
+        return ventasCompletas.categoria === categoria;
+    }
+
+    return ventasCompletas;
+}
+
+function filtrarCategoriaInventarioProveedores(inventario) {
+    const { categoria } = terminosBusquedaProveedores;
+
+    if (categoria) {
+        return inventario.categoria === categoria;
+    }
+
+    return inventario;
+}
+
+function filtrarCategoriaVisitasProveedorProveedores(visitas_proveedor) {
+    const { categoria } = terminosBusquedaProveedores;
+
+    if (categoria) {
+        return visitas_proveedor.categoria === categoria;
+    }
+
+    return visitas_proveedor;
 }
 
 
@@ -3462,9 +3624,103 @@ function filtrarCancelaciones() {
 
 }
 
-// function filtrarProveedores(){
+function filtrarProveedores() {
+    let resultadosFiltrados = ventasCompletas;
+    // Aplicar filtro de fecha inicial si existe
+    if (terminosBusquedaProveedores.fechaI) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaIProveedores);
+        console.log(resultadosFiltrados);
 
-// }
+    }
+
+    if (terminosBusquedaProveedores.fechaF) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaFProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaProveedores.proveedor) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarProveedorProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaProveedores.categoria) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarCategoriaProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+    crearGraficasProveedores(resultadosFiltrados);
+
+    return resultadosFiltrados;
+
+}
+
+function filtrarInventarioProveedores() {
+    let resultadosFiltrados = inventario;
+    // Aplicar filtro de fecha inicial si existe
+    if (terminosBusquedaProveedores.fechaI) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaIInventarioProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaProveedores.fechaF) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaFInventarioProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaProveedores.proveedor) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarProveedorInventarioProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaProveedores.categoria) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarCategoriaInventarioProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+
+    return resultadosFiltrados;
+
+}
+
+
+function filtrarVisitasProveedorProveedores() {
+    let resultadosFiltrados = visitas_proveedor;
+    // Aplicar filtro de fecha inicial si existe
+    if (terminosBusquedaProveedores.fechaI) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaIVisitasProveedorProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaProveedores.fechaF) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarfechaFVisitasProveedorProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaProveedores.proveedor) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarProveedorVisitasProveedorProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+    if (terminosBusquedaProveedores.categoria) {
+        resultadosFiltrados = resultadosFiltrados.filter(filtrarCategoriaVisitasProveedorProveedores);
+        console.log(resultadosFiltrados);
+
+    }
+
+
+    return resultadosFiltrados;
+
+}
+
 
 function filtrarCategorias() {
     let resultadosFiltrados = ventasCompletas;
@@ -3492,7 +3748,7 @@ function filtrarCategorias() {
         console.log(resultadosFiltrados);
 
     }
-    crearGraficasCategorias(resultadosFiltrados,categoriasCompletas);
+    crearGraficasCategorias(resultadosFiltrados, categoriasCompletas);
 
     return resultadosFiltrados;
 }
