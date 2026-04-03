@@ -314,7 +314,7 @@
         inputR.focus();
         inputR.addEventListener('input', (e) => {
             console.log(e.target.value);
-            const resultado = parseFloat(cantidad_caja) - parseFloat(e.target.value);
+            const resultado = (parseFloat(cantidad_caja) - parseFloat(e.target.value)).toFixed(2);
 
             pEfectivoResultanteA.innerHTML = `$ ${resultado}`;
             inputHiddenRetirar.value = resultado;

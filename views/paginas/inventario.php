@@ -23,7 +23,7 @@
     <div class="botones">
         <a href="/movimientoproducto" class="botonslider1"><span>Movimiento de Producto</span></a>
         <a href="/categorias" class="botonslider2"><span>Ver Categorías </span></a>
-        <a href="#" class="botonslider3"><span>+ Añadir Nuevo Producto</span></a>
+        <a href="#" data-test="bntNuevoProducto" class="botonslider3"><span>+ Añadir Nuevo Producto</span></a>
     </div>
     <div class="busqueda-titulo">
         <h1>Productos en Inventario</h1>
