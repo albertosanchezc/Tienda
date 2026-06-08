@@ -1,17 +1,17 @@
 <main class="contenedor seccion contenido-centrado">
     <h1>Recuperar Contraseña</h1>
 
-    <?php foreach ($exito as $exitomsg) { ?>
-        <div class="alerta exito">
-            <?php echo $exitomsg; ?>
-        </div>
-    <?php } ?>
+    <?php
+    foreach ($alertas as $key => $alerta) :
+        foreach ($alerta as $mensaje) :
+    ?>
 
-    <?php foreach ($errores as $error) { ?>
-        <div class="alerta error">
-            <?php echo $error; ?>
-        </div>
-    <?php } ?>
+            <div class="alerta <?php echo $key; ?>"><?php echo $mensaje; ?></div>
+
+    <?php
+        endforeach;
+    endforeach;
+    ?>
 
     <form class="formulario" method="POST" action="/recuperar">
         <fieldset>

@@ -23,13 +23,17 @@ class ActiveRecord
 
     public function guardar()
     {
+
+        $resultado = '';
         if (!is_null($this->id)) {
             // Actualizando
-            $this->actualizar();
+            $resultado = $this->actualizar();
         } else {
             // Creando un nuevo registro
-            $this->crear();
+            $resultado = $this->crear();
         }
+
+        return $resultado;
     }
 
     public function crear()
@@ -132,16 +136,43 @@ class ActiveRecord
 
     public static function getAlertas()
     {
-        return static::$alertas;
+        $alertas = static::$alertas;
+        static::$alertas = [];
+
+        $resultado = [];
+
+        foreach ($alertas as $tipo => $mensajes) {
+            foreach ($mensajes as $mensaje) {
+
+                if (is_array($mensaje)) {
+                    $mensaje = implode(' ', array_map('strval', $mensaje));
+                }
+
+                $resultado[$tipo][] = $mensaje;
+            }
+        }
+
+        return $resultado;
     }
+
+
+
     public static function setAlerta($tipo, $mensaje)
     {
-        static::$alertas[$tipo][] = $mensaje;
+        if (is_array($mensaje)) {
+            $mensaje = implode(' ', array_map('strval', $mensaje));
+        }
+
+        static::$alertas[$tipo][] = (string) $mensaje;
     }
 
     public static function setError($mensaje)
     {
-        static::$errores[] = $mensaje;
+        if (is_array($mensaje)) {
+            $mensaje = implode(' ', array_map('strval', $mensaje));
+        }
+
+        static::$errores[] = (string) $mensaje;
     }
 
 
@@ -178,7 +209,7 @@ class ActiveRecord
 
     public static function join2($primera, $segunda)
     {
-        $query = "SELECT * FROM $primera JOIN $segunda ON " . $primera . ".id = " . $segunda . ".producto_id ORDER BY " . $primera . ".nombre ASC" ;
+        $query = "SELECT * FROM $primera JOIN $segunda ON " . $primera . ".id = " . $segunda . ".producto_id ORDER BY " . $primera . ".nombre ASC";
         // debuguear($query);
         $resultado = self::consultarSQL($query);
         return $resultado;
@@ -242,13 +273,13 @@ class ActiveRecord
         INNER JOIN categorias ON inventario.categoria_id = categorias.id  
         INNER JOIN proveedor ON inventario.proveedor_id = proveedor.id;
         ";
-    
+
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
 
-    
-    
+
+
 
     //Obtiene la última columna(especificada) de una tabla 
     public static function lastofTable($tabla, $columna)

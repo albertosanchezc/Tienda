@@ -2,11 +2,11 @@
 
 namespace Controllers;
 
-use Model\Restaurant;
 use MVC\Router;
 use Model\Admin;
 use Classes\Email;
-use Model\Usuario;
+use Model\Usuarios;
+
 class LoginController
 {
 
@@ -31,9 +31,9 @@ class LoginController
 
                     if ($autenticado) {
                         // Autenticar al usuario
-                        $usuarioLogueado = Usuario::where('email', $_POST['email']);
+                        $usuarioLogueado = Usuarios::where('email', $_POST['email']);
                         $usuarioLogueado = ArrayobjectToArrayAssoc($usuarioLogueado);
-                        $usuario = new Usuario($usuarioLogueado);
+                        $usuario = new Usuarios($usuarioLogueado);
                         if (!isset($_SESSION)) {
                             session_start();
                         }
@@ -41,15 +41,7 @@ class LoginController
                         $_SESSION['id'] = $usuario->id;
                         $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
                         $_SESSION['login'] = true;
-                        $_SESSION['rol'] = $usuario->rol_id ?? null;
-                        $_SESSION['restaurantId'] = $usuario->restaurant_id ?? null;
-                        if ($_SESSION['rol'] === "1") {
-                            $_SESSION['admin'] = true;
-                            header('Location: /admin');
-                        } elseif($_SESSION['rol'] === "2") {
-                            $_SESSION['mesero'] = true;
-                            header('Location: /admin');
-                        }
+                        // $_SESSION['rol'] = $usuario->rol_id ?? null;
                     } else {
                         $errores = Admin::getErrores();
                     }
@@ -64,59 +56,59 @@ class LoginController
 
     public static function registrar(Router $router)
     {
-        $errores = [];
-        $usuario = new Usuario;
-        $restaurant = new Restaurant;
+        $alertas = [];
+        $usuario = new Usuarios;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $usuario->sincronizar($_POST['usuario']);
-            $errores = $usuario->validarNuevacuenta();
+            $datos = $_POST['usuario'];
 
-            if (empty($errores)) {
-                $existeUsuario = $usuario->existeUsuario();
-                if ($existeUsuario->num_rows > 0) {
-                    Usuario::setError('El Usuario ya está registrado');
-                } else {
+            // 1. VALIDAR PRIMERO (SIN BORRAR NADA)
+            if ($datos['password'] !== $datos['password2']) {
+                $alertas[] = 'Los passwords no coinciden';
+            }
 
-                    // Esto sólo le necesito yo ya que restaurant_id no puede ser null 
-                    if (empty($usuario->restaurant_id)) {
+            // 2. SOLO SI NO HAY alertas
+            if (empty($alertas)) {
 
-                        $usuario->restaurant_id = 1; //
-                        // Asigna un valor por defecto. Cambia este valor según sea necesario.
-                    }
-                    // Hashear el password
-                    $usuario->hashPassword();
-                    // Eliminar password2
-                    unset($usuario->password2);
+                // ahora sí eliminar password2
 
-                    // Generar el Token
-                    $usuario->crearToken();
+                // sincronizar limpio
+                $usuario->sincronizar($datos);
 
-                    // Crear un nuevo usuario 
-                    $resultado = $usuario->guardar();
+                // validar reglas del modelo
+                $alertas = $usuario->validarNuevaCuenta();
 
-                    $usuarioNuevo = $usuario->where('email', $usuario->email);
-                    $restaurant->usuario_admin_id = $usuarioNuevo[0]->id;
-                    $restaurant->nombre = $_POST['restaurant']['nombre'];
-                    
-                    $restaurant->guardar();
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-                    // debuguear($email);
-                    $email->enviarConfirmacion();
+                if (empty($alertas)) {
 
-                    if ($resultado) {
-                        header('Location: /mensaje');
+                    $existeUsuario = Usuarios::where('email', $usuario->email);
+
+                    if ($existeUsuario) {
+                        Usuarios::setAlerta('error', 'El Usuario ya está registrado');
+                        $alertas = Usuarios::getAlertas();
+                    } else {
+
+                        $usuario->hashPassword();
+                        $usuario->crearToken();
+
+                        $resultado = $usuario->guardar();
+
+                        $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                        $email->enviarConfirmacion();
+
+                        if ($resultado) {
+                            header('Location: /mensaje');
+                            exit;
+                        }
                     }
                 }
-                // debuguear($existeUsuario);
             }
         }
-        $errores = Usuario::getErrores();
-
 
         $router->render('auth/registrar', [
-            'errores' => $errores,
-            'usuario' => $usuario
+            'titulo' => 'Crea tu cuenta en Uptask',
+            'usuario' => $usuario,
+            'alertas' => $alertas
         ]);
     }
 
@@ -132,13 +124,13 @@ class LoginController
         if (!$token) header('Location: /');
 
         // Encontrar al usuario con este token
-        $usuario = Usuario::where('token', $token);
+        $usuario = Usuarios::where('token', $token);
 
 
         if (empty($usuario)) {
             // No se encontró un usuario con este token
-            Usuario::setError('La cuenta no se confirmó');
-            $errores = Usuario::getErrores();
+            Usuarios::setError('La cuenta no se confirmó');
+            $errores = Usuarios::getErrores();
         } else {
             $usuario[0]->confirmado = 1;
             $usuario[0]->token = '';
@@ -156,38 +148,61 @@ class LoginController
 
     public static function recuperar(Router $router)
     {
-
-        $errores = [];
+        $alertas = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $usuario = new Usuario($_POST);
-            $errores = $usuario->validarEmail();
-            if (empty($errores)) {
-                $usuario = Usuario::where('email', $usuario->email);
-                $usuario = $usuario[0];
-                if ($usuario && $usuario->confirmado) {
-                    // Generar un nuevo token
-                    $usuario->crearToken();
-                    unset($usuario->password2);
 
-                    // Actualizar el usuario
-                    $usuario->guardar();
+            $email = $_POST['email'];
 
-                    // Enviar el email
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-                    $email->enviarInstrucciones();
+            // validar email primero
+            $usuarioTmp = new Usuarios($_POST);
+            $alertas = $usuarioTmp->validarEmail();
 
-                    $exito[] = 'Hemos enviado las instrucciones a tu Email';
+            if (empty($alertas)) {
+
+                // 🔥 where() devuelve ARRAY
+                $usuario = Usuarios::where('email', $email);
+
+                if ($usuario) {
+
+                    // tomar objeto real
+                    $usuario = $usuario[0];
+
+                    if ($usuario->confirmado == '1') {
+
+                        // generar token
+                        $usuario->crearToken();
+
+                        // guardar cambios
+                        $usuario->guardar();
+
+                        // enviar email
+                        $emailObj = new Email(
+                            $usuario->email,
+                            $usuario->nombre,
+                            $usuario->token
+                        );
+
+                        $emailObj->enviarInstrucciones();
+
+                        Usuarios::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
+                    } else {
+                        Usuarios::setAlerta('error', 'El Usuario no está confirmado');
+                    }
                 } else {
-                    $errores[] = 'El Usuario no existe o no está confirmado';
+                    Usuarios::setAlerta('error', 'El Usuario no existe');
                 }
             }
         }
+
+        $alertas = Usuarios::getAlertas();
+
         $router->render('auth/recuperar', [
-            'errores' => $errores,
-            'exito' => $exito
+            'titulo' => 'Olvidé mi Password',
+            'alertas' => $alertas
         ]);
     }
+
 
 
     public static function reestablecer(Router $router)
@@ -198,10 +213,10 @@ class LoginController
             header('Location: /');
         }
 
-        $usuario = Usuario::where('token', $token);
+        $usuario = Usuarios::where('token', $token);
 
         if (empty($usuario)) {
-            Usuario::setError('Token No válido');
+            Usuarios::setError('Token No válido');
             $token_valido = false;
         }
 
@@ -209,7 +224,7 @@ class LoginController
             $nuevoPassword = $_POST['password'];
             $usuarioActualizado = ArrayobjectToArrayAssoc($usuario);
             $usuarioActualizado['password'] = $nuevoPassword;
-            $usuario = new Usuario($usuarioActualizado);
+            $usuario = new Usuarios($usuarioActualizado);
 
             // Validar el Password
             $errores = $usuario->validarPassword();
@@ -230,7 +245,7 @@ class LoginController
                 }
             }
         }
-        $errores = Usuario::getErrores();
+        $errores = Usuarios::getErrores();
 
 
         $router->render('auth/reestablecer', [
