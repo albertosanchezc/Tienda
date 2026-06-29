@@ -36,9 +36,7 @@ class PaginasController
     {
 
         $tiendaId = $_SESSION['tienda_id'];
-
-        $inventario = Inventario::where('tienda_id', $tiendaId);
-        $inventario = Inventario_completo::join2tienda('productos', 'inventario');
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
 
         $categorias = Categorias::ALF('nombre', 'ASC');
         $proveedores = Proveedor::ALF('nombre', 'ASC');
