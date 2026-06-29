@@ -40,6 +40,13 @@
 
         </fieldset>
 
+        <fieldset>
+            <legend>Datos del Negocio</legend>
+            <label for="nombre">Nombre</label>
+            <input type="text" name="tienda[nombre]" placeholder="Nombre de tu Negocio" id="nombre" value="<?php echo $tienda->nombre; ?>">
+
+        </fieldset>
+
         <input type="submit" value="Crear Cuenta" class="boton boton-verde">
     </form>
 

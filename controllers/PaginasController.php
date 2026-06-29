@@ -39,8 +39,8 @@ class PaginasController
         $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
 
         $categorias = Categorias::ALF('nombre', 'ASC');
-        $proveedores = Proveedor::ALF('nombre', 'ASC');
-        $ventas = Ventas::all();
+        $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
+        $ventas = Ventas::where('tienda_id',$tiendaId);
 
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
@@ -56,8 +56,9 @@ class PaginasController
 
     public static function cajaAPI()
     {
-        $caja = Caja::find(1);
-        $cajas_historicos = Caja_historico::all();
+        $tiendaId = $_SESSION['tienda_id'];
+        $caja = Caja::where('tienda_id', $tiendaId);
+        $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
         echo json_encode([
             'caja' => $caja,
             'cajas_historicos' => $cajas_historicos
@@ -75,10 +76,10 @@ class PaginasController
 
     public static function ventasAPI()
     {
-        $ventas = Ventas_Completas::obtenerVentas();
         $tiendaId = $_SESSION['tienda_id'];
+        $ventas = Ventas_Completas::obtenerVentas($tiendaId);
         $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
-        $caja = Caja::find(1);
+        $caja = Caja::where('tienda_id', $tiendaId);
 
 
 
@@ -95,8 +96,8 @@ class PaginasController
         $ventas = Ventas_Completas::obtenerVentasConcat();
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
-        $cajas_historicos = Caja_historico::all();
-        $proveedores = Proveedor::all();
+        $cajas_historicos = Caja_historico::where('tienda_id',$tiendaId);
+        $proveedores = Proveedor::where('tienda_id',$tiendaId);
         $visitas_proveedor = Visitas_proveedor::all();
         $categorias = Categorias::ALF('nombre', 'ASC');
 
@@ -118,9 +119,9 @@ class PaginasController
 
         $script = '<script src="/build/js/metricas.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
-
+        $tiendaId = $_SESSION['tienda_id'];
         $categorias = Categorias::ALF('nombre', 'ASC');
-        $proveedores = Proveedor::ALF('nombre', 'ASC');
+        $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
 
         $router->render('estadisticas/ver', [
             'titulo' => $titulo,

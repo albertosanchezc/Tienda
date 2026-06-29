@@ -25,10 +25,10 @@ class InventarioController
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
         $alertas = [];
-
+        
         $producto = new Productos;
         $categorias = Categorias::ALF('nombre', 'ASC');
-        $proveedores = Proveedor::ALF('nombre', 'ASC');
+        $proveedores = Proveedor::ALFTienda('nombre', 'ASC',$_SESSION['tienda_id']);
         $motivos = Motivos::ALF('motivo', 'ASC');
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario::where('tienda_id', $tiendaId);
@@ -131,6 +131,7 @@ class InventarioController
                     $image = Image::make($_FILES['inventarioActualizar']['tmp_name']['imagen'])->fit(900, 800);
                     $productoActualizar->setImagen($nombreImagenActualizar);
                     $carpeta_imagenes = CARPETA_IMAGENES . 'tienda_' . $_SESSION['tienda_id'] . '/';
+                    // debuguear($carpeta_imagenes);
                     if (!is_dir($carpeta_imagenes)) {
                         mkdir($carpeta_imagenes);
                     }
@@ -157,7 +158,7 @@ class InventarioController
                 $visitaProveedorActualizarStock->proveedor_id = $proveedorId;
                 $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'id');
                 $visitaProveedorActualizarStock->visita_id = $visitaPrevia + 1;
-                debuguear($visitaProveedorActualizarStock);
+                // debuguear($visitaProveedorActualizarStock);
                 $cantidadNueva = $argsActualizarStock['cantidad'];
                 if ($cantidadNueva >= $cantidadAnterior) {
                     $cantidadAniadida = $cantidadAnterior - $cantidadNueva;

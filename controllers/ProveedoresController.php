@@ -19,8 +19,9 @@ class ProveedoresController
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $titulo = 'Proveedores';
         $alertas = [];
-
-        $proveedores = Proveedor::ALF('nombre','ASC');
+        
+        $tiendaId = $_SESSION('tienda_id');
+        $proveedores = Proveedor::ALFTienda('nombre','ASC', $tiendaId);
         $resultado = $_GET['resultado'] ?? null;
         $alertas = Proveedor::getAlertas();
         // debuguear($resultado);

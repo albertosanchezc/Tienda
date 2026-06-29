@@ -40,14 +40,22 @@ class ActiveRecord
     {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
+
         // Insertar en la base de datos
         $query = " INSERT INTO " . static::$tabla . " ( ";
         $query .= join(', ', array_keys($atributos));
         $query .= " ) VALUES ('";
         $query .= join("' , '", array_values($atributos));
         $query .= "')";
-        // debuguear($query);
+
         $resultado = self::$db->query($query);
+
+        // 🔥 AQUÍ ESTÁ LA CLAVE
+        if ($resultado) {
+            $this->id = self::$db->insert_id;
+        }
+
+        return $resultado;
     }
     public function actualizar()
     {
@@ -207,6 +215,29 @@ class ActiveRecord
     }
 
 
+    public static function ALFTienda($columna, $orden, $tienda_id)
+    {
+        $columnasPermitidas = ['nombre', 'id', 'precio', 'created_at'];
+        $ordenPermitido = ['ASC', 'DESC'];
+
+        if (!in_array($columna, $columnasPermitidas)) {
+            $columna = 'id';
+        }
+
+        if (!in_array(strtoupper($orden), $ordenPermitido)) {
+            $orden = 'ASC';
+        }
+
+        $tienda_id = (int)$tienda_id;
+
+        $query = "SELECT * FROM " . static::$tabla . "
+              WHERE tienda_id = $tienda_id
+              ORDER BY $columna $orden";
+
+        return self::consultarSQL($query);
+    }
+
+
     public static function join2($primera, $segunda)
     {
         $query = "SELECT * FROM $primera JOIN $segunda ON " . $primera . ".id = " . $segunda . ".producto_id ORDER BY " . $primera . ".nombre ASC";
@@ -227,38 +258,56 @@ class ActiveRecord
         return self::consultarSQL($query);
     }
 
-    public static function obtenerVentas()
+    public static function obtenerVentas($tienda_id)
     {
+        $tienda_id = (int) $tienda_id;
+
         $query = "SELECT 
-            ventas.id AS id_venta,
-            ventas.producto_id AS producto_id,
-            ventas.cantidad AS cantidad,
-            ventas.carrito_id AS carrito_id,
-            ventas.fecha_venta AS fecha_venta,
-            ventas.hora_venta AS hora_venta,
-            ventas.cancelacion as cancelacion,
-            productos.id AS id_producto,
-            productos.nombre AS producto,
-            productos.descripcion AS producto_descripcion,
-            productos.imagen AS imagen_producto,
-            inventario.granel AS granel,
-            inventario.precio_unitario_venta AS precio_venta,
-            inventario.precio_compra AS precio_compra,
-            categorias.nombre AS categoria,
-            categorias.descripcion AS descripcion_categoria,
-            proveedor.id AS proveedor_id,  
-            proveedor.nombre AS proveedor,  
-            proveedor.telefono AS telefono_proveedor 
-            FROM ventas
-            INNER JOIN productos ON ventas.producto_id = productos.id
-            INNER JOIN inventario ON inventario.producto_id = productos.id  
-            INNER JOIN categorias ON inventario.categoria_id = categorias.id  
-            INNER JOIN proveedor ON inventario.proveedor_id = proveedor.id;
-        ";
-        // debuguear($query);
-        $resultado = self::consultarSQL($query);
-        return $resultado;
+        ventas.id AS id_venta,
+        ventas.producto_id AS producto_id,
+        ventas.cantidad AS cantidad,
+        ventas.carrito_id AS carrito_id,
+        ventas.fecha_venta AS fecha_venta,
+        ventas.hora_venta AS hora_venta,
+        ventas.cancelacion as cancelacion,
+
+        productos.id AS id_producto,
+        productos.nombre AS producto,
+        productos.descripcion AS producto_descripcion,
+        productos.imagen AS imagen_producto,
+
+        inventario.granel AS granel,
+        inventario.precio_unitario_venta AS precio_venta,
+        inventario.precio_compra AS precio_compra,
+
+        categorias.nombre AS categoria,
+        categorias.descripcion AS descripcion_categoria,
+
+        proveedor.id AS proveedor_id,  
+        proveedor.nombre AS proveedor,  
+        proveedor.telefono AS telefono_proveedor 
+
+    FROM ventas
+
+    INNER JOIN productos 
+        ON ventas.producto_id = productos.id
+
+    INNER JOIN inventario 
+        ON inventario.producto_id = productos.id 
+        AND inventario.tienda_id = $tienda_id
+
+    INNER JOIN categorias 
+        ON inventario.categoria_id = categorias.id  
+
+    INNER JOIN proveedor 
+        ON inventario.proveedor_id = proveedor.id
+
+    WHERE ventas.tienda_id = $tienda_id
+    ";
+
+        return self::consultarSQL($query);
     }
+    
     public static function obtenerVentasConcat()
     {
         $query = "SELECT 

@@ -5,6 +5,8 @@ namespace Controllers;
 use MVC\Router;
 use Model\Admin;
 use Classes\Email;
+use Model\Caja;
+use Model\Tienda;
 use Model\Usuarios;
 
 class LoginController
@@ -42,7 +44,7 @@ class LoginController
                         $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
                         $_SESSION['login'] = true;
                         $_SESSION['tienda_id'] = $usuario->tienda_id;
-                        
+
                         // $_SESSION['rol'] = $usuario->rol_id ?? null;
                     } else {
                         $errores = Admin::getErrores();
@@ -64,6 +66,7 @@ class LoginController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $datos = $_POST['usuario'];
+            $datos_tienda = $_POST['tienda'];
 
             // 1. VALIDAR PRIMERO (SIN BORRAR NADA)
             if ($datos['password'] !== $datos['password2']) {
@@ -93,10 +96,22 @@ class LoginController
                         $usuario->hashPassword();
                         $usuario->crearToken();
 
-                        $resultado = $usuario->guardar();
+                        $tienda = new Tienda();
+                        $tienda->nombre = $datos_tienda['nombre'];
+                        // debuguear($tienda);
+
+                        $tienda->guardar();
+                        $usuario->tienda_id = $tienda->id;
+                        $usuario->guardar();
+
+                        $caja = new Caja();
+                        $caja->cantidad_caja = 0;
+                        $caja->tienda_id = $tienda->id;
+                        $resultado = $caja->guardar();
 
                         $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
                         $email->enviarConfirmacion();
+
 
                         if ($resultado) {
                             header('Location: /mensaje');
@@ -110,6 +125,7 @@ class LoginController
         $router->render('auth/registrar', [
             'titulo' => 'Crea tu cuenta en Uptask',
             'usuario' => $usuario,
+            'tienda' => $tienda,
             'alertas' => $alertas
         ]);
     }

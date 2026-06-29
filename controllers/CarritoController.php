@@ -13,7 +13,8 @@ class CarritoController
     public static function carrito(Router $router)
     {
         // Pasamos todos los productos a la vista
-        $inventario = Inventario_completo::join2('productos', 'inventario');
+        $tiendaId = $_SESSION['tienda_id'];
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
 
         $script = '<script src="/build/js/carrito/carrito.js" type="module"></script>
