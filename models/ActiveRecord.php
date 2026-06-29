@@ -215,6 +215,18 @@ class ActiveRecord
         return $resultado;
     }
 
+    public static function join2tienda($primera, $segunda, $tienda_id)
+    {
+        $query = "SELECT *
+              FROM $primera
+              JOIN $segunda
+                ON $primera.id = $segunda.producto_id
+              WHERE $segunda.tienda_id = {$tienda_id}
+              ORDER BY $primera.nombre ASC";
+
+        return self::consultarSQL($query);
+    }
+
     public static function obtenerVentas()
     {
         $query = "SELECT 

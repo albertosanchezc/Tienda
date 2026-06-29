@@ -26,13 +26,14 @@ class InventarioController
         $alertas = [];
 
         $producto = new Productos;
-        $categorias = Categorias::ALF('nombre','ASC');
-        $proveedores = Proveedor::ALF('nombre','ASC');
-        $motivos = Motivos::ALF('motivo','ASC');
-        $inventario = Inventario::all();
+        $categorias = Categorias::ALF('nombre', 'ASC');
+        $proveedores = Proveedor::ALF('nombre', 'ASC');
+        $motivos = Motivos::ALF('motivo', 'ASC');
+        $tiendaId = $_SESSION['tienda_id'];
+
+        $inventario = Inventario::where('tienda_id',$tiendaId);
         $alertas = Productos::getAlertas();
-
-
+        
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // debuguear($_POST);
             $alertas = Productos::getAlertas();
@@ -40,7 +41,7 @@ class InventarioController
             $argsActualizar = $_POST['inventarioActualizar'];
             $argsActualizarStock = $_POST['inventarioActualizarStock'];
             $argsEliminarStock = $_POST['inventarioEliminarStock'];
-            
+
 
             $producto = new Productos();
 
@@ -68,7 +69,6 @@ class InventarioController
                 $optionpieza = $argsCrear['optionpieza'];
                 if ($optionpieza === 'optiongranel') {
                     $inventario_nuevo->granel = 1;
-
                 } else {
                     $inventario_nuevo->granel = 0;
                 }
@@ -86,7 +86,6 @@ class InventarioController
                         mkdir(CARPETA_IMAGENES);
                     }
                     $image->save(CARPETA_IMAGENES . $nombreImagen);
-
                 }
 
 
@@ -115,7 +114,6 @@ class InventarioController
                 $cantidad = $inventarioViejo->cantidad;
                 if ($optionpieza === 'optiongranel') {
                     $inventarioActualizar->granel = 1;
-
                 } else {
                     $inventarioActualizar->granel = 0;
                 }
@@ -134,22 +132,20 @@ class InventarioController
                         mkdir(CARPETA_IMAGENES);
                     }
                     $image->save(CARPETA_IMAGENES . $nombreImagenActualizar);
-
                 } else {
                     $id = $productoActualizar->id;
                     $productoActualizar->imagen = $productoAnterior->imagen;
-
                 }
                 $productoActualizar->codigo_barras = $productoAnterior->codigo_barras;
                 // debuguear($productoActualizar);
                 $productoActualizar->guardar();
             } elseif ($metodoActualizarStock) { // El método fue actualizar Stock
 
-    // debuguear($metodoActualizarStock);
+                // debuguear($metodoActualizarStock);
                 $id = $argsActualizarStock['id'];
                 $productoActualizarStock = Inventario::find($id);
-                $cantidadAnterior = $productoActualizarStock->cantidad; 
-                $proveedorId = $productoActualizarStock->proveedor_id; 
+                $cantidadAnterior = $productoActualizarStock->cantidad;
+                $proveedorId = $productoActualizarStock->proveedor_id;
                 $productoActualizarStock->cantidad = $argsActualizarStock['cantidad'];
                 // debuguear($productoActualizarStock);
                 $productoActualizarStock->guardar();
@@ -157,24 +153,20 @@ class InventarioController
                 $visitaProveedorActualizarStock->id = null;
                 $visitaProveedorActualizarStock->proveedor_id = $proveedorId;
                 $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'id');
-                $visitaProveedorActualizarStock->visita_id = $visitaPrevia+1; 
+                $visitaProveedorActualizarStock->visita_id = $visitaPrevia + 1;
                 debuguear($visitaProveedorActualizarStock);
                 $cantidadNueva = $argsActualizarStock['cantidad'];
-                if($cantidadNueva>=$cantidadAnterior){
-                    $cantidadAniadida = $cantidadAnterior-$cantidadNueva;
+                if ($cantidadNueva >= $cantidadAnterior) {
+                    $cantidadAniadida = $cantidadAnterior - $cantidadNueva;
                 } else {
-                    $cantidadAniadida = $cantidadNueva -$cantidadAnterior;
+                    $cantidadAniadida = $cantidadNueva - $cantidadAnterior;
                 }
                 $productoVisita = new Visita_Producto();
                 $productoVisita->id = null;
                 $productoVisita->cantidad = $cantidadAniadida;
                 // $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'id');
                 $productoVisita->producto_id = $id;
-
-
-
-
-            } elseif ($metodoEliminarStock){// El método fue eliminar Stock
+            } elseif ($metodoEliminarStock) { // El método fue eliminar Stock
                 $id = $argsEliminarStock['id'];
                 $productoEliminarStock = Productos::find($id);
                 $productoEliminarStock->eliminar();
@@ -183,7 +175,6 @@ class InventarioController
             }
 
             header('Location: /inventario');
-
         }
 
         // $inventario = Inventario_completo::join2('productos', 'inventario');

@@ -41,6 +41,8 @@ class LoginController
                         $_SESSION['id'] = $usuario->id;
                         $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
                         $_SESSION['login'] = true;
+                        $_SESSION['tienda_id'] = $usuario->tienda_id;
+                        
                         // $_SESSION['rol'] = $usuario->rol_id ?? null;
                     } else {
                         $errores = Admin::getErrores();

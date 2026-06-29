@@ -34,7 +34,11 @@ class PaginasController
 
     public static function inventarioAPI()
     {
-        $inventario = Inventario_completo::join2('productos', 'inventario');
+
+        $tiendaId = $_SESSION['tienda_id'];
+
+        $inventario = Inventario::where('tienda_id', $tiendaId);
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario');
 
         $categorias = Categorias::ALF('nombre', 'ASC');
         $proveedores = Proveedor::ALF('nombre', 'ASC');
@@ -115,8 +119,8 @@ class PaginasController
         $script = '<script src="/build/js/metricas.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
-        $categorias = Categorias::ALF('nombre','ASC');
-        $proveedores = Proveedor::ALF('nombre','ASC');
+        $categorias = Categorias::ALF('nombre', 'ASC');
+        $proveedores = Proveedor::ALF('nombre', 'ASC');
 
         $router->render('estadisticas/ver', [
             'titulo' => $titulo,

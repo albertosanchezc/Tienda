@@ -5,13 +5,15 @@ namespace Model;
 class Productos extends ActiveRecord{
     // Base de datos
     protected static $tabla = 'productos';
-    protected static $columnasDB = ['id', 'nombre', 'descripcion', 'codigo_barras', 'imagen'];
+    protected static $columnasDB = ['id', 'nombre', 'descripcion', 'codigo_barras', 'imagen', 'tienda_id'];
 
     public $id;
     public $nombre;
     public $descripcion;
     public $codigo_barras;
     public $imagen;
+    public $tienda_id;
+
 
 
 
@@ -22,6 +24,8 @@ class Productos extends ActiveRecord{
         $this->descripcion = $args['descripcion'] ?? '';
         $this->codigo_barras = $args['codigo_barras'] ?? '';
         $this->imagen = $args['imagen'] ?? '';
+        $this->tienda_id = $args['tienda_id'] ?? '';
+
         
     }
 
