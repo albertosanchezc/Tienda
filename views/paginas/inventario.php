@@ -317,7 +317,7 @@
                             </div>
                         </div>
                         <div class="modal--inventario--actualizar__imgcarga">
-                            <img id="vistaPreviaImagenActualizar" src="/imagenes/<?php echo $producto->imagen; ?>"
+                            <img id="vistaPreviaImagenActualizar" src="/imagenes/tienda_<?php echo $_SESSION['tienda_id'] . $producto->imagen . '/';  ?>"
                                 class="imagen-small">
                         </div>
                     </div>

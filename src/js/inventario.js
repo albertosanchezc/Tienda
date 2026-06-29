@@ -4,6 +4,9 @@ let proveedores = [];
 let categorias = [];
 let ventas = [];
 
+let tiendaId = 0; 
+
+
 let agotados = [];
 let porAgotarse = [];
 let suficientes = [];
@@ -892,9 +895,10 @@ function mostrarCards(inventario, proveedores, categorias) {
         let porcentajeGanancia = ganancia * 100 / precio_compra;
 
         const parrafoContainer = document.createElement('div');
+        tiendaId = inventario[0].tienda_id;
         parrafoContainer.classList.add('nombreprod');
         parrafoContainer.innerHTML = `
-        <img src="/imagenes/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
+        '<img src="/imagenes/tienda_${tiendaId}/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
 
         <P> ${nombre}</P>
         `;

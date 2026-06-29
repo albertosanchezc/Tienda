@@ -18,6 +18,7 @@ class InventarioController
 
     public static function inventario(Router $router)
     {
+
         $script = '<script src="/build/js/inventario.js"></script>
         <script src="/build/js/JsBarcode.all.min.js"></script>
 
@@ -30,10 +31,9 @@ class InventarioController
         $proveedores = Proveedor::ALF('nombre', 'ASC');
         $motivos = Motivos::ALF('motivo', 'ASC');
         $tiendaId = $_SESSION['tienda_id'];
-
-        $inventario = Inventario::where('tienda_id',$tiendaId);
+        $inventario = Inventario::where('tienda_id', $tiendaId);
         $alertas = Productos::getAlertas();
-        
+
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // debuguear($_POST);
             $alertas = Productos::getAlertas();
@@ -56,7 +56,7 @@ class InventarioController
                 $producto->nombre = $argsCrear['nombre'];
                 $producto->descripcion = $argsCrear['descripcion'];
                 $producto->codigo_barras = $argsCrear['codigo_barras'];
-
+                $producto->tienda_id = $tiendaId;
 
                 // debuguear($producto);
 
@@ -66,6 +66,7 @@ class InventarioController
                 $inventario_nuevo->categoria_id = $argsCrear['categoria_id'];
                 $inventario_nuevo->codigo_barras = $argsCrear['codigo_barras'];
                 $inventario_nuevo->proveedor_id = $argsCrear['proveedor_id'];
+                $inventario_nuevo->tienda_id = $tiendaId;
                 $optionpieza = $argsCrear['optionpieza'];
                 if ($optionpieza === 'optiongranel') {
                     $inventario_nuevo->granel = 1;
@@ -82,10 +83,11 @@ class InventarioController
                     //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
                     $image = Image::make($_FILES['inventarioCrear']['tmp_name']['imagen'])->fit(900, 800);
                     $producto->setImagen($nombreImagen);
-                    if (!is_dir(CARPETA_IMAGENES)) {
-                        mkdir(CARPETA_IMAGENES);
+                    $carpeta_imagenes = CARPETA_IMAGENES . 'tienda_' . $_SESSION['tienda_id'] . '/';
+                    if (!is_dir($carpeta_imagenes)) {
+                        mkdir($carpeta_imagenes);
                     }
-                    $image->save(CARPETA_IMAGENES . $nombreImagen);
+                    $image->save($carpeta_imagenes . $nombreImagen);
                 }
 
 
@@ -128,10 +130,11 @@ class InventarioController
                     //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
                     $image = Image::make($_FILES['inventarioActualizar']['tmp_name']['imagen'])->fit(900, 800);
                     $productoActualizar->setImagen($nombreImagenActualizar);
-                    if (!is_dir(CARPETA_IMAGENES)) {
-                        mkdir(CARPETA_IMAGENES);
+                    $carpeta_imagenes = CARPETA_IMAGENES . 'tienda_' . $_SESSION['tienda_id'] . '/';
+                    if (!is_dir($carpeta_imagenes)) {
+                        mkdir($carpeta_imagenes);
                     }
-                    $image->save(CARPETA_IMAGENES . $nombreImagenActualizar);
+                    $image->save($carpeta_imagenes . $nombreImagenActualizar);
                 } else {
                     $id = $productoActualizar->id;
                     $productoActualizar->imagen = $productoAnterior->imagen;

@@ -6,12 +6,14 @@ class Proveedor extends ActiveRecord
 {
     // Base de datos
     protected static $tabla = 'proveedor';
-    protected static $columnasDB = ['id', 'nombre', 'telefono', 'email'];
+    protected static $columnasDB = ['id', 'nombre', 'telefono', 'email', 'tienda_id'];
 
     public $id;
     public $nombre;
     public $telefono;
     public $email;
+    public $tienda_id;
+    
 
 
     public function __construct($args = [])
@@ -20,6 +22,8 @@ class Proveedor extends ActiveRecord
         $this->nombre = $args['nombre'] ?? '';
         $this->telefono = $args['telefono'] ?? '';
         $this->email = $args['email'] ?? '';
+        $this->tienda_id = $args['tienda_id'] ?? '';
+
     }
 
     public function validar()

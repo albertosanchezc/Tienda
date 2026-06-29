@@ -5,7 +5,7 @@ namespace Model;
 class Caja_historico extends ActiveRecord{
     // Base de datos
     protected static $tabla = 'caja_historico';
-    protected static $columnasDB = ['id', 'retiro_abono','cantidad','hora','fecha', 'saldo_caja'];
+    protected static $columnasDB = ['id', 'retiro_abono','cantidad','hora','fecha', 'saldo_caja','tienda_id'];
 
     public $id;
     public $retiro_abono;
@@ -13,6 +13,8 @@ class Caja_historico extends ActiveRecord{
     public $hora;
     public $fecha;
     public $saldo_caja;
+    public $tienda_id;
+
 
 
 
@@ -25,6 +27,8 @@ class Caja_historico extends ActiveRecord{
         $this->hora = $this->obtenerHoraActual();
         $this->fecha = $args['fecha'] ?? date('Y/m/d');
         $this->saldo_caja = $args['saldo_caja'] ?? '';
+        $this->tienda_id = $args['tienda_id'] ?? '';
+
 
     }
 

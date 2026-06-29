@@ -76,7 +76,8 @@ class PaginasController
     public static function ventasAPI()
     {
         $ventas = Ventas_Completas::obtenerVentas();
-        $inventario = Inventario_completo::join2('productos', 'inventario');
+        $tiendaId = $_SESSION['tienda_id'];
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
         $caja = Caja::find(1);
 
 
@@ -92,7 +93,8 @@ class PaginasController
     public static function metricasAPI()
     {
         $ventas = Ventas_Completas::obtenerVentasConcat();
-        $inventario = Inventario_completo::join2('productos', 'inventario');
+        $tiendaId = $_SESSION['tienda_id'];
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
         $cajas_historicos = Caja_historico::all();
         $proveedores = Proveedor::all();
         $visitas_proveedor = Visitas_proveedor::all();
