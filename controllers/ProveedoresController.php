@@ -15,17 +15,19 @@ class ProveedoresController
 {
     public static function proveedores(Router $router)
     {
+
+    
         $script = '<script src="/build/js/proveedores.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $titulo = 'Proveedores';
         $alertas = [];
-        
-        $tiendaId = $_SESSION('tienda_id');
+
+        $tiendaId = $_SESSION['tienda_id'];
         $proveedores = Proveedor::ALFTienda('nombre','ASC', $tiendaId);
+
         $resultado = $_GET['resultado'] ?? null;
         $alertas = Proveedor::getAlertas();
         // debuguear($resultado);
-
         if($_SERVER['REQUEST_METHOD']==="POST"){            
             $proveedores = new Proveedor();
             $alertas = Proveedor::getAlertas();
@@ -63,13 +65,14 @@ class ProveedoresController
         ]);
     }
     public static function proveedoresAPI(){
-        $proveedores = Proveedor::all();
-        $visitas_proveedor = Visitas_proveedor::all();
-        $visita_producto = Visita_Producto::all();
-        $productos = Productos::all();
-        $inventario = Inventario::all();
-        $ventas = Ventas_Completas::obtenerVentas();
 
+        $tiendaId = $_SESSION['tienda_id'];
+        $proveedores = Proveedor::where('tienda_id', $tiendaId);
+        $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
+        $visita_producto = Visita_Producto::where('tienda_id', $tiendaId);
+        $productos = Productos::where('tienda_id', $tiendaId);
+        $inventario = Inventario::where('tienda_id', $tiendaId);
+        $ventas = Ventas_Completas::obtenerVentas($tiendaId);
 
 
         echo json_encode([
