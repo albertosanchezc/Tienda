@@ -244,19 +244,19 @@
                         <div class="modalproveedores--aniadir__nombre">
                             <label for="entradanombre">Nombre: </label>
                             <input class="modalproveedores--aniadir__inputNombre" type="text" id="entradanombre"
-                                name="proveedores[nombre]" placeholder="Coca - Cola"
+                                name="aniadirProveedor[nombre]" placeholder="Coca - Cola"
                                 value="<?php echo s($proveedores->nombre); ?>" required>
                         </div>
                         <div class="modalproveedores--aniadir__telefono">
                             <label for="phone">Teléfono: </label>
                             <input class="modalproveedores--aniadir__inputTelefono" type="tel" id="phone"
-                                name="proveedores[telefono]" placeholder="+52 (415) 456 7890" maxlength="19"
+                                name="aniadirProveedor[telefono]" placeholder="+52 (415) 456 7890" maxlength="19"
                                 value="<?php echo s($proveedores->telefono); ?>">
                         </div>
                         <div class="modalproveedores--aniadir__email">
                             <label for="entradaemail">Email: </label>
                             <input class="modalproveedores--aniadir__inputEmail" type="email" id="entradaemail"
-                                name="proveedores[email]" placeholder="correo@correo.com"
+                                name="aniadirProveedor[email]" placeholder="correo@correo.com"
                                 value="<?php echo s($proveedores->email); ?>">
                         </div>
                     </div>
