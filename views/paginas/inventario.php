@@ -47,7 +47,7 @@
                     <select id="categoriaproducto">
                         <option selected value="">Selecciona una Categoría</option>
                         <?php foreach ($categorias as $categoria) { ?>
-                            <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                            <option <?php echo $categoria->id; ?>
                                 value="<?php echo s($categoria->id); ?>">
                                 <?php echo s($categoria->nombre); ?>
                             </option>
@@ -59,7 +59,7 @@
                     <select id="proveedorproducto">
                         <option selected value="">Selecciona un proveedor</option>
                         <?php foreach ($proveedores as $proveedor) { ?>
-                            <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                            <option <?php echo $proveedor->id; ?>
                                 value="<?php echo s($proveedor->id); ?>">
                                 <?php echo s($proveedor->nombre); ?>
                             </option>
@@ -146,7 +146,7 @@
                             <select name="inventarioCrear[categoria_id]" id="entradacategoria">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
-                                    <option <?php echo $inventario->categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                    <option <?php echo $categoria->id; ?>
                                         value="<?php echo s($categoria->id); ?>">
                                         <?php echo s($categoria->nombre); ?>
                                     </option>
@@ -158,7 +158,7 @@
                             <select name="inventarioCrear[proveedor_id]" id="entradaproveedor">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
-                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                    <option <?php echo $proveedor->id; ?>
                                         value="<?php echo s($proveedor->id); ?>">
                                         <?php echo s($proveedor->nombre); ?>
                                     </option>

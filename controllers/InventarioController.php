@@ -25,13 +25,16 @@ class InventarioController
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
         $alertas = [];
-        
+        $inventario_nuevo = new Inventario();
         $producto = new Productos;
         $categorias = Categorias::ALF('nombre', 'ASC');
-        $proveedores = Proveedor::ALFTienda('nombre', 'ASC',$_SESSION['tienda_id']);
+        $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $_SESSION['tienda_id']);
         $motivos = Motivos::ALF('motivo', 'ASC');
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario::where('tienda_id', $tiendaId);
+        
+        // debuguear($inventario);
+        
         $alertas = Productos::getAlertas();
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -60,7 +63,7 @@ class InventarioController
 
                 // debuguear($producto);
 
-                $inventario_nuevo = new Inventario();
+                // $inventario_nuevo = new Inventario();
                 $inventario_nuevo->precio_unitario_venta = $argsCrear['precio_unitario_venta'];
                 $inventario_nuevo->precio_compra = $argsCrear['precio_compra'];
                 $inventario_nuevo->categoria_id = $argsCrear['categoria_id'];
@@ -181,12 +184,14 @@ class InventarioController
             header('Location: /inventario');
         }
 
-        // $inventario = Inventario_completo::join2('productos', 'inventario');
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
         // debuguear($inventario);
 
         // debuguear($inventario_granel);
 
         // debuguear([$inventario, $inventario_granel]);
+        
+        
 
         $titulo = 'Inventario';
 

@@ -22,11 +22,11 @@ class ProveedoresController
 
         $tiendaId = $_SESSION['tienda_id'];
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
+        // debuguear($proveedores);
         $resultado = $_GET['resultado'] ?? null;
         $alertas = Proveedor::getAlertas();
         // debuguear($resultado);
         $proveedores = new Proveedor();
-
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // $proveedores = new Proveedor();
             $alertas = Proveedor::getAlertas();
@@ -34,7 +34,7 @@ class ProveedoresController
             $argsActualizarProveedor = $_POST['proveedoresActualizar'];
             $argsEliminarProveedor = $_POST['proveedoresEliminar'];
 
-
+            
             $metodoAniadir = !empty($argsAniadirProveedor);
             $metodoActualizar = !empty($argsActualizarProveedor);
             $metodoEliminar = !empty($argsEliminarProveedor);
@@ -42,6 +42,7 @@ class ProveedoresController
 
             if ($metodoAniadir) {
                 $proveedores->sincronizar($argsAniadirProveedor);
+                $proveedores->tienda_id = $tiendaId;
                 $proveedores->guardar();
             } elseif ($metodoActualizar) {
                 $proveedores->sincronizar($argsActualizarProveedor);
@@ -65,14 +66,17 @@ class ProveedoresController
     }
     public static function proveedoresAPI()
     {
-        $proveedores = Proveedor::all();
-        $visitas_proveedor = Visitas_proveedor::all();
+        $tiendaId = $_SESSION['tienda_id'];
+        $proveedores = Proveedor::where('tienda_id',$tiendaId);
+        $visitas_proveedor = Visitas_proveedor::where('tienda_id',$tiendaId);
         $visita_producto = Visita_Producto::all();
         $productos = Productos::all();
         $inventario = Inventario::all();
-        $ventas = Ventas_Completas::obtenerVentas();
+        $ventas = Ventas_Completas::obtenerVentas($tiendaId);
+        
 
-
+        
+        
 
         echo json_encode([
             'proveedores' => $proveedores,
