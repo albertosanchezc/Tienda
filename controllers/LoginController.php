@@ -62,6 +62,7 @@ class LoginController
     {
         $alertas = [];
         $usuario = new Usuarios;
+        $tienda = new Tienda;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

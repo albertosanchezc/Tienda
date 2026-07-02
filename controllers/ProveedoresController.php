@@ -19,15 +19,16 @@ class ProveedoresController
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $titulo = 'Proveedores';
         $alertas = [];
-        
-        $tiendaId = $_SESSION('tienda_id');
-        $proveedores = Proveedor::ALFTienda('nombre','ASC', $tiendaId);
+
+        $tiendaId = $_SESSION['tienda_id'];
+        $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
         $resultado = $_GET['resultado'] ?? null;
         $alertas = Proveedor::getAlertas();
         // debuguear($resultado);
+        $proveedores = new Proveedor();
 
-        if($_SERVER['REQUEST_METHOD']==="POST"){            
-            $proveedores = new Proveedor();
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            // $proveedores = new Proveedor();
             $alertas = Proveedor::getAlertas();
             $argsAniadirProveedor = $_POST['aniadirProveedor'];
             $argsActualizarProveedor = $_POST['proveedoresActualizar'];
@@ -39,13 +40,13 @@ class ProveedoresController
             $metodoEliminar = !empty($argsEliminarProveedor);
 
 
-            if($metodoAniadir){
+            if ($metodoAniadir) {
                 $proveedores->sincronizar($argsAniadirProveedor);
                 $proveedores->guardar();
-            } elseif($metodoActualizar){
+            } elseif ($metodoActualizar) {
                 $proveedores->sincronizar($argsActualizarProveedor);
-                $proveedores->guardar();                
-            } elseif($metodoEliminar){
+                $proveedores->guardar();
+            } elseif ($metodoEliminar) {
 
                 $proveedores = Proveedor::find($argsEliminarProveedor['id']);
                 $proveedores->eliminar();
@@ -59,10 +60,11 @@ class ProveedoresController
             'titulo' => $titulo,
             'proveedores' => $proveedores,
             'resultado' => $resultado,
-            'alertas'=> $alertas
+            'alertas' => $alertas
         ]);
     }
-    public static function proveedoresAPI(){
+    public static function proveedoresAPI()
+    {
         $proveedores = Proveedor::all();
         $visitas_proveedor = Visitas_proveedor::all();
         $visita_producto = Visita_Producto::all();
