@@ -58,7 +58,7 @@
                                 <select class="selectSpecial" id="bnombre">
                                     <option selected value="">Selecciona un proveedor</option>
                                     <?php foreach ($proveedores as $proveedor) { ?>
-                                        <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                        <option <?php echo $proveedor->id; ?>
                                             value="<?php echo s($proveedor->id); ?>">
                                             <?php echo s($proveedor->nombre); ?>
                                         </option>
