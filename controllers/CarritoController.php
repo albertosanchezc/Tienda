@@ -23,6 +23,7 @@ class CarritoController
         $caja = Caja::find(1);
         // Todo el cálculo del carrito_id deberá hacerse después de finalizar la venta
         $venta_previa = Ventas::lastofTable('ventas', 'carrito_id');
+        
         $carrito_id = $venta_previa->carrito_id;
         $carrito_id++;
         // $venta->carrito_id = $carrito_id;

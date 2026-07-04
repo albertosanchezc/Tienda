@@ -257,8 +257,7 @@
                             <select name="inventarioActualizar[categoria_id]" id="entradacategoria">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
-                                    <option <?php echo $inventario->categoria_id === $categoria->id ? 'selected' : ''; ?>
-                                        value="<?php echo s($categoria->id); ?>">
+                                    <option value="<?php echo s($categoria->id); ?>">
                                         <?php echo s($categoria->nombre); ?>
                                     </option>
                                 <?php } ?>
@@ -269,8 +268,7 @@
                             <select name="inventarioActualizar[proveedor_id]" id="entradaproveedor">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
-                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
-                                        value="<?php echo s($proveedor->id); ?>">
+                                    <option value="<?php echo s($proveedor->id); ?>">
                                         <?php echo s($proveedor->nombre); ?>
                                     </option>
                                 <?php } ?>

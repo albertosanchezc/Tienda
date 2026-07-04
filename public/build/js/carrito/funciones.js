@@ -977,10 +977,10 @@ function mostrarProductosCarrito(productos = articulosCarrito) {
     console.log('Articulos carrito desde mostrar productosCarrito', productos);
 
     productos.forEach(articulo => {
-        const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta, imagen, granel } = articulo;
+        const { id, cantidad, nombre, descripcion, codigo_barras, precio_unitario_venta, imagen, granel, tienda_id } = articulo;
         let rutaImagen = '';
         if (imagen) {
-            rutaImagen = `/imagenes/${imagen}`;
+            rutaImagen = `/imagenes/tienda_${tienda_id}/${imagen}`;
         }
 
         console.log(articulosCarrito);
@@ -1155,12 +1155,12 @@ function mostrarDetallesProducto(articuloCarritoAModificar) {
     limpiarHTMLElemento(contenedorDetalles);
 
     console.log("Articulo desde mostrar detalles Producto", articuloCarritoAModificar);
-    const { nombre, descripcion, cantidad, precio_unitario_venta, imagen, granel, codigo_barras } = articuloCarritoAModificar;
+    const { nombre, descripcion, cantidad, precio_unitario_venta, imagen, granel, codigo_barras, tienda_id } = articuloCarritoAModificar;
     console.log("Cantidad", articuloCarritoAModificar.cantidad);
 
     let rutaImagen = '';
     if (rutaImagen != 'null') {
-        rutaImagen = `/imagenes/${imagen}`;
+        rutaImagen = `/imagenes/tienda_${tienda_id}/${imagen}`;
     }
     let totalD = 0;
     if (granel === '0') {
@@ -1286,10 +1286,10 @@ function mostrarTotalesCarrito(articulosCarrito) {
 function mostrarProductosModal(productosFiltrados, tbodyTablaModal, tipo) {
     limpiarHTMLElemento(tbodyTablaModal);
     productosFiltrados.forEach(producto => {
-        const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras, imagen } = producto;
+        const { id, cantidad, nombre, descripcion, precio_unitario_venta, codigo_barras, imagen, tienda_id } = producto;
         let rutaImagen = '';
         if (rutaImagen != 'null') {
-            rutaImagen = `/imagenes/${imagen}`;
+            rutaImagen = `/imagenes/tienda_${tienda_id}/${imagen}`;
         }
         const tr = document.createElement('tr');
         tr.innerHTML = `     

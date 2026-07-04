@@ -305,7 +305,7 @@ class ActiveRecord
 
         return self::consultarSQL($query);
     }
-    
+
     public static function obtenerVentasConcat()
     {
         $query = "SELECT 
@@ -343,8 +343,17 @@ class ActiveRecord
     //Obtiene la última columna(especificada) de una tabla 
     public static function lastofTable($tabla, $columna)
     {
-        $query = "SELECT  " . $columna . "  FROM " . static::$tabla . " ORDER BY " . $columna . " DESC LIMIT 1 ";
+        $query = "SELECT $columna
+              FROM " . static::$tabla . "
+              ORDER BY $columna DESC
+              LIMIT 1";
+
         $resultado = self::consultarSQL($query);
+
+        if (empty($resultado)) {
+            return null;
+        }
+
         return array_shift($resultado);
     }
 

@@ -25,10 +25,11 @@ class InventarioController
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
         $alertas = [];
+        $tiendaId = $_SESSION['tienda_id'];
         $inventario_nuevo = new Inventario();
         $producto = new Productos;
         $categorias = Categorias::ALF('nombre', 'ASC');
-        $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $_SESSION['tienda_id']);
+        $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
         $motivos = Motivos::ALF('motivo', 'ASC');
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario::where('tienda_id', $tiendaId);
@@ -129,6 +130,7 @@ class InventarioController
                 $inventarioActualizar->cantidad = $cantidad;
                 $productoAnterior = Productos::find($id);
                 $inventarioActualizar->codigo_barras = $productoAnterior->codigo_barras;
+                $inventarioActualizar->tienda_id = $productoAnterior->tienda_id;
                 $inventarioActualizar->guardar();
 
                 $nombreImagenActualizar = md5(uniqid(rand(), true)) . ".jpg";
@@ -148,6 +150,8 @@ class InventarioController
                     $productoActualizar->imagen = $productoAnterior->imagen;
                 }
                 $productoActualizar->codigo_barras = $productoAnterior->codigo_barras;
+                $productoActualizar->tienda_id = $productoAnterior->tienda_id;
+
                 // debuguear($productoActualizar);
                 $productoActualizar->guardar();
             } elseif ($metodoActualizarStock) { // El método fue actualizar Stock
