@@ -54,7 +54,6 @@ class ActiveRecord
         if ($resultado) {
             $this->id = self::$db->insert_id;
         }
-
         return $resultado;
     }
     public function actualizar()
@@ -72,7 +71,6 @@ class ActiveRecord
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 ";
 
-        // debuguear($query);
 
         $resultado = self::$db->query($query);
     }

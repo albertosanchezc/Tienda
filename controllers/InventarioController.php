@@ -32,21 +32,21 @@ class InventarioController
         $motivos = Motivos::ALF('motivo', 'ASC');
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario::where('tienda_id', $tiendaId);
-        
+
         // debuguear($inventario);
-        
+
         $alertas = Productos::getAlertas();
+
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // debuguear($_POST);
             $alertas = Productos::getAlertas();
-            $argsCrear = $_POST['inventarioCrear'];
-            $argsActualizar = $_POST['inventarioActualizar'];
-            $argsActualizarStock = $_POST['inventarioActualizarStock'];
-            $argsEliminarStock = $_POST['inventarioEliminarStock'];
+            $argsCrear = $_POST['inventarioCrear'] ?? [];
+            $argsActualizar = $_POST['inventarioActualizar'] ?? [];
+            $argsActualizarStock = $_POST['inventarioActualizarStock'] ?? [];
+            $argsEliminarStock = $_POST['inventarioEliminarStock'] ?? [];
 
 
-            $producto = new Productos();
 
             $metodoCrear = !empty($argsCrear);
             $metodoActualizar = !empty($argsActualizar);
@@ -61,7 +61,6 @@ class InventarioController
                 $producto->codigo_barras = $argsCrear['codigo_barras'];
                 $producto->tienda_id = $tiendaId;
 
-                // debuguear($producto);
 
                 // $inventario_nuevo = new Inventario();
                 $inventario_nuevo->precio_unitario_venta = $argsCrear['precio_unitario_venta'];
@@ -82,7 +81,10 @@ class InventarioController
 
                 $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
 
-                if ($_FILES['inventarioCrear']['tmp_name']['imagen']) {
+                if (
+                    isset($_FILES['inventarioCrear']['tmp_name']['imagen']) &&
+                    $_FILES['inventarioCrear']['tmp_name']['imagen']
+                ) {
                     //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
                     $image = Image::make($_FILES['inventarioCrear']['tmp_name']['imagen'])->fit(900, 800);
                     $producto->setImagen($nombreImagen);
@@ -100,7 +102,9 @@ class InventarioController
 
                 $codigo_barras = $producto->codigo_barras;
                 $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
+
                 if (empty($producto_nuevo)) { // Si no se encuentra dentro de la base
+
                     $producto->guardar();
                     // Inventario::setAlerta('exito', 'Guardado Correctamente');
                 }
@@ -190,8 +194,8 @@ class InventarioController
         // debuguear($inventario_granel);
 
         // debuguear([$inventario, $inventario_granel]);
-        
-        
+
+
 
         $titulo = 'Inventario';
 

@@ -15,6 +15,9 @@ use Controllers\VentasYCancelacionesController;
 
 $router = new Router();
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 //PUNTO DE VENTA
 // Login y Autenticación
 $router->get('/login', [LoginController::class, 'login']);

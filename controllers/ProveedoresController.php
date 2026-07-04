@@ -21,31 +21,33 @@ class ProveedoresController
         $alertas = [];
 
         $tiendaId = $_SESSION['tienda_id'];
+        $proveedor = new Proveedor();
+
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
         // debuguear($proveedores);
         $resultado = $_GET['resultado'] ?? null;
         $alertas = Proveedor::getAlertas();
         // debuguear($resultado);
-        $proveedores = new Proveedor();
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // $proveedores = new Proveedor();
             $alertas = Proveedor::getAlertas();
             $argsAniadirProveedor = $_POST['aniadirProveedor'];
             $argsActualizarProveedor = $_POST['proveedoresActualizar'];
             $argsEliminarProveedor = $_POST['proveedoresEliminar'];
-
+            // debuguear($_POST);
             
             $metodoAniadir = !empty($argsAniadirProveedor);
             $metodoActualizar = !empty($argsActualizarProveedor);
             $metodoEliminar = !empty($argsEliminarProveedor);
 
-
             if ($metodoAniadir) {
-                $proveedores->sincronizar($argsAniadirProveedor);
-                $proveedores->tienda_id = $tiendaId;
-                $proveedores->guardar();
+                $proveedor->sincronizar($argsAniadirProveedor);
+
+                $proveedor->tienda_id = $tiendaId;
+                $proveedor->guardar();
             } elseif ($metodoActualizar) {
                 $proveedores->sincronizar($argsActualizarProveedor);
+                $proveedores->tienda_id = $tiendaId;
                 $proveedores->guardar();
             } elseif ($metodoEliminar) {
 
@@ -70,8 +72,8 @@ class ProveedoresController
         $proveedores = Proveedor::where('tienda_id',$tiendaId);
         $visitas_proveedor = Visitas_proveedor::where('tienda_id',$tiendaId);
         $visita_producto = Visita_Producto::all();
-        $productos = Productos::all();
-        $inventario = Inventario::all();
+        $productos = Productos::where('tienda_id', $tiendaId);
+        $inventario = Inventario::where('tienda_id', $tiendaId);
         $ventas = Ventas_Completas::obtenerVentas($tiendaId);
         
 
