@@ -102,14 +102,14 @@ class InventarioController
 
 
                 $codigo_barras = $producto->codigo_barras;
-                $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
+                $producto_nuevo = Productos::wherebelongsTo('codigo_barras', $codigo_barras, 'tienda_id', $tiendaId);
 
                 if (empty($producto_nuevo)) { // Si no se encuentra dentro de la base
 
                     $producto->guardar();
                     // Inventario::setAlerta('exito', 'Guardado Correctamente');
                 }
-                $producto_nuevo = Productos::where('codigo_barras', $codigo_barras);
+                $producto_nuevo = Productos::wherebelongsTo('codigo_barras', $codigo_barras, 'tienda_id', $tiendaId);
 
 
                 $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
