@@ -136,33 +136,38 @@ class LoginController
         $router->render('auth/mensaje');
     }
 
-    public static function confirmar(Router $router)
-    {
-        $token = $_GET['token'];
+public static function confirmar(Router $router)
+{
+    $errores = [];
 
-        if (!$token) header('Location: /');
+    // $token = $_GET['token'];
+    $token = s($_GET['token'] ?? '');
 
-        // Encontrar al usuario con este token
-        $usuario = Usuarios::where('token', $token);
-
-
-        if (empty($usuario)) {
-            // No se encontró un usuario con este token
-            Usuarios::setError('La cuenta no se confirmó');
-            $errores = Usuarios::getErrores();
-        } else {
-            $usuario[0]->confirmado = 1;
-            $usuario[0]->token = '';
-            unset($usuario[0]->password2);
-
-            $usuario[0]->guardar();
-        }
-
-
-        $router->render('auth/confirmar', [
-            'errores' => $errores
-        ]);
+    if (!$token) {
+        header('Location: /');
+        exit;
     }
+
+    $usuario = Usuarios::where('token', $token);
+
+    if (empty($usuario)) {
+
+        Usuarios::setError('La cuenta no se confirmó');
+        $errores = Usuarios::getErrores();
+
+    } else {
+
+        $usuario[0]->confirmado = 1;
+        $usuario[0]->token = '';
+        unset($usuario[0]->password2);
+
+        $usuario[0]->guardar();
+    }
+
+    $router->render('auth/confirmar', [
+        'errores' => $errores
+    ]);
+}
 
 
     public static function recuperar(Router $router)

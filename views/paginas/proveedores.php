@@ -252,7 +252,7 @@
                                 value="<?php echo s($proveedor->telefono ?? ''); ?>">
                         </div>
                         <div class="modalproveedores--aniadir__email">
-                            <label for="entradaemail">Email: </label>
+                            <label for="entradaemail">Email: </label> 
                             <input class="modalproveedores--aniadir__inputEmail" type="email" id="entradaemail"
                                 name="aniadirProveedor[email]" placeholder="correo@correo.com"
                                 value="<?php echo s($proveedor->email ?? ''); ?>">
