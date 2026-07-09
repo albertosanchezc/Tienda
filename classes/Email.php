@@ -60,15 +60,19 @@ class Email
         //         'allow_self_signed' => true,
         //     ],
         // ];
-        if (!$mail->send()) {
-            die($mail->ErrorInfo);
-        }
+        // if (!$mail->send()) {
+        //     die($mail->ErrorInfo);
+        // }
         // if ($mail->send()) {
         //     echo 'Message has been sent';
         // } else {
         //     echo 'Message could not be sent.';
         //     echo 'Mailer Error: ' . $mail->ErrorInfo;
         // }
+
+        $mail->Body = $contenido;
+
+        return $mail->send();
     }
 
     public function enviarInstrucciones()
