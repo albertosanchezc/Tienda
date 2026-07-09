@@ -104,7 +104,8 @@ class Email
         $mail->Body = $contenido;
 
         //Enviar el mail
-        $mail->send();
+        // $mail->send();
+        return $mail->send();
     }
 
     public function enviarConfirmacionMesero()
@@ -137,11 +138,13 @@ class Email
         $mail->Body = $contenido;
 
 
-        if ($mail->send()) {
-            echo 'Message has been sent';
-        } else {
-            echo 'Message could not be sent.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        }
+        // if ($mail->send()) {
+        //     echo 'Message has been sent';
+        // } else {
+        //     echo 'Message could not be sent.';
+        //     echo 'Mailer Error: ' . $mail->ErrorInfo;
+        // }
+
+        return $mail->send();
     }
 }
