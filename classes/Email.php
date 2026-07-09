@@ -27,12 +27,21 @@ class Email
         // create a new object
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = $_ENV['EMAIL_HOST'];
+        // $mail->Host = $_ENV['EMAIL_HOST'];
+        $mail->Host = gethostbyname($_ENV['EMAIL_HOST']);
         $mail->SMTPAuth = true;
         $mail->Port = $_ENV['EMAIL_PORT'];
         $mail->Username = $_ENV['EMAIL_USER'];
         $mail->Password = $_ENV['EMAIL_PASS'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'cafile' => 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\extras\ssl\cacert.pem',
+                'verify_peer' => true,
+                'verify_peer_name' => true,
+            ],
+        ];
 
         $mail->setFrom($_ENV['EMAIL_FROM'], $_ENV['EMAIL_TO_2']);
         $mail->addAddress($this->email, $this->nombre);
@@ -70,7 +79,7 @@ class Email
         //     echo 'Mailer Error: ' . $mail->ErrorInfo;
         // }
 
-        $mail->Body = $contenido;
+        // $mail->Body = $contenido;
 
         return $mail->send();
     }

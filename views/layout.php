@@ -1,8 +1,23 @@
 <?php
+
+use Classes\ConfiguracionTienda;
+
 if (!isset($_SESSION)) {
     session_start();
 }
 $auth = $_SESSION['login'] ?? false;
+
+
+$pendientesConfiguracion = [];
+
+if ($auth && isset($_SESSION['tienda_id'])) {
+
+    $pasosConfiguracion = ConfiguracionTienda::estado($_SESSION['tienda_id']);
+
+    $pendientesConfiguracion = array_filter($pasosConfiguracion, function ($paso) {
+        return !$paso['completo'];
+    });
+}
 
 if (!isset($inicio)) {
     $inicio = false;
@@ -132,6 +147,66 @@ if (!isset($inicio)) {
     <?php echo $contenido; ?>
     <?php echo $script ?? ''; ?>
     <?php echo $script2 ?? ''; ?>
+
+    <?php if (!empty($pendientesConfiguracion)) { ?>
+
+        <div class="config-overlay" id="configuracionTienda">
+
+            <div class="config-panel">
+
+                <div class="config-header">
+
+                    <h2>
+                        Configuración inicial
+                    </h2>
+
+                    <button onclick="cerrarConfiguracion()">
+                        ×
+                    </button>
+
+                </div>
+
+
+                <p>
+                    Tu tienda todavía tiene pasos pendientes.
+                </p>
+
+
+                <div class="config-list">
+
+                    <?php foreach ($pendientesConfiguracion as $paso) { ?>
+
+                        <div class="config-item">
+
+                            <div>
+                                <strong>
+                                    <?= $paso['nombre'] ?>
+                                </strong>
+                            </div>
+
+
+                            <?php if (isset($paso['ruta'])) { ?>
+
+                                <a href="<?= $paso['ruta'] ?>">
+                                    Configurar
+                                </a>
+
+                            <?php } ?>
+
+                        </div>
+
+
+                    <?php } ?>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    <?php } ?>
 
     <script src="../build/js/bundle.min.js"></script>
 

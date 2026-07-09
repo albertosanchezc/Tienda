@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\ConfiguracionTienda;
 use MVC\Router;
 use Model\Admin;
 use Classes\Email;
@@ -45,6 +46,21 @@ class LoginController
                         $_SESSION['login'] = true;
                         $_SESSION['tienda_id'] = $usuario->tienda_id;
 
+                        $pasos = ConfiguracionTienda::estado($usuario->tienda_id);
+
+
+                        foreach ($pasos as $paso) {
+
+                            if (!$paso['completo']) {
+
+                                header("Location: " . $paso['ruta']);
+                                exit;
+                            }
+                        }
+
+
+                        header('Location: /carrito');
+                        exit;
                         // $_SESSION['rol'] = $usuario->rol_id ?? null;
                     } else {
                         $errores = Admin::getErrores();
@@ -111,7 +127,10 @@ class LoginController
                         $resultado = $caja->guardar();
 
                         $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-                        $email->enviarConfirmacion();
+                        // $email->enviarConfirmacion();
+                        if (!$email->enviarConfirmacion()) {
+                            die('No se pudo enviar correo');
+                        }
 
 
                         if ($resultado) {
@@ -136,38 +155,37 @@ class LoginController
         $router->render('auth/mensaje');
     }
 
-public static function confirmar(Router $router)
-{
-    $errores = [];
+    public static function confirmar(Router $router)
+    {
+        $errores = [];
 
-    // $token = $_GET['token'];
-    $token = s($_GET['token'] ?? '');
+        // $token = $_GET['token'];
+        $token = s($_GET['token'] ?? '');
 
-    if (!$token) {
-        header('Location: /');
-        exit;
+        if (!$token) {
+            header('Location: /');
+            exit;
+        }
+
+        $usuario = Usuarios::where('token', $token);
+
+        if (empty($usuario)) {
+
+            Usuarios::setError('La cuenta no se confirmó');
+            $errores = Usuarios::getErrores();
+        } else {
+
+            $usuario[0]->confirmado = 1;
+            $usuario[0]->token = '';
+            unset($usuario[0]->password2);
+
+            $usuario[0]->guardar();
+        }
+
+        $router->render('auth/confirmar', [
+            'errores' => $errores
+        ]);
     }
-
-    $usuario = Usuarios::where('token', $token);
-
-    if (empty($usuario)) {
-
-        Usuarios::setError('La cuenta no se confirmó');
-        $errores = Usuarios::getErrores();
-
-    } else {
-
-        $usuario[0]->confirmado = 1;
-        $usuario[0]->token = '';
-        unset($usuario[0]->password2);
-
-        $usuario[0]->guardar();
-    }
-
-    $router->render('auth/confirmar', [
-        'errores' => $errores
-    ]);
-}
 
 
     public static function recuperar(Router $router)
