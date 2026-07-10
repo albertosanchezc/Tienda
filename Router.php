@@ -31,6 +31,8 @@ class Router
             '/metricas',
             '/proveedores',
             '/ventasycancelaciones',
+            '/movimientoproducto',
+            '/categorias'
         ];
 
         $urlActual = $_SERVER['PATH_INFO'] ?? '/';
