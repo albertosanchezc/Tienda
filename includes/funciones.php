@@ -26,6 +26,15 @@ function estaAutenticado()
     }
 }
 
+function autenticado(): bool
+{
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+
+    return $_SESSION['login'] ?? false;
+}
+
 function isAdmin()
 {
     if (!isset($_SESSION['admin'])) {

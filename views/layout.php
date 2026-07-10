@@ -56,14 +56,14 @@ if (!isset($inicio)) {
                 <div class="derecha">
                     <img src="/build/img/dark-mode.svg" alt="Boton Modo Oscuro" class="dark-mode-boton">
                     <nav class="navegacion">
-                        <a class="verde" href="/carrito">Carrito</a>
-                        <a class="azul" href="/inventario">Inventario</a>
-                        <a class="naranja" href="/caja">Caja</a>
-                        <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
-                        <a class="rosa" href="/metricas">Métricas</a>
-                        <a class="morado" href="/proveedores">Proveedores</a>
-
-
+                        <?php if (autenticado()): ?>
+                            <a class="verde" href="/carrito">Carrito</a>
+                            <a class="azul" href="/inventario">Inventario</a>
+                            <a class="naranja" href="/caja">Caja</a>
+                            <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
+                            <a class="rosa" href="/metricas">Métricas</a>
+                            <a class="morado" href="/proveedores">Proveedores</a>
+                        <?php endif; ?>
                         <?php if ($auth) { ?>
                             <a href="/logout">Cerrar Sesión</a>
                         <?php } else { ?>
@@ -155,12 +155,14 @@ if (!isset($inicio)) {
     <footer class="footer seccion">
         <div class="contenedor contenedor-footer">
             <nav class="navegacion">
-                <a class="verde" href="/carrito">Carrito</a>
-                <a class="azul" href="/inventario">Inventario</a>
-                <a class="naranja" href="/caja">Caja</a>
-                <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
-                <a class="rosa" href="/metricas">Métricas</a>
-                <a class="morado" href="/proveedores">Proveedores</a>
+                <?php if (autenticado()): ?>
+                    <a class="verde" href="/carrito">Carrito</a>
+                    <a class="azul" href="/inventario">Inventario</a>
+                    <a class="naranja" href="/caja">Caja</a>
+                    <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
+                    <a class="rosa" href="/metricas">Métricas</a>
+                    <a class="morado" href="/proveedores">Proveedores</a>
+                <?php endif; ?>
                 <?php if ($auth) { ?>
                     <a href="/logout">Cerrar Sesión</a>
                 <?php } else { ?>
