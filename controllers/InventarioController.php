@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\ConfiguracionTienda;
 use Model\Motivos;
 use Model\Visita_Producto;
 use Model\Visitas_proveedor;
@@ -19,6 +20,11 @@ class InventarioController
     public static function inventario(Router $router)
     {
 
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        
+        
         $script = '<script src="/build/js/inventario.js"></script>
         <script src="/build/js/JsBarcode.all.min.js"></script>
 
