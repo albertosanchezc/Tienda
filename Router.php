@@ -62,7 +62,10 @@ class Router
     // Muestra una vista
     public function render($view, $datos = [])
     {
-
+        $datos = array_merge([
+            'inicio' => false
+        ], $datos);
+        
         foreach ($datos as $key => $value) {
             $$key = $value;
         }

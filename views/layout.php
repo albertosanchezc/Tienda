@@ -1,30 +1,3 @@
-<?php
-
-use Classes\ConfiguracionTienda;
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-
-
-$pendientesConfiguracion = [];
-
-if (autenticado() && isset($_SESSION['tienda_id'])) {
-
-    $pasosConfiguracion = ConfiguracionTienda::estado($_SESSION['tienda_id']);
-
-    $pendientesConfiguracion = array_filter($pasosConfiguracion, function ($paso) {
-        return !$paso['completo'];
-    });
-}
-
-if (!isset($inicio)) {
-    $inicio = false;
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,6 +15,8 @@ if (!isset($inicio)) {
 
 <body>
     <?php require __DIR__ . '/templates/header.php'; ?>
+    <?php require __DIR__ . '/templates/asistente-configuracion.php'; ?>
+
 
 
     <?php echo $contenido; ?>
@@ -49,7 +24,7 @@ if (!isset($inicio)) {
     <?php echo $script2 ?? ''; ?>
 
 
-    <script src="../build/js/bundle.min.js"></script>
+    <script src="/build/js/bundle.min.js"></script>
 
     <?php require __DIR__ . '/templates/footer.php'; ?>
 </body>
