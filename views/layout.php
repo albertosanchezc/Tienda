@@ -5,13 +5,12 @@ use Classes\ConfiguracionTienda;
 if (!isset($_SESSION)) {
     session_start();
 }
-$auth = $_SESSION['login'] ?? false;
 
 
 
 $pendientesConfiguracion = [];
 
-if ($auth && isset($_SESSION['tienda_id'])) {
+if (autenticado() && isset($_SESSION['tienda_id'])) {
 
     $pasosConfiguracion = ConfiguracionTienda::estado($_SESSION['tienda_id']);
 
@@ -56,18 +55,16 @@ if (!isset($inicio)) {
                 <div class="derecha">
                     <img src="/build/img/dark-mode.svg" alt="Boton Modo Oscuro" class="dark-mode-boton">
                     <nav class="navegacion">
-                        <?php if (autenticado()): ?>
+                        <?php if (autenticado()) { ?>
                             <a class="verde" href="/carrito">Carrito</a>
                             <a class="azul" href="/inventario">Inventario</a>
                             <a class="naranja" href="/caja">Caja</a>
                             <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
                             <a class="rosa" href="/metricas">Métricas</a>
                             <a class="morado" href="/proveedores">Proveedores</a>
-                        <?php endif; ?>
-                        <?php if ($auth) { ?>
-                            <a href="/logout">Cerrar Sesión</a>
+                            <a class="gris" href="/logout">Cerrar Sesión</a>
                         <?php } else { ?>
-                            <a href="/login">Iniciar Sesión</a>
+                            <a class="cyan" href="/login">Iniciar Sesión</a>
                         <?php } ?>
                     </nav>
                 </div>
@@ -155,18 +152,16 @@ if (!isset($inicio)) {
     <footer class="footer seccion">
         <div class="contenedor contenedor-footer">
             <nav class="navegacion">
-                <?php if (autenticado()): ?>
+                <?php if (autenticado()) { ?>
                     <a class="verde" href="/carrito">Carrito</a>
                     <a class="azul" href="/inventario">Inventario</a>
                     <a class="naranja" href="/caja">Caja</a>
                     <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
                     <a class="rosa" href="/metricas">Métricas</a>
                     <a class="morado" href="/proveedores">Proveedores</a>
-                <?php endif; ?>
-                <?php if ($auth) { ?>
-                    <a href="/logout">Cerrar Sesión</a>
+                    <a class="gris" href="/logout">Cerrar Sesión</a>
                 <?php } else { ?>
-                    <a href="/login">Iniciar Sesión</a>
+                    <a class="cyan" href="/login">Iniciar Sesión</a>
                 <?php } ?>
             </nav>
         </div>

@@ -103,6 +103,14 @@
     color: rgb(194, 39, 255);
 }
 
+.cyan:hover{
+    color: rgb(0, 217, 255);
+}
+
+.gris:hover{
+    color: rgb(190, 190, 190);
+}
+
 // Menú de hamburguesa
 .mobile-menu {
     @include tablet {
