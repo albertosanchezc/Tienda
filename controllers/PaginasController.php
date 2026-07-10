@@ -23,6 +23,7 @@ class PaginasController
 {
     public static function index(Router $router)
     {
+
         $inicio = true;
         $titulo = 'Inicio';
         $router->render('paginas/index', [
@@ -40,7 +41,7 @@ class PaginasController
 
         $categorias = Categorias::ALF('nombre', 'ASC');
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
-        $ventas = Ventas::where('tienda_id',$tiendaId);
+        $ventas = Ventas::where('tienda_id', $tiendaId);
 
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
@@ -96,8 +97,8 @@ class PaginasController
         $ventas = Ventas_Completas::obtenerVentasConcat();
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
-        $cajas_historicos = Caja_historico::where('tienda_id',$tiendaId);
-        $proveedores = Proveedor::where('tienda_id',$tiendaId);
+        $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
+        $proveedores = Proveedor::where('tienda_id', $tiendaId);
         $visitas_proveedor = Visitas_proveedor::all();
         $categorias = Categorias::ALF('nombre', 'ASC');
 
@@ -115,6 +116,9 @@ class PaginasController
 
     public static function metricas(Router $router)
     {
+
+        estaAutenticado();
+
         $titulo = 'Métricas';
 
         $script = '<script src="/build/js/metricas.js"></script>

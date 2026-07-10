@@ -10,7 +10,7 @@ class CajaController
 {
     public static function caja(Router $router)
     {
-
+        estaAutenticado();
         $script = '<script src="/build/js/caja.js" type="module"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $titulo = 'Caja';

@@ -14,7 +14,7 @@ function estaAutenticado()
     session_start();
 
     if (!$_SESSION['login']) {
-        header('Location: /');
+        header('Location: /login');
     }
 }
 
