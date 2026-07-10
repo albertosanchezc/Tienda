@@ -17,6 +17,9 @@
     box-shadow:-5px 0 15px rgba(0,0,0,.2);
 }
 
+.config-item p {
+    font-weight: $bold;
+}
 
 .config-header {
     display:flex;
@@ -28,8 +31,37 @@
 .config-item {
     margin-top:1rem;
     padding:1rem;
-    border-left:4px solid orange;
-    background:#fff7ed;
     display:flex;
     justify-content:space-between;
+    align-items:center;
+    border-left:4px solid;
+}
+
+.config-item.pendiente{
+    border-left:4px solid orange;
+    background:#fff7ed;
+}
+
+.config-item.completo {
+    border-left:4px solid rgb(115,255,0);
+    background:#f0ffe6;
+}
+
+.config-item:has(p) {
+    display: block;
+}
+
+.config-item span {
+    font-weight:bold;
+    color:rgb(80,150,0);
+}
+
+.config-item a {
+    color:#6b21a8;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.config-item a:hover {
+    text-decoration:none;
 }

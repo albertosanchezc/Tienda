@@ -5,36 +5,36 @@ namespace Classes;
 use Model\Proveedor;
 use Model\Productos;
 use Model\Caja;
+use Model\Usuarios;
 
 class ConfiguracionTienda
 {
 
     public static function estado($tienda_id)
     {
+        $usuario = Usuarios::find($_SESSION['id']);
 
         return [
             [
+                'id' => 'cuenta',
                 'nombre' => 'Cuenta confirmada',
-                'completo' => true,
+                'completo' => $usuario->confirmado == 1,
+                'mensaje' => 'Revisa tu correo electrónico para confirmar tu cuenta.'
             ],
 
             [
+                'id' => 'proveedor',
                 'nombre' => 'Registrar proveedor',
                 'completo' => !empty(Proveedor::where('tienda_id', $tienda_id)),
                 'ruta' => '/proveedores'
             ],
 
             [
+                'id' => 'producto',
                 'nombre' => 'Registrar producto',
                 'completo' => !empty(Productos::where('tienda_id', $tienda_id)),
                 'ruta' => '/inventario'
-            ] //,
-
-            // [
-            //     'nombre' => 'Configurar caja',
-            //     'completo' => !empty(Caja::where('tienda_id', $tienda_id)),
-            //     'ruta' => '/caja'
-            // ],
+            ]
         ];
     }
 
@@ -56,12 +56,29 @@ class ConfiguracionTienda
         ];
     }
 
+    private static function pasoCompletado($pasos, $id)
+    {
+        foreach ($pasos as $paso) {
+            if ($paso['id'] === $id) {
+                return $paso['completo'];
+            }
+        }
+
+        return false;
+    }
+
     public static function puedeAcceder($modulo, $tienda_id)
     {
         $pasos = self::estado($tienda_id);
 
-        $proveedorRegistrado = $pasos[1]['completo'];
-        $productoRegistrado  = $pasos[2]['completo'];
+        $cuentaConfirmada = self::pasoCompletado($pasos, 'cuenta');
+        $proveedorRegistrado = self::pasoCompletado($pasos, 'proveedor');
+        $productoRegistrado = self::pasoCompletado($pasos, 'producto');
+
+        if($cuentaConfirmada){
+            return false;
+        }
+
 
         switch ($modulo) {
 
@@ -72,8 +89,6 @@ class ConfiguracionTienda
                 return $proveedorRegistrado;
 
             case 'carrito':
-                return $proveedorRegistrado && $productoRegistrado;
-
             case 'ventas':
                 return $proveedorRegistrado && $productoRegistrado;
 
@@ -105,10 +120,6 @@ class ConfiguracionTienda
 
     public static function validarAcceso($modulo)
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
         $tienda_id = $_SESSION['tienda_id'] ?? null;
 
         if (!$tienda_id) {

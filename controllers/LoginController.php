@@ -51,7 +51,7 @@ class LoginController
 
                         foreach ($pasos as $paso) {
 
-                            if (!$paso['completo']) {
+                            if (!$paso['completo'] && isset($paso['ruta'])) {
 
                                 header("Location: " . $paso['ruta']);
                                 exit;

@@ -114,4 +114,16 @@
             }
         }
     }
+
+
+    .config-panel{
+        background-color: $grisOscuro;
+        .config-list{
+            background-color: darken($grisOscuro,10%);
+
+            p{
+                color: $negro;
+            }
+        }
+    }
 }

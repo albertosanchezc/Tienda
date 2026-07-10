@@ -2,21 +2,83 @@
 
 use Classes\ConfiguracionTienda;
 
-if (!isset($inicio)) {
-    $inicio = false;
-}
-
-
-$pendientesConfiguracion = [];
+$pasosConfiguracion = [];
 
 if (autenticado() && isset($_SESSION['tienda_id'])) {
 
     $pasosConfiguracion = ConfiguracionTienda::estado($_SESSION['tienda_id']);
-
-    $pendientesConfiguracion = array_filter($pasosConfiguracion, function ($paso) {
-        return !$paso['completo'];
-    });
 }
 
-
 ?>
+
+<?php if (!empty($pasosConfiguracion)) { ?>
+
+    <div class="config-overlay" id="configuracionTienda">
+
+        <div class="config-panel">
+
+            <div class="config-header">
+
+                <h2>
+                    Configuración inicial
+                </h2>
+
+                <button type="button" onclick="cerrarConfiguracion()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <p>
+                Completa los siguientes pasos para dejar lista tu tienda.
+            </p>
+
+
+            <div class="config-list">
+
+                <?php foreach ($pasosConfiguracion as $paso) { ?>
+
+                    <div class="config-item <?= $paso['completo'] ? 'completo' : 'pendiente' ?>">
+
+                        <div>
+
+                            <strong>
+                                <?= $paso['nombre'] ?>
+                            </strong>
+
+                        </div>
+
+
+                        <?php if ($paso['completo']) { ?>
+
+                            <span>
+                                ✓ Completo
+                            </span>
+
+
+                        <?php } elseif (isset($paso['ruta'])) { ?>
+
+                            <a href="<?= $paso['ruta'] ?>">
+                                Configurar
+                            </a>
+
+                        <?php } elseif (isset($paso['mensaje'])) { ?>
+
+                            <p>
+                                <?= $paso['mensaje'] ?>
+                            </p>
+
+                        <?php } ?>
+                    </div>
+
+                <?php } ?>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+<?php } ?>
