@@ -117,7 +117,6 @@ class PaginasController
     public static function metricas(Router $router)
     {
 
-        estaAutenticado();
 
         $titulo = 'Métricas';
 

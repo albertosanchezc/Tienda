@@ -13,7 +13,6 @@ class VentasYCancelacionesController
     public static function ventasycancelaciones(Router $router)
     {
 
-        estaAutenticado();
 
         $titulo = 'Ventas y cancelaciones';
 

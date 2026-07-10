@@ -13,7 +13,6 @@ class CarritoController
     public static function carrito(Router $router)
     {
 
-        estaAutenticado();
         // Pasamos todos los productos a la vista
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);

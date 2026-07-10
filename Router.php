@@ -19,17 +19,18 @@ class Router
 
         session_start();
 
-        $auth = $_SESSION['login'] ?? null;
+        $auth = $_SESSION['login'] ?? false;
 
 
 
         // Arreglo de rutas protegidas...
         $rutas_protegidas = [
-            // '/carrito',
-            // '/inventario',
-            // '/caja',
-            // '/metricas',
-            // '/proveedores'
+            '/carrito',
+            '/inventario',
+            '/caja',
+            '/metricas',
+            '/proveedores',
+            '/ventasycancelaciones',
         ];
 
         $urlActual = $_SERVER['PATH_INFO'] ?? '/';
@@ -43,7 +44,8 @@ class Router
 
         // Proteger las rutas
         if (in_array($urlActual, $rutas_protegidas) && !$auth) {
-            header('Location: /');
+            header('Location: /login');
+            exit;
         }
 
         if ($fn) {
@@ -51,6 +53,7 @@ class Router
             call_user_func($fn, $this);
         } else {
             header('Location: /404');
+            exit;
         }
     }
 

@@ -14,7 +14,6 @@ class ProductoController
     public static function movimientoproducto(Router $router)
     {
 
-        estaAutenticado();
         $script = '<script src="/build/js/movimiento.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $alertas = [];

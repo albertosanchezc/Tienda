@@ -9,17 +9,26 @@ function incluirTemplate(string $nombre, bool $inicio = false)
     include TEMPLATES_URL . "/$nombre.php";
 }
 
+// function estaAutenticado()
+// {
+//     session_start();
+
+//     if (!$_SESSION['login']) {
+//         header('Location: /login');
+//     }
+// }
+
 function estaAutenticado()
 {
-    session_start();
-
-    if (!$_SESSION['login']) {
+    if (empty($_SESSION['login'])) {
         header('Location: /login');
+        exit;
     }
 }
 
-function isAdmin(){
-    if(!isset($_SESSION['admin'])){
+function isAdmin()
+{
+    if (!isset($_SESSION['admin'])) {
         header('Location: /');
         exit;
     }
@@ -28,21 +37,22 @@ function isAdmin(){
     return $restaurantId;
 }
 
-function isValido(){
+function isValido()
+{
     $admin = isset($_SESSION['admin']);
     $mesero = isset($_SESSION['mesero']);
 
-    if(!$admin && !$mesero){
+    if (!$admin && !$mesero) {
         header('Location: /');
         exit;
-
     }
 }
 
-function isMesero(){
+function isMesero()
+{
 
-    if(!isset($_SESSION['mesero'])){
-        if(!isset($_SESSION['admin'])){
+    if (!isset($_SESSION['mesero'])) {
+        if (!isset($_SESSION['admin'])) {
             header('Location: /');
             exit;
         }
@@ -72,7 +82,7 @@ function s($html): string
 // Validar tipo de Conteniod
 function validarTipoContenido($tipo)
 {
-    $tipos = ['vendedor', 'propiedad', 'entrada','platillos'];
+    $tipos = ['vendedor', 'propiedad', 'entrada', 'platillos'];
     return in_array($tipo, $tipos);
 }
 
@@ -112,7 +122,8 @@ function validarORedireccionar(string $url)
     return $id;
 }
 
-function ArrayobjectToArrayAssoc($array){
+function ArrayobjectToArrayAssoc($array)
+{
     $array_assoc = get_object_vars(array_shift($array));
     return $array_assoc;
 }

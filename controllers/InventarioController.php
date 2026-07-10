@@ -20,11 +20,10 @@ class InventarioController
     public static function inventario(Router $router)
     {
 
-        estaAutenticado();
 
-        if (!isset($_SESSION)) {
-            session_start();
-        }
+        // if (!isset($_SESSION)) {
+        //     session_start();
+        // }
         
         
         $script = '<script src="/build/js/inventario.js"></script>

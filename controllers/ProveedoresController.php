@@ -16,7 +16,6 @@ class ProveedoresController
     public static function proveedores(Router $router)
     {
 
-        estaAutenticado();
 
         $script = '<script src="/build/js/proveedores.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';

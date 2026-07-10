@@ -8,6 +8,7 @@ if (!isset($_SESSION)) {
 $auth = $_SESSION['login'] ?? false;
 
 
+
 $pendientesConfiguracion = [];
 
 if ($auth && isset($_SESSION['tienda_id'])) {
