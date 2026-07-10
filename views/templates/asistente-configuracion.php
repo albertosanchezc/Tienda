@@ -42,34 +42,31 @@ if (autenticado() && isset($_SESSION['tienda_id'])) {
                     <div class="config-item <?= $paso['completo'] ? 'completo' : 'pendiente' ?>">
 
                         <div>
-
-                            <strong>
-                                <?= $paso['nombre'] ?>
-                            </strong>
-
+                            <strong><?= $paso['nombre'] ?></strong>
                         </div>
-
 
                         <?php if ($paso['completo']) { ?>
 
-                            <span>
-                                ✓ Completo
-                            </span>
+                            <span>✓ Completo</span>
 
-
-                        <?php } elseif (isset($paso['ruta'])) { ?>
+                        <?php } elseif (isset($paso['ruta']) && $paso['habilitado']) { ?>
 
                             <a href="<?= $paso['ruta'] ?>">
                                 Configurar
                             </a>
 
+                        <?php } elseif (isset($paso['ruta']) && !$paso['habilitado']) { ?>
+
+                            <button type="button" disabled>
+                                Bloqueado
+                            </button>
+
                         <?php } elseif (isset($paso['mensaje'])) { ?>
 
-                            <p>
-                                <?= $paso['mensaje'] ?>
-                            </p>
+                            <p><?= $paso['mensaje'] ?></p>
 
                         <?php } ?>
+
                     </div>
 
                 <?php } ?>

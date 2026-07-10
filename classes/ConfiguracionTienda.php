@@ -19,21 +19,24 @@ class ConfiguracionTienda
                 'id' => 'cuenta',
                 'nombre' => 'Cuenta confirmada',
                 'completo' => $usuario->confirmado == 1,
-                'mensaje' => 'Revisa tu correo electrónico para confirmar tu cuenta.'
+                'mensaje' => 'Revisa tu correo electrónico para confirmar tu cuenta.',
+                'habilitado' => true
             ],
 
             [
                 'id' => 'proveedor',
                 'nombre' => 'Registrar proveedor',
                 'completo' => !empty(Proveedor::where('tienda_id', $tienda_id)),
-                'ruta' => '/proveedores'
+                'ruta' => '/proveedores',
+                'habilitado' => $usuario->confirmado == 1
             ],
 
             [
                 'id' => 'producto',
                 'nombre' => 'Registrar producto',
                 'completo' => !empty(Productos::where('tienda_id', $tienda_id)),
-                'ruta' => '/inventario'
+                'ruta' => '/inventario',
+                'habilitado' => $usuario->confirmado == 1 && !empty(Proveedor::where('tienda_id', $tienda_id))
             ]
         ];
     }
