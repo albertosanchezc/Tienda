@@ -105,8 +105,14 @@ class ActiveRecord
         $sanitizado = [];
 
         foreach ($atributos as $key => $value) {
-            $sanitizado[$key] = self::$db->escape_string($value);
+
+            if ($value === null) {
+                $sanitizado[$key] = null;
+            } else {
+                $sanitizado[$key] = self::$db->escape_string((string) $value);
+            }
         }
+
         return $sanitizado;
     }
 
@@ -394,6 +400,14 @@ class ActiveRecord
 
 
         return $resultado;
+    }
+
+
+    public static function firstWhere($columna, $valor)
+    {
+        $resultado = static::where($columna, $valor);
+
+        return $resultado[0] ?? null;
     }
 
     public static function wherebelongsTo($columna, $valor, $belongs, $valueBelongs)

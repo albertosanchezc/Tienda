@@ -169,7 +169,7 @@ class LoginController
             exit;
         }
 
-        $usuario = Usuarios::where('token', $token);
+        $usuario = Usuarios::firstWhere('token', $token);
 
         if (empty($usuario)) {
 
@@ -177,11 +177,11 @@ class LoginController
             $errores = Usuarios::getErrores();
         } else {
 
-            $usuario[0]->confirmado = 1;
-            $usuario[0]->token = '';
-            unset($usuario[0]->password2);
+            $usuario->confirmado = 1;
+            $usuario->token = '';
+            unset($usuario->password2);
 
-            $usuario[0]->guardar();
+            $usuario->guardar();
         }
 
         $router->render('auth/confirmar', [
@@ -204,12 +204,11 @@ class LoginController
             if (empty($alertas)) {
 
                 // 🔥 where() devuelve ARRAY
-                $usuario = Usuarios::where('email', $email);
+                $usuario = Usuarios::firstWhere('email', $email);
 
-                if ($usuario && $usuario->confirmado === "1") {
+                if (!empty($usuario)) {
 
                     // tomar objeto real
-                    $usuario = $usuario[0];
 
                     if ($usuario->confirmado == '1') {
 
@@ -223,7 +222,7 @@ class LoginController
                         $email->enviarInstrucciones();
 
                         // Imprimir la alerta
-                        Usuario::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
+                        Usuarios::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
                     } else {
                         Usuarios::setAlerta('error', 'El Usuario no está confirmado');
                     }
@@ -245,46 +244,51 @@ class LoginController
 
     public static function reestablecer(Router $router)
     {
-        $token = s($_GET['token']);
+        $token = s($_GET['token'] ?? '');
         $token_valido = true;
+
         if (!$token) {
             header('Location: /');
+            exit;
         }
 
-        $usuario = Usuarios::where('token', $token);
+        $usuario = Usuarios::firstWhere('token', $token);
 
         if (empty($usuario)) {
-            Usuarios::setError('Token No válido');
+            Usuarios::setAlerta('error', 'Token No válido');
             $token_valido = false;
+        } else {
+            $usuario = $usuario;
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nuevoPassword = $_POST['password'];
-            $usuarioActualizado = ArrayobjectToArrayAssoc($usuario);
-            $usuarioActualizado['password'] = $nuevoPassword;
-            $usuario = new Usuarios($usuarioActualizado);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $token_valido) {
+
+            $usuario->password = $_POST['password'];
 
             // Validar el Password
             $errores = $usuario->validarPassword();
 
             if (empty($errores)) {
+
                 // Hashear el nuevo password
                 $usuario->hashPassword();
 
-                // Eliminar el Token 
-                $usuario->token = null;
+                // Eliminar el token
+                $usuario->token = '';
 
-                // Actualizar el usuario en la BD
+                // Guardar cambios
                 $resultado = $usuario->guardar();
 
-                // Redireccionar
+                Usuarios::setAlerta('exito', 'Password Actualizado Correctamente');
+
                 if ($resultado) {
                     header('Location: /login');
+                    exit;
                 }
             }
         }
-        $errores = Usuarios::getErrores();
 
+        $errores = Usuarios::getAlertas();
 
         $router->render('auth/reestablecer', [
             'errores' => $errores,

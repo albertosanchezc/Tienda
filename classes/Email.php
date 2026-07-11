@@ -86,12 +86,12 @@ class Email
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
+        // $mail->SMTPSecure = "tls";
         $mail->Port = $_ENV['EMAIL_PORT'];
         $mail->Username = $_ENV['EMAIL_USER'];
         $mail->Password = $_ENV['EMAIL_PASS'];
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
-        $mail->setFrom($_ENV['EMAIL_FROM'], $_ENV['EMAIL_TO_2']);
+        $mail->setFrom($_ENV['EMAIL_FROM'], $_ENV['EMAIL_SET_FROM']);
         $mail->addAddress($this->email, $this->nombre);
         $mail->Subject = 'Reestablece tu password';
 
@@ -108,7 +108,10 @@ class Email
 
         //Enviar el mail
         // $mail->send();
-        return $mail->send();
+        $resultado = $mail->send();
+        $mail->smtpClose();
+
+        return $resultado;
     }
 
     public function enviarConfirmacionMesero()
