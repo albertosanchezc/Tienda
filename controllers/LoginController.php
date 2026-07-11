@@ -85,10 +85,7 @@ class LoginController
             $datos = $_POST['usuario'];
             $datos_tienda = $_POST['tienda'];
 
-            // 1. VALIDAR PRIMERO (SIN BORRAR NADA)
-            if ($datos['password'] !== $datos['password2']) {
-                $alertas[] = 'Los passwords no coinciden';
-            }
+
 
             // 2. SOLO SI NO HAY alertas
             if (empty($alertas)) {
@@ -100,7 +97,6 @@ class LoginController
 
                 // validar reglas del modelo
                 $alertas = $usuario->validarNuevaCuenta();
-
                 if (empty($alertas)) {
 
                     $existeUsuario = Usuarios::where('email', $usuario->email);
@@ -109,8 +105,13 @@ class LoginController
                         Usuarios::setAlerta('error', 'El Usuario ya está registrado');
                         $alertas = Usuarios::getAlertas();
                     } else {
-
+                        // Hashear el password
                         $usuario->hashPassword();
+
+                        // Eliminar password2
+                        unset($usuario->password2);
+
+                        // Generar Token
                         $usuario->crearToken();
 
                         $tienda = new Tienda();
@@ -119,6 +120,7 @@ class LoginController
 
                         $tienda->guardar();
                         $usuario->tienda_id = $tienda->id;
+                        // Crear un Nuevo Usuario
                         $usuario->guardar();
 
                         $caja = new Caja();
@@ -193,7 +195,6 @@ class LoginController
         $alertas = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             $email = $_POST['email'];
 
             // validar email primero
@@ -205,29 +206,24 @@ class LoginController
                 // 🔥 where() devuelve ARRAY
                 $usuario = Usuarios::where('email', $email);
 
-                if ($usuario) {
+                if ($usuario && $usuario->confirmado === "1") {
 
                     // tomar objeto real
                     $usuario = $usuario[0];
 
                     if ($usuario->confirmado == '1') {
 
-                        // generar token
+                        // Generar un nuevo token
                         $usuario->crearToken();
-
-                        // guardar cambios
+                        unset($usuario->password2);
+                        // Actualizar el usuario
                         $usuario->guardar();
+                        // Enviar el email
+                        $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                        $email->enviarInstrucciones();
 
-                        // enviar email
-                        $emailObj = new Email(
-                            $usuario->email,
-                            $usuario->nombre,
-                            $usuario->token
-                        );
-
-                        $emailObj->enviarInstrucciones();
-
-                        Usuarios::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
+                        // Imprimir la alerta
+                        Usuario::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
                     } else {
                         Usuarios::setAlerta('error', 'El Usuario no está confirmado');
                     }
