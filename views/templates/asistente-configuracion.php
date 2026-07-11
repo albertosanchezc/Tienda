@@ -23,9 +23,11 @@ if (autenticado() && isset($_SESSION['tienda_id'])) {
                     Configuración inicial
                 </h2>
 
-                <button type="button" onclick="cerrarConfiguracion()">
-                    ×
-                </button>
+                <div class="modal--inventario__cerrar btnCerrarAsistente">
+                    <a href="#" class="modal--inventario__refcerrar">
+                        <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--inventario__imgcerrar">
+                    </a>
+                </div>
 
             </div>
 

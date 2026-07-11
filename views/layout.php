@@ -15,16 +15,32 @@
 
 <body>
     <?php require __DIR__ . '/templates/header.php'; ?>
-    <?php require __DIR__ . '/templates/asistente-configuracion.php'; ?>
 
 
 
     <?php echo $contenido; ?>
+
+    <?php require __DIR__ . '/templates/asistente-configuracion.php'; ?>
+
     <?php echo $script ?? ''; ?>
     <?php echo $script2 ?? ''; ?>
 
 
     <script src="/build/js/bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const btnCerrar = document.querySelector('.btnCerrarAsistente');
+            const configuracion = document.querySelector('#configuracionTienda');
+
+            if (btnCerrar && configuracion) {
+                btnCerrar.addEventListener('click', () => {
+                    configuracion.style.display = 'none';
+                });
+            }
+
+        });
+    </script>
 
     <?php require __DIR__ . '/templates/footer.php'; ?>
 </body>
