@@ -182,7 +182,7 @@
                             <div class="modal--inventario__flexcompra">
                                 <p>$</p>
                                 <input type="number" step="0.01" id="entradaprecio_compra"
-                                    name="inventarioCrear[precio_compra]" placeholder="12.23" maxlength="30"
+                                    name="inventarioCrear[precio_compra]" placeholder="12.23" min="0" maxlength="30"
                                     value="<?php echo s($inventario_nuevo->precio_compra); ?>">
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                             <div class="modal--inventario__flexcompra">
                                 <p>$</p>
                                 <input type="text" step="0.01" id="entradaprecio_unitario_venta"
-                                    name="inventarioCrear[precio_unitario_venta]" placeholder="12.23" maxlength="30"
+                                    name="inventarioCrear[precio_unitario_venta]" placeholder="12.23" min="0" maxlength="30"
                                     value="<?php echo s($inventario_nuevo->precio_unitario_venta); ?>">
                             </div>
                         </div>

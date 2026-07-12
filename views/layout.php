@@ -18,7 +18,7 @@
 
 
 
-    <?php echo $contenido; ?>
+    <?php echo $contenido ?? '';  ?>
 
     <?php require __DIR__ . '/templates/asistente-configuracion.php'; ?>
 
