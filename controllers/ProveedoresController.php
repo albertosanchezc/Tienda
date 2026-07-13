@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\ConfiguracionTienda;
 use Model\Inventario;
 use Model\Productos;
 use Model\Proveedor;
@@ -56,6 +57,8 @@ class ProveedoresController
                 $proveedor = Proveedor::find($argsEliminarProveedor['id']);
                 $proveedor->eliminar();
             }
+
+            ConfiguracionTienda::redireccionarSiguientePaso();
             header('Location: /proveedores');
         }
 

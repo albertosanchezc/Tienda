@@ -2,10 +2,12 @@
 
 namespace Classes;
 
+use Controllers\VentasYCancelacionesController;
 use Model\Proveedor;
 use Model\Productos;
 use Model\Caja;
 use Model\Usuarios;
+use Model\Ventas;
 
 class ConfiguracionTienda
 {
@@ -37,7 +39,19 @@ class ConfiguracionTienda
                 'completo' => !empty(Productos::where('tienda_id', $tienda_id)),
                 'ruta' => '/inventario',
                 'habilitado' => $usuario->confirmado == 1 && !empty(Proveedor::where('tienda_id', $tienda_id))
+            ],
+
+            [
+                'id' => 'ventas',
+                'nombre' => 'Registrar Una Venta',
+                'completo' => !empty(Ventas::where('tienda_id', $tienda_id)),
+                'ruta' => '/carrito',
+                'habilitado' => $usuario->confirmado == 1
+                    && !empty(Proveedor::where('tienda_id', $tienda_id))
+                    && !empty(Productos::where('tienda_id', $tienda_id))
             ]
+
+
         ];
     }
 
@@ -77,6 +91,8 @@ class ConfiguracionTienda
         $cuentaConfirmada = self::pasoCompletado($pasos, 'cuenta');
         $proveedorRegistrado = self::pasoCompletado($pasos, 'proveedor');
         $productoRegistrado = self::pasoCompletado($pasos, 'producto');
+        $ventaRegistrada = self::pasoCompletado($pasos, 'ventas');
+
 
         if (!$cuentaConfirmada) {
             return false;
@@ -93,12 +109,14 @@ class ConfiguracionTienda
                 return $proveedorRegistrado;
 
             case 'carrito':
-            case 'ventas':
             case 'caja':
                 return $tiendaListaParaVender;
 
+            case 'ventas':
+                return $ventaRegistrada;
+
             case 'metricas':
-                return $productoRegistrado;
+                return $ventaRegistrada;
 
             default:
                 return true;
@@ -117,6 +135,25 @@ class ConfiguracionTienda
         }
 
         return '/';
+    }
+
+    public static function redireccionarSiguientePaso()
+    {
+        $tienda_id = $_SESSION['tienda_id'] ?? null;
+
+        if (!$tienda_id) {
+            return false;
+        }
+
+        $siguiente = self::siguientePaso($tienda_id);
+
+        // Si ya terminó la configuración, no redirigimos
+        if ($siguiente === '/') {
+            return false;
+        }
+
+        header('Location: ' . $siguiente);
+        exit;
     }
 
 

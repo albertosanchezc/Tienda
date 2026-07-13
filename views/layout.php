@@ -49,6 +49,7 @@
         document.querySelector('#configuracionTienda').addEventListener('click', () => {
             cerrarAsistente();
         })
+
     </script>
 
     <?php require __DIR__ . '/templates/footer.php'; ?>

@@ -196,6 +196,8 @@ class InventarioController
                 $inventarioEliminarStock->eliminar();
             }
 
+            ConfiguracionTienda::redireccionarSiguientePaso();
+
             header('Location: /inventario');
         }
 
