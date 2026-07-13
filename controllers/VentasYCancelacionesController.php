@@ -43,9 +43,21 @@ class VentasYCancelacionesController
                 $inventarioPost = json_decode($argsCancelarPorCarritoModal['inventario']);
 
                 $caja = Caja::firstWhere('tienda_id', $tiendaId);
+
+                // Obtener el carrito que se está cancelando
+                $carritoId = $ventasPost[0]->carrito_id;
+                // Obtener las ventas originales desde la BD
+                $ventas = Ventas::where3Params(
+                    'carrito_id',
+                    $carritoId,
+                    'cancelacion',
+                    0,
+                    'tienda_id',
+                    $tiendaId
+                );
                 $totalVenta = 0;
 
-                foreach ($ventasPost as $venta) {
+                foreach ($ventas as $venta) {
 
                     if ($venta->cancelacion == 0) {
 

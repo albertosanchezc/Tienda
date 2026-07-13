@@ -21,7 +21,7 @@ class CarritoController
         $script = '<script src="/build/js/carrito/carrito.js" type="module"></script>
         <script src="/build/js/JsBarcode.all.min.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
-        $caja = Caja::firstWhere('tienda_id,'$tiendaId);
+        $caja = Caja::firstWhere('tienda_id',$tiendaId);
         // Todo el cálculo del carrito_id deberá hacerse después de finalizar la venta
         $venta_previa = Ventas::lastofTable('ventas', 'carrito_id');
         
