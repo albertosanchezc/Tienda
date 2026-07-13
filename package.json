@@ -25,6 +25,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser-js": "^5.2.2",
     "gulp-webp": "^4.0.1",
+    "mysql2": "^3.22.6",
     "sass": "^1.49.9",
     "terser": "^4.8.0"
   }

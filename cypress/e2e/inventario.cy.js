@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 describe('Pruebas del Inventario sin POST', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3004/inventario')
+        cy.visit('http://localhost:3000/inventario')
 
     })
 

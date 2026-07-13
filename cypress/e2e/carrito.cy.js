@@ -1,7 +1,7 @@
 describe('Pruebas del carrito de compras', () => {
 
     beforeEach(() => {
-        cy.visit('http://localhost:3004/carrito')
+        cy.visit('http://localhost:3000/carrito')
 
         // Captura de la página completa
         cy.getByData("documento").click(50, 30)
