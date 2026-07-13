@@ -13,7 +13,7 @@ class VentasYCancelacionesController
     public static function ventasycancelaciones(Router $router)
     {
 
-
+        $tiendaId = $_SESSION['tienda_id'];
         $titulo = 'Ventas y cancelaciones';
 
         $script = '<script src="/build/js/ventasycancelaciones.js"></script>
@@ -22,9 +22,9 @@ class VentasYCancelacionesController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // debuguear($_POST);
-            $argsCancelarPorCarritoModal = $_POST['cancelarTodaLaVenta'];
-            $argsCancelarPorSeleccionModal = $_POST['cancelarSeleccion'];
-            $argsCancelarProducto = $_POST['cancelarProducto'];
+            $argsCancelarPorCarritoModal = $_POST['cancelarTodaLaVenta'] ?? [];
+            $argsCancelarPorSeleccionModal = $_POST['cancelarSeleccion'] ?? [];
+            $argsCancelarProducto = $_POST['cancelarProducto'] ?? [];
 
 
 
@@ -41,26 +41,47 @@ class VentasYCancelacionesController
                 $cajaPost = json_decode($argsCancelarPorCarritoModal['caja']);
                 $ventasPost = json_decode($argsCancelarPorCarritoModal['ventas']);
                 $inventarioPost = json_decode($argsCancelarPorCarritoModal['inventario']);
-                // debuguear($cajaPost[0]);
 
-                $caja = Caja::find(1);
+                $caja = Caja::firstWhere('tienda_id', $tiendaId);
+                $totalVenta = 0;
+
+                foreach ($ventasPost as $venta) {
+
+                    if ($venta->cancelacion == 0) {
+
+                        $totalVenta += $venta->cantidad * $venta->precio_venta;
+                    }
+                }
+
+                $caja->cantidad_caja -= $totalVenta;
 
                 // Actualizar los valores de caja
-                $caja->id = 1;
-                $caja->cantidad_caja = $cajaPost[0]->cantidad_caja;
+                // $caja->id = 1;
+                // $arreglo = [$cajaPost, $ventasPost, $inventarioPost];
+                // debuguear($arreglo);
 
                 $ventaNueva = new Ventas();
                 $fecha_venta = $ventaNueva->fecha_venta;
 
                 $inventarioNuevo = new Inventario();
+                $inventarioNuevo->tienda_id = $tiendaId;
+
                 // debuguear($inventarioPost);
                 foreach ($inventarioPost as $producto) {
                     $id = $producto->producto_id;
                     // $inventarioNuevo->sincronizar($producto);
-                    $productoCompleto = Inventario::find($id);
+                    $productoCompleto = Inventario::wherebelongsTo('id', $id, 'tienda_id', $tiendaId)[0];
+                    // debuguear($productoCompleto);
+                    // debuguear([
+                    //     gettype($inventarioPost),
+                    //     gettype($ventasPost),
+                    //     $inventarioPost,
+                    //     $ventasPost
+                    // ]);
                     $productoCompleto->sincronizar($producto);
 
                     $inventarioNuevo->sincronizar($productoCompleto);
+
                     // debuguear($inventarioNuevo);
 
 
@@ -86,7 +107,7 @@ class VentasYCancelacionesController
                         $ventaNueva->precio_compra =  $precio_compra;
                         $ventaNueva->cancelacion = 0;
                         $ventaNueva->fecha_venta = $fecha_venta;
-                        // debuguear($ventaNueva);
+                        $ventaNueva->tienda_id = $tiendaId;
 
                         $ventaNueva->guardar();
                     } else {
@@ -101,7 +122,7 @@ class VentasYCancelacionesController
                     $ventaNueva->cancelacion = 1;
                     $ventaNueva->precio_compra =  $precio_compra;
                     $ventaNueva->fecha_venta = $fecha_venta;
-
+                    $ventaNueva->tienda_id = $tiendaId;
                     // debuguear($ventaNueva);
                     $ventaNueva->guardar();
                 }
@@ -110,14 +131,18 @@ class VentasYCancelacionesController
                 $cajaPost = json_decode($argsCancelarPorSeleccionModal['caja']);
                 $ventasPost = json_decode($argsCancelarPorSeleccionModal['ventas']);
                 $inventarioPost = json_decode($argsCancelarPorSeleccionModal['inventario']);
-                // debuguear($cajaPost[0]);
 
-                $caja = Caja::find(1);
+                $caja = Caja::firstWhere('tienda_id', $tiendaId);
 
                 // Actualizar los valores de caja
-                $caja->id = 1;
+                // $caja->id = 1;
                 $caja->cantidad_caja = $cajaPost[0]->cantidad_caja;
-
+                // debuguear([
+                //     gettype($inventarioPost),
+                //     gettype($ventasPost),
+                //     $inventarioPost,
+                //     $ventasPost
+                // ]);
                 $ventaNueva = new Ventas();
                 $inventarioNuevo = new Inventario();
                 $fecha_venta = $ventaNueva->fecha_venta;
@@ -125,7 +150,7 @@ class VentasYCancelacionesController
                 foreach ($inventarioPost as $producto) {
                     $id = $producto->producto_id;
                     // $inventarioNuevo->sincronizar($producto);
-                    $productoCompleto = Inventario::find($id);
+                    $productoCompleto = Inventario::wherebelongsTo('id', $id, 'tienda_id', $tiendaId);
                     $productoCompleto->sincronizar($producto);
 
                     $inventarioNuevo->sincronizar($productoCompleto);
@@ -146,6 +171,7 @@ class VentasYCancelacionesController
 
                     $resultado = $cantidadAnterior - $cantidadPost;
                     $ventaNueva->sincronizar($venta);
+                    $ventaNueva->tienda_id = $tiendaId;
                     $precio_compra = $ventaCompleta->precio_compra;
                     if ($resultado >= 1) {
                         // Quedan Ventas de ese producto en ese carrito
@@ -155,8 +181,7 @@ class VentasYCancelacionesController
                         $ventaNueva->cancelacion = 0;
                         $ventaNueva->fecha_venta = $fecha_venta;
 
-                        // debuguear($ventaNueva);
-
+                        $ventaNueva->tienda_id = $tiendaId;
                         $ventaNueva->guardar();
                     } else {
                         // Cantidad quedó en cero para ese producto por lo que se elimina
@@ -170,7 +195,7 @@ class VentasYCancelacionesController
                     $ventaNueva->cancelacion = 1;
                     $ventaNueva->precio_compra =  $precio_compra;
                     $ventaNueva->fecha_venta = $fecha_venta;
-
+                    $ventaNueva->tienda_id = $tiendaId;
 
 
 
@@ -254,6 +279,7 @@ class VentasYCancelacionesController
                         $cancelacion->cantidad = $cantidadAnteriorCancelacion + 1;
                         $cancelacion->cancelacion = 1;
                         $cancelacion->id = $existeCancelacion[0]->id;
+                        $cancelacion->tienda_id = $tiendaId;
                         $cancelacionConFechaNueva = new Ventas();
                         $fecha_venta = $cancelacionConFechaNueva->fecha_venta;
                         $cancelacion->fecha_venta = $fecha_venta;

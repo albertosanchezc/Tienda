@@ -31,7 +31,9 @@
         const configuracion = document.querySelector('#configuracionTienda');
 
         const cerrarAsistente = () => {
-            configuracion.style.display = 'none';
+            if (configuracion) {
+                configuracion.style.display = 'none';
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -44,12 +46,13 @@
                 });
             }
 
+            if (configuracion) {
+                configuracion.addEventListener('click', () => {
+                    cerrarAsistente();
+                });
+            }
+
         });
-
-        document.querySelector('#configuracionTienda').addEventListener('click', () => {
-            cerrarAsistente();
-        })
-
     </script>
 
     <?php require __DIR__ . '/templates/footer.php'; ?>

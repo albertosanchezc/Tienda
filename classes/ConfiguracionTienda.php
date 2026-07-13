@@ -109,8 +109,10 @@ class ConfiguracionTienda
                 return $proveedorRegistrado;
 
             case 'carrito':
-            case 'caja':
                 return $tiendaListaParaVender;
+
+            case 'caja':
+                return $ventaRegistrada;
 
             case 'ventas':
                 return $ventaRegistrada;

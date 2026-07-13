@@ -133,10 +133,21 @@ class ActiveRecord
     // Elimina el archivo
     public function borrarImagen()
     {
-        // Comprobar si existe el archivo
-        $exiteArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
-        if ($exiteArchivo) {
-            unlink(CARPETA_IMAGENES . $this->imagen);
+        // Comprobar que el modelo tenga imagen
+        if (!property_exists($this, 'imagen')) {
+            return;
+        }
+
+        // Comprobar que tenga un nombre de archivo válido
+        if (empty($this->imagen)) {
+            return;
+        }
+
+        $ruta = CARPETA_IMAGENES . $this->imagen;
+
+        // Comprobar que exista y sea archivo
+        if (file_exists($ruta) && is_file($ruta)) {
+            unlink($ruta);
         }
     }
 
@@ -349,18 +360,16 @@ class ActiveRecord
     //Obtiene la última columna(especificada) de una tabla 
     public static function lastofTable($tabla, $columna)
     {
-        $query = "SELECT $columna
-              FROM " . static::$tabla . "
-              ORDER BY $columna DESC
-              LIMIT 1";
-
+        $query = "SELECT {$columna} FROM " . static::$tabla . " ORDER BY {$columna} DESC LIMIT 1";
         $resultado = self::consultarSQL($query);
 
-        if (empty($resultado)) {
-            return null;
+        $registro = array_shift($resultado);
+
+        if (!$registro) {
+            return (object)[$columna => 0];
         }
 
-        return array_shift($resultado);
+        return $registro;
     }
 
 
