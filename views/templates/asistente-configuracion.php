@@ -9,9 +9,29 @@ if (autenticado() && isset($_SESSION['tienda_id'])) {
     $pasosConfiguracion = ConfiguracionTienda::estado($_SESSION['tienda_id']);
 }
 
+$mostrarAsistente = false;
+
+if (autenticado() && isset($_SESSION['tienda_id'])) {
+
+    $pasosConfiguracion = ConfiguracionTienda::estado($_SESSION['tienda_id']);
+
+    $progreso = ConfiguracionTienda::progreso($_SESSION['tienda_id']);
+
+    $mostrarAsistente = $progreso['completados'] < $progreso['total'];
+}
+
+
+$puedeCerrar = false;
+
+foreach ($pasosConfiguracion as $paso) {
+    if ($paso['id'] === 'cuenta') {
+        $puedeCerrar = $paso['completo'];
+        break;
+    }
+}
 ?>
 
-<?php if (!empty($pasosConfiguracion)) { ?>
+<?php if ($mostrarAsistente) { ?>
 
     <div class="config-overlay" id="configuracionTienda">
 
@@ -23,11 +43,13 @@ if (autenticado() && isset($_SESSION['tienda_id'])) {
                     Configuración inicial
                 </h2>
 
-                <div class="modal--inventario__cerrar btnCerrarAsistente">
-                    <a href="#" class="modal--inventario__refcerrar">
-                        <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--inventario__imgcerrar">
-                    </a>
-                </div>
+                <?php if ($puedeCerrar) { ?>
+                    <div class="modal--inventario__cerrar btnCerrarAsistente">
+                        <a href="#" class="modal--inventario__refcerrar">
+                            <img src="/build/img/cerrar.png" alt="Logotipo de cerrar" class="modal--inventario__imgcerrar">
+                        </a>
+                    </div>
+                <?php } ?>
 
             </div>
 

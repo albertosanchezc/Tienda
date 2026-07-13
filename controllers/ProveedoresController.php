@@ -48,13 +48,13 @@ class ProveedoresController
                 $proveedor->tienda_id = $tiendaId;
                 $proveedor->guardar();
             } elseif ($metodoActualizar) {
-                $proveedores->sincronizar($argsActualizarProveedor);
-                $proveedores->tienda_id = $tiendaId;
-                $proveedores->guardar();
+                $proveedor->sincronizar($argsActualizarProveedor);
+                $proveedor->tienda_id = $tiendaId;
+                $proveedor->guardar();
             } elseif ($metodoEliminar) {
 
-                $proveedores = Proveedor::find($argsEliminarProveedor['id']);
-                $proveedores->eliminar();
+                $proveedor = Proveedor::find($argsEliminarProveedor['id']);
+                $proveedor->eliminar();
             }
             header('Location: /proveedores');
         }

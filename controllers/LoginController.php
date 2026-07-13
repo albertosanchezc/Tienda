@@ -116,28 +116,31 @@ class LoginController
 
                         $tienda = new Tienda();
                         $tienda->nombre = $datos_tienda['nombre'];
-                        // debuguear($tienda);
+                        $alertas = $tienda->validar();
+                        if (empty($alertas)) {
+                            // debuguear($tienda);
 
-                        $tienda->guardar();
-                        $usuario->tienda_id = $tienda->id;
-                        // Crear un Nuevo Usuario
-                        $usuario->guardar();
+                            $tienda->guardar();
+                            $usuario->tienda_id = $tienda->id;
+                            // Crear un Nuevo Usuario
+                            $usuario->guardar();
 
-                        $caja = new Caja();
-                        $caja->cantidad_caja = 0;
-                        $caja->tienda_id = $tienda->id;
-                        $resultado = $caja->guardar();
+                            $caja = new Caja();
+                            $caja->cantidad_caja = 0;
+                            $caja->tienda_id = $tienda->id;
+                            $resultado = $caja->guardar();
 
-                        $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-                        // $email->enviarConfirmacion();
-                        if (!$email->enviarConfirmacion()) {
-                            die('No se pudo enviar correo');
-                        }
+                            $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                            // $email->enviarConfirmacion();
+                            if (!$email->enviarConfirmacion()) {
+                                die('No se pudo enviar correo');
+                            }
 
 
-                        if ($resultado) {
-                            header('Location: /mensaje');
-                            exit;
+                            if ($resultado) {
+                                header('Location: /mensaje');
+                                exit;
+                            }
                         }
                     }
                 }

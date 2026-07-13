@@ -78,10 +78,11 @@ class ConfiguracionTienda
         $proveedorRegistrado = self::pasoCompletado($pasos, 'proveedor');
         $productoRegistrado = self::pasoCompletado($pasos, 'producto');
 
-        if($cuentaConfirmada){
+        if (!$cuentaConfirmada) {
             return false;
         }
 
+        $tiendaListaParaVender = $proveedorRegistrado && $productoRegistrado;
 
         switch ($modulo) {
 
@@ -93,13 +94,11 @@ class ConfiguracionTienda
 
             case 'carrito':
             case 'ventas':
-                return $proveedorRegistrado && $productoRegistrado;
+            case 'caja':
+                return $tiendaListaParaVender;
 
             case 'metricas':
                 return $productoRegistrado;
-
-            case 'caja':
-                return true;
 
             default:
                 return true;

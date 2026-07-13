@@ -28,18 +28,27 @@
 
     <script src="/build/js/bundle.min.js"></script>
     <script>
+        const configuracion = document.querySelector('#configuracionTienda');
+
+        const cerrarAsistente = () => {
+            configuracion.style.display = 'none';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
 
             const btnCerrar = document.querySelector('.btnCerrarAsistente');
-            const configuracion = document.querySelector('#configuracionTienda');
 
             if (btnCerrar && configuracion) {
                 btnCerrar.addEventListener('click', () => {
-                    configuracion.style.display = 'none';
+                    cerrarAsistente();
                 });
             }
 
         });
+
+        document.querySelector('#configuracionTienda').addEventListener('click', () => {
+            cerrarAsistente();
+        })
     </script>
 
     <?php require __DIR__ . '/templates/footer.php'; ?>

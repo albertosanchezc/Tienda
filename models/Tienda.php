@@ -22,18 +22,18 @@ class Tienda extends ActiveRecord
     public function validar()
     {
         if (!$this->nombre) {
-            self::$errores[] = 'El Nombre es Obligatorio';
+            self::$alertas['error'][] = 'El Nombre del Negocio es Obligatorio';
         }
         // if (!$this->telefono) {
-        //     self::$errores[] = 'El Telefono es Obligatorio';
+        //     self::$alertas[] = 'El Telefono es Obligatorio';
         // }
 
         // if (strlen($this->telefono) !== 19) {
-        //     self::$errores[] = 'El Teléfono debe tener exactamente 10 caracteres';
+        //     self::$alertas[] =t 'El Teléfono debe tener exactamente 10 caracteres';
         // }
         
 
-        return self::$errores;
+        return self::$alertas;
     }
 }
 
