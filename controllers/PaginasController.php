@@ -58,7 +58,7 @@ class PaginasController
     public static function cajaAPI()
     {
         $tiendaId = $_SESSION['tienda_id'];
-        $caja = Caja::where('tienda_id', $tiendaId);
+        $caja = Caja::firstWhere('tienda_id', $tiendaId);
         $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
         echo json_encode([
             'caja' => $caja,
