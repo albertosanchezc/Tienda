@@ -99,7 +99,7 @@ class PaginasController
         $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
         $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
         $proveedores = Proveedor::where('tienda_id', $tiendaId);
-        $visitas_proveedor = Visitas_proveedor::all();
+        $visitas_proveedor = Visitas_proveedor::where('tienda_id',$tiendaId);
         $categorias = Categorias::ALF('nombre', 'ASC');
 
         echo json_encode([
