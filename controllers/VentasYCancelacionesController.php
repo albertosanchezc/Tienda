@@ -103,7 +103,7 @@ class VentasYCancelacionesController
 
                 foreach ($ventasPost as $venta) {
                     $id = $venta->id_venta;
-                    $ventaCompleta = Ventas::find($id);
+                    $ventaCompleta = Ventas::wherebelongsTo('id', $id, 'tienda_id', $tiendaId)[0];
 
                     // debuguear($ventaCompleta);
                     $cantidadPost = $venta->cantidad;
@@ -146,9 +146,32 @@ class VentasYCancelacionesController
 
                 $caja = Caja::firstWhere('tienda_id', $tiendaId);
 
-                // Actualizar los valores de caja
-                // $caja->id = 1;
-                $caja->cantidad_caja = $cajaPost[0]->cantidad_caja;
+                // Calcular cuánto dinero se devuelve usando los datos reales de la BD
+                $totalVenta = 0;
+
+                foreach ($ventasPost as $venta) {
+
+                    $ventaBD = Ventas::wherebelongsTo(
+                        'id',
+                        $venta->id_venta,
+                        'tienda_id',
+                        $tiendaId
+                    )[0];
+
+                    if ($ventaBD->cancelacion == 0) {
+                        $totalVenta += $venta->cantidad * $ventaBD->precio_venta;
+                    }
+                }
+
+
+                // Restar la devolución de la caja
+                $caja->cantidad_caja -= $totalVenta;
+
+
+                // Evitar valores negativos
+                if ($caja->cantidad_caja < 0) {
+                    $caja->cantidad_caja = 0;
+                }
                 // debuguear([
                 //     gettype($inventarioPost),
                 //     gettype($ventasPost),
@@ -162,7 +185,9 @@ class VentasYCancelacionesController
                 foreach ($inventarioPost as $producto) {
                     $id = $producto->producto_id;
                     // $inventarioNuevo->sincronizar($producto);
-                    $productoCompleto = Inventario::wherebelongsTo('id', $id, 'tienda_id', $tiendaId);
+                    $productoCompleto = Inventario::wherebelongsTo('id', $id, 'tienda_id', $tiendaId)[0];
+
+
                     $productoCompleto->sincronizar($producto);
 
                     $inventarioNuevo->sincronizar($productoCompleto);
@@ -175,7 +200,7 @@ class VentasYCancelacionesController
 
                 foreach ($ventasPost as $venta) {
                     $id = $venta->id_venta;
-                    $ventaCompleta = Ventas::find($id);
+                    $ventaCompleta = Ventas::wherebelongsTo('id', $id, 'tienda_id', $tiendaId)[0];
 
                     // debuguear($ventaCompleta);
                     $cantidadPost = $venta->cantidad;
