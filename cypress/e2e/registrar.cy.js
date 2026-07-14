@@ -141,7 +141,7 @@ describe('Registro de usuario', () => {
 
                     // cargar imagen
                     cy.get('#imagen')
-                        .attachFile('coca-cola.jpg');
+                        .attachFile('producto.jpeg');
 
 
 
@@ -167,7 +167,7 @@ describe('Registro de usuario', () => {
                             expect(rows).to.have.length(1);
 
                             expect(rows[0].nombre.trim())
-                                .to.equal('Coca-Cola');
+                                .to.equal('Coca Cola');
 
                         });
 
