@@ -12,6 +12,7 @@
   "devDependencies": {
     "cssnano": "^5.1.0",
     "cypress": "^14.0.0",
+    "cypress-file-upload": "^5.0.8",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-cache": "^1.1.3",
