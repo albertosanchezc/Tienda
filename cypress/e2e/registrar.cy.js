@@ -30,7 +30,9 @@ describe('Registro de usuario', () => {
         cy.get('input[name="tienda[nombre]"]')
             .type('El Dante Enojón');
 
+        cy.intercept('POST', '**').as('guardarProveedor');
         cy.get('form').submit();
+        cy.wait('@guardarProveedor');
 
         // Verificar mensaje
         cy.url().should('include', '/mensaje');
@@ -102,7 +104,7 @@ describe('Registro de usuario', () => {
                     cy.get('.botonslider3').click();
 
                     cy.get('input[name="inventarioCrear[nombre]"]')
-                        .type('Coca-Cola');
+                        .type('Coca Cola');
 
 
                     cy.get('input[name="inventarioCrear[descripcion]"]')
@@ -144,10 +146,12 @@ describe('Registro de usuario', () => {
                         .attachFile('producto.jpeg');
 
 
-
+                    cy.intercept('POST', '**').as('guardarProducto');
                     cy.get('#nuevoproducto')
                         .submit();
+                    cy.get('#nuevoproducto').submit();
 
+                    cy.wait('@guardarProducto');
 
                     // aquí continúa la creación del producto
 

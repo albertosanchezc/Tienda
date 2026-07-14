@@ -2,3 +2,5 @@ node_modules
 vendor
 .DS_Store
 includes/.env
+cypress.config.js
+
