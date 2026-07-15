@@ -34,14 +34,14 @@ class ConfiguracionTienda
                 'habilitado' => $usuario->confirmado == 1
             ],
 
-            [
-                'id' => 'categoria',
-                'nombre' => 'Registrar Categoria',
-                'completo' => !empty(Categorias::where('tienda_id', $tienda_id)),
-                'ruta' => '/categorias',
-                'habilitado' => $usuario->confirmado == 1
-                    && !empty(Proveedor::where('tienda_id', $tienda_id))
-            ],
+            // [
+            //     'id' => 'categoria',
+            //     'nombre' => 'Registrar Categoria',
+            //     'completo' => !empty(Categorias::where('tienda_id', $tienda_id)),
+            //     'ruta' => '/categorias',
+            //     'habilitado' => $usuario->confirmado == 1
+            //         && !empty(Proveedor::where('tienda_id', $tienda_id))
+            // ],
 
             [
                 'id' => 'producto',

@@ -230,7 +230,7 @@ class ActiveRecord
     }
 
 
-    public static function ALFTienda($columna, $orden, $tienda_id)
+    public static function ALFTienda($columna, $orden, $tienda_id, $incluirGlobales = false)
     {
         $columnasPermitidas = ['nombre', 'id', 'precio', 'created_at'];
         $ordenPermitido = ['ASC', 'DESC'];
@@ -243,11 +243,17 @@ class ActiveRecord
             $orden = 'ASC';
         }
 
-        $tienda_id = (int)$tienda_id;
+        $tienda_id = (int) $tienda_id;
 
-        $query = "SELECT * FROM " . static::$tabla . "
-              WHERE tienda_id = $tienda_id
-              ORDER BY $columna $orden";
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ";
+
+        if ($incluirGlobales) {
+            $query .= "(tienda_id IS NULL OR tienda_id = $tienda_id)";
+        } else {
+            $query .= "tienda_id = $tienda_id";
+        }
+
+        $query .= " ORDER BY $columna $orden";
 
         return self::consultarSQL($query);
     }

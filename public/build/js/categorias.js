@@ -139,17 +139,17 @@
 
     document.getElementById('eliminarCategoria').addEventListener('submit', function (e) {
         e.preventDefault();
-    
-            const alertaExito = document.createElement('div');
-            alertaExito.className = 'alerta exito';
-            alertaExito.textContent = 'Categoría Eliminada con éxito';
-            document.querySelector('#eliminarCategoria').prepend(alertaExito);
 
-            setTimeout(() => {
-                this.submit();
+        const alertaExito = document.createElement('div');
+        alertaExito.className = 'alerta exito';
+        alertaExito.textContent = 'Categoría Eliminada con éxito';
+        document.querySelector('#eliminarCategoria').prepend(alertaExito);
 
-            }, 3000);
-        
+        setTimeout(() => {
+            this.submit();
+
+        }, 3000);
+
     });
 
     btnAbrirModalAniadirCategoria.addEventListener('click', (e) => {
@@ -262,7 +262,7 @@
 
 
         categorias.forEach(categoria => {
-            const { id, nombre, descripcion } = categoria;
+            const { id, nombre, descripcion, tienda_id } = categoria;
 
             const cardCategorias = document.createElement('DIV');
             cardCategorias.classList.add('cardCategorias');
@@ -278,18 +278,21 @@
             const botonesCategorias = document.createElement('DIV');
             botonesCategorias.classList.add('botonesCategorias');
 
-            const btnActualizar = document.createElement('A');
-            btnActualizar.href = '#';
-            btnActualizar.classList.add('botonesCategoriasA');
-            btnActualizar.textContent = 'Actualizar';
+            if (tienda_id !== null) {
+                const btnActualizar = document.createElement('A');
+                btnActualizar.href = '#';
+                btnActualizar.classList.add('botonesCategoriasA');
+                btnActualizar.textContent = 'Actualizar';
 
-            const btnEliminar = document.createElement('A');
-            btnEliminar.href = '#';
-            btnEliminar.classList.add('botonesCategoriasE');
-            btnEliminar.textContent = 'Eliminar';
+                const btnEliminar = document.createElement('A');
+                btnEliminar.href = '#';
+                btnEliminar.classList.add('botonesCategoriasE');
+                btnEliminar.textContent = 'Eliminar';
 
-            botonesCategorias.appendChild(btnActualizar);
-            botonesCategorias.appendChild(btnEliminar);
+                botonesCategorias.appendChild(btnActualizar);
+                botonesCategorias.appendChild(btnEliminar);
+            }
+
 
             cardCategorias.appendChild(nombreCategoria);
             cardCategorias.appendChild(descripcionCategoria);
@@ -453,17 +456,17 @@
                     case 'modalCategorias--aniadir':
                         cerrarModalAniadirCategoria();
                         break;
-    
+
                     case 'modalCategorias--actualizar':
                         cerrarModalActualizarCategoria();
                         break;
-    
+
                     case 'modalCategorias--eliminar':
                         cerrarModalEliminarCategoria();
                         break;
-    
+
                     default:
-    
+
                         break;
                 }
             }
@@ -482,17 +485,17 @@
         cerrarModalClickFuera(modalEliminarCategoria, 'modalCategorias--eliminar');
     }
 
-    function cerrarModalAniadirCategoria(){
+    function cerrarModalAniadirCategoria() {
         modalAniadirCategoria.classList.remove('modalCategorias--aniadir--show');
     }
 
-    function cerrarModalActualizarCategoria(){
+    function cerrarModalActualizarCategoria() {
         modalActualizarCategoria.classList.remove('modalCategorias--actualizar--show');
     }
 
-    function cerrarModalEliminarCategoria(){
+    function cerrarModalEliminarCategoria() {
         modalEliminarCategoria.classList.remove('modalCategorias--eliminar--show');
     }
-    
+
 
 }())

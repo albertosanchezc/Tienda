@@ -68,8 +68,11 @@ class PaginasController
 
     public static function categoriasAPI()
     {
-        $categorias = Categorias::ALF('nombre', 'ASC');
-
+        $tiendaId = $_SESSION['tienda_id'];
+        $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
+        
+        // debuguear($categorias);
+        
         echo json_encode([
             'categorias' => $categorias
         ]);

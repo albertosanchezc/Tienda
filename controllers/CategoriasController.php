@@ -22,17 +22,20 @@ class CategoriasController
         $alertas = Categorias::getAlertas();
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            
+            
             $alertas = Categorias::getAlertas();
             $argsCrear = $_POST['categorias'];
-            $argsActualizar = $_POST['categoriasA'];
-            $argsEliminar = $_POST['categoriasE'];
-            $metodoCrear = !empty($argsCrear);
+            $argsActualizar = $_POST['categoriasA'] ?? [];
+            $argsEliminar = $_POST['categoriasE'] ?? [];
+            $metodoCrear = !empty($argsCrear) ?? [];
             $metodoActualizar = !empty($argsActualizar);
             $metodoEliminar = !empty($argsEliminar);
 
             if ($metodoCrear) {
                 $categorias->nombre = $argsCrear['nombre'];
                 $categorias->descripcion = $argsCrear['descripcion'];
+                $categorias->tienda_id = $tiendaId;     
                 $categorias->guardar();
             } else if ($metodoActualizar) {
                 $categoriasActualizar = new Categorias($argsActualizar);
@@ -42,7 +45,7 @@ class CategoriasController
             } else if ($metodoEliminar) {
 
                 $id = $argsEliminar['id'];
-                $categoriaseliminar = Categorias::find($id);
+                $categoriaseliminar = Categorias::wherebelongsTo('id', $id, 'tienda_id', $tiendaId)[0];
                 $categoriaseliminar->eliminar();
             }
             header('Location:/categorias');
