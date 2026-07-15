@@ -25,28 +25,41 @@ class CategoriasController
             
             
             $alertas = Categorias::getAlertas();
-            $argsCrear = $_POST['categorias'];
+            $argsCrear = $_POST['categorias'] ?? [];
             $argsActualizar = $_POST['categoriasA'] ?? [];
             $argsEliminar = $_POST['categoriasE'] ?? [];
-            $metodoCrear = !empty($argsCrear) ?? [];
+            $metodoCrear = !empty($argsCrear);
             $metodoActualizar = !empty($argsActualizar);
             $metodoEliminar = !empty($argsEliminar);
 
             if ($metodoCrear) {
                 $categorias->nombre = $argsCrear['nombre'];
                 $categorias->descripcion = $argsCrear['descripcion'];
-                $categorias->tienda_id = $tiendaId;     
+                $categorias->tienda_id = $tiendaId;
                 $categorias->guardar();
             } else if ($metodoActualizar) {
+                //Probando proteger la actualización    
+                $id = $argsActualizar['id'];
+                $categoriaActualizar = Categorias::findBelongsTo($id, $tiendaId);
+                                
+                if(!$categoriaActualizar){
+                    header('Location: /categorias');
+                    exit;
+                }
+
                 $categoriasActualizar = new Categorias($argsActualizar);
-                // debuguear($categoriasActualizar);
+                $categoriasActualizar->tienda_id = $tiendaId;
 
                 $categoriasActualizar->guardar();
             } else if ($metodoEliminar) {
 
                 $id = $argsEliminar['id'];
-                $categoriaseliminar = Categorias::wherebelongsTo('id', $id, 'tienda_id', $tiendaId)[0];
-                $categoriaseliminar->eliminar();
+                $categoriaEliminar = Categorias::findBelongsTo($id, $tiendaId);
+                if (!$categoriaEliminar) {
+                    header('Location: /categorias');
+                    exit;
+                }
+                $categoriaEliminar->eliminar();
             }
             header('Location:/categorias');
         }

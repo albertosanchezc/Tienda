@@ -103,7 +103,7 @@ class PaginasController
         $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
         $proveedores = Proveedor::where('tienda_id', $tiendaId);
         $visitas_proveedor = Visitas_proveedor::where('tienda_id',$tiendaId);
-        $categorias = Categorias::ALF('nombre', 'ASC');
+        $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
 
         echo json_encode([
             'ventas' => $ventas,
@@ -126,7 +126,7 @@ class PaginasController
         $script = '<script src="/build/js/metricas.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $tiendaId = $_SESSION['tienda_id'];
-        $categorias = Categorias::ALF('nombre', 'ASC');
+        $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
 
         $router->render('estadisticas/ver', [

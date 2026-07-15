@@ -454,6 +454,21 @@ class ActiveRecord
         return array_shift($resultado);
     }
 
+    public static function findBelongsTo($id, $tiendaId)
+    {
+        $id = (int) $id;
+        $tiendaId = (int) $tiendaId;
+
+        $query = "SELECT * FROM " . static::$tabla . "
+              WHERE id = $id
+              AND tienda_id = $tiendaId
+              LIMIT 1";
+
+        $resultado = self::consultarSQL($query);
+
+        return array_shift($resultado);
+    }
+
     public static function consultarSQL($query)
     {
         // Consultar la base de datos

@@ -35,10 +35,9 @@ class InventarioController
         $tiendaId = $_SESSION['tienda_id'];
         $inventario_nuevo = new Inventario();
         $producto = new Productos;
-        $categorias = Categorias::ALF('nombre', 'ASC');
+        $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
         $motivos = Motivos::ALF('motivo', 'ASC');
-        $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario::where('tienda_id', $tiendaId);
 
         // debuguear($inventario);
