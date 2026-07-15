@@ -13,9 +13,11 @@ class CategoriasController
 
         $titulo = 'Categorias';
         $alertas = [];
-        $tiendaId = $_SESSION
+        $tiendaId = $_SESSION['tienda_id'];
         $categorias = new Categorias;
-        $categoriasall = Categorias::where();
+        $categoriasall = Categorias::where('tienda_id', $tiendaId);
+
+        $categoriasActualizar = new Categorias; // o null
 
         $alertas = Categorias::getAlertas();
 
@@ -28,23 +30,20 @@ class CategoriasController
             $metodoActualizar = !empty($argsActualizar);
             $metodoEliminar = !empty($argsEliminar);
 
-            if($metodoCrear){
-            $categorias->nombre = $argsCrear['nombre'];
-            $categorias->descripcion = $argsCrear['descripcion'];
-            $categorias->guardar();
-
-            } else if ($metodoActualizar){
+            if ($metodoCrear) {
+                $categorias->nombre = $argsCrear['nombre'];
+                $categorias->descripcion = $argsCrear['descripcion'];
+                $categorias->guardar();
+            } else if ($metodoActualizar) {
                 $categoriasActualizar = new Categorias($argsActualizar);
                 // debuguear($categoriasActualizar);
 
                 $categoriasActualizar->guardar();
-
-            } else if($metodoEliminar){
+            } else if ($metodoEliminar) {
 
                 $id = $argsEliminar['id'];
                 $categoriaseliminar = Categorias::find($id);
                 $categoriaseliminar->eliminar();
-
             }
             header('Location:/categorias');
         }
@@ -60,6 +59,4 @@ class CategoriasController
             'categorias' => $categorias
         ]);
     }
-
-
 }
