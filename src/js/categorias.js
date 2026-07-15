@@ -293,7 +293,15 @@
                 botonesCategorias.appendChild(btnEliminar);
             }
 
+            if (tienda_id === null) {
 
+                const etiqueta = document.createElement('SPAN');
+                etiqueta.classList.add('categoria-global');
+                etiqueta.textContent = 'Predeterminada';
+
+                botonesCategorias.appendChild(etiqueta);
+
+            }
             cardCategorias.appendChild(nombreCategoria);
             cardCategorias.appendChild(descripcionCategoria);
             cardCategorias.appendChild(botonesCategorias);
