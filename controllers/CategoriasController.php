@@ -13,9 +13,9 @@ class CategoriasController
 
         $titulo = 'Categorias';
         $alertas = [];
-
+        $tiendaId = $_SESSION
         $categorias = new Categorias;
-        $categoriasall = Categorias::all();
+        $categoriasall = Categorias::where();
 
         $alertas = Categorias::getAlertas();
 
