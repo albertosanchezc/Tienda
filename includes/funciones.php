@@ -84,7 +84,7 @@ function debuguear($variable)
 // Escapa / Sanitizar el HTML
 function s($html): string
 {
-    $s = htmlspecialchars($html);
+    $s = htmlspecialchars($html ?? '', ENT_QUOTES, 'UTF-8');
     return $s;
 }
 

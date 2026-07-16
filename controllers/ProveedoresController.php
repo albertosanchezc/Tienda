@@ -25,6 +25,8 @@ class ProveedoresController
 
         $tiendaId = $_SESSION['tienda_id'];
         $proveedor = new Proveedor();
+        $proveedorActualizar = new Proveedor();
+
 
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
         // debuguear($proveedores);
@@ -49,9 +51,9 @@ class ProveedoresController
                 $proveedor->tienda_id = $tiendaId;
                 $proveedor->guardar();
             } elseif ($metodoActualizar) {
-                $proveedor->sincronizar($argsActualizarProveedor);
-                $proveedor->tienda_id = $tiendaId;
-                $proveedor->guardar();
+                $proveedorActualizar->sincronizar($argsActualizarProveedor);
+                $proveedorActualizar->tienda_id = $tiendaId;
+                $proveedorActualizar->guardar();
             } elseif ($metodoEliminar) {
 
                 $proveedor = Proveedor::find($argsEliminarProveedor['id']);
@@ -67,6 +69,7 @@ class ProveedoresController
             'script' => $script,
             'titulo' => $titulo,
             'proveedores' => $proveedores,
+            'proveedor' => $proveedor,
             'resultado' => $resultado,
             'alertas' => $alertas
         ]);

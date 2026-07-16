@@ -50,7 +50,7 @@ class ConfiguracionTienda
                 'ruta' => '/inventario',
                 'habilitado' => $usuario->confirmado == 1
                     && !empty(Proveedor::where('tienda_id', $tienda_id))
-                    && !empty(Categorias::where('tienda_id', $tienda_id))
+                    // && !empty(Categorias::where('tienda_id', $tienda_id))
 
             ],
 
