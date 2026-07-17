@@ -82,7 +82,7 @@ if (resultado) {
       break;
 
     case '4':
-      mostrarAlerta('No tienes permisos para realizar esa acción.', 'error');
+      mostrarAlerta('No tienes permisos para realizar esa acción.', 'error', contenedorGral);
       break;
   }
 

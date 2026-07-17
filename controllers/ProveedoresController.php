@@ -59,7 +59,7 @@ class ProveedoresController
                 $proveedorActualizar = Proveedor::findBelongsTo($id, $tiendaId);
 
                 if (!$proveedorActualizar) {
-                    header('Location: /proveedores');
+                    header('Location: /proveedores?resultado=4');
                     exit;
                 }
 
@@ -74,7 +74,7 @@ class ProveedoresController
                 $proveedor = Proveedor::findBelongsTo($id, $tiendaId);
 
                 if (!$proveedor) {
-                    header('Location: /proveedores');
+                    header('Location: /proveedores?resultado=4');
                     exit;
                 }
 
