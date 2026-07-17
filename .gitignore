@@ -3,4 +3,4 @@ vendor
 .DS_Store
 includes/.env
 cypress.config.js
-
+tienda_*
