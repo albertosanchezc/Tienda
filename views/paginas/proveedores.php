@@ -367,19 +367,19 @@
                             <label for="entradanombre">Nombre: </label>
                             <input class="modalproveedores--actualizar__inputNombre" type="text" id="entradanombre"
                                 name="proveedoresActualizar[nombre]" placeholder="Coca - Cola"
-                                value="<?php echo s($proveedores->nombre); ?>" required>
+                                value="<?php echo s($proveedores->nombre ?? ''); ?>" required>
                         </div>
                         <div class="modalproveedores--actualizar__telefono">
                             <label for="phone">Teléfono: </label>
                             <input class="modalproveedores--actualizar__inputTelefono" type="tel" id="phone"
                                 name="proveedoresActualizar[telefono]" placeholder="+52 (415) 456 7890" maxlength="19"
-                                value="<?php echo s($proveedores->telefono); ?>">
+                                value="<?php echo s($proveedores->telefono ?? ''); ?>">
                         </div>
                         <div class="modalproveedores--actualizar__email">
                             <label for="entradaemail">Email: </label>
                             <input class="modalproveedores--actualizar__inputEmail" type="email" id="entradaemail"
                                 name="proveedoresActualizar[email]" placeholder="correo@correo.com"
-                                value="<?php echo s($proveedores->email); ?>">
+                                value="<?php echo s($proveedores->email ?? ''); ?>">
                         </div>
                     </div>
                 </fieldset>

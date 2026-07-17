@@ -317,6 +317,10 @@ btnAbrirBuscarProveedores.addEventListener('click', () => {
 });
 
 btnAbrirNuevoProveedor.addEventListener('click', () => {
+  const nombreProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputNombre').value = '';
+  const telefonoProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputTelefono').value = '';
+  const emailProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputEmail').value = '';
+  console.log('Desde modal nuevo proveedor');
   modalNuevoProveedor.classList.add('modalproveedores--aniadir--show');
 });
 

@@ -69,7 +69,7 @@ class ProveedoresController
             'script' => $script,
             'titulo' => $titulo,
             'proveedores' => $proveedores,
-            'proveedor' => $proveedor,
+            // 'proveedor' => $proveedor,
             'resultado' => $resultado,
             'alertas' => $alertas
         ]);
