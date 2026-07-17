@@ -351,6 +351,7 @@ btnAbrirNuevoProveedor.addEventListener('click', () => {
   const telefonoProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputTelefono').value = '';
   const emailProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputEmail').value = '';
   modalNuevoProveedor.classList.add('modalproveedores--aniadir--show');
+  document.querySelector('#entradanombreCrear').focus();
 });
 
 botonCerrarModal.addEventListener('click', () => {
