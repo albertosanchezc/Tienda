@@ -172,6 +172,15 @@ describe('Registro de usuario', () => {
                             expect(rows[0].nombre.trim())
                                 .to.equal('Coca Cola');
 
+
+
+                            // AQUÍ VA EL VISIT
+                            cy.visit('http://localhost:3000/inventario');
+
+
+                            cy.get('.config-overlay').click();
+
+                            cy.get('.botonactualizarstock').click();
                         });
 
                 });
