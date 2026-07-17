@@ -36,32 +36,52 @@ class ProveedoresController
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             // $proveedores = new Proveedor();
             $alertas = Proveedor::getAlertas();
-            $argsAniadirProveedor = $_POST['aniadirProveedor'];
-            $argsActualizarProveedor = $_POST['proveedoresActualizar'];
-            $argsEliminarProveedor = $_POST['proveedoresEliminar'];
+            $argsAniadirProveedor = $_POST['aniadirProveedor'] ?? [];
+            $argsActualizarProveedor = $_POST['proveedoresActualizar'] ?? [];
+            $argsEliminarProveedor = $_POST['proveedoresEliminar'] ?? [];
             // debuguear($_POST);
-            
+
             $metodoAniadir = !empty($argsAniadirProveedor);
             $metodoActualizar = !empty($argsActualizarProveedor);
             $metodoEliminar = !empty($argsEliminarProveedor);
 
             if ($metodoAniadir) {
                 $proveedor->sincronizar($argsAniadirProveedor);
-
                 $proveedor->tienda_id = $tiendaId;
                 $proveedor->guardar();
+                ConfiguracionTienda::redireccionarSiguientePaso();
+
+                header('Location: /proveedores?resultado=1');
+                exit;
             } elseif ($metodoActualizar) {
+                $id = $argsActualizarProveedor['id'];
+
+                $proveedorActualizar = Proveedor::findBelongsTo($id, $tiendaId);
+
+                if (!$proveedorActualizar) {
+                    header('Location: /proveedores');
+                    exit;
+                }
+
                 $proveedorActualizar->sincronizar($argsActualizarProveedor);
-                $proveedorActualizar->tienda_id = $tiendaId;
                 $proveedorActualizar->guardar();
+
+                header('Location: /proveedores?resultado=2');
+                exit;
             } elseif ($metodoEliminar) {
+                $id = $argsEliminarProveedor['id'];
 
-                $proveedor = Proveedor::find($argsEliminarProveedor['id']);
+                $proveedor = Proveedor::findBelongsTo($id, $tiendaId);
+
+                if (!$proveedor) {
+                    header('Location: /proveedores');
+                    exit;
+                }
+
                 $proveedor->eliminar();
+                header('Location: /proveedores?resultado=3');
+                exit;
             }
-
-            ConfiguracionTienda::redireccionarSiguientePaso();
-            header('Location: /proveedores');
         }
 
         // debuguear($proveedores);
@@ -77,16 +97,16 @@ class ProveedoresController
     public static function proveedoresAPI()
     {
         $tiendaId = $_SESSION['tienda_id'];
-        $proveedores = Proveedor::where('tienda_id',$tiendaId);
-        $visitas_proveedor = Visitas_proveedor::where('tienda_id',$tiendaId);
+        $proveedores = Proveedor::where('tienda_id', $tiendaId);
+        $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
         $visita_producto = Visita_Producto::all();
         $productos = Productos::where('tienda_id', $tiendaId);
         $inventario = Inventario::where('tienda_id', $tiendaId);
         $ventas = Ventas_Completas::obtenerVentas($tiendaId);
-        
 
-        
-        
+
+
+
 
         echo json_encode([
             'proveedores' => $proveedores,

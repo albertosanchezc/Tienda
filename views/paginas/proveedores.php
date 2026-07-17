@@ -240,20 +240,20 @@
                     <legend>+Anadir Proveedor</legend>
                     <div class="modalproveedores--aniadir__entradasbox">
                         <div class="modalproveedores--aniadir__nombre">
-                            <label for="entradanombre">Nombre: </label>
-                            <input class="modalproveedores--aniadir__inputNombre" type="text" id="entradanombre"
+                            <label for="entradanombreCrear">Nombre: </label>
+                            <input class="modalproveedores--aniadir__inputNombre" type="text" id="entradanombreCrear"
                                 name="aniadirProveedor[nombre]" placeholder="Coca - Cola"
                                 value="<?php echo s($proveedor->nombre ?? ''); ?>" required>
                         </div>
                         <div class="modalproveedores--aniadir__telefono">
-                            <label for="phone">Teléfono: </label>
-                            <input class="modalproveedores--aniadir__inputTelefono" type="tel" id="phone"
+                            <label for="phoneCrear">Teléfono: </label>
+                            <input class="modalproveedores--aniadir__inputTelefono" type="tel" id="phoneCrear"
                                 name="aniadirProveedor[telefono]" placeholder="+52 (415) 456 7890" maxlength="19"
                                 value="<?php echo s($proveedor->telefono ?? ''); ?>">
                         </div>
                         <div class="modalproveedores--aniadir__email">
-                            <label for="entradaemail">Email: </label> 
-                            <input class="modalproveedores--aniadir__inputEmail" type="email" id="entradaemail"
+                            <label for="entradaemailCrear">Email: </label> 
+                            <input class="modalproveedores--aniadir__inputEmail" type="email" id="entradaemailCrear"
                                 name="aniadirProveedor[email]" placeholder="correo@correo.com"
                                 value="<?php echo s($proveedor->email ?? ''); ?>">
                         </div>
@@ -364,20 +364,20 @@
                     <legend>+Actualizar Proveedor</legend>
                     <div class="modalproveedores--actualizar__entradasbox">
                         <div class="modalproveedores--actualizar__nombre">
-                            <label for="entradanombre">Nombre: </label>
-                            <input class="modalproveedores--actualizar__inputNombre" type="text" id="entradanombre"
+                            <label for="entradanombreActualizar">Nombre: </label>
+                            <input class="modalproveedores--actualizar__inputNombre" type="text" id="entradanombreActualizar"
                                 name="proveedoresActualizar[nombre]" placeholder="Coca - Cola"
                                 value="<?php echo s($proveedores->nombre ?? ''); ?>" required>
                         </div>
                         <div class="modalproveedores--actualizar__telefono">
-                            <label for="phone">Teléfono: </label>
-                            <input class="modalproveedores--actualizar__inputTelefono" type="tel" id="phone"
+                            <label for="phoneActualizar">Teléfono: </label>
+                            <input class="modalproveedores--actualizar__inputTelefono" type="tel" id="phoneActualizar"
                                 name="proveedoresActualizar[telefono]" placeholder="+52 (415) 456 7890" maxlength="19"
                                 value="<?php echo s($proveedores->telefono ?? ''); ?>">
                         </div>
                         <div class="modalproveedores--actualizar__email">
-                            <label for="entradaemail">Email: </label>
-                            <input class="modalproveedores--actualizar__inputEmail" type="email" id="entradaemail"
+                            <label for="entradaemailActualizar">Email: </label>
+                            <input class="modalproveedores--actualizar__inputEmail" type="email" id="entradaemailActualizar"
                                 name="proveedoresActualizar[email]" placeholder="correo@correo.com"
                                 value="<?php echo s($proveedores->email ?? ''); ?>">
                         </div>

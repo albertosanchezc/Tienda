@@ -33,7 +33,7 @@ const botonCerrarModalVerProductos = document.querySelector('.modalproveedores--
 const modalProveedores = document.querySelector('.modalproveedores');
 const modalNuevoProveedor = document.querySelector('.modalproveedores--aniadir');
 const modalVerProductos = document.querySelector('.modalproveedores--verProductos');
-const phoneInput = document.getElementById("phone");
+const phoneInput = document.getElementById("phoneCrear");
 const btnAbrirBuscarProveedores = document.querySelector('.p2boton');
 const btnAbrirNuevoProveedor = document.querySelector('.p2boton1');
 const fijarBtn = document.querySelector('.btnmorado');
@@ -58,6 +58,36 @@ const inputNombreActualizar = document.querySelector('.modalproveedores--actuali
 const inputTelefonoActualizar = document.querySelector('.modalproveedores--actualizar__inputTelefono');
 const inputEmailActualizar = document.querySelector('.modalproveedores--actualizar__inputEmail');
 const inputIdActualizar = document.createElement('input');
+
+const params = new URLSearchParams(window.location.search);
+const resultado = params.get('resultado');
+
+if (resultado) {
+
+  const contenedorGral = document.querySelector('.proveedores-titulo');
+
+
+  switch (resultado) {
+
+    case '1':
+      mostrarAlerta('Proveedor registrado correctamente', 'exito', contenedorGral,);
+      break;
+
+    case '2':
+      mostrarAlerta('Proveedor actualizado correctamente', 'exito', contenedorGral,);
+      break;
+
+    case '3':
+      mostrarAlerta('Proveedor eliminado correctamente', 'exito', contenedorGral,);
+      break;
+
+    case '4':
+      mostrarAlerta('No tienes permisos para realizar esa acción.', 'error');
+      break;
+  }
+
+  window.history.replaceState({}, '', window.location.pathname);
+}
 
 const texts = [
   "Busca proveedores fácilmente y gestiona su información de forma rápida, precisa y completamente organizada.",
@@ -320,7 +350,6 @@ btnAbrirNuevoProveedor.addEventListener('click', () => {
   const nombreProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputNombre').value = '';
   const telefonoProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputTelefono').value = '';
   const emailProveedor = modalNuevoProveedor.querySelector('.modalproveedores--aniadir__inputEmail').value = '';
-  console.log('Desde modal nuevo proveedor');
   modalNuevoProveedor.classList.add('modalproveedores--aniadir--show');
 });
 
@@ -540,12 +569,19 @@ document.getElementById('actualizarProveedor').addEventListener('submit', functi
 
 });
 
-function mostrarAlerta(mensaje, tipo, contenedorGeneral, contenedorEspecifico) {
-  const alerta = document.createElement('div');
-  alerta.className = `alerta ${tipo}`;
-  alerta.textContent = mensaje;
-  contenedorGeneral.querySelector(contenedorEspecifico).prepend(alerta);
-  return alerta;
+function mostrarAlerta(mensaje, tipo, contenedorGeneral, contenedorEspecifico = null) {
+
+    const alerta = document.createElement('div');
+    alerta.className = `alerta ${tipo}`;
+    alerta.textContent = mensaje;
+
+    const destino = contenedorEspecifico
+        ? contenedorGeneral.querySelector(contenedorEspecifico)
+        : contenedorGeneral;
+
+    destino.prepend(alerta);
+
+    return alerta;
 }
 
 // Función para mostrar texto y actualizar indicadores
