@@ -149,7 +149,6 @@ describe('Registro de usuario', () => {
                     cy.intercept('POST', '**').as('guardarProducto');
                     cy.get('#nuevoproducto')
                         .submit();
-                    cy.get('#nuevoproducto').submit();
 
                     cy.wait('@guardarProducto');
 

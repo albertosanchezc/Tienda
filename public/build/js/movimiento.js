@@ -56,7 +56,16 @@
             const respuesta = await fetch(url);
             const resultado = await respuesta.json();
 
+            inventario = resultado.inventario;
 
+            console.table(
+                inventario.map(item => ({
+                    id: item.id,
+                    producto_id: item.producto_id,
+                    proveedor_id: item.proveedor_id,
+                    cantidad: item.cantidad
+                }))
+            );
             inventario = resultado.inventario;
             proveedores = resultado.proveedores;
             categorias = resultado.categorias;
@@ -459,7 +468,7 @@
                 <td>${producto.codigo_barras}</td>
                 <td>
                     <div class="btnVerVerde">
-                        <a href="#" class="btnEditarStock" data-id="${producto.id}">Editar Stock</a>
+                        <a href="#" class="btnEditarStock" data-id="${producto.producto_id}">Editar Stock</a>
                     </div>
                 </td>
 
@@ -486,6 +495,7 @@
             const idProducto = e.target.getAttribute('data-id');
             const fila = document.querySelector(`tr[data-id="${idProducto}"]`);
             const boton = e.target;
+
             const stockProducto = inventario.find(producto => producto.producto_id === idProducto);
             let objetoIdStock = {
                 producto_id: '',
@@ -497,12 +507,19 @@
                 objetoIdStock.producto_id = idProducto;
                 objetoIdStock.cantidad = stockProducto.cantidad;
                 arrayIdStock.push(objetoIdStock);
+                console.log('Seccion que nos interesa')
+                console.log({
+                    idProducto,
+                    fila,
+                    stockProducto
+                });
+
                 fila.classList.add('fila-seleccionada');
                 boton.textContent = 'Dejar de Editar';
                 boton.classList.add('btnQuitarStock');
 
                 const productoSeleccionado = inventario.find(producto => producto.id == idProducto);
-
+                console.log(productoSeleccionado);
                 if (productoSeleccionado) {
                     mostrarCard(productoSeleccionado, proveedores, categorias);
                     sel1 = document.querySelectorAll('.botonStock');
@@ -615,8 +632,8 @@
     function mostrarCard(producto, proveedores, categorias) {
         const gridmodificaciones = document.querySelector('.gridmodificaciones');
 
-        let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, cantidad, imagen, granel } = producto;
-
+        let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, cantidad, imagen, granel, tienda_id } = producto;
+        tiendaId = producto.tienda_id;
         let proveedorDatos = proveedores.find(proveedor => proveedor.id === proveedor_id);
 
         const proveedorNombre = proveedorDatos ? proveedorDatos.nombre : 'Proveedor no disponible';
@@ -640,7 +657,7 @@
 
 
         parrafoContainer.innerHTML = `
-            <img src="/imagenes/${imagen}" alt="Img ${nombre}" class="imgcoca">
+            <img src="/imagenes/tienda_${tiendaId}/${imagen}" alt="Img ${nombre}" class="imgcoca">
             <h3>${nombre}</h3>
         `;
 

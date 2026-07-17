@@ -1276,6 +1276,7 @@ function abrirModalActualizarStock(inputHidden, inputHiddenEliminar, e, cantidad
     e.preventDefault();
     modalActualizarStock.classList.add('modal--inventario--actualizarStock--show');
     cerrarModalClickFuera(modalActualizarStock, 'modal--inventario--actualizarStock');
+    document.querySelector('#cantidadStock').focus();
     contenedorSelectMotivo.style.display = 'none';
     const switchContainer = modalActualizarStock.querySelector('.switch');
     // switchContainer.id = 'optionaniadir';

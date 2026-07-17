@@ -372,7 +372,7 @@
                         <div class="modal--inventario--actualizarStock__nombre">
                             <label for="cantidadStock"> Cantidad a Agregar: </label>
                             <input type="number" id="cantidadStock" name="inventarioActualizarStock[cantidad]"
-                                placeholder="Ej. 10" value="<?php echo s($inventario->cantidad); ?>">
+                                placeholder="Ej. 10" value="<?php echo s($inventario->cantidad ?? ''); ?>">
                         </div>
                     </div>
                 </fieldset>

@@ -24,8 +24,8 @@ class InventarioController
         // if (!isset($_SESSION)) {
         //     session_start();
         // }
-        
-        
+
+
         $script = '<script src="/build/js/inventario.js"></script>
         <script src="/build/js/JsBarcode.all.min.js"></script>
 
@@ -113,14 +113,31 @@ class InventarioController
                 if (empty($producto_nuevo)) { // Si no se encuentra dentro de la base
 
                     $producto->guardar();
+                    // Recuperarlo
+                    $producto_nuevo = Productos::wherebelongsTo(
+                        'codigo_barras',
+                        $codigo_barras,
+                        'tienda_id',
+                        $tiendaId
+                    );
                     // Inventario::setAlerta('exito', 'Guardado Correctamente');
                 }
-                $producto_nuevo = Productos::wherebelongsTo('codigo_barras', $codigo_barras, 'tienda_id', $tiendaId);
+                $productoId = $producto_nuevo[0]->id;
 
+                // ¿Ya existe inventario para ese producto?
+                $inventarioExistente = Inventario::wherebelongsTo(
+                    'producto_id',
+                    $productoId,
+                    'tienda_id',
+                    $tiendaId
+                );
+                // $producto_nuevo = Productos::wherebelongsTo('codigo_barras', $codigo_barras, 'tienda_id', $tiendaId);
 
-                $inventario_nuevo->producto_id = $producto_nuevo[0]->id;
+                if (empty($inventarioExistente)) {
 
-                $inventario_nuevo->guardar();
+                    $inventario_nuevo->producto_id = $productoId;
+                    $inventario_nuevo->guardar();
+                }
             } elseif ($metodoActualizar) { // El método fue actualizar
                 $inventarioActualizar = new Inventario($argsActualizar);
                 $productoActualizar = new Productos($argsActualizar);
@@ -173,8 +190,8 @@ class InventarioController
                 $visitaProveedorActualizarStock = new Visitas_Proveedor();
                 $visitaProveedorActualizarStock->id = null;
                 $visitaProveedorActualizarStock->proveedor_id = $proveedorId;
-                $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'id');
-                $visitaProveedorActualizarStock->visita_id = $visitaPrevia + 1;
+                $visitaPrevia = Visitas_proveedor::lastofTable('visitas_proveedor', 'visita_id');
+                $visitaProveedorActualizarStock->visita_id = $visitaPrevia->visita_id + 1;
                 // debuguear($visitaProveedorActualizarStock);
                 $cantidadNueva = $argsActualizarStock['cantidad'];
                 if ($cantidadNueva >= $cantidadAnterior) {
