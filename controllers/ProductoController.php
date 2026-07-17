@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\ConfiguracionTienda;
 use Model\Categorias;
 use Model\Inventario;
 use Model\Proveedor;
@@ -17,7 +18,12 @@ class ProductoController
         $script = '<script src="/build/js/movimiento.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
         $alertas = [];
-        $proveedores = Proveedor::ALF('nombre', 'ASC');
+        $tiendaId = $_SESSION['tienda_id'];
+        $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
+        ConfiguracionTienda::redireccionarSiguientePaso();
+        $inventario = new Inventario();
+        $vista_proveedor = new Visitas_proveedor();
+
         $alertas = Proveedor::getAlertas();
         $visita_previa = Visitas_proveedor::lastofTable('visitas_proveedor', 'visita_id');
         $visita_id = $visita_previa->visita_id;
@@ -44,7 +50,7 @@ class ProductoController
 
                     // debuguear($producto);
 
-                    $productoCompleto = Inventario::find($producto->producto_id);
+                    $productoCompleto = Inventario::findBelongsTo($producto->producto_id, $tiendaId);
                     $diferenciaCantidad = $producto->cantidad - $productoCompleto->cantidad;
 
                     if ($productoCompleto->granel === '1') {
@@ -108,7 +114,9 @@ class ProductoController
         $router->render('paginas/movimientoproducto', [
             'titulo' => $titulo,
             'script' => $script,
-            'proveedores' => $proveedores
+            'proveedores' => $proveedores,
+            'inventario' => $inventario,
+            'vista_proveedor' => $vista_proveedor
         ]);
     }
 }
