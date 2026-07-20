@@ -38,9 +38,9 @@ class VentasYCancelacionesController
 
             // El métofo fue Cancelar Toda la venta
             if ($metodoCancelarPorCarritoModal) {
-                $cajaPost = json_decode($argsCancelarPorCarritoModal['caja']);
-                $ventasPost = json_decode($argsCancelarPorCarritoModal['ventas']);
-                $inventarioPost = json_decode($argsCancelarPorCarritoModal['inventario']);
+                $cajaPost = json_decode($argsCancelarPorCarritoModal['caja']) ?? [];
+                $ventasPost = json_decode($argsCancelarPorCarritoModal['ventas']) ?? [];
+                $inventarioPost = json_decode($argsCancelarPorCarritoModal['inventario']) ?? [];
 
                 $caja = Caja::firstWhere('tienda_id', $tiendaId);
 
@@ -248,13 +248,13 @@ class VentasYCancelacionesController
                 $caja->guardar();
                 // debuguear($caja);
             } elseif ($metodoCancelarProducto) {
-                $cajaPost = json_decode($argsCancelarProducto['caja']);
-                $ventasPost = json_decode($argsCancelarProducto['ventas']);
-                $inventarioPost = json_decode($argsCancelarProducto['inventario']);
+                $cajaPost = json_decode($argsCancelarProducto['caja']) ?? [];
+                $ventasPost = json_decode($argsCancelarProducto['ventas']) ?? [];
+                $inventarioPost = json_decode($argsCancelarProducto['inventario']) ?? [];
 
 
-                $caja = Caja::find(1);
-                $caja->sincronizar(get_object_vars($cajaPost));
+                $caja = Caja::firstWhere('tienda_id', $tiendaId);
+                $caja->sincronizar($cajaPost);
                 $producto_id = $inventarioPost->producto_id;
                 // debuguear($caja);
 
@@ -263,7 +263,7 @@ class VentasYCancelacionesController
                 // debuguear($ventaNueva);
                 $fecha_venta = $ventaNueva->fecha_venta;
 
-                $productoInv = Inventario::find($producto_id);
+                $productoInv = Inventario::findBelongsTo($producto_id,$tiendaId);
 
                 $esGranel = $productoInv->granel;
                 $carrito_id = $ventasPost->carrito_id;
