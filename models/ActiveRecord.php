@@ -444,6 +444,21 @@ class ActiveRecord
 
         return $resultado;
     }
+    
+    public static function where3ParamsBelongsTo($col1, $valor1, $col2, $valor2, $col3, $valor3, $tienda_id)
+    {
+        $tienda_id = (int) $tienda_id;
+
+        $query = "SELECT * FROM " . static::$tabla .
+            " WHERE ($col1, $col2, $col3) = ('$valor1', '$valor2', '$valor3')" .
+            " AND tienda_id = $tienda_id";
+
+        // debuguear($query);
+
+        $resultado = self::consultarSQL($query);
+
+        return $resultado;
+    }
 
     // Buscar un registro por su id
     public static function find($id)
