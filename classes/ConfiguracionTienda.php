@@ -50,7 +50,7 @@ class ConfiguracionTienda
                 'ruta' => '/inventario',
                 'habilitado' => $usuario->confirmado == 1
                     && !empty(Proveedor::where('tienda_id', $tienda_id))
-                    // && !empty(Categorias::where('tienda_id', $tienda_id))
+                // && !empty(Categorias::where('tienda_id', $tienda_id))
 
             ],
 
@@ -62,6 +62,17 @@ class ConfiguracionTienda
                 'habilitado' => $usuario->confirmado == 1
                     && !empty(Proveedor::where('tienda_id', $tienda_id))
                     && !empty(Productos::where('tienda_id', $tienda_id))
+            ],
+
+            [
+                'id' => 'cancelacion',
+                'nombre' => 'Registrar Una Cancelación',
+                'completo' => !empty(Ventas::wherebelongsTo('cancelacion', '1', 'tienda_id', $tienda_id)),
+                'ruta' => '/ventasycancelaciones',
+                'habilitado' => $usuario->confirmado == 1
+                    && !empty(Proveedor::where('tienda_id', $tienda_id))
+                    && !empty(Productos::where('tienda_id', $tienda_id))
+                    && !empty(Ventas::where('tienda_id', $tienda_id))
             ]
 
 
@@ -105,6 +116,8 @@ class ConfiguracionTienda
         $proveedorRegistrado = self::pasoCompletado($pasos, 'proveedor');
         $productoRegistrado = self::pasoCompletado($pasos, 'producto');
         $ventaRegistrada = self::pasoCompletado($pasos, 'ventas');
+        $cancelacionRegistrada = self::pasoCompletado($pasos, 'cancelacion');
+
 
 
         if (!$cuentaConfirmada) {
@@ -112,7 +125,7 @@ class ConfiguracionTienda
         }
 
         $tiendaListaParaVender = $proveedorRegistrado && $productoRegistrado;
-
+        $tiendaListaParaCancelar = $ventaRegistrada;
         switch ($modulo) {
 
             case 'proveedores':
@@ -125,13 +138,16 @@ class ConfiguracionTienda
                 return $tiendaListaParaVender;
 
             case 'caja':
-                return $ventaRegistrada;
+                return $cancelacionRegistrada;
 
             case 'ventas':
-                return $ventaRegistrada;
+                return $tiendaListaParaVender;
+
+            case 'cancelacion':
+                return $tiendaListaParaCancelar;
 
             case 'metricas':
-                return $ventaRegistrada;
+                return $cancelacionRegistrada;
 
             default:
                 return true;
