@@ -194,13 +194,33 @@ describe('Registro de usuario', () => {
                                     cy.get('.config-overlay').click();
 
                                     cy.get('.crearVariante').click();
+
+                                    cy.get('input[name="inventarioCrear[codigo_barras]"]')
+                                        .type('7501055313545');
+
+                                    // cy.get('input[name="inventarioCrear[descripcion]"]')
+                                    //     .type('3l');
+
+
+                                    // cargar imagen
+                                    cy.get('#imagen')
+                                        .attachFile('producto_2.jpeg');
+
+
+
+                                    cy.intercept('POST', '**').as('guardarProducto');
+                                    cy.get('#nuevoproducto')
+                                        .submit();
+
+                                    cy.wait('@guardarProducto');
+
                                 });
 
                         });
                 });
 
         });
-        });
-
-
     });
+
+
+});
