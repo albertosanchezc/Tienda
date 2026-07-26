@@ -163,29 +163,44 @@ describe('Registro de usuario', () => {
 
                     cy.task(
                         'queryDb',
-                        `SELECT * FROM productos WHERE codigo_barras='7501055330116'`
+                        `SELECT tienda_id
+     FROM usuarios
+     WHERE email='${email}'`
                     )
                         .then((rows) => {
 
-                            expect(rows).to.have.length(1);
+                            const tiendaId = rows[0].tienda_id;
 
-                            expect(rows[0].nombre.trim())
-                                .to.equal('Coca Cola');
+                            cy.task(
+                                'queryDb',
+                                `SELECT *
+         FROM productos
+         WHERE codigo_barras='7501055330116'
+         AND tienda_id=${tiendaId}`
+                            )
+                                .then((rows) => {
+
+                                    expect(rows).to.have.length(1);
+
+                                    expect(rows[0].nombre.trim())
+                                        .to.equal('Coca Cola');
 
 
 
-                            // AQUÍ VA EL VISIT
-                            cy.visit('http://localhost:3000/inventario');
+                                    // AQUÍ VA EL VISIT
+                                    cy.visit('http://localhost:3000/inventario');
 
 
-                            cy.get('.config-overlay').click();
+                                    cy.get('.config-overlay').click();
 
-                            cy.get('.botonactualizarstock').click();
+                                    cy.get('.crearVariante').click();
+                                });
+
                         });
-
                 });
+
+        });
         });
 
-    });
 
-});
+    });

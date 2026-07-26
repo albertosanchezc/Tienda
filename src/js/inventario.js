@@ -984,7 +984,7 @@ function mostrarCards(inventario, proveedores, categorias) {
         botonesGrid.innerHTML = `
 
         <div class="primerafila" style="gap:1rem;">
-            <a href="#" id="crearVariante" class="botonactualizarstock">Actualizar Stock</a>
+            <a href="#" class="botonactualizarstock">Actualizar Stock</a>
             <a href="#" class="botonactualizarstock crearVariante">Crear Variante</a>
         </div>
         <div class="segundafila">

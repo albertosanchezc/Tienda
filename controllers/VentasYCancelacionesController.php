@@ -30,7 +30,6 @@ class VentasYCancelacionesController
 
 
 
-
             $metodoCancelarPorCarritoModal = !empty($argsCancelarPorCarritoModal);
             $metodoCancelarPorSeleccionModal = !empty($argsCancelarPorSeleccionModal);
             $metodoCancelarProducto = !empty($argsCancelarProducto);
@@ -268,7 +267,7 @@ class VentasYCancelacionesController
                 $esGranel = $productoInv->granel;
                 $carrito_id = $ventasPost->carrito_id;
                 $existeCancelacion = Ventas::where3Params('cancelacion', '1', 'producto_id', $producto_id, 'carrito_id', $carrito_id);
-
+                // debuguear($existeCancelacion);
                 $valorVentaAntesActualizar = Ventas::where3Params('cancelacion', '0', 'producto_id', $producto_id, 'carrito_id', $carrito_id);
 
                 if ($esGranel === '0') {
@@ -291,7 +290,7 @@ class VentasYCancelacionesController
                     } else {
                         // Cantidad = 1 debemos eliminar la venta
                         $venta = new Ventas(get_object_vars($valorVentaAntesActualizar[0]));
-
+                        // debuguear($venta);
                         // Estamos listos para eliminar la venta
                         $venta->eliminar();
                     }
@@ -304,6 +303,7 @@ class VentasYCancelacionesController
                         $cancelacionConFechaNueva = new Ventas();
                         $fecha_venta = $cancelacionConFechaNueva->fecha_venta;
                         $cancelacion->fecha_venta = $fecha_venta;
+                        $cancelacion->tienda_id = $tiendaId;
 
                         // debuguear($cancelacion);
                         // Estamos listos para guardar la cancelacion
@@ -320,6 +320,7 @@ class VentasYCancelacionesController
                         $cancelacionConFechaNueva = new Ventas();
                         $fecha_venta = $cancelacionConFechaNueva->fecha_venta;
                         $cancelacion->fecha_venta = $fecha_venta;
+                        $cancelacion->tienda_id = $tiendaId;
 
                         // Estamos listos para actualizar la cancelacion
 
@@ -344,9 +345,10 @@ class VentasYCancelacionesController
                     // Añadir ese articulo al inventario
                     // $productoInv->cantidad++;
                     $inventarioActualizado = new Inventario(get_object_vars($productoInv));
+                    // debuguear($inventarioActualizado);
+
                     $inventarioActualizado->guardar();
                     $caja->guardar();
-                    // debuguear($inventarioActualizado);
                 } else {
                     // Debemos Eliminar todos los gramos de ese producto
                     $cancelacion = new Ventas(get_object_vars($ventasPost));
