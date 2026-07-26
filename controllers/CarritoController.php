@@ -86,7 +86,7 @@ class CarritoController
                 $caja->guardar();
 
                 ConfiguracionTienda::redireccionarSiguientePaso();
-                exit;
+                // exit;
             }
         }
 

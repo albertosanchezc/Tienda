@@ -214,6 +214,15 @@ describe('Registro de usuario', () => {
 
                                     cy.wait('@guardarProducto');
 
+
+                                    cy.get('.config-overlay').click();
+                                    cy.getByData("documento").click(50, 30);
+                                    cy.getByData("botonBusquedaManual").should('be.visible');
+                                    cy.getByData("botonBusquedaManual").click()
+                                    cy.getByData("modal--manual__close").type("7501055313545")
+                                    cy.getByData("descripcionProductoTbodyModalManual").contains('600').click()
+                                    cy.get('#pagar').type('30')
+                                    cy.get('.modal--pagar__btn').click()
                                 });
 
                         });
