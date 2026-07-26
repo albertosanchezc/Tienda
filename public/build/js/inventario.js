@@ -255,7 +255,8 @@ inputNuevaImagenActualizar.addEventListener('change', (event) => {
 
 
         // Si no se selecciona un archivo, muestra la imagen actual (o un placeholder)
-        vistaPreviaImagenActualizar.src = `/imagenes/${imagen}`;
+
+        vistaPreviaImagenActualizar.src = `/imagenes/tienda_${tienda_id}/${imagen}`;
     }
 });
 
@@ -886,7 +887,7 @@ function mostrarCards(inventario, proveedores, categorias) {
         const botonesGrid = document.createElement('DIV');
         botonesGrid.classList.add('botonesinventario');
 
-        let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel } = producto;
+        let { id, nombre, descripcion, codigo_barras, fecha_compra, precio_unitario_venta, precio_compra, proveedor_id, categoria_id, cantidad, imagen, producto_id, granel, tienda_id } = producto;
 
         let proveedorDatos = proveedores.find(proveedor => proveedor.id === proveedor_id);
         let categoriaDatos = categorias.find(categoria => categoria.id === categoria_id);
@@ -1065,7 +1066,7 @@ function mostrarCards(inventario, proveedores, categorias) {
 
 
                 const vistaPreviaImagenActualizar = modalActualizarInventario.querySelector('#vistaPreviaImagenActualizar');
-                vistaPreviaImagenActualizar.src = `/imagenes/${imagen}`;
+                vistaPreviaImagenActualizar.src = `/imagenes/tienda_${tienda_id}/${imagen}`;
 
 
 
@@ -1178,7 +1179,7 @@ function mostrarCards(inventario, proveedores, categorias) {
 
 
                 const vistaPreviaImagen = modalInventario.querySelector('#vistaPreviaImagen');
-                vistaPreviaImagen.src = `/imagenes/${imagen}`;
+                vistaPreviaImagen.src = `/imagenes/tienda_${tienda_id}/${imagen}`;
 
             }
 

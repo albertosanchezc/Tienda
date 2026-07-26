@@ -28,8 +28,11 @@ class VentasYCancelacionesController
 
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d3579ba3175f2a0187700ec304e774106d360628
             $metodoCancelarPorCarritoModal = !empty($argsCancelarPorCarritoModal);
             $metodoCancelarPorSeleccionModal = !empty($argsCancelarPorSeleccionModal);
             $metodoCancelarProducto = !empty($argsCancelarProducto);
@@ -139,9 +142,9 @@ class VentasYCancelacionesController
                 }
                 $caja->guardar();
             } elseif ($metodoCancelarPorSeleccionModal) {
-                $cajaPost = json_decode($argsCancelarPorSeleccionModal['caja']);
-                $ventasPost = json_decode($argsCancelarPorSeleccionModal['ventas']);
-                $inventarioPost = json_decode($argsCancelarPorSeleccionModal['inventario']);
+                $cajaPost = json_decode($argsCancelarPorSeleccionModal['caja']) ?? [];
+                $ventasPost = json_decode($argsCancelarPorSeleccionModal['ventas']) ?? [];
+                $inventarioPost = json_decode($argsCancelarPorSeleccionModal['inventario']) ?? [];
 
                 $caja = Caja::firstWhere('tienda_id', $tiendaId);
 
@@ -253,7 +256,10 @@ class VentasYCancelacionesController
 
 
                 $caja = Caja::firstWhere('tienda_id', $tiendaId);
+                
+                
                 $caja->sincronizar($cajaPost);
+
                 $producto_id = $inventarioPost->producto_id;
                 // debuguear($caja);
 
@@ -262,13 +268,20 @@ class VentasYCancelacionesController
                 // debuguear($ventaNueva);
                 $fecha_venta = $ventaNueva->fecha_venta;
 
-                $productoInv = Inventario::findBelongsTo($producto_id,$tiendaId);
-
+                $productoInv = Inventario::wherebelongsTo('producto_id', $producto_id, 'tienda_id', $tiendaId)[0];
+                
+                
                 $esGranel = $productoInv->granel;
                 $carrito_id = $ventasPost->carrito_id;
+<<<<<<< HEAD
                 $existeCancelacion = Ventas::where3Params('cancelacion', '1', 'producto_id', $producto_id, 'carrito_id', $carrito_id);
                 // debuguear($existeCancelacion);
                 $valorVentaAntesActualizar = Ventas::where3Params('cancelacion', '0', 'producto_id', $producto_id, 'carrito_id', $carrito_id);
+=======
+                $existeCancelacion = Ventas::where3ParamsBelongsTo('cancelacion', '1', 'producto_id', $producto_id, 'carrito_id', $carrito_id, $tiendaId);
+
+                $valorVentaAntesActualizar = Ventas::where3ParamsBelongsTo('cancelacion', '0', 'producto_id', $producto_id, 'carrito_id', $carrito_id, $tiendaId);
+>>>>>>> d3579ba3175f2a0187700ec304e774106d360628
 
                 if ($esGranel === '0') {
                     // No es de granel, Debemos actualizarlo en el inventario
@@ -323,7 +336,8 @@ class VentasYCancelacionesController
                         $cancelacion->tienda_id = $tiendaId;
 
                         // Estamos listos para actualizar la cancelacion
-
+                        
+                        
 
                     }
                     $cancelacion->guardar();
