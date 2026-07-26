@@ -97,8 +97,8 @@ class PaginasController
 
     public static function metricasAPI()
     {
-        $ventas = Ventas_Completas::obtenerVentasConcat();
         $tiendaId = $_SESSION['tienda_id'];
+        $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
         $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
         $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
         $proveedores = Proveedor::where('tienda_id', $tiendaId);

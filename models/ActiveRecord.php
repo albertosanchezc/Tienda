@@ -329,35 +329,39 @@ class ActiveRecord
         return self::consultarSQL($query);
     }
 
-    public static function obtenerVentasConcat()
+    public static function obtenerVentasConcat($tiendaId)
     {
         $query = "SELECT 
-            ventas.id AS id_venta,
-            ventas.producto_id AS producto_id,
-            ventas.cantidad AS cantidad,
-            ventas.carrito_id AS carrito_id,
-            ventas.fecha_venta AS fecha_venta,
-            ventas.hora_venta AS hora_venta,
-            ventas.cancelacion as cancelacion,
-            productos.id AS id_producto,
-            CONCAT(productos.nombre, ' - ', productos.descripcion) AS producto,
-            productos.imagen AS imagen_producto,
-            inventario.granel AS granel,
-            inventario.precio_unitario_venta AS precio_venta,
-            inventario.precio_compra AS precio_compra,
-            categorias.nombre AS categoria,
-            categorias.descripcion AS descripcion_categoria,
-            proveedor.nombre AS proveedor,  
-            proveedor.telefono AS telefono_proveedor 
-        FROM ventas
-        INNER JOIN productos ON ventas.producto_id = productos.id
-        INNER JOIN inventario ON inventario.producto_id = productos.id  
-        INNER JOIN categorias ON inventario.categoria_id = categorias.id  
-        INNER JOIN proveedor ON inventario.proveedor_id = proveedor.id;
-        ";
+        ventas.id AS id_venta,
+        ventas.producto_id AS producto_id,
+        ventas.cantidad AS cantidad,
+        ventas.carrito_id AS carrito_id,
+        ventas.fecha_venta AS fecha_venta,
+        ventas.hora_venta AS hora_venta,
+        ventas.cancelacion AS cancelacion,
+        productos.id AS id_producto,
+        CONCAT(productos.nombre, ' - ', productos.descripcion) AS producto,
+        productos.imagen AS imagen_producto,
+        inventario.granel AS granel,
+        inventario.precio_unitario_venta AS precio_venta,
+        inventario.precio_compra AS precio_compra,
+        categorias.nombre AS categoria,
+        categorias.descripcion AS descripcion_categoria,
+        proveedor.nombre AS proveedor,
+        proveedor.telefono AS telefono_proveedor
+    FROM ventas
+    INNER JOIN productos
+        ON ventas.producto_id = productos.id
+    INNER JOIN inventario
+        ON inventario.producto_id = productos.id
+        AND inventario.tienda_id = ventas.tienda_id
+    INNER JOIN categorias
+        ON inventario.categoria_id = categorias.id
+    INNER JOIN proveedor
+        ON inventario.proveedor_id = proveedor.id
+    WHERE ventas.tienda_id = " . self::$db->escape_string($tiendaId);
 
-        $resultado = self::consultarSQL($query);
-        return $resultado;
+        return self::consultarSQL($query);
     }
 
 
@@ -444,7 +448,7 @@ class ActiveRecord
 
         return $resultado;
     }
-    
+
     public static function where3ParamsBelongsTo($col1, $valor1, $col2, $valor2, $col3, $valor3, $tienda_id)
     {
         $tienda_id = (int) $tienda_id;
