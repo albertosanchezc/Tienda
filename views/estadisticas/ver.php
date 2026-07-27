@@ -359,22 +359,88 @@
             </div>
             <div>
                 <div class="flextitulo-icono">
-                    <p>Top 20 Productos registrados con Stock en exceso (ver ayuda)</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <p>Top 20 Productos registrados con Stock en exceso</p>
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos registrados con mayor cantidad de existencias en inventario. Es útil para identificar aquellos productos cuyo nivel de stock es considerablemente alto y que podrían representar un exceso de inventario.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con mayor cantidad de existencias.</li>
+                                <li>Detectar posibles excesos de inventario que ocupan espacio de almacenamiento.</li>
+                                <li>Evaluar si es necesario implementar promociones para acelerar la rotación de estos productos.</li>
+                                <li>Optimizar futuras compras evitando sobreabastecimientos.</li>
+                                <li>Tomar decisiones para mantener un inventario más equilibrado y eficiente.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart22" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
-                    <p>Top 20 Productos registrados con Stock por agotarse (ver ayuda)</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <p>Top 20 Productos registrados con Stock por agotarse</p>
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos registrados con menor cantidad de existencias en inventario. Permite identificar los artículos que están más cerca de agotarse y que podrían requerir un nuevo abastecimiento.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con menor disponibilidad en inventario.</li>
+                                <li>Detectar artículos que necesitan ser reabastecidos antes de quedarse sin existencias.</li>
+                                <li>Reducir el riesgo de perder ventas por falta de stock.</li>
+                                <li>Priorizar las compras de los productos con mayor urgencia de reposición.</li>
+                                <li>Planificar mejor el abastecimiento y mantener una disponibilidad adecuada de los productos.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart23" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
-                    <p>Top 20 Productos registrados con Stock Suficiente (ver ayuda)</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <p>Top 20 Productos registrados con Stock Suficiente</p>
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos registrados con una cantidad de existencias suficiente en inventario. Permite identificar los artículos que cuentan con disponibilidad adecuada para cubrir la demanda actual y mantener un abastecimiento estable.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos que mantienen un nivel adecuado de stock.</li>
+                                <li>Verificar qué artículos cuentan con suficiente disponibilidad para la venta.</li>
+                                <li>Evitar compras innecesarias de productos que aún tienen existencias suficientes.</li>
+                                <li>Monitorear el equilibrio del inventario y la distribución de productos.</li>
+                                <li>Tomar mejores decisiones de abastecimiento basadas en los niveles actuales de stock.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart24" width="400" height="400"></canvas>
             </div>
@@ -432,14 +498,58 @@
             <div>
                 <div class="flextitulo-icono">
                     <p>Retiros y abonos</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra el comportamiento histórico de los movimientos de efectivo registrados como retiros y abonos, indicando los montos acumulados en pesos. La información puede consultarse considerando todo el historial registrado o aplicando filtros por un periodo específico, desde una fecha inicial hasta una fecha final.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Visualizar cuánto dinero ha sido retirado y abonado durante un periodo determinado.</li>
+                                <li>Comparar los movimientos de entrada y salida de efectivo.</li>
+                                <li>Analizar el comportamiento del flujo de dinero en caja.</li>
+                                <li>Consultar movimientos históricos para facilitar revisiones y controles administrativos.</li>
+                                <li>Identificar periodos con mayor cantidad de retiros o abonos para una mejor toma de decisiones.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart27" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Total en Caja</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra el comportamiento histórico del total disponible en caja en pesos, permitiendo visualizar cómo ha variado el saldo a través del tiempo de acuerdo con los movimientos registrados. La información puede consultarse con todo el historial disponible o mediante filtros por un periodo específico.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Conocer la evolución del saldo disponible en caja a lo largo del tiempo.</li>
+                                <li>Identificar aumentos y disminuciones en el efectivo disponible.</li>
+                                <li>Analizar el comportamiento financiero de la caja durante diferentes periodos.</li>
+                                <li>Detectar variaciones importantes en el flujo de efectivo.</li>
+                                <li>Facilitar el control y seguimiento de los recursos disponibles en caja.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart28" width="400" height="400"></canvas>
             </div>
