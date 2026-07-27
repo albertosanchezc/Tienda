@@ -664,7 +664,29 @@
             <div class="graficaGananciasVentas">
                 <div class="flextitulo-icono">
                     <p>Ganancias Contra Ventas</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra la comparación entre el monto total de ventas realizadas y las ganancias obtenidas en pesos. Permite analizar la diferencia entre los ingresos generados por la venta de productos y la utilidad resultante después de considerar el costo de adquisición de los productos vendidos.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Comparar el volumen de ventas contra las ganancias generadas.</li>
+                                <li>Identificar qué tan rentable está siendo la operación del negocio.</li>
+                                <li>Analizar el comportamiento de los ingresos y la utilidad en diferentes periodos.</li>
+                                <li>Detectar variaciones entre las ventas realizadas y el margen de ganancia obtenido.</li>
+                                <li>Tomar mejores decisiones sobre precios, compras y estrategias de venta.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart1" width="400" height="400"></canvas>
             </div>
@@ -674,42 +696,174 @@
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 de Productos Más Vendidos</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos con mayor cantidad de unidades vendidas, permitiendo identificar los artículos con mayor rotación dentro del inventario. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar cuáles son los productos con mayor demanda.</li>
+                                <li>Conocer qué artículos tienen una mayor rotación en ventas.</li>
+                                <li>Planificar mejor las compras y el abastecimiento del inventario.</li>
+                                <li>Detectar los productos que generan mayor movimiento comercial.</li>
+                                <li>Tomar decisiones basadas en el comportamiento real de las ventas.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart2" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 de Productos Menos Vendidos</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos con menor cantidad de unidades vendidas, permitiendo identificar los artículos con baja rotación dentro del inventario. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar productos con menor demanda de venta.</li>
+                                <li>Detectar artículos con poca rotación dentro del inventario.</li>
+                                <li>Analizar si es necesario ajustar compras o niveles de abastecimiento.</li>
+                                <li>Tomar decisiones sobre promociones, descuentos o estrategias de venta.</li>
+                                <li>Optimizar el espacio y recursos destinados a productos con baja salida.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart3" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Productos con Mayor Volumen de Ventas en $</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos que han generado el mayor volumen de ventas en pesos, permitiendo identificar cuáles artículos tienen una mayor contribución económica dentro del negocio. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos que generan mayores ingresos por ventas.</li>
+                                <li>Conocer qué artículos tienen mayor impacto económico para el negocio.</li>
+                                <li>Analizar la importancia de cada producto dentro de la facturación total.</li>
+                                <li>Priorizar estrategias de venta y abastecimiento para productos de mayor valor.</li>
+                                <li>Tomar decisiones comerciales basadas en la generación real de ingresos.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart4" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos que han generado mayores ganancias totales en pesos, permitiendo identificar cuáles artículos tienen una mayor rentabilidad para el negocio. La información se obtiene considerando la diferencia entre el precio de venta y el costo de adquisición de los productos vendidos.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos que generan mayor utilidad económica.</li>
+                                <li>Conocer cuáles artículos aportan más rentabilidad al negocio.</li>
+                                <li>Analizar qué productos tienen mejor desempeño financiero.</li>
+                                <li>Enfocar estrategias de venta en productos con mayor margen de ganancia.</li>
+                                <li>Tomar mejores decisiones de compra y fijación de precios.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart5" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos con menor volumen de ventas en pesos, permitiendo identificar los artículos que han generado menores ingresos dentro del negocio. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con menor contribución económica a las ventas.</li>
+                                <li>Detectar artículos con bajo desempeño en generación de ingresos.</li>
+                                <li>Analizar si determinados productos requieren ajustes en precio, promoción o estrategia de venta.</li>
+                                <li>Evaluar la rotación y participación económica de cada producto.</li>
+                                <li>Tomar decisiones para optimizar el inventario y mejorar el rendimiento comercial.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart6" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos que han generado las menores ganancias totales en pesos, permitiendo identificar los artículos con menor rentabilidad para el negocio. La información se obtiene considerando la diferencia entre el precio de venta y el costo de adquisición de los productos vendidos.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos que generan menor utilidad económica.</li>
+                                <li>Detectar artículos con bajo desempeño en términos de rentabilidad.</li>
+                                <li>Analizar si es necesario ajustar precios, costos o estrategias de venta.</li>
+                                <li>Evaluar la conveniencia de mantener determinados productos en el inventario.</li>
+                                <li>Tomar decisiones para optimizar el margen de ganancia del negocio.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart7" width="400" height="400"></canvas>
             </div>
@@ -1087,7 +1241,29 @@
                 <div class="flextitulo-icono">
                     <p>Top 20 Proveedores más comprados por los clientes
                     </p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 proveedores cuyos productos han registrado la mayor cantidad de unidades vendidas, permitiendo identificar cuáles tienen una mayor demanda por parte de los clientes. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los proveedores con mayor demanda en ventas.</li>
+                                <li>Conocer qué proveedores aportan más productos vendidos al negocio.</li>
+                                <li>Planificar mejor las compras y el abastecimiento con los proveedores más solicitados.</li>
+                                <li>Analizar las preferencias de los clientes respecto a las marcas o productos de cada proveedor.</li>
+                                <li>Tomar decisiones comerciales basadas en el desempeño de los proveedores.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart30" width="400" height="400"></canvas>
             </div>
@@ -1095,21 +1271,87 @@
                 <div class="flextitulo-icono">
                     <p>Top 20 Proveedores menos comprados por los clientes
                     </p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 proveedores cuyos productos han registrado la menor cantidad de unidades vendidas, permitiendo identificar aquellos con menor demanda por parte de los clientes. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los proveedores con menor demanda en ventas.</li>
+                                <li>Detectar productos de proveedores con baja rotación.</li>
+                                <li>Evaluar si es necesario ajustar las compras a determinados proveedores.</li>
+                                <li>Analizar el desempeño comercial de los productos suministrados por cada proveedor.</li>
+                                <li>Tomar decisiones para optimizar el inventario y fortalecer la relación con los proveedores más competitivos.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart50" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Proveedores con más ganancia en sus productos</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 proveedores cuyos productos han generado el mayor volumen de ventas en pesos, permitiendo identificar cuáles aportan mayores ingresos al negocio. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los proveedores cuyos productos generan mayores ingresos por ventas.</li>
+                                <li>Conocer cuáles proveedores tienen mayor impacto económico en el negocio.</li>
+                                <li>Analizar la contribución de cada proveedor a la facturación total.</li>
+                                <li>Priorizar compras y negociaciones con los proveedores de mejor desempeño comercial.</li>
+                                <li>Tomar decisiones estratégicas basadas en el volumen de ventas generado por cada proveedor.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart51" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Proveedores con más ganancia en sus productos</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 proveedores cuyos productos han generado las mayores ganancias totales en pesos, permitiendo identificar cuáles aportan una mayor rentabilidad al negocio. La información se obtiene considerando la diferencia entre el precio de venta y el costo de adquisición de los productos vendidos, y puede consultarse para todo el historial o mediante filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los proveedores cuyos productos generan mayor utilidad económica.</li>
+                                <li>Conocer cuáles proveedores aportan una mayor rentabilidad al negocio.</li>
+                                <li>Analizar el desempeño financiero de los productos suministrados por cada proveedor.</li>
+                                <li>Priorizar negociaciones y compras con los proveedores más rentables.</li>
+                                <li>Tomar decisiones estratégicas para maximizar las ganancias del negocio.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart52" width="400" height="400"></canvas>
             </div>
@@ -1198,7 +1440,29 @@
                 <div class="flextitulo-icono">
                     <p>Top 20 Categorías más Vendidas.
                     </p>
-                    <img src="/build/img/ayudaCategorias.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra las 20 categorías con mayor cantidad de productos vendidos, permitiendo identificar cuáles concentran la mayor demanda por parte de los clientes. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar las categorías con mayor volumen de ventas por cantidad.</li>
+                                <li>Conocer las preferencias de compra de los clientes.</li>
+                                <li>Planificar el abastecimiento de las categorías con mayor demanda.</li>
+                                <li>Analizar el comportamiento de las ventas por categoría.</li>
+                                <li>Tomar decisiones comerciales para fortalecer las categorías con mejor desempeño.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart31" width="400" height="400"></canvas>
             </div>
@@ -1206,7 +1470,29 @@
                 <div class="flextitulo-icono">
                     <p>Top 20 Categorías menos Vendidas
                     </p>
-                    <img src="/build/img/ayudaCategorias.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra las 20 categorías con menor cantidad de productos vendidos, permitiendo identificar aquellas con menor demanda por parte de los clientes. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar las categorías con menor volumen de ventas por cantidad.</li>
+                                <li>Detectar categorías con baja rotación de productos.</li>
+                                <li>Evaluar si es necesario implementar promociones o estrategias para impulsar sus ventas.</li>
+                                <li>Analizar el comportamiento de las categorías con menor demanda.</li>
+                                <li>Tomar decisiones para optimizar el inventario y mejorar el desempeño de las categorías menos vendidas.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart32" width="400" height="400"></canvas>
             </div>
@@ -1214,7 +1500,29 @@
                 <div class="flextitulo-icono">
                     <p>Top 20 Categorías con más Ganancias
                     </p>
-                    <img src="/build/img/ayudaCategorias.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra las 20 categorías que han generado las mayores ganancias totales en pesos, permitiendo identificar cuáles aportan una mayor rentabilidad al negocio. La información se obtiene considerando la diferencia entre el precio de venta y el costo de adquisición de los productos vendidos, y puede consultarse para todo el historial o mediante filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar las categorías que generan mayor utilidad económica.</li>
+                                <li>Conocer cuáles categorías aportan una mayor rentabilidad al negocio.</li>
+                                <li>Analizar el desempeño financiero de cada categoría de productos.</li>
+                                <li>Priorizar estrategias de venta y abastecimiento para las categorías más rentables.</li>
+                                <li>Tomar decisiones comerciales para maximizar las ganancias del negocio.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart33" width="400" height="400"></canvas>
             </div>
@@ -1222,7 +1530,29 @@
                 <div class="flextitulo-icono">
                     <p>Top 20 Categorías con menos Ganancias
                     </p>
-                    <img src="/build/img/ayudaCategorias.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra las 20 categorías que han generado las menores ganancias totales en pesos, permitiendo identificar aquellas con menor rentabilidad para el negocio. La información se obtiene considerando la diferencia entre el precio de venta y el costo de adquisición de los productos vendidos, y puede consultarse para todo el historial o mediante filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar las categorías que generan menor utilidad económica.</li>
+                                <li>Detectar categorías con bajo desempeño en términos de rentabilidad.</li>
+                                <li>Analizar si es necesario ajustar precios, costos o estrategias de venta.</li>
+                                <li>Evaluar la conveniencia de mantener o fortalecer determinadas categorías de productos.</li>
+                                <li>Tomar decisiones para optimizar las ganancias y mejorar el rendimiento del negocio.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart34" width="400" height="400"></canvas>
             </div>
