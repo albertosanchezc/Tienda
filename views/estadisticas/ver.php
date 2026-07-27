@@ -131,28 +131,113 @@
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Productos con más Stock</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+
+                            Muestra los 20 productos con mayor cantidad disponible en inventario.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Detectar productos con exceso de stock.</li>
+                                <li>Identificar productos de baja rotación.</li>
+                                <li>Planear promociones o compras futuras.</li>
+                            </ul>
+
+                        </span>
+                    </span>
+
                 </div>
                 <canvas id="myChart16" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Productos con menos Stock</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+
+                            Muestra los 20 productos con menor cantidad disponible en inventario.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Detectar productos por agotarse.</li>
+                                <li>Planificar reabastecimientos a tiempo.</li>
+                                <li>Evitar pérdidas por falta de inventario.</li>
+                            </ul>
+
+                        </span>
+                    </span>
+
                 </div>
                 <canvas id="myChart17" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Productos a Granel con más Stock</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+
+                            Muestra los 20 productos de granel con mayor cantidad disponible en inventario.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Detectar productos con exceso de stock.</li>
+                                <li>Identificar productos de baja rotación.</li>
+                                <li>Planear promociones o compras futuras.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart18" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Productos a Granel con menos Stock</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+
+                            Muestra los 20 productos de granel con menor cantidad disponible en inventario.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Detectar productos por agotarse.</li>
+                                <li>Planificar reabastecimientos a tiempo.</li>
+                                <li>Evitar pérdidas por falta de inventario.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart19" width="400" height="400"></canvas>
             </div>
@@ -179,7 +264,7 @@
             </div>
             <div>
                 <div class="flextitulo-icono">
-                <p>Top 20 Productos registrados a Granel con menos ganancia</p>
+                    <p>Top 20 Productos registrados a Granel con menos ganancia</p>
                     <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
                 </div>
                 <canvas id="myChart36" width="400" height="400"></canvas>
