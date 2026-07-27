@@ -6,6 +6,7 @@ use Controllers\VentasYCancelacionesController;
 use Model\Proveedor;
 use Model\Productos;
 use Model\Caja;
+use Model\Caja_historico;
 use Model\Categorias;
 use Model\Usuarios;
 use Model\Ventas;
@@ -73,7 +74,20 @@ class ConfiguracionTienda
                     && !empty(Proveedor::where('tienda_id', $tienda_id))
                     && !empty(Productos::where('tienda_id', $tienda_id))
                     && !empty(Ventas::where('tienda_id', $tienda_id))
+            ],
+
+            [
+                'id' => 'abono',
+                'nombre' => 'Registrar Un abono',
+                'completo' => !empty(Caja_historico::wherebelongsTo('retiro_abono', '0', 'tienda_id', $tienda_id)),
+                'ruta' => '/caja',
+                'habilitado' => $usuario->confirmado == 1
+                    && !empty(Proveedor::where('tienda_id', $tienda_id))
+                    && !empty(Productos::where('tienda_id', $tienda_id))
+                    && !empty(Ventas::where('tienda_id', $tienda_id))
+                    && !empty(Ventas::wherebelongsTo('cancelacion', '1', 'tienda_id', $tienda_id))
             ]
+
 
 
         ];
@@ -117,6 +131,7 @@ class ConfiguracionTienda
         $productoRegistrado = self::pasoCompletado($pasos, 'producto');
         $ventaRegistrada = self::pasoCompletado($pasos, 'ventas');
         $cancelacionRegistrada = self::pasoCompletado($pasos, 'cancelacion');
+        $cajaListaparaAbono = self::pasoCompletado($pasos,'abono');
 
 
 
@@ -137,14 +152,14 @@ class ConfiguracionTienda
             case 'carrito':
                 return $tiendaListaParaVender;
 
-            case 'caja':
-                return $cancelacionRegistrada;
-
             case 'ventas':
                 return $tiendaListaParaVender;
 
             case 'cancelacion':
                 return $tiendaListaParaCancelar;
+
+            case 'caja':
+                return $cajaListaparaAbono;
 
             case 'metricas':
                 return $cancelacionRegistrada;

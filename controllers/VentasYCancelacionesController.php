@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\ConfiguracionTienda;
 use Model\Caja;
 use Model\Caja_historico;
 use Model\Inventario;
@@ -383,6 +384,7 @@ class VentasYCancelacionesController
                     $inventarioActualizado->guardar();
                     $caja->guardar();
                 }
+                ConfiguracionTienda::redireccionarSiguientePaso();
             }
         }
 

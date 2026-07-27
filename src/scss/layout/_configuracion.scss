@@ -1,7 +1,7 @@
 .config-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.35);
+    background: rgba(0, 0, 0, .35);
     z-index: 999;
 }
 
@@ -12,9 +12,9 @@
     top: 0;
     width: 380px;
     height: 100%;
-    background:white;
-    padding:2rem;
-    box-shadow:-5px 0 15px rgba(0,0,0,.2);
+    background: white;
+    padding: 2rem;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, .2);
 }
 
 .config-item p {
@@ -22,29 +22,34 @@
 }
 
 .config-header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 
 .config-item {
-    margin-top:1rem;
-    padding:1rem;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-left:4px solid;
+    margin-top: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid;
 }
 
-.config-item.pendiente{
-    border-left:4px solid orange;
-    background:#fff7ed;
+.config-item.pendiente {
+    border-left: 4px solid orange;
+    background: #fff7ed;
 }
 
 .config-item.completo {
-    border-left:4px solid rgb(115,255,0);
-    background:#f0ffe6;
+    border-left: 4px solid rgb(115, 255, 0);
+    background: #f0ffe6;
+
+    span {
+        font-size: small;
+
+    }
 }
 
 .config-item:has(p) {
@@ -52,16 +57,16 @@
 }
 
 .config-item span {
-    font-weight:bold;
-    color:rgb(80,150,0);
+    font-weight: bold;
+    color: rgb(80, 150, 0);
 }
 
 .config-item a {
-    color:#6b21a8;
-    text-decoration:none;
-    font-weight:bold;
+    color: #6b21a8;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .config-item a:hover {
-    text-decoration:none;
+    text-decoration: none;
 }

@@ -85,6 +85,8 @@ describe('Registro de usuario', () => {
             // Enviar el formulario
             cy.get('#aniadirProveedor').submit();
 
+            cy.wait(3000)
+
             cy.task(
                 'queryDb',
                 `SELECT id FROM proveedor WHERE email='proveedor@test.com'`
@@ -223,6 +225,10 @@ describe('Registro de usuario', () => {
                                     cy.getByData("descripcionProductoTbodyModalManual").contains('600').click()
                                     cy.get('#pagar').type('30')
                                     cy.get('.modal--pagar__btn').click()
+
+                                    cy.get('.config-overlay').click();
+                                    cy.get('.rojoclaro').click()
+
                                 });
 
                         });
