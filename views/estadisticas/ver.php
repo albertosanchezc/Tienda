@@ -870,70 +870,290 @@
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos a granel con la mayor cantidad de gramos vendidos, permitiendo identificar cuáles tienen una mayor demanda según el peso total comercializado. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel con mayor volumen de venta por gramos.</li>
+                                <li>Conocer cuáles productos tienen una mayor demanda entre los clientes.</li>
+                                <li>Planificar el abastecimiento de los productos a granel con mayor rotación.</li>
+                                <li>Analizar el comportamiento de las ventas de productos comercializados por peso.</li>
+                                <li>Tomar decisiones de compra e inventario basadas en el consumo real de productos a granel.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart8" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos a granel con la menor cantidad de gramos vendidos, permitiendo identificar aquellos con menor demanda según el peso total comercializado. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel con menor volumen de venta por gramos.</li>
+                                <li>Detectar productos con baja demanda entre los clientes.</li>
+                                <li>Evaluar si es necesario ajustar las compras o el nivel de abastecimiento de determinados productos.</li>
+                                <li>Analizar el comportamiento de los productos comercializados por peso con menor rotación.</li>
+                                <li>Tomar decisiones para optimizar el inventario y mejorar el desempeño de los productos a granel.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart9" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos a granel que han generado el mayor volumen de ventas en pesos, permitiendo identificar cuáles aportan mayores ingresos al negocio. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel que generan mayores ingresos por ventas.</li>
+                                <li>Conocer cuáles productos tienen mayor impacto económico dentro del negocio.</li>
+                                <li>Analizar el desempeño de los productos comercializados por peso.</li>
+                                <li>Priorizar el abastecimiento de los productos a granel con mayor demanda económica.</li>
+                                <li>Tomar decisiones comerciales basadas en los ingresos generados por cada producto.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart10" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos a granel que han generado las mayores ganancias totales en pesos, permitiendo identificar cuáles aportan una mayor utilidad al negocio. La información se obtiene considerando la diferencia entre el precio de venta y el costo de adquisición de los productos vendidos, y puede consultarse para todo el historial o mediante filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel que generan mayor utilidad económica.</li>
+                                <li>Conocer cuáles productos aportan una mayor rentabilidad al negocio.</li>
+                                <li>Analizar el desempeño financiero de los productos comercializados por peso.</li>
+                                <li>Priorizar el abastecimiento de los productos a granel con mayor utilidad.</li>
+                                <li>Tomar decisiones comerciales para maximizar las ganancias obtenidas por la venta de productos a granel.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart11" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos a granel que han generado el menor volumen de ventas en pesos, permitiendo identificar aquellos con menor contribución a los ingresos del negocio. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel que generan menores ingresos por ventas.</li>
+                                <li>Detectar productos con bajo desempeño comercial.</li>
+                                <li>Analizar si es necesario ajustar precios, promociones o estrategias de venta.</li>
+                                <li>Evaluar el comportamiento de los productos comercializados por peso con menor participación en las ventas.</li>
+                                <li>Tomar decisiones para optimizar el inventario y mejorar el rendimiento de los productos a granel.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart12" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos a granel que han generado las menores ganancias totales en pesos, permitiendo identificar aquellos con menor contribución a la utilidad del negocio. La información se obtiene considerando la diferencia entre el precio de venta y el costo de adquisición de los productos vendidos, y puede consultarse para todo el historial o mediante filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel que generan menor utilidad económica.</li>
+                                <li>Detectar productos con bajo desempeño en términos de ganancias.</li>
+                                <li>Analizar si es necesario ajustar precios, costos o estrategias de comercialización.</li>
+                                <li>Evaluar la conveniencia de mantener determinados productos a granel dentro del inventario.</li>
+                                <li>Tomar decisiones para optimizar la rentabilidad de los productos comercializados por peso.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart13" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 proveedores cuyos productos han generado el mayor volumen de ventas en pesos, permitiendo identificar cuáles aportan mayores ingresos al negocio. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los proveedores que generan mayores ingresos por ventas.</li>
+                                <li>Conocer cuáles proveedores tienen mayor participación en la facturación del negocio.</li>
+                                <li>Analizar el desempeño comercial de los productos de cada proveedor.</li>
+                                <li>Priorizar compras y negociaciones con los proveedores de mejor rendimiento.</li>
+                                <li>Tomar decisiones estratégicas basadas en el volumen de ventas generado por cada proveedor.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart14" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra las 20 categorías que han generado el mayor volumen de ventas en pesos, permitiendo identificar cuáles aportan mayores ingresos al negocio. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar las categorías que generan mayores ingresos por ventas.</li>
+                                <li>Conocer cuáles categorías tienen mayor participación en la facturación del negocio.</li>
+                                <li>Analizar el desempeño comercial de cada categoría de productos.</li>
+                                <li>Priorizar estrategias de abastecimiento y promoción para las categorías con mejor rendimiento.</li>
+                                <li>Tomar decisiones comerciales basadas en el volumen de ventas generado por cada categoría.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart15" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra el comportamiento de las ventas según el día de la semana, permitiendo identificar cuáles días registran una mayor o menor actividad comercial. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los días de la semana con mayor y menor volumen de ventas.</li>
+                                <li>Analizar el comportamiento semanal de las ventas.</li>
+                                <li>Planificar horarios, personal y recursos de acuerdo con la demanda.</li>
+                                <li>Evaluar el impacto de promociones o eventos en determinados días de la semana.</li>
+                                <li>Tomar decisiones para optimizar la operación y mejorar el desempeño comercial.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart25" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra las ventas totales registradas por hora, permitiendo identificar los horarios con mayor y menor actividad comercial. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar las horas del día con mayor y menor volumen de ventas.</li>
+                                <li>Analizar el comportamiento de las ventas a lo largo de la jornada.</li>
+                                <li>Planificar la asignación de personal de acuerdo con la demanda.</li>
+                                <li>Evaluar el impacto de promociones o estrategias comerciales en horarios específicos.</li>
+                                <li>Tomar decisiones para optimizar la operación y mejorar la atención a los clientes.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart26" width="400" height="400"></canvas>
             </div>
@@ -1050,99 +1270,429 @@
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos que han registrado la mayor cantidad de cancelaciones, permitiendo identificar aquellos que con mayor frecuencia han sido cancelados durante el proceso de venta. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con mayor número de cancelaciones.</li>
+                                <li>Detectar posibles errores frecuentes en el proceso de venta.</li>
+                                <li>Analizar si determinados productos presentan incidencias o devoluciones recurrentes.</li>
+                                <li>Evaluar el impacto de las cancelaciones sobre las ventas del negocio.</li>
+                                <li>Tomar decisiones para reducir cancelaciones y mejorar la operación del punto de venta.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart29" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos que han registrado la menor cantidad de cancelaciones, permitiendo identificar aquellos con mayor continuidad en las ventas y menor incidencia de cancelación. La información puede consultarse considerando el historial completo de ventas o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con menor número de cancelaciones.</li>
+                                <li>Conocer cuáles productos presentan mayor estabilidad durante el proceso de venta.</li>
+                                <li>Comparar el comportamiento de los productos respecto a sus cancelaciones.</li>
+                                <li>Analizar tendencias y posibles diferencias entre productos con mayor y menor incidencia de cancelación.</li>
+                                <li>Tomar decisiones basadas en el comportamiento de venta de los productos.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart37" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos que han acumulado el mayor monto económico en devoluciones, permitiendo identificar cuáles representan una mayor afectación en ingresos o movimientos de inventario. La información puede consultarse considerando el historial completo de devoluciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con mayor impacto económico por devoluciones.</li>
+                                <li>Detectar artículos que presentan frecuentes devoluciones o incidencias.</li>
+                                <li>Analizar posibles causas relacionadas con la calidad, precio o venta de los productos.</li>
+                                <li>Evaluar el impacto de las devoluciones en los ingresos del negocio.</li>
+                                <li>Tomar decisiones para reducir pérdidas y mejorar el control de inventario.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart38" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos que han acumulado el mayor monto económico en cancelaciones, permitiendo identificar cuáles representan una mayor afectación en las ventas registradas. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con mayor impacto económico por cancelaciones.</li>
+                                <li>Detectar artículos que generan mayores pérdidas potenciales por ventas canceladas.</li>
+                                <li>Analizar posibles causas relacionadas con errores de venta, cambios de decisión del cliente o problemas en el proceso comercial.</li>
+                                <li>Evaluar el impacto de las cancelaciones sobre los ingresos del negocio.</li>
+                                <li>Tomar decisiones para reducir cancelaciones y mejorar la eficiencia del punto de venta.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart39" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos que han acumulado el menor monto económico en devoluciones, permitiendo identificar aquellos con menor impacto sobre los ingresos y movimientos de inventario del negocio. La información puede consultarse considerando el historial completo de devoluciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con menor impacto económico por devoluciones.</li>
+                                <li>Conocer cuáles productos presentan mayor estabilidad en sus ventas.</li>
+                                <li>Comparar el comportamiento de los productos respecto al valor de sus devoluciones.</li>
+                                <li>Analizar tendencias relacionadas con devoluciones y desempeño de productos.</li>
+                                <li>Tomar decisiones basadas en el comportamiento de los productos y su impacto financiero.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart40" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos con el menor monto económico acumulado en cancelaciones, permitiendo identificar aquellos que representan una menor afectación económica para el negocio. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con menor impacto económico por cancelaciones.</li>
+                                <li>Conocer cuáles productos presentan mayor estabilidad dentro del proceso de venta.</li>
+                                <li>Comparar el valor monetario de las cancelaciones entre diferentes productos.</li>
+                                <li>Analizar el comportamiento de los productos con menor incidencia económica por ventas canceladas.</li>
+                                <li>Tomar decisiones para mejorar el control de ventas y reducir pérdidas relacionadas con cancelaciones.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart41" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos que han acumulado el menor monto económico en cancelaciones, permitiendo identificar aquellos con menor impacto sobre las ventas registradas del negocio. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con menor impacto económico por cancelaciones.</li>
+                                <li>Conocer cuáles productos presentan mayor estabilidad durante el proceso de venta.</li>
+                                <li>Comparar el comportamiento de los productos respecto al valor de sus cancelaciones.</li>
+                                <li>Analizar tendencias relacionadas con ventas canceladas y desempeño de productos.</li>
+                                <li>Tomar decisiones basadas en el comportamiento comercial de los productos.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart42" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos a granel con la menor cantidad de kilogramos cancelados, permitiendo identificar cuáles productos presentan menor volumen de cancelaciones medido por peso. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel con menor cantidad de kilogramos cancelados.</li>
+                                <li>Conocer cuáles productos presentan mayor estabilidad durante el proceso de venta.</li>
+                                <li>Comparar el comportamiento de los productos comercializados por peso.</li>
+                                <li>Analizar cuáles productos tienen menor incidencia de cancelaciones por volumen.</li>
+                                <li>Tomar decisiones para mejorar la gestión de inventario y mantener un mejor control de productos a granel.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart43" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos a granel con la menor cantidad de kilogramos cancelados, permitiendo identificar cuáles productos presentan menor volumen de cancelaciones medido por peso. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel con menor cantidad de kilogramos cancelados.</li>
+                                <li>Conocer cuáles productos presentan mayor estabilidad durante el proceso de venta.</li>
+                                <li>Comparar el comportamiento de los productos comercializados por peso.</li>
+                                <li>Analizar cuáles productos tienen menor incidencia de cancelaciones por volumen.</li>
+                                <li>Tomar decisiones para mejorar la gestión de inventario y mantener un mejor control de productos a granel.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart44" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <span class="tooltip">
+
+                            <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                            <span class="tooltip-text">
+                                <strong>¿Qué muestra esta gráfica?</strong>
+
+                                <br><br>
+                                Esta gráfica muestra los productos a granel que han acumulado el mayor monto económico en cancelaciones, permitiendo identificar cuáles representan una mayor afectación financiera para el negocio. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                                <br><br>
+
+                                Esta información te ayuda a:
+                                <ul>
+                                    <li>Identificar los productos a granel con mayor impacto económico por cancelaciones.</li>
+                                    <li>Detectar productos que representan mayores pérdidas potenciales debido a ventas canceladas.</li>
+                                    <li>Analizar el comportamiento de los productos comercializados por peso respecto a sus cancelaciones.</li>
+                                    <li>Evaluar posibles causas de cancelaciones frecuentes en productos a granel.</li>
+                                    <li>Tomar decisiones para reducir cancelaciones y mejorar el control de ventas e inventario.</li>
+                                </ul>
+
+                            </span>
+                        </span>
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos con el menor monto económico acumulado en cancelaciones, permitiendo identificar aquellos que generan un menor impacto financiero debido a ventas canceladas. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con menor impacto económico por cancelaciones.</li>
+                                <li>Conocer cuáles productos presentan mayor estabilidad en el proceso de venta.</li>
+                                <li>Comparar el comportamiento económico de las cancelaciones entre productos.</li>
+                                <li>Analizar tendencias relacionadas con productos con menor afectación por ventas canceladas.</li>
+                                <li>Tomar decisiones basadas en el desempeño comercial y financiero de los productos.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart45" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los productos a granel que han acumulado el menor monto económico en cancelaciones, permitiendo identificar aquellos que representan una menor afectación financiera para el negocio. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos a granel con menor impacto económico por cancelaciones.</li>
+                                <li>Conocer cuáles productos presentan mayor estabilidad durante el proceso de venta.</li>
+                                <li>Comparar el comportamiento económico de los productos comercializados por peso.</li>
+                                <li>Analizar cuáles productos generan menor afectación financiera por ventas canceladas.</li>
+                                <li>Tomar decisiones para mejorar el control de ventas e inventario de productos a granel.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart46" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Cantidad de Productos Vendidos A Granel</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra las 20 categorías de productos que han acumulado el mayor monto económico en cancelaciones, permitiendo identificar cuáles representan una mayor afectación financiera para el negocio. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar las categorías con mayor impacto económico por cancelaciones.</li>
+                                <li>Detectar categorías que concentran mayores pérdidas potenciales por ventas canceladas.</li>
+                                <li>Analizar el comportamiento de las diferentes categorías dentro del proceso de venta.</li>
+                                <li>Evaluar posibles causas de cancelaciones frecuentes en determinados grupos de productos.</li>
+                                <li>Tomar decisiones para reducir cancelaciones y mejorar el desempeño comercial del negocio.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart47" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
-                    <p>Patrón Semanal de Ventas ($)</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <p>Patrón Semanal de Cancelaciones ($)</p>
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra el comportamiento de las cancelaciones en pesos según el día de la semana, permitiendo identificar qué días concentran el mayor y menor monto económico en ventas canceladas. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los días con mayor impacto económico por cancelaciones.</li>
+                                <li>Detectar patrones de cancelación durante la semana.</li>
+                                <li>Analizar qué días presentan mayores pérdidas potenciales por ventas canceladas.</li>
+                                <li>Evaluar posibles causas relacionadas con horarios, operación o comportamiento de compra.</li>
+                                <li>Tomar decisiones para reducir cancelaciones y mejorar el control de las ventas.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart48" width="400" height="400"></canvas>
             </div>
 
             <div>
                 <div class="flextitulo-icono">
-                    <p>Ventas Totales por Hora</p>
-                    <img src="/build/img/ayudaGraf.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <p>Cancelaciones Totales por Hora</p>
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra el monto total de cancelaciones en pesos según la hora del día, permitiendo identificar los horarios donde se generan mayores y menores importes de ventas canceladas. La información puede consultarse considerando el historial completo de cancelaciones o aplicando filtros por un periodo determinado.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar las horas del día con mayor impacto económico por cancelaciones.</li>
+                                <li>Detectar horarios donde se concentran mayores pérdidas potenciales por ventas canceladas.</li>
+                                <li>Analizar patrones de cancelación durante la jornada laboral.</li>
+                                <li>Evaluar posibles causas relacionadas con la operación, atención al cliente o procesos de venta.</li>
+                                <li>Tomar decisiones para reducir cancelaciones y mejorar el control del punto de venta.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart49" width="400" height="400"></canvas>
             </div>
