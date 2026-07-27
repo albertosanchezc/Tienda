@@ -244,28 +244,116 @@
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Productos registrados con más ganancia</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos registrados con mayor ganancia por pieza. La ganancia se calcula restando el precio de compra al precio de venta de cada producto.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con el mayor margen de utilidad por unidad.</li>
+                                <li>Detectar oportunidades para promocionar productos con alta rentabilidad.</li>
+                                <li>Apoyar la toma de decisiones sobre precios y estrategias de venta.</li>
+                                <li>Priorizar la reposición de productos que generan un mayor beneficio por pieza.</li>
+                                <li>Comparar la rentabilidad individual de los productos registrados.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart20" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Productos registrados con menos ganancia</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos registrados con menor ganancia por pieza. La ganancia se calcula restando el precio de compra al precio de venta de cada producto.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con el menor margen de utilidad por unidad.</li>
+                                <li>Detectar artículos cuya rentabilidad puede mejorarse mediante ajustes de precio o negociación con proveedores.</li>
+                                <li>Evaluar si ciertos productos siguen siendo convenientes para el negocio.</li>
+                                <li>Priorizar acciones para incrementar la rentabilidad de los productos con menor margen.</li>
+                                <li>Comparar la utilidad por pieza de los productos registrados y apoyar la toma de decisiones comerciales.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart21" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Productos registrados a Granel con mas ganancia</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos registrados a granel con mayor ganancia por kg en $. La ganancia se calcula restando el precio de compra al precio de venta de cada producto del precio de compra.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con el mayor margen de utilidad por kg.</li>
+                                <li>Detectar oportunidades para promocionar productos con alta rentabilidad.</li>
+                                <li>Apoyar la toma de decisiones sobre precios y estrategias de venta.</li>
+                                <li>Priorizar la reposición de productos que generan un mayor beneficio por kg.</li>
+                                <li>Comparar la rentabilidad individual de los productos registrados.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart35" width="400" height="400"></canvas>
             </div>
             <div>
                 <div class="flextitulo-icono">
                     <p>Top 20 Productos registrados a Granel con menos ganancia</p>
-                    <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+                    <span class="tooltip">
+
+                        <img src="/build/img/ayudaInventario.png" alt="Logotipo de ayuda" class="imgayuda">
+
+                        <span class="tooltip-text">
+                            <strong>¿Qué muestra esta gráfica?</strong>
+
+                            <br><br>
+                            Esta gráfica muestra los 20 productos registrados a granel con menor ganancia por kg en $. La ganancia se calcula restando el precio de compra al precio de venta de cada producto.
+
+                            <br><br>
+
+                            Esta información te ayuda a:
+                            <ul>
+                                <li>Identificar los productos con el menor margen de utilidad por unidad.</li>
+                                <li>Detectar artículos cuya rentabilidad puede mejorarse mediante ajustes de precio o negociación con proveedores.</li>
+                                <li>Evaluar si ciertos productos siguen siendo convenientes para el negocio.</li>
+                                <li>Priorizar acciones para incrementar la rentabilidad de los productos con menor margen.</li>
+                                <li>Comparar la utilidad por pieza de los productos registrados y apoyar la toma de decisiones comerciales.</li>
+                            </ul>
+
+                        </span>
+                    </span>
                 </div>
                 <canvas id="myChart36" width="400" height="400"></canvas>
             </div>
