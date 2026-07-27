@@ -67,7 +67,7 @@
                             <select id="proveedorFiltroInventario">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
-                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($proveedor->id); ?>">
                                         <?php echo s($proveedor->nombre); ?>
                                     </option>
@@ -79,7 +79,7 @@
                             <select id="categoriaFiltroInventario">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
-                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($categoria->id); ?>">
                                         <?php echo s($categoria->nombre); ?>
                                     </option>
@@ -299,7 +299,7 @@
                             <select id="proveedorFiltro">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
-                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($proveedor->id); ?>">
                                         <?php echo s($proveedor->nombre); ?>
                                     </option>
@@ -311,7 +311,7 @@
                             <select id="categoriaFiltro">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
-                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($categoria->id); ?>">
                                         <?php echo s($categoria->nombre); ?>
                                     </option>
@@ -529,7 +529,7 @@
                             <select id="proveedorFiltroCancelaciones">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
-                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($proveedor->id); ?>">
                                         <?php echo s($proveedor->nombre); ?>
                                     </option>
@@ -541,7 +541,7 @@
                             <select id="categoriaFiltroCancelaciones">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
-                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($categoria->id); ?>">
                                         <?php echo s($categoria->nombre); ?>
                                     </option>
@@ -738,7 +738,7 @@
                             <select id="proveedorFiltroProveedores">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
-                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($proveedor->id); ?>">
                                         <?php echo s($proveedor->nombre); ?>
                                     </option>
@@ -750,7 +750,7 @@
                             <select id="categoriaFiltroProveedores">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
-                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($categoria->id); ?>">
                                         <?php echo s($categoria->nombre); ?>
                                     </option>
@@ -859,7 +859,7 @@
                             <select id="proveedorFiltroCategorias">
                                 <option selected value="">Selecciona un proveedor</option>
                                 <?php foreach ($proveedores as $proveedor) { ?>
-                                    <option <?php echo $inventario->proveedor_id === $proveedor->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($proveedor->id); ?>">
                                         <?php echo s($proveedor->nombre); ?>
                                     </option>
@@ -871,7 +871,7 @@
                             <select id="categoriaFiltroCategorias">
                                 <option selected value="">Selecciona una Categoría</option>
                                 <?php foreach ($categorias as $categoria) { ?>
-                                    <option <?php echo $inventario->$categoria_id === $categoria->id ? 'selected' : ''; ?>
+                                    <option
                                         value="<?php echo s($categoria->id); ?>">
                                         <?php echo s($categoria->nombre); ?>
                                     </option>

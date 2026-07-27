@@ -99,7 +99,7 @@ class ProveedoresController
         $tiendaId = $_SESSION['tienda_id'];
         $proveedores = Proveedor::where('tienda_id', $tiendaId);
         $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
-        $visita_producto = Visita_Producto::all();
+        $visita_producto = Visita_Producto::where('tienda_id', $tiendaId);
         $productos = Productos::where('tienda_id', $tiendaId);
         $inventario = Inventario::where('tienda_id', $tiendaId);
         $ventas = Ventas_Completas::obtenerVentas($tiendaId);

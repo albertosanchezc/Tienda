@@ -24,7 +24,8 @@ class Ventas_Completas extends ActiveRecord{
         'descripcion_categoria',
         'proveedor_id',
         'proveedor',
-        'telefono_proveedor'
+        'telefono_proveedor',
+        'tienda_id'
 
     ];
 
@@ -49,6 +50,8 @@ class Ventas_Completas extends ActiveRecord{
 
    public $proveedor;
    public $telefono_proveedor;
+   public $tienda_id;
+
 
     public function __construct($args = [])
     {
@@ -71,6 +74,7 @@ class Ventas_Completas extends ActiveRecord{
         $this->proveedor_id = $args['proveedor_id'] ?? '';
         $this->proveedor = $args['proveedor'] ?? '';
         $this->telefono_proveedor = $args['telefono_proveedor'] ?? '';
+        $this->tienda_id = $args['tienda_id'] ?? '';
 
     }
 }

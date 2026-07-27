@@ -39,7 +39,7 @@ class PaginasController
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
 
-        $categorias = Categorias::ALF('nombre', 'ASC');
+        $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
         $ventas = Ventas::where('tienda_id', $tiendaId);
 
@@ -128,6 +128,7 @@ class PaginasController
         $tiendaId = $_SESSION['tienda_id'];
         $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
+
 
         $router->render('estadisticas/ver', [
             'titulo' => $titulo,

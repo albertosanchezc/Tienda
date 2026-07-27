@@ -78,6 +78,8 @@ class ProductoController
                     // $visitaProductoNueva->sincronizar($producto);
 
                     $visitaProductoNueva->cantidad = $diferenciaCantidad;
+                    $visitaProductoNueva->tienda_id = $tiendaId;
+
                     // debuguear($visitaProductoNueva);
                     $visitaProductoNueva->guardar();
                 }
@@ -98,6 +100,8 @@ class ProductoController
                 $visitaProveedorNueva->sincronizar($visitas_proveedorPost);
                 $visitaProveedorNueva->cantidad_aniadido = $cantidadTotalRetirado;
                 $visitaProveedorNueva->cantidad_retirado = $cantidadTotalAniadido;
+                $visitaProveedorNueva->tienda_id = $tiendaId;
+
 
                 $visitaProveedorNueva->guardar();
                 // debuguear([$argsMovimiento, $inventarioNuevo, $visitaProveedorNueva, $visitaProductoNueva]);
