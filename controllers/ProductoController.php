@@ -20,7 +20,6 @@ class ProductoController
         $alertas = [];
         $tiendaId = $_SESSION['tienda_id'];
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
-        ConfiguracionTienda::redireccionarSiguientePaso();
         $inventario = new Inventario();
         $vista_proveedor = new Visitas_proveedor();
 
@@ -102,7 +101,7 @@ class ProductoController
 
                 $visitaProveedorNueva->guardar();
                 // debuguear([$argsMovimiento, $inventarioNuevo, $visitaProveedorNueva, $visitaProductoNueva]);
-
+                ConfiguracionTienda::redireccionarSiguientePaso();
             }
 
 

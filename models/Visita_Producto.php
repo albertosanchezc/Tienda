@@ -5,12 +5,14 @@ namespace Model;
 class Visita_Producto extends ActiveRecord{
     // Base de datos
     protected static $tabla = 'visita_producto';
-    protected static $columnasDB = ['id', 'producto_id','visita_id','cantidad'];
+    protected static $columnasDB = ['id', 'producto_id','visita_id','cantidad', 'tienda_id'];
 
     public $id;
     public $producto_id;
     public $visita_id;
     public $cantidad;
+    public $tienda_id;
+
 
 
     public function __construct($args = [])
@@ -19,7 +21,7 @@ class Visita_Producto extends ActiveRecord{
         $this->producto_id = $args['producto_id'] ?? '';
         $this->visita_id = $args['visita_id'] ?? '';
         $this->cantidad = $args['cantidad'] ?? '';
-
+        $this->tienda_id = $args['tienda_id'] ?? '';
 
     }
 }

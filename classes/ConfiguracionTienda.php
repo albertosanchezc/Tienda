@@ -10,6 +10,7 @@ use Model\Caja_historico;
 use Model\Categorias;
 use Model\Usuarios;
 use Model\Ventas;
+use Model\Visita_Producto;
 
 class ConfiguracionTienda
 {
@@ -99,9 +100,21 @@ class ConfiguracionTienda
                     && !empty(Ventas::where('tienda_id', $tienda_id))
                     && !empty(Ventas::wherebelongsTo('cancelacion', '1', 'tienda_id', $tienda_id))
                     && !empty(Caja_historico::wherebelongsTo('retiro_abono', '0', 'tienda_id', $tienda_id))
+            ],
+
+            [
+                'id' => 'movimiento',
+                'nombre' => 'Registrar Movimiento de producto',
+                'completo' => !empty(Visita_Producto::firstWhere('tienda_id', $tienda_id)),
+                'ruta' => '/movimientoproducto',
+                'habilitado' => $usuario->confirmado == 1
+                    && !empty(Proveedor::where('tienda_id', $tienda_id))
+                    && !empty(Productos::where('tienda_id', $tienda_id))
+                    && !empty(Ventas::where('tienda_id', $tienda_id))
+                    && !empty(Ventas::wherebelongsTo('cancelacion', '1', 'tienda_id', $tienda_id))
+                    && !empty(Caja_historico::wherebelongsTo('retiro_abono', '0', 'tienda_id', $tienda_id))
+                    && !empty(Caja_historico::wherebelongsTo('retiro_abono', '1', 'tienda_id', $tienda_id))
             ]
-
-
 
         ];
     }
@@ -144,8 +157,8 @@ class ConfiguracionTienda
         $productoRegistrado = self::pasoCompletado($pasos, 'producto');
         $ventaRegistrada = self::pasoCompletado($pasos, 'ventas');
         $cancelacionRegistrada = self::pasoCompletado($pasos, 'cancelacion');
-        $cajaListaparaAbono = self::pasoCompletado($pasos,'abono');
-
+        $cajaListaparaAbono = self::pasoCompletado($pasos, 'abono');
+        $movimientoProducto = self::pasoCompletado($pasos, 'movimiento');
 
 
         if (!$cuentaConfirmada) {
@@ -154,6 +167,7 @@ class ConfiguracionTienda
 
         $tiendaListaParaVender = $proveedorRegistrado && $productoRegistrado;
         $tiendaListaParaCancelar = $ventaRegistrada;
+
         switch ($modulo) {
 
             case 'proveedores':
@@ -176,6 +190,9 @@ class ConfiguracionTienda
 
             case 'metricas':
                 return $cancelacionRegistrada;
+
+            case 'movimiento':
+                return $movimientoProducto;
 
             default:
                 return true;
