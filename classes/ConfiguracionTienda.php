@@ -86,6 +86,19 @@ class ConfiguracionTienda
                     && !empty(Productos::where('tienda_id', $tienda_id))
                     && !empty(Ventas::where('tienda_id', $tienda_id))
                     && !empty(Ventas::wherebelongsTo('cancelacion', '1', 'tienda_id', $tienda_id))
+            ],
+
+            [
+                'id' => 'retiro',
+                'nombre' => 'Registrar Un retiro',
+                'completo' => !empty(Caja_historico::wherebelongsTo('retiro_abono', '1', 'tienda_id', $tienda_id)),
+                'ruta' => '/caja',
+                'habilitado' => $usuario->confirmado == 1
+                    && !empty(Proveedor::where('tienda_id', $tienda_id))
+                    && !empty(Productos::where('tienda_id', $tienda_id))
+                    && !empty(Ventas::where('tienda_id', $tienda_id))
+                    && !empty(Ventas::wherebelongsTo('cancelacion', '1', 'tienda_id', $tienda_id))
+                    && !empty(Caja_historico::wherebelongsTo('retiro_abono', '0', 'tienda_id', $tienda_id))
             ]
 
 

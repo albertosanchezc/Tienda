@@ -384,8 +384,9 @@ class VentasYCancelacionesController
                     $inventarioActualizado->guardar();
                     $caja->guardar();
                 }
-                ConfiguracionTienda::redireccionarSiguientePaso();
             }
+
+            ConfiguracionTienda::redireccionarSiguientePaso();
         }
 
         $router->render('paginas/ventasycancelaciones', [
