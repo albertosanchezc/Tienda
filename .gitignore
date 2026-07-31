@@ -4,3 +4,7 @@ vendor
 includes/.env
 cypress.config.js
 tienda_*
+
+# Cypress
+cypress/screenshots/
+cypress/videos/
