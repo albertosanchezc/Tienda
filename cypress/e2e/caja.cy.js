@@ -1,7 +1,8 @@
 describe('Pruebas de la caja sin post', () => {
 
     beforeEach(() => {
-        cy.visit('http://localhost:3000/caja')
+        cy.login();
+        cy.visit('/caja')
     })
 
     context("Probar las modales y sus inputs", () => {

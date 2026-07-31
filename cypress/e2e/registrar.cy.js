@@ -1,7 +1,7 @@
 describe('Registro de usuario', () => {
 
     beforeEach(() => {
-        cy.visit('http://localhost:3000/registrar');
+        cy.visit('/registrar');
     });
 
     it('Debe registrar una nueva cuenta correctamente', () => {

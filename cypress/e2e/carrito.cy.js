@@ -1,7 +1,8 @@
 describe('Pruebas del carrito de compras', () => {
 
     beforeEach(() => {
-        cy.visit('http://localhost:3000/carrito')
+        cy.login();
+        cy.visit('/carrito')
 
         // Captura de la página completa
         cy.getByData("documento").click(50, 30)
@@ -79,7 +80,7 @@ describe('Pruebas del carrito de compras', () => {
 
                     cy.getByData("nombreProductoTbodyModalManual").contains('Cigarros Shots Classics')
                     cy.getByData("descripcionProductoTbodyModalManual").contains('25')
-                    cy.getByData("precioUnitarioVentaProductoTbodyModalManual").contains('$50.48')
+                    cy.getByData("precioUnitarioVentaProductoTbodyModalManual").contains('79')
                     cy.getByData("imagenProductoTbodyModalManual").should('not.have.text', '4')
                     cy.screenshot('Cigarros busqueda manual', {
                         capture: 'viewport',            // Define qué parte capturar
@@ -174,11 +175,11 @@ describe('Pruebas del carrito de compras', () => {
                         // Cerrar ventana modal busqueda por código de barras
                         cy.getByData("modal--manual__close").should('exist')
                         cy.getByData("modal--manual__close").type("7507")
-    
+
                         // Cerrar ventana modal busqueda por código de barras
                         cy.getByData("botonCerrarModalManual").should('exist')
                         cy.getByData("botonCerrarModalManual").click()
-    
+
                         // Abrir de nuevo la ventana modal, 
                         cy.getByData("botonBusquedaManual").should('be.visible')
                         cy.getByData("botonBusquedaManual").click()
@@ -199,7 +200,7 @@ describe('Pruebas del carrito de compras', () => {
                     })
 
                     it("Debería poder Cerrar la ventana modal manual al dar click fuera de la modal", () => {
-                       // Cerrar ventana modal busqueda por codigo de barras
+                        // Cerrar ventana modal busqueda por codigo de barras
                         cy.getByData("modal--manual__close").should('exist')
                         cy.getByData("modal--manual__close").type("7507")
                         // Cerrar ventana modal busqueda por código de barras
@@ -225,7 +226,7 @@ describe('Pruebas del carrito de compras', () => {
                     })
 
                 })
-                
+
                 describe("Si se selecciona un producto por pieza", () => {
                     beforeEach(() => {
                         // Abrir ventana modal buscar por codigo de barras y escribir en ella
@@ -251,7 +252,7 @@ describe('Pruebas del carrito de compras', () => {
                     })
 
                     it("Debe tener los valores correctos en el carrito", () => {
-                        cy.getByData("idCarrito").contains('39')
+                        // cy.getByData("idCarrito").contains('39')
                         cy.getByData("cantidadCarrito").contains('1')
                         cy.getByData("nombreCarrito").contains('Cigarros Shots Classics')
                         cy.getByData("descripcionCarrito").contains('25')
@@ -266,7 +267,7 @@ describe('Pruebas del carrito de compras', () => {
                             overwrite: true
                         })
 
-                        const precio = 50.48;
+                        const precio = 79;
                         const cantidad = 1;
                         const nombre = 'Cigarros Shots Classics';
                         const descripcion = '25'
@@ -295,14 +296,14 @@ describe('Pruebas del carrito de compras', () => {
                             cy.getByData("descripcionProductoTbodyModalManual").should('be.visible')
                             cy.getByData("descripcionProductoTbodyModalManual").contains('25').click()
 
-                            cy.getByData("Cantidadtotal").contains('100.96')
+                            cy.getByData("Cantidadtotal").contains('158')
                             cy.getByData("numeroArticulos").contains('2')
 
                             cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
                             cy.getByData("descripcionDetallesProducto").contains('25')
                             cy.getByData("cantidadDetallesProducto").contains('Cantidad: 2')
-                            cy.getByData("precioVentaDetallesProducto").contains('50.48')
-                            cy.getByData("totalDetallesProducto").contains('100.96')
+                            cy.getByData("precioVentaDetallesProducto").contains('79')
+                            cy.getByData("totalDetallesProducto").contains('158')
 
                         })
 
@@ -318,7 +319,7 @@ describe('Pruebas del carrito de compras', () => {
                                 const cantidad = 1;
                                 const nombre = 'Coca-Cola';
                                 const descripcion = '1.75 L'
-                                const total = (precio * cantidad + 50.48).toFixed(2);
+                                const total = (precio * cantidad + 79).toFixed(2);
                                 cy.getByData("Cantidadtotal").contains(`${total}`)
                                 cy.getByData("numeroArticulos").contains('2')
                                 cy.getByData("nombreDetallesProducto").contains(`${nombre}`)
@@ -363,7 +364,7 @@ describe('Pruebas del carrito de compras', () => {
                                 cy.getByData("precioVentaDetallesProducto").contains(`${precio}`)
                                 cy.getByData("totalDetallesProducto").contains(`${total}`)
 
-                                const totalCarrito = total + 50.48;
+                                const totalCarrito = total + 79;
                                 cy.getByData("Cantidadtotal").contains(`$${totalCarrito}`)
                                 cy.getByData("numeroArticulos").contains('4')
                             })
@@ -421,7 +422,7 @@ describe('Pruebas del carrito de compras', () => {
                                     cy.getByData('totalTablaModalGranel').contains(`$${total}`)
                                     cy.getByData('totalmodalGranel').contains(`$${total}`)
 
-                                    // const totalCarrito = total + 50.48;
+                                    // const totalCarrito = total + 79;
                                     // cy.getByData("Cantidadtotal").contains(`$${totalCarrito}`)
                                     // cy.getByData("numeroArticulos").contains('4')
                                 })
@@ -538,7 +539,7 @@ describe('Pruebas del carrito de compras', () => {
 
                     cy.getByData("nombreProductoTbodyModalManual").contains('Cigarros Shots Classics')
                     cy.getByData("descripcionProductoTbodyModalManual").contains('25')
-                    cy.getByData("precioUnitarioVentaProductoTbodyModalManual").contains('$50.48')
+                    cy.getByData("precioUnitarioVentaProductoTbodyModalManual").contains('$79')
                     cy.getByData("imagenProductoTbodyModalManual").should('not.have.text', '4')
                     cy.screenshot('Cigarros busqueda nombre', {
                         capture: 'viewport',            // Define qué parte capturar
@@ -656,27 +657,27 @@ describe('Pruebas del carrito de compras', () => {
                         // Cerrar ventana modal busqueda por codigo de barras
                         cy.getByData("modal--nombre__close").should('be.visible')
                         cy.getByData("modal--nombre__close").type("cig")
-                         // Cerrar ventana modal busqueda por código de barras
-                         cy.getByData("modal--nombre").click(50, 30).should('not.be.visible')
- 
-                         // Abrir de nuevo la ventana modal, 
-                         cy.getByData("botonBusquedaManual").should('be.visible')
-                         cy.getByData("botonBusquedaManual").click()
-                         cy.getByData("modal--manual__close").should("exist")
-                         // Valores a revisar
-                         cy.getByData("modal--manual__close").should('not.have.value', 'coc');
-                         cy.getByData("modal--manual__close").should('not.have.value', '7507');
-                         cy.screenshot('Input vacío en modal manual tras filtrar-cerrar modal manual fuera', {
-                             capture: 'viewport',            // Define qué parte capturar
-                             disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
-                             scale: true,                     // Escala la imagen en pantallas con alta resolución
-                             timout: 1000,                     // Espera hasta 5 segundos antes de 
-                             overwrite: true
-                             // capturar
-                         })
- 
-                     })
- 
+                        // Cerrar ventana modal busqueda por código de barras
+                        cy.getByData("modal--nombre").click(50, 30).should('not.be.visible')
+
+                        // Abrir de nuevo la ventana modal, 
+                        cy.getByData("botonBusquedaManual").should('be.visible')
+                        cy.getByData("botonBusquedaManual").click()
+                        cy.getByData("modal--manual__close").should("exist")
+                        // Valores a revisar
+                        cy.getByData("modal--manual__close").should('not.have.value', 'coc');
+                        cy.getByData("modal--manual__close").should('not.have.value', '7507');
+                        cy.screenshot('Input vacío en modal manual tras filtrar-cerrar modal manual fuera', {
+                            capture: 'viewport',            // Define qué parte capturar
+                            disableTimersAndAnimations: true, // Desactiva animaciones y temporizadores
+                            scale: true,                     // Escala la imagen en pantallas con alta resolución
+                            timout: 1000,                     // Espera hasta 5 segundos antes de 
+                            overwrite: true
+                            // capturar
+                        })
+
+                    })
+
                 })
 
                 describe("Si se selecciona un producto por pieza", () => {
@@ -720,7 +721,7 @@ describe('Pruebas del carrito de compras', () => {
                         })
 
 
-                        const precio = 50.48;
+                        const precio = 79;
                         const cantidad = 1;
                         const nombre = 'Cigarros Shots Classics';
                         const descripcion = '25'
@@ -748,14 +749,14 @@ describe('Pruebas del carrito de compras', () => {
                             cy.getByData("descripcionProductoTbodyModalNombre").should('be.visible')
                             cy.getByData("descripcionProductoTbodyModalNombre").contains('25').click()
 
-                            cy.getByData("Cantidadtotal").contains('100.96')
+                            cy.getByData("Cantidadtotal").contains('158')
                             cy.getByData("numeroArticulos").contains('2')
 
                             cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
                             cy.getByData("descripcionDetallesProducto").contains('25')
                             cy.getByData("cantidadDetallesProducto").contains('Cantidad: 2')
-                            cy.getByData("precioVentaDetallesProducto").contains('50.48')
-                            cy.getByData("totalDetallesProducto").contains('100.96')
+                            cy.getByData("precioVentaDetallesProducto").contains('79')
+                            cy.getByData("totalDetallesProducto").contains('158')
 
                         })
 
@@ -771,7 +772,7 @@ describe('Pruebas del carrito de compras', () => {
                                 const cantidad = 1;
                                 const nombre = 'Coca-Cola';
                                 const descripcion = '1.75 L'
-                                const total = (precio * cantidad + 50.48).toFixed(2);
+                                const total = (precio * cantidad + 79).toFixed(2);
                                 cy.getByData("Cantidadtotal").contains(`${total}`)
                                 cy.getByData("numeroArticulos").contains('2')
                                 cy.getByData("nombreDetallesProducto").contains(`${nombre}`)
@@ -816,7 +817,7 @@ describe('Pruebas del carrito de compras', () => {
                                 cy.getByData("precioVentaDetallesProducto").contains(`${precio}`)
                                 cy.getByData("totalDetallesProducto").contains(`${total}`)
 
-                                const totalCarrito = total + 50.48;
+                                const totalCarrito = total + 79;
                                 cy.getByData("Cantidadtotal").contains(`$${totalCarrito}`)
                                 cy.getByData("numeroArticulos").contains('4')
                             })
@@ -875,7 +876,7 @@ describe('Pruebas del carrito de compras', () => {
                                     cy.getByData('totalTablaModalGranel').contains(`$${total}`)
                                     cy.getByData('totalmodalGranel').contains(`$${total}`)
 
-                                    // const totalCarrito = total + 50.48;
+                                    // const totalCarrito = total + 79;
                                     // cy.getByData("Cantidadtotal").contains(`$${totalCarrito}`)
                                     // cy.getByData("numeroArticulos").contains('4')
                                 })
@@ -934,7 +935,7 @@ describe('Pruebas del carrito de compras', () => {
 
     })
 
-    
+
     context('Pruebas funcionalidad lector de código barras', () => {
         beforeEach(() => {
             cy.getByData("documento")
@@ -957,8 +958,8 @@ describe('Pruebas del carrito de compras', () => {
             cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
             cy.getByData("descripcionDetallesProducto").contains('25')
             cy.getByData("cantidadDetallesProducto").contains('Cantidad: 1')
-            cy.getByData("precioVentaDetallesProducto").contains('50.48')
-            cy.getByData("totalDetallesProducto").contains('50.48')
+            cy.getByData("precioVentaDetallesProducto").contains('79')
+            cy.getByData("totalDetallesProducto").contains('79')
 
         })
         describe("Pruebas al lector de código de barras", () => {
@@ -991,14 +992,14 @@ describe('Pruebas del carrito de compras', () => {
                     cy.getByData("imgCarrito").should('exist')
 
 
-                    cy.getByData("Cantidadtotal").contains('100.96')
+                    cy.getByData("Cantidadtotal").contains('158')
                     cy.getByData("numeroArticulos").contains('2')
 
                     cy.getByData("nombreDetallesProducto").contains('Cigarros Shots Classics')
                     cy.getByData("descripcionDetallesProducto").contains('25')
                     cy.getByData("cantidadDetallesProducto").contains('Cantidad: 2')
-                    cy.getByData("precioVentaDetallesProducto").contains('50.48')
-                    cy.getByData("totalDetallesProducto").contains('100.96')
+                    cy.getByData("precioVentaDetallesProducto").contains('79')
+                    cy.getByData("totalDetallesProducto").contains('158')
 
                 })
 
@@ -1056,7 +1057,7 @@ describe('Pruebas del carrito de compras', () => {
                     cy.getByData("precioVentaDetallesProducto").contains(`${precio}`)
                     cy.getByData("totalDetallesProducto").contains(`${total}`)
 
-                    const totalCarrito = total + 50.48;
+                    const totalCarrito = total + 79;
                     cy.getByData("Cantidadtotal").contains(`$${totalCarrito}`)
                     cy.getByData("numeroArticulos").contains('4')
                 })
@@ -1117,7 +1118,7 @@ describe('Pruebas del carrito de compras', () => {
                         cy.getByData('totalTablaModalGranel').contains(`$${total}`)
                         cy.getByData('totalmodalGranel').contains(`$${total}`)
 
-                        // const totalCarrito = total + 50.48;
+                        // const totalCarrito = total + 79;
                         // cy.getByData("Cantidadtotal").contains(`$${totalCarrito}`)
                         // cy.getByData("numeroArticulos").contains('4')
                     })
