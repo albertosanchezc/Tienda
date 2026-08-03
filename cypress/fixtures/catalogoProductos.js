@@ -1,5 +1,25 @@
 const catalogoProductos = [
     {
+            nombre: 'Cigarros Shots Classics',
+            descripcion: '25 Rojos',
+            codigo: '75078843',
+            categoria: '21',
+            proveedor: '1',
+            compra: '50',
+            venta: '79',
+            imagen: 'producto_3.jpeg'
+    },
+    {
+            nombre: 'Coca-Cola',
+            descripcion: '1.75 L',
+            codigo: '7501055313532',
+            categoria: '7',
+            proveedor: '1',
+            compra: '20',
+            venta: '37.50',
+            imagen: 'producto_2.jpeg'
+    },
+    {
         nombre: 'Papas Sabritas',
         descripcion: 'Sabor original 55 g',
         codigo: '7501011122004',
@@ -17,7 +37,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '18',
         venta: '28',
-        imagen: 'producto_3.jpeg'
+        imagen: 'producto_5.jpeg'
     },
     {
         nombre: 'Leche Lala',
@@ -27,7 +47,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '21',
         venta: '29',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_6.jpeg'
     },
     {
         nombre: 'Pan Bimbo',
@@ -37,7 +57,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '28',
         venta: '38',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_7.jpeg'
     },
     {
         nombre: 'Epura',
@@ -47,7 +67,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '9',
         venta: '15',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_8.jpeg'
     },
     {
         nombre: 'Arroz Morelos',
@@ -57,7 +77,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '24',
         venta: '36',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_9.jpeg'
     },
     {
         nombre: 'Atún Dolores',
@@ -67,7 +87,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '17',
         venta: '25',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_10.jpeg'
     },
     {
         nombre: 'Cochinita Pibil',
@@ -77,17 +97,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '48',
         venta: '70',
-        imagen: 'producto.jpeg'
-    },
-    {
-        nombre: 'Cigarros Shots Classics',
-        descripcion: '25 Rojos',
-        codigo: '75078843',
-        categoria: '21',
-        proveedor: '1',
-        compra: '50',
-        venta: '79',
-        imagen: 'producto_3.jpeg'
+        imagen: 'producto_11.jpeg'
     },
     {
         nombre: 'Bonafont',
@@ -97,7 +107,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '8',
         venta: '13',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_12.jpeg'
     },
     {
         nombre: 'Salchichas',
@@ -107,7 +117,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '28',
         venta: '40',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_13.jpeg'
     },
     {
         nombre: 'Alpura Vaquita',
@@ -117,7 +127,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '7',
         venta: '12',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_14.jpeg'
     },
     {
         nombre: 'Alpura Vaquita',
@@ -127,7 +137,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '7',
         venta: '12',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_15.jpeg'
     },
     {
         nombre: 'Caguama Modelo',
@@ -137,7 +147,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '42',
         venta: '58',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_16.jpeg'
     },
     {
         nombre: 'Fanta',
@@ -147,7 +157,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '18',
         venta: '28',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_17.jpeg'
     },
     {
         nombre: 'Electrolit',
@@ -157,7 +167,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '22',
         venta: '34',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_18.jpeg'
     },
     {
         nombre: 'Tang',
@@ -167,7 +177,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '4',
         venta: '8',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_19.jpeg'
     },
     {
         nombre: 'Tang',
@@ -177,7 +187,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '4',
         venta: '8',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_20.jpeg'
     },
     {
         nombre: 'Electrolit',
@@ -187,7 +197,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '22',
         venta: '34',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_21.jpeg'
     },
     {
         nombre: 'Electrolit',
@@ -197,7 +207,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '22',
         venta: '34',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_22.jpeg'
     },
     {
         nombre: 'Sidral Mundet',
@@ -207,7 +217,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '25',
         venta: '39',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_23.jpeg'
     },
     {
         nombre: 'Pepsi',
@@ -217,7 +227,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '25',
         venta: '38',
-        imagen: 'producto.jpeg'
+        imagen: 'producto_24.jpeg'
     }
 ];
 
