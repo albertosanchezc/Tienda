@@ -336,7 +336,7 @@ describe('Pruebas del carrito de compras', () => {
                                 const descripcion = '25 Rojos'
                                 const total = (precio * cantidad);
 
-                                cy.getByData("editar-cantidad-1").click()
+                                cy.getByData("editar-cantidad-2").click()
                                 cy.getByData('cantidadTablaModalCantidad').contains(`1`)
                                 cy.getByData('nombreTablaModalCantidad').contains(`${nombre}`)
                                 cy.getByData('descripcionTablaModalCantidad').contains(`${descripcion}`)
@@ -789,7 +789,7 @@ describe('Pruebas del carrito de compras', () => {
                                 const descripcion = '25 Rojos'
                                 const total = (precio * cantidad);
 
-                                cy.getByData("editar-cantidad-1").click()
+                                cy.getByData("editar-cantidad-2").click()
                                 cy.getByData('cantidadTablaModalCantidad').contains(`1`)
                                 cy.getByData('nombreTablaModalCantidad').contains(`${nombre}`)
                                 cy.getByData('descripcionTablaModalCantidad').contains(`${descripcion}`)
@@ -1029,7 +1029,7 @@ describe('Pruebas del carrito de compras', () => {
                     const descripcion = '25 Rojos'
                     const total = (precio * cantidad);
 
-                    cy.getByData("editar-cantidad-1").click()
+                    cy.getByData("editar-cantidad-2").click()
                     cy.getByData('cantidadTablaModalCantidad').contains(`1`)
                     cy.getByData('nombreTablaModalCantidad').contains(`${nombre}`)
                     cy.getByData('descripcionTablaModalCantidad').contains(`${descripcion}`)

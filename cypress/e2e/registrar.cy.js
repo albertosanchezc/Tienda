@@ -42,10 +42,13 @@ describe('Registro de usuario', () => {
         // Obtener token de la BD
         cy.task(
             'queryDb',
-            `SELECT token FROM usuarios WHERE email='${email}'`
+            `SELECT token, tienda_id
+            FROM usuarios
+            WHERE email='${email}'`
         ).then((rows) => {
 
             const token = rows[0].token;
+            const tiendaId = rows[0].tienda_id;
 
             // Confirmar cuenta
             cy.visit(`http://localhost:3000/confirmar-cuenta?token=${token}`);
@@ -89,7 +92,7 @@ describe('Registro de usuario', () => {
 
             cy.task(
                 'queryDb',
-                `SELECT id FROM proveedor WHERE email='proveedor@test.com'`
+                `SELECT id FROM proveedor WHERE email='proveedor@test.com' AND tienda_id='${tiendaId}'`
             )
                 .then((rows) => {
 
@@ -124,7 +127,7 @@ describe('Registro de usuario', () => {
 
 
                     cy.get('select[name="inventarioCrear[proveedor_id]"]')
-                        .select(proveedorId);
+                        .select(`${proveedorId}`);
 
 
 

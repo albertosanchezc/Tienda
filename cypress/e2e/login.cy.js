@@ -1,13 +1,13 @@
 describe('Registro de usuario', () => {
 
     beforeEach(() => {
-        cy.visit('http://localhost:3000/login');
+        cy.visit('/registrar');
     });
 
-    it('Debe Iniciar Sesión', () => {
+    it('Debe creae la cuenta', () => {
 
         cy.get('input[name="usuario[email]"]')
-            .type('albertosanchezc98@gmail.com');
+            .type('prueba@prueba.com');
 
         cy.get('input[name="usuario[password]"]')
             .type('123456');
