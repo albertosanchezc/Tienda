@@ -45,7 +45,7 @@ class LoginController
                         $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
                         $_SESSION['login'] = true;
                         $_SESSION['tienda_id'] = $usuario->tienda_id;
-
+                        $_SESSION['modo_dios'] = $usuario->modo_dios;
                         $pasos = ConfiguracionTienda::estado($usuario->tienda_id);
 
 
@@ -138,7 +138,7 @@ class LoginController
 
 
                             if ($resultado) {
-                                
+
                                 header('Location: /mensaje');
                                 exit;
                             }

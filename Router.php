@@ -36,6 +36,15 @@ class Router
             '/admin'
         ];
 
+        // Arreglo de rutas protegidas...
+        $rutas_admin = [
+            '/admin',
+            '/admin/ventas',
+            '/admin/inventario',
+            '/admin/reportes',
+            '/admin/suscripciones',
+        ];
+
         $urlActual = $_SERVER['PATH_INFO'] ?? '/';
         $metodo = $_SERVER['REQUEST_METHOD'];
 
@@ -49,6 +58,19 @@ class Router
         if (in_array($urlActual, $rutas_protegidas) && !$auth) {
             header('Location: /login');
             exit;
+        }
+
+
+        if(in_array($urlActual, $rutas_admin)){
+            if(!$auth){
+                header('Location: /login');
+                exit;
+            }
+
+            if(!($_SESSION['modo_dios'] ?? false)){
+                header('Location: /');
+                exit;
+            }
         }
 
         if ($fn) {
@@ -66,7 +88,7 @@ class Router
         $datos = array_merge([
             'inicio' => false
         ], $datos);
-        
+
         foreach ($datos as $key => $value) {
             $$key = $value;
         }

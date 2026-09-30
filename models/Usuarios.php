@@ -6,7 +6,7 @@ class Usuarios extends ActiveRecord
 {
     // Base de datos
     protected static $tabla = 'usuarios';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'email', 'password', 'telefono', 'admin', 'confirmado', 'token','tienda_id'];
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'email', 'password', 'telefono', 'admin', 'confirmado', 'token','tienda_id', 'modo_dios'];
 
     public $id;
     public $nombre;
@@ -19,6 +19,7 @@ class Usuarios extends ActiveRecord
     public $confirmado;
     public $token;
     public $tienda_id;
+    public $modo_dios;
 
 
     public function __construct($args = [])
@@ -34,6 +35,7 @@ class Usuarios extends ActiveRecord
         $this->confirmado = $args['confirmado'] ?? 0;
         $this->token = $args['token'] ?? '';
         $this->tienda_id = $args['tienda_id'] ?? '';
+        $this->modo_dios = $args['modo_dios'] ?? 0;
     }
 
 
