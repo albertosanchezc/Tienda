@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\AdminController;
 use Controllers\CajaController;
 use Controllers\CarritoController;
 use Controllers\CategoriasController;
@@ -19,6 +20,11 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 //PUNTO DE VENTA
+// Admin
+$router->get('/admin', [AdminController::class, 'admin']);
+
+
+
 // Login y Autenticación
 $router->get('/login', [LoginController::class, 'login']);
 $router->post('/login', [LoginController::class, 'login']);
