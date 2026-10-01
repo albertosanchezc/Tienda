@@ -8,7 +8,7 @@ Cypress.Commands.add('login', () => {
     cy.session('admin', () => {
         cy.visit('/login');
 
-        cy.get('[name=email]').type('prueba@prueba.com');
+        cy.get('[name=email]').type('zamudiolopezkarina@gmail.com');
         cy.get('[name=password]').type('123456');
 
         cy.get('[type="submit"]').click();

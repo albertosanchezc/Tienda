@@ -247,7 +247,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '350',
         venta: '400.00',
-        imagen: ''
+        imagen: 'producto_26.jpeg'
     },
     {
         nombre: 'Monitor LG',
@@ -257,7 +257,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '120',
         venta: '150.00',
-        imagen: 'producto_24.jpeg'
+        imagen: 'producto_27.jpeg'
     },
     {
         nombre: 'Silla Ergonómica',
@@ -267,7 +267,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '250',
         venta: '300.00',
-        imagen: ''
+        imagen: 'producto_28.jpeg'
     },
     {
         nombre: 'Auriculares Sony',
@@ -277,7 +277,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '200',
         venta: '250.00',
-        imagen: ''
+        imagen: 'producto_29.jpeg'
     },
     {
         nombre: 'Impresora Epson',
@@ -287,7 +287,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '70',
         venta: '90.00',
-        imagen: ''
+        imagen: 'producto_30.jpeg'
     },
     {
         nombre: 'Disco Duro Externo',
@@ -297,7 +297,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '60',
         venta: '75.00',
-        imagen: ''
+        imagen: 'producto_31.jpeg'
     },
     {
         nombre: 'Cámara Web Logitech',
@@ -307,7 +307,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '15',
         venta: '25.00',
-        imagen: ''
+        imagen: 'producto_32.jpeg'
     },
     {
         nombre: 'Cargador Universal',
@@ -317,7 +317,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '2.50',
         venta: '5.50',
-        imagen: ''
+        imagen: 'producto_33.jpeg'
     },
     {
         nombre: 'Dulce de Fresa',
@@ -327,7 +327,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '4',
         venta: '7.00',
-        imagen: ''
+        imagen: 'producto_34.jpeg'
     },
     {
         nombre: 'Palillos',
@@ -337,7 +337,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '2.50',
         venta: '5.50',
-        imagen: ''
+        imagen: 'producto_35.jpeg'
     },
     {
         nombre: 'Saladitas',
@@ -347,17 +347,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '12.30',
         venta: '17.32',
-        imagen: ''
-    },
-    {
-        nombre: 'Dulce de Fresa',
-        descripcion: '20g Dulces Karla',
-        codigo: '1234567890',
-        categoria: '3',
-        proveedor: '1',
-        compra: '2.50',
-        venta: '5.00',
-        imagen: ''
+        imagen: 'producto_36.jpeg'
     },
     {
         nombre: 'Tang',
@@ -367,17 +357,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '12.03',
         venta: '20.32',
-        imagen: ''
-    },
-    {
-        nombre: 'Dulce de Fresa',
-        descripcion: '20g Dulces Karla',
-        codigo: '76134',
-        categoria: '3',
-        proveedor: '1',
-        compra: '0.5',
-        venta: '3.00',
-        imagen: ''
+        imagen: 'producto_37.jpeg'
     },
     {
         nombre: 'Tang',
@@ -387,7 +367,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '4.5',
         venta: '7.00',
-        imagen: ''
+        imagen: 'producto_38.jpeg'
     },
     {
         nombre: 'Tang',
@@ -397,7 +377,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '4.50',
         venta: '7.00',
-        imagen: ''
+        imagen: 'producto_39.jpeg'
     },
     {
         nombre: 'Tang',
@@ -407,17 +387,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '12.36',
         venta: '14.50',
-        imagen: ''
-    },
-    {
-        nombre: 'Dulce de Fresa',
-        descripcion: 'Tarasquitos',
-        codigo: '750688431',
-        categoria: '3',
-        proveedor: '1',
-        compra: '12.36',
-        venta: '14.36',
-        imagen: ''
+        imagen: 'producto_40.jpeg'
     },
     {
         nombre: 'Queso',
@@ -427,7 +397,7 @@ const catalogoProductos = [
         proveedor: '1',
         compra: '150',
         venta: '200.00',
-        imagen: ''
+        imagen: 'producto_41.jpeg'
     },
     {
         nombre: 'Tang',
@@ -435,101 +405,10 @@ const catalogoProductos = [
         codigo: '5412336',
         categoria: '6',
         proveedor: '1',
-        compra: '',
-        venta: '',
-        imagen: ''
-    },
-    {
-        nombre: 'Queso',
-        descripcion: 'Panela',
-        codigo: '725469',
-        categoria: '1',
-        proveedor: '1',
-        compra: '150',
-        venta: '200.00',
-        imagen: ''
-    },
-    {
-        nombre: 'Queso',
-        descripcion: 'Panela',
-        codigo: '72546915',
-        categoria: '1',
-        proveedor: '1',
-        compra: '150',
-        venta: '200.00',
-        imagen: ''
-    },
-    {
-        nombre: 'Dulce de Fresa',
-        descripcion: '455210fhcjh',
-        codigo: '7613445',
-        categoria: '3',
-        proveedor: '1',
-        compra: '',
-        venta: '',
-        imagen: ''
-    },
-    {
-        nombre: 'Dulce de Fresa',
-        descripcion: 'hbn',
-        codigo: '4',
-        categoria: '3',
-        proveedor: '1',
-        compra: '0.13',
-        venta: '151.00',
-        imagen: ''
-    },
-    {
-        nombre: 'Dulce de Fresa',
-        descripcion: '20g Dulces Karla',
-        codigo: '1',
-        categoria: '3',
-        proveedor: '1',
-        compra: '12.3',
-        venta: '14.85',
-        imagen: ''
-    },
-    {
-        nombre: 'Tang',
-        descripcion: 'Kiwi',
-        codigo: '7501237598',
-        categoria: '6',
-        proveedor: '1',
-        compra: '4.50',
-        venta: '7.00',
-        imagen: ''
-    },
-    {
-        nombre: 'Tang',
-        descripcion: 'prueba',
-        codigo: '750125496',
-        categoria: '6',
-        proveedor: '1',
-        compra: '15',
-        venta: '70.00',
-        imagen: ''
-    },
-    {
-        nombre: 'Tang',
-        descripcion: 'prueba1',
-        codigo: '7501243597',
-        categoria: '6',
-        proveedor: '1',
-        compra: '12',
-        venta: '80.00',
-        imagen: ''
-    },
-    {
-        nombre: 'Tang',
-        descripcion: 'prueba',
-        codigo: '7622210572288',
-        categoria: '6',
-        proveedor: '1',
-        compra: '12',
-        venta: '80.00',
-        imagen: ''
+        compra: '4',
+        venta: '8',
+        imagen: 'producto_42.jpeg'
     }
-    
 
 ];
 

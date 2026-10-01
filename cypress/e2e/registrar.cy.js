@@ -6,7 +6,8 @@ describe('Registro de usuario', () => {
 
     it('Debe registrar una nueva cuenta correctamente', () => {
 
-        const email = `cypress_${Date.now()}@test.com`;
+        // const email = `cypress_${Date.now()}@test.com`;
+        const email = `zamudiolopezkarina@gmail.com`;
 
         // Registro
         cy.get('input[name="usuario[email]"]')
@@ -19,13 +20,13 @@ describe('Registro de usuario', () => {
             .type('123456');
 
         cy.get('input[name="usuario[nombre]"]')
-            .type('Alberto');
+            .type('Karina');
 
         cy.get('input[name="usuario[apellido]"]')
-            .type('Sánchez Camacho');
+            .type('Zamudio López');
 
         cy.get('input[name="usuario[telefono]"]')
-            .type('4641230877');
+            .type('4451637444');
 
         cy.get('input[name="tienda[nombre]"]')
             .type('El Dante Enojón');
@@ -77,13 +78,13 @@ describe('Registro de usuario', () => {
             // Probando la creación de un proveedor
             // Llenar el formulario
             cy.get('input[name="aniadirProveedor[nombre]"]')
-                .type('Proveedor de Prueba');
+                .type('Bimbo');
 
             cy.get('input[name="aniadirProveedor[telefono]"]')
                 .type('4641234567');
 
             cy.get('input[name="aniadirProveedor[email]"]')
-                .type('proveedor@test.com');
+                .type('bimbo@bimbo.com');
 
             // Enviar el formulario
             cy.get('#aniadirProveedor').submit();
