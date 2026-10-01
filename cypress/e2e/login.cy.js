@@ -7,7 +7,7 @@ describe('Registro de usuario', () => {
     it('Debe creae la cuenta', () => {
 
         cy.get('input[name="usuario[email]"]')
-            .type('prueba@prueba.com');
+            .type('zamudiolopezkarina@gmail.com');
 
         cy.get('input[name="usuario[password]"]')
             .type('123456');
