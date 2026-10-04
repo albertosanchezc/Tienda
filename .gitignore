@@ -8,4 +8,4 @@ tienda_*
 # Cypress
 cypress/screenshots/
 cypress/videos/
-public/build
+public/build/
