@@ -22,6 +22,9 @@ error_reporting(E_ALL);
 //PUNTO DE VENTA
 // Admin
 $router->get('/admin', [AdminController::class, 'admin']);
+$router->get('/admin/ventas', [AdminController::class, 'ventas']);
+$router->get('/admin/inventario', [AdminController::class, 'inventario']);
+$router->get('/admin/reportes', [AdminController::class, 'reportes']);
 $router->get('/admin/suscripciones', [AdminController::class, 'suscripciones']);
 
 
