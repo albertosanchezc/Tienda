@@ -71,9 +71,16 @@
                 radial-gradient(at 52% 19%, hsla(205, 0%, 76%, 1) 0px, transparent 50%)
         }
 
-        &:hover {
-            background-color: darken($gris, 10%);
+        // &:hover {
+        //     background-color: darken($gris, 10%);
 
+        // }
+        // &:hover {
+            background-color: hsla(212, 14%, 20%, 0.85);
+        // }
+
+        &:hover {
+            background-color: hsla(212, 14%, 20%, 0.85);
         }
 
         img {
