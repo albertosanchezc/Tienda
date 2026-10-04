@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Suscripcion;
 use MVC\Router;
 
 class AdminController
@@ -62,9 +63,13 @@ class AdminController
         $titulo = 'Administrar Suscripciones';
         $nombre = $_SESSION['nombre'];
 
+        $suscripciones = Suscripcion::all();
+
         $router->render('admin/suscripciones', [
             'titulo' => $titulo,
-            'nombre' => $nombre
+            'nombre' => $nombre,
+            'suscripciones' => $suscripciones
+
         ]);
     }
 }

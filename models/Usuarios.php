@@ -96,4 +96,8 @@ class Usuarios extends ActiveRecord
     {
         $this->token = md5(uniqid());
     }
+
+    public function obtenerNombreCompleto(){
+        return $this->nombre . ' ' . $this->apellido;
+    }
 }
