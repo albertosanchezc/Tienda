@@ -59,6 +59,14 @@
 
 }
 
+.enlace-anuncio {
+    transition: transform 0.3s ease;
+}
+
+.enlace-anuncio:hover {
+    transform: scale(1.05);
+}
+
 // .adicionalcontenido-anuncio{
 //     h3{
 //         font-size: 10px;
