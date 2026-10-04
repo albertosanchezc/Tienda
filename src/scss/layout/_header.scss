@@ -16,7 +16,7 @@
         background-size: cover;
 
         @include tablet{
-            min-height: 130rem;
+            min-height: 110rem;
         }
 
         @include desktop{
@@ -29,7 +29,7 @@
         .contenido-header{
 
             @include tablet{
-                min-height: 130rem;
+                min-height: 110rem;
             }   
 
             @include desktop{
@@ -58,3 +58,9 @@
     }
 
 }
+
+// .adicionalcontenido-anuncio{
+//     h3{
+//         font-size: 10px;
+//     }
+// }
