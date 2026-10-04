@@ -49,9 +49,10 @@
           </thead>
           <tbody>
             <!-- Fila 1 -->
+             <?php foreach($suscripciones as $suscripcion){ ?> 
             <tr>
-              <td>Juan Pérez (Cafe Central)</td>
-              <td>Cafe Central</td>
+              <td>$suscripcion->usuario</td>
+              <td>$suscripcion->tienda->nombre</td>
               <td><span class="badge badge-active">Activo</span></td>
               <td>21/04/2023</td>
               <td>23/01/2023</td>
@@ -66,6 +67,7 @@
                 </div>
               </td>
             </tr>
+            <?php } ?> 
             <!-- Fila 2 -->
             <tr>
               <td>María Gómez (Librería ABC)</td>

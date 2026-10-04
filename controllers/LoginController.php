@@ -3,12 +3,14 @@
 namespace Controllers;
 
 use Classes\ConfiguracionTienda;
-use MVC\Router;
-use Model\Admin;
 use Classes\Email;
+use DateTime;
+use Model\Admin;
 use Model\Caja;
+use Model\Suscripcion;
 use Model\Tienda;
 use Model\Usuarios;
+use MVC\Router;
 
 class LoginController
 {
@@ -116,6 +118,7 @@ class LoginController
 
                         $tienda = new Tienda();
                         $tienda->nombre = $datos_tienda['nombre'];
+
                         $alertas = $tienda->validar();
                         if (empty($alertas)) {
                             // debuguear($tienda);
@@ -124,6 +127,23 @@ class LoginController
                             $usuario->tienda_id = $tienda->id;
                             // Crear un Nuevo Usuario
                             $usuario->guardar();
+
+                            $suscripcion = new Suscripcion();
+
+                            $ahora = new DateTime();
+
+                            $suscripcion->tienda_id = $tienda->id;
+                            $suscripcion->usuario_id = $usuario->id;
+                            $suscripcion->created_at = $ahora->format('Y-m-d H:i:s');
+                            $suscripcion->updated_at = $ahora->format('Y-m-d H:i:s');
+                            $suscripcion->fecha_inicio = $ahora->format('Y-m-d');
+
+                            $ahora->modify('+7 days');
+
+                            $suscripcion->fecha_vencimiento = $ahora->format('Y-m-d');
+                            $suscripcion->activa = 1;
+
+                            $suscripcion->guardar();
 
                             $caja = new Caja();
                             $caja->cantidad_caja = 0;
