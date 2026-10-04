@@ -22,7 +22,7 @@
                     <div class="contenedor-anuncios-1">
                         <a href="/metricas" class="enlace-anuncio">
                             <div class="anuncio-1">
-                                <img loading="lazy" src="build/img/metricas.png" alt="anuncio">
+                                <img loading="lazy" src="build/img/metricas.png" alt="anuncio" class="imagenmetricas">
                                 <div class="contenido-anuncio-1">
                                     <h3>Métricas</h3>
                                     <p>Consulta el estado actual e histórico. Visualiza gráficamente resúmenes periódicos.</p>

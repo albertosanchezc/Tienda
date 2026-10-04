@@ -14,15 +14,28 @@
     &.inicio{
         background-position: center center;
         background-size: cover;
-         
+
         @include tablet{
-            min-height: 70rem;
+            min-height: 130rem;
         }
 
+        @include desktop{
+            min-height: 70rem;
+        }
+         
+        
+
+
         .contenido-header{
+
             @include tablet{
-                min-height: 70rem;
+                min-height: 130rem;
             }   
+
+            @include desktop{
+                min-height: 70rem;
+            }  
+            
         }
         
     }
