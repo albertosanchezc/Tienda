@@ -50,6 +50,7 @@
 
     &:hover{
         cursor: pointer;
+        
     }
 
     @include tablet {
@@ -61,10 +62,14 @@
 
     a {
         color: $blanco;
-        text-decoration: none;
+        // text-decoration: none;
         font-size: 1.8rem;
         display: block;
         text-align: center;
+        padding: 1rem 0 2rem 0;
+        text-shadow: 
+    0 0 4px rgba(0, 0, 0, 0.9),
+    0 0 8px rgba(0, 0, 0, 0.7);
 
         @include tablet {
             margin-right: 2rem;
@@ -81,34 +86,43 @@
 
 .verde:hover{
     color: rgb(115, 255, 0);
+    font-weight: 499;
+    cursor: pointer;
 }
 
 .azul:hover{
     color: rgb(104, 247, 240);
+    font-weight: 500;
 }
 
 .naranja:hover{
     color: rgb(252, 156, 66);
+    font-weight: 500;
 }
 
 .rojo:hover{
     color: rgb(255, 46, 46);
+    font-weight: 500;
 }
 
 .rosa:hover{
     color: rgb(255, 32, 106);
+    font-weight: 500;
 }
 
 .morado:hover{
     color: rgb(194, 39, 255);
+    font-weight: 500;
 }
 
 .cyan:hover{
     color: rgb(0, 217, 255);
+    font-weight: 500;
 }
 
 .gris:hover{
     color: rgb(190, 190, 190);
+    font-weight: 500;
 }
 
 // Menú de hamburguesa
@@ -134,3 +148,28 @@
     opacity: 1;
     height: auto;
 }
+
+.contenedor_navegacion{
+    @include tablet {
+        display: flex;
+        align-items: center;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    a {
+        color: $blanco;
+        text-decoration: none;
+        font-size: 1.8rem;
+        display: block;
+        text-align: center;
+        
+
+        @include tablet {
+            margin-right: 2rem;
+
+            &:last-of-type {
+                margin-right: 0;
+            }
+        }
+}}

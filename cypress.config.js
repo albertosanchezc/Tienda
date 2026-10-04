@@ -17,7 +17,7 @@ module.exports = defineConfig({
                         host: "localhost",
                         user: "root",
                         password: "root",
-                        database: "tienda_pruebas"
+                        database: "multitienda"
                     });
 
                     const [rows] = await connection.execute(query);

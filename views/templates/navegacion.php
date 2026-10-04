@@ -22,10 +22,12 @@ if (autenticado() && isset($_SESSION['tienda_id'])) {
 ?>
 
 <nav class="navegacion">
+
     <?php if (autenticado()) { ?>
 
-        <?php if ($mostrarCarrito) { ?>
-            <a class="verde" href="/carrito">Carrito</a>
+<div class="contenedor_navegacion">
+      <?php if ($mostrarMetricas) { ?>
+            <a class="rosa" href="/metricas">Métricas</a>
         <?php } ?>
 
         <?php if ($mostrarInventario) { ?>
@@ -36,16 +38,16 @@ if (autenticado() && isset($_SESSION['tienda_id'])) {
             <a class="naranja" href="/caja">Caja</a>
         <?php } ?>
 
-        <?php if ($mostrarVentas) { ?>
-            <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
-        <?php } ?>
-
-        <?php if ($mostrarMetricas) { ?>
-            <a class="rosa" href="/metricas">Métricas</a>
+        <?php if ($mostrarCarrito) { ?>
+            <a class="verde" href="/carrito">Carrito</a>
         <?php } ?>
 
         <?php if ($mostrarProveedores) { ?>
             <a class="morado" href="/proveedores">Proveedores</a>
+        <?php } ?>
+
+        <?php if ($mostrarVentas) { ?>
+            <a class="rojo" href="/ventasycancelaciones">Ventas y Cancelaciones</a>
         <?php } ?>
 
         <a class="gris" href="/logout">Cerrar Sesión</a>
@@ -55,4 +57,5 @@ if (autenticado() && isset($_SESSION['tienda_id'])) {
         <a class="cyan" href="/login">Iniciar Sesión</a>
 
     <?php } ?>
+    </div>  
 </nav>
