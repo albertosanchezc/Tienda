@@ -329,6 +329,7 @@
     function imprimirActualCaja(caja) {
         const { cantidad_caja } = caja;
 
+
         h1EfectivoCaja.innerHTML = `$ ${cantidad_caja}`;
     }
 

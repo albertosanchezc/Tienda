@@ -6,8 +6,8 @@ describe('Registro de usuario', () => {
 
     it('Debe registrar una nueva cuenta correctamente', () => {
 
-        // const email = `cypress_${Date.now()}@test.com`;
-        const email = `zamudiolopezkarina@gmail.com`;
+        const email = `cypress_${Date.now()}@test.com`;
+        // const email = `zamudiolopezkarina@gmail.com`;
 
         // Registro
         cy.get('input[name="usuario[email]"]')
@@ -78,13 +78,20 @@ describe('Registro de usuario', () => {
             // Probando la creación de un proveedor
             // Llenar el formulario
             cy.get('input[name="aniadirProveedor[nombre]"]')
-                .type('Bimbo');
+                //     .type('Bimbo');
+
+                // cy.get('input[name="aniadirProveedor[telefono]"]')
+                //     .type('4641234567');
+
+                // cy.get('input[name="aniadirProveedor[email]"]')
+                //     .type('bimbo@bimbo.com');
+                .type('Proveedor de Prueba');
 
             cy.get('input[name="aniadirProveedor[telefono]"]')
                 .type('4641234567');
 
             cy.get('input[name="aniadirProveedor[email]"]')
-                .type('bimbo@bimbo.com');
+                .type('proveedor@test.com');
 
             // Enviar el formulario
             cy.get('#aniadirProveedor').submit();
@@ -97,7 +104,7 @@ describe('Registro de usuario', () => {
             )
                 .then((rows) => {
 
-                    // expect(rows).to.have.length(1);
+                    expect(rows).to.have.length(1);
 
                     const proveedorId = rows[0].id;
 

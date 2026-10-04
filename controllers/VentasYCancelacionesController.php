@@ -58,13 +58,16 @@ class VentasYCancelacionesController
                 $totalVenta = 0;
 
                 foreach ($ventas as $venta) {
+                    $inventario = Inventario::wherebelongsTo('producto_id', $venta->producto_id, 'tienda_id', $tiendaId)[0];
+                    $total =  $venta->cantidad * $venta->precio_venta;
 
-                    if ($venta->cancelacion == 0) {
-
-                        $totalVenta += $venta->cantidad * $venta->precio_venta;
+                    if ($inventario->granel == 1) {
+                        $totalVenta += $total / 1000;
+                    } else {
+                        $totalVenta += $total;
                     }
                 }
-
+                // debuguear($totalVenta);
                 $caja->cantidad_caja -= $totalVenta;
 
                 // Actualizar los valores de caja
@@ -157,9 +160,14 @@ class VentasYCancelacionesController
                         'tienda_id',
                         $tiendaId
                     )[0];
+                    $inventario = Inventario::wherebelongsTo('producto_id', $ventaBD->producto_id, 'tienda_id', $tiendaId)[0];
 
-                    if ($ventaBD->cancelacion == 0) {
-                        $totalVenta += $venta->cantidad * $ventaBD->precio_venta;
+                    $total =  $venta->cantidad * $ventaBD->precio_venta;
+
+                    if ($inventario->granel == 1) {
+                        $totalVenta += $total / 1000;
+                    } else {
+                        $totalVenta += $total;
                     }
                 }
 
@@ -272,10 +280,10 @@ class VentasYCancelacionesController
                 $valorVentaAntesActualizar = Ventas::where3Params('cancelacion', '0', 'producto_id', $producto_id, 'carrito_id', $carrito_id);
                 $precioVenta = $valorVentaAntesActualizar[0]->precio_venta;
 
-                if ($esGranel === '0') {
+                if ($esGranel === 0) {
                     $devolucion = $precioVenta; // una pieza
                 } else {
-                    $devolucion = $precioVenta * $valorVentaAntesActualizar[0]->cantidad;
+                    $devolucion = ($precioVenta * $valorVentaAntesActualizar[0]->cantidad)/1000;
                 }
 
                 $caja->cantidad_caja -= $devolucion;
@@ -340,6 +348,7 @@ class VentasYCancelacionesController
 
 
                     }
+                    
                     $cancelacion->guardar();
 
 
@@ -364,26 +373,34 @@ class VentasYCancelacionesController
                     $inventarioActualizado->guardar();
                     $caja->guardar();
                 } else {
-                    // Debemos Eliminar todos los gramos de ese producto
-                    $cancelacion = new Ventas(get_object_vars($ventasPost));
-                    $cancelacionConFechaNueva = new Ventas();
-                    $cancelacion->cantidad = 1;
-                    $cancelacion->cancelacion = 1;
-                    $cancelacion->cantidad = $valorVentaAntesActualizar[0]->cantidad;
-                    $fecha_venta = $cancelacionConFechaNueva->fecha_venta;
-                    $cancelacion->fecha_venta = $fecha_venta;
-                    $cancelacion->guardar();
+                // Debemos eliminar todos los gramos de ese producto
 
-                    $venta = new Ventas(get_object_vars($valorVentaAntesActualizar[0]));
+                $cancelacion = new Ventas(get_object_vars($ventasPost));
 
-                    // Estamos listos para eliminar la venta
-                    $venta->eliminar();
-                    // Añadir ese articulo al inventario(consultar con moshi)
+                $cancelacionConFechaNueva = new Ventas();
 
-                    $inventarioActualizado = new Inventario(get_object_vars($productoInv));
-                    $inventarioActualizado->guardar();
-                    $caja->guardar();
-                }
+                $cancelacion->id = null;
+                $cancelacion->cantidad = $valorVentaAntesActualizar[0]->cantidad;
+                $cancelacion->cancelacion = 1;
+
+                $fecha_venta = $cancelacionConFechaNueva->fecha_venta;
+                $cancelacion->fecha_venta = $fecha_venta;
+
+                // IMPORTANTE: asignar la tienda
+                $cancelacion->tienda_id = $tiendaId;
+
+                $cancelacion->guardar();
+
+                // Eliminar la venta original
+                $venta = new Ventas(get_object_vars($valorVentaAntesActualizar[0]));
+                $venta->eliminar();
+
+                // Guardar inventario
+                $inventarioActualizado = new Inventario(get_object_vars($productoInv));
+                $inventarioActualizado->guardar();
+
+                $caja->guardar();
+}
             }
 
             ConfiguracionTienda::redireccionarSiguientePaso();
