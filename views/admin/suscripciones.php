@@ -12,13 +12,13 @@
     <!-- Resumen de Métricas -->
     <section class="metrics-summary">
       <div class="metric-item">
-        Total Suscripciones Activas: <strong class="text-green">85</strong>
+        Total Suscripciones Activas: <strong class="text-green"><?php echo $totalActivas; ?></strong>
       </div>
       <div class="metric-item">
-        Suscripciones Próximas a Vencer: <strong class="text-red">12</strong> (en &lt; 30 días)
+        Suscripciones Próximas a Vencer: <strong class="text-red"><?php echo $totalPorVencer; ?></strong> (en &lt; 30 días)
       </div>
       <div class="metric-item">
-        Suscripciones Inactivas: <strong class="text-red">18</strong>
+        Suscripciones Inactivas: <strong class="text-red"><?php echo $totalInactivas; ?></strong>
       </div>
     </section>
 

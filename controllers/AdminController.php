@@ -19,7 +19,7 @@ class AdminController
             'titulo' => $titulo,
             'nombre' => $nombre,
             'script' => $script
-            
+
         ]);
     }
 
@@ -64,11 +64,19 @@ class AdminController
         $nombre = $_SESSION['nombre'];
 
         $suscripciones = Suscripcion::all();
+        $totalActivas = Suscripcion::contarActivas();
+        $totalPorVencer = Suscripcion::contarProximasAVencer();
+        $totalInactivas = Suscripcion::contarInctivas();
+
 
         $router->render('admin/suscripciones', [
             'titulo' => $titulo,
             'nombre' => $nombre,
-            'suscripciones' => $suscripciones
+            'suscripciones' => $suscripciones,
+            'totalActivas' => $totalActivas,
+            'totalPorVencer' => $totalPorVencer,
+            'totalInactivas' => $totalInactivas
+
 
         ]);
     }

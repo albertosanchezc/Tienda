@@ -72,4 +72,33 @@ class Suscripcion extends ActiveRecord
 
         return $fecha->format('d/m/Y');
     }
+
+    public static function contarActivas()
+    {
+        $query = "SELECT COUNT(*) FROM " . static::$tabla . " WHERE activa = 1";
+        $resultado = self::$db->query($query);
+
+        return $resultado->fetch_row()[0];
+    }
+
+        public static function contarInctivas()
+    {
+        $query = "SELECT COUNT(*) FROM " . static::$tabla . " WHERE activa = 0";
+        $resultado = self::$db->query($query);
+
+        return $resultado->fetch_row()[0];
+    }
+
+    public static function contarProximasAVencer()
+    {
+        $query = "SELECT COUNT(*) 
+              FROM " . static::$tabla . "
+              WHERE activa = 1
+              AND fecha_vencimiento >= CURDATE()
+              AND fecha_vencimiento <= DATE_ADD(CURDATE(), INTERVAL 30 DAY)";
+
+        $resultado = self::$db->query($query);
+
+        return $resultado->fetch_row()[0];
+    }
 }
