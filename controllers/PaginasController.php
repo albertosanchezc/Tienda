@@ -37,7 +37,9 @@ public static function inventarioAPI()
 {
     header('Content-Type: application/json; charset=utf-8');
 
-    echo '{"prueba":"hola"}';
+    echo json_encode([
+        'prueba' => 'inventarioAPI funciona'
+    ]);
 
     exit;
 }
