@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Inventario_completo extends ActiveRecord{
+class Inventario_Completo extends ActiveRecord{
     // Base de datos
     protected static $tabla = 'inventario';
     protected static $columnasDB = [
@@ -47,7 +47,7 @@ class Inventario_completo extends ActiveRecord{
         $this->id = $args['id'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
         $this->descripcion = $args['descripcion'] ?? '';
-        $this->producto_id = $args['codigo_barras'] ?? '';
+        $this->producto_id = $args['producto_id'] ?? '';
         $this->cantidad = $args['cantidad'] ?? '';
         $this->codigo_barras = $args['codigo_barras'] ?? '';
         $this->precio_unitario_venta = $args['precio_unitario_venta'] ?? '';

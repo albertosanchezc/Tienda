@@ -14,73 +14,67 @@ class Router
     {
         $this->rutasPost[$url] = $fn;
     }
-    public function comprobarRutas()
-    {
 
-        session_start();
+public function comprobarRutas()
+{
+    session_start();
 
-        $auth = $_SESSION['login'] ?? false;
+    $urlActual = strtok($_SERVER['REQUEST_URI'], '?') ?: '/';
+    $metodo = $_SERVER['REQUEST_METHOD'];
 
+    if ($metodo === 'GET') {
+        $fn = $this->rutasGet[$urlActual] ?? null;
+    } else {
+        $fn = $this->rutasPost[$urlActual] ?? null;
+    }
 
+    $auth = $_SESSION['login'] ?? false;
 
-        // Arreglo de rutas protegidas...
-        $rutas_protegidas = [
-            '/carrito',
-            '/inventario',
-            '/caja',
-            '/metricas',
-            '/proveedores',
-            '/ventasycancelaciones',
-            '/movimientoproducto',
-            '/categorias',
-            '/admin'
-        ];
+    $rutas_protegidas = [
+        '/carrito',
+        '/inventario',
+        '/caja',
+        '/metricas',
+        '/proveedores',
+        '/ventasycancelaciones',
+        '/movimientoproducto',
+        '/categorias',
+        '/admin'
+    ];
 
-        // Arreglo de rutas protegidas...
-        $rutas_admin = [
-            '/admin',
-            '/admin/ventas',
-            '/admin/inventario',
-            '/admin/reportes',
-            '/admin/suscripciones',
-        ];
+    $rutas_admin = [
+        '/admin',
+        '/admin/ventas',
+        '/admin/inventario',
+        '/admin/reportes',
+        '/admin/suscripciones',
+    ];
 
-        $urlActual = $_SERVER['PATH_INFO'] ?? '/';
-        $metodo = $_SERVER['REQUEST_METHOD'];
+    if (in_array($urlActual, $rutas_protegidas) && !$auth) {
+        header('Location: /login');
+        exit;
+    }
 
-        if ($metodo === 'GET') {
-            $fn = $this->rutasGet[$urlActual] ?? null;
-        } else {
-            $fn = $this->rutasPost[$urlActual] ?? null;
-        }
+    if (in_array($urlActual, $rutas_admin)) {
 
-        // Proteger las rutas
-        if (in_array($urlActual, $rutas_protegidas) && !$auth) {
+        if (!$auth) {
             header('Location: /login');
             exit;
         }
 
-
-        if(in_array($urlActual, $rutas_admin)){
-            if(!$auth){
-                header('Location: /login');
-                exit;
-            }
-
-            if(!($_SESSION['modo_dios'] ?? false)){
-                header('Location: /');
-                exit;
-            }
-        }
-
-        if ($fn) {
-            // La URL existe y hay una función asociada
-            call_user_func($fn, $this);
-        } else {
-            header('Location: /404');
+        if (!($_SESSION['modo_dios'] ?? false)) {
+            header('Location: /');
             exit;
         }
     }
+
+    if ($fn) {
+        call_user_func($fn, $this);
+    } else {
+        header('Location: /404');
+        exit;
+    }
+}
 
     // Muestra una vista
     public function render($view, $datos = [])

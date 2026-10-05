@@ -7,7 +7,7 @@ use Model\Motivos;
 use Model\Visita_Producto;
 use Model\Visitas_proveedor;
 use MVC\Router;
-use Model\Inventario_completo;
+use Model\Inventario_Completo;
 use Model\Productos;
 use Model\Proveedor;
 use Model\Categorias;
@@ -217,7 +217,7 @@ class InventarioController
             header('Location: /inventario');
         }
 
-        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
+        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
         // debuguear($inventario);
 
         // debuguear($inventario_granel);

@@ -52,6 +52,10 @@ class Productos extends ActiveRecord{
         return self::$alertas;
     }
 
+    public static function obtenerInventario(){
+        $inventario = Inventario::where('producto_id',$this->producto_id);
+    }
+
 }
 
 
