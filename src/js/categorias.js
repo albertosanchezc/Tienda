@@ -9,7 +9,9 @@
             const server = window.location.host;
             const api = '/categorias/api/categorias'
 
+            // const url = `http://${server}${api}`;
             const url = `${api}`;
+
             const respuesta = await fetch(url);
             const resultado = await respuesta.json();
 
