@@ -17,7 +17,9 @@ class Router
 
 public function comprobarRutas()
 {
-    $urlActual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
+    session_start();
+
+    $urlActual = strtok($_SERVER['REQUEST_URI'], '?') ?: '/';
     $metodo = $_SERVER['REQUEST_METHOD'];
 
     if ($metodo === 'GET') {
@@ -25,8 +27,6 @@ public function comprobarRutas()
     } else {
         $fn = $this->rutasPost[$urlActual] ?? null;
     }
-
-    session_start();
 
     $auth = $_SESSION['login'] ?? false;
 
