@@ -105,7 +105,7 @@ async function consultarAPI() {
   try {
     const server = window.location.host;
 
-    const url = `http://${server}/proveedores/api/proveedores`;
+    const url = `/proveedores/api/proveedores`;
     const respuesta = await fetch(url);
     const resultado = await respuesta.json();
 
