@@ -17,7 +17,7 @@
             </div> <!--.barra-->
 
             <?php if ($inicio) { ?>
-                <section class="seccion-1 contenedor-1">
+                <section class="seccion-1 contenedor-1 tituloauxiliar">
                     <h1>Punto de Venta</h1>
                     <div class="contenedor-anuncios-1 adicionalcanuncios">
                         <a href="/metricas" class="enlace-anuncio">

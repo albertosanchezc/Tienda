@@ -67,13 +67,23 @@ const ctx34 = document.getElementById('myChart34').getContext('2d');
 
 
 
-const btnAbrirInventario = document.querySelector('.botonGeneralInventario');
-const btnAbrirCaja = document.querySelector('.botonGeneralCaja');
-const btnAbrirVentas = document.querySelector('.botonGeneralVentas');
-const btnAbrirCancelaciones = document.querySelector('.botonGeneralCancelaciones');
-const btnAbrirProveedores = document.querySelector('.botonGeneralProveedores');
-const btnAbrirCategorias = document.querySelector('.botonGeneralCategorias');
+const btnAbrirInventario = document.querySelectorAll('.botonGeneralInventario');
+const btnAbrirCaja = document.querySelectorAll('.botonGeneralCaja');
+const btnAbrirVentas = document.querySelectorAll('.botonGeneralVentas');
+const btnAbrirCancelaciones = document.querySelectorAll('.botonGeneralCancelaciones');
+const btnAbrirProveedores = document.querySelectorAll('.botonGeneralProveedores');
+const btnAbrirCategorias = document.querySelectorAll('.botonGeneralCategorias');
 
+// const tituloCaja = [...document.querySelector('.tituloIndividual h3')]
+//     .find(h3 => h3.textContent.trim() === 'Caja');
+
+
+// const btnAbrirInventarioPar = document.querySelectorAll('.botonGeneralInventario');
+// const btnAbrirCajaPar = document.querySelectorAll('.botonGeneralCaja');
+// const btnAbrirVentasPar = document.querySelectorAll('.botonGeneralVentas');
+// const btnAbrirCancelacionesPar = document.querySelectorAll('.botonGeneralCancelaciones');
+// const btnAbrirProveedoresPar = document.querySelectorAll('.botonGeneralProveedores');
+// const btnAbrirCategoriasPar = document.querySelectorAll('.botonGeneralCategorias');
 
 const contenedorInventario = document.querySelector('.contenedorInventario');
 contenedorInventario.style.display = 'none';
@@ -103,6 +113,9 @@ const filtrosProveedores = contenedorProveedores.querySelector('#formularioProve
 const contenedorCategorias = document.querySelector('.contenedorCategorias');
 contenedorCategorias.style.display = 'none';
 const filtrosCategorias = contenedorCategorias.querySelector('#formularioCategorias');
+
+const barraBotonesHiddenDinamico = document.getElementById("barraEsconderBotones");
+barraBotonesHiddenDinamico.style.display = "none";
 
 
 
@@ -379,6 +392,7 @@ let cajas_historicos = [];
 let ventasCompletas = [];
 let visitas_proveedor = [];
 let categoriasCompletas = [];
+let banderaBotonSeleccionado =[];
 
 
 const hoy = new Date();
@@ -3791,83 +3805,370 @@ function filtrarCategoriaVentas(ventasCompletas) {
 }
 
 
-btnAbrirInventario.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (contenedorInventario.style.display === 'none') {
-        btnAbrirInventario.classList.add('botonGeneralInventarioHover');
-        contenedorInventario.style.display = 'block';
-        crearGraficasInventario(inventario);
+// btnAbrirInventario.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if (contenedorInventario.style.display === 'none') {
+//         btnAbrirInventario.classList.add('botonGeneralInventarioHover');
+//         contenedorInventario.style.display = 'block';
+//         crearGraficasInventario(inventario);
+//         banderaBotonSeleccionado[0] = 1;
+//         barraBotonesHiddenDinamico.style.display = "flex";
+         
 
-    } else {
-        contenedorInventario.style.display = 'none';
-        btnAbrirInventario.classList.remove('botonGeneralInventarioHover');
-    }
+//         // barra.style.display = "none";
 
-});
+//     } else {
+//         contenedorInventario.style.display = 'none';
+//         btnAbrirInventario.classList.remove('botonGeneralInventarioHover');
+//         banderaBotonSeleccionado[0] = 0;
+//         if (banderaBotonSeleccionado.includes(1)) {
+//             barraBotonesHiddenDinamico.style.display = "flex";
+//          } else {
+//              barraBotonesHiddenDinamico.style.display = "none";
+//          }
+//     }
 
-btnAbrirCaja.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (contenedorCaja.style.display === 'none') {
-        btnAbrirCaja.classList.add('botonGeneralCajaHover');
-        contenedorCaja.style.display = 'block';
-    } else {
-        contenedorCaja.style.display = 'none';
-        btnAbrirCaja.classList.remove('botonGeneralCajaHover');
+// });
 
-    }
+btnAbrirInventario.forEach(boton => {
 
-});
+    boton.addEventListener('click', (e) => {
+        e.preventDefault();
 
-btnAbrirVentas.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (contenedorVentas.style.display === 'none') {
-        btnAbrirVentas.classList.add('botonGeneralVentasHover');
-        contenedorVentas.style.display = 'block';
-        crearGraficasVentas(ventasCompletas);
-    } else {
-        contenedorVentas.style.display = 'none';
-        btnAbrirVentas.classList.remove('botonGeneralVentasHover');
+        if (contenedorInventario.style.display === 'none') {
 
-    }
+            btnAbrirInventario.forEach(boton => {
+                boton.classList.add('botonGeneralInventarioHover');
+            });
 
-});
+            contenedorInventario.style.display = 'block';
+            crearGraficasInventario(inventario);
 
-btnAbrirCancelaciones.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (contenedorCancelaciones.style.display === 'none') {
-        btnAbrirCancelaciones.classList.add('botonGeneralCancelacionesHover');
-        contenedorCancelaciones.style.display = 'block';
-        crearGraficasCancelaciones(cancelacionesCompletas);
-    } else {
-        contenedorCancelaciones.style.display = 'none';
-        btnAbrirCancelaciones.classList.remove('botonGeneralCancelacionesHover');
+            banderaBotonSeleccionado[0] = 1;
+            barraBotonesHiddenDinamico.style.display = "flex";
 
-    }
+        } else {
 
-});
+            contenedorInventario.style.display = 'none';
 
-btnAbrirProveedores.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (contenedorProveedores.style.display === 'none') {
-        btnAbrirProveedores.classList.add('botonGeneralProveedoresHover');
-        contenedorProveedores.style.display = 'block';
-        crearGraficasProveedores(ventasCompletas);
-    } else {
-        contenedorProveedores.style.display = 'none';
-        btnAbrirProveedores.classList.remove('botonGeneralProveedoresHover');
+            btnAbrirInventario.forEach(boton => {
+                boton.classList.remove('botonGeneralInventarioHover');
+            });
 
-    }
+            banderaBotonSeleccionado[0] = 0;
+
+            if (banderaBotonSeleccionado.includes(1)) {
+                barraBotonesHiddenDinamico.style.display = "flex";
+            } else {
+                barraBotonesHiddenDinamico.style.display = "none";
+            }
+        }
+    });
 
 });
 
+// btnAbrirCaja.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if (contenedorCaja.style.display === 'none') {
+//         btnAbrirCaja.classList.add('botonGeneralCajaHover');
+//         contenedorCaja.style.display = 'block';
+//         banderaBotonSeleccionado[1] = 1;
+//         barraBotonesHiddenDinamico.style.display = "flex";
+//     } else {
+//         contenedorCaja.style.display = 'none';
+//         btnAbrirCaja.classList.remove('botonGeneralCajaHover');
+//         banderaBotonSeleccionado[1] = 0;
+//         if (banderaBotonSeleccionado.includes(1)) {
+//             barraBotonesHiddenDinamico.style.display = "flex";
+//          } else {
+//              barraBotonesHiddenDinamico.style.display = "none";
+//          }
 
-btnAbrirCategorias.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (contenedorCategorias.style.display === 'none') {
-        btnAbrirCategorias.classList.add('botonGeneralCategoriasHover');
-        contenedorCategorias.style.display = 'block';
-    } else {
-        contenedorCategorias.style.display = 'none';
-        btnAbrirCategorias.classList.remove('botonGeneralCategoriasHover');
-    }
+//     }
+
+// });
+btnAbrirCaja.forEach(boton => {
+    boton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (contenedorCaja.style.display === 'none') {
+
+            btnAbrirCaja.forEach(boton => {
+                boton.classList.add('botonGeneralCajaHover');
+            });
+
+            contenedorCaja.style.display = 'block';
+
+            banderaBotonSeleccionado[1] = 1;
+
+            barraBotonesHiddenDinamico.style.display = "flex";
+
+            const tituloCaja =document.getElementById('formularioCaja');
+
+            tituloCaja?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+        } else {
+
+            contenedorCaja.style.display = 'none';
+
+            btnAbrirCaja.forEach(boton => {
+                boton.classList.remove('botonGeneralCajaHover');
+            });
+
+            banderaBotonSeleccionado[1] = 0;
+
+            if (banderaBotonSeleccionado.includes(1)) {
+                barraBotonesHiddenDinamico.style.display = "flex";
+            } else {
+                barraBotonesHiddenDinamico.style.display = "none";
+            }
+        }
+    });
 });
+
+
+// btnAbrirVentas.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if (contenedorVentas.style.display === 'none') {
+//         btnAbrirVentas.classList.add('botonGeneralVentasHover');
+//         contenedorVentas.style.display = 'block';
+//         crearGraficasVentas(ventasCompletas);
+//         banderaBotonSeleccionado[2] = 1;
+//         barraBotonesHiddenDinamico.style.display = "flex";
+//     } else {
+//         contenedorVentas.style.display = 'none';
+//         btnAbrirVentas.classList.remove('botonGeneralVentasHover');
+//         banderaBotonSeleccionado[2] = 0;
+//         if (banderaBotonSeleccionado.includes(1)) {
+//             barraBotonesHiddenDinamico.style.display = "flex";
+//          } else {
+//              barraBotonesHiddenDinamico.style.display = "none";
+//          }
+
+//     }
+
+// });
+
+btnAbrirVentas.forEach(boton => {
+    boton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (contenedorVentas.style.display === 'none') {
+
+            btnAbrirVentas.forEach(boton => {
+                boton.classList.add('botonGeneralVentasHover');
+            });
+
+            contenedorVentas.style.display = 'block';
+
+            crearGraficasVentas(ventasCompletas);
+
+            banderaBotonSeleccionado[2] = 1;
+
+            barraBotonesHiddenDinamico.style.display = "flex";
+
+        } else {
+
+            contenedorVentas.style.display = 'none';
+
+            btnAbrirVentas.forEach(boton => {
+                boton.classList.remove('botonGeneralVentasHover');
+            });
+
+            banderaBotonSeleccionado[2] = 0;
+
+            if (banderaBotonSeleccionado.includes(1)) {
+                barraBotonesHiddenDinamico.style.display = "flex";
+            } else {
+                barraBotonesHiddenDinamico.style.display = "none";
+            }
+        }
+
+
+    });
+
+
+});
+
+
+// btnAbrirCancelaciones.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if (contenedorCancelaciones.style.display === 'none') {
+//         btnAbrirCancelaciones.classList.add('botonGeneralCancelacionesHover');
+//         contenedorCancelaciones.style.display = 'block';
+//         crearGraficasCancelaciones(cancelacionesCompletas);
+//         banderaBotonSeleccionado[3] = 1;
+//         barraBotonesHiddenDinamico.style.display = "flex";
+//     } else {
+//         contenedorCancelaciones.style.display = 'none';
+//         btnAbrirCancelaciones.classList.remove('botonGeneralCancelacionesHover');
+//         banderaBotonSeleccionado[3] = 0;
+//         if (banderaBotonSeleccionado.includes(1)) {
+//             barraBotonesHiddenDinamico.style.display = "flex";
+//          } else {
+//              barraBotonesHiddenDinamico.style.display = "none";
+//          }
+
+//     }
+
+// });
+
+
+
+btnAbrirCancelaciones.forEach(boton => {
+    boton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (contenedorCancelaciones.style.display === 'none') {
+
+            btnAbrirCancelaciones.forEach(boton => {
+                boton.classList.add('botonGeneralCancelacionesHover');
+            });
+
+            contenedorCancelaciones.style.display = 'block';
+
+            crearGraficasCancelaciones(cancelacionesCompletas);
+
+            banderaBotonSeleccionado[3] = 1;
+
+            barraBotonesHiddenDinamico.style.display = "flex";
+
+        } else {
+
+            contenedorCancelaciones.style.display = 'none';
+
+            btnAbrirCancelaciones.forEach(boton => {
+                boton.classList.remove('botonGeneralCancelacionesHover');
+            });
+
+            banderaBotonSeleccionado[3] = 0;
+
+            if (banderaBotonSeleccionado.includes(1)) {
+                barraBotonesHiddenDinamico.style.display = "flex";
+            } else {
+                barraBotonesHiddenDinamico.style.display = "none";
+            }
+        }
+    });
+});
+
+
+// btnAbrirProveedores.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if (contenedorProveedores.style.display === 'none') {
+//         btnAbrirProveedores.classList.add('botonGeneralProveedoresHover');
+//         contenedorProveedores.style.display = 'block';
+//         crearGraficasProveedores(ventasCompletas);
+//         banderaBotonSeleccionado[4] = 1;
+//         barraBotonesHiddenDinamico.style.display = "flex";
+//     } else {
+//         contenedorProveedores.style.display = 'none';
+//         btnAbrirProveedores.classList.remove('botonGeneralProveedoresHover');
+//         banderaBotonSeleccionado[4] = 0;
+//         if (banderaBotonSeleccionado.includes(1)) {
+//             barraBotonesHiddenDinamico.style.display = "flex";
+//          } else {
+//              barraBotonesHiddenDinamico.style.display = "none";
+//          }
+//     }
+
+// });
+
+btnAbrirProveedores.forEach(boton => {
+    boton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (contenedorProveedores.style.display === 'none') {
+
+            btnAbrirProveedores.forEach(boton => {
+                boton.classList.add('botonGeneralProveedoresHover');
+            });
+
+            contenedorProveedores.style.display = 'block';
+
+            crearGraficasProveedores(ventasCompletas);
+
+            banderaBotonSeleccionado[4] = 1;
+
+            barraBotonesHiddenDinamico.style.display = "flex";
+
+        } else {
+
+            contenedorProveedores.style.display = 'none';
+
+            btnAbrirProveedores.forEach(boton => {
+                boton.classList.remove('botonGeneralProveedoresHover');
+            });
+
+            banderaBotonSeleccionado[4] = 0;
+
+            if (banderaBotonSeleccionado.includes(1)) {
+                barraBotonesHiddenDinamico.style.display = "flex";
+            } else {
+                barraBotonesHiddenDinamico.style.display = "none";
+            }
+        }
+    });
+});
+
+
+
+// btnAbrirCategorias.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if (contenedorCategorias.style.display === 'none') {
+//         btnAbrirCategorias.classList.add('botonGeneralCategoriasHover');
+//         contenedorCategorias.style.display = 'block';
+//         banderaBotonSeleccionado[5] = 1;
+//         barraBotonesHiddenDinamico.style.display = "flex";
+
+//     } else {
+//         contenedorCategorias.style.display = 'none';
+//         btnAbrirCategorias.classList.remove('botonGeneralCategoriasHover');
+//         banderaBotonSeleccionado[5] = 0;
+//         if (banderaBotonSeleccionado.includes(1)) {
+//             barraBotonesHiddenDinamico.style.display = "flex";
+//          } else {
+//              barraBotonesHiddenDinamico.style.display = "none";
+//          }
+//     }
+// });
+
+
+btnAbrirCategorias.forEach(boton => {
+    boton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (contenedorCategorias.style.display === 'none') {
+
+            btnAbrirCategorias.forEach(boton => {
+                boton.classList.add('botonGeneralCategoriasHover');
+            });
+
+            contenedorCategorias.style.display = 'block';
+
+            banderaBotonSeleccionado[5] = 1;
+
+            barraBotonesHiddenDinamico.style.display = "flex";
+
+        } else {
+
+            contenedorCategorias.style.display = 'none';
+
+            btnAbrirCategorias.forEach(boton => {
+                boton.classList.remove('botonGeneralCategoriasHover');
+            });
+
+            banderaBotonSeleccionado[5] = 0;
+
+            if (banderaBotonSeleccionado.includes(1)) {
+                barraBotonesHiddenDinamico.style.display = "flex";
+            } else {
+                barraBotonesHiddenDinamico.style.display = "none";
+            }
+        }
+    });
+});
+

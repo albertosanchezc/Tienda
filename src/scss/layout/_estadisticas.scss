@@ -900,6 +900,9 @@
 }
 
 .botonesExportarVentas.botonesExportarInventario {
+    transition: transform 0.2s ease;
+
+    
     a {
         background-color: #557DCE;
         border: solid 1px #557DCE;
@@ -913,10 +916,20 @@
     .moradoOsc {
         background-color: #3a568d;
         border: solid 1px #3a568d;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
+    .moradoClaro{
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 }
 
 .botonesExportarVentas.botonesExportarCaja {
+    transition: transform 0.2s ease;
     a {
         background-color: #7073CA;
         border: solid 1px #7073CA;
@@ -931,10 +944,19 @@
     .moradoOsc {
         background-color: #3a568d;
         border: solid 1px #3a568d;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+    .moradoClaro{
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 }
 
 .botonesExportarVentas.botonesExportarCancelaciones {
+    transition: transform 0.2s ease;
     a {
         background-color: #9D5BB5;
         border: solid 1px #9D5BB5;
@@ -949,10 +971,19 @@
     .moradoOsc {
         background-color: #744386;
         border: solid 1px #744386;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+    .moradoClaro{
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 }
 
 .botonesExportarVentas.botonesExportarProveedores {
+    transition: transform 0.2s ease;
     a {
         background-color: #AF4CA4;
         border: solid 1px #AF4CA4;
@@ -967,10 +998,19 @@
     .moradoOsc {
         background-color: #8d3d84;
         border: solid 1px #8d3d84;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+    .moradoClaro{
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 }
 
 .botonesExportarVentas.botonesExportarCategorias {
+    transition: transform 0.2s ease;
     a {
         background-color: #BD3B8F;
         border: solid 1px #BD3B8F;
@@ -985,6 +1025,14 @@
     .moradoOsc {
         background-color: #9b3176;
         border: solid 1px #9b3176;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+    .moradoClaro{
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 }
 

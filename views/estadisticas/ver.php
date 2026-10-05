@@ -2109,7 +2109,7 @@
         </div>
     </div>
     <div class="contenedorcaja seccioncaja">
-        <div class="botonesGenerales">
+        <div class="botonesGenerales" id="barraEsconderBotones">
             <div class="botonGeneralInventario">
                 <a href="#">Inventario</a>
             </div>
