@@ -7,7 +7,7 @@ use Model\Caja;
 use Model\Caja_historico;
 use Model\Categorias;
 use Model\Inventario;
-use Model\Inventario_Completo;
+use Model\Inventario_completo;
 use Model\Inventario_Completo_Granel;
 use Model\Inventario_granel;
 use Model\Platillo;
@@ -37,12 +37,12 @@ class PaginasController
     {
 
         $tiendaId = $_SESSION['tienda_id'];
-        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
 
         $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
-        $ventas = Ventas::where('tienda_id', $tiendaId);
-
+        // $ventas = Ventas::where('tienda_id', $tiendaId);
+        $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
             'inventario' => $inventario,
@@ -70,9 +70,9 @@ class PaginasController
     {
         $tiendaId = $_SESSION['tienda_id'];
         $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
-        
+
         // debuguear($categorias);
-        
+
         echo json_encode([
             'categorias' => $categorias
         ]);
@@ -82,7 +82,7 @@ class PaginasController
     {
         $tiendaId = $_SESSION['tienda_id'];
         $ventas = Ventas_Completas::obtenerVentas($tiendaId);
-        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
         $caja = Caja::where('tienda_id', $tiendaId);
 
 
@@ -99,10 +99,10 @@ class PaginasController
     {
         $tiendaId = $_SESSION['tienda_id'];
         $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
-        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
+        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
         $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
         $proveedores = Proveedor::where('tienda_id', $tiendaId);
-        $visitas_proveedor = Visitas_proveedor::where('tienda_id',$tiendaId);
+        $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
         $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
 
         echo json_encode([
