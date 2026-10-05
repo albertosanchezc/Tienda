@@ -14,90 +14,67 @@ class Router
     {
         $this->rutasPost[$url] = $fn;
     }
-    public function comprobarRutas()
-    {
-        $currentUrl = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
-        $method = $_SERVER['REQUEST_METHOD'];
-        //dividimos la URL actual cada vez que exista un '?' eso indica que se están pasando variables por la url
-        $splitURL = explode('?', $currentUrl);
-        // debuguear($splitURL);
 
-        if ($method === 'GET') {
-            $fn = $this->getRoutes[$splitURL[0]] ?? null; //$splitURL[0] contiene la URL sin variables 
-        } else {
-            $fn = $this->postRoutes[$splitURL[0]] ?? null;
-        }
+public function comprobarRutas()
+{
+    $urlActual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
+    $metodo = $_SERVER['REQUEST_METHOD'];
 
-        if ($fn) {
-            // Call user fn va a llamar una función cuando no sabemos cual sera
-            call_user_func($fn, $this); // This es para pasar argumentos
-        } else {
-            // echo "Página No Encontrada o Ruta no válida";
-        }
-        session_start();
+    if ($metodo === 'GET') {
+        $fn = $this->rutasGet[$urlActual] ?? null;
+    } else {
+        $fn = $this->rutasPost[$urlActual] ?? null;
+    }
 
-        $auth = $_SESSION['login'] ?? false;
+    session_start();
 
+    $auth = $_SESSION['login'] ?? false;
 
+    $rutas_protegidas = [
+        '/carrito',
+        '/inventario',
+        '/caja',
+        '/metricas',
+        '/proveedores',
+        '/ventasycancelaciones',
+        '/movimientoproducto',
+        '/categorias',
+        '/admin'
+    ];
 
-        // Arreglo de rutas protegidas...
-        $rutas_protegidas = [
-            '/carrito',
-            '/inventario',
-            '/caja',
-            '/metricas',
-            '/proveedores',
-            '/ventasycancelaciones',
-            '/movimientoproducto',
-            '/categorias',
-            '/admin'
-        ];
+    $rutas_admin = [
+        '/admin',
+        '/admin/ventas',
+        '/admin/inventario',
+        '/admin/reportes',
+        '/admin/suscripciones',
+    ];
 
-        // Arreglo de rutas protegidas...
-        $rutas_admin = [
-            '/admin',
-            '/admin/ventas',
-            '/admin/inventario',
-            '/admin/reportes',
-            '/admin/suscripciones',
-        ];
+    if (in_array($urlActual, $rutas_protegidas) && !$auth) {
+        header('Location: /login');
+        exit;
+    }
 
-        $urlActual = $_SERVER['PATH_INFO'] ?? '/';
-        $metodo = $_SERVER['REQUEST_METHOD'];
+    if (in_array($urlActual, $rutas_admin)) {
 
-        if ($metodo === 'GET') {
-            $fn = $this->rutasGet[$urlActual] ?? null;
-        } else {
-            $fn = $this->rutasPost[$urlActual] ?? null;
-        }
-
-        // Proteger las rutas
-        if (in_array($urlActual, $rutas_protegidas) && !$auth) {
+        if (!$auth) {
             header('Location: /login');
             exit;
         }
 
-
-        if (in_array($urlActual, $rutas_admin)) {
-            if (!$auth) {
-                header('Location: /login');
-                exit;
-            }
-
-            if (!($_SESSION['modo_dios'] ?? false)) {
-                header('Location: /');
-                exit;
-            }
-        }
-
-        if ($fn) {
-            // La URL existe y hay una función asociada
-            call_user_func($fn, $this);
-        } else {
-            header('Location: /404');
+        if (!($_SESSION['modo_dios'] ?? false)) {
+            header('Location: /');
             exit;
         }
     }
+
+    if ($fn) {
+        call_user_func($fn, $this);
+    } else {
+        header('Location: /404');
+        exit;
+    }
+}
 
     // Muestra una vista
     public function render($view, $datos = [])
