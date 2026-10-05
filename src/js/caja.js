@@ -25,7 +25,7 @@
             const server = window.location.host;
             const api = '/caja/api/caja'
 
-            const url = `http://${server}${api}`;
+            const url = `${api}`;
             const respuesta = await fetch(url);
             const resultado = await respuesta.json();
 
