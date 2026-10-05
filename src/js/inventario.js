@@ -4,7 +4,7 @@ let proveedores = [];
 let categorias = [];
 let ventas = [];
 
-let tiendaId = 0; 
+let tiendaId = 0;
 
 
 let agotados = [];
@@ -98,8 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
 async function consultarAPI() {
     try {
         const server = window.location.host;
+        const api = '/inventarios/api/inventarios'
 
-        const url = `/inventarios/api/inventarios`;
+
+        const url = `http://${server}${api}`;
         const respuesta = await fetch(url);
         const resultado = await respuesta.json();
 
