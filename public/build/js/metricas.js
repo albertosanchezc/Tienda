@@ -3805,30 +3805,6 @@ function filtrarCategoriaVentas(ventasCompletas) {
 }
 
 
-// btnAbrirInventario.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if (contenedorInventario.style.display === 'none') {
-//         btnAbrirInventario.classList.add('botonGeneralInventarioHover');
-//         contenedorInventario.style.display = 'block';
-//         crearGraficasInventario(inventario);
-//         banderaBotonSeleccionado[0] = 1;
-//         barraBotonesHiddenDinamico.style.display = "flex";
-         
-
-//         // barra.style.display = "none";
-
-//     } else {
-//         contenedorInventario.style.display = 'none';
-//         btnAbrirInventario.classList.remove('botonGeneralInventarioHover');
-//         banderaBotonSeleccionado[0] = 0;
-//         if (banderaBotonSeleccionado.includes(1)) {
-//             barraBotonesHiddenDinamico.style.display = "flex";
-//          } else {
-//              barraBotonesHiddenDinamico.style.display = "none";
-//          }
-//     }
-
-// });
 
 btnAbrirInventario.forEach(boton => {
 
@@ -3846,6 +3822,12 @@ btnAbrirInventario.forEach(boton => {
 
             banderaBotonSeleccionado[0] = 1;
             barraBotonesHiddenDinamico.style.display = "flex";
+            const tituloInventario =document.getElementById('formularioInventario');
+            tituloInventario?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            
 
         } else {
 
@@ -3867,26 +3849,6 @@ btnAbrirInventario.forEach(boton => {
 
 });
 
-// btnAbrirCaja.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if (contenedorCaja.style.display === 'none') {
-//         btnAbrirCaja.classList.add('botonGeneralCajaHover');
-//         contenedorCaja.style.display = 'block';
-//         banderaBotonSeleccionado[1] = 1;
-//         barraBotonesHiddenDinamico.style.display = "flex";
-//     } else {
-//         contenedorCaja.style.display = 'none';
-//         btnAbrirCaja.classList.remove('botonGeneralCajaHover');
-//         banderaBotonSeleccionado[1] = 0;
-//         if (banderaBotonSeleccionado.includes(1)) {
-//             barraBotonesHiddenDinamico.style.display = "flex";
-//          } else {
-//              barraBotonesHiddenDinamico.style.display = "none";
-//          }
-
-//     }
-
-// });
 btnAbrirCaja.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -3898,13 +3860,9 @@ btnAbrirCaja.forEach(boton => {
             });
 
             contenedorCaja.style.display = 'block';
-
             banderaBotonSeleccionado[1] = 1;
-
             barraBotonesHiddenDinamico.style.display = "flex";
-
             const tituloCaja =document.getElementById('formularioCaja');
-
             tituloCaja?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center'
@@ -3929,29 +3887,6 @@ btnAbrirCaja.forEach(boton => {
     });
 });
 
-
-// btnAbrirVentas.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if (contenedorVentas.style.display === 'none') {
-//         btnAbrirVentas.classList.add('botonGeneralVentasHover');
-//         contenedorVentas.style.display = 'block';
-//         crearGraficasVentas(ventasCompletas);
-//         banderaBotonSeleccionado[2] = 1;
-//         barraBotonesHiddenDinamico.style.display = "flex";
-//     } else {
-//         contenedorVentas.style.display = 'none';
-//         btnAbrirVentas.classList.remove('botonGeneralVentasHover');
-//         banderaBotonSeleccionado[2] = 0;
-//         if (banderaBotonSeleccionado.includes(1)) {
-//             barraBotonesHiddenDinamico.style.display = "flex";
-//          } else {
-//              barraBotonesHiddenDinamico.style.display = "none";
-//          }
-
-//     }
-
-// });
-
 btnAbrirVentas.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -3963,12 +3898,14 @@ btnAbrirVentas.forEach(boton => {
             });
 
             contenedorVentas.style.display = 'block';
-
             crearGraficasVentas(ventasCompletas);
-
             banderaBotonSeleccionado[2] = 1;
-
             barraBotonesHiddenDinamico.style.display = "flex";
+            const tituloVentas =document.getElementById('formularioVentas');
+            tituloVentas?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
 
         } else {
 
@@ -3993,31 +3930,6 @@ btnAbrirVentas.forEach(boton => {
 
 });
 
-
-// btnAbrirCancelaciones.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if (contenedorCancelaciones.style.display === 'none') {
-//         btnAbrirCancelaciones.classList.add('botonGeneralCancelacionesHover');
-//         contenedorCancelaciones.style.display = 'block';
-//         crearGraficasCancelaciones(cancelacionesCompletas);
-//         banderaBotonSeleccionado[3] = 1;
-//         barraBotonesHiddenDinamico.style.display = "flex";
-//     } else {
-//         contenedorCancelaciones.style.display = 'none';
-//         btnAbrirCancelaciones.classList.remove('botonGeneralCancelacionesHover');
-//         banderaBotonSeleccionado[3] = 0;
-//         if (banderaBotonSeleccionado.includes(1)) {
-//             barraBotonesHiddenDinamico.style.display = "flex";
-//          } else {
-//              barraBotonesHiddenDinamico.style.display = "none";
-//          }
-
-//     }
-
-// });
-
-
-
 btnAbrirCancelaciones.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -4031,10 +3943,13 @@ btnAbrirCancelaciones.forEach(boton => {
             contenedorCancelaciones.style.display = 'block';
 
             crearGraficasCancelaciones(cancelacionesCompletas);
-
             banderaBotonSeleccionado[3] = 1;
-
             barraBotonesHiddenDinamico.style.display = "flex";
+            const tituloCancelaciones =document.getElementById('formularioCancelaciones');
+            tituloCancelaciones?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
 
         } else {
 
@@ -4055,28 +3970,6 @@ btnAbrirCancelaciones.forEach(boton => {
     });
 });
 
-
-// btnAbrirProveedores.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if (contenedorProveedores.style.display === 'none') {
-//         btnAbrirProveedores.classList.add('botonGeneralProveedoresHover');
-//         contenedorProveedores.style.display = 'block';
-//         crearGraficasProveedores(ventasCompletas);
-//         banderaBotonSeleccionado[4] = 1;
-//         barraBotonesHiddenDinamico.style.display = "flex";
-//     } else {
-//         contenedorProveedores.style.display = 'none';
-//         btnAbrirProveedores.classList.remove('botonGeneralProveedoresHover');
-//         banderaBotonSeleccionado[4] = 0;
-//         if (banderaBotonSeleccionado.includes(1)) {
-//             barraBotonesHiddenDinamico.style.display = "flex";
-//          } else {
-//              barraBotonesHiddenDinamico.style.display = "none";
-//          }
-//     }
-
-// });
-
 btnAbrirProveedores.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -4088,12 +3981,14 @@ btnAbrirProveedores.forEach(boton => {
             });
 
             contenedorProveedores.style.display = 'block';
-
             crearGraficasProveedores(ventasCompletas);
-
             banderaBotonSeleccionado[4] = 1;
-
             barraBotonesHiddenDinamico.style.display = "flex";
+            const tituloProveedores =document.getElementById('formularioProveedores');
+            tituloProveedores?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
 
         } else {
 
@@ -4114,29 +4009,6 @@ btnAbrirProveedores.forEach(boton => {
     });
 });
 
-
-
-// btnAbrirCategorias.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if (contenedorCategorias.style.display === 'none') {
-//         btnAbrirCategorias.classList.add('botonGeneralCategoriasHover');
-//         contenedorCategorias.style.display = 'block';
-//         banderaBotonSeleccionado[5] = 1;
-//         barraBotonesHiddenDinamico.style.display = "flex";
-
-//     } else {
-//         contenedorCategorias.style.display = 'none';
-//         btnAbrirCategorias.classList.remove('botonGeneralCategoriasHover');
-//         banderaBotonSeleccionado[5] = 0;
-//         if (banderaBotonSeleccionado.includes(1)) {
-//             barraBotonesHiddenDinamico.style.display = "flex";
-//          } else {
-//              barraBotonesHiddenDinamico.style.display = "none";
-//          }
-//     }
-// });
-
-
 btnAbrirCategorias.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -4148,10 +4020,13 @@ btnAbrirCategorias.forEach(boton => {
             });
 
             contenedorCategorias.style.display = 'block';
-
             banderaBotonSeleccionado[5] = 1;
-
             barraBotonesHiddenDinamico.style.display = "flex";
+            const tituloCategorias =document.getElementById('formularioCategorias');
+            tituloCategorias?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
 
         } else {
 
