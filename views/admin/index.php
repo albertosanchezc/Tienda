@@ -66,20 +66,6 @@
 
         </section>
 
-        <div class="admin-metric admin-metric-large">
-            <div class="contenedor-ventas-ticket">
-                <span>Ventas Totales (Clientes)</span>
-                <strong>
-                    $<?php echo number_format($ventasTotales ?? 0, 2); ?>
-                </strong>
-            </div>
-
-            <div class="contenedor-ventas-ticket">
-                <span>Ticket promedio</span>
-                <strong>$<?php echo number_format($ticketPromedio ?? 0, 2); ?></strong>
-            </div>
-        </div>
-
         <section class="admin-chart-grid">
 
             <div class="content-card">
