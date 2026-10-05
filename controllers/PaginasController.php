@@ -33,16 +33,46 @@ class PaginasController
     }
 
 
-public static function inventarioAPI()
-{
-    header('Content-Type: application/json; charset=utf-8');
+    public static function inventarioAPI()
+    {
+        $tiendaId = $_SESSION['tienda_id'];
 
-    echo json_encode([
-        'prueba' => 'inventarioAPI funciona'
-    ]);
+        $inventario = Inventario_Completo::join2tienda(
+            'productos',
+            'inventario',
+            $tiendaId
+        );
 
-    exit;
-}
+        $categorias = Categorias::ALFTienda(
+            'nombre',
+            'ASC',
+            $tiendaId,
+            true
+        );
+
+        $proveedores = Proveedor::ALFTienda(
+            'nombre',
+            'ASC',
+            $tiendaId
+        );
+
+        $ventas = Ventas::where(
+            'tienda_id',
+            $tiendaId
+        );
+
+        $datos = [
+            'inventario' => $inventario,
+            'categorias' => $categorias,
+            'proveedores' => $proveedores,
+            'ventas' => $ventas
+        ];
+
+        header('Content-Type: application/json; charset=utf-8');
+
+        echo json_encode($datos);
+        exit;
+    }
 
 
     public static function cajaAPI()
