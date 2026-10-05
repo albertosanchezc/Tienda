@@ -14,7 +14,7 @@ const clean = require('gulp-clean');
 const webp = require('gulp-webp');
 
 const paths = {
-    scss: 'src/scss/**/*.scss',
+    scss: ['src/scss/**/*.scss', '!src/scss/**/_*.scss'],
     bundlejs: ['src/js/**/app.js','src/js/**/modernizr.js'],
     js: 'src/js/**/*.js',
     imagenes: 'src/img/**/*'
