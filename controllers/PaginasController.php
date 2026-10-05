@@ -39,9 +39,10 @@ class PaginasController
         $tiendaId = $_SESSION['tienda_id'];
         $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
         $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
-        debuguear($categorias);
 
         $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId,true);
+        debuguear($proveedores);
+
         // $ventas = Ventas::where('tienda_id', $tiendaId);
         $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
