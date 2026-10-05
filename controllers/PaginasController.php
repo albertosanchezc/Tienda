@@ -37,29 +37,10 @@ public static function inventarioAPI()
 {
     $tiendaId = $_SESSION['tienda_id'];
 
-    $inventario = Inventario_Completo::join2tienda(
-        'productos',
-        'inventario',
-        $tiendaId
-    );
-
-    $categorias = Categorias::ALFTienda(
-        'nombre',
-        'ASC',
-        $tiendaId,
-        true
-    );
-
-    $proveedores = Proveedor::ALFTienda(
-        'nombre',
-        'ASC',
-        $tiendaId
-    );
-
-    $ventas = Ventas::where(
-        'tienda_id',
-        $tiendaId
-    );
+    $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
+    $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
+    $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
+    $ventas = Ventas::where('tienda_id', $tiendaId);
 
     $datos = [
         'inventario' => $inventario,
@@ -68,11 +49,12 @@ public static function inventarioAPI()
         'ventas' => $ventas
     ];
 
-    header('Content-Type: application/json; charset=utf-8');
-
     $json = json_encode($datos);
 
+    header('Content-Type: application/json; charset=utf-8');
+
     echo $json;
+
     exit;
 }
 
