@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function () {
     async function obtenerOrdenes() {
         try {
             const server = window.location.origin;
-
-            const url = `${server}/api/metricas`;
+            
+            const url = `/api/metricas`;
             const respuesta = await fetch(url);
             const datos = await respuesta.json();
             let resumenPedidos = datos.resumenPedidos;
