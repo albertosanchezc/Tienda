@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Inventario_completo extends ActiveRecord{
+class Inventario_Completo extends ActiveRecord{
     // Base de datos
     protected static $tabla = 'inventario';
     protected static $columnasDB = [

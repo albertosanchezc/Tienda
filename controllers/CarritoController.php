@@ -7,7 +7,7 @@ use Model\Caja;
 use Model\Inventario;
 use MVC\Router;
 use Model\Ventas;
-use Model\Inventario_completo;
+use Model\Inventario_Completo;
 
 class CarritoController
 {
@@ -17,7 +17,7 @@ class CarritoController
         // Pasamos todos los productos a la vista
         $tiendaId = $_SESSION['tienda_id'];
         // debuguear(Ventas::wherebelongsTo('cancelacion', '0', 'tienda_id', $tiendaId));
-        $inventario = Inventario_completo::join2tienda('productos', 'inventario', $tiendaId);
+        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
 
         $script = '<script src="/build/js/carrito/carrito.js" type="module"></script>
