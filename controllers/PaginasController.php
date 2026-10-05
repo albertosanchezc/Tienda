@@ -35,25 +35,9 @@ class PaginasController
 
 public static function inventarioAPI()
 {
-    $tiendaId = $_SESSION['tienda_id'];
-
-    $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
-    $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
-    $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId);
-    $ventas = Ventas::where('tienda_id', $tiendaId);
-
-    $datos = [
-        'inventario' => $inventario,
-        'categorias' => $categorias,
-        'proveedores' => $proveedores,
-        'ventas' => $ventas
-    ];
-
-    $json = json_encode($datos);
-
     header('Content-Type: application/json; charset=utf-8');
 
-    echo $json;
+    echo '{"prueba":"hola"}';
 
     exit;
 }
