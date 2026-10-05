@@ -1,0 +1,251 @@
+/* ================================
+   ADMIN DASHBOARD
+================================ */
+
+.admin-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-metric {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-metric span {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.admin-metric strong {
+  font-size: 1.7rem;
+  color: var(--text-main);
+}
+
+.metric-highlight {
+  border-top: 4px solid var(--primary-color);
+}
+
+/* ================================
+   CARDS
+================================ */
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 1rem;
+}
+
+.card-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.card-header span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ================================
+   DASHBOARD CHARTS
+================================ */
+
+.admin-chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.admin-chart-grid .content-card {
+  min-height: 320px;
+}
+
+.admin-chart-grid canvas {
+  width: 100% !important;
+  height: 250px !important;
+}
+
+/* ================================
+   REPORTES
+================================ */
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.report-card {
+  min-height: 350px;
+}
+
+.report-card canvas {
+  width: 100% !important;
+  height: 280px !important;
+}
+
+/* ================================
+   FILTROS
+================================ */
+
+.filters-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, 1fr)
+    auto;
+
+  gap: 1rem;
+  align-items: end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.store-select {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+
+  background: white;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.store-select:focus {
+  border-color: var(--primary-color);
+}
+
+/* ================================
+   BOTONES
+================================ */
+
+.btn-primary,
+.btn-secondary {
+  border: none;
+  border-radius: 6px;
+
+  padding: 0.55rem 0.9rem;
+
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-secondary {
+  background: #f0f0f0;
+  color: var(--text-main);
+}
+
+/* ================================
+   BADGE WARNING
+================================ */
+
+.badge-warning {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1100px) {
+  .admin-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-chart-grid,
+  .reports-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .admin-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ================================
+   CARDS
+================================ */
+
+/* Layout Principal: Columna izquierda (3fr) y Columna derecha (1fr) */
+.layout-metrics-global {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 16px;
+  align-items: stretch; /* Estira ambas partes para que tengan la misma altura */
+  margin-bottom: 24px;
+}
+
+/* Subcontenedor de las 6 métricas (3 cols x 2 filas) */
+.grid-bloque-izq {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* Estilos para la tarjeta grande de la derecha */
+.admin-metric-large {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%; /* Asegura que tome todo el alto vertical disponible */
+}
+
+/* Adaptabilidad para pantallas móviles (Responsive) */
+@media (max-width: 992px) {
+  .layout-metrics-global {
+    grid-template-columns: 1fr; /* Pasa a una sola columna en pantallas pequeñas */
+  }
+
+  .grid-bloque-izq {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+  }
+}
+
+@media (max-width: 576px) {
+  .grid-bloque-izq {
+    grid-template-columns: 1fr; /* 1 columna en celulares */
+  }
+}

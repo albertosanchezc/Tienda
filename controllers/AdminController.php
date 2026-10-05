@@ -13,6 +13,7 @@ class AdminController
         $titulo = 'Panel de Administración';
         $nombre = $_SESSION['nombre'];
         $script = '<script src="/build/js/admin.js" type="module"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />';
 
         $router->render('admin/index', [
