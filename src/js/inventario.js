@@ -97,31 +97,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function consultarAPI() {
     try {
-        const api = '/inventarios/api/inventarios';
+        const server = window.location.host;
+        const api = '/inventarios/api/inventarios'
 
-        const respuesta = await fetch(api);
 
-        console.log('STATUS:', respuesta.status);
-        console.log('URL:', respuesta.url);
+        // const url = `${server}${api}`;
+        const url = `${api}`;
 
-        const texto = await respuesta.text();
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
 
-        console.log('RESPUESTA:', texto);
-
-        const resultado = JSON.parse(texto);
-
+        console.log(resultado);
+        
         inventario = resultado.inventario;
         proveedores = resultado.proveedores;
         categorias = resultado.categorias;
         ventas = resultado.ventas;
-
         ventas = ventas.filter(venta => venta.cancelacion === '0');
 
-        filtrar();
+        // Teoría 1 aquí mandar llamar filtrar primero y luego mostrarCards
+        filtrar()
         LlenarClasificaciones();
+        // mostrarCards(inventario);
 
     } catch (e) {
-        console.log('ERROR:', e);
+        console.log(e);
     }
 }
 

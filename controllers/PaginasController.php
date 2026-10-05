@@ -33,27 +33,48 @@ class PaginasController
     }
 
 
-    public static function inventarioAPI()
-    {
+public static function inventarioAPI()
+{
+    $tiendaId = $_SESSION['tienda_id'];
 
-        $tiendaId = $_SESSION['tienda_id'];
-        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
-        $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
+    $inventario = Inventario_Completo::join2tienda(
+        'productos',
+        'inventario',
+        $tiendaId
+    );
 
-        $proveedores = Proveedor::ALFTienda('nombre', 'ASC', $tiendaId,true);
+    $categorias = Categorias::ALFTienda(
+        'nombre',
+        'ASC',
+        $tiendaId,
+        true
+    );
 
-        // $ventas = Ventas::where('tienda_id', $tiendaId);
-        $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
+    $proveedores = Proveedor::ALFTienda(
+        'nombre',
+        'ASC',
+        $tiendaId
+    );
 
-        // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
-        echo json_encode([
-            'inventario' => $inventario,
-            'categorias' => $categorias,
-            'proveedores' => $proveedores,
-            'ventas' => $ventas
-        ]);
-    }
+    $ventas = Ventas::where(
+        'tienda_id',
+        $tiendaId
+    );
 
+    $datos = [
+        'inventario' => $inventario,
+        'categorias' => $categorias,
+        'proveedores' => $proveedores,
+        'ventas' => $ventas
+    ];
+
+    header('Content-Type: application/json; charset=utf-8');
+
+    $json = json_encode($datos);
+
+    echo $json;
+    exit;
+}
 
 
     public static function cajaAPI()
