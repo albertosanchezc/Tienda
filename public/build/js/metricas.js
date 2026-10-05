@@ -74,17 +74,6 @@ const btnAbrirCancelaciones = document.querySelectorAll('.botonGeneralCancelacio
 const btnAbrirProveedores = document.querySelectorAll('.botonGeneralProveedores');
 const btnAbrirCategorias = document.querySelectorAll('.botonGeneralCategorias');
 
-// const tituloCaja = [...document.querySelector('.tituloIndividual h3')]
-//     .find(h3 => h3.textContent.trim() === 'Caja');
-
-
-// const btnAbrirInventarioPar = document.querySelectorAll('.botonGeneralInventario');
-// const btnAbrirCajaPar = document.querySelectorAll('.botonGeneralCaja');
-// const btnAbrirVentasPar = document.querySelectorAll('.botonGeneralVentas');
-// const btnAbrirCancelacionesPar = document.querySelectorAll('.botonGeneralCancelaciones');
-// const btnAbrirProveedoresPar = document.querySelectorAll('.botonGeneralProveedores');
-// const btnAbrirCategoriasPar = document.querySelectorAll('.botonGeneralCategorias');
-
 const contenedorInventario = document.querySelector('.contenedorInventario');
 contenedorInventario.style.display = 'none';
 const filtrosInventario = contenedorInventario.querySelector('#formularioInventario');
@@ -93,7 +82,6 @@ const filtrosInventario = contenedorInventario.querySelector('#formularioInventa
 const contenedorCaja = document.querySelector('.contenedorCaja');
 contenedorCaja.style.display = 'none';
 const filtrosCaja = contenedorCaja.querySelector('#formularioCaja');
-
 
 const contenedorVentas = document.querySelector('.contenedorVentas');
 contenedorVentas.style.display = 'none';
@@ -3811,6 +3799,12 @@ btnAbrirInventario.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
 
+        boton.classList.add('destelloClick');
+
+        setTimeout(() => {
+            boton.classList.remove('destelloClick');
+        }, 350);
+
         if (contenedorInventario.style.display === 'none') {
 
             btnAbrirInventario.forEach(boton => {
@@ -3852,6 +3846,11 @@ btnAbrirInventario.forEach(boton => {
 btnAbrirCaja.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
+        boton.classList.add('destelloClick');
+
+        setTimeout(() => {
+            boton.classList.remove('destelloClick');
+        }, 350);
 
         if (contenedorCaja.style.display === 'none') {
 
@@ -3890,6 +3889,11 @@ btnAbrirCaja.forEach(boton => {
 btnAbrirVentas.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
+        boton.classList.add('destelloClick');
+
+        setTimeout(() => {
+            boton.classList.remove('destelloClick');
+        }, 350);
 
         if (contenedorVentas.style.display === 'none') {
 
@@ -3933,6 +3937,11 @@ btnAbrirVentas.forEach(boton => {
 btnAbrirCancelaciones.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
+        boton.classList.add('destelloClick');
+
+        setTimeout(() => {
+            boton.classList.remove('destelloClick');
+        }, 350);
 
         if (contenedorCancelaciones.style.display === 'none') {
 
@@ -3973,6 +3982,11 @@ btnAbrirCancelaciones.forEach(boton => {
 btnAbrirProveedores.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
+        boton.classList.add('destelloClick');
+
+        setTimeout(() => {
+            boton.classList.remove('destelloClick');
+        }, 350);
 
         if (contenedorProveedores.style.display === 'none') {
 
@@ -4012,6 +4026,11 @@ btnAbrirProveedores.forEach(boton => {
 btnAbrirCategorias.forEach(boton => {
     boton.addEventListener('click', (e) => {
         e.preventDefault();
+        boton.classList.add('destelloClick');
+
+        setTimeout(() => {
+            boton.classList.remove('destelloClick');
+        }, 350);
 
         if (contenedorCategorias.style.display === 'none') {
 

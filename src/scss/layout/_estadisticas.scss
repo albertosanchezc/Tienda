@@ -1511,3 +1511,21 @@
 .tooltip-text li{
     margin-bottom:.5rem;
 }
+
+.destelloClick {
+    animation: destello 0.1s ease;
+}
+
+@keyframes destello {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.9);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
