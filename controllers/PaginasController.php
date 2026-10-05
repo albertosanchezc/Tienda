@@ -44,7 +44,6 @@ class PaginasController
 
         // $ventas = Ventas::where('tienda_id', $tiendaId);
         $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
-        debuguear($ventas);
 
         // $inventario_granel = Inventario_Completo_Granel::join2('productos', 'inventario_granel');
         echo json_encode([
@@ -52,7 +51,6 @@ class PaginasController
             'categorias' => $categorias,
             'proveedores' => $proveedores,
             'ventas' => $ventas
-
         ]);
     }
 
