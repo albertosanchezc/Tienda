@@ -54,7 +54,7 @@
               <tr>
                 <td><?php echo $suscripcion->obtenerUsuario()->obtenerNombreCompleto(); ?></td>
                 <td><?php echo $suscripcion->obtenerTienda()->nombre; ?></td>
-                <td>Por definir</td>
+                <td><?php echo $suscripcion->obtenerPlan()->nombre; ?></td>
                 <td><span class="badge <?php echo $suscripcion->activa ? 'badge-active' : 'badge-inactive'; ?>"><?php echo $suscripcion->activa ? 'Activa' : 'Inactiva'; ?></span></td>
                 <td><?php echo $suscripcion->obtenerFechaInicioFormateada(); ?></td>
                 <td><?php echo $suscripcion->obtenerFechaVencimientoFormateada(); ?></td>

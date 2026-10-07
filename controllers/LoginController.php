@@ -134,6 +134,7 @@ class LoginController
 
                             $suscripcion->tienda_id = $tienda->id;
                             $suscripcion->usuario_id = $usuario->id;
+                            $suscripcion->plan_id = 1;
                             $suscripcion->created_at = $ahora->format('Y-m-d H:i:s');
                             $suscripcion->updated_at = $ahora->format('Y-m-d H:i:s');
                             $suscripcion->fecha_inicio = $ahora->format('Y-m-d');
