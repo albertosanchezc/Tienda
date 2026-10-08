@@ -209,16 +209,16 @@ const catalogoProductos = [
     //     venta: '34',
     //     imagen: 'producto_22.jpeg'
     // },
-    // {
-    //     nombre: 'Sidral Mundet',
-    //     descripcion: '3 L',
-    //     codigo: '7501055340422',
-    //     categoria: '7',
-    //     proveedor: '1',
-    //     compra: '25',
-    //     venta: '39',
-    //     imagen: 'producto_23.jpeg'
-    // },
+    {
+        nombre: 'Sidral Mundet',
+        descripcion: '3 L',
+        codigo: '7501055340422',
+        categoria: '7',
+        proveedor: '1',
+        compra: '25',
+        venta: '39',
+        imagen: 'producto_23.jpeg'
+    },
     {
         nombre: 'Pepsi',
         descripcion: '3 L',

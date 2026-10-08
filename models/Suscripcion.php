@@ -8,12 +8,12 @@ class Suscripcion extends ActiveRecord
 {
     // Base de datos
     protected static $tabla = 'suscripcion';
-    protected static $columnasDB = ['id', 'usuario_id', 'tienda_id', 'plan', 'fecha_inicio', 'fecha_vencimiento', 'activa', 'created_at', 'updated_at'];
+    protected static $columnasDB = ['id', 'usuario_id', 'tienda_id', 'plan_id', 'fecha_inicio', 'fecha_vencimiento', 'activa', 'created_at', 'updated_at'];
 
     public $id;
     public $usuario_id;
     public $tienda_id;
-    public $plan;
+    public $plan_id;
     public $fecha_inicio;
     public $fecha_vencimiento;
     public $activa;
@@ -29,7 +29,7 @@ class Suscripcion extends ActiveRecord
         $this->id = $args['id'] ?? null;
         $this->usuario_id = $args['usuario_id'] ?? '';
         $this->tienda_id = $args['tienda_id'] ?? '';
-        $this->plan = $args['plan'] ?? '';
+        $this->plan_id = $args['plan_id'] ?? '';
         $this->fecha_inicio = $args['fecha_inicio'] ?? '';
         $this->fecha_vencimiento = $args['fecha_vencimiento'] ?? '';
         $this->activa = $args['activa'] ?? '';
@@ -47,6 +47,12 @@ class Suscripcion extends ActiveRecord
     {
         $tienda = Tienda::find($this->tienda_id);
         return $tienda;
+    }
+
+        public function obtenerPlan()
+    {
+        $plan = Plan::find($this->plan_id);
+        return $plan;
     }
 
     public function obtenerDiasRestantes()

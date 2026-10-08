@@ -35,6 +35,14 @@ class PaginasController
 
     public static function inventarioAPI()
     {
+        header('Content-Type: application/json; charset=utf-8');
+
+        if (!($_SESSION['login'] ?? false) || !isset($_SESSION['tienda_id'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'No autenticado']);
+            exit;
+        }
+
         $tiendaId = $_SESSION['tienda_id'];
 
         $inventario = Inventario_Completo::join2tienda(
@@ -67,8 +75,6 @@ class PaginasController
             'proveedores' => $proveedores,
             'ventas' => $ventas
         ];
-
-        header('Content-Type: application/json; charset=utf-8');
 
         echo json_encode($datos);
         exit;
