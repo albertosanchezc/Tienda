@@ -3815,7 +3815,7 @@ btnAbrirInventario.forEach(boton => {
             crearGraficasInventario(inventario);
 
             banderaBotonSeleccionado[0] = 1;
-            barraBotonesHiddenDinamico.style.display = "flex";
+            barraBotonesHiddenDinamico.style.display = "grid";
             const tituloInventario =document.getElementById('formularioInventario');
             tituloInventario?.scrollIntoView({
                 behavior: 'smooth',
@@ -3860,7 +3860,7 @@ btnAbrirCaja.forEach(boton => {
 
             contenedorCaja.style.display = 'block';
             banderaBotonSeleccionado[1] = 1;
-            barraBotonesHiddenDinamico.style.display = "flex";
+            barraBotonesHiddenDinamico.style.display = "grid";
             const tituloCaja =document.getElementById('formularioCaja');
             tituloCaja?.scrollIntoView({
                 behavior: 'smooth',
@@ -3904,7 +3904,7 @@ btnAbrirVentas.forEach(boton => {
             contenedorVentas.style.display = 'block';
             crearGraficasVentas(ventasCompletas);
             banderaBotonSeleccionado[2] = 1;
-            barraBotonesHiddenDinamico.style.display = "flex";
+            barraBotonesHiddenDinamico.style.display = "grid";
             const tituloVentas =document.getElementById('formularioVentas');
             tituloVentas?.scrollIntoView({
                 behavior: 'smooth',
@@ -3953,7 +3953,7 @@ btnAbrirCancelaciones.forEach(boton => {
 
             crearGraficasCancelaciones(cancelacionesCompletas);
             banderaBotonSeleccionado[3] = 1;
-            barraBotonesHiddenDinamico.style.display = "flex";
+            barraBotonesHiddenDinamico.style.display = "grid";
             const tituloCancelaciones =document.getElementById('formularioCancelaciones');
             tituloCancelaciones?.scrollIntoView({
                 behavior: 'smooth',
@@ -3997,7 +3997,7 @@ btnAbrirProveedores.forEach(boton => {
             contenedorProveedores.style.display = 'block';
             crearGraficasProveedores(ventasCompletas);
             banderaBotonSeleccionado[4] = 1;
-            barraBotonesHiddenDinamico.style.display = "flex";
+            barraBotonesHiddenDinamico.style.display = "grid";
             const tituloProveedores =document.getElementById('formularioProveedores');
             tituloProveedores?.scrollIntoView({
                 behavior: 'smooth',
@@ -4040,7 +4040,7 @@ btnAbrirCategorias.forEach(boton => {
 
             contenedorCategorias.style.display = 'block';
             banderaBotonSeleccionado[5] = 1;
-            barraBotonesHiddenDinamico.style.display = "flex";
+            barraBotonesHiddenDinamico.style.display = "grid";
             const tituloCategorias =document.getElementById('formularioCategorias');
             tituloCategorias?.scrollIntoView({
                 behavior: 'smooth',

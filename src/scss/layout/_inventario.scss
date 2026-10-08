@@ -518,10 +518,10 @@ span {
     }
 }
 
-// .botonesinventario {
-//     display: flex;
+.botonesinventario {
+    display: flex;
 
-// }
+}
 
 
 .botonesinventario {
@@ -980,3 +980,15 @@ span {
         background-color: #f5f2f2;
     }
 }
+
+.seleccionSlider{
+    background-color: rgb(255, 255, 255);
+    color: #1100ab !important;
+}
+
+.seleccionSlider span {
+    background-color: rgb(255, 255, 255);
+    color: #6655ff !important;
+}
+
+

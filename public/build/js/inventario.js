@@ -5,6 +5,7 @@ let categorias = [];
 let ventas = [];
 
 let tiendaId = 0;
+let banderaSlider= 0;
 
 
 let agotados = [];
@@ -63,23 +64,28 @@ const contenedorSelectMotivo = document.querySelector('.divSelectMotivo');
 const labelRetiro = document.querySelector('label[for="cantidadStock"]');
 const legendRetiro = document.querySelector('.legend-retiro');
 
+const botonFijo1= document.querySelector('.botonslider1');
+
+const botonFijo2= document.querySelector('.botonslider2');
+
+
 const slides = [
 
     {
-        titulo: "Movimiento de producto",
-        parrafo: "Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
+        titulo: "Herramientas de gestión",
+        parrafo: "Movimiento de producto: Busca y gestiona la cantidad disponible de un producto que ya está registrado en el inventario.",
         enlace: "#",
         enlaceTexto: "Movimiento de producto"
     },
     {
-        titulo: "Ver Categorías",
-        parrafo: "Busca y gestiona las categorías disponibles para poder clasificar correctamente tus productos.",
+        titulo: "Herramientas de gestión",
+        parrafo: "Ver Categorías: Busca y gestiona las categorías disponibles para poder clasificar correctamente tus productos.",
         enlace: "#",
         enlaceTexto: "Ver Categorías"
     },
     {
-        titulo: "Añade un producto",
-        parrafo: "Registra un nuevo producto en el inventario, incluyendo sus características y detalles esenciales.",
+        titulo: "Herramientas de gestión",
+        parrafo: "Añade un producto: Registra un nuevo producto en el inventario, incluyendo sus características y detalles esenciales.",
         enlace: "#",
         enlaceTexto: "+ Añadir nuevo Producto"
     },
@@ -87,6 +93,12 @@ const slides = [
 ];
 
 let currentIndex = 0;
+
+const botonesHerramientas = [
+    botonFijo1,
+    botonFijo2,
+    btnAbrirModalNuevoProductoFijo
+];
 
 document.addEventListener("DOMContentLoaded", () => {
     limpiarHTMLElemento(despliegueInventario);
@@ -612,11 +624,19 @@ function showSlide(index) {
     // Actualiza los colores del botón (clase dinámica)
     const colores = ["color1", "color2", "color3"];
     enlaceElement.classList.remove(...colores); // Elimina las clases de color previas
-    enlaceElement.classList.add(colores[index]); // Agrega la clase correspondiente al índice
+    enlaceElement.classList.add(colores[index]); // 
+    banderaSlider=index;
+
+
+    // Agrega la clase correspondiente al índice
 
     // Actualiza los indicadores (dots)
     dots.forEach((dot, i) => {
         dot.classList.toggle("active", i === index); // Agrega o quita la clase según el índice
+    });
+
+    botonesHerramientas.forEach((boton, i) => {
+        boton.classList.toggle('seleccionSlider', i === index);
     });
 }
 
@@ -1016,11 +1036,11 @@ function mostrarCards(inventario, proveedores, categorias) {
         </style>
         `;
         inventarioGrid.appendChild(parrafoContainer);
-        gridContenido.prepend(div);
-        inventarioGrid.appendChild(gridContenido);
-        inventarioGrid.appendChild(dineroGrid);
-        inventarioGrid.appendChild(botonesGrid);
-        despliegueInventario.appendChild(inventarioGrid);
+gridContenido.prepend(div);
+inventarioGrid.appendChild(gridContenido);
+inventarioGrid.appendChild(dineroGrid);
+inventarioGrid.appendChild(botonesGrid);
+despliegueInventario.appendChild(inventarioGrid);
 
 
 
