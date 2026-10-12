@@ -32,10 +32,14 @@ $router->post('/admin/suscripciones', [AdminController::class, 'actualizarSuscri
 
 
 
+
 // Login y Autenticación
 $router->get('/login', [LoginController::class, 'login']);
 $router->post('/login', [LoginController::class, 'login']);
 $router->get('/logout', [LoginController::class, 'logout']);
+
+$router->get('/suscripcion-vencida', [LoginController::class, 'vencida']);
+
 
 // Crear Cuenta
 $router->get('/registrar', [LoginController::class, 'registrar']);

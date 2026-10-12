@@ -49,7 +49,7 @@ class Suscripcion extends ActiveRecord
         return $tienda;
     }
 
-        public function obtenerPlan()
+    public function obtenerPlan()
     {
         $plan = Plan::find($this->plan_id);
         return $plan;
@@ -79,7 +79,7 @@ class Suscripcion extends ActiveRecord
         }
     }
 
-        public function obtenerDiasRestantes()
+    public function obtenerDiasRestantes()
     {
         $hoy = new DateTime();
         $vencimiento = new DateTime($this->fecha_vencimiento);
@@ -111,7 +111,7 @@ class Suscripcion extends ActiveRecord
         return $resultado->fetch_row()[0];
     }
 
-        public static function contarInctivas()
+    public static function contarInctivas()
     {
         $query = "SELECT COUNT(*) FROM " . static::$tabla . " WHERE activa = 0";
         $resultado = self::$db->query($query);
@@ -130,5 +130,45 @@ class Suscripcion extends ActiveRecord
         $resultado = self::$db->query($query);
 
         return $resultado->fetch_row()[0];
+    }
+
+    public function estaVigente(): bool
+    {
+        if ((int) $this->activa !== 1 || empty($this->fecha_vencimiento)) {
+            return false;
+        }
+
+        try {
+            $hoy = new DateTime('today');
+            $vencimiento = new DateTime($this->fecha_vencimiento);
+            $vencimiento->setTime(0, 0, 0);
+
+            return $vencimiento >= $hoy;
+        } catch (\Exception $error) {
+            return false;
+        }
+    }
+
+    public static function obtenerPorTienda($tiendaId): ?self
+    {
+        if (!$tiendaId) {
+            return null;
+        }
+
+        $query = "SELECT * FROM " . static::$tabla . "
+              WHERE tienda_id = ?
+              ORDER BY id DESC
+              LIMIT 1";
+
+        $stmt = self::$db->prepare($query);
+        $stmt->bind_param('i', $tiendaId);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+        $datos = $resultado->fetch_assoc();
+
+        $stmt->close();
+
+        return $datos ? new self($datos) : null;
     }
 }

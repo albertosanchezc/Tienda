@@ -321,6 +321,10 @@ class LoginController
         ]);
     }
 
+    public static function vencida(){
+        header('Location: suscripcion-vencida');
+    }
+
 
     public static function logout()
     {
