@@ -103,11 +103,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function consultarAPI() {
   try {
-    const server = window.location.host;
+    const respuesta = await fetch('/proveedores/api/proveedores');
+    let resultado;
 
-    const url = `/proveedores/api/proveedores`;
-    const respuesta = await fetch(url);
-    const resultado = await respuesta.json();
+    try {
+      resultado = await respuesta.json();
+    } catch (error) {
+      throw new Error(`La API de proveedores devolvió una respuesta inválida (HTTP ${respuesta.status})`);
+    }
+
+    if (!respuesta.ok) {
+      throw new Error(resultado.error || `Error HTTP ${respuesta.status} al consultar proveedores`);
+    }
 
     proveedores = resultado.proveedores;
     visitas_proveedor = resultado.visitas_proveedor;
@@ -123,7 +130,12 @@ async function consultarAPI() {
     generarPaginador(visitas_proveedor, proveedores);
 
   } catch (e) {
-    console.log(e);
+    console.error('Error al consultar la API de proveedores:', e);
+    const contenedor = document.querySelector('.proveedores-titulo');
+    const alerta = document.createElement('div');
+    alerta.className = 'alerta error';
+    alerta.textContent = `No se pudo cargar la información de proveedores. ${e.message}`;
+    contenedor.appendChild(alerta);
   }
 }
 

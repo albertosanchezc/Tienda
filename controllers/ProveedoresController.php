@@ -96,25 +96,39 @@ class ProveedoresController
     }
     public static function proveedoresAPI()
     {
-        $tiendaId = $_SESSION['tienda_id'];
-        $proveedores = Proveedor::where('tienda_id', $tiendaId);
-        $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
-        $visita_producto = Visita_Producto::where('tienda_id', $tiendaId);
-        $productos = Productos::where('tienda_id', $tiendaId);
-        $inventario = Inventario::where('tienda_id', $tiendaId);
-        $ventas = Ventas_Completas::obtenerVentas($tiendaId);
+        header('Content-Type: application/json; charset=utf-8');
 
+        if (!isset($_SESSION['tienda_id'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'No autenticado']);
+            exit;
+        }
 
+        try {
+            $tiendaId = $_SESSION['tienda_id'];
+            $proveedores = Proveedor::where('tienda_id', $tiendaId);
+            $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
+            $visita_producto = Visita_Producto::where('tienda_id', $tiendaId);
+            $productos = Productos::where('tienda_id', $tiendaId);
+            $inventario = Inventario::where('tienda_id', $tiendaId);
+            $ventas = Ventas_Completas::obtenerVentas($tiendaId);
 
+            $respuesta = json_encode([
+                'proveedores' => $proveedores,
+                'visitas_proveedor' => $visitas_proveedor,
+                'visita_producto' => $visita_producto,
+                'productos' => $productos,
+                'inventario' => $inventario,
+                'ventas' => $ventas
+            ], JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR);
+        } catch (\Throwable $e) {
+            error_log('Error en la API de proveedores: ' . $e->getMessage());
+            http_response_code(500);
+            echo '{"error":"No se pudieron obtener los proveedores"}';
+            exit;
+        }
 
-
-        echo json_encode([
-            'proveedores' => $proveedores,
-            'visitas_proveedor' => $visitas_proveedor,
-            'visita_producto' => $visita_producto,
-            'productos' => $productos,
-            'inventario' => $inventario,
-            'ventas' => $ventas
-        ]);
+        echo $respuesta;
+        exit;
     }
 }
