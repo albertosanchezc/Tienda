@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Suscripcion;
+use Model\Plan;
 use MVC\Router;
 
 class AdminController
@@ -64,20 +65,37 @@ class AdminController
         $titulo = 'Administrar Suscripciones';
         $nombre = $_SESSION['nombre'];
 
+        $script = '<script src="/build/js/suscripciones.js" type="module"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />';
+
         $suscripciones = Suscripcion::all();
+        $planes = Plan::all();
         $totalActivas = Suscripcion::contarActivas();
         $totalPorVencer = Suscripcion::contarProximasAVencer();
         $totalInactivas = Suscripcion::contarInctivas();
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $datos = $_POST;
+            debuguear($datos);
+            $suscripcion = new Suscripcion($datos);
+            $resultado = $suscripcion->guardar();
+            if($resultado) {
+                header('Location: /admin/suscripciones');
+                exit;
+            }
+        }
 
 
         $router->render('admin/suscripciones', [
             'titulo' => $titulo,
             'nombre' => $nombre,
             'suscripciones' => $suscripciones,
+            'planes' => $planes,
             'totalActivas' => $totalActivas,
             'totalPorVencer' => $totalPorVencer,
-            'totalInactivas' => $totalInactivas
-
+            'totalInactivas' => $totalInactivas,
+            'script' => $script
 
         ]);
     }
