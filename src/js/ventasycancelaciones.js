@@ -838,7 +838,7 @@ async function consultarAPI() {
         const server = window.location.host;
         const api = '/ventas/api/ventas'
 
-        const url = `http://${server}${api}`;
+        const url = `${api}`;
         const respuesta = await fetch(url);
         const resultado = await respuesta.json();
 
