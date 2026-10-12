@@ -118,18 +118,25 @@ class PaginasController
 
     public static function ventasAPI()
     {
+        header('Content-Type: application/json; charset=utf-8');
+
+        if (!($_SESSION['login'] ?? false) || !isset($_SESSION['tienda_id'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'No autenticado']);
+            exit;
+        }
+
         $tiendaId = $_SESSION['tienda_id'];
         $ventas = Ventas_Completas::obtenerVentas($tiendaId);
         $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
-        $caja = Caja::where('tienda_id', $tiendaId);
+        $caja = Caja::firstWhere('tienda_id', $tiendaId);
 
 
 
         echo json_encode([
             'ventas' => $ventas,
             'inventario' => $inventario,
-            'caja' => $caja,
-
+            'caja' => $caja
         ]);
     }
 
