@@ -835,13 +835,18 @@ function agruparPorCarrito(){
 
 async function consultarAPI() {
     try {
-        const server = window.location.host;
-        const api = '/ventas/api/ventas'
+        const respuesta = await fetch('/ventas/api/ventas');
+        let resultado;
 
-        const url = `${api}`;
-        const respuesta = await fetch(url);
-        const resultado = await respuesta.json();
+        try {
+            resultado = await respuesta.json();
+        } catch (error) {
+            throw new Error(`La API de ventas devolvió una respuesta inválida (HTTP ${respuesta.status})`);
+        }
 
+        if (!respuesta.ok) {
+            throw new Error(resultado.error || `Error HTTP ${respuesta.status} al consultar ventas`);
+        }
 
         ventas = resultado.ventas;
         cancelaciones = ventas.filter(venta => venta.cancelacion === '1');
@@ -856,7 +861,7 @@ async function consultarAPI() {
         // filtrar();
 
     } catch (e) {
-        console.log(e);
+        console.error('Error al consultar la API de ventas:', e);
     }
 }
 

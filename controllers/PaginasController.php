@@ -120,24 +120,32 @@ class PaginasController
     {
         header('Content-Type: application/json; charset=utf-8');
 
-        if (!($_SESSION['login'] ?? false) || !isset($_SESSION['tienda_id'])) {
+        if (!isset($_SESSION['tienda_id'])) {
             http_response_code(401);
             echo json_encode(['error' => 'No autenticado']);
             exit;
         }
 
-        $tiendaId = $_SESSION['tienda_id'];
-        $ventas = Ventas_Completas::obtenerVentas($tiendaId);
-        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
-        $caja = Caja::firstWhere('tienda_id', $tiendaId);
+        try {
+            $tiendaId = $_SESSION['tienda_id'];
+            $ventas = Ventas_Completas::obtenerVentas($tiendaId);
+            $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
+            $caja = Caja::firstWhere('tienda_id', $tiendaId);
 
+            $respuesta = json_encode([
+                'ventas' => $ventas,
+                'inventario' => $inventario,
+                'caja' => $caja
+            ], JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR);
+        } catch (\Throwable $e) {
+            error_log('Error en la API de ventas: ' . $e->getMessage());
+            http_response_code(500);
+            echo '{"error":"No se pudieron obtener las ventas"}';
+            exit;
+        }
 
-
-        echo json_encode([
-            'ventas' => $ventas,
-            'inventario' => $inventario,
-            'caja' => $caja
-        ]);
+        echo $respuesta;
+        exit;
     }
 
     public static function metricasAPI()
