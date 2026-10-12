@@ -17,6 +17,29 @@ use Intervention\Image\ImageManagerStatic as Image;
 class InventarioController
 {
 
+    private static function obtenerCarpetaImagenesTienda($tiendaId)
+    {
+        $carpeta = rtrim(CARPETA_IMAGENES, '/\\')
+            . DIRECTORY_SEPARATOR
+            . 'tienda_' . (int) $tiendaId
+            . DIRECTORY_SEPARATOR;
+
+        if (!is_dir($carpeta) && !@mkdir($carpeta, 0775, true) && !is_dir($carpeta)) {
+            throw new \RuntimeException(
+                'No se pudo crear la carpeta de imágenes: ' . $carpeta
+                . '. Verifica los permisos de escritura de ' . dirname($carpeta) . '.'
+            );
+        }
+
+        if (!is_writable($carpeta)) {
+            throw new \RuntimeException(
+                'La carpeta de imágenes no tiene permisos de escritura: ' . $carpeta
+            );
+        }
+
+        return $carpeta;
+    }
+
     public static function inventario(Router $router)
     {
 
@@ -95,10 +118,7 @@ class InventarioController
                     //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
                     $image = Image::make($_FILES['inventarioCrear']['tmp_name']['imagen'])->fit(900, 800);
                     $producto->setImagen($nombreImagen);
-                    $carpeta_imagenes = CARPETA_IMAGENES . 'tienda_' . $_SESSION['tienda_id'] . '/';
-                    if (!is_dir($carpeta_imagenes)) {
-                        mkdir($carpeta_imagenes);
-                    }
+                    $carpeta_imagenes = self::obtenerCarpetaImagenesTienda($tiendaId);
                     $image->save($carpeta_imagenes . $nombreImagen);
                 }
 
@@ -162,11 +182,8 @@ class InventarioController
                     //REALIZA UN RESIZE A LA IMAGEN CON INTERVENTION
                     $image = Image::make($_FILES['inventarioActualizar']['tmp_name']['imagen'])->fit(900, 800);
                     $productoActualizar->setImagen($nombreImagenActualizar);
-                    $carpeta_imagenes = CARPETA_IMAGENES . 'tienda_' . $_SESSION['tienda_id'] . '/';
+                    $carpeta_imagenes = self::obtenerCarpetaImagenesTienda($tiendaId);
                     // debuguear($carpeta_imagenes);
-                    if (!is_dir($carpeta_imagenes)) {
-                        mkdir($carpeta_imagenes);
-                    }
                     $image->save($carpeta_imagenes . $nombreImagenActualizar);
                 } else {
                     $id = $productoActualizar->id;
