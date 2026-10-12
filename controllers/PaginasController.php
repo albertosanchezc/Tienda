@@ -76,7 +76,19 @@ class PaginasController
             'ventas' => $ventas
         ];
 
-        echo json_encode($datos);
+        try {
+            $respuesta = json_encode(
+                $datos,
+                JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR
+            );
+        } catch (\JsonException $e) {
+            error_log('Error al generar la respuesta de la API de inventario: ' . $e->getMessage());
+            http_response_code(500);
+            echo '{"error":"No se pudo generar la respuesta de inventario"}';
+            exit;
+        }
+
+        echo $respuesta;
         exit;
     }
 
@@ -212,42 +224,42 @@ class PaginasController
         $router->render('paginas/propiedades', []);
     }
 
-    public static function propiedad(Router $router)
-    {
+    // public static function propiedad(Router $router)
+    // {
 
-        $id = validarORedireccionar('/propiedades');
+    //     $id = validarORedireccionar('/propiedades');
 
-        // Buscar la propiedad por su id
-        $platillo = Platillo::find($id);
+    //     // Buscar la propiedad por su id
+    //     $platillo = Platillo::find($id);
 
-        $router->render('paginas/propiedad', [
-            'platillo' => $platillo
-        ]);
-    }
+    //     $router->render('paginas/propiedad', [
+    //         'platillo' => $platillo
+    //     ]);
+    // }
 
-    public static function blog(Router $router)
-    {
-        $entradas = Blog::all();
+    // public static function blog(Router $router)
+    // {
+    //     $entradas = Blog::all();
 
-        $router->render('/paginas/blog', [
-            'entradas' => $entradas
-        ]);
-    }
-    public static function entrada(Router $router)
-    {
-        $id = validarORedireccionar('/blog');
+    //     $router->render('/paginas/blog', [
+    //         'entradas' => $entradas
+    //     ]);
+    // }
+    // public static function entrada(Router $router)
+    // {
+    //     $id = validarORedireccionar('/blog');
 
-        $entrada = Blog::find($id);
-        if (!$entrada) {
-            header('Location: /blog');
-            exit;
-        }
+    //     $entrada = Blog::find($id);
+    //     if (!$entrada) {
+    //         header('Location: /blog');
+    //         exit;
+    //     }
 
 
-        $router->render('/paginas/entrada', [
-            'entrada' => $entrada
-        ]);
-    }
+    //     $router->render('/paginas/entrada', [
+    //         'entrada' => $entrada
+    //     ]);
+    // }
 
     public static function contacto(Router $router)
     {
