@@ -22,8 +22,12 @@ async function consultarAPI() {
     try {
 
         const server = window.location.host;
+        const api = '/inventarios/api/inventarios'
 
-        const url = `http://${server}/inventarios/api/inventarios`;
+        // const url = `http://${server}/inventarios/api/inventarios`;
+        const url = `${api}`;
+
+
         const respuesta = await fetch(url);
         const resultado = await respuesta.json();
 
