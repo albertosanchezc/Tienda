@@ -1,176 +1,176 @@
 document.addEventListener('DOMContentLoaded', function () {
     const modal = document.querySelector('.modal1');
-    const modalDialog = modal?.querySelector('[role="dialog"]');
-    const closeButton = document.getElementById('cerrar-modal1');
-    const cancelButton = document.getElementById('cancelar-modal1');
-    const form = document.getElementById('form-suscripcion');
-    const subscriptionId = document.getElementById('suscripcion-id');
-    const planSelect = document.getElementById('selector-plan');
-    const editButtons = document.querySelectorAll('.subscription-edit-button');
+    const dialogoModal = modal?.querySelector('[role="dialog"]');
+    const botonCerrar = document.getElementById('cerrar-modal1');
+    const botonCancelar = document.getElementById('cancelar-modal1');
+    const formulario = document.getElementById('form-suscripcion');
+    const idSuscripcion = document.getElementById('suscripcion-id');
+    const selectorPlan = document.getElementById('selector-plan');
+    const botonesEditar = document.querySelectorAll('.boton-editar-suscripcion');
 
-    if (!modal || !form || !subscriptionId || !planSelect) return;
+    if (!modal || !formulario || !idSuscripcion || !selectorPlan) return;
 
-    const setText = (id, value) => {
-        const element = document.getElementById(id);
-        if (element) element.textContent = value || '—';
+    const establecerTexto = (id, valor) => {
+        const elemento = document.getElementById(id);
+        if (elemento) elemento.textContent = valor || '—';
     };
 
-    const parseDate = (value) => {
-        if (!value) return null;
-        const [year, month, day] = value.slice(0, 10).split('-').map(Number);
-        if (!year || !month || !day) return null;
-        return new Date(year, month - 1, day);
+    const analizarFecha = (valor) => {
+        if (!valor) return null;
+        const [anio, mes, dia] = valor.slice(0, 10).split('-').map(Number);
+        if (!anio || !mes || !dia) return null;
+        return new Date(anio, mes - 1, dia);
     };
 
-    const formatDate = (date) => {
-        if (!date || Number.isNaN(date.getTime())) return '—';
+    const formatearFecha = (fecha) => {
+        if (!fecha || Number.isNaN(fecha.getTime())) return '—';
         return new Intl.DateTimeFormat('es-MX', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric'
-        }).format(date);
+        }).format(fecha);
     };
 
-    const getSelectedPlan = () => planSelect.options[planSelect.selectedIndex];
+    const obtenerPlanSeleccionado = () => selectorPlan.options[selectorPlan.selectedIndex];
 
-    const updatePreview = () => {
-        const plan = getSelectedPlan();
-        const operation = form.querySelector('input[name="operacion"]:checked')?.value;
-        const selectedPeriod = Number(form.querySelector('input[name="periodo"]:checked')?.value);
-        const selectedStatus = form.querySelector('input[name="activa"]:checked')?.value;
-        const duration = Number(plan?.dataset.duration);
-        const currentExpiry = parseDate(form.dataset.currentExpiry);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+    const actualizarVistaPrevia = () => {
+        const plan = obtenerPlanSeleccionado();
+        const operacion = formulario.querySelector('input[name="operacion"]:checked')?.value;
+        const periodoSeleccionado = Number(formulario.querySelector('input[name="periodo"]:checked')?.value);
+        const estadoSeleccionado = formulario.querySelector('input[name="activa"]:checked')?.value;
+        const duracion = Number(plan?.dataset.duracion);
+        const vencimientoActual = analizarFecha(formulario.dataset.vencimientoActual);
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
 
-        setText('resumen-plan', plan?.value ? plan.textContent.trim() : '—');
-        setText(
+        establecerTexto('resumen-plan', plan?.value ? plan.textContent.trim() : '—');
+        establecerTexto(
             'resumen-periodo',
-            operation === 'cambiar_plan' && Number.isFinite(duration) && duration > 0
-                ? `${duration} días`
-                : selectedPeriod
-                    ? `${selectedPeriod} días`
+            operacion === 'cambiar_plan' && Number.isFinite(duracion) && duracion > 0
+                ? `${duracion} días`
+                : periodoSeleccionado
+                    ? `${periodoSeleccionado} días`
                     : '—'
         );
-        setText('resumen-estado', selectedStatus === '1' ? 'Activa' : 'Inactiva');
+        establecerTexto('resumen-estado', estadoSeleccionado === '1' ? 'Activa' : 'Inactiva');
 
-        let nextExpiry = null;
-        if (operation === 'cambiar_plan' && Number.isFinite(duration) && duration > 0) {
-            nextExpiry = new Date(today);
-            nextExpiry.setDate(nextExpiry.getDate() + duration);
-        } else if (operation === 'renovar' && selectedPeriod) {
-            nextExpiry = currentExpiry && currentExpiry > today
-                ? new Date(currentExpiry)
-                : new Date(today);
-            nextExpiry.setDate(nextExpiry.getDate() + selectedPeriod);
+        let nuevoVencimiento = null;
+        if (operacion === 'cambiar_plan' && Number.isFinite(duracion) && duracion > 0) {
+            nuevoVencimiento = new Date(hoy);
+            nuevoVencimiento.setDate(nuevoVencimiento.getDate() + duracion);
+        } else if (operacion === 'renovar' && periodoSeleccionado) {
+            nuevoVencimiento = vencimientoActual && vencimientoActual > hoy
+                ? new Date(vencimientoActual)
+                : new Date(hoy);
+            nuevoVencimiento.setDate(nuevoVencimiento.getDate() + periodoSeleccionado);
         }
 
-        setText('fecha-nueva', formatDate(nextExpiry));
-        setText('resumen-fecha', formatDate(nextExpiry));
+        establecerTexto('fecha-nueva', formatearFecha(nuevoVencimiento));
+        establecerTexto('resumen-fecha', formatearFecha(nuevoVencimiento));
     };
 
-    let previousFocus = null;
-    let previousBodyOverflow = '';
+    let focoAnterior = null;
+    let desbordamientoAnterior = '';
 
-    const closeModal = () => {
+    const cerrarModal = () => {
         modal.classList.remove('modal1--visible');
-        document.body.style.overflow = previousBodyOverflow;
-        previousFocus?.focus();
+        document.body.style.overflow = desbordamientoAnterior;
+        focoAnterior?.focus();
     };
 
-    const openModal = (button) => {
-        previousFocus = button;
-        previousBodyOverflow = document.body.style.overflow;
+    const abrirModal = (boton) => {
+        focoAnterior = boton;
+        desbordamientoAnterior = document.body.style.overflow;
 
-        form.reset();
-        subscriptionId.value = button.dataset.id || '';
-        form.dataset.currentExpiry = button.dataset.end || '';
+        formulario.reset();
+        idSuscripcion.value = boton.dataset.suscripcionId || '';
+        formulario.dataset.vencimientoActual = boton.dataset.vencimiento || '';
 
-        setText('cliente-nombre', button.dataset.user);
-        setText('cliente-correo', button.dataset.email);
-        setText('tienda-nombre', button.dataset.store);
-        setText('tienda-id', button.dataset.storeId ? `ID ${button.dataset.storeId}` : '');
+        establecerTexto('cliente-nombre', boton.dataset.usuario);
+        establecerTexto('cliente-correo', boton.dataset.correo);
+        establecerTexto('tienda-nombre', boton.dataset.tienda);
+        establecerTexto('tienda-id', boton.dataset.tiendaId ? `ID ${boton.dataset.tiendaId}` : '');
 
-        [...planSelect.options].forEach((option) => {
-            option.disabled = option.dataset.active === '0';
+        [...selectorPlan.options].forEach((opcion) => {
+            opcion.disabled = opcion.dataset.activo === '0';
         });
-        const currentPlan = [...planSelect.options].find(
-            (option) => option.value === button.dataset.planId
+        const planActual = [...selectorPlan.options].find(
+            (opcion) => opcion.value === boton.dataset.idPlan
         );
-        if (currentPlan) {
-            currentPlan.disabled = false;
-            planSelect.value = currentPlan.value;
-            setText('plan-actual', currentPlan.textContent.trim());
+        if (planActual) {
+            planActual.disabled = false;
+            selectorPlan.value = planActual.value;
+            establecerTexto('plan-actual', planActual.textContent.trim());
 
-            const price = Number(currentPlan.dataset.price);
-            const duration = Number(currentPlan.dataset.duration);
-            const priceText = Number.isFinite(price)
+            const precio = Number(planActual.dataset.precio);
+            const duracion = Number(planActual.dataset.duracion);
+            const textoPrecio = Number.isFinite(precio)
                 ? new Intl.NumberFormat('es-MX', {
                     style: 'currency',
                     currency: 'MXN'
-                }).format(price)
+                }).format(precio)
                 : '—';
-            setText(
+            establecerTexto(
                 'plan-precio',
-                Number.isFinite(duration) && duration > 0
-                    ? `${priceText} / ${duration} días`
-                    : priceText
+                Number.isFinite(duracion) && duracion > 0
+                    ? `${textoPrecio} / ${duracion} días`
+                    : textoPrecio
             );
         } else {
-            planSelect.value = '';
-            setText('plan-actual', 'Plan no disponible');
-            setText('plan-precio', '—');
+            selectorPlan.value = '';
+            establecerTexto('plan-actual', 'Plan no disponible');
+            establecerTexto('plan-precio', '—');
         }
 
-        const currentExpiry = parseDate(button.dataset.end);
-        setText('fecha-actual', formatDate(currentExpiry));
+        const vencimientoActual = analizarFecha(boton.dataset.vencimiento);
+        establecerTexto('fecha-actual', formatearFecha(vencimientoActual));
 
-        const activeInput = form.querySelector(
-            `input[name="activa"][value="${button.dataset.active === '1' ? '1' : '0'}"]`
+        const entradaEstado = formulario.querySelector(
+            `input[name="activa"][value="${boton.dataset.activa === '1' ? '1' : '0'}"]`
         );
-        if (activeInput) activeInput.checked = true;
+        if (entradaEstado) entradaEstado.checked = true;
 
-        const defaultPeriod = form.querySelector('input[name="periodo"][value="30"]');
-        if (defaultPeriod) defaultPeriod.checked = true;
+        const periodoPredeterminado = formulario.querySelector('input[name="periodo"][value="30"]');
+        if (periodoPredeterminado) periodoPredeterminado.checked = true;
 
-        const renewInput = form.querySelector('input[name="operacion"][value="renovar"]');
-        if (renewInput) renewInput.checked = true;
+        const entradaRenovar = formulario.querySelector('input[name="operacion"][value="renovar"]');
+        if (entradaRenovar) entradaRenovar.checked = true;
 
-        setText('resumen-periodo', defaultPeriod ? '30 días' : '—');
-        setText('resumen-estado', button.dataset.active === '1' ? 'Activa' : 'Inactiva');
-        updatePreview();
+        establecerTexto('resumen-periodo', periodoPredeterminado ? '30 días' : '—');
+        establecerTexto('resumen-estado', boton.dataset.activa === '1' ? 'Activa' : 'Inactiva');
+        actualizarVistaPrevia();
 
         modal.classList.add('modal1--visible');
         document.body.style.overflow = 'hidden';
-        closeButton?.focus();
+        botonCerrar?.focus();
     };
 
-    editButtons.forEach((button) => {
-        button.addEventListener('click', () => openModal(button));
+    botonesEditar.forEach((boton) => {
+        boton.addEventListener('click', () => abrirModal(boton));
     });
 
-    closeButton?.addEventListener('click', closeModal);
-    cancelButton?.addEventListener('click', closeModal);
+    botonCerrar?.addEventListener('click', cerrarModal);
+    botonCancelar?.addEventListener('click', cerrarModal);
 
-    modal.addEventListener('click', (event) => {
-        if (event.target === modal) closeModal();
+    modal.addEventListener('click', (evento) => {
+        if (evento.target === modal) cerrarModal();
     });
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.classList.contains('modal1--visible')) {
-            closeModal();
+    document.addEventListener('keydown', (evento) => {
+        if (evento.key === 'Escape' && modal.classList.contains('modal1--visible')) {
+            cerrarModal();
         }
     });
 
-    form.querySelectorAll('input[name="operacion"], input[name="periodo"], input[name="activa"]')
-        .forEach((input) => input.addEventListener('change', updatePreview));
+    formulario.querySelectorAll('input[name="operacion"], input[name="periodo"], input[name="activa"]')
+        .forEach((entrada) => entrada.addEventListener('change', actualizarVistaPrevia));
 
-    planSelect.addEventListener('change', () => {
-        [...planSelect.options].forEach((option) => {
-            option.disabled = option.dataset.active === '0' && option.value !== planSelect.value;
+    selectorPlan.addEventListener('change', () => {
+        [...selectorPlan.options].forEach((opcion) => {
+            opcion.disabled = opcion.dataset.activo === '0' && opcion.value !== selectorPlan.value;
         });
-        updatePreview();
+        actualizarVistaPrevia();
     });
 
-    modalDialog?.addEventListener('click', (event) => event.stopPropagation());
+    dialogoModal?.addEventListener('click', (evento) => evento.stopPropagation());
 });

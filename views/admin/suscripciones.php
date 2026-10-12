@@ -77,16 +77,16 @@
                     <span class="action-label">Desactivar/Activar</span>
                     <button
                       type="button"
-                      class="subscription-edit-button"
+                      class="boton-editar-suscripcion"
                       aria-label="Editar suscripción de <?php echo s($usuario->obtenerNombreCompleto()); ?>"
-                      data-id="<?php echo s($suscripcion->id); ?>"
-                      data-user="<?php echo s($usuario->obtenerNombreCompleto()); ?>"
-                      data-email="<?php echo s($usuario->email); ?>"
-                      data-store="<?php echo s($tienda->nombre); ?>"
-                      data-store-id="<?php echo s($tienda->id); ?>"
-                      data-plan-id="<?php echo s($plan->id); ?>"
-                      data-end="<?php echo s($suscripcion->fecha_vencimiento); ?>"
-                      data-active="<?php echo $suscripcion->activa ? '1' : '0'; ?>">
+                      data-suscripcion-id="<?php echo s($suscripcion->id); ?>"
+                      data-usuario="<?php echo s($usuario->obtenerNombreCompleto()); ?>"
+                      data-correo="<?php echo s($usuario->email); ?>"
+                      data-tienda="<?php echo s($tienda->nombre); ?>"
+                      data-tienda-id="<?php echo s($tienda->id); ?>"
+                      data-id-plan="<?php echo s($plan->id); ?>"
+                      data-vencimiento="<?php echo s($suscripcion->fecha_vencimiento); ?>"
+                      data-activa="<?php echo $suscripcion->activa ? '1' : '0'; ?>">
                       <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
                       Editar
                     </button>
@@ -187,9 +187,9 @@
                 <?php foreach ($planes as $planDisponible) { ?>
                   <option
                     value="<?php echo s($planDisponible->id); ?>"
-                    data-price="<?php echo s($planDisponible->precio); ?>"
-                    data-duration="<?php echo s($planDisponible->duracion_dias); ?>"
-                    data-active="<?php echo $planDisponible->activo ? '1' : '0'; ?>"
+                    data-precio="<?php echo s($planDisponible->precio); ?>"
+                    data-duracion="<?php echo s($planDisponible->duracion_dias); ?>"
+                    data-activo="<?php echo $planDisponible->activo ? '1' : '0'; ?>"
                     <?php echo $planDisponible->activo ? '' : 'disabled'; ?>>
                     <?php echo s($planDisponible->nombre); ?><?php echo $planDisponible->activo ? '' : ' (Inactivo)'; ?>
                   </option>
