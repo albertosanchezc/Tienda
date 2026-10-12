@@ -55,7 +55,31 @@ class Suscripcion extends ActiveRecord
         return $plan;
     }
 
-    public function obtenerDiasRestantes()
+    public static function guardarConHistorial(Suscripcion $suscripcion, HistorialSuscripcion $historial): bool
+    {
+        if (!self::$db->begin_transaction()) {
+            return false;
+        }
+
+        try {
+            if (!$suscripcion->guardar() || !$historial->guardar()) {
+                self::$db->rollback();
+                return false;
+            }
+
+            if (!self::$db->commit()) {
+                self::$db->rollback();
+                return false;
+            }
+
+            return true;
+        } catch (\mysqli_sql_exception $error) {
+            self::$db->rollback();
+            throw $error;
+        }
+    }
+
+        public function obtenerDiasRestantes()
     {
         $hoy = new DateTime();
         $vencimiento = new DateTime($this->fecha_vencimiento);

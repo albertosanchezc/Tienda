@@ -130,7 +130,7 @@
         </button>
       </div>
 
-      <form id="form-suscripcion">
+      <form id="form-suscripcion" action="/admin/suscripciones" method="POST">
         <input type="hidden" name="id" id="suscripcion-id">
 
         <!-- Información actual -->

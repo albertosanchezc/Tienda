@@ -6,8 +6,8 @@ describe('Registro de usuario', () => {
 
     it('Debe registrar una nueva cuenta correctamente', () => {
 
-        const email = `cypress_${Date.now()}@test.com`;
-        // const email = `zamudiolopezkarina@gmail.com`;
+        // const email = `cypress_${Date.now()}@test.com`;
+        const email = `zamudiolopezkarina@gmail.com`;
 
         // Registro
         cy.get('input[name="usuario[email]"]')

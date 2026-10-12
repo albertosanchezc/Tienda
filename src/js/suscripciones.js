@@ -173,4 +173,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dialogoModal?.addEventListener('click', (evento) => evento.stopPropagation());
+
+    const guardarCambios = () => {
+        formulario.addEventListener('submit', async (evento) => {
+            evento.preventDefault();
+
+            const datos = new FormData(formulario);
+
+            try {
+                const respuesta = await fetch(window.location.pathname, {
+                    method: 'POST',
+                    body: datos
+                });
+
+                const resultado = await respuesta.json();
+
+                if (!respuesta.ok || !resultado.exito) {
+                    throw new Error(resultado.mensaje || 'No se pudieron guardar los cambios.');
+                }
+
+                cerrarModal();
+                window.location.reload();
+
+            } catch (error) {
+                console.error('Error al guardar la suscripción:', error);
+                alert(error.message || 'Ocurrió un error al guardar los cambios.');
+            }
+        });
+    };
+
+    guardarCambios();
+
 });
