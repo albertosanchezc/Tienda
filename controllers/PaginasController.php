@@ -150,22 +150,40 @@ class PaginasController
 
     public static function metricasAPI()
     {
-        $tiendaId = $_SESSION['tienda_id'];
-        $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
-        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
-        $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
-        $proveedores = Proveedor::where('tienda_id', $tiendaId);
-        $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
-        $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
+        header('Content-Type: application/json; charset=utf-8');
 
-        echo json_encode([
-            'ventas' => $ventas,
-            'inventario' => $inventario,
-            'cajas_historicos' => $cajas_historicos,
-            'proveedores' => $proveedores,
-            'visitas_proveedor' => $visitas_proveedor,
-            'categorias' => $categorias
-        ]);
+        if (!isset($_SESSION['tienda_id'])) {
+            http_response_code(401);
+            echo '{"error":"No autenticado"}';
+            exit;
+        }
+
+        try {
+            $tiendaId = $_SESSION['tienda_id'];
+            $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
+            $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
+            $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
+            $proveedores = Proveedor::where('tienda_id', $tiendaId);
+            $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
+            $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
+
+            $respuesta = json_encode([
+                'ventas' => $ventas,
+                'inventario' => $inventario,
+                'cajas_historicos' => $cajas_historicos,
+                'proveedores' => $proveedores,
+                'visitas_proveedor' => $visitas_proveedor,
+                'categorias' => $categorias
+            ], JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR);
+        } catch (\Throwable $e) {
+            error_log('Error en la API de métricas: ' . $e->getMessage());
+            http_response_code(500);
+            echo '{"error":"No se pudieron obtener las métricas"}';
+            exit;
+        }
+
+        echo $respuesta;
+        exit;
     }
 
 
