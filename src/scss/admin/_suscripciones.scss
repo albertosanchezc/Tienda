@@ -305,6 +305,8 @@ input:checked+.slider:before {
   &__container {
     width: 100%;
     max-width: 1040px;
+    height: min(900px, calc(100vh - 2rem));
+    height: min(900px, calc(100dvh - 2rem));
     max-height: calc(100vh - 2rem);
     max-height: calc(100dvh - 2rem);
 
@@ -454,7 +456,6 @@ input:checked+.slider:before {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.9rem;
-    flex: 0 0 auto;
     flex: 0 0 auto;
     padding: 1.25rem 1.5rem 0;
   }
@@ -695,6 +696,11 @@ input:checked+.slider:before {
       text-transform: uppercase;
     }
 
+    small {
+      color: #64748b;
+      font-size: 0.72rem;
+    }
+
     strong {
       color: #0f172a;
       font-size: 0.95rem;
@@ -843,53 +849,208 @@ input:checked+.slider:before {
    RESPONSIVE
 ======================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .modal1 {
-    align-items: flex-start;
-    padding: 0.75rem;
-
+    padding: 1rem;
 
     &__container {
-      width: 100%;
-      max-height: calc(100vh - 1.5rem);
-      max-height: calc(100dvh - 1.5rem);
+      max-width: 720px;
+      max-height: calc(100vh - 2rem);
+      max-height: calc(100dvh - 2rem);
     }
 
     &__header {
-      grid-template-columns: 1fr;
-      gap: 0.65rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       padding: 1rem 1rem 0;
+    }
+
+    &__grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto;
     }
 
     &__body {
       padding: 1rem;
     }
+  }
+}
+
+@media (max-width: 600px) {
+  .modal1 {
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0;
+    overflow: hidden;
+
+    &__container {
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      min-height: 0;
+      border-radius: 0;
+    }
+
+    &__titulo {
+      gap: 0.65rem;
+      min-width: 0;
+
+      h2 {
+        font-size: clamp(1rem, 4.5vw, 1.15rem);
+      }
+
+      p {
+        font-size: 0.75rem;
+      }
+    }
+
+    &__header {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+      padding: 0.65rem 0.75rem 0;
+
+      > div {
+        padding: 0.7rem 0.8rem;
+      }
+
+      > div:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    &__body {
+      flex: 1 1 0;
+      padding: 0.75rem;
+      -webkit-overflow-scrolling: touch;
+    }
 
     &__grid {
       grid-template-columns: 1fr;
       grid-template-rows: auto;
+      gap: 0.75rem;
     }
 
     &__top {
-      padding: 1rem 1rem 0.75rem;
+      padding: 0.85rem 0.85rem 0.7rem;
     }
 
     &__panel {
-      padding: 0.85rem;
+      padding: 0.75rem;
     }
 
-    &__periodos,
+    &__periodos {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+
+    &__periodos .modal1__opcion {
+      justify-content: center;
+      padding: 0.65rem 0.35rem;
+      text-align: center;
+      font-size: 0.78rem;
+    }
+
     &__fechas {
       grid-template-columns: 1fr;
     }
 
     &__footer {
-      flex-direction: column-reverse;
-      padding: 0.85rem 1rem;
+      flex-direction: row;
+      padding: 0.65rem 0.75rem max(0.65rem, env(safe-area-inset-bottom));
+      gap: 0.6rem;
     }
 
     &__boton {
-      width: 100%;
+      flex: 1 1 0;
+      width: auto;
+      min-width: 0;
+      min-height: 2.75rem;
+      padding: 0.65rem 0.5rem;
+      font-size: 0.82rem;
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .modal1 {
+    &__header {
+      gap: 0.45rem;
+      padding-right: 0.6rem;
+      padding-left: 0.6rem;
+    }
+
+    &__header > div {
+      gap: 0.5rem;
+      padding: 0.6rem;
+    }
+
+    &__header > div > i {
+      width: 1.8rem;
+      height: 1.8rem;
+      flex: 0 0 1.8rem;
+    }
+
+    &__header strong {
+      font-size: 0.82rem;
+    }
+
+    &__header small {
+      font-size: 0.68rem;
+    }
+
+    &__periodos {
+      grid-template-columns: 1fr;
+    }
+
+    &__fechas {
+      grid-template-columns: 1fr;
+    }
+
+    &__panel {
+      padding: 0.65rem;
+    }
+
+    &__top {
+      padding: 0.7rem 0.65rem 0.6rem;
+    }
+
+    &__body {
+      padding: 0.6rem;
+    }
+  }
+}
+
+@media (max-height: 700px) and (min-width: 601px) {
+  .modal1 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    &__container {
+      height: calc(100vh - 1rem);
+      height: calc(100dvh - 1rem);
+      max-height: calc(100vh - 1rem);
+      max-height: calc(100dvh - 1rem);
+    }
+
+    &__top {
+      padding-top: 0.85rem;
+      padding-bottom: 0.65rem;
+    }
+
+    &__header {
+      padding-top: 0.75rem;
+    }
+
+    &__body {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+
+    &__footer {
+      padding-top: 0.65rem;
+      padding-bottom: 0.65rem;
     }
   }
 }

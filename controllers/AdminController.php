@@ -159,28 +159,32 @@ class AdminController
         $planAnteriorId = $suscripcion->plan_id;
         $estadoAnterior = (int) $suscripcion->activa;
 
+        $vencimientoActual = \DateTimeImmutable::createFromFormat(
+            '!Y-m-d',
+            substr((string) $suscripcion->fecha_vencimiento, 0, 10)
+        );
+        $erroresFecha = \DateTimeImmutable::getLastErrors();
+
+        if (
+            !$vencimientoActual ||
+            ($erroresFecha !== false && ($erroresFecha['warning_count'] > 0 || $erroresFecha['error_count'] > 0))
+        ) {
+            self::responderSuscripcion(422, false, 'La fecha de vencimiento actual no es válida.');
+        }
+
+        $diasRestantes = $vencimientoActual > $hoy
+            ? (int) $hoy->diff($vencimientoActual)->days
+            : 0;
+
         if ($operacion === 'renovar') {
-            $vencimientoActual = \DateTimeImmutable::createFromFormat(
-                '!Y-m-d',
-                substr((string) $suscripcion->fecha_vencimiento, 0, 10)
-            );
-            $erroresFecha = \DateTimeImmutable::getLastErrors();
-
-            if (
-                !$vencimientoActual ||
-                ($erroresFecha !== false && ($erroresFecha['warning_count'] > 0 || $erroresFecha['error_count'] > 0))
-            ) {
-                self::responderSuscripcion(422, false, 'La fecha de vencimiento actual no es válida.');
-            }
-
-            $fechaBase = $vencimientoActual > $hoy ? $vencimientoActual : $hoy;
-            $nuevoVencimiento = $fechaBase->modify("+{$periodo} days");
             $periodoAplicado = $periodo;
         } else {
             $suscripcion->fecha_inicio = $hoy->format('Y-m-d');
-            $nuevoVencimiento = $hoy->modify("+{$duracionPlan} days");
             $periodoAplicado = $duracionPlan;
         }
+
+        $diasTotales = $diasRestantes + $periodoAplicado;
+        $nuevoVencimiento = $hoy->modify("+{$diasTotales} days");
 
         $suscripcion->plan_id = $plan->id;
         $suscripcion->fecha_vencimiento = $nuevoVencimiento->format('Y-m-d');

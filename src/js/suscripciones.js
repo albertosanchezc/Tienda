@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return new Date(anio, mes - 1, dia);
     };
 
+    const obtenerDiasEntreFechas = (inicio, fin) => {
+        if (!inicio || !fin) return 0;
+        const inicioUTC = Date.UTC(inicio.getFullYear(), inicio.getMonth(), inicio.getDate());
+        const finUTC = Date.UTC(fin.getFullYear(), fin.getMonth(), fin.getDate());
+        return Math.max(0, Math.floor((finUTC - inicioUTC) / 86400000));
+    };
+
     const formatearFecha = (fecha) => {
         if (!fecha || Number.isNaN(fecha.getTime())) return '—';
         return new Intl.DateTimeFormat('es-MX', {
@@ -40,29 +47,28 @@ document.addEventListener('DOMContentLoaded', function () {
         const estadoSeleccionado = formulario.querySelector('input[name="activa"]:checked')?.value;
         const duracion = Number(plan?.dataset.duracion);
         const vencimientoActual = analizarFecha(formulario.dataset.vencimientoActual);
-        const hoy = new Date();
+        const hoy = analizarFecha(formulario.dataset.fechaHoy) || new Date();
         hoy.setHours(0, 0, 0, 0);
+        const diasRestantes = obtenerDiasEntreFechas(hoy, vencimientoActual);
+        const periodoAplicado = operacion === 'cambiar_plan' ? duracion : periodoSeleccionado;
 
+        establecerTexto(
+            'dias-restantes',
+            diasRestantes ? `${diasRestantes} días disponibles que se conservarán` : 'Sin días pendientes'
+        );
         establecerTexto('resumen-plan', plan?.value ? plan.textContent.trim() : '—');
         establecerTexto(
             'resumen-periodo',
-            operacion === 'cambiar_plan' && Number.isFinite(duracion) && duracion > 0
-                ? `${duracion} días`
-                : periodoSeleccionado
-                    ? `${periodoSeleccionado} días`
-                    : '—'
+            Number.isFinite(periodoAplicado) && periodoAplicado > 0
+                ? `${periodoAplicado} días${diasRestantes ? ` + ${diasRestantes} disponibles` : ''}`
+                : '—'
         );
         establecerTexto('resumen-estado', estadoSeleccionado === '1' ? 'Activa' : 'Inactiva');
 
         let nuevoVencimiento = null;
-        if (operacion === 'cambiar_plan' && Number.isFinite(duracion) && duracion > 0) {
+        if (Number.isFinite(periodoAplicado) && periodoAplicado > 0) {
             nuevoVencimiento = new Date(hoy);
-            nuevoVencimiento.setDate(nuevoVencimiento.getDate() + duracion);
-        } else if (operacion === 'renovar' && periodoSeleccionado) {
-            nuevoVencimiento = vencimientoActual && vencimientoActual > hoy
-                ? new Date(vencimientoActual)
-                : new Date(hoy);
-            nuevoVencimiento.setDate(nuevoVencimiento.getDate() + periodoSeleccionado);
+            nuevoVencimiento.setDate(nuevoVencimiento.getDate() + diasRestantes + periodoAplicado);
         }
 
         establecerTexto('fecha-nueva', formatearFecha(nuevoVencimiento));

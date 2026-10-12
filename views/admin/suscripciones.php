@@ -130,7 +130,11 @@
         </button>
       </div>
 
-      <form id="form-suscripcion" action="/admin/suscripciones" method="POST">
+      <form
+        id="form-suscripcion"
+        action="/admin/suscripciones"
+        method="POST"
+        data-fecha-hoy="<?php echo date('Y-m-d'); ?>">
         <input type="hidden" name="id" id="suscripcion-id">
 
         <!-- Información actual -->
@@ -231,7 +235,7 @@
                 <span>
                   <strong>Cambiar plan</strong>
                   <small>
-                    Aplica el periodo correspondiente al nuevo plan.
+                    Aplica el periodo del nuevo plan y conserva los días disponibles.
                   </small>
                 </span>
               </label>
@@ -280,6 +284,7 @@
                 <p>
                   <span>Vencimiento actual</span>
                   <strong id="fecha-actual">—</strong>
+                  <small id="dias-restantes">Sin días pendientes</small>
                 </p>
 
                 <p>
