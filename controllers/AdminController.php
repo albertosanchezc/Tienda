@@ -93,9 +93,12 @@ class AdminController
     {
         header('Content-Type: application/json; charset=utf-8');
 
+        if (($_POST['accion'] ?? '') === 'actualizar_estado') {
+            self::actualizarEstadoSuscripcion();
+        }
+
         $idRecibido = $_POST['id'] ?? null;
         $planIdRecibido = $_POST['plan_id'] ?? null;
-        $periodoRecibido = $_POST['periodo'] ?? null;
         $operacion = $_POST['operacion'] ?? '';
         $estado = $_POST['activa'] ?? null;
         $motivoRecibido = $_POST['motivo'] ?? '';
@@ -103,7 +106,6 @@ class AdminController
 
         $id = is_string($idRecibido) ? filter_var($idRecibido, FILTER_VALIDATE_INT) : false;
         $planId = is_string($planIdRecibido) ? filter_var($planIdRecibido, FILTER_VALIDATE_INT) : false;
-        $periodo = is_string($periodoRecibido) ? filter_var($periodoRecibido, FILTER_VALIDATE_INT) : false;
 
         if (!$id || $id < 1 || !$planId || $planId < 1) {
             self::responderSuscripcion(422, false, 'Selecciona una suscripción y un plan válidos.');
@@ -119,10 +121,6 @@ class AdminController
 
         if (!is_string($estado) || !in_array($estado, ['0', '1'], true)) {
             self::responderSuscripcion(422, false, 'Selecciona un estado de acceso válido.');
-        }
-
-        if ($operacion === 'renovar' && !in_array($periodo, [7, 30, 365], true)) {
-            self::responderSuscripcion(422, false, 'Selecciona un periodo de renovación válido.');
         }
 
         if (!is_string($motivoRecibido)) {
@@ -176,11 +174,9 @@ class AdminController
             ? (int) $hoy->diff($vencimientoActual)->days
             : 0;
 
-        if ($operacion === 'renovar') {
-            $periodoAplicado = $periodo;
-        } else {
+        $periodoAplicado = $duracionPlan;
+        if ($operacion === 'cambiar_plan') {
             $suscripcion->fecha_inicio = $hoy->format('Y-m-d');
-            $periodoAplicado = $duracionPlan;
         }
 
         $diasTotales = $diasRestantes + $periodoAplicado;
@@ -220,6 +216,65 @@ class AdminController
         }
 
         self::responderSuscripcion(200, true, 'La suscripción se actualizó correctamente.');
+    }
+
+    private static function actualizarEstadoSuscripcion(): void
+    {
+        $idRecibido = $_POST['id'] ?? null;
+        $estado = $_POST['activa'] ?? null;
+        $administradorId = filter_var($_SESSION['id'] ?? null, FILTER_VALIDATE_INT);
+        $id = is_string($idRecibido) ? filter_var($idRecibido, FILTER_VALIDATE_INT) : false;
+
+        if (!$id || $id < 1 || !is_string($estado) || !in_array($estado, ['0', '1'], true)) {
+            self::responderSuscripcion(422, false, 'La suscripción o el estado seleccionado no son válidos.');
+        }
+
+        if (!$administradorId || $administradorId < 1) {
+            self::responderSuscripcion(401, false, 'Tu sesión no es válida. Inicia sesión nuevamente.');
+        }
+
+        $suscripcion = Suscripcion::find($id);
+        if (!$suscripcion) {
+            self::responderSuscripcion(404, false, 'No se encontró la suscripción que intentas actualizar.');
+        }
+
+        $estadoAnterior = (int) $suscripcion->activa;
+        $estadoNuevo = (int) $estado;
+        if ($estadoAnterior === $estadoNuevo) {
+            self::responderSuscripcion(200, true, 'El estado de la suscripción ya estaba actualizado.');
+        }
+
+        $suscripcion->activa = $estadoNuevo;
+        $suscripcion->updated_at = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
+
+        $historial = new HistorialSuscripcion([
+            'suscripcion_id' => $suscripcion->id,
+            'administrador_id' => $administradorId,
+            'operacion' => 'cambiar_estado',
+            'plan_anterior_id' => $suscripcion->plan_id,
+            'plan_nuevo_id' => $suscripcion->plan_id,
+            'fecha_inicio_anterior' => $suscripcion->fecha_inicio,
+            'fecha_inicio_nueva' => $suscripcion->fecha_inicio,
+            'fecha_vencimiento_anterior' => $suscripcion->fecha_vencimiento,
+            'fecha_vencimiento_nueva' => $suscripcion->fecha_vencimiento,
+            'activa_anterior' => $estadoAnterior,
+            'activa_nueva' => $estadoNuevo,
+            'motivo' => 'Cambio de estado desde la lista de suscripciones.',
+            'created_at' => (new \DateTimeImmutable())->format('Y-m-d H:i:s')
+        ]);
+
+        try {
+            $guardado = Suscripcion::guardarConHistorial($suscripcion, $historial);
+        } catch (\mysqli_sql_exception $error) {
+            error_log('Error al cambiar estado de suscripción ' . $id . ': ' . $error->getMessage());
+            self::responderSuscripcion(500, false, 'Ocurrió un error al actualizar el estado. Inténtalo de nuevo.');
+        }
+
+        if (!$guardado) {
+            self::responderSuscripcion(500, false, 'No se pudo actualizar el estado. Inténtalo de nuevo.');
+        }
+
+        self::responderSuscripcion(200, true, 'El estado de la suscripción se actualizó correctamente.');
     }
 
     private static function responderSuscripcion(int $estadoHttp, bool $exito, string $mensaje): void

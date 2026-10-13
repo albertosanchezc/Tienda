@@ -7,6 +7,39 @@ document.addEventListener('DOMContentLoaded', function () {
     const idSuscripcion = document.getElementById('suscripcion-id');
     const selectorPlan = document.getElementById('selector-plan');
     const botonesEditar = document.querySelectorAll('.boton-editar-suscripcion');
+    const interruptoresEstado = document.querySelectorAll('.action-cell .switch input[type="checkbox"][data-id]');
+
+    interruptoresEstado.forEach((interruptor) => {
+        interruptor.addEventListener('change', async () => {
+            const estadoSolicitado = interruptor.checked;
+            interruptor.disabled = true;
+
+            const datos = new FormData();
+            datos.set('accion', 'actualizar_estado');
+            datos.set('id', interruptor.dataset.id);
+            datos.set('activa', estadoSolicitado ? '1' : '0');
+
+            try {
+                const respuesta = await fetch(window.location.pathname, {
+                    method: 'POST',
+                    body: datos
+                });
+                const resultado = await respuesta.json();
+
+                if (!respuesta.ok || !resultado.exito) {
+                    throw new Error(resultado.mensaje || 'No se pudo actualizar el estado.');
+                }
+
+                window.location.reload();
+            } catch (error) {
+                interruptor.checked = !estadoSolicitado;
+                console.error('Error al actualizar el estado de la suscripción:', error);
+                alert(error.message || 'Ocurrió un error al actualizar el estado.');
+            } finally {
+                interruptor.disabled = false;
+            }
+        });
+    });
 
     if (!modal || !formulario || !idSuscripcion || !selectorPlan) return;
 
@@ -42,21 +75,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const actualizarVistaPrevia = () => {
         const plan = obtenerPlanSeleccionado();
-        const operacion = formulario.querySelector('input[name="operacion"]:checked')?.value;
-        const periodoSeleccionado = Number(formulario.querySelector('input[name="periodo"]:checked')?.value);
         const estadoSeleccionado = formulario.querySelector('input[name="activa"]:checked')?.value;
         const duracion = Number(plan?.dataset.duracion);
         const vencimientoActual = analizarFecha(formulario.dataset.vencimientoActual);
         const hoy = analizarFecha(formulario.dataset.fechaHoy) || new Date();
         hoy.setHours(0, 0, 0, 0);
         const diasRestantes = obtenerDiasEntreFechas(hoy, vencimientoActual);
-        const periodoAplicado = operacion === 'cambiar_plan' ? duracion : periodoSeleccionado;
+        const periodoAplicado = duracion;
 
         establecerTexto(
             'dias-restantes',
             diasRestantes ? `${diasRestantes} días disponibles que se conservarán` : 'Sin días pendientes'
         );
         establecerTexto('resumen-plan', plan?.value ? plan.textContent.trim() : '—');
+        establecerTexto(
+            'duracion-plan',
+            Number.isFinite(duracion) && duracion > 0 ? `${duracion} días` : 'Selecciona un plan para ver su duración.'
+        );
         establecerTexto(
             'resumen-periodo',
             Number.isFinite(periodoAplicado) && periodoAplicado > 0
@@ -136,13 +171,9 @@ document.addEventListener('DOMContentLoaded', function () {
         );
         if (entradaEstado) entradaEstado.checked = true;
 
-        const periodoPredeterminado = formulario.querySelector('input[name="periodo"][value="30"]');
-        if (periodoPredeterminado) periodoPredeterminado.checked = true;
-
         const entradaRenovar = formulario.querySelector('input[name="operacion"][value="renovar"]');
         if (entradaRenovar) entradaRenovar.checked = true;
 
-        establecerTexto('resumen-periodo', periodoPredeterminado ? '30 días' : '—');
         establecerTexto('resumen-estado', boton.dataset.activa === '1' ? 'Activa' : 'Inactiva');
         actualizarVistaPrevia();
 
@@ -168,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    formulario.querySelectorAll('input[name="operacion"], input[name="periodo"], input[name="activa"]')
+    formulario.querySelectorAll('input[name="operacion"], input[name="activa"]')
         .forEach((entrada) => entrada.addEventListener('change', actualizarVistaPrevia));
 
     selectorPlan.addEventListener('change', () => {

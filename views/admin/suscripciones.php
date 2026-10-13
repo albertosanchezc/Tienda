@@ -71,10 +71,11 @@
                       <input
                         type="checkbox"
                         data-id="<?php echo $suscripcion->id; ?>"
+                        aria-label="Activar o desactivar suscripción de <?php echo s($usuario->obtenerNombreCompleto()); ?>"
                         <?php echo $suscripcion->activa ? 'checked' : ''; ?>>
                       <span class="slider"></span>
                     </label>
-                    <span class="action-label">Desactivar/Activar</span>
+                    <span class="action-label"><?php echo $suscripcion->activa ? 'Activa' : 'Inactiva'; ?></span>
                     <button
                       type="button"
                       class="boton-editar-suscripcion"
@@ -221,7 +222,7 @@
                 <span>
                   <strong>Renovar o extender periodo</strong>
                   <small>
-                    Conserva los días restantes y agrega el nuevo periodo.
+                    Conserva los días restantes y agrega la duración del plan seleccionado.
                   </small>
                 </span>
               </label>
@@ -248,36 +249,16 @@
                 <i class="fa-regular fa-calendar-days"></i>
 
                 <div>
-                  <h3>Periodo adicional</h3>
-                  <p>Selecciona el tiempo que deseas agregar.</p>
+                  <h3>Duración del plan</h3>
+                  <p>Este periodo se toma automáticamente del plan seleccionado.</p>
                 </div>
               </div>
 
-              <div class="modal1__periodos">
-                <label class="modal1__opcion">
-                  <input
-                    type="radio"
-                    name="periodo"
-                    value="7">
-                  <span>7 días</span>
-                </label>
-
-                <label class="modal1__opcion">
-                  <input
-                    type="radio"
-                    name="periodo"
-                    value="30"
-                    checked>
-                  <span>30 días (1 mes)</span>
-                </label>
-
-                <label class="modal1__opcion">
-                  <input
-                    type="radio"
-                    name="periodo"
-                    value="365">
-                  <span>365 días (1 año)</span>
-                </label>
+              <div class="modal1__fechas">
+                <p>
+                  <span>Periodo que se agregará</span>
+                  <strong id="duracion-plan">Selecciona un plan para ver su duración.</strong>
+                </p>
               </div>
 
               <div class="modal1__fechas">
@@ -367,8 +348,8 @@
               </p>
 
               <p>
-                <span>Periodo:</span>
-                <strong id="resumen-periodo">30 días</strong>
+                <span>Duración aplicada:</span>
+                <strong id="resumen-periodo">—</strong>
               </p>
 
               <p>
