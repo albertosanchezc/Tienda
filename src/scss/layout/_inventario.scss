@@ -13,6 +13,8 @@
         font-size: 2.4rem;
         padding: 0 15rem;
         margin-bottom: 8rem;
+
+
     }
 }
 
@@ -347,283 +349,283 @@ span {
     padding: 0 1rem;
 }
 
-.despliegueinventario {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* Dos contenedores principales */
-    gap: 20px;
-    width: 100%;
-    margin-top: 5rem;
-    padding: 0 2rem;
+// .despliegueinventario {
+//     display: grid;
+//     grid-template-columns: repeat(2, 1fr);
+//     /* Dos contenedores principales */
+//     gap: 20px;
+//     width: 100%;
+//     margin-top: 5rem;
+//     padding: 0 2rem;
 
-}
+// }
 
-.inventariogrid {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 0 6rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+// .inventariogrid {
+//     background-color: #f9f9f9;
+//     border: 1px solid #ddd;
+//     border-radius: 8px;
+//     padding: 0 6rem;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    // gap: 20px;
+//     display: grid;
+//     grid-template-columns: 3fr 2fr;
+//     // gap: 20px;
 
-    .gridcontenido1 {
-        grid-column: 1;
-        grid-row: 1fr;
+//     .gridcontenido1 {
+//         grid-column: 1;
+//         grid-row: 1fr;
 
-        /* Ubica esta sección en la primera columna */
-    }
+//         /* Ubica esta sección en la primera columna */
+//     }
 
-    .dinerogrid {
-        grid-column: 2;
-        /* Ubica esta sección en la segunda columna */
-        text-align: right;
-        grid-row: 1fr;
+//     .dinerogrid {
+//         grid-column: 2;
+//         /* Ubica esta sección en la segunda columna */
+//         text-align: right;
+//         grid-row: 1fr;
 
-        padding-top: 3rem;
-    }
+//         padding-top: 3rem;
+//     }
 
-}
+// }
 
-.nombreprod {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: 1/3;
-    margin: 0;
-    padding: 0;
-    gap: 2rem;
+// .nombreprod {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     grid-column: 1/3;
+//     margin: 0;
+//     padding: 0;
+//     gap: 2rem;
 
-    img {
-        width: 10rem;
-        height: auto;
-        border-radius: 8px;
-    }
+//     img {
+//         width: 10rem;
+//         height: auto;
+//         border-radius: 8px;
+//     }
 
-    p {
-        margin: 0;
-        padding: 0;
-        font-size: 1.7rem;
-        text-transform: uppercase;
-        font-weight: bold;
-        text-align: center;
-    }
-}
+//     p {
+//         margin: 0;
+//         padding: 0;
+//         font-size: 1.7rem;
+//         text-transform: uppercase;
+//         font-weight: bold;
+//         text-align: center;
+//     }
+// }
 
-.inventariogrid:hover {
-    background-color: #f3f4f5;
+// .inventariogrid:hover {
+//     background-color: #f3f4f5;
 
-}
+// }
 
-.inventarionombre {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-
-
-    h3 {
-        margin: 0;
-        font-size: 1.7rem;
-        font-weight: bold;
-        text-align: left;
-        text-transform: uppercase;
-
-
-    }
-
-    p {
-        margin: 0;
-        font-weight: bold;
-        font-size: 1.3rem;
-        color: rgb(84, 196, 32);
-        text-transform: uppercase;
-
-    }
-
-}
-
-.flexdescripcion,
-.flexcodigo,
-.flexproveedor,
-.flexreloj {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    p {
-        margin: 0;
-        font-size: 1.3rem;
-        color: #10101a;
-    }
-
-    div {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .negritas {
-        font-weight: bold;
-
-    }
-}
-
-
-.inventarionombre,
-.flexdescripcion,
-.flexcodigo,
-.flexproveedor,
-.flexreloj {
-    margin-bottom: 1rem;
-    /* Añade separación entre elementos */
-
-}
-
-.preciodeventa,
-.preciodecompra,
-.gananciap,
-.gananciad {
-    margin-bottom: 0.5rem;
-
-    /* Espaciado entre los datos de la segunda columna */
-
-
-    p {
-        margin: 0;
-        font-size: 1.3rem;
-        color: #10101a;
-    }
-
-    .negritas {
-        font-weight: bold;
-
-    }
-
-    .dineros {
-        font-size: 1.82rem;
-        font-weight: bold;
-        background: linear-gradient(to right, #0400ff, #33cc33);
-        /* Otro degradado para el párrafo */
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-
-    }
-
-    .dineros1 {
-        color: #0400ff;
-        font-size: 1.82rem;
-        font-weight: bold;
-    }
-}
-
-.botonesinventario {
-    display: flex;
-
-}
-
-
-.botonesinventario {
-    grid-column: 1/3;
-    display: grid;
-    grid-template-rows: 2;
-
-    gap: 10px;
-    /* Espacio entre filas */
-}
-
-.primerafila {
-    grid-row: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    /* Ocupa toda la fila */
-}
-
-.botonactualizarstock {
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    background-color: #192ac7;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-.botonactualizarstock:hover {
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    background-color: #f9f9f9;
-    color: #192ac7;
-    border: solid 1px #192ac7;
+// .inventarionombre {
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
 
 
 
-}
+//     h3 {
+//         margin: 0;
+//         font-size: 1.7rem;
+//         font-weight: bold;
+//         text-align: left;
+//         text-transform: uppercase;
 
-.segundafila {
-    grid-row: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    /* Espacio entre los botones */
-}
 
-.botonactualizar,
-.botoneliminar {
-    flex: 1;
-    /* Hace que ambos botones compartan el ancho del contenedor */
-    text-align: center;
-    padding: 10px;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
-    font-weight: bold;
+//     }
 
-}
+//     p {
+//         margin: 0;
+//         font-weight: bold;
+//         font-size: 1.3rem;
+//         color: rgb(84, 196, 32);
+//         text-transform: uppercase;
 
-.botoneliminar {
-    background-color: #e01b2f;
-}
+//     }
 
-.botoneliminar:hover {
-    background-color: #f9f9f9;
-    color: #e01b2f;
-    border: solid 1px #e01b2f;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
+// }
 
-.botonactualizar {
-    background-color: #198a32;
-}
+// .flexdescripcion,
+// .flexcodigo,
+// .flexproveedor,
+// .flexreloj {
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
 
-.botonactualizar:hover {
-    background-color: #f9f9f9;
-    color: #198a32;
-    border: solid 1px #198a32;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
+//     p {
+//         margin: 0;
+//         font-size: 1.3rem;
+//         color: #10101a;
+//     }
 
-.imgdescripcion,
-.imgcodigo,
-.imgproveedor,
-.imgreloj {
-    width: 2.7rem;
-    height: 2.7rem;
+//     div {
+//         display: flex;
+//         flex-direction: column;
+//     }
 
-}
+//     .negritas {
+//         font-weight: bold;
 
-.imgcoca {
-    width: 100%;
+//     }
+// }
 
-}
+
+// .inventarionombre,
+// .flexdescripcion,
+// .flexcodigo,
+// .flexproveedor,
+// .flexreloj {
+//     margin-bottom: 1rem;
+//     /* Añade separación entre elementos */
+
+// }
+
+// .preciodeventa,
+// .preciodecompra,
+// .gananciap,
+// .gananciad {
+//     margin-bottom: 0.5rem;
+
+//     /* Espaciado entre los datos de la segunda columna */
+
+
+//     p {
+//         margin: 0;
+//         font-size: 1.3rem;
+//         color: #10101a;
+//     }
+
+//     .negritas {
+//         font-weight: bold;
+
+//     }
+
+//     .dineros {
+//         font-size: 1.82rem;
+//         font-weight: bold;
+//         background: linear-gradient(to right, #0400ff, #33cc33);
+//         /* Otro degradado para el párrafo */
+//         -webkit-background-clip: text;
+//         -webkit-text-fill-color: transparent;
+
+//     }
+
+//     .dineros1 {
+//         color: #0400ff;
+//         font-size: 1.82rem;
+//         font-weight: bold;
+//     }
+// }
+
+// .botonesinventario {
+//     display: flex;
+
+// }
+
+
+// .botonesinventario {
+//     grid-column: 1/3;
+//     display: grid;
+//     grid-template-rows: 2;
+
+//     gap: 10px;
+//     /* Espacio entre filas */
+// }
+
+// .primerafila {
+//     grid-row: 1;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 100%;
+//     /* Ocupa toda la fila */
+// }
+
+// .botonactualizarstock {
+//     width: 100%;
+//     text-align: center;
+//     padding: 10px;
+//     background-color: #192ac7;
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+//     color: white;
+//     text-decoration: none;
+//     border-radius: 5px;
+//     font-weight: bold;
+//     transition: background-color 0.3s;
+// }
+
+// .botonactualizarstock:hover {
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+//     background-color: #f9f9f9;
+//     color: #192ac7;
+//     border: solid 1px #192ac7;
+
+
+
+// }
+
+// .segundafila {
+//     grid-row: 2;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     gap: 10px;
+//     /* Espacio entre los botones */
+// }
+
+// .botonactualizar,
+// .botoneliminar {
+//     flex: 1;
+//     /* Hace que ambos botones compartan el ancho del contenedor */
+//     text-align: center;
+//     padding: 10px;
+//     color: white;
+//     text-decoration: none;
+//     border-radius: 5px;
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+//     transition: background-color 0.3s;
+//     font-weight: bold;
+
+// }
+
+// .botoneliminar {
+//     background-color: #e01b2f;
+// }
+
+// .botoneliminar:hover {
+//     background-color: #f9f9f9;
+//     color: #e01b2f;
+//     border: solid 1px #e01b2f;
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+// }
+
+// .botonactualizar {
+//     background-color: #198a32;
+// }
+
+// .botonactualizar:hover {
+//     background-color: #f9f9f9;
+//     color: #198a32;
+//     border: solid 1px #198a32;
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+// }
+
+// .imgdescripcion,
+// .imgcodigo,
+// .imgproveedor,
+// .imgreloj {
+//     width: 2.7rem;
+//     height: 2.7rem;
+
+// }
+
+// .imgcoca {
+//     width: 100%;
+
+// }
 
 @include telefono-1 {
     .proveedores-titulo {
@@ -655,16 +657,16 @@ span {
         grid-row: 5;
     }
 
-    .inventariogrid {
-        padding: 3rem 2rem;
-        grid-template-columns: 1fr;
+    // .inventariogrid {
+    //     padding: 3rem 2rem;
+    //     grid-template-columns: 1fr;
 
-    }
+    // }
 
-    .despliegueinventario {
-        grid-template-columns: 1fr;
+    // .despliegueinventario {
+    //     grid-template-columns: 1fr;
 
-    }
+    // }
 
 }
 
@@ -698,13 +700,13 @@ span {
         grid-row: 5;
     }
 
-    .inventariogrid {
-        padding: 3rem 2rem;
-    }
+    // .inventariogrid {
+    //     padding: 3rem 2rem;
+    // }
 
-    .despliegueinventario {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    // .despliegueinventario {
+    //     grid-template-columns: repeat(2, 1fr);
+    // }
 }
 
 @include laptop-1 {
@@ -736,14 +738,14 @@ span {
         grid-row: 3/5;
     }
 
-    .inventariogrid {
-        padding: 3rem 1.3rem;
+    // .inventariogrid {
+    //     padding: 3rem 1.3rem;
 
-    }
+    // }
 
-    .despliegueinventario {
-        grid-template-columns: repeat(3, 1fr);
-    }
+    // .despliegueinventario {
+    //     grid-template-columns: repeat(3, 1fr);
+    // }
 }
 
 .modal--inventarioEliminar,
@@ -990,5 +992,421 @@ span {
     background-color: rgb(255, 255, 255);
     color: #6655ff !important;
 }
+
+$inv-texto: #20262f;
+$inv-secundario: #68717d;
+$inv-borde: #dfe3e8;
+$inv-primario: #3658cf;
+$inv-peligro: #c73636;
+
+.despliegueinventario {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 24px;
+
+  &,
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  > .inventariogrid {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid $inv-borde;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(32, 38, 47, 0.04);
+    color: $inv-texto;
+    font-family: "Segoe UI", sans-serif;
+
+    p,
+    h3 {
+      margin: 0;
+    }
+
+    // Imagen, nombre, categoría y existencias
+    .nombreprod {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr);
+      align-items: center;
+      gap: 5px; 
+      width: 100%;
+      padding: 20px 20px 8px 20px;
+
+
+      > .imgcoca {
+        display: block;
+        width: 80px;
+        height: 80px;
+        padding: 8px;
+        border: 1px solid $inv-borde;
+        border-radius: 8px;
+        background: #fff;
+        object-fit: contain;
+        // grid-column:1/2 ;
+        // grid-row: 1/2;
+      }
+
+      > p {
+        color: $inv-texto;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.4;
+        text-align: left;
+        overflow-wrap: anywhere;
+        // grid-column:2/3 ;
+        // grid-row: 1/2;
+      }
+
+      > .inventarionombre {
+        grid-column: 1 / -1;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+
+        // Tu función genera otra .inventarionombre anidada.
+        .inventarionombre {
+          display: block;
+          margin: 0;
+          padding: 0;
+        }
+
+        h3 {
+          margin-bottom: 8px;
+          color: $inv-secundario;
+          font-size: 11px;
+          font-weight: 600;
+          line-height: 1.4;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+
+        div > p {
+          padding: 10px 12px;
+          border-radius: 6px;
+          background: #f4f6f9;
+          color: $inv-texto;
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 1.5;
+        }
+      }
+    }
+
+    // Precios y ganancias
+    .dinerogrid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: start;
+      gap: 8px;
+      width: 100%;
+      margin: 0;
+      padding: 0 20px 8px 20px;
+      text-align: left;
+      font-variant-numeric: tabular-nums;
+
+      > div {
+        min-width: 0;
+      }
+
+      .negritas {
+        margin-bottom: 6px;
+        color: $inv-secundario;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+
+      .preciodeventa {
+        grid-column: 1 / -1;
+      }
+
+      .dineros1 {
+        color: $inv-texto;
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+      }
+
+      .dineros {
+        color: $inv-texto;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
+      }
+
+      .gananciad {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 6px;
+        background: #f7f8fa;
+
+        .negritas {
+          margin: 0;
+        }
+      }
+    }
+
+    // Información operativa
+    .gridcontenido1 {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      margin: 0;
+      padding: 10px 20px;
+      border-top: 1px solid $inv-borde;
+
+      .flexdescripcion,
+      .flexcodigo,
+      .flexproveedor,
+      .flexreloj {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+
+        > img {
+          flex: 0 0 20px;
+          width: 20px;
+          height: 20px;
+          margin-top: 2px;
+          object-fit: contain;
+        }
+
+        > div {
+          flex: 1;
+          min-width: 0;
+        }
+
+        p {
+          color: $inv-texto;
+          font-size: 13px;
+          line-height: 1.6;
+          overflow-wrap: anywhere;
+        }
+
+        .negritas {
+          margin-bottom: 4px;
+          color: $inv-secundario;
+          font-size: 12px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    // Acciones
+    .botonesinventario {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      margin-top: auto;
+      padding: 8px 20px;
+      border-top: 1px solid $inv-borde;
+      
+
+      .primerafila,
+      .segundafila {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        min-height: 44px;
+        width: 100%;
+        margin: 0;
+        padding: 10px 8px;
+        border: 1px solid $inv-borde;
+        border-radius: 6px;
+        background: #fff;
+        box-shadow: none;
+        color: $inv-texto;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.4;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          background-color 150ms ease,
+          border-color 150ms ease;
+
+        &:hover {
+          border-color: #bcc4cf;
+          background: #f1f3f7;
+        }
+
+        &:focus-visible {
+          outline: 3px solid rgba($inv-primario, 0.35);
+          outline-offset: 3px;
+        }
+      }
+
+      .botonactualizarstock:not(.crearVariante) {
+        border-color: $inv-primario;
+        background: $inv-primario;
+        color: #fff;
+
+        &:hover {
+          border-color: #2946b5;
+          background: #2946b5;
+        }
+      }
+
+      .crearVariante,
+      .botonactualizar {
+        background: #fff;
+        color: $inv-texto;
+      }
+
+      .botoneliminar {
+        color: $inv-peligro;
+
+        &:hover {
+          border-color: #edbcbc;
+          background: #fff1f1;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .despliegueinventario {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .despliegueinventario {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px;
+  }
+}
+
+// .despliegueinventario > .inventariogrid {
+//     .nombreprod {
+//       display: grid;
+//       grid-template-columns: 80px minmax(0, 1fr);
+//       grid-template-rows: auto auto;
+//       grid-template-areas:
+//         "foto titulo"
+//         "datos datos";
+//       align-items: center;
+//       gap: 8px;
+//       width: 100%;
+//       padding: 5px;
+  
+//       // Restablece posiciones heredadas del diseño anterior.
+//       > .imgcoca,
+//       > p,
+//       > .inventarionombre {
+//         position: static;
+//         inset: auto;
+//         transform: none;
+//         margin: 0;
+//         justify-self: stretch;
+//         align-self: center;
+//       }
+  
+//       > .imgcoca {
+//         grid-area: foto;
+//         display: block;
+//         width: 80px;
+//         height: 80px;
+//         padding: 8px;
+//         object-fit: contain;
+//       }
+  
+//       > p {
+//         grid-area: titulo;
+//         min-width: 0;
+//         width: auto;
+//         color: #20262f;
+//         font-size: 16px;
+//         font-weight: 600;
+//         line-height: 1.4;
+//         text-align: left;
+//         overflow-wrap: anywhere;
+//       }
+  
+//       > .inventarionombre {
+//         grid-area: datos;
+//         display: block;
+//         min-width: 0;
+//         width: 100%;
+//         padding: 0;
+  
+//         // Tu función también genera esta clase dentro del bloque.
+//         .inventarionombre {
+//           display: block;
+//           position: static;
+//           width: 100%;
+//           margin: 0;
+//           padding: 0;
+//         }
+  
+//         h3 {
+//           margin: 0 0 8px;
+//           color: #68717d;
+//           font-size: 11px;
+//           font-weight: 600;
+//           line-height: 1.4;
+//           text-transform: uppercase;
+//         }
+  
+//         div > p {
+//           margin: 0;
+//           padding: 10px 12px;
+//           border-radius: 6px;
+//           background: #f4f6f9;
+//           color: #20262f;
+//           font-size: 12px;
+//           line-height: 1.5;
+//         }
+//       }
+//     }
+//   }
+
+
+
+
+
+
+  
+
 
 

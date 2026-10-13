@@ -924,7 +924,7 @@ function mostrarCards(inventario, proveedores, categorias) {
         tiendaId = inventario[0].tienda_id;
         parrafoContainer.classList.add('nombreprod');
         parrafoContainer.innerHTML = `
-        '<img src="/imagenes/tienda_${tiendaId}/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
+        <img src="/imagenes/tienda_${tiendaId}/${imagen}" alt="Logotipo de ${nombre}" class="imgcoca">
 
         <P> ${nombre}</P>
         `;
@@ -1009,7 +1009,7 @@ function mostrarCards(inventario, proveedores, categorias) {
 
         botonesGrid.innerHTML = `
 
-        <div class="primerafila" style="gap:1rem;">
+        <div class="primerafila">
             <a href="#" class="botonactualizarstock">Actualizar Stock</a>
             <a href="#" class="botonactualizarstock crearVariante">Crear Variante</a>
         </div>
@@ -1031,15 +1031,18 @@ function mostrarCards(inventario, proveedores, categorias) {
                 background-color: #f9f9f9;
                 color: #0093ff;
             }
-
-            /* Puedes agregar más estilos de hover para otros botones aquí */
         </style>
         `;
-        inventarioGrid.appendChild(parrafoContainer);
-gridContenido.prepend(div);
-inventarioGrid.appendChild(gridContenido);
+       
+// Categoría y stock debajo del nombre.
+parrafoContainer.appendChild(div);
+
+// Primero precios; después detalles y acciones.
+inventarioGrid.appendChild(parrafoContainer);
 inventarioGrid.appendChild(dineroGrid);
+inventarioGrid.appendChild(gridContenido);
 inventarioGrid.appendChild(botonesGrid);
+
 despliegueInventario.appendChild(inventarioGrid);
 
 
