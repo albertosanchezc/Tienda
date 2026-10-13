@@ -49,10 +49,34 @@ class Suscripcion extends ActiveRecord
         return $tienda;
     }
 
-        public function obtenerPlan()
+    public function obtenerPlan()
     {
         $plan = Plan::find($this->plan_id);
         return $plan;
+    }
+
+    public static function guardarConHistorial(Suscripcion $suscripcion, HistorialSuscripcion $historial): bool
+    {
+        if (!self::$db->begin_transaction()) {
+            return false;
+        }
+
+        try {
+            if (!$suscripcion->guardar() || !$historial->guardar()) {
+                self::$db->rollback();
+                return false;
+            }
+
+            if (!self::$db->commit()) {
+                self::$db->rollback();
+                return false;
+            }
+
+            return true;
+        } catch (\mysqli_sql_exception $error) {
+            self::$db->rollback();
+            throw $error;
+        }
     }
 
     public function obtenerDiasRestantes()
@@ -87,7 +111,7 @@ class Suscripcion extends ActiveRecord
         return $resultado->fetch_row()[0];
     }
 
-        public static function contarInctivas()
+    public static function contarInctivas()
     {
         $query = "SELECT COUNT(*) FROM " . static::$tabla . " WHERE activa = 0";
         $resultado = self::$db->query($query);
@@ -106,5 +130,45 @@ class Suscripcion extends ActiveRecord
         $resultado = self::$db->query($query);
 
         return $resultado->fetch_row()[0];
+    }
+
+    public function estaVigente(): bool
+    {
+        if ((int) $this->activa !== 1 || empty($this->fecha_vencimiento)) {
+            return false;
+        }
+
+        try {
+            $hoy = new DateTime('today');
+            $vencimiento = new DateTime($this->fecha_vencimiento);
+            $vencimiento->setTime(0, 0, 0);
+
+            return $vencimiento >= $hoy;
+        } catch (\Exception $error) {
+            return false;
+        }
+    }
+
+    public static function obtenerPorTienda($tiendaId): ?self
+    {
+        if (!$tiendaId) {
+            return null;
+        }
+
+        $query = "SELECT * FROM " . static::$tabla . "
+              WHERE tienda_id = ?
+              ORDER BY id DESC
+              LIMIT 1";
+
+        $stmt = self::$db->prepare($query);
+        $stmt->bind_param('i', $tiendaId);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+        $datos = $resultado->fetch_assoc();
+
+        $stmt->close();
+
+        return $datos ? new self($datos) : null;
     }
 }

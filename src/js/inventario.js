@@ -112,14 +112,30 @@ async function consultarAPI() {
         const server = window.location.host;
         const api = '/inventarios/api/inventarios'
 
-
         // const url = `${server}${api}`;
         const url = `${api}`;
 
         const respuesta = await fetch(url);
-        const resultado = await respuesta.json();
+        let resultado;
 
-        console.log(resultado);
+        try {
+            resultado = await respuesta.json();
+        } catch (e) {
+            throw new Error(`La API de inventario devolvió una respuesta que no es JSON válido (HTTP ${respuesta.status})`);
+        }
+
+        if (!respuesta.ok) {
+            throw new Error(resultado.error || `La API de inventario respondió HTTP ${respuesta.status}`);
+        }
+
+        if (
+            !Array.isArray(resultado.inventario) ||
+            !Array.isArray(resultado.proveedores) ||
+            !Array.isArray(resultado.categorias) ||
+            !Array.isArray(resultado.ventas)
+        ) {
+            throw new Error('La respuesta de la API de inventario no tiene la estructura esperada');
+        }
         
         inventario = resultado.inventario;
         proveedores = resultado.proveedores;
@@ -133,7 +149,7 @@ async function consultarAPI() {
         // mostrarCards(inventario);
 
     } catch (e) {
-        console.log(e);
+        console.error('No se pudo cargar el inventario:', e);
     }
 }
 
@@ -1417,8 +1433,6 @@ function imprimirParrafosModal(granel, cantidad, resultado) {
         parrafoCantidadResultado.innerHTML = `${resultado} Artículos en Stock`;
     }
 }
-
-
 
 
 

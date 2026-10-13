@@ -76,7 +76,19 @@ class PaginasController
             'ventas' => $ventas
         ];
 
-        echo json_encode($datos);
+        try {
+            $respuesta = json_encode(
+                $datos,
+                JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR
+            );
+        } catch (\JsonException $e) {
+            error_log('Error al generar la respuesta de la API de inventario: ' . $e->getMessage());
+            http_response_code(500);
+            echo '{"error":"No se pudo generar la respuesta de inventario"}';
+            exit;
+        }
+
+        echo $respuesta;
         exit;
     }
 
@@ -106,39 +118,72 @@ class PaginasController
 
     public static function ventasAPI()
     {
-        $tiendaId = $_SESSION['tienda_id'];
-        $ventas = Ventas_Completas::obtenerVentas($tiendaId);
-        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
-        $caja = Caja::where('tienda_id', $tiendaId);
+        header('Content-Type: application/json; charset=utf-8');
 
+        if (!isset($_SESSION['tienda_id'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'No autenticado']);
+            exit;
+        }
 
+        try {
+            $tiendaId = $_SESSION['tienda_id'];
+            $ventas = Ventas_Completas::obtenerVentas($tiendaId);
+            $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
+            $caja = Caja::firstWhere('tienda_id', $tiendaId);
 
-        echo json_encode([
-            'ventas' => $ventas,
-            'inventario' => $inventario,
-            'caja' => $caja,
+            $respuesta = json_encode([
+                'ventas' => $ventas,
+                'inventario' => $inventario,
+                'caja' => $caja
+            ], JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR);
+        } catch (\Throwable $e) {
+            error_log('Error en la API de ventas: ' . $e->getMessage());
+            http_response_code(500);
+            echo '{"error":"No se pudieron obtener las ventas"}';
+            exit;
+        }
 
-        ]);
+        echo $respuesta;
+        exit;
     }
 
     public static function metricasAPI()
     {
-        $tiendaId = $_SESSION['tienda_id'];
-        $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
-        $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
-        $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
-        $proveedores = Proveedor::where('tienda_id', $tiendaId);
-        $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
-        $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
+        header('Content-Type: application/json; charset=utf-8');
 
-        echo json_encode([
-            'ventas' => $ventas,
-            'inventario' => $inventario,
-            'cajas_historicos' => $cajas_historicos,
-            'proveedores' => $proveedores,
-            'visitas_proveedor' => $visitas_proveedor,
-            'categorias' => $categorias
-        ]);
+        if (!isset($_SESSION['tienda_id'])) {
+            http_response_code(401);
+            echo '{"error":"No autenticado"}';
+            exit;
+        }
+
+        try {
+            $tiendaId = $_SESSION['tienda_id'];
+            $ventas = Ventas_Completas::obtenerVentasConcat($tiendaId);
+            $inventario = Inventario_Completo::join2tienda('productos', 'inventario', $tiendaId);
+            $cajas_historicos = Caja_historico::where('tienda_id', $tiendaId);
+            $proveedores = Proveedor::where('tienda_id', $tiendaId);
+            $visitas_proveedor = Visitas_proveedor::where('tienda_id', $tiendaId);
+            $categorias = Categorias::ALFTienda('nombre', 'ASC', $tiendaId, true);
+
+            $respuesta = json_encode([
+                'ventas' => $ventas,
+                'inventario' => $inventario,
+                'cajas_historicos' => $cajas_historicos,
+                'proveedores' => $proveedores,
+                'visitas_proveedor' => $visitas_proveedor,
+                'categorias' => $categorias
+            ], JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR);
+        } catch (\Throwable $e) {
+            error_log('Error en la API de métricas: ' . $e->getMessage());
+            http_response_code(500);
+            echo '{"error":"No se pudieron obtener las métricas"}';
+            exit;
+        }
+
+        echo $respuesta;
+        exit;
     }
 
 
@@ -212,42 +257,42 @@ class PaginasController
         $router->render('paginas/propiedades', []);
     }
 
-    public static function propiedad(Router $router)
-    {
+    // public static function propiedad(Router $router)
+    // {
 
-        $id = validarORedireccionar('/propiedades');
+    //     $id = validarORedireccionar('/propiedades');
 
-        // Buscar la propiedad por su id
-        $platillo = Platillo::find($id);
+    //     // Buscar la propiedad por su id
+    //     $platillo = Platillo::find($id);
 
-        $router->render('paginas/propiedad', [
-            'platillo' => $platillo
-        ]);
-    }
+    //     $router->render('paginas/propiedad', [
+    //         'platillo' => $platillo
+    //     ]);
+    // }
 
-    public static function blog(Router $router)
-    {
-        $entradas = Blog::all();
+    // public static function blog(Router $router)
+    // {
+    //     $entradas = Blog::all();
 
-        $router->render('/paginas/blog', [
-            'entradas' => $entradas
-        ]);
-    }
-    public static function entrada(Router $router)
-    {
-        $id = validarORedireccionar('/blog');
+    //     $router->render('/paginas/blog', [
+    //         'entradas' => $entradas
+    //     ]);
+    // }
+    // public static function entrada(Router $router)
+    // {
+    //     $id = validarORedireccionar('/blog');
 
-        $entrada = Blog::find($id);
-        if (!$entrada) {
-            header('Location: /blog');
-            exit;
-        }
+    //     $entrada = Blog::find($id);
+    //     if (!$entrada) {
+    //         header('Location: /blog');
+    //         exit;
+    //     }
 
 
-        $router->render('/paginas/entrada', [
-            'entrada' => $entrada
-        ]);
-    }
+    //     $router->render('/paginas/entrada', [
+    //         'entrada' => $entrada
+    //     ]);
+    // }
 
     public static function contacto(Router $router)
     {

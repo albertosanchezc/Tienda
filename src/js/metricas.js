@@ -402,7 +402,18 @@ async function consultarAPI() {
         const server = window.location.origin;
         const url = `${server}/metricas/api/metricas`;
         const respuesta = await fetch(url);
-        const datos = await respuesta.json();
+        let datos;
+
+        try {
+            datos = await respuesta.json();
+        } catch (error) {
+            throw new Error(`La API de métricas devolvió una respuesta inválida (HTTP ${respuesta.status})`);
+        }
+
+        if (!respuesta.ok) {
+            throw new Error(datos.error || `Error HTTP ${respuesta.status} al consultar métricas`);
+        }
+
         ventas = datos.ventas;
         visitas_proveedor = datos.visitas_proveedor;
         cancelacionesGranel = ventas.filter(venta => venta.cancelacion === '1' && venta.granel === '1');
@@ -427,8 +438,7 @@ async function consultarAPI() {
         console.log(cancelacionesCompletas);
 
     } catch (error) {
-        console.error('Error al obtener los datos:', error);
-        throw error; // Propaga el error para manejarlo en un nivel superior si es necesario
+        console.error('Error al consultar la API de métricas:', error);
     }
 }
 
@@ -4065,4 +4075,3 @@ btnAbrirCategorias.forEach(boton => {
         }
     });
 });
-

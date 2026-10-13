@@ -26,6 +26,9 @@ $router->get('/admin/ventas', [AdminController::class, 'ventas']);
 $router->get('/admin/inventario', [AdminController::class, 'inventario']);
 $router->get('/admin/reportes', [AdminController::class, 'reportes']);
 $router->get('/admin/suscripciones', [AdminController::class, 'suscripciones']);
+$router->post('/admin/suscripciones', [AdminController::class, 'actualizarSuscripcion']);
+
+
 
 
 
@@ -34,6 +37,9 @@ $router->get('/admin/suscripciones', [AdminController::class, 'suscripciones']);
 $router->get('/login', [LoginController::class, 'login']);
 $router->post('/login', [LoginController::class, 'login']);
 $router->get('/logout', [LoginController::class, 'logout']);
+
+$router->get('/suscripcion-vencida', [LoginController::class, 'vencida']);
+
 
 // Crear Cuenta
 $router->get('/registrar', [LoginController::class, 'registrar']);

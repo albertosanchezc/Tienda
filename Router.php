@@ -2,6 +2,8 @@
 
 namespace MVC;
 
+use Model\Suscripcion;
+
 class Router
 {
     public $rutasGet = [];
@@ -15,66 +17,80 @@ class Router
         $this->rutasPost[$url] = $fn;
     }
 
-public function comprobarRutas()
-{
-    session_start();
+    public function comprobarRutas()
+    {
+        session_start();
 
-    $urlActual = strtok($_SERVER['REQUEST_URI'], '?') ?: '/';
-    $metodo = $_SERVER['REQUEST_METHOD'];
+        $urlActual = strtok($_SERVER['REQUEST_URI'], '?') ?: '/';
+        $metodo = $_SERVER['REQUEST_METHOD'];
 
-    if ($metodo === 'GET') {
-        $fn = $this->rutasGet[$urlActual] ?? null;
-    } else {
-        $fn = $this->rutasPost[$urlActual] ?? null;
-    }
+        if ($metodo === 'GET') {
+            $fn = $this->rutasGet[$urlActual] ?? null;
+        } else {
+            $fn = $this->rutasPost[$urlActual] ?? null;
+        }
 
-    $auth = $_SESSION['login'] ?? false;
+        $auth = $_SESSION['login'] ?? false;
 
-    $rutas_protegidas = [
-        '/carrito',
-        '/inventario',
-        '/caja',
-        '/metricas',
-        '/proveedores',
-        '/ventasycancelaciones',
-        '/movimientoproducto',
-        '/categorias',
-        '/admin'
-    ];
+        $rutas_protegidas = [
+            '/carrito',
+            '/inventario',
+            '/caja',
+            '/metricas',
+            '/proveedores',
+            '/ventasycancelaciones',
+            '/movimientoproducto',
+            '/categorias',
+            '/admin'
+        ];
 
-    $rutas_admin = [
-        '/admin',
-        '/admin/ventas',
-        '/admin/inventario',
-        '/admin/reportes',
-        '/admin/suscripciones',
-    ];
+        $rutas_admin = [
+            '/admin',
+            '/admin/ventas',
+            '/admin/inventario',
+            '/admin/reportes',
+            '/admin/suscripciones',
+        ];
 
-    if (in_array($urlActual, $rutas_protegidas) && !$auth) {
-        header('Location: /login');
-        exit;
-    }
-
-    if (in_array($urlActual, $rutas_admin)) {
-
-        if (!$auth) {
+        if (in_array($urlActual, $rutas_protegidas) && !$auth) {
             header('Location: /login');
             exit;
         }
 
-        if (!($_SESSION['modo_dios'] ?? false)) {
-            header('Location: /');
+        if (in_array($urlActual, $rutas_admin)) {
+
+            if (!$auth) {
+                header('Location: /login');
+                exit;
+            }
+
+            if (!($_SESSION['modo_dios'] ?? false)) {
+                header('Location: /');
+                exit;
+            }
+        }
+
+        if (
+            $auth &&
+            !($_SESSION['modo_dios'] ?? false) &&
+            in_array($urlActual, $rutas_protegidas)
+        ) {
+            $tiendaId = $_SESSION['tienda_id'] ?? null;
+            $suscripcion = Suscripcion::obtenerPorTienda($tiendaId);
+
+            if (!$suscripcion || !$suscripcion->estaVigente()) {
+                $this->render('suscripcion-vencida');
+                exit;
+            }
+        }
+
+        if ($fn) {
+            call_user_func($fn, $this);
+        } else {
+            header('Location: /404');
             exit;
         }
     }
-
-    if ($fn) {
-        call_user_func($fn, $this);
-    } else {
-        header('Location: /404');
-        exit;
-    }
-}
 
     // Muestra una vista
     public function render($view, $datos = [])
